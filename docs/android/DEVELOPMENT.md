@@ -2,17 +2,29 @@
 
 ## What exists today
 
-This is a desktop Pyfa fork with Android project instructions. There is no Android
-Gradle project, working Android test suite or APK yet. A06 introduces the actual
-build workflow after the early dependency investigation. Do not add a green
-placeholder workflow or report a successful docs check as an Android build.
+This is a desktop Pyfa fork with an A01 desktop-reference harness. There is no
+Android Gradle project, working Android test suite or APK yet. A06 introduces the
+Android build workflow after the early dependency investigation. The separate
+`Desktop reference` workflow validates the host oracle and is not an Android build.
+
+## Working A01 reference command
+
+Follow [tools/android_reference/README.md](../../tools/android_reference/README.md)
+for the isolated pinned checkout, Python 3.11 dependencies and exact commands.
+The exporter uses the unmodified database builder/EOS, creates disposable data,
+compares 38 statistics across an ammunition edit/restoration, and repeats in fresh
+processes. Its checked-in fixture and runtime/data provenance are linked there.
+Eight focused tests protect the comparator and database digest from false passes.
+No inherited legacy test is claimed as repaired or passing by this work.
 
 The upstream instructions are in [CONTRIBUTING.md](../../CONTRIBUTING.md). They
 recommend Python 3.11, installing desktop requirements, generating translations
 with `python scripts/compile_lang.py`, generating data with `python db_update.py`,
-and starting `python pyfa.py`. These are upstream instructions, not commands
-verified in this Android project. A01 records the working environment and exact
-commands, including any display/system packages needed. Never run against a
+and starting `python pyfa.py`. These are upstream desktop UI instructions, not a
+verified GUI launch in this Android project. The A01 harness calls the original
+database builder with a disposable output path and does not need translations or
+a display. It still needs genuine wx libraries through configuration imports.
+Never run against a
 developer's personal saved-fit database.
 
 The old tox configuration and tests need auditing; missing paths and early-return
