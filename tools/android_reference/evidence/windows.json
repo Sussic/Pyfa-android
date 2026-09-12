@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "committed_fixture_match": true,
+    "fresh_process_repeat": true,
+    "reversible_ammo_edit": true
+  },
+  "database_bytes": 99897344,
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "database_sha256": "d723761d89b49b3d39bfd247254f53fe35a17307d0ea88d78139ef0981b825cf",
+  "dependencies": {
+    "cffi": "1.16.0",
+    "cryptography": "42.0.4",
+    "greenlet": "3.0.3",
+    "logbook": "1.7.0.post0",
+    "numpy": "1.26.2",
+    "pillow": "10.4.0",
+    "pycparser": "2.22",
+    "pyyaml": "6.0.1",
+    "six": "1.16.0",
+    "sqlalchemy": "1.4.50",
+    "typing-extensions": "4.12.2",
+    "wxPython": "4.2.1"
+  },
+  "exporter_sha256": "73b2eaca77ad62eaa999f68a055f87e5d4d5f2518ce5de01bc93b011f5a6e026",
+  "fixture_sha256": "4e70699577310605c46a497d6d7f37b25b19b1b883821daef796d4175fc68324",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "python": "3.11.9",
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+  "sqlite": "3.45.1",
+  "ci": {
+    "url": "https://github.com/Sussic/Pyfa-android/actions/runs/34691992984",
+    "tested_commit": "8e6fa96b93985f5c78a3f4eb6b1cdf00d1f76b2c",
+    "job_id": 103548766751
+  }
+}

@@ -25,18 +25,28 @@ Updated: 2026-09-12.
 - Setup validation: whitespace, local link targets, task IDs/dependencies and
   feature-family coverage checked before committing. No runtime code changed.
 
+## A01 completed and delivered
+
+- [PR #1](https://github.com/Sussic/Pyfa-android/pull/1) merged as
+  `675bb21e033de2c64d90a9bbf31e6111bfa64166` after successful Windows CI.
+- [Passing run](https://github.com/Sussic/Pyfa-android/actions/runs/34691992984)
+  tested code commit `8e6fa96b93985f5c78a3f4eb6b1cdf00d1f76b2c`.
+- Eight focused tests passed on Linux and Windows. The same logical database and
+  38 statistics in three states matched across both platforms. Independent Linux
+  rebuilds and fresh processes also matched the committed fixture.
+- [Reference commands and evidence](../../tools/android_reference/README.md).
+  Windows CI exposed a SQLite handle cleanup error, now fixed with explicit closes;
+  JSON is read as UTF-8. Expected numbers and tolerances were not loosened.
+- An initial workspace database failed integrity; successful Linux builds used
+  `/tmp`. Its cause remains unproven. Every reference build checks integrity.
+
 ## Current work
 
-- A01 is implemented and locally verified on `android/a01-desktop-reference`.
-  Delivery and the Windows `Desktop reference` CI check are pending the task PR.
-- The exporter captures 38 real EOS statistics across the initial fit, a two-gun
-  ammunition edit and restoration. Two independent database builds and fresh
-  export processes agree with the committed fixture; eight focused tests pass.
-- [Reference commands and evidence](../../tools/android_reference/README.md).
-  Initial workspace SQLite corruption was not reproduced under `/tmp`; the cause
-  is unproven, and every completed run checks database integrity.
-- Next task after A01 delivery: **A02 — expand the parity inventory**. A03 will
-  also have its prerequisite satisfied; follow the queue one task at a time.
+- No implementation task is active.
+- Next ready task: **A02 — expand the parity inventory**, using the source, controls
+  and feature families identified in SCOPE. Do not regenerate the A01 fixture as
+  part of an inventory-only task.
+- A03 also has its prerequisite satisfied; follow the queue one task at a time.
 - [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns coverage.
 
 ## Open technical questions
@@ -52,7 +62,7 @@ Updated: 2026-09-12.
 
 ## Resume instruction
 
-Read AGENTS.md and this file, verify live master and relevant open PRs, and finish
-A01 delivery if still open; otherwise select A02. Keep full offline Pyfa parity as the destination.
+Read AGENTS.md and this file, verify live master and relevant open PRs, and select
+A02. A01 is already implemented, verified and merged; do not repeat its setup. Keep full offline Pyfa parity as the destination.
 Do not jump into the entire app, restart settled research or treat the setup
 documentation as evidence that an APK has been built.

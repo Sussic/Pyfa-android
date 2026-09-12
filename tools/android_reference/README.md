@@ -112,3 +112,17 @@ SQLite image. The same source/runtime built successfully under `/tmp`; the exact
 cause of the initial failure is not established. Reproduction commands therefore
 use temporary storage and retain the integrity check. Do not reuse the failed file
 or describe this as a fixed upstream Pyfa bug.
+
+## Windows verification
+
+[CI run 34691992984](https://github.com/Sussic/Pyfa-android/actions/runs/34691992984)
+passed all eight tests and the complete fixture comparison on Windows, Python
+3.11.9 and SQLite 3.45.1. [Windows evidence](evidence/windows.json) records the
+runtime, data identity and tested commit. It matches Linux's logical data digest
+and all 38 statistics in the three states.
+
+Exporter/fixture byte hashes identify files from each run. Windows CRLF line
+endings can produce different byte hashes; the verification compares parsed JSON
+and normalized source data. No numeric tolerance or expected value was changed to
+obtain the Windows pass. The first Windows check found open SQLite handles during
+cleanup; explicit connection closing fixed the actual resource lifetime.
