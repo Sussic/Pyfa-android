@@ -27,11 +27,17 @@ Updated: 2026-09-12.
 
 ## Current work
 
-- No implementation task is active.
-- Next ready task: **A01 — establish a reproducible desktop reference**.
-  Read [its brief](tasks/A01-desktop-reference.md), then the relevant source only.
-- [ROADMAP.md](ROADMAP.md) is the authoritative task-state list. The feature matrix
-  in [SCOPE.md](SCOPE.md) tracks coverage, not duplicate task progress.
+- A01 is implemented and locally verified on `android/a01-desktop-reference`.
+  Delivery and the Windows `Desktop reference` CI check are pending the task PR.
+- The exporter captures 38 real EOS statistics across the initial fit, a two-gun
+  ammunition edit and restoration. Two independent database builds and fresh
+  export processes agree with the committed fixture; eight focused tests pass.
+- [Reference commands and evidence](../../tools/android_reference/README.md).
+  Initial workspace SQLite corruption was not reproduced under `/tmp`; the cause
+  is unproven, and every completed run checks database integrity.
+- Next task after A01 delivery: **A02 — expand the parity inventory**. A03 will
+  also have its prerequisite satisfied; follow the queue one task at a time.
+- [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns coverage.
 
 ## Open technical questions
 
@@ -39,14 +45,14 @@ Updated: 2026-09-12.
   x86_64 emulator with the same calculation behavior? A03 and A07–A09 establish it.
 - Can projections/commands recalculate within practical phone latency and memory?
   Measure in A10 before expanding the interface.
-- Working desktop test commands, Android SDK/toolchain pins, game-data digest and
-  real-device performance evidence are not established yet.
+- Android SDK/toolchain pins and real-device performance evidence are not
+  established yet. The host reference now has reproducible commands/data hashes.
 - The user's exact phone model/API level has not been explicitly confirmed in this
   project. It does not block host work or an emulator-based feasibility build.
 
 ## Resume instruction
 
-Read AGENTS.md and this file, verify live master and relevant open PRs, and complete
-A01 with its focused checks. Keep full offline Pyfa parity as the destination.
+Read AGENTS.md and this file, verify live master and relevant open PRs, and finish
+A01 delivery if still open; otherwise select A02. Keep full offline Pyfa parity as the destination.
 Do not jump into the entire app, restart settled research or treat the setup
 documentation as evidence that an APK has been built.

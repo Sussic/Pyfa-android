@@ -1,0 +1,15 @@
+# Host reference only: direct versions match pinned upstream requirements.
+# Linux wxPython wheels: https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04/
+wxPython==4.2.1
+logbook==1.7.0.post0
+sqlalchemy==1.4.50
+pyyaml==6.0.1
+cryptography==42.0.4
+numpy==1.26.2
+# Locked transitive dependencies for this reference environment.
+greenlet==3.0.3
+typing-extensions==4.12.2
+pillow==10.4.0
+six==1.16.0
+cffi==1.16.0
+pycparser==2.22
