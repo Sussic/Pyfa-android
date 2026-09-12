@@ -40,14 +40,27 @@ Updated: 2026-09-12.
 - An initial workspace database failed integrity; successful Linux builds used
   `/tmp`. Its cause remains unproven. Every reference build checks integrity.
 
+## A02 completed — delivery in progress
+
+- Expanded the 23 scope families into [239 observable behavior rows](PARITY.md)
+  with pinned source links, delivery owners, required checks and empty D/A evidence
+  slots. Every Android behavior remains unimplemented.
+- [Audit notes](PARITY_AUDIT.md) index 162 source surfaces and preserve nine
+  unresolved investigation/disposition questions with explicit owners.
+- Split four broad I tasks into 21 children. The roadmap now has 76 tracked rows:
+  72 work items plus four parent rollups. A01 and A02 are done.
+- Documentation validation covers IDs, source paths, owners/evidence slots,
+  family/control/graph coverage, local links, acyclic task dependencies and
+  whitespace. No runtime code, fixtures or workflows changed; no runtime tests run.
+- Delivery branch: `android/a02-parity-inventory`.
+
 ## Current work
 
-- No implementation task is active.
-- Next ready task: **A02 — expand the parity inventory**, using the source, controls
-  and feature families identified in SCOPE. Do not regenerate the A01 fixture as
-  part of an inventory-only task.
-- A03 also has its prerequisite satisfied; follow the queue one task at a time.
-- [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns coverage.
+- No implementation task is active; A02 documentation is being delivered.
+- Next ready task: **A03 — minimal headless adapter**. Calculate the same A01
+  synthetic fit without wx/UI initialization and compare the recorded raw values.
+- [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns scope;
+  [PARITY.md](PARITY.md) owns behavior-level coverage and evidence slots.
 
 ## Open technical questions
 
@@ -63,6 +76,8 @@ Updated: 2026-09-12.
 ## Resume instruction
 
 Read AGENTS.md and this file, verify live master and relevant open PRs, and select
-A02. A01 is already implemented, verified and merged; do not repeat its setup. Keep full offline Pyfa parity as the destination.
+A03. A01 is already verified and merged; A02 is the completed source audit. Keep
+full offline Pyfa parity as the destination. Do not regenerate fixtures for a
+documentation-only change.
 Do not jump into the entire app, restart settled research or treat the setup
 documentation as evidence that an APK has been built.

@@ -9,7 +9,9 @@ Each row is a bounded outcome with a minimum acceptance check, not a license to
 omit related Pyfa behavior. Before implementing a row, expand it with the
 [task template](../../.github/ISSUE_TEMPLATE/android-task.md) in the PR, issue or a
 task brief. If it cannot fit one focused review, split it into child tasks first.
-A02 will refine feature coverage and add missed behaviors; it cannot reduce scope.
+[The A02 checklist](PARITY.md) maps observable behaviors to delivery owners.
+Read the owner's rows before expanding a task. Coverage cannot be reduced to make
+a task appear finished.
 Early dependency requirements are ordering constraints, not claims of feasibility.
 
 ## A — prove the calculation engine and native build
@@ -17,7 +19,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
 | A01 | done | — | [Reproducible desktop reference](tasks/A01-desktop-reference.md) | Clean Python 3.11 setup generates pinned game data and records meaningful raw values for one synthetic fitted ship; exact commands and data hash are reproducible. |
-| A02 | ready | A01 | Expand the parity inventory | Desktop controls, context menus, settings, all stat/graph families and import/export paths map to observable behaviors, source locations and tasks; gaps stay explicit. |
+| A02 | done | A01 | [Expand the parity inventory](tasks/A02-parity-inventory.md) | Desktop controls, context menus, settings, all stat/graph families and import/export paths map to observable behaviors, source locations and tasks; gaps stay explicit. |
 | A03 | ready | A01 | Minimal headless adapter | One fitted ship calculates without wx/UI initialization; required dependencies, import order and data paths are documented; raw values match A01. |
 | A04 | queued | A03 | Projected-effect reference cases | A pinned desktop source/target case records apply, range/state change and remove results; adapter agrees and restores original values on removal. |
 | A05 | queued | A03 | Command-burst reference cases | A real booster/source fit and recipient produce matching results with skills/implants/state changes; disabling/removing the command source restores baseline. |
@@ -92,11 +94,44 @@ each graph. Keep heavy sample calculation off the UI thread.
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
 | I01 | queued | B04 | EFT import/export and phone sharing | Paste/import/export a fit; valid states/charges round-trip as supported, and malformed input does not partially overwrite saved work. |
-| I02 | queued | I01, C10, D03 | Remaining Pyfa interchange formats | Port each audited format (DNA/XML/EFS/mutation/multibuy/stats) in a child task; record unavoidable format loss rather than silently discarding attributes. |
-| I03 | queued | C06, I01 | Optional character/fitting synchronization | Split login, skill refresh and fitting sync into child tasks; refresh succeeds online, cancellation/expiry is handled, and saved skills/fits remain usable offline. |
-| I04 | queued | B04 | Prices and price preferences | Refresh supported sources online, retain timestamped cached values offline and preserve manual pricing options; unavailable values are not zero. |
-| I05 | queued | B02 | Data refresh and user backups | Separate child tasks for dataset update and fit backup/restore; validate data before activation, retain recoverable user state and reject incompatible/corrupt imports. |
-| I06 | queued | A02, C03, D05 | Remaining preferences and localization | Split the audited calculation/display/language options into small tasks; preserve semantics, units and text legibility for supported locales. |
+| I02 | queued | I02.01, I02.02, I02.03, I02.04, I02.05, I02.06, I02.07, I02.08 | Remaining Pyfa interchange formats — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
+| I03 | queued | I03.01, I03.02, I03.03, I03.04 | Optional character/fitting synchronization — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
+| I04 | queued | B04 | Prices and price preferences | Refresh supported sources online, retain timestamped cached values offline and preserve supported pricing options; resolve the manual-price question in PARITY_AUDIT Q02. Unavailable values are not zero. |
+| I05 | queued | I05.01, I05.02 | Data refresh and user backups — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
+| I06 | queued | I06.01, I06.02, I06.03, I06.04, I06.05, I06.06, I06.07 | Remaining preferences and localization — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
+
+## I child tasks — bounded delivery units
+
+A02 split four broad I rows before implementation. Parent IDs remain as rollups
+so existing dependencies retain their meaning; children never depend on their
+own parent. A parent becomes done only when every child is done. These 21 child
+rows increase the queue from 55 to 76 tracked rows: 72 work items and four rollups.
+Task counts measure bookkeeping, not equal effort or a percentage of app parity.
+The first ready task in the A–R order remains the default next task.
+
+| ID | State | Depends on | One outcome | Done when |
+| --- | --- | --- | --- | --- |
+| I02.01 | queued | I01 | DNA interchange | Plain, chat-tagged and alternate DNA fixtures pass; supported formatting and losses are documented. |
+| I02.02 | queued | I01, C10, D03 | XML interchange | Single/multi-fit XML and Pyfa extensions match supported fields; notes truncation and absent relationship/state fields are explicit. |
+| I02.03 | queued | C05, D02 | EFS export | Fit/type exports match the implemented EFS schema, including weapon/fighter/projection data and unsupported-effect reporting. |
+| I02.04 | queued | I01, I04 | Multibuy export | Quantities and inclusion/cheaper-equivalent options match reference exports without mutating the saved fit. |
+| I02.05 | queued | C01, C02, C03 | Fit stats and item CSV export | Formatted fit reports and current/base attribute CSV retain units, assumptions and Unicode. |
+| I02.06 | queued | I01, C10, C05, C07, C08, B07 | Mutation and additions clipboard interchange | Mutation text and all/selected additions round-trip their supported fields; malformed pastes preserve saved work. |
+| I02.07 | queued | C06, D05 | Skills and profile interchange | Character XML, skill text/training exports and damage/target-profile clipboard formats preserve supported values and validate errors. |
+| I02.08 | queued | I01, B02 | HTML fit collection export | Styled/minimal collection exports contain correct fitting links/data and work through Android file sharing. |
+| I03.01 | queued | C06 | Android ESI sign-in and identity management | Supported authentication return path, character selection/removal, cancellation/expiry and offline startup are verified; desktop server/token preferences have an explicit disposition. |
+| I03.02 | queued | I03.01, C06 | Character skill refresh | Linked-character refresh updates skills/security; failures retain cached values and do not silently discard pending edits. |
+| I03.03 | queued | I03.01, I01 | ESI fittings and JSON interchange | Browse/import/upload and explicitly confirmed remote deletions work; JSON losses and inclusion options are documented; local fits remain usable offline. |
+| I03.04 | queued | C10 | Dynamic mutated-item link resolution | Supported online item links resolve exact rolls that persist offline; malformed/unavailable links preserve the current fit. |
+| I05.01 | queued | A10, B02 | Dataset refresh and recovery | Validate a pinned update before activation; interrupted/corrupt/incompatible data leaves user state recoverable and calculation offline. |
+| I05.02 | queued | B02, C06, C07, D05, I02.02 | User backup, restore and database maintenance | Complete Android backup scope is explicit and tested beyond lossy XML fit export; corrupt restore and clearing referenced profiles are handled safely. |
+| I06.01 | queued | C06, C07, C09, D05 | Calculation/default preferences | Reload/spool, strict skill prerequisites, global character/pattern and default implant settings persist and update all affected fits. |
+| I06.02 | queued | B05, B08, C03, C10 | Display and interaction preferences | Audited statistics, rack/details, context actions and market/meta controls have persistent touch equivalents and remain discoverable. |
+| I06.03 | queued | A07, C03 | UI and game-data localization | Enumerate/pin available locales; bundled UI/data languages, fallback, formatting and Unicode work offline. |
+| I06.04 | queued | B01, C03 | Attribute overrides | Edit/toggle/remove/import/export global overrides with exact recalculation/restoration and safe invalid CSV handling. |
+| I06.05 | queued | I03.01, I04 | Network and proxy controls | Master/per-service controls and supported proxy behavior work on Android; local calculations never depend on refresh. |
+| I06.06 | queued | A06, C03 | Diagnostics, notices and help | Source/version/notices/help and privacy-preserving diagnostic export are reachable; desktop-only tools have documented equivalents or a recorded product decision. |
+| I06.07 | queued | R02 | Optional app update notifications | Personal-build delivery equivalent supports prerelease/suppression/download choices or records an explicit product decision; no store/backend requirement is introduced. |
 
 ## R — close actual gaps and deliver
 
