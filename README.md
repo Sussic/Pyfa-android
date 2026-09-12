@@ -1,3 +1,19 @@
+# Pyfa for Android — personal fork
+
+Development target: an offline Android app with Pyfa's fitting features and a
+phone-friendly interface, including bulk edits, projections and command bursts.
+**The Android app is not implemented yet.** The desktop project is preserved below.
+
+- [Agent instructions](AGENTS.md)
+- [Current status and next task](docs/android/STATUS.md)
+- [Small-task roadmap](docs/android/ROADMAP.md)
+- [Feature scope and completion criteria](docs/android/SCOPE.md)
+- [Proposed architecture](docs/android/ARCHITECTURE.md)
+- [Development and validation](docs/android/DEVELOPMENT.md)
+
+Android work belongs in [Sussic/Pyfa-android](https://github.com/Sussic/Pyfa-android).
+The following documentation describes upstream desktop Pyfa.
+
 # pyfa
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/pyfa-org/pyfa?branch=master&svg=true)]([https://travis-ci.org/pyfa-org/Pyfa](https://ci.appveyor.com/project/pyfa-org/pyfa))
