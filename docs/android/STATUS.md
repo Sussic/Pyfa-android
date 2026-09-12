@@ -57,13 +57,20 @@ Updated: 2026-09-12.
   `5704f0aa562bc4597e9e083b3b4d3feebea247b6` exactly matched the local validated tree.
   No Actions run was triggered for this documentation-only PR.
 
-## Current work
+## Current work — A03 active
 
-- No implementation task is active. A02 is merged and its handover is complete.
-- Next ready task: **A03 — minimal headless adapter**. Calculate the same A01
-  synthetic fit without wx/UI initialization and compare the recorded raw values.
-- [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns scope;
-  [PARITY.md](PARITY.md) owns behavior-level coverage and evidence slots.
+- Implemented [a minimal headless EOS adapter](../../android_bridge/README.md)
+  and deferred desktop config import until migration actually needs backup paths.
+- Linux: ten behavioral tests passed; 38 raw statistics/units across three states
+  match A01 in two fresh processes with no desktop imports or network operations.
+  Game data is read-only and its bytes are unchanged.
+- A real desktop schema-48-to-49 migration still preserves the backup and data;
+  repeating it is a no-op. A01 fixtures/exporter/tolerances are unchanged.
+- [Verification commands](../../tools/android_headless/README.md). Host CI is
+  pending; A03 remains active until that required evidence and delivery finish.
+- Branch: `android/a03-headless-adapter`.
+- Next task after delivery: **A04 — projected-effect reference cases**.
+- ROADMAP owns task state; SCOPE owns scope; PARITY owns behavior/evidence rows.
 
 ## Open technical questions
 
@@ -79,8 +86,8 @@ Updated: 2026-09-12.
 ## Resume instruction
 
 Read AGENTS.md and this file, verify live master and relevant open PRs, and select
-A03. A01 is already verified and merged; A02 is the completed source audit. Keep
-full offline Pyfa parity as the destination. Do not regenerate fixtures for a
-documentation-only change.
+the active A03 branch/PR before selecting another task. A01 and A02 are complete.
+Keep full offline Pyfa parity as the destination; do not regenerate expectations
+from the adapter under test.
 Do not jump into the entire app, restart settled research or treat the setup
 documentation as evidence that an APK has been built.

@@ -1,0 +1,47 @@
+{
+  "absent_desktop_packages": [
+    "wxPython",
+    "numpy",
+    "cryptography",
+    "pyyaml",
+    "pillow"
+  ],
+  "adapter_commit": "b50f503693b873e6debc8920f715f70f87c220b2",
+  "android_runtime_tested": false,
+  "behavioral_tests_passed": 10,
+  "checks": {
+    "A01_comparison": true,
+    "fresh_process_repeat": true,
+    "game_database_unchanged": true,
+    "no_desktop_imports": true,
+    "no_network_operations": true
+  },
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "database_sha256": "9d96d6b7a34550204c8b5627946cdcdc3eed9b9e77e9ca379038c7a09a6d5dea",
+  "dependencies": {
+    "greenlet": "3.0.3",
+    "logbook": "1.7.0.post0",
+    "sqlalchemy": "1.4.50"
+  },
+  "desktop_import_attempts": [],
+  "desktop_migration_regression": {
+    "backup_preserved": true,
+    "repeat_noop": true,
+    "result": "PASS",
+    "runtime": "A01 desktop environment with genuine wx",
+    "schema_from": 48,
+    "schema_to": 49
+  },
+  "engine_modules_loaded": 135,
+  "network_attempts": [],
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "python": "3.11.16",
+  "reference_fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+  "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+  "source_manifest_sha256": "7efc65d10c3d3d9a778db48f1e76020b2ca3678d22efde3fba002377a4339d33",
+  "sqlite": "3.53.1",
+  "states": 3,
+  "stats_per_state": 38,
+  "tracked_worktree_dirty": true
+}

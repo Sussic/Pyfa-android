@@ -3,6 +3,10 @@ name: Desktop reference
 on:
   pull_request:
     paths:
+      - 'android_bridge/**'
+      - 'eos/**'
+      - 'utils/**'
+      - 'tools/android_headless/**'
       - 'tools/android_reference/**'
       - '.github/workflows/desktop-reference.yml'
   workflow_dispatch:
@@ -21,7 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          sparse-checkout: tools/android_reference
+          sparse-checkout: |
+            android_bridge
+            eos
+            utils
+            tools/android_reference
+            tools/android_headless
       - name: Check out the independent pinned reference
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -47,6 +56,24 @@ jobs:
           --source reference-upstream
           --output "${{ runner.temp }}/pyfa-desktop-reference"
           --check tools/android_reference/fixtures/vexor.json
+      - name: Verify desktop migration backup compatibility
+        run: >-
+          python -I tools/android_headless/check_desktop_migration.py
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+      - name: Create a separate environment without desktop dependencies
+        run: python -m venv "${{ runner.temp }}/pyfa-headless-venv"
+      - name: Install pinned headless dependencies
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -m pip install --only-binary=:all: -r tools/android_headless/requirements.txt
+      - name: Compare the headless adapter and run behavioral tests
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check.py
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-headless-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -58,6 +85,15 @@ jobs:
             Get-ChildItem $referenceDir -Filter '*.log' | ForEach-Object {
               Write-Output $_.Name
               Get-Content $_.FullName -Tail 35
+            }
+          }
+          $headlessDir = Join-Path $env:RUNNER_TEMP 'pyfa-headless-check'
+          $headlessEvidence = Join-Path $headlessDir 'evidence.json'
+          if (Test-Path $headlessEvidence) { Get-Content $headlessEvidence }
+          if ('${{ job.status }}' -ne 'success' -and (Test-Path $headlessDir)) {
+            Get-ChildItem $headlessDir -Filter '*.log' | ForEach-Object {
+              Write-Output $_.Name
+              Get-Content $_.FullName -Tail 40
             }
           }
 # No uploads, caches, scheduled builds or release publication for this host check.
