@@ -6,7 +6,7 @@
   },
   "database_bytes": 99897344,
   "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
-  "database_sha256": "deb14bd1d4ec34c64f5630549093cd84516be1f471f5ed0cd250a2b4b62d8437",
+  "database_sha256": "9d96d6b7a34550204c8b5627946cdcdc3eed9b9e77e9ca379038c7a09a6d5dea",
   "dependencies": {
     "cffi": "1.16.0",
     "cryptography": "42.0.4",
@@ -21,7 +21,7 @@
     "typing-extensions": "4.12.2",
     "wxPython": "4.2.1"
   },
-  "exporter_sha256": "3fa7545e2f404b9d46cd30db00ebaba6bcab831c0a893ded6ad849d08aa8c3b6",
+  "exporter_sha256": "85f7d2d77e036a2b7e5bb8dafba96fa5adabb9faf1f8aa6e55a471ce57fc7262",
   "fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
   "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
   "python": "3.11.16",

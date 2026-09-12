@@ -5,6 +5,7 @@ This is a reference exporter, not the Android engine adapter. See README.md.
 """
 
 import argparse
+from contextlib import closing
 import hashlib
 import importlib.metadata
 import json
@@ -64,7 +65,7 @@ def source_data_digest(source):
 def logical_database_digest(path):
     """Hash schema/columns and sorted rows, independently of SQLite file layout."""
     digest = hashlib.sha256()
-    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as db:
+    with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as db:
         if db.execute("PRAGMA integrity_check").fetchall() != [("ok",)]:
             raise ValueError("Generated database failed SQLite integrity_check")
         tables = db.execute("SELECT name, sql FROM sqlite_master WHERE type='table' "
@@ -165,7 +166,7 @@ def export(source, output, name):
     from eos.saveddata.module import Module
     from eos.saveddata.ship import Ship
 
-    case = json.loads(Path(__file__).with_name("vexor.json").read_text())
+    case = json.loads(Path(__file__).with_name("vexor.json").read_text(encoding="utf-8"))
     if case["target_profile"] is not None or any(case[key] for key in (
             "implants", "boosters", "projections", "commands", "environments")):
         raise ValueError("A01 exporter does not implement those scenario inputs yet")
@@ -290,12 +291,13 @@ def main():
     logical = logical_database_digest(args.output / "eve.db")
     for name in ("fixture.json", "repeat.json"):
         run_child(args, "export", name)
-    fixture = json.loads((args.output / "fixture.json").read_text())
-    compare(fixture, json.loads((args.output / "repeat.json").read_text()), "fresh_process")
+    fixture = json.loads((args.output / "fixture.json").read_text(encoding="utf-8"))
+    compare(fixture, json.loads((args.output / "repeat.json").read_text(encoding="utf-8")),
+            "fresh_process")
     fixture["database_logical_sha256"] = logical
     fixture["comparison_tolerance"] = {"relative": REL_TOL, "absolute": ABS_TOL}
     if args.check:
-        compare(json.loads(args.check.read_text()), fixture, "committed_fixture")
+        compare(json.loads(args.check.read_text(encoding="utf-8")), fixture, "committed_fixture")
     (args.output / "fixture.json").write_text(
         json.dumps(fixture, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
     evidence = {

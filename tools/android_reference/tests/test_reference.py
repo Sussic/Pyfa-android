@@ -1,6 +1,7 @@
 """Guard the oracle against false passes and physical SQLite layout differences."""
 
 import importlib.util
+from contextlib import closing
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -49,7 +50,7 @@ class DatabaseProvenanceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             paths = [Path(folder) / (name + ".db") for name in ("first", "second")]
             for path, rows in zip(paths, ([(1, "a"), (2, "b")], [(2, "b"), (1, "a")])):
-                with sqlite3.connect(path) as db:
+                with closing(sqlite3.connect(path)) as db, db:
                     db.execute("CREATE TABLE items (id INTEGER, name TEXT)")
                     db.executemany("INSERT INTO items VALUES (?, ?)", rows)
             first, second = paths
@@ -59,7 +60,7 @@ class DatabaseProvenanceTests(unittest.TestCase):
             before = reference.digest_file(second)
             reference.logical_database_digest(second)
             self.assertEqual(before, reference.digest_file(second))
-            with sqlite3.connect(second) as db:
+            with closing(sqlite3.connect(second)) as db, db:
                 db.execute("UPDATE items SET name = 'changed' WHERE id = 2")
             self.assertNotEqual(reference.logical_database_digest(first),
                                 reference.logical_database_digest(second))
