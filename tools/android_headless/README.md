@@ -78,3 +78,18 @@ uploads, caches, scheduled runs, spending changes or emulator runs.
 
 Projections, command sources, persistent saves, the full statistics interface and
 Android packaging/ABIs remain unverified. A04 is the next task after A03 delivery.
+
+## Retained A03 evidence
+
+[Linux](evidence/linux.json) and [Windows](evidence/windows.json) both passed ten
+behavioral tests and the fresh-process scenario. The Windows run also passed the
+unchanged eight A01 comparator/digest checks, full independent reference rebuild
+and real desktop migration regression. [Passing CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34695947959).
+
+The normalized code manifest is
+`7efc65d10c3d3d9a778db48f1e76020b2ca3678d22efde3fba002377a4339d33`
+on both platforms; logical game-data hash is
+`5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607`.
+Linux was measured before commit (tracked changes recorded); Windows used GitHub's
+PR merge checkout, with the actual PR head and delivered merge recorded separately.
+Only evidence/documentation changed after that passing run.

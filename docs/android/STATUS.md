@@ -57,25 +57,40 @@ Updated: 2026-09-12.
   `5704f0aa562bc4597e9e083b3b4d3feebea247b6` exactly matched the local validated tree.
   No Actions run was triggered for this documentation-only PR.
 
-## Current work — A03 active
+## A03 completed and delivered
 
-- Implemented [a minimal headless EOS adapter](../../android_bridge/README.md)
-  and deferred desktop config import until migration actually needs backup paths.
-- Linux: ten behavioral tests passed; 38 raw statistics/units across three states
-  match A01 in two fresh processes with no desktop imports or network operations.
-  Game data is read-only and its bytes are unchanged.
-- A real desktop schema-48-to-49 migration still preserves the backup and data;
-  repeating it is a no-op. A01 fixtures/exporter/tolerances are unchanged.
-- [Verification commands](../../tools/android_headless/README.md). Host CI is
-  pending; A03 remains active until that required evidence and delivery finish.
-- Branch: `android/a03-headless-adapter`.
-- Next task after delivery: **A04 — projected-effect reference cases**.
+- [PR #3](https://github.com/Sussic/Pyfa-android/pull/3) merged as
+  `d8b0f7b6898b138708063ec9f06b91c131f303e5` after
+  [passing Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/34695947959)
+  on the first run. Checked PR head: `b20bcff38ce373894266c9cb75a936b9b36be73d`.
+- [Minimal headless adapter](../../android_bridge/README.md): explicit read-only
+  game data, in-memory fits and validated group ammunition edits. Desktop config
+  is imported only when an actual saved-database migration needs its backup paths.
+- Linux and Windows matched all 38 A01 raw values/units in three states and fresh
+  processes. Ten behavioral tests passed on each; the eight oracle checks also
+  passed in CI. No desktop imports or network operations occurred in the headless
+  path, using only Logbook, SQLAlchemy and Greenlet.
+- Real desktop schema-48-to-49 migration still preserves backup bytes and its row;
+  the repeat call is a no-op. No formulas, A01 expectations or tolerances changed.
+- [Commands and retained evidence](../../tools/android_headless/README.md).
+  Linux and Windows have the same normalized source-manifest and logical data
+  hashes. Windows tests use the PR merge checkout recorded in its evidence JSON.
+- This is host evidence only. No Android APK/ABI runtime or complete feature
+  implementation is claimed. Lazy GUI imports remain in some makeRoom helpers.
+
+## Current work
+
+- No task is active. A01–A03 are done: 3 of 72 work items, plus four parent rollups.
+- Next ready task: **A04 — projected-effect reference cases**. Add a real pinned
+  source/recipient scenario; compare applying, changing range/state and removing
+  projections through the adapter, including complete baseline restoration.
+- A05 and A06 also have completed prerequisites. Follow the queue one task at a time.
 - ROADMAP owns task state; SCOPE owns scope; PARITY owns behavior/evidence rows.
 
 ## Open technical questions
 
-- Can this EOS plus required Python/native packages run on arm64 Android and an
-  x86_64 emulator with the same calculation behavior? A03 and A07–A09 establish it.
+- Can the host-tested EOS dependency set run on arm64 Android and an x86_64
+  emulator with the same calculation behavior? A07–A09 must establish it.
 - Can projections/commands recalculate within practical phone latency and memory?
   Measure in A10 before expanding the interface.
 - Android SDK/toolchain pins and real-device performance evidence are not
@@ -86,8 +101,7 @@ Updated: 2026-09-12.
 ## Resume instruction
 
 Read AGENTS.md and this file, verify live master and relevant open PRs, and select
-the active A03 branch/PR before selecting another task. A01 and A02 are complete.
-Keep full offline Pyfa parity as the destination; do not regenerate expectations
-from the adapter under test.
+A04. A01, A02 and A03 are complete and merged. Keep full offline Pyfa parity as
+the destination; do not regenerate expectations from the adapter under test.
 Do not jump into the entire app, restart settled research or treat the setup
 documentation as evidence that an APK has been built.

@@ -20,10 +20,10 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | A01 | done | — | [Reproducible desktop reference](tasks/A01-desktop-reference.md) | Clean Python 3.11 setup generates pinned game data and records meaningful raw values for one synthetic fitted ship; exact commands and data hash are reproducible. |
 | A02 | done | A01 | [Expand the parity inventory](tasks/A02-parity-inventory.md) | Desktop controls, context menus, settings, all stat/graph families and import/export paths map to observable behaviors, source locations and tasks; gaps stay explicit. |
-| A03 | active | A01 | [Minimal headless adapter](tasks/A03-headless-adapter.md) | One fitted ship calculates without wx/UI initialization; required dependencies, import order and data paths are documented; raw values match A01. |
-| A04 | queued | A03 | Projected-effect reference cases | A pinned desktop source/target case records apply, range/state change and remove results; adapter agrees and restores original values on removal. |
-| A05 | queued | A03 | Command-burst reference cases | A real booster/source fit and recipient produce matching results with skills/implants/state changes; disabling/removing the command source restores baseline. |
-| A06 | queued | A03 | Android skeleton and native CI | Pinned toolchain builds an installable APK; an emulator test executes a real app assertion; deliberate APK delivery, concurrency, timeouts and retention are configured. No engine parity claim yet. |
+| A03 | done | A01 | [Minimal headless adapter](tasks/A03-headless-adapter.md) | One fitted ship calculates without wx/UI initialization; required dependencies, import order and data paths are documented; raw values match A01. |
+| A04 | ready | A03 | Projected-effect reference cases | A pinned desktop source/target case records apply, range/state change and remove results; adapter agrees and restores original values on removal. |
+| A05 | ready | A03 | Command-burst reference cases | A real booster/source fit and recipient produce matching results with skills/implants/state changes; disabling/removing the command source restores baseline. |
+| A06 | ready | A03 | Android skeleton and native CI | Pinned toolchain builds an installable APK; an emulator test executes a real app assertion; deliberate APK delivery, concurrency, timeouts and retention are configured. No engine parity claim yet. |
 | A07 | queued | A06 | Bundle data and boot EOS on Android | Fresh offline launch calculates A01 through embedded Python; x86_64 native test passes and arm64 package contains its required native dependencies/data. |
 | A08 | queued | A04, A07 | Android projection parity | A04 reference cases pass through the Android bridge, including changes/removal and stale-cache checks. |
 | A09 | queued | A05, A07 | Android command parity | A05 reference cases pass through the Android bridge with correct recipient updates and cleanup. |
