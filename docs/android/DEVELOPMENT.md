@@ -2,10 +2,14 @@
 
 ## What exists today
 
-This is a desktop Pyfa fork with an A01 desktop-reference harness. There is no
+This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03
+[headless adapter](../../android_bridge/README.md). There is no
 Android Gradle project, working Android test suite or APK yet. A06 introduces the
 Android build workflow after the early dependency investigation. The separate
-`Desktop reference` workflow validates the host oracle and is not an Android build.
+`Desktop reference` workflow validates the independent host oracle, desktop
+migration compatibility and the separate headless adapter; it is not an Android
+build. [Headless commands and evidence](../../tools/android_headless/README.md)
+record the ten behavioral tests and fresh-process comparison.
 
 ## Working A01 reference command
 

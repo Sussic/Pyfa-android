@@ -2,7 +2,6 @@ from logbook import Logger
 import shutil
 import time
 
-import config
 from . import migrations
 
 pyfalog = Logger(__name__)
@@ -25,6 +24,10 @@ def update(saveddata_engine):
         return
 
     if dbVersion < appVersion:
+        # Desktop paths are only needed when backing up an existing user DB.
+        # Importing EOS for an in-memory fit must not initialize wx/config.
+        import config
+
         # Automatically backup database
         toFile = "%s/saveddata_migration_%d-%d_%s.db" % (
             config.savePath,

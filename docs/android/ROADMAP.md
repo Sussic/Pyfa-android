@@ -20,7 +20,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | A01 | done | — | [Reproducible desktop reference](tasks/A01-desktop-reference.md) | Clean Python 3.11 setup generates pinned game data and records meaningful raw values for one synthetic fitted ship; exact commands and data hash are reproducible. |
 | A02 | done | A01 | [Expand the parity inventory](tasks/A02-parity-inventory.md) | Desktop controls, context menus, settings, all stat/graph families and import/export paths map to observable behaviors, source locations and tasks; gaps stay explicit. |
-| A03 | ready | A01 | Minimal headless adapter | One fitted ship calculates without wx/UI initialization; required dependencies, import order and data paths are documented; raw values match A01. |
+| A03 | active | A01 | [Minimal headless adapter](tasks/A03-headless-adapter.md) | One fitted ship calculates without wx/UI initialization; required dependencies, import order and data paths are documented; raw values match A01. |
 | A04 | queued | A03 | Projected-effect reference cases | A pinned desktop source/target case records apply, range/state change and remove results; adapter agrees and restores original values on removal. |
 | A05 | queued | A03 | Command-burst reference cases | A real booster/source fit and recipient produce matching results with skills/implants/state changes; disabling/removing the command source restores baseline. |
 | A06 | queued | A03 | Android skeleton and native CI | Pinned toolchain builds an installable APK; an emulator test executes a real app assertion; deliberate APK delivery, concurrency, timeouts and retention are configured. No engine parity claim yet. |
