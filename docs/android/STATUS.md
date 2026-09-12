@@ -40,7 +40,7 @@ Updated: 2026-09-12.
 - An initial workspace database failed integrity; successful Linux builds used
   `/tmp`. Its cause remains unproven. Every reference build checks integrity.
 
-## A02 completed — delivery in progress
+## A02 completed and delivered
 
 - Expanded the 23 scope families into [239 observable behavior rows](PARITY.md)
   with pinned source links, delivery owners, required checks and empty D/A evidence
@@ -52,11 +52,14 @@ Updated: 2026-09-12.
 - Documentation validation covers IDs, source paths, owners/evidence slots,
   family/control/graph coverage, local links, acyclic task dependencies and
   whitespace. No runtime code, fixtures or workflows changed; no runtime tests run.
-- Delivery branch: `android/a02-parity-inventory`.
+- [PR #2](https://github.com/Sussic/Pyfa-android/pull/2) merged as
+  `53f36cad7937eebf3ff3e23c6664af8bc71591dd`; checked PR head
+  `5704f0aa562bc4597e9e083b3b4d3feebea247b6` exactly matched the local validated tree.
+  No Actions run was triggered for this documentation-only PR.
 
 ## Current work
 
-- No implementation task is active; A02 documentation is being delivered.
+- No implementation task is active. A02 is merged and its handover is complete.
 - Next ready task: **A03 — minimal headless adapter**. Calculate the same A01
   synthetic fit without wx/UI initialization and compare the recorded raw values.
 - [ROADMAP.md](ROADMAP.md) owns task state; [SCOPE.md](SCOPE.md) owns scope;
