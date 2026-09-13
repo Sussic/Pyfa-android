@@ -69,9 +69,18 @@ applies; they also test reverse read order and editing/removing just one link.
 
 ## Evidence and boundaries
 
-[Retained Linux evidence](evidence/projection-linux.json) records the oracle,
+[Linux](evidence/projection-linux.json) and [Windows](evidence/projection-windows.json) evidence record the oracle,
 headless projection and existing ammunition runs plus desktop migration and eight
-reference utility checks. Windows CI is pending on the implementation PR.
+reference utility checks. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/34759292301)
+passed on the first run for [PR #4](https://github.com/Sussic/Pyfa-android/pull/4).
+Both platforms have normalized source-manifest hash
+`832aee418c59bb3a5016ff9d18f33a6a408aa65feed54a5bbc35b633ec42d56a`,
+projection fixture hash
+`01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05`,
+and logical database hash
+`5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607`.
+Linux was tested before committing; Windows records its actual PR merge checkout.
+Only evidence/documentation changed after the passing run.
 The [existing Windows workflow](../../.github/workflows/desktop-reference.yml)
 performs the same checks with one shared A01 database rebuild, no extra jobs or
 uploads. Reference imports, fixture/data hashes, runtime versions and normalized
