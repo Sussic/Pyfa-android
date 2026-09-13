@@ -28,40 +28,45 @@ Updated: 2026-09-13.
   EOS session, read-only data, group ammunition edits and ten behavioral tests.
   Lazy desktop config import preserves real migration backups. [Details/evidence](../../tools/android_headless/README.md).
 
-## A04 completed and delivered
+- **A04:** [PR #4](https://github.com/Sussic/Pyfa-android/pull/4), linked Celestis
+  dampener reference: 39 statistics per fit in 11 stages, eight projection tests,
+  two recipients and removal cleanup. [Details/evidence](../../tools/android_reference/PROJECTIONS.md).
 
-- [PR #4](https://github.com/Sussic/Pyfa-android/pull/4) merged as
-  `4ab6b75fa29e4eccfb395369417c7f23c0ee8f22` after the first
-  [Windows CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34759292301)
-  passed. Tested head: `ef0950fc78168ea9fe77a4792bf741e0c377c353`.
-- [Independent desktop case and evidence](../../tools/android_reference/PROJECTIONS.md):
-  a Celestis applies a scripted dampener to a Vexor. Both fits' 39 raw statistics
-  match across 11 stages, including distance, inactive/active state, source script
-  changes, removal and reapplication. Fresh processes match on both platforms.
-- [Adapter](../../android_bridge/README.md) uses EOS projection relationships and
-  in-memory IDs. Snapshots refresh invalidated recipients; removal clears the
-  reverse relationship. Eight new tests include two recipients and repeated
-  removal. No extra upstream patch, formula change or A01 expectation change.
-- Linux and Windows passed all 18 headless behavioral tests, eight reference
-  utility tests, independent A01/A04 desktop comparisons and the genuine desktop
-  48-to-49 migration/backup regression. No headless desktop imports or network
-  attempts occurred, and game-data bytes remained unchanged.
-- Normalized code/input/fixture and logical data hashes agree across platforms.
-  CI evidence records its actual PR merge checkout. Only evidence/documentation
-  changed after the passing run. This establishes one host projection case;
-  full projection families, stacking/cycles and Android execution remain unverified.
+## A05 completed and delivered
+
+- [PR #5](https://github.com/Sussic/Pyfa-android/pull/5) merged as
+  `ac3eb238e2314b7afee08f5c1d8c5d8628fe44af` after the first
+  [Windows CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34760339495)
+  passed. Tested head: `96d8d4749c9723f89f60b1cee66a551a2b7ece39`.
+- [Independent command case and evidence](../../tools/android_reference/COMMANDS.md):
+  a Vulture applies Shield Extension/Harmonizing to a Vexor. Both fits' 39 raw
+  statistics match in 19 stages, covering two skills, mindlink addition/state/
+  removal, module/link toggles, charge changes and repeated command removal.
+- [Adapter](../../android_bridge/README.md) adds command links and validated skill,
+  fit-local implant and module-state edits. EOS performs every calculation and
+  recipient invalidation. Removed links clear their reverse association. No
+  upstream patch or A01/A04 fixture/exporter changes were needed.
+- Linux and Windows passed **27 headless behavioral tests** (10 ammunition,
+  8 projection, 9 command), eight reference utility checks, the independent A05
+  reference and real desktop 48-to-49 migration/backup regression. Windows also
+  rebuilt A01 data and rechecked A01/A04 desktop references. Fresh processes match.
+- No headless desktop imports or network attempts occurred; game-data bytes were
+  unchanged. Normalized source/input/fixture and logical data hashes agree across
+  platforms. CI evidence identifies its actual PR merge checkout. Only evidence
+  and documentation changed after the passing run.
+- This is one host command case. Full burst coverage, command overlap/cycles,
+  persistence, UI behavior and Android execution remain unverified.
 
 ## Current work and exact next task
 
-- Active task: **A05**, on `android/a05-command-reference`. Live master verified
-  at `c48f18dd04fcbc87587aed99a5f8e9a1d9bd0a93`; no open PRs.
-  **A01–A04 are done: 4 of 72 work items; 68 remain**, plus four
+- No task active. **A01–A05 are done: 5 of 72 work items; 67 remain**, plus four
   parent rollups. ROADMAP owns task state; PARITY owns behavior/evidence rows.
-- Intended outcome: **A05 — command-burst reference cases**. Build an independent pinned
-  booster/recipient case covering source skills, implants and state changes;
-  compare through the adapter and restore baseline on disable/removal.
-- A06 is also ready, but continue the queue one task at a time. It introduces the
-  Android skeleton and native CI; A07–A09 establish actual engine/ABI parity.
+- Next: **A06 — Android skeleton and native CI**. Pin the toolchain, build an
+  installable APK and run an emulator test containing a real app assertion.
+  Configure deliberate APK delivery, concurrency, timeouts and retention within
+  existing limits. This skeleton does not yet claim EOS calculation parity.
+- A07 then bundles data and boots EOS on Android; A08/A09 run the established
+  projection/command fixtures on Android. Continue one task at a time.
 
 ## Open questions and environment notes
 
@@ -69,7 +74,8 @@ Updated: 2026-09-13.
   Greenlet 3.0.3. Their Android wheels/ABIs, phone latency/memory and APK size are
   not established. A07–A10 own those feasibility checks.
 - Q07 still needs full projection/command stacking and cycle cases. Lazy GUI
-  imports remain in some EOS makeRoom helpers; investigate the actual A05 path.
+  imports remain in some EOS makeRoom helpers. A05 avoids them with vacant-slot
+  implant addition; C07 owns complete replacement/set/location behavior.
 - The exact phone model/API level is unconfirmed; this does not block host or
   emulator work. SDK/toolchain pins belong to A06.
 - Scratch runtimes and temporary databases can expire between sessions. Verify
@@ -79,7 +85,8 @@ Updated: 2026-09-13.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select A05.
-Read its relevant EOS/desktop sources and keep expected results independent of the
-adapter. Do not restart prior research, implement the whole roadmap at once, or
-mistake host tests for an Android build.
+Read AGENTS.md and this file; verify live master and open PRs, then select A06.
+Read the native build scope and verify current official toolchain/package support
+when selecting pins. Preserve independent EOS expectations and all existing host
+checks. Do not implement the whole roadmap at once or mistake an app skeleton for
+full Android fitting parity.

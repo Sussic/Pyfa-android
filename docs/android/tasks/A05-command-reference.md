@@ -1,6 +1,6 @@
 # A05 — command-burst reference cases
 
-Dependency: A03. Status: active; Linux checks passed, Windows CI/delivery pending.
+Dependency: A03. Status: done and merged.
 
 ## Acceptance
 
@@ -26,4 +26,13 @@ nine new command tests plus the existing ten ammunition and eight projection
 tests. Fresh processes match the desktop fixture, and disabled/removed sources
 restore the recipient. No EOS formulas or A01/A04 expected values were changed.
 
-Next task after delivery: **A06 — Android skeleton and native CI**.
+[PR #5](https://github.com/Sussic/Pyfa-android/pull/5) merged as
+`ac3eb238e2314b7afee08f5c1d8c5d8628fe44af` after the first
+[Windows CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34760339495)
+passed for head `96d8d4749c9723f89f60b1cee66a551a2b7ece39`. Windows passed all
+27 headless behavioral tests, eight reference utility checks, independent desktop
+A01/A04/A05 references and the genuine desktop migration/backup regression.
+Linux and Windows agree on normalized source/input/fixture and logical data hashes.
+Retained evidence records the actual CI merge checkout separately from delivery.
+
+Next task: **A06 — Android skeleton and native CI**.

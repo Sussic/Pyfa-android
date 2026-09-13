@@ -86,8 +86,20 @@ slots, invalid skills and mixed charge/state rejection without partial edits.
 
 ## Evidence and remaining scope
 
-[Retained Linux evidence](evidence/command-linux.json) includes the command oracle
-and all three headless scenarios. Windows CI is pending on the implementation PR.
+[Linux](evidence/command-linux.json) and [Windows](evidence/command-windows.json)
+evidence includes the command oracle, all three headless scenarios, reference
+utility checks and desktop migration regression. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/34760339495)
+passed on the first run for [PR #5](https://github.com/Sussic/Pyfa-android/pull/5).
+Both platforms match normalized source-manifest hash
+`e0c4fa7b0993a4940e57eb87eb27b2061f2c909de123361ae4a11d67f35dc9ab`,
+command fixture hash
+`e7fc9ff92370c5a0e6895fd92eb836e9bdc34dfa573899535794bf906d430299`,
+and logical database hash
+`5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607`.
+Linux used the existing verified A01 database and was tested before committing;
+Windows rebuilt A01 and also rechecked the unchanged A04 desktop fixture. Windows
+records its actual PR merge checkout. Only documentation/evidence changed after
+the passing run.
 The [existing Windows workflow](../../.github/workflows/desktop-reference.yml)
 rebuilds A01 data once, runs all independent references and migration regression,
 then runs all three headless scenarios. It adds no jobs, uploads or caches.
