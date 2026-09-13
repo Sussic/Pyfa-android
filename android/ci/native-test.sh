@@ -31,7 +31,9 @@ fi
 adb shell getprop ro.build.fingerprint > build/evidence/device-fingerprint.txt
 adb shell getprop ro.product.cpu.abi > build/evidence/device-abi.txt
 adb shell getprop ro.build.version.sdk > build/evidence/device-api.txt
-"${ANDROID_HOME}/emulator/emulator" -version > build/evidence/emulator-version.txt
+# Read the installed package metadata without invoking a second, graphical QEMU
+# binary (which needs audio libraries even when asked only for its version).
+cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-version.txt
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest
 python3 ci/summarize-tests.py
