@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Pyfa Dev</string>
+    <string name="brand">PYFA / ANDROID</string>
+    <string name="home_title">Your fitting work,\non your phone.</string>
+    <string name="milestone">EARLY DEVELOPMENT</string>
+    <string name="status_title">The app foundation is here.</string>
+    <string name="status_body">Fitting calculations and saved fits are not available in this build yet.</string>
+    <string name="next_body">Next: bring Pyfa’s fitting engine and game data onto the device.</string>
+    <string name="about_button">About this build</string>
+    <string name="about_title">About Pyfa Android</string>
+    <string name="back">Back</string>
+    <string name="about_goal">A personal Android port of Pyfa, built for offline fitting and complete fitting statistics.</string>
+    <string name="about_scope">The goal includes bulk edits, drones, projected effects and command bursts. These features are still in development.</string>
+    <string name="about_credit">Based on Pyfa by the Pyfa developers. Source and license are available in the project repository.</string>
+    <string name="source_url" translatable="false">github.com/Sussic/Pyfa-android</string>
+    <string name="license_label" translatable="false">GNU General Public License v3</string>
+    <string name="version">Development build %1$s</string>
+</resources>

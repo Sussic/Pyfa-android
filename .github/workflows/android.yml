@@ -1,0 +1,124 @@
+name: Android native
+
+on:
+  pull_request:
+    paths:
+      - 'android/**'
+      - '!android/**/*.md'
+      - '.github/workflows/android.yml'
+      - '.gitattributes'
+      - 'LICENSE'
+  workflow_dispatch:
+    inputs:
+      upload_apk:
+        description: 'Deliver the tested development APK (expires after one day)'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-native-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    name: Build, lint and native assertions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: android
+          persist-credentials: false
+      - name: Install the exact Temurin JDK archive
+        run: |
+          mkdir -p build/evidence "$RUNNER_TEMP/pyfa-jdk"
+          git rev-parse HEAD > build/evidence/checkout.txt
+          curl --fail --location --max-time 180 --output "$RUNNER_TEMP/pyfa-jdk.tar.gz" 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.20.1_1.tar.gz'
+          echo "3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e  $RUNNER_TEMP/pyfa-jdk.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/pyfa-jdk.tar.gz" -C "$RUNNER_TEMP/pyfa-jdk" --strip-components=1
+          echo "JAVA_HOME=$RUNNER_TEMP/pyfa-jdk" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/pyfa-jdk/bin" >> "$GITHUB_PATH"
+      - name: Install pinned Android command-line tools
+        run: |
+          curl --fail --location --max-time 180 --output "$RUNNER_TEMP/pyfa-sdk-tools.zip" 'https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip'
+          echo "7ec965280a073311c339e571cd5de778b9975026cfcbe79f2b1cdcb1e15317ee  $RUNNER_TEMP/pyfa-sdk-tools.zip" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/pyfa-sdk/cmdline-tools"
+          unzip -q "$RUNNER_TEMP/pyfa-sdk-tools.zip" -d "$RUNNER_TEMP/pyfa-sdk/cmdline-tools"
+          mv "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/cmdline-tools" "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/19.0"
+          ln -s 19.0 "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/latest"
+          echo "ANDROID_HOME=$RUNNER_TEMP/pyfa-sdk" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$RUNNER_TEMP/pyfa-sdk" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/19.0/bin" >> "$GITHUB_PATH"
+          echo "$RUNNER_TEMP/pyfa-sdk/platform-tools" >> "$GITHUB_PATH"
+      - name: Verify wrapper and install pinned SDK packages
+        run: |
+          echo '81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check
+          python3 -c 'import subprocess; subprocess.run(["sdkmanager", "--licenses"], input="y\n" * 200, text=True, stdout=subprocess.DEVNULL, check=True)'
+          sdkmanager 'platforms;android-36' 'build-tools;35.0.0' 'platform-tools'
+          mkdir -p build/evidence
+          java -version 2> build/evidence/java-version.txt
+          sdkmanager --list_installed > build/evidence/sdk-packages.txt
+          ./gradlew --version > build/evidence/gradle-version.txt
+      - name: Build APKs and run lint
+        run: ./gradlew --no-daemon --console=plain :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug
+      - name: Verify development APK signature
+        run: '"$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk > build/evidence/apk-signature.txt'
+      - name: Verify the original license is inside the APK
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          with ZipFile('app/build/outputs/apk/debug/app-debug.apk') as apk:
+              assert apk.read('assets/LICENSE') == Path('../LICENSE').read_bytes()
+          print('APK contains the unchanged root GPLv3 license')
+          PY
+      - name: Enable and verify KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-pyfa-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
+      - name: Test a fresh offline installation on Android
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
+        with:
+          api-level: 36
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          cores: 2
+          ram-size: 2048M
+          disk-size: 2048M
+          disable-linux-hw-accel: false
+          emulator-boot-timeout: 300
+          emulator-build: '15917651' # 37.1.11, stable package checked 2026-09-13
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          working-directory: android
+          script: bash ci/native-test.sh
+      - name: Retain concise native evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: android-native-evidence-${{ github.run_id }}
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            android/build/evidence/
+            android/app/build/outputs/androidTest-results/connected/**/*.xml
+            android/app/build/reports/lint-results-debug.html
+      - name: Deliver the tested development APK
+        if: github.event_name == 'workflow_dispatch' && inputs.upload_apk
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pyfa-android-dev-${{ github.sha }}
+          retention-days: 1
+          if-no-files-found: error
+          compression-level: 0
+          path: android/app/build/outputs/apk/debug/app-debug.apk

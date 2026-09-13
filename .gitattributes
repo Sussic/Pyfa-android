@@ -34,3 +34,7 @@ pyfa.py     text eol=lf
 *.icns binary
 *.ico binary
 
+android/gradlew text eol=lf
+android/gradlew.bat text eol=crlf
+android/ci/*.sh text eol=lf
+*.jar binary

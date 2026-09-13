@@ -2,14 +2,15 @@
 
 ## What exists today
 
-This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03
-[headless adapter](../../android_bridge/README.md). There is no
-Android Gradle project, working Android test suite or APK yet. A06 introduces the
-Android build workflow after the early dependency investigation. The separate
+This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03–A05
+[headless adapter](../../android_bridge/README.md). A06 adds the isolated
+[Android project, toolchain and native commands](../../android/README.md).
+Its current validation state is recorded in STATUS; the shell does not yet embed
+EOS. The separate
 `Desktop reference` workflow validates the independent host oracle, desktop
 migration compatibility and the separate headless adapter; it is not an Android
 build. [Headless commands and evidence](../../tools/android_headless/README.md)
-record the ten behavioral tests and fresh-process comparison.
+record the 27 behavioral tests and fresh-process comparisons.
 
 ## Working A01 reference command
 
@@ -70,7 +71,7 @@ mock engine, skipped scenario or early-return test is insufficient for parity.
 Record native runtime evidence for each ABI actually tested; building an arm64 APK
 does not mean it was executed on arm64 hardware.
 
-## CI to implement in A06
+## Native CI policy (A06)
 
 - Pin a compatible JDK, Gradle wrapper (including distribution checksum), Android
   plugin/SDK, Kotlin, embedded Python and dependencies after the compatibility
