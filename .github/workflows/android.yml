@@ -45,10 +45,23 @@ jobs:
           tar -xzf "$RUNNER_TEMP/pyfa-jdk.tar.gz" -C "$RUNNER_TEMP/pyfa-jdk" --strip-components=1
           echo "JAVA_HOME=$RUNNER_TEMP/pyfa-jdk" >> "$GITHUB_ENV"
           echo "$RUNNER_TEMP/pyfa-jdk/bin" >> "$GITHUB_PATH"
+      - name: Install pinned Android command-line tools
+        run: |
+          curl --fail --location --max-time 180 --output "$RUNNER_TEMP/pyfa-sdk-tools.zip" 'https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip'
+          echo "7ec965280a073311c339e571cd5de778b9975026cfcbe79f2b1cdcb1e15317ee  $RUNNER_TEMP/pyfa-sdk-tools.zip" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/pyfa-sdk/cmdline-tools"
+          unzip -q "$RUNNER_TEMP/pyfa-sdk-tools.zip" -d "$RUNNER_TEMP/pyfa-sdk/cmdline-tools"
+          mv "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/cmdline-tools" "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/19.0"
+          ln -s 19.0 "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/latest"
+          echo "ANDROID_HOME=$RUNNER_TEMP/pyfa-sdk" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$RUNNER_TEMP/pyfa-sdk" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/pyfa-sdk/cmdline-tools/19.0/bin" >> "$GITHUB_PATH"
+          echo "$RUNNER_TEMP/pyfa-sdk/platform-tools" >> "$GITHUB_PATH"
       - name: Verify wrapper and install pinned SDK packages
         run: |
           echo '81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check
-          sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+          python3 -c 'import subprocess; subprocess.run(["sdkmanager", "--licenses"], input="y\n" * 200, text=True, stdout=subprocess.DEVNULL, check=True)'
+          sdkmanager 'platforms;android-36' 'build-tools;35.0.0' 'platform-tools'
           mkdir -p build/evidence
           java -version 2> build/evidence/java-version.txt
           sdkmanager --list_installed > build/evidence/sdk-packages.txt

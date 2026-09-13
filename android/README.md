@@ -19,6 +19,7 @@ upstream source and notices remain in the repository.
 | AndroidX test runner / JUnit extension | 1.7.0 / 1.3.0 |
 | Compile / target / minimum API | 36 / 36 / 24 (Android 7.0 minimum) |
 | SDK build tools | 35.0.0 |
+| SDK command-line tools | 19.0, archive 13114758, SHA-256 checked |
 | CI host / emulator | ubuntu-24.04 / emulator 37.1.11, build 15917651 |
 | Native test device | API 36, google_apis, x86_64, Pixel 2 profile, KVM |
 
@@ -41,7 +42,7 @@ CI installs the exact Temurin archive with SHA-256
 The four-part JDK version is not accepted by setup-java's version parser, so the
 workflow checks and extracts the pinned vendor archive directly.
 
-The hosted runner image, SDK command-line/platform tools and system-image patch
+The hosted runner image, SDK platform tools and system-image patch
 revision can change independently of API 36. CI retains installed package versions,
 emulator version and the device fingerprint. This is a pinned application toolchain,
 not a claim that the entire hosted environment is byte-for-byte reproducible.
