@@ -1,0 +1,117 @@
+{
+  "task": "A06",
+  "recorded_on": "2026-09-13",
+  "pull_request": "https://github.com/Sussic/Pyfa-android/pull/6",
+  "tested_head": "b7bf3d14786b6f9ed6693fcba41bfa6c727179b1",
+  "merge_commit": "07ecf9f6c4f5412232f0ea2e49f201096b1bb9b4",
+  "workflow_url": "https://github.com/Sussic/Pyfa-android/actions/runs/34763124199",
+  "job_id": 103739297025,
+  "job_conclusion": "success",
+  "native_summary": {
+    "task": "A06",
+    "checkout_sha": "9debe2fa57008de4e629595b99aa9687c7f8504c",
+    "workflow_run": "34763124199",
+    "tests": [
+      "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
+      "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack"
+    ],
+    "screenshots": {
+      "home": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "40756a9c8da9f04accba2ad848283d17fa6b92373501424387dc3412ffc08f5c"
+      },
+      "about": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "80bb048a4fe7ec65a68c6e7ab474860bfdb5772236dec9ab1a956e1c3bb5ffb6"
+      },
+      "about-landscape": {
+        "width": 1920,
+        "height": 1080,
+        "sha256": "08957aa3450b63c83a95ee170388d84915a06eb79f1005eed0c022b5448717ea"
+      }
+    },
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "fresh_install": true,
+    "airplane_mode": true,
+    "app_internet_permission": false,
+    "apk_bytes": 10334009,
+    "apk_sha256": "5dd6c9e65c542223552136d774bb09f4f719e1e575435b68d2ca84ab6c949e8b",
+    "engine_packaged": false,
+    "engine_parity_tested": false
+  },
+  "junit": {
+    "name": "io.github.sussic.pyfa.AppShellTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "11.667",
+    "timestamp": "2026-09-13T14:42:26",
+    "hostname": "localhost"
+  },
+  "toolchain": {
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)\nOpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)",
+    "gradle": "8.13",
+    "agp": "8.11.1",
+    "kotlin": "2.2.21",
+    "compose_bom": "2025.10.01",
+    "compile_sdk": 36,
+    "target_sdk": 36,
+    "min_sdk": 24,
+    "application_build_tools": "35.0.0",
+    "command_line_tools": "19.0 (13114758)",
+    "platform_revision": 2,
+    "platform_tools": "37.0.1",
+    "emulator": "Pkg.UserSrc=false\nPkg.Revision=37.1.11\nPkg.Path=emulator\nPkg.Desc=Android Emulator\nPkg.BuildId=15917651",
+    "system_image_revision": 7,
+    "ci_host": "ubuntu-24.04",
+    "profile": "pixel_2",
+    "kvm_access_check": "passed",
+    "note": "The pinned emulator action also installs build-tools 37.0.0. The application explicitly uses 35.0.0."
+  },
+  "packaging": {
+    "application_id": "io.github.sussic.pyfa.dev",
+    "version_name": "0.1.0-a06",
+    "version_code": 1,
+    "apk_signature_report": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: be509ae58674699ccaf35ede2630cfeae3cc0158fc08fc13c828cf06c542d9f3\nSigner #1 certificate SHA-1 digest: 3ce246b9b14a9701defac15bba9de073b51aad99\nSigner #1 certificate MD5 digest: 2d93d9121080e4e39dbe8cbdc419129f\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 8ebf5d35ed8d6689450cbee336b32c5050061a80830b7da031a72106e259e857\nSigner #1 public key SHA-1 digest: b39ef4437ccbc6ae929fba24d8328f6427a09660\nSigner #1 public key MD5 digest: 7a871d883d080008a37e4c14e95553b0",
+    "root_gpl_license_byte_comparison": "passed: assets/LICENSE matches repository LICENSE",
+    "manual_apk_delivery": "Configured as opt-in workflow_dispatch upload after successful checks; delivery dispatch not exercised during A06."
+  },
+  "visual_review": {
+    "reviewed_on": "2026-09-13",
+    "captures": [
+      "home",
+      "about",
+      "about-landscape"
+    ],
+    "result": "Portrait home/About text and controls are readable without overlap. Landscape scrolling exposes lower About content and Back. System bars do not obscure controls.",
+    "user_usability_signoff": false
+  },
+  "artifact": {
+    "id": 10319393633,
+    "name": "android-native-evidence-34763124199",
+    "bytes": 306611,
+    "retention_days": 1,
+    "expires_at": "2026-09-14T14:42:29Z",
+    "zip_sha256": "7cb5af604841eb85c3a3e6e7ba8150f807f2cb6a70cc626cd16fd45b50c34d29"
+  },
+  "validation_notes": [
+    "Build, lint, signature, license packaging, native assertions and evidence upload all passed on the tested head.",
+    "Lint retains one Missing data extraction rules warning. The shell has no fit storage; backup/transfer policy remains with storage/upgrade work.",
+    "Earlier runs exposed and fixed setup-java four-part version parsing, absent sdkmanager PATH, an API-27-only base theme attribute, graphical emulator version probing, the asset producer dependency and screenshots lost during AGP uninstall.",
+    "The first native test pass was run 34762651056, but its private screenshots did not survive uninstall. It was not accepted as completed visual evidence. The final run requires valid retained PNGs.",
+    "Host oracle, EOS, adapter and desktop reference workflow were unchanged. Their existing A05 evidence was not rerun or relabeled as Android validation.",
+    "Local resource XML, shell/Python/workflow syntax, wrapper hashes, CI policy, documentation links and git whitespace checks passed. Local Java SDK/dependency downloads failed; no local APK build is claimed."
+  ],
+  "limitations": [
+    "EOS and the game database are not packaged. No calculation/engine parity is established.",
+    "Only API 36 x86_64 runtime was tested. ARM64, other APIs and physical phones remain unverified.",
+    "No saved-fit storage, stable release signing or upgrade guarantee. R02 precedes persistent-use releases."
+  ]
+}

@@ -10,7 +10,8 @@ Updated: 2026-09-13.
   `8db82315f8312b124dd24ef103e43496cee50b4a`. It matched upstream master on
   2026-09-12 and includes changes after v2.68.0; do not substitute that binary.
 - Goal: personal offline Android Pyfa with full feature parity and usable bulk
-  edits. A06's Android shell is under validation; EOS has not run on Android yet.
+  edits. A06's Android shell is built and natively tested; EOS has not run on
+  Android yet.
 - [Scope](SCOPE.md), [architecture](ARCHITECTURE.md), [development rules](DEVELOPMENT.md)
   and root AGENTS.md govern work. The inherited test suite is not a verified oracle.
 
@@ -32,54 +33,63 @@ Updated: 2026-09-13.
   dampener reference: 39 statistics per fit in 11 stages, eight projection tests,
   two recipients and removal cleanup. [Details/evidence](../../tools/android_reference/PROJECTIONS.md).
 
-## A05 completed and delivered
+- **A05:** [PR #5](https://github.com/Sussic/Pyfa-android/pull/5), Vulture command
+  bursts applied to a Vexor: 39 raw statistics per fit across 19 stages. Adapter
+  edits cover links, skills, implants and module states. Linux/Windows passed
+  **27 headless tests**, eight utility checks and the real desktop migration/backup
+  regression. [Command case and evidence](../../tools/android_reference/COMMANDS.md).
 
-- [PR #5](https://github.com/Sussic/Pyfa-android/pull/5) merged as
-  `ac3eb238e2314b7afee08f5c1d8c5d8628fe44af` after the first
-  [Windows CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34760339495)
-  passed. Tested head: `96d8d4749c9723f89f60b1cee66a551a2b7ece39`.
-- [Independent command case and evidence](../../tools/android_reference/COMMANDS.md):
-  a Vulture applies Shield Extension/Harmonizing to a Vexor. Both fits' 39 raw
-  statistics match in 19 stages, covering two skills, mindlink addition/state/
-  removal, module/link toggles, charge changes and repeated command removal.
-- [Adapter](../../android_bridge/README.md) adds command links and validated skill,
-  fit-local implant and module-state edits. EOS performs every calculation and
-  recipient invalidation. Removed links clear their reverse association. No
-  upstream patch or A01/A04 fixture/exporter changes were needed.
-- Linux and Windows passed **27 headless behavioral tests** (10 ammunition,
-  8 projection, 9 command), eight reference utility checks, the independent A05
-  reference and real desktop 48-to-49 migration/backup regression. Windows also
-  rebuilt A01 data and rechecked A01/A04 desktop references. Fresh processes match.
-- No headless desktop imports or network attempts occurred; game-data bytes were
-  unchanged. Normalized source/input/fixture and logical data hashes agree across
-  platforms. CI evidence identifies its actual PR merge checkout. Only evidence
-  and documentation changed after the passing run.
-- This is one host command case. Full burst coverage, command overlap/cycles,
-  persistence, UI behavior and Android execution remain unverified.
+## A06 completed and delivered
+
+- [PR #6](https://github.com/Sussic/Pyfa-android/pull/6) merged as
+  `07ecf9f6c4f5412232f0ea2e49f201096b1bb9b4` after the final
+  [native CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34763124199)
+  passed. Tested head: `b7bf3d14786b6f9ed6693fcba41bfa6c727179b1`.
+- [Android project, pinned toolchain and commands](../../android/README.md):
+  Kotlin/Compose shell, honest unavailable fitting status and versioned About
+  screen. No Internet permission. The original GPL license is verified inside
+  the development APK. Existing EOS, adapter, host fixtures and CI are unchanged.
+- Built and installed a **10,334,009-byte APK** on a fresh Android 16 / API 36
+  x86_64 emulator. Networking was disabled before installation. **Two native tests
+  passed** with zero failures/errors/skips: navigation, activity recreation,
+  landscape scrolling and Back behavior. Three actual Android screenshots were
+  retained and visually reviewed. [Evidence receipt](evidence/a06-native.json).
+- CI pins actions, verifies KVM access, uses a 25-minute timeout and branch/PR
+  concurrency, and retains concise evidence for one day. No schedules, duplicate
+  push runs or persistent caches. APK upload is opt-in through manual dispatch
+  after successful checks; the upload dispatch itself was not exercised in A06.
+- Initial setup/diagnostic issues are fixed and recorded in the evidence receipt.
+  The final merge tree matches the tested head. Only documentation/evidence changed
+  afterward. The shell has no EOS, bundled game data or saved fits, and establishes
+  no Android calculation parity, ARM64 runtime or physical-phone result.
 
 ## Current work and exact next task
 
-- Active task: **A06**, on `android/a06-native-skeleton`. Live master verified at
-  `e9609f9b092689f26a3b0751b72b5c2e5c0ecde0`; no open PRs.
-  **A01–A05 are done: 5 of 72 work items; 67 remain**, plus four
+- No active task; A06 is delivered. **A01–A06 are done: 6 of 72 work items;
+  66 remain**, plus four
   parent rollups. ROADMAP owns task state; PARITY owns behavior/evidence rows.
-- Intended outcome: **A06 — Android skeleton and native CI**. Pin the toolchain, build an
-  installable APK and run an emulator test containing a real app assertion.
-  Configure deliberate APK delivery, concurrency, timeouts and retention within
-  existing limits. This skeleton does not yet claim EOS calculation parity.
-- A07 then bundles data and boots EOS on Android; A08/A09 run the established
-  projection/command fixtures on Android. Continue one task at a time.
+- Exact next task: **A07 — Bundle data and boot EOS on Android**. A fresh offline
+  launch must calculate A01 through embedded Python, with an x86_64 native test
+  and verified ARM64 package contents. Keep desktop expectations independent.
+  A08/A09 then run projection/command fixtures on Android. Continue one task at a time.
 
 ## Open questions and environment notes
 
 - Host dependencies are Python 3.11, Logbook 1.7.0.post0, SQLAlchemy 1.4.50 and
-  Greenlet 3.0.3. Their Android wheels/ABIs, phone latency/memory and APK size are
-  not established. A07–A10 own those feasibility checks.
+  Greenlet 3.0.3. Chaquopy 17.0.0 / Python 3.11 is provisional, not packaged yet.
+  Android wheels/ABIs, engine latency/memory and full-data APK size remain unknown;
+  A07–A10 own those checks. Extend native CI path filters when EOS is bundled.
 - Q07 still needs full projection/command stacking and cycle cases. Lazy GUI
   imports remain in some EOS makeRoom helpers. A05 avoids them with vacant-slot
   implant addition; C07 owns complete replacement/set/location behavior.
 - The exact phone model/API level is unconfirmed; this does not block host or
-  emulator work. SDK/toolchain pins belong to A06.
+  emulator work. A06 declares minSdk 24 but has tested runtime only on API 36.
+- Lint reports one missing-data-extraction-rules warning. Storage/upgrade tasks
+  must define backup/transfer behavior before persistent-use releases. Stable
+  signing and upgrade preservation remain R02 work.
+- This workspace lacked KVM and local Java SDK downloads failed. Native build,
+  installation and tests succeeded on GitHub's Ubuntu runner; no local APK build
+  is claimed. Use A06's reproducible workflow and recorded toolchain.
 - Scratch runtimes and temporary databases can expire between sessions. Verify
   paths before reuse and rebuild from A01 if absent. An earlier workspace DB
   failed integrity for an unproven reason; fresh `/tmp` builds passed. Every
@@ -87,8 +97,7 @@ Updated: 2026-09-13.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select A06.
-Read the native build scope and verify current official toolchain/package support
-when selecting pins. Preserve independent EOS expectations and all existing host
-checks. Do not implement the whole roadmap at once or mistake an app skeleton for
-full Android fitting parity.
+Read AGENTS.md and this file; verify live master and open PRs, then select A07.
+Read the Android build instructions and headless adapter boundary, verify real
+Android wheels and package the pinned data. Preserve independent EOS expectations
+and host checks. Do not mistake the native shell for full Android fitting parity.

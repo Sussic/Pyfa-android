@@ -111,6 +111,19 @@ signing for successive persistent-use releases.
 
 ## Evidence
 
-A06 native validation is pending. See [STATUS](../docs/android/STATUS.md) for the
-active PR/check and the exact next task. No passing build or emulator result is
-claimed until its actual run is recorded.
+[PR #6](https://github.com/Sussic/Pyfa-android/pull/6) is merged. The final
+[native CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34763124199)
+passed build, lint, signature, byte-for-byte GPL asset verification and **two
+instrumented tests** with zero failures/errors/skips. The 10,334,009-byte APK was
+installed on API 36 x86_64 with networking disabled. All three retained Android
+screenshots were reviewed: home/About in portrait and scrolled About in landscape.
+
+The [checked-in evidence receipt](../docs/android/evidence/a06-native.json) records
+the tested head, actual PR merge checkout, APK hash, runtime, test names, screenshot
+hashes/dimensions and limitations. Full CI reports/screenshots have one-day retention.
+Lint retains one data-extraction-rules warning for the future storage/upgrade work;
+this shell has no saved fits. Manual APK upload is configured but was not dispatched
+during A06. No EOS result, ARM64 runtime or physical-phone test is claimed.
+
+Next: **A07**, package game data and embedded Python, calculate A01 offline, verify
+x86_64 execution and required ARM64 package contents. See [STATUS](../docs/android/STATUS.md).
