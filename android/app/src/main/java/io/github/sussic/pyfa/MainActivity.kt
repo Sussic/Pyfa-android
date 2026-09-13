@@ -80,7 +80,7 @@ private fun PyfaApp() {
                         } else {
                             Home(onAbout = { showAbout = true })
                         }
-                }
+                    }
                 }
             }
         }

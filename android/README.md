@@ -36,6 +36,10 @@ Wrapper JAR SHA-256:
 `81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f`.
 Both were checked against Gradle's published distribution/checksum endpoints.
 Do not edit the wrapper JAR or change pins without reviewing compatibility.
+CI installs the exact Temurin archive with SHA-256
+`3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e`.
+The four-part JDK version is not accepted by setup-java's version parser, so the
+workflow checks and extracts the pinned vendor archive directly.
 
 The hosted runner image, SDK command-line/platform tools and system-image patch
 revision can change independently of API 36. CI retains installed package versions,

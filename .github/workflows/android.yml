@@ -36,10 +36,15 @@ jobs:
         with:
           sparse-checkout: android
           persist-credentials: false
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
-        with:
-          distribution: temurin
-          java-version: '17.0.20.1+1'
+      - name: Install the exact Temurin JDK archive
+        run: |
+          mkdir -p build/evidence "$RUNNER_TEMP/pyfa-jdk"
+          git rev-parse HEAD > build/evidence/checkout.txt
+          curl --fail --location --max-time 180 --output "$RUNNER_TEMP/pyfa-jdk.tar.gz" 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.20.1_1.tar.gz'
+          echo "3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e  $RUNNER_TEMP/pyfa-jdk.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/pyfa-jdk.tar.gz" -C "$RUNNER_TEMP/pyfa-jdk" --strip-components=1
+          echo "JAVA_HOME=$RUNNER_TEMP/pyfa-jdk" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/pyfa-jdk/bin" >> "$GITHUB_PATH"
       - name: Verify wrapper and install pinned SDK packages
         run: |
           echo '81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check
