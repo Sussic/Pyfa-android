@@ -67,6 +67,13 @@ jobs:
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-projection-reference"
           --check tools/android_reference/fixtures/projection.json
+      - name: Compare the independent desktop command reference
+        run: >-
+          python -I tools/android_reference/command.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-command-reference"
+          --check tools/android_reference/fixtures/command.json
       - name: Create a separate environment without desktop dependencies
         run: python -m venv "${{ runner.temp }}/pyfa-headless-venv"
       - name: Install pinned headless dependencies
@@ -88,6 +95,13 @@ jobs:
           -I tools/android_headless/check.py --scenario projection
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-projection-check"
+      - name: Compare headless command bursts and run behavioral tests
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check.py --scenario command
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-command-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -110,7 +124,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {

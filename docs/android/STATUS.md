@@ -53,9 +53,11 @@ Updated: 2026-09-13.
 
 ## Current work and exact next task
 
-- No task active. **A01–A04 are done: 4 of 72 work items; 68 remain**, plus four
+- Active task: **A05**, on `android/a05-command-reference`. Live master verified
+  at `c48f18dd04fcbc87587aed99a5f8e9a1d9bd0a93`; no open PRs.
+  **A01–A04 are done: 4 of 72 work items; 68 remain**, plus four
   parent rollups. ROADMAP owns task state; PARITY owns behavior/evidence rows.
-- Next: **A05 — command-burst reference cases**. Build an independent pinned
+- Intended outcome: **A05 — command-burst reference cases**. Build an independent pinned
   booster/recipient case covering source skills, implants and state changes;
   compare through the adapter and restore baseline on disable/removal.
 - A06 is also ready, but continue the queue one task at a time. It introduces the

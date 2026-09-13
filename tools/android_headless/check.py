@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify A03/A04 against pinned desktop fixtures without desktop packages/networking."""
+"""Verify A03–A05 against pinned desktop fixtures without desktop packages/networking."""
 
 import argparse
 import hashlib
@@ -21,6 +21,11 @@ from tools.android_reference.reference import canonical, compare, digest_file, l
 DEPENDENCIES = {"logbook": "1.7.0.post0", "sqlalchemy": "1.4.50", "greenlet": "3.0.3"}
 FORBIDDEN_PACKAGES = ("wxPython", "numpy", "cryptography", "pyyaml", "pillow")
 FORBIDDEN_IMPORTS = {"wx", "gui", "service", "config"}
+SCENARIOS = {
+    "ammunition": {"input": "vexor.json", "test": "test_engine.py", "oracle": "A01", "fits": 1},
+    "projection": {"input": "projection.json", "test": "test_projection.py", "oracle": "A04", "fits": 2},
+    "command": {"input": "command.json", "test": "test_command.py", "oracle": "A05", "fits": 2},
+}
 
 
 def read_json(path):
@@ -53,14 +58,14 @@ def worker(args):
 
     sys.addaudithook(block_network)
     from android_bridge import HeadlessEngine
-    test_file = "test_projection.py" if args.scenario == "projection" else "test_engine.py"
+    test_file = SCENARIOS[args.scenario]["test"]
     spec = importlib.util.spec_from_file_location("headless_engine_tests", Path(__file__).parent / "tests" / test_file)
     tests = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(tests)
     engine = HeadlessEngine(args.database)
     expected = read_json(args.expected)
     # Scenario inputs are independent of the expected numeric values.
-    case = read_json(ROOT / "tools/android_reference" / ("projection.json" if args.scenario == "projection" else "vexor.json"))
+    case = read_json(ROOT / "tools/android_reference" / SCENARIOS[args.scenario]["input"])
     compare(expected["inputs"], case, "case_definition")
     states = tests.sample(engine, case)
     compare(expected["states"], states, args.scenario + "_states")
@@ -94,13 +99,14 @@ def worker(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--database", type=Path, required=True)
-    parser.add_argument("--scenario", choices=("ammunition", "projection"), default="ammunition")
+    parser.add_argument("--scenario", choices=SCENARIOS, default="ammunition")
     parser.add_argument("--expected", type=Path)
     parser.add_argument("--output", type=Path, required=True, help="New directory outside the development checkout")
     parser.add_argument("--worker", choices=("tests", "repeat"), help=argparse.SUPPRESS)
     args = parser.parse_args()
     args.database = args.database.resolve(strict=True)
-    case_name = "projection.json" if args.scenario == "projection" else "vexor.json"
+    scenario = SCENARIOS[args.scenario]
+    case_name = scenario["input"]
     args.expected = (args.expected or ROOT / "tools/android_reference/fixtures" / case_name).resolve(strict=True)
     args.output = args.output.resolve()
     if sys.version_info[:2] != (3, 11):
@@ -155,10 +161,10 @@ def main():
         "database_logical_sha256": logical_hash, "database_sha256": database_hash,
         "scenario": args.scenario,
         "scenario_sha256": hashlib.sha256((ROOT / "tools/android_reference" / case_name).read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
-        "stats_per_fit": len(result["states"]["initial"]["target"] if args.scenario == "projection" else result["states"]["initial"]),
-        "fits_per_state": 2 if args.scenario == "projection" else 1, "states": len(result["states"]),
+        "stats_per_fit": len(result["states"]["initial"]["target"] if scenario["fits"] == 2 else result["states"]["initial"]),
+        "fits_per_state": scenario["fits"], "states": len(result["states"]),
         "behavioral_tests_passed": result["tests_passed"],
-        "checks": {("A04_comparison" if args.scenario == "projection" else "A01_comparison"): True,
+        "checks": {scenario["oracle"] + "_comparison": True,
                    "fresh_process_repeat": True, "no_desktop_imports": True,
                    "no_network_operations": True, "game_database_unchanged": True},
         "desktop_import_attempts": result["isolation"]["desktop_import_attempts"],

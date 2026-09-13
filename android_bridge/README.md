@@ -1,4 +1,4 @@
-# A03/A04 headless EOS boundary
+# A03–A05 headless EOS boundary
 
 This is a host-tested Python prototype for the Android port, not an Android app
 or the complete bridge contract. It uses this checkout's EOS calculations and a
@@ -9,7 +9,7 @@ separate, existing game database. See [verification commands](../tools/android_h
 The tested host baseline is Python 3.11 with Logbook 1.7.0.post0, SQLAlchemy 1.4.50
 and its Greenlet 3.0.3 dependency. The runtime needs the `android_bridge`, `eos`
 and `utils` packages. It does not require wxPython, NumPy, PyYAML, cryptography,
-Pillow, root `config.py`, `gui`, or `service` for the A03/A04 cases. This dependency list
+Pillow, root `config.py`, `gui`, or `service` for the A03–A05 cases. This dependency list
 does not establish Android wheel/ABI availability; A07 must do that.
 
 Create `HeadlessEngine(game_database)` **before importing `eos.db`**. EOS builds
@@ -44,8 +44,9 @@ states/charges, all-0 through all-5 default skills, reload, damage pattern and
 security settings. It rejects unknown keys, incompatible charges, invalid
 selections and nonempty inputs for features it has not implemented. It does not
 quietly ignore projections, commands, implants, boosters, environments or target
-profiles. A04 exposes linked projections through separate methods below; A05
-will introduce the first command-source case.
+profiles. A04/A05 expose linked projections, command sources and fit-local implant
+edits through separate methods below. Nonempty creation-time additions are still
+rejected; the later full fit/persistence contract will define them explicitly.
 
 `create_fit` returns an internal EOS object. Do not expose or modify that object
 directly from Kotlin. `set_charges` validates the entire selection before changing
@@ -89,7 +90,50 @@ The [A04 reference](../tools/android_reference/PROJECTIONS.md) verifies a script
 Celestis dampener, range and active changes, source script edits, two recipients,
 and repeated removal/restoration. No additional upstream code patch is needed.
 Full projection types, multiplicities/stacking, cycles, persistent links, command
-interactions and Android runtime behavior remain with D01/D02/A05/A08/A09.
+interactions and Android runtime behavior remain with D01/D02/D03/A08/A09.
+
+## A05 command sources and supporting edits
+
+```python
+engine.add_command(source, fit)
+engine.set_skill_level(source, "Shield Command Specialist", 4)
+engine.add_implant(source, "Shield Command Mindlink")
+engine.set_implant_active(source, 10, False)
+engine.set_module_states(source, [1], "ONLINE")
+engine.set_command_active(source, fit, False)
+engine.remove_command(source, fit)
+engine.remove_implant(source, 10)
+```
+
+`add_command` accepts an existing source/recipient and defaults to `active=True`.
+Only boolean active states are accepted. Duplicate adds and edits/removals of a
+missing link fail explicitly. Addition uses the desktop command's flush/refresh
+pattern; removal clears the reverse association. EOS controls command selection,
+effect application and recipient invalidation. No command formula was ported.
+
+`set_skill_level` accepts a named skill and integer 0–5 on the fit's synthetic
+character, calls EOS `Skill.setLevel` with its normal restriction behavior, then
+recalculates. Full character profiles, unlearned/alpha states and shared-character
+editing remain C06. Each prototype fit has its own synthetic character.
+
+Implant methods operate on the fit-local list selected by this prototype's
+`ImplantLocation.FIT`. Addition validates the item and vacant slot before append;
+an occupied slot fails without changing the current implant. State/removal use
+the integer slot. This path needs no GUI `makeRoom` helper. Replacement, implant
+sets, character-location selection and full C07 behavior are still pending.
+
+`set_module_states` accepts a nonempty unique index selection and EOS state name.
+It validates every selected module before mutation, then recalculates together,
+restoring previous states if recalculation raises. This does not replace the full
+restriction checking, undo system or fitting editor owned by B04/B09/C09.
+
+All source edits recalculate EOS so linked recipients are invalidated. The
+existing `projection_snapshot` is reused for A05's 39-field sample. The
+[command reference](../tools/android_reference/COMMANDS.md) verifies two command
+skills, mindlink addition/state/removal, module and link toggles, two burst charges
+and independent recipient updates. Full burst coverage, multiple-source overlap,
+self/reciprocal commands, projection interactions, persistence and native Android
+execution remain D03/A09. These APIs are provisional and not general transactions.
 
 ## Small upstream compatibility change
 
@@ -105,6 +149,6 @@ bytes and retained row, and verifies a second call is a no-op. Headless checks
 also prove that checking a current schema does not import desktop config.
 
 Other UI coupling remains: `eos/effectHandlerHelpers.py` has lazy `gui` imports in
-implant, booster and projected-environment `makeRoom` helpers. A03/A04 do not call
+implant, booster and projected-environment `makeRoom` helpers. A03–A05 do not call
 them. Investigate relevant paths in the owning later task; do not stub wx, inject
 a fake config module or claim the entire engine is already decoupled.

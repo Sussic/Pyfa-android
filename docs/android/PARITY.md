@@ -271,10 +271,10 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F16.01 | Add command-source fits from the browser/open fits, enable/disable/remove them and navigate to the source fit. | D03 | [s052][s052], [s066][s066], [s165][s165] | NUP | D: —; A: — |
-| F16.02 | Calculate every supported command burst charge using actual source hull, modules, skills, implants and states; editing the source updates recipients. | D03 | [s017][s017], [s152][s152] | NUP | D: —; A: — |
+| F16.01 | Add command-source fits from the browser/open fits, enable/disable/remove them and navigate to the source fit. | D03 | [s052][s052], [s066][s066], [s165][s165] | NUP | D: [partial A05 host case](../../tools/android_reference/COMMANDS.md); A: — |
+| F16.02 | Calculate every supported command burst charge using actual source hull, modules, skills, implants and states; editing the source updates recipients. | D03 | [s017][s017], [s152][s152] | NUP | D: [partial A05 host case](../../tools/android_reference/COMMANDS.md); A: — |
 | F16.03 | Combine multiple command sources with correct per-bonus selection/stacking; test source/recipient overlap and commands plus projections. | D03 | [s017][s017], [s167][s167] | NUP | D: —; A: — |
-| F16.04 | Persist command links and enabled states, then toggle/remove/re-add sources without duplicate or stale bonuses. | D03 | [s166][s166], [s017][s017] | NUP | D: —; A: — |
+| F16.04 | Persist command links and enabled states, then toggle/remove/re-add sources without duplicate or stale bonuses. | D03 | [s166][s166], [s017][s017] | NUP | D: [partial A05 host case](../../tools/android_reference/COMMANDS.md); A: — |
 
 ## F17 — Environments and security
 
