@@ -1,4 +1,4 @@
-"""Minimal EOS session for A03. See README.md for the intentionally narrow API."""
+"""Minimal EOS session for A03/A04. See README.md for the narrow API."""
 
 from contextlib import closing
 import math
@@ -144,8 +144,68 @@ class HeadlessEngine:
         fit.calculateModifiedAttributes()
         if not fit.fits:
             raise ValueError("Fit contains incompatible equipment")
+        # EOS projection associations need unique fit IDs and the mapped reverse
+        # relationships. This database is in memory; disk persistence is B02.
+        import eos.db
+        eos.db.saveddata_session.add(fit)
+        eos.db.saveddata_session.flush()
         self._fits.append(fit)
         return fit
+
+    @staticmethod
+    def _projection_values(range_m, active, amount):
+        if range_m is not None and (type(range_m) not in (int, float) or
+                                    not math.isfinite(range_m) or range_m < 0):
+            raise ValueError("Projection range must be nonnegative metres or None")
+        if type(active) is not bool:
+            raise ValueError("Projection active state must be boolean")
+        _integer(amount, 1, 2**31 - 1)
+
+    def _projection(self, source, target):
+        self._check_fit(source)
+        self._check_fit(target)
+        if target.projectedFitDict.get(source.ID) is not source:
+            raise ValueError("Projection does not exist")
+        info = source.getProjectionInfo(target.ID)
+        if info is None:
+            raise RuntimeError("EOS projection reverse relationship is missing")
+        return info
+
+    def add_projection(self, source, target, *, range_m=None, active=True, amount=1):
+        """Link existing fits; duplicates must be edited explicitly."""
+        self._check_fit(source)
+        self._check_fit(target)
+        self._projection_values(range_m, active, amount)
+        if source.ID in target.projectedFitDict:
+            raise ValueError("Projection already exists; use configure_projection")
+        import eos.db
+        target.projectedFitDict[source.ID] = source
+        # Same flush/refresh as desktop CalcAddProjectedFitCommand (issue #83).
+        eos.db.saveddata_session.flush()
+        eos.db.saveddata_session.refresh(source)
+        self.configure_projection(source, target, range_m=range_m, active=active, amount=amount)
+
+    def configure_projection(self, source, target, *, range_m, active, amount):
+        """Set all link options together after validation; range units are metres."""
+        info = self._projection(source, target)
+        self._projection_values(range_m, active, amount)
+        info.projectionRange, info.active, info.amount = range_m, active, amount
+        self._recalculate(target)
+
+    def remove_projection(self, source, target):
+        """Remove the complete link, including its reverse association."""
+        self._projection(source, target)
+        import eos.db
+        del target.projectedFitDict[source.ID]
+        eos.db.saveddata_session.flush()
+        eos.db.saveddata_session.refresh(source)
+        self._recalculate(target)
+
+    def projection_snapshot(self, fit):
+        """A04 extends the A03 sample with scan resolution for script changes."""
+        result = self.snapshot(fit)
+        result["scan_resolution"] = {"value": fit.ship.getModifiedItemAttr("scanResolution"), "unit": "mm"}
+        return result
 
     def set_charges(self, fit, module_indices, charge_name):
         """Change a selection together; validate all entries before editing any."""
@@ -184,6 +244,10 @@ class HeadlessEngine:
         """
         self._check_fit(fit)
         _integer(weapon_index, 0, len(fit.modules) - 1)
+        # Calculating a changed source invalidates its direct recipients in EOS.
+        # Read after recalculation, as desktop getFit does before displaying it.
+        if not fit.calculated:
+            fit.calculateModifiedAttributes()
         result = {}
 
         def put(name, value, unit):

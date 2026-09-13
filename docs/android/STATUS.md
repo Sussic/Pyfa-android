@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-12.
+Updated: 2026-09-13.
 
 ## Verified baseline
 
@@ -80,8 +80,10 @@ Updated: 2026-09-12.
 
 ## Current work
 
-- No task is active. A01–A03 are done: 3 of 72 work items, plus four parent rollups.
-- Next ready task: **A04 — projected-effect reference cases**. Add a real pinned
+- Active task: **A04 — projected-effect reference cases**, on
+  `android/a04-projection-reference`. A01–A03 are done: 3 of 72 work items.
+  Live master verified at `220ce250398f1d2c46f3e80c763dfc9b450151c7`; no open PRs.
+  Intended outcome: add a real pinned
   source/recipient scenario; compare applying, changing range/state and removing
   projections through the adapter, including complete baseline restoration.
 - A05 and A06 also have completed prerequisites. Follow the queue one task at a time.

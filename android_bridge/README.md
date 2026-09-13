@@ -1,4 +1,4 @@
-# A03 headless EOS boundary
+# A03/A04 headless EOS boundary
 
 This is a host-tested Python prototype for the Android port, not an Android app
 or the complete bridge contract. It uses this checkout's EOS calculations and a
@@ -9,7 +9,7 @@ separate, existing game database. See [verification commands](../tools/android_h
 The tested host baseline is Python 3.11 with Logbook 1.7.0.post0, SQLAlchemy 1.4.50
 and its Greenlet 3.0.3 dependency. The runtime needs the `android_bridge`, `eos`
 and `utils` packages. It does not require wxPython, NumPy, PyYAML, cryptography,
-Pillow, root `config.py`, `gui`, or `service` for the A03 case. This dependency list
+Pillow, root `config.py`, `gui`, or `service` for the A03/A04 cases. This dependency list
 does not establish Android wheel/ABI availability; A07 must do that.
 
 Create `HeadlessEngine(game_database)` **before importing `eos.db`**. EOS builds
@@ -44,7 +44,8 @@ states/charges, all-0 through all-5 default skills, reload, damage pattern and
 security settings. It rejects unknown keys, incompatible charges, invalid
 selections and nonempty inputs for features it has not implemented. It does not
 quietly ignore projections, commands, implants, boosters, environments or target
-profiles. A04/A05 introduce the first linked-effect cases separately.
+profiles. A04 exposes linked projections through separate methods below; A05
+will introduce the first command-source case.
 
 `create_fit` returns an internal EOS object. Do not expose or modify that object
 directly from Kotlin. `set_charges` validates the entire selection before changing
@@ -58,6 +59,37 @@ and units. Weapon optimal/falloff are for `weapon_index` (default 0). The legacy
 the fit's selected pattern. This sample export is not the all-statistics contract
 or a claim that any of the 239 Android parity rows are implemented. B01 and the
 C tasks replace/expand the provisional result schema deliberately.
+
+## A04 linked projections
+
+```python
+source = engine.create_fit(source_spec)
+engine.add_projection(source, fit, range_m=100000.0)
+engine.configure_projection(source, fit, range_m=0.0, active=False, amount=1)
+engine.remove_projection(source, fit)
+```
+
+Fits now receive unique IDs from the in-memory EOS saved-data session. Links use
+EOS's mapped association, including the desktop's flush/refresh step which keys
+the source's reverse relationship by recipient ID. Removing a link flushes and
+refreshes the source so it no longer retains that recipient.
+
+`add_projection` defaults to `range_m=None`, `active=True`, `amount=1`.
+`configure_projection` requires all three options explicitly and validates them
+before changing any. Range accepts nonnegative finite metres or `None` (EOS's
+unspecified range); state must be a boolean and count a positive integer.
+Duplicate adds and edits/removals of missing links fail explicitly. Desktop UI
+duplicate-add/count behavior belongs to D01. These operations do not constitute
+a general transaction/undo API or a performance guarantee for large counts.
+
+Changing source charges recalculates that source; EOS invalidates its recipients.
+Both snapshot methods recalculate an invalidated recipient before reading values.
+`projection_snapshot` adds scan resolution in mm to the existing 38-field sample.
+The [A04 reference](../tools/android_reference/PROJECTIONS.md) verifies a scripted
+Celestis dampener, range and active changes, source script edits, two recipients,
+and repeated removal/restoration. No additional upstream code patch is needed.
+Full projection types, multiplicities/stacking, cycles, persistent links, command
+interactions and Android runtime behavior remain with D01/D02/A05/A08/A09.
 
 ## Small upstream compatibility change
 
@@ -73,6 +105,6 @@ bytes and retained row, and verifies a second call is a no-op. Headless checks
 also prove that checking a current schema does not import desktop config.
 
 Other UI coupling remains: `eos/effectHandlerHelpers.py` has lazy `gui` imports in
-implant, booster and projected-environment `makeRoom` helpers. A03 does not call
+implant, booster and projected-environment `makeRoom` helpers. A03/A04 do not call
 them. Investigate relevant paths in the owning later task; do not stub wx, inject
 a fake config module or claim the entire engine is already decoupled.

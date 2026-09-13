@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the A03 adapter against A01 without any desktop packages or networking."""
+"""Verify A03/A04 against pinned desktop fixtures without desktop packages/networking."""
 
 import argparse
 import hashlib
@@ -53,16 +53,17 @@ def worker(args):
 
     sys.addaudithook(block_network)
     from android_bridge import HeadlessEngine
-    spec = importlib.util.spec_from_file_location("a03_engine_tests", Path(__file__).parent / "tests/test_engine.py")
+    test_file = "test_projection.py" if args.scenario == "projection" else "test_engine.py"
+    spec = importlib.util.spec_from_file_location("headless_engine_tests", Path(__file__).parent / "tests" / test_file)
     tests = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(tests)
     engine = HeadlessEngine(args.database)
     expected = read_json(args.expected)
     # Scenario inputs are independent of the expected numeric values.
-    case = read_json(ROOT / "tools/android_reference/vexor.json")
+    case = read_json(ROOT / "tools/android_reference" / ("projection.json" if args.scenario == "projection" else "vexor.json"))
     compare(expected["inputs"], case, "case_definition")
     states = tests.sample(engine, case)
-    compare(expected["states"], states, "A01_states")
+    compare(expected["states"], states, args.scenario + "_states")
     compare(expected["dataset_metadata"], engine.metadata, "dataset_metadata")
     compare(expected["eos_settings"], engine.settings, "eos_settings")
     compare(expected["resolved_item_ids"], engine.resolved_item_ids, "resolved_item_ids")
@@ -93,15 +94,17 @@ def worker(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--database", type=Path, required=True)
-    parser.add_argument("--expected", type=Path, default=ROOT / "tools/android_reference/fixtures/vexor.json")
+    parser.add_argument("--scenario", choices=("ammunition", "projection"), default="ammunition")
+    parser.add_argument("--expected", type=Path)
     parser.add_argument("--output", type=Path, required=True, help="New directory outside the development checkout")
     parser.add_argument("--worker", choices=("tests", "repeat"), help=argparse.SUPPRESS)
     args = parser.parse_args()
     args.database = args.database.resolve(strict=True)
-    args.expected = args.expected.resolve(strict=True)
+    case_name = "projection.json" if args.scenario == "projection" else "vexor.json"
+    args.expected = (args.expected or ROOT / "tools/android_reference/fixtures" / case_name).resolve(strict=True)
     args.output = args.output.resolve()
     if sys.version_info[:2] != (3, 11):
-        raise ValueError("A03 host comparison uses Python 3.11")
+        raise ValueError("Host comparisons use Python 3.11")
     versions = {name: importlib.metadata.version(name) for name in DEPENDENCIES}
     compare(DEPENDENCIES, versions, "headless_dependencies")
     for name in FORBIDDEN_PACKAGES:
@@ -124,7 +127,8 @@ def main():
         with (args.output / (mode + ".log")).open("w", encoding="utf-8") as log:
             subprocess.run([sys.executable, "-I", str(Path(__file__).resolve()),
                             "--database", str(args.database), "--expected", str(args.expected),
-                            "--output", str(args.output / (mode + ".json")), "--worker", mode],
+                            "--output", str(args.output / (mode + ".json")), "--worker", mode,
+                            "--scenario", args.scenario],
                            check=True, stdout=log, stderr=subprocess.STDOUT,
                            cwd=args.output, timeout=120)
     result = read_json(args.output / "tests.json")
@@ -132,7 +136,7 @@ def main():
     for key in ("states", "dataset_metadata", "resolved_item_ids", "eos_settings", "isolation"):
         compare(result[key], repeat[key], "fresh_process." + key)
     compare(database_hash, digest_file(args.database), "unchanged_database_bytes")
-    paths = sorted({p for directory in ("eos", "utils", "android_bridge", "tools/android_headless")
+    paths = sorted({p for directory in ("eos", "utils", "android_bridge", "tools/android_headless", "tools/android_reference")
                     for p in (ROOT / directory).rglob("*.py")})
     source_manifest = {p.relative_to(ROOT).as_posix(): hashlib.sha256(
         p.read_bytes().replace(b"\r\n", b"\n")).hexdigest() for p in paths}
@@ -149,9 +153,13 @@ def main():
         "source_data_sha256": expected["source_data_sha256"],
         "reference_fixture_sha256": hashlib.sha256(args.expected.read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
         "database_logical_sha256": logical_hash, "database_sha256": database_hash,
-        "stats_per_state": len(result["states"]["initial"]), "states": len(result["states"]),
+        "scenario": args.scenario,
+        "scenario_sha256": hashlib.sha256((ROOT / "tools/android_reference" / case_name).read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
+        "stats_per_fit": len(result["states"]["initial"]["target"] if args.scenario == "projection" else result["states"]["initial"]),
+        "fits_per_state": 2 if args.scenario == "projection" else 1, "states": len(result["states"]),
         "behavioral_tests_passed": result["tests_passed"],
-        "checks": {"A01_comparison": True, "fresh_process_repeat": True, "no_desktop_imports": True,
+        "checks": {("A04_comparison" if args.scenario == "projection" else "A01_comparison"): True,
+                   "fresh_process_repeat": True, "no_desktop_imports": True,
                    "no_network_operations": True, "game_database_unchanged": True},
         "desktop_import_attempts": result["isolation"]["desktop_import_attempts"],
         "network_attempts": result["isolation"]["network_attempts"],
