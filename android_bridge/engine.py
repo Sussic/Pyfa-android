@@ -1,4 +1,4 @@
-"""Minimal EOS session for A03/A04. See README.md for the narrow API."""
+"""Minimal EOS session for A03–A05. See README.md for the narrow API."""
 
 from contextlib import closing
 import math
@@ -206,6 +206,116 @@ class HeadlessEngine:
         result = self.snapshot(fit)
         result["scan_resolution"] = {"value": fit.ship.getModifiedItemAttr("scanResolution"), "unit": "mm"}
         return result
+
+    def _command(self, source, target):
+        self._check_fit(source)
+        self._check_fit(target)
+        if target.commandFitDict.get(source.ID) is not source:
+            raise ValueError("Command link does not exist")
+        info = source.getCommandInfo(target.ID)
+        if info is None:
+            raise RuntimeError("EOS command reverse relationship is missing")
+        return info
+
+    def add_command(self, source, target, *, active=True):
+        """Link an existing command source using EOS's mapped association."""
+        self._check_fit(source)
+        self._check_fit(target)
+        if type(active) is not bool:
+            raise ValueError("Command active state must be boolean")
+        if source.ID in target.commandFitDict:
+            raise ValueError("Command link already exists")
+        import eos.db
+        target.commandFitDict[source.ID] = source
+        eos.db.saveddata_session.flush()
+        eos.db.saveddata_session.refresh(source)
+        self.set_command_active(source, target, active)
+
+    def set_command_active(self, source, target, active):
+        info = self._command(source, target)
+        if type(active) is not bool:
+            raise ValueError("Command active state must be boolean")
+        info.active = active
+        self._recalculate(target)
+
+    def remove_command(self, source, target):
+        self._command(source, target)
+        import eos.db
+        del target.commandFitDict[source.ID]
+        eos.db.saveddata_session.flush()
+        eos.db.saveddata_session.refresh(source)
+        self._recalculate(target)
+
+    def set_skill_level(self, fit, skill_name, level):
+        """Edit one skill on this fit's synthetic character through EOS."""
+        self._check_fit(fit)
+        _integer(level, 0, 5)
+        item = self._item(skill_name)
+        if item.category.name != "Skill":
+            raise ValueError("Selected item is not a skill")
+        fit.character.getSkill(item).setLevel(level)
+        self._recalculate(fit)
+
+    def add_implant(self, fit, item_name, *, active=True):
+        """Add a fit-local implant to a vacant slot; replacement belongs to C07."""
+        self._check_fit(fit)
+        if type(active) is not bool:
+            raise ValueError("Implant active state must be boolean")
+        from eos.saveddata.implant import Implant
+        implant = Implant(self._item(item_name))
+        if any(existing.slot == implant.slot for existing in fit.implants):
+            raise ValueError("Implant slot is occupied")
+        implant.active = active
+        fit.implants.append(implant)
+        self._recalculate(fit)
+
+    def _implant(self, fit, slot):
+        self._check_fit(fit)
+        _integer(slot, 1, 2**31 - 1)
+        implant = next((value for value in fit.implants if value.slot == slot), None)
+        if implant is None:
+            raise ValueError("Implant slot is empty")
+        return implant
+
+    def set_implant_active(self, fit, slot, active):
+        implant = self._implant(fit, slot)
+        if type(active) is not bool:
+            raise ValueError("Implant active state must be boolean")
+        implant.active = active
+        self._recalculate(fit)
+
+    def remove_implant(self, fit, slot):
+        implant = self._implant(fit, slot)
+        fit.implants.remove(implant)
+        self._recalculate(fit)
+
+    def set_module_states(self, fit, module_indices, state_name):
+        """Validate the full selection before changing module states together."""
+        self._check_fit(fit)
+        if not isinstance(module_indices, list) or not module_indices:
+            raise ValueError("Select at least one module")
+        for index in module_indices:
+            _integer(index, 0, len(fit.modules) - 1)
+        if len(set(module_indices)) != len(module_indices):
+            raise ValueError("Module selection contains duplicates")
+        from eos.const import FittingModuleState
+        try:
+            state = FittingModuleState[state_name]
+        except (KeyError, TypeError) as error:
+            raise ValueError("Invalid module state") from error
+        modules = [fit.modules[index] for index in module_indices]
+        if any(not module.isValidState(state) for module in modules):
+            raise ValueError("A selected module cannot use that state")
+        previous = [module.state for module in modules]
+        try:
+            for module in modules:
+                module.state = state
+            self._recalculate(fit)
+        except Exception:
+            for module, old in zip(modules, previous):
+                module.state = old
+            self._recalculate(fit)
+            raise
 
     def set_charges(self, fit, module_indices, charge_name):
         """Change a selection together; validate all entries before editing any."""

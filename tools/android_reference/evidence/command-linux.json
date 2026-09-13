@@ -1,0 +1,174 @@
+{
+  "android_runtime_tested": false,
+  "desktop_command": {
+    "checks": {
+      "committed_fixture_match": true,
+      "complete_restoration": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_pending_command_bonuses": true,
+      "skill_implant_state_charge_changes": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "cffi": "1.16.0",
+      "cryptography": "42.0.4",
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "numpy": "1.26.2",
+      "pillow": "10.4.0",
+      "pycparser": "2.22",
+      "pyyaml": "6.0.1",
+      "six": "1.16.0",
+      "sqlalchemy": "1.4.50",
+      "typing-extensions": "4.12.2",
+      "wxPython": "4.2.1"
+    },
+    "exporter_sha256": "2ce407f0cc97b4f55db4ec4233b49c8c00f69e97606bb720c9796a8ad1b45584",
+    "fits_per_state": 2,
+    "fixture_sha256": "e7fc9ff92370c5a0e6895fd92eb836e9bdc34dfa573899535794bf906d430299",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "sqlite": "3.53.1",
+    "states": 19,
+    "stats_per_fit": 39
+  },
+  "headless_ammunition": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "c48f18dd04fcbc87587aed99a5f8e9a1d9bd0a93",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 10,
+    "checks": {
+      "A01_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 1,
+    "network_attempts": [],
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "reference_fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "ammunition",
+    "scenario_sha256": "69db67a4eb5d7209559ce5e8a1b480e682de5c1fa6741c32deb9221bccd3981d",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "e0c4fa7b0993a4940e57eb87eb27b2061f2c909de123361ae4a11d67f35dc9ab",
+    "sqlite": "3.53.1",
+    "states": 3,
+    "stats_per_fit": 38,
+    "tracked_worktree_dirty": true
+  },
+  "headless_command": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "c48f18dd04fcbc87587aed99a5f8e9a1d9bd0a93",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 9,
+    "checks": {
+      "A05_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 2,
+    "network_attempts": [],
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "reference_fixture_sha256": "e7fc9ff92370c5a0e6895fd92eb836e9bdc34dfa573899535794bf906d430299",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "command",
+    "scenario_sha256": "df9f56e3063c311770efc23ac617d7a0cb275fc5df416a681f551ffbfb99a143",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "e0c4fa7b0993a4940e57eb87eb27b2061f2c909de123361ae4a11d67f35dc9ab",
+    "sqlite": "3.53.1",
+    "states": 19,
+    "stats_per_fit": 39,
+    "tracked_worktree_dirty": true
+  },
+  "headless_projection": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "c48f18dd04fcbc87587aed99a5f8e9a1d9bd0a93",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 8,
+    "checks": {
+      "A04_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 2,
+    "network_attempts": [],
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "reference_fixture_sha256": "01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "projection",
+    "scenario_sha256": "9b733f6b783395b8b4bb20f8587b4e66e63dc77abfc7d26a51d5d5b1f9237ce0",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "e0c4fa7b0993a4940e57eb87eb27b2061f2c909de123361ae4a11d67f35dc9ab",
+    "sqlite": "3.53.1",
+    "states": 11,
+    "stats_per_fit": 39,
+    "tracked_worktree_dirty": true
+  },
+  "regressions": {
+    "desktop_migration": {
+      "backup_preserved": true,
+      "repeat_noop": true,
+      "result": "PASS",
+      "schema": "48-to-49"
+    },
+    "reference_utility_tests_passed": 8
+  }
+}

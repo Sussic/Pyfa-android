@@ -1,6 +1,6 @@
 # Headless adapter verification
 
-This verifies [the A03/A04 Python adapter](../../android_bridge/README.md). It is a
+This verifies [the A03–A05 Python adapter](../../android_bridge/README.md). It is a
 host check, not native Android evidence. The A01 fixture, input file, exporter
 and numeric tolerances remain unchanged.
 
@@ -81,9 +81,15 @@ extend that same job with an independent desktop projection export and
 `check.py --scenario projection` in the headless environment. Eight additional
 real EOS tests cover the 11 reference states, two recipients, independent link
 edits, invalid inputs, mixed source-charge rejection, ownership and repeated
-removal. Both scenarios record normalized code, input and fixture hashes.
-Command sources, full projection coverage, persistent saves, the complete
-statistics interface and Android packaging/ABIs remain unverified.
+removal.
+
+The [A05 command reference](../android_reference/COMMANDS.md) adds
+`check.py --scenario command`. Nine additional tests cover 19 reference stages,
+two recipients, skill/implant/charge/module edits, independent command toggles,
+invalid input rejection and repeated removal. All three scenarios record
+normalized code, input and fixture hashes and use the same import/network guards.
+Full command/projection coverage, persistent saves, the complete statistics
+interface and Android packaging/ABIs remain unverified.
 
 ## Retained A03 evidence
 

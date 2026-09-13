@@ -1,0 +1,212 @@
+{
+  "source": {
+    "name": "A05 synthetic Vulture command source",
+    "ship": "Vulture",
+    "skill_level": 5,
+    "factor_reload": false,
+    "damage_pattern": {
+      "emAmount": 25,
+      "thermalAmount": 25,
+      "kineticAmount": 25,
+      "explosiveAmount": 25
+    },
+    "target_profile": null,
+    "security": {
+      "system": "HISEC",
+      "pilot": 0.0
+    },
+    "implants": [],
+    "boosters": [],
+    "projections": [],
+    "commands": [],
+    "environments": [],
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "charge": "Antimatter Charge M",
+        "state": "ACTIVE"
+      },
+      {
+        "name": "Shield Command Burst II",
+        "charge": "Shield Extension Charge",
+        "state": "ACTIVE"
+      }
+    ],
+    "drones": []
+  },
+  "target": {
+    "name": "A05 synthetic Vexor recipient",
+    "ship": "Vexor",
+    "skill_level": 5,
+    "factor_reload": false,
+    "damage_pattern": {
+      "emAmount": 25,
+      "thermalAmount": 25,
+      "kineticAmount": 25,
+      "explosiveAmount": 25
+    },
+    "target_profile": null,
+    "security": {
+      "system": "HISEC",
+      "pilot": 0.0
+    },
+    "implants": [],
+    "boosters": [],
+    "projections": [],
+    "commands": [],
+    "environments": [],
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "charge": "Antimatter Charge M",
+        "state": "ACTIVE"
+      },
+      {
+        "name": "Dual 150mm Railgun II",
+        "charge": "Antimatter Charge M",
+        "state": "ACTIVE"
+      },
+      {
+        "name": "Drone Link Augmentor I",
+        "state": "ONLINE"
+      },
+      {
+        "name": "10MN Afterburner II",
+        "state": "ACTIVE"
+      },
+      {
+        "name": "Medium Shield Extender II",
+        "state": "ONLINE"
+      },
+      {
+        "name": "Cap Recharger II",
+        "state": "ONLINE"
+      },
+      {
+        "name": "Damage Control II",
+        "state": "ONLINE"
+      },
+      {
+        "name": "Drone Damage Amplifier II",
+        "state": "ONLINE"
+      },
+      {
+        "name": "Medium Armor Repairer II",
+        "state": "ACTIVE"
+      }
+    ],
+    "drones": [
+      {
+        "name": "Hammerhead II",
+        "amount": 5,
+        "active": 5
+      }
+    ]
+  },
+  "steps": [
+    {
+      "name": "applied",
+      "operation": "add"
+    },
+    {
+      "name": "specialist_4",
+      "operation": "skill",
+      "skill": "Shield Command Specialist",
+      "level": 4
+    },
+    {
+      "name": "specialist_restored",
+      "operation": "skill",
+      "skill": "Shield Command Specialist",
+      "level": 5
+    },
+    {
+      "name": "command_ships_4",
+      "operation": "skill",
+      "skill": "Command Ships",
+      "level": 4
+    },
+    {
+      "name": "command_ships_restored",
+      "operation": "skill",
+      "skill": "Command Ships",
+      "level": 5
+    },
+    {
+      "name": "mindlink_added",
+      "operation": "implant_add",
+      "implant": "Shield Command Mindlink"
+    },
+    {
+      "name": "mindlink_inactive",
+      "operation": "implant_state",
+      "slot": 10,
+      "active": false
+    },
+    {
+      "name": "mindlink_active",
+      "operation": "implant_state",
+      "slot": 10,
+      "active": true
+    },
+    {
+      "name": "burst_online",
+      "operation": "module_state",
+      "module_indices": [
+        1
+      ],
+      "state": "ONLINE"
+    },
+    {
+      "name": "burst_active",
+      "operation": "module_state",
+      "module_indices": [
+        1
+      ],
+      "state": "ACTIVE"
+    },
+    {
+      "name": "link_inactive",
+      "operation": "command_state",
+      "active": false
+    },
+    {
+      "name": "link_active",
+      "operation": "command_state",
+      "active": true
+    },
+    {
+      "name": "harmonizing",
+      "operation": "charges",
+      "module_indices": [
+        1
+      ],
+      "charge": "Shield Harmonizing Charge"
+    },
+    {
+      "name": "extension_restored",
+      "operation": "charges",
+      "module_indices": [
+        1
+      ],
+      "charge": "Shield Extension Charge"
+    },
+    {
+      "name": "mindlink_removed",
+      "operation": "implant_remove",
+      "slot": 10
+    },
+    {
+      "name": "removed",
+      "operation": "remove"
+    },
+    {
+      "name": "reapplied",
+      "operation": "add"
+    },
+    {
+      "name": "removed_again",
+      "operation": "remove"
+    }
+  ]
+}
