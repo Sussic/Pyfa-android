@@ -10,7 +10,7 @@ Updated: 2026-09-13.
   `8db82315f8312b124dd24ef103e43496cee50b4a`. It matched upstream master on
   2026-09-12 and includes changes after v2.68.0; do not substitute that binary.
 - Goal: personal offline Android Pyfa with full feature parity and usable bulk
-  edits. No APK, Android project or native runtime result exists yet.
+  edits. A06's Android shell is under validation; EOS has not run on Android yet.
 - [Scope](SCOPE.md), [architecture](ARCHITECTURE.md), [development rules](DEVELOPMENT.md)
   and root AGENTS.md govern work. The inherited test suite is not a verified oracle.
 
@@ -59,9 +59,11 @@ Updated: 2026-09-13.
 
 ## Current work and exact next task
 
-- No task active. **A01–A05 are done: 5 of 72 work items; 67 remain**, plus four
+- Active task: **A06**, on `android/a06-native-skeleton`. Live master verified at
+  `e9609f9b092689f26a3b0751b72b5c2e5c0ecde0`; no open PRs.
+  **A01–A05 are done: 5 of 72 work items; 67 remain**, plus four
   parent rollups. ROADMAP owns task state; PARITY owns behavior/evidence rows.
-- Next: **A06 — Android skeleton and native CI**. Pin the toolchain, build an
+- Intended outcome: **A06 — Android skeleton and native CI**. Pin the toolchain, build an
   installable APK and run an emulator test containing a real app assertion.
   Configure deliberate APK delivery, concurrency, timeouts and retention within
   existing limits. This skeleton does not yet claim EOS calculation parity.
