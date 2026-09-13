@@ -82,8 +82,10 @@ real Compose instrumented tests:
   is reachable by scrolling, and Android's Back dispatcher returns home.
 
 The summary rejects absent, skipped, failed or empty native results and requires
-both named assertions. Screenshots come from Android's UI automation, including a
-landscape scroll; failures retain a current screenshot and a short logcat excerpt.
+both named assertions. Android's UI automation captures screenshots through the
+shell into the disposable emulator's Download directory so they survive AGP's
+app uninstall. CI requires real PNG files and records dimensions/hashes, including
+a landscape scroll. Failures retain a current screenshot and short logcat excerpt.
 `build/evidence/native-summary.json` records the actual checkout, APK and device.
 These tests prove only the shell behavior. A07–A09 own the EOS runtime/parity tests;
 ARM64 runtime, physical phone behavior and full offline fitting remain unverified.
@@ -97,7 +99,7 @@ There are no push duplicates, schedules or persistent caches. The separate host
 reference workflow remains unchanged and runs for its existing engine paths.
 
 To obtain an APK after this workflow is merged: open GitHub **Actions → Android
-native → Run workflow**, choose the intended branch/commit and enable **Deliver the
+native → Run workflow**, choose the intended branch and enable **Deliver the
 tested development APK**. The workflow builds, checks lint/signing, installs and
 tests it before upload. Download `pyfa-android-dev-<commit>` from that run's
 Artifacts section and unzip it. APK and concise native evidence expire after one

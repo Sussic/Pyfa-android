@@ -49,6 +49,10 @@ android {
 
 kotlin { jvmToolchain(17) }
 
+// AGP resolves this legacy source directory without retaining its producer's
+// task dependency. Make the license available before the asset merge.
+tasks.named("preBuild") { dependsOn(bundleLicense) }
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
     implementation(composeBom)

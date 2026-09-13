@@ -3,14 +3,17 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p build/evidence
 
+collect_screenshots() {
+  for name in home about about-landscape; do
+    adb exec-out cat "/sdcard/Download/pyfa-a06-$name.png" > "build/evidence/$name.png"
+  done
+}
+
 collect_diagnostics() {
   local result=$?
   set +e
-  for name in home about about-landscape; do
-    adb exec-out run-as io.github.sussic.pyfa.dev cat "files/a06-screenshots/$name.png" > "build/evidence/$name.png"
-    if [ ! -s "build/evidence/$name.png" ]; then rm -f "build/evidence/$name.png"; fi
-  done
   if [ "$result" -ne 0 ]; then
+    collect_screenshots
     adb exec-out screencap -p > build/evidence/failure.png
     adb logcat -d -t 300 AndroidRuntime:E TestRunner:I '*:S' > build/evidence/failure-logcat.txt
   fi
@@ -36,4 +39,5 @@ adb shell getprop ro.build.version.sdk > build/evidence/device-api.txt
 cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-version.txt
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest
+collect_screenshots
 python3 ci/summarize-tests.py

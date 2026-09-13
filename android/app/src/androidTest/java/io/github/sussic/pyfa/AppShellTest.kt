@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
+import android.os.ParcelFileDescriptor
 import android.provider.Settings
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -14,11 +14,10 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertArrayEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class AppShellTest {
@@ -71,14 +70,21 @@ class AppShellTest {
 
     private fun screenshot(name: String) {
         compose.waitForIdle()
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val bitmap = instrumentation.uiAutomation.takeScreenshot()
-        assertNotNull("Android screenshot must be captured", bitmap)
-        val directory = File(instrumentation.targetContext.filesDir, "a06-screenshots")
-        check(directory.isDirectory || directory.mkdirs())
-        File(directory, "$name.png").outputStream().use {
-            check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
-        }
-        bitmap.recycle()
+        val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+        // AGP uninstalls the app after testing. Shell-owned captures on this
+        // disposable emulator survive that cleanup; no app storage permission
+        // is added. Names are fixed test constants, never user input.
+        val path = "/sdcard/Download/pyfa-a06-$name.png"
+        ParcelFileDescriptor.AutoCloseInputStream(
+            automation.executeShellCommand("screencap -p $path"),
+        ).use { it.readBytes() }
+        val bytes = ParcelFileDescriptor.AutoCloseInputStream(
+            automation.executeShellCommand("cat $path"),
+        ).use { it.readBytes() }
+        assertArrayEquals(
+            "Screenshot must be a PNG, not shell error text",
+            byteArrayOf(-119, 80, 78, 71, 13, 10, 26, 10),
+            bytes.take(8).toByteArray(),
+        )
     }
 }
