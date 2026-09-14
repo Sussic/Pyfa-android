@@ -160,8 +160,21 @@ signing for successive persistent-use releases.
 
 A06's shell checks passed in [PR #6](https://github.com/Sussic/Pyfa-android/pull/6);
 its historical [receipt](../docs/android/evidence/a06-native.json) remains unchanged.
-A07 native evidence is pending on the task branch; [STATUS](../docs/android/STATUS.md)
-records delivery state. Host checks alone do not establish Android support.
+A07 is merged in [PR #7](https://github.com/Sussic/Pyfa-android/pull/7).
+[Native CI](https://github.com/Sussic/Pyfa-android/actions/runs/34846081342) passed all
+three tests, APK inspection, signing and lint on head
+`a4182bd17462dbfe79ddf0dde8cb700429fa89cb`. The 70,361,140-byte APK contains the
+99,897,344-byte database and 73 native libraries per ABI. Four screenshots were
+reviewed. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/34846081350)
+passed 35 host tests, all independent references and real migration/backup checks.
+[The durable receipt](../docs/android/evidence/a07-native.json) preserves raw native
+values, exact hashes, selected library identities, toolchain and resolved failures.
+
+Python boot through initial fit creation measured 5.29 s; the edit/report sequence
+measured 0.67 s on this emulator. These are not full cold-start or individual-edit
+benchmarks. The Python thread name `MainThread` identifies the interpreter's first
+thread; Kotlin started it on `pyfa-engine` and asserts it is off the Android UI
+thread. A10 owns fuller startup/edit/memory measurements.
 ARM64 execution, physical phone behavior, API 24 execution, persistent fit storage
 and APK upgrades remain unverified. The existing lint data-extraction-rules warning
 belongs to storage/upgrade work. Manual APK upload remains opt-in.

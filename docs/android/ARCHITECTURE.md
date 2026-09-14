@@ -7,7 +7,7 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 [SCOPE.md](SCOPE.md). The initial reference is upstream commit
 `8b04f3b271e614b3e103853b44a7851a63d79d0e`, not an unversioned moving branch.
 
-## Proposed implementation, pending feasibility
+## Implementation, with linked-fit feasibility still pending
 
 - Kotlin with a native Android UI (Compose is the initial candidate).
 - Embed Python and this repository's EOS using Chaquopy if A03/A07–A09 validate
@@ -26,9 +26,14 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 - Optional ESI/price/data refresh sits outside the calculation path. Its absence
   cannot block creating, opening, editing or calculating a fit.
 
-These are implementation candidates, not a claim that the port already works.
-Python packaging alone does not prove EOS initialization, graph recalculation,
-database migration, numerical parity or acceptable memory use.
+A07 verifies this Kotlin/Compose + Chaquopy approach for the A01 baseline on API
+36 x86_64, including an offline first installation and actual ARM64 package
+contents. See [the native evidence](evidence/a07-native.json). A08/A09 still need
+linked projections/commands on Android; A10 records the broader feasibility and
+performance decision. ARM64 execution and user-data upgrades are not established.
+The two isolated upstream changes defer desktop config until an actual migration
+backup and give dynamic migration imports a valid `fromlist` sequence. Neither
+changes fitting formulas or migration functions.
 
 ## Boundaries to inspect
 

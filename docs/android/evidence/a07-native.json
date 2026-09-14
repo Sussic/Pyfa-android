@@ -1,0 +1,991 @@
+{
+  "task": "A07",
+  "recorded_on": "2026-09-14",
+  "pull_request": "https://github.com/Sussic/Pyfa-android/pull/7",
+  "tested_head": "a4182bd17462dbfe79ddf0dde8cb700429fa89cb",
+  "merge_commit": "6fcd50fcca9911aca1d0871fc89b26f671fe0350",
+  "workflow_url": "https://github.com/Sussic/Pyfa-android/actions/runs/34846081342",
+  "job_id": 103982246824,
+  "job_conclusion": "success",
+  "native_summary": {
+    "task": "A07",
+    "checkout_sha": "62718044c0eb61b87647be33bec52363111ef54e",
+    "workflow_run": "34846081342",
+    "tests": [
+      "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
+      "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack",
+      "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline"
+    ],
+    "screenshots": {
+      "home": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "85675810c8aba4835c80c0b4c50a02c27403d097b226fb1c8a43d531fb1f646f"
+      },
+      "about": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "f350b8387bb6a76068a7b75e10be9cddad62d5aa3d8919c2582214f6f1fc64f1"
+      },
+      "about-landscape": {
+        "width": 1920,
+        "height": 1080,
+        "sha256": "e3a9637be626e2def513302b590e3b9ce6aeac186ecfac4e64a549420f71e908"
+      },
+      "fit": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "db7873558a4fbc579c080ff8bc388ba461f3b87f8f0cc91574767d73b601bf0e"
+      }
+    },
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "fresh_install": true,
+    "airplane_mode": true,
+    "app_internet_permission": false,
+    "apk_bytes": 70361140,
+    "apk_sha256": "06a4110a8dcb5157525419d6421d7ee1607f25633496249778f36d8bc7d8c115",
+    "engine_packaged": true,
+    "engine_parity_tested": "A01: 38 statistics across three ammunition states",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false,
+    "python_dependencies": {
+      "greenlet": "3.0.1",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "engine_boot_ms": 5289.683682999993,
+    "edit_sequence_ms": 670.7953190000069
+  },
+  "native_actual": {
+    "boot_ms": 5289.683682999993,
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "100c257c2e2684bfef2b7e6e4b667116b18f6aff816193a508ba726e38d0a30e",
+    "dataset_metadata": {
+      "client_build": "3424810",
+      "dump_time": "1783448238",
+      "schema_version": "4"
+    },
+    "dependencies": {
+      "greenlet": "3.0.1",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+    "desktop_import_attempts": [],
+    "desktop_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "edit_sequence_ms": 670.7953190000069,
+    "engine_source_sha256": "1ca7e6608d43baa4cecb0bd4aa22f5ceaaa887db181d2f3f12d1e7ba58b8aa96",
+    "engine_thread": "MainThread",
+    "eos_settings": {
+      "globalDefaultSpoolupPercentage": 1,
+      "strictSkillLevels": true,
+      "useStaticAdaptiveArmorHardener": false
+    },
+    "inputs": {
+      "boosters": [],
+      "commands": [],
+      "damage_pattern": {
+        "emAmount": 25,
+        "explosiveAmount": 25,
+        "kineticAmount": 25,
+        "thermalAmount": 25
+      },
+      "drones": [
+        {
+          "active": 5,
+          "amount": 5,
+          "name": "Hammerhead II"
+        }
+      ],
+      "edit": {
+        "charge": "Iron Charge M",
+        "module_indices": [
+          0,
+          1
+        ]
+      },
+      "environments": [],
+      "factor_reload": false,
+      "implants": [],
+      "modules": [
+        {
+          "charge": "Antimatter Charge M",
+          "name": "Dual 150mm Railgun II",
+          "state": "ACTIVE"
+        },
+        {
+          "charge": "Antimatter Charge M",
+          "name": "Dual 150mm Railgun II",
+          "state": "ACTIVE"
+        },
+        {
+          "name": "Drone Link Augmentor I",
+          "state": "ONLINE"
+        },
+        {
+          "name": "10MN Afterburner II",
+          "state": "ACTIVE"
+        },
+        {
+          "name": "Medium Shield Extender II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Cap Recharger II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Damage Control II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Drone Damage Amplifier II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Medium Armor Repairer II",
+          "state": "ACTIVE"
+        }
+      ],
+      "name": "A01 synthetic Vexor — guns and drones",
+      "projections": [],
+      "security": {
+        "pilot": 0,
+        "system": "HISEC"
+      },
+      "ship": "Vexor",
+      "skill_level": 5,
+      "target_profile": null
+    },
+    "migration_versions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "native_greenlet_module": "/data/data/io.github.sussic.pyfa.dev/files/chaquopy/AssetFinder/requirements/greenlet/_greenlet.so",
+    "python": "3.11.14 (main, Nov 20 2025, 18:07:04) [Clang 18.0.4 (https://android.googlesource.com/toolchain/llvm-project d8003a456",
+    "readonly_database": true,
+    "resolved_item_ids": {
+      "10MN Afterburner II": 12058,
+      "Antimatter Charge M": 230,
+      "Cap Recharger II": 2032,
+      "Damage Control II": 2048,
+      "Drone Damage Amplifier II": 4405,
+      "Drone Link Augmentor I": 23527,
+      "Dual 150mm Railgun II": 3106,
+      "Hammerhead II": 2185,
+      "Iron Charge M": 223,
+      "Medium Armor Repairer II": 3530,
+      "Medium Shield Extender II": 3831,
+      "Vexor": 626
+    },
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "states": {
+      "initial": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      },
+      "iron_ammunition": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 171
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.209521583294375
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 25920
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 321.42224731182796
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1235.3632499999999
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 35.11424731182795
+        }
+      },
+      "restored": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    }
+  },
+  "junit": [
+    {
+      "name": "io.github.sussic.pyfa.AppShellTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "14.672",
+      "timestamp": "2026-09-14T13:03:22",
+      "hostname": "localhost"
+    }
+  ],
+  "packaging": {
+    "database_bytes": 99897344,
+    "database_sha256": "100c257c2e2684bfef2b7e6e4b667116b18f6aff816193a508ba726e38d0a30e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "engine_source_sha256": "1ca7e6608d43baa4cecb0bd4aa22f5ceaaa887db181d2f3f12d1e7ba58b8aa96",
+    "engine_source_files": 142,
+    "abis": {
+      "arm64-v8a": {
+        "elf_machine": 183,
+        "library_count": 73,
+        "dependency_closure": "passed",
+        "selected_libraries": {
+          "lib/arm64-v8a/libpython3.11.so": {
+            "sha256": "bcbf0b2cedc14925bc820ed606033e04cc369c6698a8169fc07185cf1108975e",
+            "bytes": 5389896,
+            "needed": [
+              "libm.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          },
+          "assets/chaquopy/requirements-arm64-v8a.imy!/chaquopy/lib/libc++_shared.so": {
+            "sha256": "3e852764502d06e0cf1080d532ae7c608b7649d946a3a9d7e84e3d4b7d683214",
+            "bytes": 1292904,
+            "needed": [
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "assets/chaquopy/requirements-arm64-v8a.imy!/greenlet/_greenlet.so": {
+            "sha256": "83bf8dcabf09f006ee2d66ecd80533de2f0cdac5df65b4615ef4fdbdd4a655a3",
+            "bytes": 207656,
+            "needed": [
+              "libm.so",
+              "libpython3.11.so",
+              "libc++_shared.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          },
+          "assets/chaquopy/stdlib-arm64-v8a.imy!/_sqlite3.cpython-311.so": {
+            "sha256": "6328f2e5bdd5a6542effb3da42da5380dd97c6550ef7184397cefc41c91db814",
+            "bytes": 112584,
+            "needed": [
+              "libm.so",
+              "libsqlite3_python.so",
+              "libpython3.11.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          }
+        },
+        "runtime_tested": false
+      },
+      "x86_64": {
+        "elf_machine": 62,
+        "library_count": 73,
+        "dependency_closure": "passed",
+        "selected_libraries": {
+          "lib/x86_64/libpython3.11.so": {
+            "sha256": "d6e5a2dc1a8032d341e242a835acc0ed01f881cf97adafe9762271a2ef48e774",
+            "bytes": 5308952,
+            "needed": [
+              "libm.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          },
+          "assets/chaquopy/requirements-x86_64.imy!/chaquopy/lib/libc++_shared.so": {
+            "sha256": "0a2c7afa35b183fdd5a3cb20e2080ad54cbea06c2a4f0bc8f122cb7d1e9e0b9f",
+            "bytes": 1252080,
+            "needed": [
+              "libc.so",
+              "libm.so",
+              "libdl.so"
+            ]
+          },
+          "assets/chaquopy/requirements-x86_64.imy!/greenlet/_greenlet.so": {
+            "sha256": "9f23fe99601f30dc2e2ab460a628b38b9f7391a00c76a16f55a67a4641dddc0d",
+            "bytes": 204664,
+            "needed": [
+              "libm.so",
+              "libpython3.11.so",
+              "libc++_shared.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          },
+          "assets/chaquopy/stdlib-x86_64.imy!/_sqlite3.cpython-311.so": {
+            "sha256": "e21fe9477b4fbe96e367088557b1131d29a3d0a5d94a779c3e1dda6c6d101772",
+            "bytes": 106568,
+            "needed": [
+              "libm.so",
+              "libsqlite3_python.so",
+              "libpython3.11.so",
+              "libdl.so",
+              "libc.so"
+            ]
+          }
+        },
+        "runtime_tested": true
+      }
+    },
+    "full_apk_contents_receipt_sha256": "2217220357947a8871f71ad034112c1942827ecc8e1d42b0eef8df7cd918a056",
+    "application_id": "io.github.sussic.pyfa.dev",
+    "version_name": "0.1.0-a07",
+    "version_code": 2,
+    "root_gpl_and_eos_lgpl": "Root LICENSE matches byte-for-byte; EOS LGPL content matches the normalized source manifest",
+    "signature_report": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: 69a94efd74bfad76a53336a63ede8d3b25a040b821627ed0c43c031ac4e43faf\nSigner #1 certificate SHA-1 digest: e20403f0165bba8910adbeb2140620327bfb440a\nSigner #1 certificate MD5 digest: 7be4132484f1212b6f4d5b3ea33a5070\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 2d8bb753ee7d3c2ce96f74510ae31797e0d4af0a5e1b70c30eb3de227cf261a4\nSigner #1 public key SHA-1 digest: a35a98cf337e4887309e4485027abd3e6f57cf15\nSigner #1 public key MD5 digest: 7a894bf257036666685b95583546d615",
+    "apk_delivery": "Manual opt-in only; upload intentionally skipped on this PR run"
+  },
+  "python_wheels": {
+    "Logbook-1.7.0.post0-py3-none-any.whl": {
+      "sha256": "d9d1fb2d9b42cbb609487d6aae2bb1ecf6ca00838250466041006f1ec98ac00d",
+      "requires": [
+        "Requires-Dist: Logbook[compression,execnet,jinja,nteventlog,redis,sqlalchemy,zmq] ; extra == 'all'",
+        "Requires-Dist: brotli ; extra == 'compression'",
+        "Requires-Dist: Logbook[test] ; extra == 'dev'",
+        "Requires-Dist: tox >=4 ; extra == 'dev'",
+        "Requires-Dist: Sphinx >=5 ; extra == 'docs'",
+        "Requires-Dist: execnet >=1.0.9 ; extra == 'execnet'",
+        "Requires-Dist: Jinja2 ; extra == 'jinja'",
+        "Requires-Dist: pywin32 ; (platform_system == \"Windows\") and extra == 'nteventlog'",
+        "Requires-Dist: redis ; extra == 'redis'",
+        "Requires-Dist: sqlalchemy >=1.4 ; extra == 'sqlalchemy'",
+        "Requires-Dist: pytest >=6 ; extra == 'test'",
+        "Requires-Dist: pytest-rerunfailures ; extra == 'test'",
+        "Requires-Dist: pyzmq ; extra == 'zmq'"
+      ]
+    },
+    "SQLAlchemy-1.4.50-py3-none-any.whl": {
+      "sha256": "9f014a6418cff60553d2be78091e1539cf85835f790e64b5962efa832a692e3d",
+      "requires": [
+        "Requires-Dist: importlib-metadata ; python_version < \"3.8\"",
+        "Requires-Dist: greenlet !=0.4.17 ; python_version >= \"3\" and (platform_machine == \"aarch64\" or (platform_machine == \"ppc64le\" or (platform_machine == \"x86_64\" or (platform_machine == \"amd64\" or (platform_machine == \"AMD64\" or (platform_machine == \"win32\" or platform_machine == \"WIN32\"))))))",
+        "Requires-Dist: greenlet !=0.4.17 ; (python_version >= \"3\") and extra == 'aiomysql'",
+        "Requires-Dist: aiomysql >=0.2.0 ; (python_version >= \"3\") and extra == 'aiomysql'",
+        "Requires-Dist: typing-extensions !=3.10.0.1 ; extra == 'aiosqlite'",
+        "Requires-Dist: greenlet !=0.4.17 ; (python_version >= \"3\") and extra == 'aiosqlite'",
+        "Requires-Dist: aiosqlite ; (python_version >= \"3\") and extra == 'aiosqlite'",
+        "Requires-Dist: greenlet !=0.4.17 ; (python_version >= \"3\") and extra == 'asyncio'",
+        "Requires-Dist: greenlet !=0.4.17 ; (python_version >= \"3\") and extra == 'asyncmy'",
+        "Requires-Dist: asyncmy !=0.2.4,>=0.2.3 ; (python_version >= \"3\") and extra == 'asyncmy'",
+        "Requires-Dist: mariadb !=1.1.2,>=1.0.1 ; (python_version >= \"3\") and extra == 'mariadb_connector'",
+        "Requires-Dist: pyodbc ; extra == 'mssql'",
+        "Requires-Dist: pymssql ; extra == 'mssql_pymssql'",
+        "Requires-Dist: pyodbc ; extra == 'mssql_pyodbc'",
+        "Requires-Dist: sqlalchemy2-stubs ; extra == 'mypy'",
+        "Requires-Dist: mypy >=0.910 ; (python_version >= \"3\") and extra == 'mypy'",
+        "Requires-Dist: mysqlclient <2,>=1.4.0 ; (python_version < \"3\") and extra == 'mysql'",
+        "Requires-Dist: mysqlclient >=1.4.0 ; (python_version >= \"3\") and extra == 'mysql'",
+        "Requires-Dist: mysql-connector-python ; extra == 'mysql_connector'",
+        "Requires-Dist: cx-oracle <8,>=7 ; (python_version < \"3\") and extra == 'oracle'",
+        "Requires-Dist: cx-oracle >=7 ; (python_version >= \"3\") and extra == 'oracle'",
+        "Requires-Dist: psycopg2 >=2.7 ; extra == 'postgresql'",
+        "Requires-Dist: greenlet !=0.4.17 ; (python_version >= \"3\") and extra == 'postgresql_asyncpg'",
+        "Requires-Dist: asyncpg ; (python_version >= \"3\") and extra == 'postgresql_asyncpg'",
+        "Requires-Dist: pg8000 !=1.29.0,>=1.16.6 ; extra == 'postgresql_pg8000'",
+        "Requires-Dist: psycopg2-binary ; extra == 'postgresql_psycopg2binary'",
+        "Requires-Dist: psycopg2cffi ; extra == 'postgresql_psycopg2cffi'",
+        "Requires-Dist: pymysql <1 ; (python_version < \"3\") and extra == 'pymysql'",
+        "Requires-Dist: pymysql ; (python_version >= \"3\") and extra == 'pymysql'",
+        "Requires-Dist: sqlcipher3-binary ; (python_version >= \"3\") and extra == 'sqlcipher'"
+      ]
+    },
+    "chaquopy_libcxx-180000-0-py3-none-android_24_arm64_v8a.whl": {
+      "sha256": "811547210b01eefb0fb850fd35bd27b53a00a76b9466b8c03e049b7e8175004b",
+      "requires": []
+    },
+    "chaquopy_libcxx-180000-0-py3-none-android_24_x86_64.whl": {
+      "sha256": "dd56e48a66d08e352a1aacb6e3e9ff50788ae1b140b30bbd33d8bbb6854390c4",
+      "requires": []
+    },
+    "greenlet-3.0.1-1-cp311-cp311-android_24_arm64_v8a.whl": {
+      "sha256": "0e3b535f8f3d52a270a8638150934f0d88f6951191f27c350a66d8a0ab88a4e6",
+      "requires": [
+        "Requires-Dist: Sphinx; extra == \"docs\"",
+        "Requires-Dist: objgraph; extra == \"test\"",
+        "Requires-Dist: psutil; extra == \"test\"",
+        "Requires-Dist: chaquopy-libcxx (>=180000)"
+      ]
+    },
+    "greenlet-3.0.1-1-cp311-cp311-android_24_x86_64.whl": {
+      "sha256": "b0d0eaef9d0fbfdacd9bbd09fb1c64403fa640610d9ce7021df842af217bbb03",
+      "requires": [
+        "Requires-Dist: Sphinx; extra == \"docs\"",
+        "Requires-Dist: objgraph; extra == \"test\"",
+        "Requires-Dist: psutil; extra == \"test\"",
+        "Requires-Dist: chaquopy-libcxx (>=180000)"
+      ]
+    }
+  },
+  "toolchain": {
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)\nOpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)",
+    "gradle": "8.13",
+    "agp": "8.11.1",
+    "kotlin": "2.2.21",
+    "compose_bom": "2025.10.01",
+    "chaquopy": "17.0.0",
+    "build_python": "3.11.16",
+    "embedded_python": "3.11.14",
+    "compile_sdk": 36,
+    "target_sdk": 36,
+    "min_sdk": 24,
+    "application_build_tools": "35.0.0",
+    "command_line_tools": "19.0 (13114758)",
+    "emulator": "Pkg.UserSrc=false\nPkg.Revision=37.1.11\nPkg.Path=emulator\nPkg.Desc=Android Emulator\nPkg.BuildId=15917651",
+    "sdk_packages": "Loading package information...                                                  \nLoading local repository...                                                     \n[=========                              ] 25% Loading local repository...       \n[=========                              ] 25% Fetch remote repository...        \n[=======================================] 100% Fetch remote repository...       \nInstalled packages:\n  Path                                        | Version | Description                                | Location                                   \n  -------                                     | ------- | -------                                    | -------                                    \n  build-tools;35.0.0                          | 35.0.0  | Android SDK Build-Tools 35                 | build-tools/35.0.0                         \n  build-tools;37.0.0                          | 37.0.0  | Android SDK Build-Tools 37                 | build-tools/37.0.0                         \n  emulator                                    | 37.1.11 | Android Emulator                           | emulator                                   \n  platform-tools                              | 37.0.1  | Android SDK Platform-Tools                 | platform-tools                             \n  platforms;android-36                        | 2       | Android SDK Platform 36                    | platforms/android-36                       \n  system-images;android-36;google_apis;x86_64 | 7       | Google APIs Intel x86_64 Atom System Image | system-images/android-36/google_apis/x86_64",
+    "kvm_device": "crw-rw-rw- 1 root kvm 10, 232 Sep 14 12:55 /dev/kvm",
+    "ci_host": "ubuntu-24.04",
+    "profile": "pixel_2",
+    "cores": 2,
+    "ram_mb": 2048
+  },
+  "desktop_regression": {
+    "workflow_url": "https://github.com/Sussic/Pyfa-android/actions/runs/34846081350",
+    "job_id": 103982247338,
+    "conclusion": "success",
+    "reference_utility_tests": 8,
+    "headless_behavior_tests": 27,
+    "independent_references": [
+      "A01: 38 stats / 3 states",
+      "A04: 39 stats per fit / 11 states",
+      "A05: 39 stats per fit / 19 states"
+    ],
+    "real_migration": "48-to-49, unchanged backup bytes, repeat is a no-op; passed",
+    "local_checks": "Eight utility tests, ten headless behaviors/fresh-process repeat, pure Logbook/SQLAlchemy wrapper comparison; 49 migration functions discovered"
+  },
+  "visual_review": {
+    "reviewed_on": "2026-09-14",
+    "captures": [
+      "home",
+      "fit",
+      "about",
+      "about-landscape"
+    ],
+    "result": "Readable development status, sample ammo action, DPS/drone-control/gun-range values and About/back controls; scrolling reaches lower content. No overlap or inaccessible control observed.",
+    "not_claimed": "Expanded 38-field display assertions, other device layouts, or user usability sign-off"
+  },
+  "measurement_limits": [
+    "boot_ms covers Python boot entry through database quick_check, EOS initialization and create_fit; it excludes Python.start, APK/data extraction and final snapshot serialization.",
+    "edit_sequence_ms covers initial reset, ammo change and restoration with snapshots, read-only probe and report metadata. It is not a single-edit benchmark.",
+    "Python calls its first interpreter thread MainThread. Python was started on the Kotlin pyfa-engine executor; Kotlin asserts it is not the Android UI thread before boot."
+  ],
+  "resolved_diagnostics": [
+    {
+      "run": 34843506042,
+      "issue": "Chaquopy rejected a multi-package install declaration",
+      "fix": "Declare each pinned requirement separately"
+    },
+    {
+      "run": 34843872072,
+      "issue": "APK mobile entry-point source comparison failed",
+      "fix": "Explicitly include both Python source directories and compare normalized line endings"
+    },
+    {
+      "run": 34844501288,
+      "issue": "Immediate KVM access check failed after an asynchronous udev trigger",
+      "fix": "Wait for udev settle; keep character-device/read/write gates and check before building"
+    },
+    {
+      "run": 34845093873,
+      "issue": "Native EOS boot rejected boolean fromlist in migration import",
+      "fix": "Use fromlist=[upgrade] as a proper list; native discovery plus real desktop migration regression pass"
+    },
+    {
+      "issue": "Source review showed UiAutomation uses Runtime.exec(String), which does not parse shell quoting",
+      "fix": "Write synthetic evidence through executeShellCommandRw stdin; native test verifies retained JSON after writing"
+    }
+  ],
+  "limits": [
+    "A01 synthetic Vexor only; Android projection and command cases belong to A08/A09",
+    "ARM64 library packaging verified, ARM64 execution and physical phone untested",
+    "App minimum API is 24; execution tested only on 36. Evidence transport needs API 31+.",
+    "No user fit creation/storage, process-restart persistence, stable signing or install-over-previous-build evidence",
+    "Full inventory/invalid-edit/device/upgrade/offline coverage and user usability approval remain required",
+    "Timing is one emulator sample; A10 owns complete startup, edit and memory measurements",
+    "Detailed native reports/screenshots retained for one day; this receipt preserves summary, raw values and selected native identities"
+  ],
+  "exact_next_task": "A08 — Android projection parity"
+}

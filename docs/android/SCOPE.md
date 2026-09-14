@@ -11,11 +11,11 @@ user after technical verification; it is not a substitute for correctness tests.
 The desktop feature set is the acceptance reference, not its window layout.
 Capabilities hidden in menus, settings and item details count as features too.
 
-## Coverage map — all Android behavior is currently unimplemented
+## Coverage map — full parity remains unverified
 
 A02 expanded these 23 families into [239 observable behavior rows](PARITY.md),
-with pinned source references, task owners and empty desktop/Android evidence
-slots. The [audit notes and control index](PARITY_AUDIT.md) record the review
+with pinned source references, task owners and desktop/Android evidence slots.
+A07 adds partial native baseline evidence; it does not complete the full families. The [audit notes and control index](PARITY_AUDIT.md) record the review
 boundary and unresolved questions. Static coverage is not runtime verification;
 newly discovered behavior must be added. No family is complete merely because a
 corresponding screen exists.

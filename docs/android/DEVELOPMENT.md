@@ -5,8 +5,9 @@
 This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03–A05
 [headless adapter](../../android_bridge/README.md). A06 adds the isolated
 [Android project, toolchain and native commands](../../android/README.md).
-Its current validation state is recorded in STATUS; the shell does not yet embed
-EOS. The separate
+A07 embeds EOS and the full pinned dataset, with native A01 numerical parity and
+ARM64 package inspection; [evidence](evidence/a07-native.json) and STATUS record
+the limits. The separate
 `Desktop reference` workflow validates the independent host oracle, desktop
 migration compatibility and the separate headless adapter; it is not an Android
 build. [Headless commands and evidence](../../tools/android_headless/README.md)

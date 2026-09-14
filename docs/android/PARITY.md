@@ -6,12 +6,13 @@ Android implementation. [SCOPE.md](SCOPE.md) owns the product boundary;
 [ROADMAP.md](ROADMAP.md) owns task state. A01 proves only its recorded host fixture.
 
 Each row has a stable ID, one delivery owner, a behavior/acceptance target, pinned
-source links, required check types and an evidence slot. Every Android row is
-currently **unimplemented**. `D: —; A: —` means desktop reference evidence and
+source links, required check types and an evidence slot. A07 now supplies limited
+Android baseline evidence to the rows below; **no full feature family is complete**. `D: —; A: —` means desktop reference evidence and
 Android evidence have not yet been attached to that row. Do not fill these slots
 with a planned test, source reading, an inherited placeholder, or a screen image
-that does not establish the behavior. A01's limited baseline may be linked later
-only to the exact values/inputs it actually checks.
+that does not establish the behavior. A01/A07 links cover only the fixed Vexor inputs and states actually checked.
+A07 does not establish broad editing, displayed precision, persistence or the
+other members of a row's required matrix. Full completion still needs each row.
 
 Checks: **N** matched numerical/reference states and units; **U** native touch
 interaction/display assertion; **P** persistence/process restart; **G** numerical
@@ -64,7 +65,7 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F03.01 | Select multiple compatible weapons and change all selected ammunition in one action; mixed selections do not silently edit unintended modules. | B05 | [s199][s199], [s093][s093] | NU | D: —; A: — |
+| F03.01 | Select multiple compatible weapons and change all selected ammunition in one action; mixed selections do not silently edit unintended modules. | B05 | [s199][s199], [s093][s093] | NU | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): fixed two-gun change/restoration and touch button; selection/mixed UI pending |
 | F03.02 | Choose same-type-all versus selection-only ammo changes; expose the desktop modifier-key alternative as a touch-accessible choice. | B05 | [s122][s122], [s199][s199] | NUP | D: —; A: — |
 | F03.03 | Change selected module states together, including offline, online, active and overheated where supported. | B05 | [s201][s201], [s177][s177] | NU | D: —; A: — |
 | F03.04 | Fill free slots with an item or clones of a fitted module; verify charges, states and stopping limits. | B05 | [s088][s088], [s094][s094], [s204][s204], [s203][s203] | NU | D: —; A: — |
@@ -91,22 +92,22 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 | F05.03 | Show used and available active drones (count); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
 | F05.04 | Show used and available fighter tubes (count); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
 | F05.05 | Show used and available calibration (points); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
-| F05.06 | Show used and available CPU (tf); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
-| F05.07 | Show used and available powergrid (MW); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
+| F05.06 | Show used and available CPU (tf); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): CPU used/output only |
+| F05.07 | Show used and available powergrid (MW); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): powergrid used/output only |
 | F05.08 | Show used and available drone bay (m³); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
 | F05.09 | Show used and available fighter bay (m³); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
-| F05.10 | Show used and available drone bandwidth (Mbit/s); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
+| F05.10 | Show used and available drone bandwidth (Mbit/s); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): used bandwidth only |
 | F05.11 | Show used and available cargo bay (m³); limits, over-capacity and detail precision agree with the reference. | C01 | [s142][s142] | NUP | D: —; A: — |
-| F05.12 | Show capacitor capacity (GJ) and neutralizer-resistance-adjusted effective capacity in accessible details. | C01 | [s133][s133], [s017][s017] | NUP | D: —; A: — |
-| F05.13 | Distinguish stable capacitor percentage/range from depletion time (s); do not confuse capState units. | C01 | [s133][s133], [s017][s017] | NUP | D: —; A: — |
-| F05.14 | Show recharge, use and signed delta (GJ/s), including effective excess gain in details. | C01 | [s133][s133], [s017][s017] | NUP | D: —; A: — |
+| F05.12 | Show capacitor capacity (GJ) and neutralizer-resistance-adjusted effective capacity in accessible details. | C01 | [s133][s133], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): raw capacity only |
+| F05.13 | Distinguish stable capacitor percentage/range from depletion time (s); do not confuse capState units. | C01 | [s133][s133], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): baseline cap stability/state only |
+| F05.14 | Show recharge, use and signed delta (GJ/s), including effective excess gain in details. | C01 | [s133][s133], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): use/recharge only |
 | F05.15 | Show neutralizer resistance (%) and update capacity/delta details after battery or projected-neut changes. | C01 | [s133][s133], [s017][s017] | NUP | D: —; A: — |
-| F05.16 | Show all four shield damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: —; A: — |
-| F05.17 | Show shield raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: —; A: — |
-| F05.18 | Show all four armor damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: —; A: — |
-| F05.19 | Show armor raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: —; A: — |
-| F05.20 | Show all four hull damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: —; A: — |
-| F05.21 | Show hull raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: —; A: — |
+| F05.16 | Show all four shield damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): four raw shield resonances only |
+| F05.17 | Show shield raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): shield HP/uniform EHP only |
+| F05.18 | Show all four armor damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): four raw armor resonances only |
+| F05.19 | Show armor raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): armor HP/uniform EHP only |
+| F05.20 | Show all four hull damage resistances (EM, thermal, kinetic, explosive) and resistance multiplier; modify each damage-type input independently. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): four raw hull resonances only |
+| F05.21 | Show hull raw HP and damage-pattern-dependent EHP; toggling HP/EHP retains values and units. | C01 | [s141][s141] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): hull HP/uniform EHP only |
 | F05.22 | Show total raw HP/EHP and the selected incoming damage pattern with all four contributions. | C01 | [s141][s141] | NUP | D: —; A: — |
 | F05.23 | Show passive shield recharge in HP/s or EHP/s with applicable reinforced/sustained variants; capacitor limits and projected repairs match desktop. | C01 | [s140][s140], [s017][s017] | NUP | D: —; A: — |
 | F05.24 | Show active shield boost in HP/s or EHP/s with applicable reinforced/sustained variants; capacitor limits and projected repairs match desktop. | C01 | [s140][s140], [s017][s017] | NUP | D: —; A: — |
@@ -118,10 +119,10 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F06.01 | Show weapon DPS and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: —; A: — |
-| F06.02 | Show drone/fighter DPS contribution and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: —; A: — |
-| F06.03 | Show total DPS and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: —; A: — |
-| F06.04 | Show total volley and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: —; A: — |
+| F06.01 | Show weapon DPS and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): total weapon DPS only |
+| F06.02 | Show drone/fighter DPS contribution and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): total drone DPS only |
+| F06.03 | Show total DPS and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): combined DPS only |
+| F06.04 | Show total volley and four damage-type shares; target-profile effective mode and no-profile raw mode match desktop. | C02 | [s134][s134], [s017][s017] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): total volley only |
 | F06.05 | Show current, initial and full-spool damage details and the default spool percentage used. | C02 | [s134][s134] | NUP | D: —; A: — |
 | F06.06 | Show mining modules yield, drain and efficiency; m³/s and detail m³/hour agree for crystals and non-crystal cases. | C02 | [s135][s135] | NUP | D: —; A: — |
 | F06.07 | Show mining drones yield, drain and efficiency; m³/s and detail m³/hour agree for crystals and non-crystal cases. | C02 | [s135][s135] | NUP | D: —; A: — |
@@ -138,11 +139,11 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
 | F07.01 | Show Maximum locked targets (count). | C03 | [s143][s143] | NUP | D: —; A: — |
-| F07.02 | Show Maximum targeting range (m raw, km display). | C03 | [s143][s143] | NUP | D: —; A: — |
+| F07.02 | Show Maximum targeting range (m raw, km display). | C03 | [s143][s143] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): raw target range only |
 | F07.03 | Show Scan resolution (mm) and lock times for each reference target size. | C03 | [s143][s143] | NUP | D: —; A: — |
 | F07.04 | Show Sensor strength, sensor type and chance to be jammed (%). | C03 | [s143][s143] | NUP | D: —; A: — |
-| F07.05 | Show Drone control range (m raw, km display); skills, modules and modifiers update the value. | C03 | [s143][s143] | NUP | D: —; A: — |
-| F07.06 | Show Maximum speed (m/s). | C03 | [s143][s143] | NUP | D: —; A: — |
+| F07.05 | Show Drone control range (m raw, km display); skills, modules and modifiers update the value. | C03 | [s143][s143] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): fixed all-V/augmentor case, raw metres displayed; modifier edits/km display pending |
+| F07.06 | Show Maximum speed (m/s). | C03 | [s143][s143] | NUP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): fixed-fit speed only |
 | F07.07 | Show Align time (s) with precise mass (kg) and agility details. | C03 | [s143][s143] | NUP | D: —; A: — |
 | F07.08 | Show Signature radius (m) and probe-size detail. | C03 | [s143][s143] | NUP | D: —; A: — |
 | F07.09 | Show Warp speed (AU/s), maximum warp distance (AU), and warp-core strength detail. | C03 | [s143][s143] | NUP | D: —; A: — |
@@ -382,7 +383,7 @@ platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F23.01 | Install bundled pinned game data and calculate on a fresh launch without network/account/PC or initial download. | A07 | [s003][s003], [s008][s008], [s009][s009] | NOP | D: —; A: — |
+| F23.01 | Install bundled pinned game data and calculate on a fresh launch without network/account/PC or initial download. | A07 | [s003][s003], [s008][s008], [s009][s009] | NOP | D: [A01 sample](../../tools/android_reference/README.md); A: [A07 partial](evidence/a07-native.json): fresh offline install and baseline calculation; process restart remains R01 verification |
 | F23.02 | Validate a new dataset/source version before activation, reconcile changed/removed types and preserve recoverable user state on interrupted or failed updates. | I05.01 | [s003][s003], [s010][s010] | NOP | D: —; A: — |
 | F23.03 | Back up and restore fits plus linked state, characters, settings and profiles; document differences between desktop XML fit backup and a complete Android user backup. | I05.02 | [s241][s241], [s011][s011] | XNUP | D: —; A: — |
 | F23.04 | Install over a previous APK with stable signing/versioning, required notices and source/data identification while preserving user fits and linked effects. | R02 | [s010][s010], [s001][s001] | UP | D: —; A: — |
