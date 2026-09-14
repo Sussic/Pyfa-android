@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">Pyfa Dev</string>
     <string name="brand">PYFA / ANDROID</string>
-    <string name="home_title">Your fitting work,\non your phone.</string>
+    <string name="home_title">Your first offline fit.</string>
     <string name="milestone">EARLY DEVELOPMENT</string>
-    <string name="status_title">The app foundation is here.</string>
-    <string name="status_body">Fitting calculations and saved fits are not available in this build yet.</string>
-    <string name="next_body">Next: bring Pyfa’s fitting engine and game data onto the device.</string>
+    <string name="status_title">A working sample fit.</string>
+    <string name="status_body">This build calculates a Vexor with guns and drones on your device. Creating and saving your own fits is still in development.</string>
+    <string name="engine_loading">Preparing the bundled game data and calculating…</string>
+    <string name="engine_failed">The fitting engine could not start.</string>
+    <string name="sample_title">Vexor · all skills V</string>
+    <string name="sample_ammunition">Both guns: %1$s</string>
+    <string name="switch_ammunition">Switch both guns’ ammunition</string>
+    <string name="total_dps">Total damage</string>
+    <string name="drone_control_range">Drone control range</string>
+    <string name="gun_optimal">Gun optimal range</string>
+    <string name="all_attributes">Show all 38 sample attributes</string>
+    <string name="hide_attributes">Hide detailed attributes</string>
     <string name="about_button">About this build</string>
     <string name="about_title">About Pyfa Android</string>
     <string name="back">Back</string>

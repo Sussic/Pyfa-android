@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-13.
+Updated: 2026-09-14.
 
 ## Baseline and goal
 
@@ -65,7 +65,10 @@ Updated: 2026-09-13.
 
 ## Current work and exact next task
 
-- No active task; A06 is delivered. **A01–A06 are done: 6 of 72 work items;
+- **Active: A07 — Bundle data and boot EOS on Android.** Package pinned data and
+  embedded EOS, calculate the A01 ammunition case on fresh offline launch, and
+  verify x86_64 runtime plus ARM64 package contents. Branch: `android/a07-offline-engine`.
+- A06 is delivered. **A01–A06 are done: 6 of 72 work items;
   66 remain**, plus four
   parent rollups. ROADMAP owns task state; PARITY owns behavior/evidence rows.
 - Exact next task: **A07 — Bundle data and boot EOS on Android**. A fresh offline

@@ -4,8 +4,8 @@ cd "$(dirname "$0")/.."
 mkdir -p build/evidence
 
 collect_screenshots() {
-  for name in home about about-landscape; do
-    adb exec-out cat "/sdcard/Download/pyfa-a06-$name.png" > "build/evidence/$name.png"
+  for name in home about about-landscape fit; do
+    adb exec-out cat "/sdcard/Download/pyfa-a07-$name.png" > "build/evidence/$name.png"
   done
 }
 
@@ -15,7 +15,7 @@ collect_diagnostics() {
   if [ "$result" -ne 0 ]; then
     collect_screenshots
     adb exec-out screencap -p > build/evidence/failure.png
-    adb logcat -d -t 300 AndroidRuntime:E TestRunner:I '*:S' > build/evidence/failure-logcat.txt
+    adb logcat -d -t 300 AndroidRuntime:E TestRunner:I python.stderr:W '*:S' > build/evidence/failure-logcat.txt
   fi
   exit "$result"
 }
@@ -40,4 +40,5 @@ cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-versi
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest
 collect_screenshots
+adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
 python3 ci/summarize-tests.py
