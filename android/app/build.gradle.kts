@@ -58,7 +58,10 @@ chaquopy {
         version = "3.11"
         pip {
             options("--no-index", "--find-links", rootProject.file("build/python-wheels").absolutePath)
-            install("Logbook==1.7.0.post0", "SQLAlchemy==1.4.50", "greenlet==3.0.1", "chaquopy-libcxx==180000")
+            install("Logbook==1.7.0.post0")
+            install("SQLAlchemy==1.4.50")
+            install("greenlet==3.0.1")
+            install("chaquopy-libcxx==180000")
         }
         // Keep source available for development traceback/provenance inspection.
         pyc { src = false }

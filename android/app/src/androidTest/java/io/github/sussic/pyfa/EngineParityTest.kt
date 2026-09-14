@@ -75,11 +75,16 @@ class EngineParityTest {
             }
             is Number -> {
                 assertTrue("$path must be numeric", actual is Number)
-                val left = expected.toDouble()
-                val right = (actual as Number).toDouble()
-                assertTrue("$path must be finite", left.isFinite() && right.isFinite())
-                val tolerance = maxOf(1e-9, 1e-10 * maxOf(abs(left), abs(right)))
-                assertEquals(path, left, right, tolerance)
+                if (expected is Int || expected is Long) {
+                    assertTrue("$path must be an integer", actual is Int || actual is Long)
+                    assertEquals(path, expected.toLong(), (actual as Number).toLong())
+                } else {
+                    val left = expected.toDouble()
+                    val right = (actual as Number).toDouble()
+                    assertTrue("$path must be finite", left.isFinite() && right.isFinite())
+                    val tolerance = maxOf(1e-9, 1e-10 * maxOf(abs(left), abs(right)))
+                    assertEquals(path, left, right, tolerance)
+                }
             }
             else -> assertEquals(path, expected, actual)
         }
