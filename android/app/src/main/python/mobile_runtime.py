@@ -1,0 +1,108 @@
+"""A07's provisional, serialized Android entry point. EOS owns every value."""
+import importlib.abc
+import importlib.metadata
+from contextlib import closing
+import json
+from pathlib import Path
+import sqlite3
+import sys
+import threading
+import time
+
+_engine = None
+_fit = None
+_case = None
+_manifest = None
+_boot_ms = None
+_forbidden = []
+
+
+class NoDesktop(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname.split(".")[0] in {"wx", "gui", "service", "config"}:
+            _forbidden.append(fullname)
+            raise ImportError("Desktop dependency is unavailable on Android: " + fullname)
+
+
+def encoded(value):
+    return json.dumps(value, sort_keys=True, allow_nan=False)
+
+
+def boot(database_path, manifest_json, case_json):
+    global _engine, _fit, _case, _manifest, _boot_ms
+    if _engine is not None:
+        raise RuntimeError("Android engine has already started")
+    start = time.monotonic()
+    sys.meta_path.insert(0, NoDesktop())
+    _manifest = json.loads(manifest_json)
+    _case = json.loads(case_json)
+    with closing(sqlite3.connect(Path(database_path).as_uri() + "?mode=ro", uri=True)) as db:
+        if db.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
+            raise ValueError("Bundled database failed SQLite quick_check")
+    from android_bridge import HeadlessEngine
+    _engine = HeadlessEngine(database_path)
+    if _engine.metadata != _manifest["dataset_metadata"]:
+        raise ValueError("Bundled dataset metadata differs from the build manifest")
+    spec = dict(_case)
+    del spec["edit"]
+    _fit = _engine.create_fit(spec)
+    _boot_ms = (time.monotonic() - start) * 1000
+    return snapshot()
+
+
+def snapshot():
+    stats = _engine.snapshot(_fit)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    return encoded({"stats": stats, "ammunition": _fit.modules[0].charge.name})
+
+
+def set_ammunition(name):
+    if name not in (_case["modules"][0]["charge"], _case["edit"]["charge"]):
+        raise ValueError("The development sample supports Antimatter and Iron ammunition")
+    _engine.set_charges(_fit, _case["edit"]["module_indices"], name)
+    return snapshot()
+
+
+def verify_ammunition():
+    """Return actual native values to the independent instrumentation comparator.
+
+    No expected numbers or desktop exporter is imported by the Android runtime.
+    Restore the existing sample so test order and activity recreation are safe.
+    """
+    start = time.monotonic()
+    initial_name = _case["modules"][0]["charge"]
+    try:
+        initial = json.loads(set_ammunition(initial_name))["stats"]
+        changed = json.loads(set_ammunition(_case["edit"]["charge"]))["stats"]
+    finally:
+        restored = json.loads(set_ammunition(initial_name))["stats"]
+    import eos.db
+    from sqlalchemy.exc import OperationalError
+    readonly = False
+    with eos.db.gamedata_engine.connect() as connection:
+        try:
+            connection.execute("UPDATE metadata SET field_value=field_value WHERE field_name='client_build'")
+        except OperationalError as error:
+            if "readonly" not in str(error).lower():
+                raise
+            readonly = True
+    if not readonly:
+        raise RuntimeError("EOS game database unexpectedly permits writes")
+    import greenlet._greenlet
+    return encoded({
+        "states": {"initial": initial, "iron_ammunition": changed, "restored": restored},
+        "inputs": _case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings, "resolved_item_ids": _engine.resolved_item_ids,
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["desktop_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "python": sys.version, "native_greenlet_module": greenlet._greenlet.__file__,
+        "dependencies": {name: importlib.metadata.version(name) for name in ("logbook", "sqlalchemy", "greenlet")},
+        "engine_thread": threading.current_thread().name, "readonly_database": readonly,
+        "desktop_import_attempts": _forbidden, "boot_ms": _boot_ms,
+        "edit_sequence_ms": (time.monotonic() - start) * 1000,
+    })

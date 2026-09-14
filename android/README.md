@@ -1,10 +1,11 @@
-# Android development shell (A06)
+# Offline Android engine development (A07)
 
-Native Kotlin/Compose application in `app/`. It displays an honest development
-status, build version and offline About screen. There is no fitting engine,
-database, saved-fit storage or fabricated fitting result in this milestone.
-The APK has no Internet permission. The root GPLv3 license is bundled as an asset;
-upstream source and notices remain in the repository.
+Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
+bundles the complete pinned game database and calculates the synthetic A01 Vexor
+without network access. Both guns can change ammunition together; the sample
+shows drone control range and all 38 sampled attributes. Creating/saving user
+fits, projection/command Android checks and the complete fitting UI are later tasks.
+The APK has no Internet permission. Root GPLv3 and EOS LGPL notices are included.
 
 ## Toolchain
 
@@ -21,6 +22,8 @@ upstream source and notices remain in the repository.
 | SDK build tools | 35.0.0 |
 | SDK command-line tools | 19.0, archive 13114758, SHA-256 checked |
 | CI host / emulator | ubuntu-24.04 / emulator 37.1.11, build 15917651 |
+| Embedded runtime | Chaquopy 17.0.0 / Python 3.11 |
+| Android Python packages | Logbook 1.7.0.post0, SQLAlchemy 1.4.50, Greenlet 3.0.1 build 1, chaquopy-libcxx 180000 build 0 |
 | Native test device | API 36, google_apis, x86_64, Pixel 2 profile, KVM |
 
 Selected from the documented compatibility intersection, checked 2026-09-13:
@@ -28,8 +31,18 @@ Selected from the documented compatibility intersection, checked 2026-09-13:
 [Kotlin's Gradle/AGP ranges](https://kotlinlang.org/docs/gradle-configure-project.html),
 [Compose BOM mapping](https://developer.android.com/develop/ui/compose/bom/bom-mapping)
 and [Chaquopy compatibility](https://chaquo.com/chaquopy/doc/current/versions.html).
-Chaquopy 17.0.0 with Python 3.11 is the provisional A07 choice, **not yet a
-dependency or proven Android EOS runtime**. Its Android wheels remain to be tested.
+A07 uses [Chaquopy's Android integration](https://chaquo.com/chaquopy/doc/current/android.html)
+and [Android wheel repository](https://chaquo.com/pypi-13.1/), checked 2026-09-14.
+See the evidence section for the actual runtime validation state.
+
+`prepare-dependencies.py` verifies source/archive SHA-256 values and builds the
+supported pure-Python variants of Logbook and SQLAlchemy. SQLAlchemy 1.4.50's
+`Distribution.has_ext_modules` always returns true: after confirming the wheel
+contains no native binaries, the script corrects its wheel tags and regenerates
+RECORD hashes without changing package code. Android Greenlet uses the available
+3.0.1 build 1 wheels (API 24, ARM64/x86_64), with pinned native libc++ dependencies.
+The independent desktop environment remains on Greenlet 3.0.3. Gradle's Python
+package install uses only these six prepared wheels with `--no-index`.
 
 Gradle distribution SHA-256:
 `20f1b1176237254a6fc204d8434196fa11a4cfb387567519c61556e8710aed78`.
@@ -54,16 +67,36 @@ individual builds, not deterministic release binaries.
 Install the pinned JDK, Android SDK platform 36 and build-tools 35.0.0. Set
 `JAVA_HOME` and `ANDROID_HOME` to those installations (or use an ignored
 `local.properties` for `sdk.dir`). Open this `android/` directory in Android Studio,
-or, from this directory:
+or, from this directory, using a clean Python 3.11 environment:
 
 ```sh
+python -m pip install --only-binary=:all: -r ../tools/android_headless/requirements.txt pip==25.1.1 setuptools==68.2.2 wheel==0.41.3
+python prepare-dependencies.py
+python -I prepare-engine.py
 ./gradlew --no-daemon --console=plain :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug
+python ci/verify-apk.py
 ```
 
 On Windows use `gradlew.bat`. Output is
 `app/build/outputs/apk/debug/app-debug.apk`, package `io.github.sussic.pyfa.dev`.
 No secrets, server or EVE login are needed. Build dependencies need a connection
-on a fresh build machine; the installed shell does not.
+on a fresh build machine; the installed app does not.
+
+Prepare after every source/data change. `prepare-engine.py` reads this checkout's
+`eos`, `utils`, `android_bridge`, `db_update.py`, `staticdata` and reference tools;
+include those paths in sparse checkouts. It checks the static-data digest against
+the pinned desktop fixture, builds the database through the original builder,
+checks SQLite integrity and logical identity, and stages normalized source files.
+No generated database or wheel is committed. Data generation imports the fork's
+existing A03 lazy migration import; its logical result must exactly match A01.
+Golden results are copied only into the instrumentation APK, never the app.
+
+The process-owned `pyfa-engine` executor installs a checksum-verified database
+atomically into app-private files and boots EOS off the UI thread. Python source
+is packaged from the existing tree, not a maintained duplicate. EOS opens game
+data read-only and keeps sample fits in memory. Startup/call failures are visible;
+no substitute result is displayed. This is a provisional bridge, not B01's final
+API or R02's persistent-data update system.
 
 Start a fresh API 36 x86_64 emulator with KVM and no previous installation of this
 app. On Linux/macOS with GNU `timeout`, Python 3 and adb available:
@@ -73,22 +106,26 @@ bash ci/native-test.sh
 ```
 
 This disables emulator Wi-Fi/mobile data and enables airplane mode **before the
-app is installed**. Do not run the script on a personal phone. It executes two
-real Compose instrumented tests:
+app is installed**. Do not run the script on a personal phone. It executes three
+instrumented tests: offline sample/bulk-ammunition/About navigation, recreation
+and landscape Back behavior, and independent A01 raw-value parity. The latter
+compares all three states, 38 values and units per state, inputs, settings, item
+IDs, dataset identity and the untouched golden fixture hash. It verifies the
+native Greenlet module is loaded and EOS rejects database writes. The existing
+reference tolerance is retained: absolute 1e-9 / relative 1e-10; boolean/string
+values and object keys are exact.
 
-- Fresh offline launch shows the unavailable fitting status, has no Internet
-  permission, opens the versioned About screen and returns with its Back button.
-- About survives activity recreation and landscape rotation; its lower content
-  is reachable by scrolling, and Android's Back dispatcher returns home.
+`ci/verify-apk.py` inspects actual APK and nested Chaquopy archive bytes. It verifies
+the complete database, source manifest, source freshness, notices and ARM64/x86_64
+ELF architecture, Python/SQLite/Greenlet presence and native dependency closure.
+Building and inspecting ARM64 libraries does not establish ARM64 runtime support.
 
 The summary rejects absent, skipped, failed or empty native results and requires
-both named assertions. Android's UI automation captures screenshots through the
-shell into the disposable emulator's Download directory so they survive AGP's
-app uninstall. CI requires real PNG files and records dimensions/hashes, including
-a landscape scroll. Failures retain a current screenshot and short logcat excerpt.
-`build/evidence/native-summary.json` records the actual checkout, APK and device.
-These tests prove only the shell behavior. A07–A09 own the EOS runtime/parity tests;
-ARM64 runtime, physical phone behavior and full offline fitting remain unverified.
+all named assertions plus actual native values and four real PNG screenshots.
+Shell-owned evidence survives AGP's app uninstall. Failures retain a screenshot
+and short logcat excerpt. `build/evidence/native-summary.json` identifies the
+actual checkout, APK, device and measured initialization/edit timings. A08/A09
+own projection/command Android parity; A10 owns fuller performance measurements.
 
 ## CI and deliberate APK delivery
 
@@ -111,19 +148,10 @@ signing for successive persistent-use releases.
 
 ## Evidence
 
-[PR #6](https://github.com/Sussic/Pyfa-android/pull/6) is merged. The final
-[native CI run](https://github.com/Sussic/Pyfa-android/actions/runs/34763124199)
-passed build, lint, signature, byte-for-byte GPL asset verification and **two
-instrumented tests** with zero failures/errors/skips. The 10,334,009-byte APK was
-installed on API 36 x86_64 with networking disabled. All three retained Android
-screenshots were reviewed: home/About in portrait and scrolled About in landscape.
-
-The [checked-in evidence receipt](../docs/android/evidence/a06-native.json) records
-the tested head, actual PR merge checkout, APK hash, runtime, test names, screenshot
-hashes/dimensions and limitations. Full CI reports/screenshots have one-day retention.
-Lint retains one data-extraction-rules warning for the future storage/upgrade work;
-this shell has no saved fits. Manual APK upload is configured but was not dispatched
-during A06. No EOS result, ARM64 runtime or physical-phone test is claimed.
-
-Next: **A07**, package game data and embedded Python, calculate A01 offline, verify
-x86_64 execution and required ARM64 package contents. See [STATUS](../docs/android/STATUS.md).
+A06's shell checks passed in [PR #6](https://github.com/Sussic/Pyfa-android/pull/6);
+its historical [receipt](../docs/android/evidence/a06-native.json) remains unchanged.
+A07 native evidence is pending on the task branch; [STATUS](../docs/android/STATUS.md)
+records delivery state. Host checks alone do not establish Android support.
+ARM64 execution, physical phone behavior, API 24 execution, persistent fit storage
+and APK upgrades remain unverified. The existing lint data-extraction-rules warning
+belongs to storage/upgrade work. Manual APK upload remains opt-in.

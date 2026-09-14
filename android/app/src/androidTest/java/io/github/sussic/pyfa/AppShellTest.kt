@@ -30,6 +30,8 @@ class AppShellTest {
         // The CI script disables networking before the app is installed/launched.
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
+        compose.waitUntil(120_000) { EngineRuntime.state.value !is EngineState.Loading }
+        org.junit.Assert.assertTrue(EngineRuntime.state.value is EngineState.Ready)
         compose.onNodeWithText(context.getString(R.string.status_body)).assertIsDisplayed()
         screenshot("home")
         compose.onNodeWithText(context.getString(R.string.about_button)).performScrollTo().performClick()
@@ -38,6 +40,19 @@ class AppShellTest {
         screenshot("about")
         compose.onNodeWithText(context.getString(R.string.back)).performScrollTo().performClick()
         compose.onNodeWithText(context.getString(R.string.status_title)).assertIsDisplayed()
+        compose.onNodeWithText(context.getString(R.string.switch_ammunition)).performScrollTo().performClick()
+        compose.waitUntil(30_000) {
+            val state = EngineRuntime.state.value
+            state is EngineState.Ready && org.json.JSONObject(state.result).getString("ammunition") == "Iron Charge M"
+        }
+        compose.onNodeWithText(context.getString(R.string.sample_ammunition, "Iron Charge M")).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText(context.getString(R.string.all_attributes)).performScrollTo().assertIsDisplayed()
+        screenshot("fit")
+        compose.onNodeWithText(context.getString(R.string.switch_ammunition)).performScrollTo().performClick()
+        compose.waitUntil(30_000) {
+            val state = EngineRuntime.state.value
+            state is EngineState.Ready && org.json.JSONObject(state.result).getString("ammunition") == "Antimatter Charge M"
+        }
     }
 
     @Test
@@ -74,7 +89,7 @@ class AppShellTest {
         // AGP uninstalls the app after testing. Shell-owned captures on this
         // disposable emulator survive that cleanup; no app storage permission
         // is added. Names are fixed test constants, never user input.
-        val path = "/sdcard/Download/pyfa-a06-$name.png"
+        val path = "/sdcard/Download/pyfa-a07-$name.png"
         ParcelFileDescriptor.AutoCloseInputStream(
             automation.executeShellCommand("screencap -p $path"),
         ).use { it.readBytes() }

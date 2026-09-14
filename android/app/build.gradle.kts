@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("com.chaquo.python")
 }
 
 val bundleLicense by tasks.registering(Copy::class) {
@@ -18,8 +19,9 @@ android {
         applicationId = "io.github.sussic.pyfa"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0-a06"
+        versionCode = 2
+        versionName = "0.1.0-a07"
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -40,6 +42,8 @@ android {
         buildConfig = true
     }
     sourceSets["main"].assets.srcDir(bundleLicense)
+    sourceSets["main"].assets.srcDir(rootProject.file("build/engine/assets"))
+    sourceSets["androidTest"].assets.srcDir(rootProject.file("build/engine/testAssets"))
     lint {
         abortOnError = true
         // Newer releases are reviewed as toolchain changes, not lint failures.
@@ -49,9 +53,33 @@ android {
 
 kotlin { jvmToolchain(17) }
 
+chaquopy {
+    defaultConfig {
+        version = "3.11"
+        pip {
+            options("--no-index", "--find-links", rootProject.file("build/python-wheels").absolutePath)
+            install("Logbook==1.7.0.post0", "SQLAlchemy==1.4.50", "greenlet==3.0.1", "chaquopy-libcxx==180000")
+        }
+        // Keep source available for development traceback/provenance inspection.
+        pyc { src = false }
+    }
+    sourceSets.getByName("main") { srcDir(rootProject.file("build/engine/python")) }
+}
+
+val verifyEngineInputs by tasks.registering {
+    doLast {
+        check(rootProject.file("build/engine/assets/engine/eve.db").isFile) {
+            "Run Python 3.11 android/prepare-engine.py before Gradle. See android/README.md."
+        }
+        check(rootProject.file("build/python-wheels").listFiles()?.count { it.extension == "whl" } == 6) {
+            "Run android/prepare-dependencies.py before Gradle."
+        }
+    }
+}
+
 // AGP resolves this legacy source directory without retaining its producer's
 // task dependency. Make the license available before the asset merge.
-tasks.named("preBuild") { dependsOn(bundleLicense) }
+tasks.named("preBuild") { dependsOn(bundleLicense, verifyEngineInputs) }
 
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
