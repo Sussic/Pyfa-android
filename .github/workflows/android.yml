@@ -49,6 +49,17 @@ jobs:
             tools/android_reference
             tools/android_headless
           persist-credentials: false
+      - name: Enable and verify KVM access
+        run: |
+          mkdir -p build/evidence
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-pyfa-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo udevadm settle --timeout=30
+          ls -l /dev/kvm | tee build/evidence/kvm-device.txt
+          test -c /dev/kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11.16'
@@ -95,13 +106,6 @@ jobs:
         run: '"$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk > build/evidence/apk-signature.txt'
       - name: Verify bundled data, source, licenses and both native architectures
         run: python ci/verify-apk.py
-      - name: Enable and verify KVM access
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-pyfa-kvm.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-          test -r /dev/kvm
-          test -w /dev/kvm
       - name: Test a fresh offline installation on Android
         uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
         with:
