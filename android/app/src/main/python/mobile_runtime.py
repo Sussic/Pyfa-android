@@ -90,6 +90,7 @@ def verify_ammunition():
     if not readonly:
         raise RuntimeError("EOS game database unexpectedly permits writes")
     import greenlet._greenlet
+    from eos.db import migrations
     return encoded({
         "states": {"initial": initial, "iron_ammunition": changed, "restored": restored},
         "inputs": _case, "dataset_metadata": _engine.metadata,
@@ -103,6 +104,7 @@ def verify_ammunition():
         "python": sys.version, "native_greenlet_module": greenlet._greenlet.__file__,
         "dependencies": {name: importlib.metadata.version(name) for name in ("logbook", "sqlalchemy", "greenlet")},
         "engine_thread": threading.current_thread().name, "readonly_database": readonly,
+        "migration_versions": sorted(migrations.updates),
         "desktop_import_attempts": _forbidden, "boot_ms": _boot_ms,
         "edit_sequence_ms": (time.monotonic() - start) * 1000,
     })

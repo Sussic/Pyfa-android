@@ -26,7 +26,7 @@ for modName in iterNamespace(__name__, __path__):
         continue
     index = int(m.group("index"))
     appVersion = max(appVersion, index)
-    module = __import__(modName, fromlist=True)
+    module = __import__(modName, fromlist=["upgrade"])
     upgrade = getattr(module, "upgrade", False)
     if upgrade:
         updates[index] = upgrade

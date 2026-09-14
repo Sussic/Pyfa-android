@@ -44,6 +44,13 @@ RECORD hashes without changing package code. Android Greenlet uses the available
 The independent desktop environment remains on Greenlet 3.0.3. Gradle's Python
 package install uses only these six prepared wheels with `--no-index`.
 
+One additional upstream compatibility correction is isolated to
+`eos/db/migrations/__init__.py`: dynamic import now uses `fromlist=["upgrade"]`
+instead of the invalid boolean accepted by desktop CPython but rejected by
+Chaquopy's import hook. Migration functions and calculation formulas are unchanged.
+Native tests require all 49 migration functions to be discovered; the separate
+desktop workflow exercises the real 48-to-49 migration and backup.
+
 Gradle distribution SHA-256:
 `20f1b1176237254a6fc204d8434196fa11a4cfb387567519c61556e8710aed78`.
 Wrapper JAR SHA-256:
@@ -122,6 +129,9 @@ Building and inspecting ARM64 libraries does not establish ARM64 runtime support
 
 The summary rejects absent, skipped, failed or empty native results and requires
 all named assertions plus actual native values and four real PNG screenshots.
+The evidence writer uses the API 31+ UI automation stdin pipe on the API 36 test
+device, avoiding shell quoting and app storage permissions. This test transport
+does not raise the application's minimum API; API 24 execution remains unverified.
 Shell-owned evidence survives AGP's app uninstall. Failures retain a screenshot
 and short logcat excerpt. `build/evidence/native-summary.json` identifies the
 actual checkout, APK, device and measured initialization/edit timings. A08/A09

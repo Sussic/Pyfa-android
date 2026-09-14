@@ -2,11 +2,11 @@ package io.github.sussic.pyfa
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import java.io.File
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -45,14 +45,26 @@ class EngineParityTest {
         assertTrue(actual.getString("native_greenlet_module").endsWith(".so"))
         assertTrue(actual.getBoolean("readonly_database"))
         assertEquals(0, actual.getJSONArray("desktop_import_attempts").length())
+        val migrations = actual.getJSONArray("migration_versions")
+        assertEquals(49, migrations.length())
+        for (index in 0 until migrations.length()) assertEquals(index + 1, migrations.getInt(index))
         // This report contains actual native values, not only a passed counter.
-        val receipt = File(context.filesDir, "a07-engine.json")
-        receipt.writeText(actual.toString(2))
         val automation = instrumentation.uiAutomation
         val output = "/sdcard/Download/pyfa-a07-engine.json"
-        ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(
-            "sh -c 'run-as ${context.packageName} cat files/a07-engine.json > $output'",
-        )).use { it.readBytes() }
+        // UiAutomation uses Runtime.exec(String), which does not parse shell
+        // quoting/redirection. Feed bytes directly to a shell-owned writer.
+        // The native evidence suite targets API 36; this transport needs 31+.
+        if (Build.VERSION.SDK_INT >= 31) {
+            val descriptors = automation.executeShellCommandRw("dd of=$output")
+            ParcelFileDescriptor.AutoCloseInputStream(descriptors[0]).use { completion ->
+                ParcelFileDescriptor.AutoCloseOutputStream(descriptors[1]).use { input ->
+                    input.write(actual.toString(2).toByteArray(Charsets.UTF_8))
+                }
+                completion.readBytes() // Wait for dd to finish, without stdout backpressure.
+            }
+        } else {
+            throw IllegalStateException("The native evidence transport requires API 31 or later")
+        }
         val retained = ParcelFileDescriptor.AutoCloseInputStream(
             automation.executeShellCommand("cat $output"),
         ).use { it.readBytes().toString(Charsets.UTF_8) }
