@@ -66,7 +66,10 @@ chaquopy {
         // Keep source available for development traceback/provenance inspection.
         pyc { src = false }
     }
-    sourceSets.getByName("main") { srcDir(rootProject.file("build/engine/python")) }
+    sourceSets.getByName("main") {
+        // Explicit sources replace Chaquopy's default directory convention.
+        setSrcDirs(listOf(file("src/main/python"), rootProject.file("build/engine/python")))
+    }
 }
 
 val verifyEngineInputs by tasks.registering {

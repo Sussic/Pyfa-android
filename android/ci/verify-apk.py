@@ -40,7 +40,11 @@ def main():
             assert len(matches) == 1, "Missing or duplicated engine source: " + name
             assert hashlib.sha256(matches[0]).hexdigest() == digest, name
         mobile = (ROOT / "app/src/main/python/mobile_runtime.py").read_bytes().replace(b"\r\n", b"\n")
-        assert any(path.endswith("!/mobile_runtime.py") and raw == mobile for path, raw in files.items())
+        mobile_files = [raw for path, raw in files.items() if path.endswith("!/mobile_runtime.py")]
+        assert len(mobile_files) == 1, "Missing or duplicated mobile_runtime.py in Chaquopy sources"
+        # Root .gitattributes uses CRLF for Python. Compare normalized source on
+        # both sides, as the engine staging/data provenance checks already do.
+        assert mobile_files[0].replace(b"\r\n", b"\n") == mobile, "Stale mobile_runtime.py in APK"
         assert not any("vexor-expected.json" in name or "tools/android_reference/fixtures" in name for name in apk.namelist())
         assert not any("!/wx/" in name or "!/gui/" in name or "!/service/" in name for name in files)
     receipt = {"database_bytes": len(database), "database_sha256": manifest["database_sha256"],
