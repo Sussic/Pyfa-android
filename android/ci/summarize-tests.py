@@ -23,6 +23,7 @@ required = {
     "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
     "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline",
     "io.github.sussic.pyfa.EngineParityTest.projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline",
+    "io.github.sussic.pyfa.EngineParityTest.commandBurstsMatchDesktopAndClearRecipientBonusesOffline",
 }
 if not required.issubset(tests):
     raise SystemExit(f"Required native assertions missing: {sorted(required - set(tests))}")
@@ -54,8 +55,21 @@ assert len(projection["states"]) == 11
 assert all(set(pair) == {"source", "target"} and all(len(stats) == 39 for stats in pair.values())
            for pair in projection["states"].values())
 assert len(projection["multi_recipient"]) == 9 and len(projection["repeated_cycles"]) == 5
+command = json.loads((evidence / "command-native.json").read_text())
+for key in ("database_sha256", "database_logical_sha256", "engine_source_sha256", "source_data_sha256",
+            "desktop_source_commit", "dataset_metadata"):
+    assert command[key] == engine[key], key
+assert not command["desktop_import_attempts"]
+assert command["same_worker_repeat_matched"] and command["ammunition_after_command_matched"]
+assert command["projection_after_command_matched"]
+assert len(command["states"]) == 19
+assert all(set(pair) == {"source", "target"} and all(len(stats) == 39 for stats in pair.values())
+           for pair in command["states"].values())
+assert len(command["multi_recipient"]) == 18 and len(command["repeated_cycles"]) == 5
+assert len(command["pending_command_bonuses"]) == 112
+assert all(type(count) is int and count == 0 for count in command["pending_command_bonuses"].values())
 summary = {
-    "task": "A08",
+    "task": "A09",
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
     "workflow_run": os.environ.get("GITHUB_RUN_ID"),
     "tests": tests,
@@ -71,6 +85,9 @@ summary = {
     "projection_parity_tested": "A04: 39 statistics per fit, two fits, 11 states; two recipients, nine phases, five apply/remove cycles; same-worker repeat",
     "projection_sequence_ms": projection["projection_sequence_ms"],
     "projection_repeat_sequence_ms": projection["repeat_sequence_ms"],
+    "command_parity_tested": "A05: 39 statistics per fit, two fits, 19 states; two recipients, 18 phases, five apply/remove cycles; 112 empty pending-bonus observations; same-worker repeat",
+    "command_sequence_ms": command["command_sequence_ms"],
+    "command_repeat_sequence_ms": command["repeat_sequence_ms"],
     "arm64_contents_verified": "arm64-v8a" in contents["abis"],
     "arm64_runtime_tested": False,
     "python_dependencies": engine["dependencies"],
@@ -85,4 +102,5 @@ if os.environ.get("GITHUB_STEP_SUMMARY"):
         stream.write(f"{len(tests)} native tests passed on API {summary['device']['api']} / {summary['device']['abi']}.\n\n")
         stream.write("Fresh offline install; no Internet permission. A01's 38 raw statistics pass in three ammunition states. ARM64 APK contents verified; ARM64 execution untested.\n\n")
         stream.write("A04 projections: 39 raw statistics per fit across 11 states; multiple-recipient invalidation, link cleanup and repeated removal pass.\n\n")
+        stream.write("A05 commands: 39 raw statistics per fit across 19 states; skills, mindlink, module/charge edits, all recipients, link removal and pending-bonus cleanup pass.\n\n")
         stream.write(f"APK: {summary['apk_bytes']} bytes; SHA-256 `{summary['apk_sha256']}`.\n")

@@ -75,7 +75,10 @@ Updated: 2026-09-16.
 
 ## Current work and exact next task
 
-- No active task; A08 is delivered. **A01–A08 are done: 8 of 72 work items;
+- Active task: **A09 — Android command parity**, branch `android/a09-command-parity`.
+  Run A05's 19 reference states on the native worker, verify all recipients update
+  after source edits, and prove removal clears links and pending command bonuses.
+  Preserve A01/A04 native checks. **A01–A08 are done: 8 of 72 work items;
   64 remain**, plus four parent rollups. ROADMAP owns task state; PARITY retains
   all 239 behavior rows. A07/A08 evidence is partial where rows require more.
 - Exact next task: **A09 — Android command parity**. Run A05's independent
