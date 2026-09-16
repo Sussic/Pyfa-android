@@ -7,7 +7,7 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 [SCOPE.md](SCOPE.md). The initial reference is upstream commit
 `8b04f3b271e614b3e103853b44a7851a63d79d0e`, not an unversioned moving branch.
 
-## Implementation, with linked-fit feasibility still pending
+## Implementation, with broader feasibility review pending
 
 - Kotlin with a native Android UI (Compose is the initial candidate).
 - Embed Python and this repository's EOS using Chaquopy if A03/A07–A09 validate
@@ -29,8 +29,9 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 A07 verifies this Kotlin/Compose + Chaquopy approach for the A01 baseline on API
 36 x86_64, including an offline first installation and actual ARM64 package
 contents. See [the native evidence](evidence/a07-native.json). A08 adds [native A04 projection parity](evidence/a08-native.json), including
-multiple-recipient updates, repeated removal and same-worker reuse. A09 still
-needs command parity on Android; A10 records the broader feasibility and
+multiple-recipient updates, repeated removal and same-worker reuse. A09 adds
+[native A05 command parity](evidence/a09-native.json), including source edits,
+all-recipient invalidation and pending-bonus cleanup. A10 records the broader feasibility and
 performance decision. ARM64 execution and user-data upgrades are not established.
 The two isolated upstream changes defer desktop config until an actual migration
 backup and give dynamic migration imports a valid `fromlist` sequence. Neither

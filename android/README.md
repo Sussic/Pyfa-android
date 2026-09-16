@@ -211,3 +211,14 @@ mobile Python sources and both ABIs. [A08's durable receipt](../docs/android/evi
 retains every native observation, exact build/data hashes, JUnit and host evidence.
 This adds bounded projection feasibility, not the projection editor or full
 D01/D02 coverage. Command parity is the next task, A09.
+
+A09 is merged in [PR #9](https://github.com/Sussic/Pyfa-android/pull/9).
+[Native CI](https://github.com/Sussic/Pyfa-android/actions/runs/35161269681) passed all five tests on head
+`e5e249b9ac95b9144d16f99de4801473661ffa05` on the first run. A05's 19 states, all
+18 recipient phases, five removal cycles and 112 pending-bonus checks pass,
+including a complete same-worker repeat and A01/A04 after command operations.
+[The A09 receipt](../docs/android/evidence/a09-native.json) retains all raw values,
+source/data/build hashes, JUnit, package checks and focused host evidence.
+This is bounded command feasibility; full editors and remaining burst/overlap
+cases stay on the roadmap. A10 is next: complete performance measurements and the
+embedding feasibility decision, with hardware and API gaps kept explicit.

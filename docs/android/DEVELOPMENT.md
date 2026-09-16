@@ -8,8 +8,9 @@ This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03–A
 A07 embeds EOS and the full pinned dataset, with native A01 numerical parity and
 ARM64 package inspection; [evidence](evidence/a07-native.json) and STATUS record
 the limits. A08 adds [native A04 projection evidence](evidence/a08-native.json)
-with multiple-recipient invalidation and repeated removal; the suite now requires
-four native tests. The separate
+with multiple-recipient invalidation and repeated removal. A09 adds
+[native A05 command evidence](evidence/a09-native.json), including skills, implants
+and recipient cleanup; the suite now requires five native tests. The separate
 `Desktop reference` workflow validates the independent host oracle, desktop
 migration compatibility and the separate headless adapter; it is not an Android
 build. [Headless commands and evidence](../../tools/android_headless/README.md)
