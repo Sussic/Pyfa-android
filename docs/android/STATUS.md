@@ -43,47 +43,46 @@ Updated: 2026-09-16.
   shell, offline About/navigation/recreation tests and build/CI setup.
   [Historical receipt](evidence/a06-native.json).
 
-## A07 completed and delivered
+## A07 and A08 completed and delivered
 
-- [PR #7](https://github.com/Sussic/Pyfa-android/pull/7) merged as
-  `6fcd50fcca9911aca1d0871fc89b26f671fe0350`. Tested head:
-  `a4182bd17462dbfe79ddf0dde8cb700429fa89cb`; the merge tree matches it.
-- [Android native CI](https://github.com/Sussic/Pyfa-android/actions/runs/34846081342)
-  passed build, lint, signing, source/data/ABI inspection and **three native tests**.
-  A fresh API 36 x86_64 installation, with networking disabled before install,
-  calculated the A01 Vexor: **38 raw statistics and units in three ammunition states**
-  match the untouched independent desktop fixture. Both guns change together;
-  drone control range is visible. Four native screenshots were reviewed.
-- APK: **70,361,140 bytes**. Bundled database: **99,897,344 bytes**, matching A01's
-  logical digest. Both ARM64 and x86_64 packages contain the required native code:
-  73 ELF libraries per ABI with dependency closure checked. **ARM64 was not run.**
-- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/34846081350)
-  passed 35 host tests, independent A01/A04/A05 comparisons and real 48-to-49
-  migration/backup compatibility. One new upstream correction uses a proper
-  `fromlist` list in migration imports; formulas and expected fixtures are unchanged.
-- [Commands and dependency decisions](../../android/README.md),
-  [durable raw values/provenance/evidence](evidence/a07-native.json).
-  Native Python is 3.11.14 (build host 3.11.16); pure Logbook/SQLAlchemy and pinned
-  Android Greenlet/libc++ wheels work for this baseline. Data is read-only, fits
-  remain in memory, and a process-owned Kotlin worker serializes engine calls.
-- This is a sample fitting milestone, not the full editor. Native projections,
-  commands, saved-fit persistence, process restart/upgrade behavior and physical
-  phone operation remain unverified. APK upload is still manual opt-in.
+- **A07:** [PR #7](https://github.com/Sussic/Pyfa-android/pull/7) embedded EOS and
+  the full pinned dataset. A01's 38 statistics in three ammunition states passed
+  offline on Android, including changing both guns and showing drone control range.
+  [Historical native/Windows evidence](evidence/a07-native.json) records the
+  dependency decisions, two minimal upstream compatibility patches and limits.
+- **A08:** [PR #8](https://github.com/Sussic/Pyfa-android/pull/8) merged as
+  `0f463ab938489b766565831695a50f0be472e93b`. Tested head: `7799cecf906950c24f7e23901d359df99030fedf`.
+  [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35159732933) passed build, lint, signing,
+  source/data/ABI inspection and **four native tests** on a fresh offline
+  API 36 x86_64 installation.
+- A04's unchanged desktop fixture matches **39 raw statistics and units on each
+  of two fits across 11 projection states**: distance, disable/reactivate, source
+  script changes, removal and reapplication. Nine multi-recipient phases verify
+  both recipients and an unlinked control, reading the second recipient first.
+  Five apply/remove cycles verify clean values and both association directions.
+  The whole probe repeats on the same worker; A01 ammunition passes again afterward.
+- Host checks passed: eight projection regression tests with independent fixture
+  comparison/fresh-process repeat, eight reference utility tests and the mobile
+  runtime sequence. No engine formulas, desktop fixture values or dependency pins
+  changed. Case-specific item provenance prevents tests contaminating one another.
+- [A08 task and limits](tasks/A08-android-projection-parity.md),
+  [durable raw native values and provenance](evidence/a08-native.json),
+  [build/test commands](../../android/README.md).
+- This establishes the bounded linked-dampener case. The app still shows the
+  Vexor ammunition sample; D01/D02 own the projection editor and broader effects,
+  counts/stacking, source deletion, cycles and interactions. ARM64 contents are
+  verified; ARM64 execution and physical-phone behavior remain unverified.
 
 ## Current work and exact next task
 
-- Active task: **A08 — Android projection parity**, branch
-  `android/a08-projection-parity`. Verify A04's 11 independent desktop states
-  through the native worker, plus multiple-recipient invalidation and removal
-  cleanup, while preserving A07's offline/ammunition/package checks.
-  **A01–A07 are done: 7 of 72 work items;
-  65 remain**, plus four parent rollups. ROADMAP owns task state; PARITY owns
-  behavior/evidence rows. A07 baseline evidence is partial where rows require more.
-- Exact next task: **A08 — Android projection parity**. Run A04's independent
-  linked Celestis/Vexor cases through the Android bridge, including range/script
-  edits, removal/restoration and stale-cache checks. Keep the fixture independent
-  and preserve the passing A07 offline/ammunition/native package checks.
-- A09 then verifies command bursts on Android. Continue one task at a time.
+- No active task; A08 is delivered. **A01–A08 are done: 8 of 72 work items;
+  64 remain**, plus four parent rollups. ROADMAP owns task state; PARITY retains
+  all 239 behavior rows. A07/A08 evidence is partial where rows require more.
+- Exact next task: **A09 — Android command parity**. Run A05's independent
+  Vulture/Vexor command cases through the existing Android worker, including
+  source/skill/implant/state edits, recipient invalidation and link cleanup.
+  Preserve A01/A04 native checks and keep golden values in the test APK.
+- A10 then records embedding feasibility and performance. Continue one task at a time.
 
 ## Open questions and environment notes
 
@@ -114,8 +113,8 @@ Updated: 2026-09-16.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select A08.
-Read Android build instructions and the A04 projection fixture/adapter boundary.
+Read AGENTS.md and this file; verify live master and open PRs, then select A09.
+Read Android build instructions and A05's command fixture/adapter boundary.
 Reuse the verified source/data/wheel pipeline and existing background worker.
-Expected values stay in the test APK. Keep A01 checks and add real Android
-projection assertions; host projection results alone do not close A08.
+Keep A01/A04 checks, case-specific item identities and the repeated-worker tests.
+Add real Android command assertions; host results alone do not close A09.

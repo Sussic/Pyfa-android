@@ -1,6 +1,6 @@
 # A08 — Android projection parity
 
-Dependencies: A04, A07. Status: in progress.
+Dependencies: A04, A07. Status: done and merged.
 
 ## Acceptance and implementation
 
@@ -26,12 +26,30 @@ checks both mobile Python sources and rejects golden assets in the app archives.
 
 ## Verification and boundaries
 
-Native build/test evidence is pending. Run the existing
-[Android commands](../../../android/README.md); `ci/native-test.sh` now requires
-four named native tests and retains `projection-native.json` alongside A01 values.
+[PR #8](https://github.com/Sussic/Pyfa-android/pull/8) merged as
+`0f463ab938489b766565831695a50f0be472e93b` after [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35159732933)
+passed on the first run for head `7799cecf906950c24f7e23901d359df99030fedf`. Build, lint,
+signing, source/data checks and ARM64/x86_64 native dependency inspection passed.
+All four native tests passed without failures, errors or skips on API 36 x86_64,
+with networking disabled before installation. A01 and all A08 assertions above
+passed, including the same-worker repeat and ammunition after projections.
+
+Local verification passed eight A04 behavioral tests and its independent fixture
+comparison/fresh-process repeat, eight reference utility tests and the mobile
+runtime's full sequence against the unchanged golden values. SQLite integrity,
+logical dataset identity and unchanged database bytes were verified. Python/shell
+syntax and staged diff checks passed. The desktop workflow was not triggered:
+EOS, the adapter and the desktop-reference files are unchanged in this task.
+
+[Durable raw native values, JUnit, hashes and provenance](../evidence/a08-native.json).
+Use the existing [Android commands](../../../android/README.md);
+`ci/native-test.sh` requires all four named native tests and retains
+`projection-native.json` alongside A01 values. Expected fixture SHA-256:
+`01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05`.
 
 This task establishes the bounded A04 linked-dampener case, not all projection
 families or a touch projection editor. D01/D02 retain full UI, counts/stacking,
 other effect types, source deletion, cycles and interactions. ARM64 execution,
-physical phones, persistence and upgrades remain unverified. A09 is the exact
-next task after native evidence and delivery: command parity on Android.
+physical phones, persistence and upgrades remain unverified.
+
+Exact next task: **A09 — Android command parity**.

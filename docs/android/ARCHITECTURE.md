@@ -28,8 +28,9 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 
 A07 verifies this Kotlin/Compose + Chaquopy approach for the A01 baseline on API
 36 x86_64, including an offline first installation and actual ARM64 package
-contents. See [the native evidence](evidence/a07-native.json). A08/A09 still need
-linked projections/commands on Android; A10 records the broader feasibility and
+contents. See [the native evidence](evidence/a07-native.json). A08 adds [native A04 projection parity](evidence/a08-native.json), including
+multiple-recipient updates, repeated removal and same-worker reuse. A09 still
+needs command parity on Android; A10 records the broader feasibility and
 performance decision. ARM64 execution and user-data upgrades are not established.
 The two isolated upstream changes defer desktop config until an actual migration
 backup and give dynamic migration imports a valid `fromlist` sequence. Neither

@@ -190,3 +190,13 @@ thread. A10 owns fuller startup/edit/memory measurements.
 ARM64 execution, physical phone behavior, API 24 execution, persistent fit storage
 and APK upgrades remain unverified. The existing lint data-extraction-rules warning
 belongs to storage/upgrade work. Manual APK upload remains opt-in.
+
+A08 is merged in [PR #8](https://github.com/Sussic/Pyfa-android/pull/8).
+[Native CI](https://github.com/Sussic/Pyfa-android/actions/runs/35159732933) passed all four tests on head
+`7799cecf906950c24f7e23901d359df99030fedf` on the first run. The unchanged A04 fixture,
+all nine recipient phases, five removal cycles and complete same-worker repeat
+pass; A01 also passes after projection verification. Package checks cover both
+mobile Python sources and both ABIs. [A08's durable receipt](../docs/android/evidence/a08-native.json)
+retains every native observation, exact build/data hashes, JUnit and host evidence.
+This adds bounded projection feasibility, not the projection editor or full
+D01/D02 coverage. Command parity is the next task, A09.
