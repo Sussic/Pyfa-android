@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-14.
+Updated: 2026-09-16.
 
 ## Baseline and goal
 
@@ -72,7 +72,11 @@ Updated: 2026-09-14.
 
 ## Current work and exact next task
 
-- No active task; A07 is delivered. **A01–A07 are done: 7 of 72 work items;
+- Active task: **A08 — Android projection parity**, branch
+  `android/a08-projection-parity`. Verify A04's 11 independent desktop states
+  through the native worker, plus multiple-recipient invalidation and removal
+  cleanup, while preserving A07's offline/ammunition/package checks.
+  **A01–A07 are done: 7 of 72 work items;
   65 remain**, plus four parent rollups. ROADMAP owns task state; PARITY owns
   behavior/evidence rows. A07 baseline evidence is partial where rows require more.
 - Exact next task: **A08 — Android projection parity**. Run A04's independent

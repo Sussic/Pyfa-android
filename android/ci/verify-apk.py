@@ -23,6 +23,7 @@ def main():
         assert len(database) == manifest["database_bytes"]
         assert hashlib.sha256(database).hexdigest() == manifest["database_sha256"]
         assert apk.read("assets/engine/vexor.json") == (ROOT.parent / "tools/android_reference/vexor.json").read_bytes()
+        assert apk.read("assets/engine/projection.json") == (ROOT.parent / "tools/android_reference/projection.json").read_bytes()
         files = {}
         for name in apk.namelist():
             if name.endswith(".so"):
@@ -39,17 +40,22 @@ def main():
             matches = [raw for path, raw in files.items() if path.endswith("!/" + name)]
             assert len(matches) == 1, "Missing or duplicated engine source: " + name
             assert hashlib.sha256(matches[0]).hexdigest() == digest, name
-        mobile = (ROOT / "app/src/main/python/mobile_runtime.py").read_bytes().replace(b"\r\n", b"\n")
-        mobile_files = [raw for path, raw in files.items() if path.endswith("!/mobile_runtime.py")]
-        assert len(mobile_files) == 1, "Missing or duplicated mobile_runtime.py in Chaquopy sources"
         # Root .gitattributes uses CRLF for Python. Compare normalized source on
         # both sides, as the engine staging/data provenance checks already do.
-        assert mobile_files[0].replace(b"\r\n", b"\n") == mobile, "Stale mobile_runtime.py in APK"
-        assert not any("vexor-expected.json" in name or "tools/android_reference/fixtures" in name for name in apk.namelist())
+        mobile_sources = {}
+        for source in sorted((ROOT / "app/src/main/python").glob("*.py")):
+            mobile = source.read_bytes().replace(b"\r\n", b"\n")
+            matches = [raw for path, raw in files.items() if path.endswith("!/" + source.name)]
+            assert len(matches) == 1, "Missing or duplicated mobile source: " + source.name
+            assert matches[0].replace(b"\r\n", b"\n") == mobile, "Stale mobile source: " + source.name
+            mobile_sources[source.name] = hashlib.sha256(mobile).hexdigest()
+        assert not any("-expected.json" in name or "tools/android_reference/fixtures" in name
+                       for name in list(apk.namelist()) + list(files))
         assert not any("!/wx/" in name or "!/gui/" in name or "!/service/" in name for name in files)
     receipt = {"database_bytes": len(database), "database_sha256": manifest["database_sha256"],
                "database_logical_sha256": manifest["database_logical_sha256"],
                "engine_source_sha256": manifest["engine_source_sha256"],
+               "mobile_sources": mobile_sources,
                "engine_source_files": len(manifest["engine_sources"]), "abis": {}}
     with tempfile.TemporaryDirectory() as directory:
         temporary = Path(directory) / "library.so"

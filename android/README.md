@@ -1,10 +1,12 @@
-# Offline Android engine development (A07)
+# Offline Android engine development (A08)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
 without network access. Both guns can change ammunition together; the sample
 shows drone control range and all 38 sampled attributes. Creating/saving user
-fits, projection/command Android checks and the complete fitting UI are later tasks.
+fits, command Android checks and the complete fitting UI are later tasks. A08 adds
+native projection checks against the unchanged A04 reference; it does not add a
+projection editor to the sample UI.
 The APK has no Internet permission. Root GPLv3 and EOS LGPL notices are included.
 
 ## Toolchain
@@ -113,7 +115,7 @@ bash ci/native-test.sh
 ```
 
 This disables emulator Wi-Fi/mobile data and enables airplane mode **before the
-app is installed**. Do not run the script on a personal phone. It executes three
+app is installed**. Do not run the script on a personal phone. It executes four
 instrumented tests: offline sample/bulk-ammunition/About navigation, recreation
 and landscape Back behavior, and independent A01 raw-value parity. The latter
 compares all three states, 38 values and units per state, inputs, settings, item
@@ -121,6 +123,15 @@ IDs, dataset identity and the untouched golden fixture hash. It verifies the
 native Greenlet module is loaded and EOS rejects database writes. The existing
 reference tolerance is retained: absolute 1e-9 / relative 1e-10; boolean/string
 values and object keys are exact.
+
+The fourth test checks A04's Celestis/Vexor projections: 39 raw statistics and
+units on each fit in 11 states (apply, distance, disable/reactivate, source script
+edit/restoration, remove/reapply/remove). Nine additional phases check two
+recipients and an unlinked control, reading recipient two before one after source
+edits. Five apply/remove cycles check both directions of every association and
+all restored values. The entire probe repeats on the same worker; A01 ammunition
+parity is checked again afterward. No manual recipient refresh or golden values
+are used in production Python. `projection-expected.json` is test-APK-only.
 
 `ci/verify-apk.py` inspects actual APK and nested Chaquopy archive bytes. It verifies
 the complete database, source manifest, source freshness, notices and ARM64/x86_64
@@ -134,8 +145,9 @@ device, avoiding shell quoting and app storage permissions. This test transport
 does not raise the application's minimum API; API 24 execution remains unverified.
 Shell-owned evidence survives AGP's app uninstall. Failures retain a screenshot
 and short logcat excerpt. `build/evidence/native-summary.json` identifies the
-actual checkout, APK, device and measured initialization/edit timings. A08/A09
-own projection/command Android parity; A10 owns fuller performance measurements.
+actual checkout, APK, device and measured initialization/edit timings.
+`projection-native.json` retains every A08 observation and its fixture/data/source
+provenance. A09 owns command Android parity; A10 owns fuller performance measurements.
 
 ## CI and deliberate APK delivery
 

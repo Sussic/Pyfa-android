@@ -73,6 +73,17 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun verifyProjection(context: Context): CompletableFuture<String> {
+        val ready = start(context)
+        val app = context.applicationContext
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(Looper.myLooper() != Looper.getMainLooper())
+            val case = app.assets.open("engine/projection.json").bufferedReader().use { it.readText() }
+            Python.getInstance().getModule("mobile_runtime").callAttr("verify_projection", case).toString()
+        }, executor)
+    }
+
     private fun submit(action: () -> String): CompletableFuture<String> =
         CompletableFuture.supplyAsync({
             try {
