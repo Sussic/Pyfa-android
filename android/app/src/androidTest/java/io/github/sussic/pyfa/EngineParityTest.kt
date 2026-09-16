@@ -48,9 +48,107 @@ class EngineParityTest {
         val migrations = actual.getJSONArray("migration_versions")
         assertEquals(49, migrations.length())
         for (index in 0 until migrations.length()) assertEquals(index + 1, migrations.getInt(index))
+        retain(actual, "/sdcard/Download/pyfa-a07-engine.json")
+    }
+
+    @Test
+    fun projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val context = instrumentation.targetContext
+        assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
+        assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
+        val fixtureBytes = instrumentation.context.assets.open("projection-expected.json").use { it.readBytes() }
+        val expected = JSONObject(fixtureBytes.toString(Charsets.UTF_8))
+        val actual = JSONObject(EngineRuntime.verifyProjection(context).get(120, TimeUnit.SECONDS))
+        for (key in listOf("states", "inputs", "dataset_metadata", "eos_settings", "resolved_item_ids",
+            "database_logical_sha256", "source_data_sha256")) {
+            compare(expected.get(key), actual.get(key), "projection.$key")
+        }
+        assertEquals(expected.getString("source_commit"), actual.getString("desktop_source_commit"))
+        val fixtureHash = MessageDigest.getInstance("SHA-256").digest(fixtureBytes)
+            .joinToString("") { "%02x".format(it) }
+        assertEquals(fixtureHash, actual.getString("desktop_fixture_sha256"))
+        assertEquals(0, actual.getJSONArray("desktop_import_attempts").length())
+        val states = expected.getJSONObject("states")
+        assertEquals(11, states.length())
+        for (name in states.keys()) {
+            for (role in listOf("source", "target")) {
+                assertEquals(39, actual.getJSONObject("states").getJSONObject(name).getJSONObject(role).length())
+            }
+        }
+        assertLinks(actual.getJSONObject("scenario_links"), false, false, "scenario_removed")
+
+        // Both identical recipients use the same independent desktop oracle.
+        // The runtime reads recipient two before one, without manual refreshes.
+        val phases = linkedMapOf(
+            "initial" to Pair("initial", "initial"),
+            "applied" to Pair("applied_zero", "applied_zero"),
+            "first_distant" to Pair("distant", "applied_zero"),
+            "first_disabled" to Pair("initial", "applied_zero"),
+            "first_reactivated" to Pair("applied_zero", "applied_zero"),
+            "script_changed" to Pair("script_changed", "script_changed"),
+            "first_removed" to Pair("initial", "script_changed"),
+            "script_restored" to Pair("initial", "applied_zero"),
+            "removed" to Pair("initial", "initial"),
+        )
+        val multi = actual.getJSONObject("multi_recipient")
+        assertEquals(phases.keys, multi.keys().asSequence().toSet())
+        for ((phase, names) in phases) {
+            val result = multi.getJSONObject(phase)
+            assertEquals(setOf("first", "second", "unlinked", "links"), result.keys().asSequence().toSet())
+            compare(states.getJSONObject(names.first).getJSONObject("target"), result.get("first"), "$phase.first")
+            compare(states.getJSONObject(names.second).getJSONObject("target"), result.get("second"), "$phase.second")
+            compare(states.getJSONObject("initial").getJSONObject("target"), result.get("unlinked"), "$phase.unlinked")
+            val secondLinked = phase != "initial" && phase != "removed"
+            val firstLinked = secondLinked && phase != "first_removed" && phase != "script_restored"
+            assertLinks(result.getJSONObject("links"), firstLinked, secondLinked, phase)
+        }
+        val cycles = actual.getJSONArray("repeated_cycles")
+        assertEquals(5, cycles.length())
+        for (i in 0 until cycles.length()) {
+            val cycle = cycles.getJSONObject(i)
+            compare(states.getJSONObject("applied_zero"), cycle.getJSONObject("applied").get("stats"), "cycle[$i].applied")
+            compare(states.getJSONObject("initial"), cycle.getJSONObject("removed").get("stats"), "cycle[$i].removed")
+            assertLinks(cycle.getJSONObject("applied").getJSONObject("links"), true, false, "cycle[$i].applied")
+            assertLinks(cycle.getJSONObject("removed").getJSONObject("links"), false, false, "cycle[$i].removed")
+        }
+        // Re-enter on the same process-owned worker and compare every observation.
+        val repeated = JSONObject(EngineRuntime.verifyProjection(context).get(120, TimeUnit.SECONDS))
+        val repeatTime = repeated.remove("projection_sequence_ms")
+        val firstTime = actual.remove("projection_sequence_ms")
+        compare(actual, repeated, "same_worker_repeat")
+        actual.put("projection_sequence_ms", firstTime)
+        actual.put("repeat_sequence_ms", repeatTime)
+        actual.put("same_worker_repeat_matched", true)
+
+        // Projection verification must not contaminate the existing sample or its
+        // provenance, regardless of native test ordering.
+        val ammoExpected = instrumentation.context.assets.open("vexor-expected.json").bufferedReader().use {
+            JSONObject(it.readText())
+        }
+        val ammunition = JSONObject(EngineRuntime.verifyAmmunition(context).get(120, TimeUnit.SECONDS))
+        for (key in listOf("states", "inputs", "resolved_item_ids")) {
+            compare(ammoExpected.get(key), ammunition.get(key), "ammunition_after_projection.$key")
+        }
+        assertTrue(ammunition.getBoolean("readonly_database"))
+        actual.put("ammunition_after_projection_matched", true)
+        retain(actual, "/sdcard/Download/pyfa-a08-projection.json")
+    }
+
+    private fun assertLinks(actual: JSONObject, first: Boolean, second: Boolean, path: String) {
+        val recipients = JSONObject()
+        for ((name, linked) in mapOf("first" to first, "second" to second, "unlinked" to false)) {
+            recipients.put(name, JSONObject().put("count", if (linked) 1 else 0)
+                .put("forward", linked).put("reverse", linked))
+        }
+        val expected = JSONObject().put("source_count", (if (first) 1 else 0) + (if (second) 1 else 0))
+            .put("recipients", recipients)
+        compare(expected, actual, "$path.links")
+    }
+
+    private fun retain(actual: JSONObject, output: String) {
         // This report contains actual native values, not only a passed counter.
-        val automation = instrumentation.uiAutomation
-        val output = "/sdcard/Download/pyfa-a07-engine.json"
+        val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
         // UiAutomation uses Runtime.exec(String), which does not parse shell
         // quoting/redirection. Feed bytes directly to a shell-owned writer.
         // The native evidence suite targets API 36; this transport needs 31+.

@@ -41,4 +41,5 @@ sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest
 collect_screenshots
 adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
+adb exec-out cat /sdcard/Download/pyfa-a08-projection.json > build/evidence/projection-native.json
 python3 ci/summarize-tests.py

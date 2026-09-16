@@ -22,6 +22,7 @@ required = {
     "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack",
     "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
     "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline",
+    "io.github.sussic.pyfa.EngineParityTest.projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline",
 }
 if not required.issubset(tests):
     raise SystemExit(f"Required native assertions missing: {sorted(required - set(tests))}")
@@ -43,8 +44,18 @@ assert engine["engine_source_sha256"] == contents["engine_source_sha256"]
 assert engine["readonly_database"] and not engine["desktop_import_attempts"]
 assert set(engine["states"]) == {"initial", "iron_ammunition", "restored"}
 assert all(len(stats) == 38 for stats in engine["states"].values())
+projection = json.loads((evidence / "projection-native.json").read_text())
+for key in ("database_sha256", "database_logical_sha256", "engine_source_sha256", "source_data_sha256",
+            "desktop_source_commit", "dataset_metadata"):
+    assert projection[key] == engine[key], key
+assert not projection["desktop_import_attempts"]
+assert projection["same_worker_repeat_matched"] and projection["ammunition_after_projection_matched"]
+assert len(projection["states"]) == 11
+assert all(set(pair) == {"source", "target"} and all(len(stats) == 39 for stats in pair.values())
+           for pair in projection["states"].values())
+assert len(projection["multi_recipient"]) == 9 and len(projection["repeated_cycles"]) == 5
 summary = {
-    "task": "A07",
+    "task": "A08",
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
     "workflow_run": os.environ.get("GITHUB_RUN_ID"),
     "tests": tests,
@@ -57,6 +68,9 @@ summary = {
     "apk_sha256": hashlib.sha256(apk.read_bytes()).hexdigest(),
     "engine_packaged": True,
     "engine_parity_tested": "A01: 38 statistics across three ammunition states",
+    "projection_parity_tested": "A04: 39 statistics per fit, two fits, 11 states; two recipients, nine phases, five apply/remove cycles; same-worker repeat",
+    "projection_sequence_ms": projection["projection_sequence_ms"],
+    "projection_repeat_sequence_ms": projection["repeat_sequence_ms"],
     "arm64_contents_verified": "arm64-v8a" in contents["abis"],
     "arm64_runtime_tested": False,
     "python_dependencies": engine["dependencies"],
@@ -70,4 +84,5 @@ if os.environ.get("GITHUB_STEP_SUMMARY"):
         stream.write("### Offline Android EOS\n\n")
         stream.write(f"{len(tests)} native tests passed on API {summary['device']['api']} / {summary['device']['abi']}.\n\n")
         stream.write("Fresh offline install; no Internet permission. A01's 38 raw statistics pass in three ammunition states. ARM64 APK contents verified; ARM64 execution untested.\n\n")
+        stream.write("A04 projections: 39 raw statistics per fit across 11 states; multiple-recipient invalidation, link cleanup and repeated removal pass.\n\n")
         stream.write(f"APK: {summary['apk_bytes']} bytes; SHA-256 `{summary['apk_sha256']}`.\n")

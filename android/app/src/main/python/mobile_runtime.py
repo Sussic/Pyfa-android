@@ -1,4 +1,4 @@
-"""A07's provisional, serialized Android entry point. EOS owns every value."""
+"""Provisional, serialized Android entry point. EOS owns every value."""
 import importlib.abc
 import importlib.metadata
 from contextlib import closing
@@ -64,6 +64,45 @@ def set_ammunition(name):
     return snapshot()
 
 
+def resolved_items(specs, charges):
+    # The worker/session is shared across tests. Report this case's identities,
+    # not the cumulative items resolved by earlier unrelated operations.
+    names = set(charges)
+    for spec in specs:
+        names.add(spec["ship"])
+        for row in spec["modules"] + spec["drones"]:
+            names.add(row["name"])
+            if row.get("charge"):
+                names.add(row["charge"])
+    return {name: _engine.resolved_item_ids[name] for name in sorted(names)}
+
+
+def verify_projection(case_json):
+    """Exercise linked fits on the existing worker; return only observed values."""
+    from projection_probe import run
+    case = json.loads(case_json)
+    start = time.monotonic()
+    actual = run(_engine, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items(
+            [case["source"], case["target"]],
+            [step["charge"] for step in case["steps"] if step["operation"] == "charges"]),
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["projection_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+        "projection_sequence_ms": (time.monotonic() - start) * 1000,
+    })
+    return encoded(actual)
+
+
 def verify_ammunition():
     """Return actual native values to the independent instrumentation comparator.
 
@@ -94,7 +133,8 @@ def verify_ammunition():
     return encoded({
         "states": {"initial": initial, "iron_ammunition": changed, "restored": restored},
         "inputs": _case, "dataset_metadata": _engine.metadata,
-        "eos_settings": _engine.settings, "resolved_item_ids": _engine.resolved_item_ids,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items([_case], [_case["edit"]["charge"]]),
         "database_sha256": _manifest["database_sha256"],
         "database_logical_sha256": _manifest["database_logical_sha256"],
         "desktop_source_commit": _manifest["desktop_source_commit"],
