@@ -84,6 +84,17 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun verifyCommand(context: Context): CompletableFuture<String> {
+        val ready = start(context)
+        val app = context.applicationContext
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(Looper.myLooper() != Looper.getMainLooper())
+            val case = app.assets.open("engine/command.json").bufferedReader().use { it.readText() }
+            Python.getInstance().getModule("mobile_runtime").callAttr("verify_command", case).toString()
+        }, executor)
+    }
+
     private fun submit(action: () -> String): CompletableFuture<String> =
         CompletableFuture.supplyAsync({
             try {

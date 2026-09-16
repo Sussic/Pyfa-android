@@ -64,10 +64,10 @@ def set_ammunition(name):
     return snapshot()
 
 
-def resolved_items(specs, charges):
+def resolved_items(specs, additional_items):
     # The worker/session is shared across tests. Report this case's identities,
     # not the cumulative items resolved by earlier unrelated operations.
-    names = set(charges)
+    names = set(additional_items)
     for spec in specs:
         names.add(spec["ship"])
         for row in spec["modules"] + spec["drones"]:
@@ -99,6 +99,32 @@ def verify_projection(case_json):
         "engine_source_sha256": _manifest["engine_source_sha256"],
         "desktop_import_attempts": list(_forbidden),
         "projection_sequence_ms": (time.monotonic() - start) * 1000,
+    })
+    return encoded(actual)
+
+
+def verify_command(case_json):
+    """Exercise command sources on the same worker; no expected values here."""
+    from command_probe import run
+    case = json.loads(case_json)
+    start = time.monotonic()
+    actual = run(_engine, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items(
+            [case["source"], case["target"]],
+            [step[key] for step in case["steps"] for key in ("charge", "skill", "implant") if key in step]),
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["command_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+        "command_sequence_ms": (time.monotonic() - start) * 1000,
     })
     return encoded(actual)
 

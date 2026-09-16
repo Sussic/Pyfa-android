@@ -37,6 +37,12 @@ def main():
         compare(golden[key], projection[key], "projection." + key)
     projection_input = ROOT / "tools/android_reference/projection.json"
     compare(projection["inputs"], json.loads(projection_input.read_text()), "projection.inputs")
+    command_path = ROOT / "tools/android_reference/fixtures/command.json"
+    command = json.loads(command_path.read_text())
+    for key in ("source_commit", "source_data_sha256", "database_logical_sha256", "dataset_metadata"):
+        compare(golden[key], command[key], "command." + key)
+    command_input = ROOT / "tools/android_reference/command.json"
+    compare(command["inputs"], json.loads(command_input.read_text()), "command.inputs")
     compare(SOURCE_COMMIT, golden["source_commit"], "desktop_source")
     data_digest = source_data_digest(ROOT)
     compare(golden["source_data_sha256"], data_digest, "pinned_source_data")
@@ -71,6 +77,7 @@ def main():
             manifest[relative.as_posix()] = hashlib.sha256(raw).hexdigest()
     shutil.copyfile(ROOT / "tools/android_reference/vexor.json", assets / "vexor.json")
     shutil.copyfile(projection_input, assets / "projection.json")
+    shutil.copyfile(command_input, assets / "command.json")
     info = {"desktop_source_commit": SOURCE_COMMIT, "source_data_sha256": data_digest,
             "database_logical_sha256": golden["database_logical_sha256"],
             "database_sha256": digest_file(database), "database_bytes": database.stat().st_size,
@@ -78,7 +85,8 @@ def main():
             "engine_source_sha256": hashlib.sha256(canonical(manifest)).hexdigest(),
             "engine_sources": manifest,
             "desktop_fixture_sha256": digest_file(golden_path),
-            "projection_fixture_sha256": digest_file(projection_path)}
+            "projection_fixture_sha256": digest_file(projection_path),
+            "command_fixture_sha256": digest_file(command_path)}
     (assets / "manifest.json").write_text(json.dumps(info, indent=2, sort_keys=True) + "\n")
     # Expected results belong only to the instrumentation APK, never production
     # Python or the sample's calculation path.
@@ -86,6 +94,7 @@ def main():
     tests.mkdir(exist_ok=True)
     shutil.copyfile(golden_path, tests / "vexor-expected.json")
     shutil.copyfile(projection_path, tests / "projection-expected.json")
+    shutil.copyfile(command_path, tests / "command-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

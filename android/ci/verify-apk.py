@@ -24,6 +24,7 @@ def main():
         assert hashlib.sha256(database).hexdigest() == manifest["database_sha256"]
         assert apk.read("assets/engine/vexor.json") == (ROOT.parent / "tools/android_reference/vexor.json").read_bytes()
         assert apk.read("assets/engine/projection.json") == (ROOT.parent / "tools/android_reference/projection.json").read_bytes()
+        assert apk.read("assets/engine/command.json") == (ROOT.parent / "tools/android_reference/command.json").read_bytes()
         files = {}
         for name in apk.namelist():
             if name.endswith(".so"):

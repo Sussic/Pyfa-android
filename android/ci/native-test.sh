@@ -42,4 +42,5 @@ timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest
 collect_screenshots
 adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
 adb exec-out cat /sdcard/Download/pyfa-a08-projection.json > build/evidence/projection-native.json
+adb exec-out cat /sdcard/Download/pyfa-a09-command.json > build/evidence/command-native.json
 python3 ci/summarize-tests.py
