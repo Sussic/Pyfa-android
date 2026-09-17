@@ -174,3 +174,43 @@ def verify_ammunition():
         "desktop_import_attempts": _forbidden, "boot_ms": _boot_ms,
         "edit_sequence_ms": (time.monotonic() - start) * 1000,
     })
+
+
+_benchmark = None
+
+
+def prepare_benchmark(kind, case_json):
+    """Prepare reusable fits outside measured edits; expose their provenance."""
+    global _benchmark
+    if _engine is None:
+        raise RuntimeError("Start the Android engine before preparing benchmarks")
+    if _benchmark is None:
+        from performance_probe import PerformanceProbe
+        _benchmark = PerformanceProbe(_engine, _fit)
+    case = _case if kind == "ammunition" else json.loads(case_json)
+    actual = _benchmark.prepare(kind, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    fixture_key = {"ammunition": "desktop_fixture_sha256", "projection": "projection_fixture_sha256",
+                   "command": "command_fixture_sha256"}[kind]
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata, "eos_settings": _engine.settings,
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest[fixture_key],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+    })
+    return encoded(actual)
+
+
+def step_benchmark(operation):
+    """Apply one edit to existing benchmark fits and serialize observed values."""
+    if _benchmark is None:
+        raise RuntimeError("Prepare a benchmark before editing")
+    actual = _benchmark.step(operation)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    return encoded(actual)

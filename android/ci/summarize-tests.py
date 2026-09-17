@@ -6,6 +6,7 @@ from pathlib import Path
 import struct
 import subprocess
 import xml.etree.ElementTree as ET
+from performance_summary import summarize
 
 root = Path(__file__).resolve().parents[1]
 reports = sorted((root / "app/build/outputs/androidTest-results/connected").rglob("TEST-*.xml"))
@@ -68,11 +69,17 @@ assert all(set(pair) == {"source", "target"} and all(len(stats) == 39 for stats 
 assert len(command["multi_recipient"]) == 18 and len(command["repeated_cycles"]) == 5
 assert len(command["pending_command_bonuses"]) == 112
 assert all(type(count) is int and count == 0 for count in command["pending_command_bonuses"].values())
+performance = summarize(
+    json.loads((evidence / "startup-native.json").read_text()),
+    json.loads((evidence / "performance-native.json").read_text()), engine,
+)
 summary = {
-    "task": "A09",
+    "task": "A10",
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
     "workflow_run": os.environ.get("GITHUB_RUN_ID"),
     "tests": tests,
+    "performance_test": "io.github.sussic.pyfa.PerformanceTest.repeatedEditsMatchDesktopWithStableFitCountOffline",
+    "performance": performance,
     "screenshots": screenshots,
     "device": {name: (evidence / f"device-{name}.txt").read_text().strip() for name in ("fingerprint", "abi", "api")},
     "fresh_install": True,
@@ -104,3 +111,7 @@ if os.environ.get("GITHUB_STEP_SUMMARY"):
         stream.write("A04 projections: 39 raw statistics per fit across 11 states; multiple-recipient invalidation, link cleanup and repeated removal pass.\n\n")
         stream.write("A05 commands: 39 raw statistics per fit across 19 states; skills, mindlink, module/charge edits, all recipients, link removal and pending-bonus cleanup pass.\n\n")
         stream.write(f"APK: {summary['apk_bytes']} bytes; SHA-256 `{summary['apk_sha256']}`.\n")
+
+if os.environ.get("GITHUB_STEP_SUMMARY"):
+    with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
+        stream.write("\nA10: five normal startup samples and a separate native test comparing 120 timed edits to desktop fixtures. Raw measurements and process-memory snapshots retained.\n")

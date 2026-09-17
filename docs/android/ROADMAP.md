@@ -27,7 +27,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | A07 | done | A06 | Bundle data and boot EOS on Android | Fresh offline launch calculates A01 through embedded Python; x86_64 native test passes and arm64 package contains its required native dependencies/data. |
 | A08 | done | A04, A07 | Android projection parity | A04 reference cases pass through the Android bridge, including changes/removal and stale-cache checks. |
 | A09 | done | A05, A07 | Android command parity | A05 reference cases pass through the Android bridge with correct recipient updates and cleanup. |
-| A10 | ready | A02, A08, A09 | Decide embedding feasibility | Record measured startup/recalculation/memory/APK size, remaining ABI/device gaps and supported dependency pins; justify continuing or propose a viable correction. |
+| A10 | in progress | A02, A08, A09 | Decide embedding feasibility | Record measured startup/recalculation/memory/APK size, remaining ABI/device gaps and supported dependency pins; justify continuing or propose a viable correction. |
 
 ## B — make an editable, persistent fitting workflow
 

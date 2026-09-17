@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-16.
+Updated: 2026-09-17.
 
 ## Baseline and goal
 
@@ -79,7 +79,7 @@ Updated: 2026-09-16.
 
 ## Current work and exact next task
 
-- No active task; A09 is delivered. **A01–A09 are done: 9 of 72 work items;
+- **Active: A10 — Decide embedding feasibility.** Measure first-install and subsequent process startup, per-edit latency, process memory and APK size for the existing single-fit/projection/command fixtures; preserve all five native parity/UI tests and record a bounded architecture decision. The sustained host run also exposed source-module attributes lost after ORM relationship refresh; A10 includes the minimal adapter recalculation fix, deterministic regressions and both native/desktop gates. A09 is delivered. **A01–A09 are done: 9 of 72 work items;
   63 remain**, plus four parent rollups. All 239 parity rows remain; evidence
   stays partial where rows require broader behavior or UI/persistence checks.
 - Exact next task: **A10 — Decide embedding feasibility**. Measure full startup,

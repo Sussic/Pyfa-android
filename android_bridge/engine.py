@@ -183,6 +183,9 @@ class HeadlessEngine:
         # Same flush/refresh as desktop CalcAddProjectedFitCommand (issue #83).
         eos.db.saveddata_session.flush()
         eos.db.saveddata_session.refresh(source)
+        # Refresh expires module relationships; collected ORM objects can reload
+        # without modified attributes while the source still says calculated.
+        self._recalculate(source)
         self.configure_projection(source, target, range_m=range_m, active=active, amount=amount)
 
     def configure_projection(self, source, target, *, range_m, active, amount):
@@ -199,6 +202,7 @@ class HeadlessEngine:
         del target.projectedFitDict[source.ID]
         eos.db.saveddata_session.flush()
         eos.db.saveddata_session.refresh(source)
+        self._recalculate(source)
         self._recalculate(target)
 
     def projection_snapshot(self, fit):
@@ -229,6 +233,7 @@ class HeadlessEngine:
         target.commandFitDict[source.ID] = source
         eos.db.saveddata_session.flush()
         eos.db.saveddata_session.refresh(source)
+        self._recalculate(source)
         self.set_command_active(source, target, active)
 
     def set_command_active(self, source, target, active):
@@ -244,6 +249,7 @@ class HeadlessEngine:
         del target.commandFitDict[source.ID]
         eos.db.saveddata_session.flush()
         eos.db.saveddata_session.refresh(source)
+        self._recalculate(source)
         self._recalculate(target)
 
     def set_skill_level(self, fit, skill_name, level):
