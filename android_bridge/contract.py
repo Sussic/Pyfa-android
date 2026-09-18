@@ -264,16 +264,20 @@ class BridgeSession:
             raise StoreError("Saved fits have invalid graph inputs; their file has been preserved") from error
 
     def _write_and_confirm(self, attempt):
+        write_error = None
         try:
             self._store.write(attempt)
-        except Exception:
+        except Exception as error:
             # A commit may have succeeded before an I/O exception was reported.
             # Only a fresh read can distinguish the exact old/new generations.
-            pass
+            write_error = error
         try:
-            return self._store.confirm(attempt)
+            outcome = self._store.confirm(attempt)
         except Exception as error:
             raise StoreUncertain("Cannot confirm the saved fit commit; reopen the app") from error
+        if outcome == "old":
+            raise StoreWriteRejected("The edit could not be saved; previous saved fits are intact") from write_error
+        return outcome
 
     def get_fit(self, logical_id):
         self.engine._check_thread()

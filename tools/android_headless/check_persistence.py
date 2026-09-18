@@ -58,13 +58,15 @@ def main():
     test_names = [test.id() for test in suite]
     with (args.output / "tests.log").open("w", encoding="utf-8") as log:
         result = unittest.TextTestRunner(stream=log, verbosity=2).run(suite)
-    if (result.testsRun != 11 or not result.wasSuccessful() or result.skipped or
+    if (result.testsRun != 14 or not result.wasSuccessful() or result.skipped or
             result.expectedFailures or guard.attempts or network_attempts):
         raise RuntimeError("Persistence tests failed, skipped or attempted forbidden operations")
     compare(before, digest_file(args.database), "unchanged_game_database")
     evidence = {"task": "B02", "host_only": True, "tests_passed": result.testsRun, "test_names": test_names,
         "real_fresh_process_reopen": True, "retained_fit_graph_size": 9,
         "before_after_commit_process_death_tested": True, "initialization_process_death_tested": True,
+        "initialization_without_hard_links_tested": True, "concurrent_initializers_tested": True,
+        "before_after_install_process_death_tested": True,
         "ambiguous_commit_confirmation_tested": True, "confirmed_publication_failure_tested": True, "invalid_saved_files_preserved": True,
         "database_sha256": before, "database_logical_sha256": identity,
         "game_database_unchanged": True, "desktop_import_attempts": guard.attempts,

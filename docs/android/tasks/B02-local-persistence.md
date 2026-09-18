@@ -30,6 +30,14 @@ B01 recovery and a save error; confirmed new data permits success. An unknown
 outcome stops the session until restart. Never publish an older graph while newer
 data may already be committed.
 
+Initial installation builds a complete temporary database first. On POSIX,
+including Android, a permanent sibling lock coordinates all app-private creators;
+under that lock, an existing destination is refused before atomic rename. Windows
+rename already refuses an existing destination. The lock inode is never deleted,
+and process death releases the operating-system lock. Android prohibits app hard
+links, so initial installation does not use them. This protocol coordinates this
+app's writers; other code must not write directly into the private store directory.
+
 Production uses app-private `noBackupFilesDir/fits/graph.sqlite3`, excluded from
 Android automatic backup/transfer. Existing direct-engine diagnostic probes run
 in explicitly ephemeral processes; they cannot mutate a user's saved graph.

@@ -10,10 +10,11 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
-from android_bridge.store import GraphStore, encode_graph
+from android_bridge.store import GraphStore, StoreUncertain, encode_graph
 from tools.android_reference.reference import compare
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -33,6 +34,18 @@ def worker(mode, database, identity, store_path, output):
     spec.pop("edit")
     engine = HeadlessEngine(database)
     original_commit = GraphStore._commit
+    if mode.startswith("install_kill_"):
+        original_rename = os.rename
+
+        def interrupt_install(source, destination):
+            candidate = json.loads(GraphStore(source).current.payload)
+            output.write_text(json.dumps({"candidate": candidate}), encoding="utf-8")
+            if mode.endswith("after"):
+                original_rename(source, destination)
+            os._exit(63)
+        with patch("android_bridge.store.os.rename", side_effect=interrupt_install):
+            BridgeSession.open(engine, store_path, identity, spec)
+        raise AssertionError("Initial installation interruption did not occur")
     if mode.startswith("initial_kill_"):
         def interrupt_initial(connection):
             if mode.endswith("after"):
@@ -48,7 +61,30 @@ def worker(mode, database, identity, store_path, output):
             output.write_text(json.dumps({"rejected": True, "error": type(error).__name__}), encoding="utf-8")
             return
         raise AssertionError("Invalid saved fits unexpectedly opened")
-    bridge = BridgeSession.open(engine, store_path, identity, spec)
+    if mode == "competing_initializer":
+        original_install = GraphStore._install_initial
+
+        def simultaneous_install(store, temporary):
+            output.with_suffix(".ready").write_text("ready", encoding="utf-8")
+            deadline = time.monotonic() + 30
+            while not Path(str(store_path) + ".go").exists():
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("Concurrent initialization barrier timed out")
+                time.sleep(0.01)
+            return original_install(store, temporary)
+        try:
+            with patch.object(GraphStore, "_install_initial", simultaneous_install):
+                bridge = BridgeSession.open(engine, store_path, identity, spec)
+        except StoreUncertain:
+            stored = GraphStore(store_path).current
+            output.write_text(json.dumps({"outcome": "lost", "payload": stored.payload}), encoding="utf-8")
+            return
+    elif mode == "no_hard_links":
+        with patch("android_bridge.store.os.link", side_effect=PermissionError("Android disallows hard links")) as link:
+            bridge = BridgeSession.open(engine, store_path, identity, spec)
+            link.assert_not_called()
+    else:
+        bridge = BridgeSession.open(engine, store_path, identity, spec)
     initial = json.loads(bridge.bootstrap())
 
     def send(operation, arguments, error=None):
@@ -138,11 +174,13 @@ def worker(mode, database, identity, store_path, output):
         send("set_charges", {"fit_id": bridge.sample_id, "module_indices": [999], "charge": "Iron Charge M"}, "INVALID_EDIT")
         assert generation == bridge.persistence_info["generation"]
         assert json.loads(bridge.bootstrap())["fits"] == initial["fits"]
-    elif mode != "reopen":
+    elif mode not in ("reopen", "no_hard_links", "competing_initializer"):
         raise ValueError("Unknown persistence worker")
     result = {"session_id": bridge.session_id, "sample_id": bridge.sample_id,
               "persistence": bridge.persistence_info, "bootstrap": json.loads(bridge.bootstrap()),
               "retained_fit_count": len(engine._fits), "detail": detail}
+    if mode == "competing_initializer":
+        result.update(outcome="won", payload=bridge._store.current.payload)
     output.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
 
 
@@ -255,6 +293,54 @@ class PersistenceTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             first.write(attempt)
         self.assertEqual(hashlib.sha256(self.store.read_bytes()).hexdigest(), digest)
+
+    def test_initialization_does_not_use_prohibited_hard_links(self):
+        saved = self.run_worker("no_hard_links")
+        self.assertEqual(saved["persistence"]["generation"], 1)
+        self.assert_roundtrip(saved, self.run_worker("reopen"))
+
+    def test_two_competing_creators_install_only_one_complete_graph(self):
+        outputs = [self.root / ("creator-" + str(index) + ".json") for index in range(2)]
+        processes = [subprocess.Popen([sys.executable, "-I", str(RUNNER), "--worker", "competing_initializer",
+                       "--database", str(DATABASE), "--identity", IDENTITY, "--store", str(self.store),
+                       "--output", str(output)], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                       text=True, encoding="utf-8") for output in outputs]
+        try:
+            deadline = time.monotonic() + 30
+            while not all(output.with_suffix(".ready").exists() for output in outputs):
+                self.assertTrue(all(process.poll() is None for process in processes), "Creator exited before barrier")
+                self.assertLess(time.monotonic(), deadline, "Creators did not reach installation barrier")
+                time.sleep(0.01)
+            Path(str(self.store) + ".go").write_text("go", encoding="utf-8")
+            for process in processes:
+                stdout, stderr = process.communicate(timeout=90)
+                self.assertEqual(process.returncode, 0, stdout + stderr)
+        finally:
+            for process in processes:
+                if process.poll() is None:
+                    process.kill()
+                    process.communicate(timeout=10)
+        reports = [json.loads(output.read_text(encoding="utf-8")) for output in outputs]
+        self.assertCountEqual([report["outcome"] for report in reports], ["won", "lost"])
+        self.assertEqual(reports[0]["payload"], reports[1]["payload"])
+        winner = next(report for report in reports if report["outcome"] == "won")
+        self.assertEqual(winner["persistence"]["generation"], 1)
+        self.assert_roundtrip(winner, self.run_worker("reopen"))
+
+    def test_process_death_before_and_after_install_releases_initialization_lock(self):
+        for phase in ("before", "after"):
+            with self.subTest(phase=phase):
+                self.run_worker("install_kill_" + phase, 63)
+                candidate = json.loads((self.root / (str(self.sequence) + ".json")).read_text(encoding="utf-8"))["candidate"]
+                self.assertEqual(self.store.exists(), phase == "after")
+                reopened = self.run_worker("reopen")
+                self.assertEqual(reopened["persistence"]["generation"], 1)
+                if phase == "after":
+                    self.assertEqual(reopened["sample_id"], candidate["sample_id"])
+                else:
+                    self.assertNotEqual(reopened["sample_id"], candidate["sample_id"])
+                self.assertEqual(len(reopened["bootstrap"]["fits"]), 1)
+                self.store.unlink()
 
     def test_invalid_unsupported_or_mismatched_saved_files_are_preserved(self):
         self.run_worker("seed")

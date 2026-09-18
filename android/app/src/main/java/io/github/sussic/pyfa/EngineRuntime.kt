@@ -5,6 +5,7 @@ import android.os.Looper
 import android.os.Debug
 import android.os.Process
 import android.os.SystemClock
+import android.util.Log
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import java.io.File
@@ -104,6 +105,7 @@ object EngineRuntime {
                 mutableState.value = EngineState.Ready(result)
                 result
             } catch (error: Exception) {
+                if (BuildConfig.DEBUG) Log.e("PyfaEngine", "Engine startup failed", error)
                 mutableState.value = EngineState.Failed(error.message ?: "The fitting engine could not start.")
                 throw error
             }

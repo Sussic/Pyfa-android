@@ -146,7 +146,7 @@ python -I tools/android_headless/check_persistence.py \
   --output /path/outside/checkout/new-persistence-check
 ```
 
-Eleven focused tests use separate operating-system processes, real EOS and a
+Fourteen focused tests use separate operating-system processes, real EOS and a
 temporary SQLite store. They check nine-fit restoration, exact relationship and
 revision identity, dependent skill nulls, interrupted initial installation,
 process death before/after commit, errors after confirmed saves, stale writers,

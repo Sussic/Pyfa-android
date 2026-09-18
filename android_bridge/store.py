@@ -167,18 +167,31 @@ class GraphStore:
                 self._commit(connection)
             finally:
                 connection.close()
-            # An atomic no-replace install: a competing creator's database must
-            # survive. The complete SQLite graph exists before its final name.
-            os.link(temporary, self.path)
+            self._install_initial(temporary)
+        finally:
+            temporary.unlink(missing_ok=True)
+            Path(str(temporary) + "-journal").unlink(missing_ok=True)
+
+    def _install_initial(self, temporary):
+        # Android forbids app hard links. All creators of this app-private store
+        # instead serialize installation through one permanent lock inode.
+        # Never unlink that inode: waiters must continue locking the same file.
+        if os.name == "nt":
+            # Windows rename already refuses any existing destination.
+            os.rename(temporary, self.path)
+            return
+        import fcntl
+        with Path(str(self.path) + ".init.lock").open("a+b") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            if os.path.lexists(self.path):
+                raise FileExistsError("Saved fits already exist")
+            os.rename(temporary, self.path)
             if hasattr(os, "O_DIRECTORY"):
                 directory = os.open(self.path.parent, os.O_RDONLY | os.O_DIRECTORY)
                 try:
                     os.fsync(directory)
                 finally:
                     os.close(directory)
-        finally:
-            temporary.unlink(missing_ok=True)
-            Path(str(temporary) + "-journal").unlink(missing_ok=True)
 
     def confirm(self, attempt):
         """Identify new, old or uncertain durable state through a new connection."""

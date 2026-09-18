@@ -15,7 +15,7 @@ collect_diagnostics() {
   if [ "$result" -ne 0 ]; then
     collect_screenshots
     adb exec-out screencap -p > build/evidence/failure.png
-    adb logcat -d -t 300 AndroidRuntime:E TestRunner:I python.stderr:W '*:S' > build/evidence/failure-logcat.txt
+    adb logcat -d -t 300 AndroidRuntime:E PyfaEngine:E TestRunner:I python.stderr:W '*:S' > build/evidence/failure-logcat.txt
   fi
   exit "$result"
 }
