@@ -103,7 +103,7 @@ Updated: 2026-09-18.
   physical/ARM64/older-API execution, release performance and large/long-lived graphs
   remain unverified. This is feasibility, not full Pyfa parity or usability sign-off.
 
-## B01 completed and exact next task
+## B01 result
 
 - **B01:** [PR #11](https://github.com/Sussic/Pyfa-android/pull/11), merged as
   `edca0e795aa086edd90db1bf5f216dcd1c704c53`. Tested head: `3963d553193b9983c464bd51bb99cdeeabe15f5b`.
@@ -121,12 +121,33 @@ Updated: 2026-09-18.
   Local mobile recovery plus all 123 benchmark observations also pass. EOS formulas,
   the headless adapter, independent fixtures and all 239 parity rows remain intact.
 - [Contract/task/limits](tasks/B01-typed-bridge.md) and [durable evidence](evidence/b01-native.json).
-  Current support is the 39-field sample view and existing adapter edits. Full editing,
-  persistence, physical/ARM64/older-API execution and usability sign-off remain later work.
-- **Active: B02 — Local fit persistence.** Save the complete committed fit graph locally and restore it across process restart, preserving logical IDs, revisions and projected/command relationships. Require atomic saves and reference-matching recalculation; keep EOS recovery and existing native/host gates. **11 of 72 work items done; 61 remain**, plus four parent rollups.
-- Exact next task: **B02 — Local fit persistence.** Save/reopen synthetic fits and
-  command/projection links across process restart, preserving identity, transactions
-  and reference-matching values. Continue one task at a time.
+  B01 established the 39-field sample view and existing adapter edits. Full editing,
+  physical/ARM64/older-API execution and usability sign-off remain later work.
+
+## B02 completed and exact next task
+
+- **B02:** [PR #12](https://github.com/Sussic/Pyfa-android/pull/12), merged as
+  `9d96e0d8e8fc0fcb0a6a03023fb7cfe1a8ed8238`. Tested head: `225d0d15d8195e148aca5233c88b8b3a57086495`.
+- Complete committed fit graphs now save atomically in app-private SQLite and
+  reopen through EOS with stable IDs/revisions and projection/command links.
+  Invalid or incompatible files are preserved; ambiguous saves require restart.
+  Existing direct-engine diagnostics run in isolated ephemeral processes.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186247) passes build/lint/signing/package checks and **ten native
+  test executions**: original five, A10 performance, B01 contract and three B02
+  phases. Nine fits persist through two process restarts; 45 snapshots × 39 raw
+  statistics match desktop fixtures, including types/units and two-recipient edits.
+- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186269) passes **65 host tests**, all independent references and
+  the real migration/backup check. Local 65 tests plus the three-process mobile
+  wrapper check pass. Fourteen new fault/restart tests protect prior saves and
+  confirmed newer commits. Formulas, fixtures and all 239 parity rows are unchanged.
+- [Storage contract and limits](tasks/B02-local-persistence.md),
+  [durable evidence](evidence/b02-native.json). Physical/ARM64/older-API execution,
+  user backup/restore, dataset migration, upgrades and full fit editing remain
+  unverified or assigned to later tasks.
+- **12 of 72 work items done; 60 remain**, plus four parent rollups.
+- Exact next task: **B03 — Fit library screen.** Create, find, rename, duplicate
+  and remove fits, preserving or explicitly resolving references and auditing
+  desktop organization options. Continue one task at a time.
 
 ## Open questions and environment notes
 
@@ -143,9 +164,9 @@ Updated: 2026-09-18.
   emulator work. The app declares minSdk 24 but runtime has been tested only on API 36.
   Native report transport uses API 31+ UI automation pipes; lower APIs need an
   appropriate evidence transport before running that suite.
-- Lint reports one missing-data-extraction-rules warning. Storage/upgrade tasks
-  must define backup/transfer behavior before persistent-use releases. Stable
-  signing and upgrade preservation remain R02 work.
+- Lint reports one missing-data-extraction-rules warning. B02 fit storage uses the app-private no-backup
+  directory. Complete user backup/restore and transfer policy remain I05 work;
+  stable signing and upgrade preservation remain R02 work.
 - This workspace lacked KVM and local Java SDK downloads failed. Native build,
   installation and tests succeeded on GitHub's Ubuntu runner; no local APK build
   is claimed. Use the native workflow and recorded toolchain. Its KVM check now waits for
@@ -157,9 +178,13 @@ Updated: 2026-09-18.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select B02.
-Read B01's contract and failure-recovery boundaries before adding persistent
-storage; its current recovery intentionally requires an exclusive in-memory session.
-Preserve all five original native tests and the separately invoked performance and
-contract classes. Keep those processes isolated and retain the A10 forced-collection
-source-refresh regressions. No golden fixture or parity inventory coverage may be removed.
+Read AGENTS.md and this file; verify live master and open PRs, then select B03.
+Read B01's typed contract and B02's storage boundary before adding fit-library
+operations. Preserve stable IDs/revisions and explicitly resolve links when removing
+fits. EOS recovery still requires its exclusive in-memory session; durable inputs
+live in the separate app-private graph store. All initializers must use its locking
+protocol, including future import/restore paths.
+Preserve the original five native tests, separate performance and contract classes,
+and three persistence phases with app data retained. Keep diagnostic processes
+ephemeral and retain the A10 forced-collection regressions. No golden fixture or
+parity inventory coverage may be removed.

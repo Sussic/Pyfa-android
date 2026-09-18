@@ -273,3 +273,14 @@ restart. [Contract and scope](../docs/android/tasks/B01-typed-bridge.md),
 remains the sample fit. B02 adds persistent fits and links, with the fit library
 screen reserved for B03. The retained A10 edit timings measure the ephemeral
 calculation path; they do not include B02 durable-save latency.
+
+
+## B02 delivery
+
+[PR #12](https://github.com/Sussic/Pyfa-android/pull/12) delivers atomic local fit
+storage and process-restart restoration. [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186247) passes the seven
+existing native tests plus three persistence phases; 45 new snapshots match the
+independent desktop values. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186269) passes 65 host tests, the
+independent references and migration/backup check. [Full evidence and limits](../docs/android/evidence/b02-native.json)
+remain in the repository after CI artifacts expire. The next task is B03's fit
+library screen; this build's UI still exposes the sample and grouped ammunition.
