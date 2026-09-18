@@ -1,8 +1,11 @@
 """Real EOS projection regressions, run under check.py's import/network guards."""
 
 from copy import deepcopy
+import gc
 import threading
 import unittest
+from unittest.mock import patch
+import weakref
 
 from tools.android_reference.reference import compare
 
@@ -100,6 +103,37 @@ class EngineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ENGINE.remove_projection(self.source, self.target)
         self.state("initial")
+
+    def test_relationship_refresh_recalculates_collected_source_modules(self):
+        import eos.db
+        other = ENGINE.create_fit(EXPECTED["inputs"]["target"])
+        unlinked = ENGINE.create_fit(EXPECTED["inputs"]["target"])
+        session = eos.db.saveddata_session
+        refresh = session.refresh
+        collected = []
+
+        def refresh_and_collect(instance, *args, **kwargs):
+            previous = weakref.ref(instance.modules[0])
+            refresh(instance, *args, **kwargs)
+            # ORM refresh expires the module collection. Force the old module
+            # out of its weak identity map before the adapter reads it again.
+            gc.collect()
+            collected.append(previous() is None)
+
+        with patch.object(session, "refresh", side_effect=refresh_and_collect):
+            for operation, recipient, first, second in (
+                    (ENGINE.add_projection, self.target, True, False),
+                    (ENGINE.add_projection, other, True, True),
+                    (ENGINE.remove_projection, self.target, False, True),
+                    (ENGINE.remove_projection, other, False, False)):
+                operation(self.source, recipient)
+                for fit, linked in ((other, second), (self.target, first), (unlinked, False)):
+                    self.state("applied_zero" if linked else "initial", fit)
+                    self.assertEqual(set(fit.projectedFitDict), {self.source.ID} if linked else set())
+                self.state("applied_zero" if first or second else "initial", self.source, "source")
+                self.assertEqual(set(self.source.projectedOnto),
+                                 {fit.ID for fit, linked in ((self.target, first), (other, second)) if linked})
+        self.assertEqual(collected, [True] * 4)
 
     def test_rejected_mixed_source_charge_edit_preserves_projected_effects(self):
         ENGINE.add_projection(self.source, self.target)

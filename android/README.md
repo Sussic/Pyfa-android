@@ -1,4 +1,4 @@
-# Offline Android engine development (A09)
+# Offline Android engine development (A10)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
@@ -150,7 +150,13 @@ ELF architecture, Python/SQLite/Greenlet presence and native dependency closure.
 Building and inspecting ARM64 libraries does not establish ARM64 runtime support.
 
 The summary rejects absent, skipped, failed or empty native results and requires
-all named assertions plus actual native values and four real PNG screenshots.
+all five named assertions plus actual native values and four real PNG screenshots.
+A10 then reinstalls for five normal app launches and a separate, fresh-process
+performance test. It verifies 120 edit snapshots against desktop fixtures and
+retains startup phases, raw edit samples and process-memory snapshots. Read the
+[A10 measurement boundaries](../docs/android/tasks/A10-embedding-feasibility.md)
+before interpreting these debug/emulator numbers. The performance class must run
+separately: do not invoke an unfiltered connected suite containing both classes.
 The evidence writer uses the API 31+ UI automation stdin pipe on the API 36 test
 device, avoiding shell quoting and app storage permissions. This test transport
 does not raise the application's minimum API; API 24 execution remains unverified.
@@ -158,7 +164,7 @@ Shell-owned evidence survives AGP's app uninstall. Failures retain a screenshot
 and short logcat excerpt. `build/evidence/native-summary.json` identifies the
 actual checkout, APK, device and measured initialization/edit timings.
 `projection-native.json` and `command-native.json` retain every linked-fit
-observation and its fixture/data/source provenance. A10 owns fuller performance measurements.
+observation and its fixture/data/source provenance. A10 adds [separate startup/edit/process-memory measurements](../docs/android/tasks/A10-embedding-feasibility.md).
 
 ## CI and deliberate APK delivery
 
