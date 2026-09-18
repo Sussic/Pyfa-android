@@ -32,8 +32,8 @@ def main():
     fixtures, cases, fixture_hashes = {}, {}, {}
     for kind, name in (("ammunition", "vexor"), ("projection", "projection"), ("command", "command")):
         path = ROOT / "tools/android_reference/fixtures" / (name + ".json")
-        fixtures[kind] = json.loads(path.read_text())
-        cases[kind] = json.loads((ROOT / "tools/android_reference" / (name + ".json")).read_text())
+        fixtures[kind] = json.loads(path.read_text(encoding="utf-8"))
+        cases[kind] = json.loads((ROOT / "tools/android_reference" / (name + ".json")).read_text(encoding="utf-8"))
         compare(fixtures[kind]["inputs"], cases[kind], kind + ".inputs")
         fixture_hashes[kind] = digest_file(path)
     if args.worker:
@@ -55,26 +55,26 @@ def main():
         if not result.wasSuccessful() or result.skipped or result.expectedFailures or guard.attempts or network_attempts:
             raise RuntimeError("Bridge tests failed, skipped or attempted forbidden operations")
         args.output.write_text(json.dumps({"tests_passed": result.testsRun,
-            "desktop_import_attempts": guard.attempts, "network_attempts": network_attempts}, indent=2) + "\n")
+            "desktop_import_attempts": guard.attempts, "network_attempts": network_attempts}, indent=2) + "\n", encoding="utf-8")
         return
     before = digest_file(args.database)
     logical = logical_database_digest(args.database)
     for expected in fixtures.values():
         compare(expected["database_logical_sha256"], logical)
     args.output.mkdir(parents=True, exist_ok=False)
-    with (args.output / "tests.log").open("w") as log:
+    with (args.output / "tests.log").open("w", encoding="utf-8") as log:
         subprocess.run([sys.executable, "-I", str(Path(__file__).resolve()), "--database", str(args.database),
                         "--output", str(args.output / "tests.json"), "--worker"],
                        check=True, stdout=log, stderr=subprocess.STDOUT, timeout=180)
     compare(before, digest_file(args.database), "unchanged_database")
-    result = json.loads((args.output / "tests.json").read_text())
+    result = json.loads((args.output / "tests.json").read_text(encoding="utf-8"))
     result.update({"task": "B01", "host_only": True, "database_sha256": before,
                    "database_logical_sha256": logical, "reference_fixture_sha256": fixture_hashes,
                    "source_sha256": {path: hashlib.sha256((ROOT / path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
                                       for path in ("android_bridge/contract.py", "android_bridge/engine.py",
                                                    "tools/android_headless/tests/test_contract.py", "tools/android_headless/check_bridge.py")},
                    "all_three_reference_cases_matched": True, "game_database_unchanged": True})
-    (args.output / "evidence.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    (args.output / "evidence.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"result": "PASS", "tests": result["tests_passed"], "host_only": True}))
 
 

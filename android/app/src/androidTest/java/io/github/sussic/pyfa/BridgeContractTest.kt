@@ -75,13 +75,13 @@ class BridgeContractTest {
         // inputs and independently supplies its added scan-resolution field.
         val ammoInput = cases.getValue("ammunition")
         val projectionTarget = cases.getValue("projection").getJSONObject("target")
-        val comparableAmmo = JSONObject(ammoInput.toString()).apply { remove("name"); remove("edit") }
-        val comparableTarget = JSONObject(projectionTarget.toString()).apply { remove("name") }
+        val comparableAmmo = copyObject(ammoInput).apply { remove("name"); remove("edit") }
+        val comparableTarget = copyObject(projectionTarget).apply { remove("name") }
         compare(comparableAmmo, comparableTarget, "scan_resolution_oracle_inputs")
         val scan = goldens.getValue("projection").getJSONObject("states")
             .getJSONObject("initial").getJSONObject("target").getJSONObject("scan_resolution")
         fun checkAmmo(stage: String) {
-            val expected = JSONObject(goldens.getValue("ammunition").getJSONObject("states").getJSONObject(stage).toString())
+            val expected = copyObject(goldens.getValue("ammunition").getJSONObject("states").getJSONObject(stage))
                 .put("scan_resolution", scan)
             checkStats(expected, fits.getValue(sample.id), "ammunition.$stage")
             ammunitionStates.put(stage, snapshotJson(fits.getValue(sample.id)))
@@ -209,6 +209,12 @@ class BridgeContractTest {
 
     private fun appJson(name: String): JSONObject = context.assets.open("engine/$name.json")
         .bufferedReader().use { JSONObject(it.readText()) }
+
+    // Only top-level keys are edited. Retain the original nested scalar types:
+    // JSONObject.toString() changes integral decimals such as 1750.0 to 1750.
+    private fun copyObject(value: JSONObject): JSONObject = JSONObject().also { copy ->
+        for (key in value.keys()) copy.put(key, value.get(key))
+    }
 
     private fun create(spec: FitSpec): String {
         val response = EngineRuntime.request(context, BridgeOperation.CreateFit(spec)).get(120, TimeUnit.SECONDS)
