@@ -248,3 +248,14 @@ Normal ready-fit PSS is 154.1–184.8 MiB; instrumented graph snapshots are cumu
 and are not peak/leak measurements. APK size: 70,395,255 bytes. [The durable receipt](../docs/android/evidence/a10-native.json)
 retains all observations and measured boundaries. These debug x86_64 results do
 not establish physical ARM64, older APIs, release speed, large graphs or full parity.
+
+
+B01 is merged in [PR #11](https://github.com/Sussic/Pyfa-android/pull/11).
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023667) passes seven native tests and package checks;
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023583) passes 51 host tests, independent
+references and migration/backup. The typed request path matches 63 full desktop
+snapshots and preserves raw types, units and revisions. Rejected and failed edits
+preserve the committed fit; malformed replies make the bridge unavailable until
+restart. [Contract and scope](../docs/android/tasks/B01-typed-bridge.md),
+[raw retained evidence](../docs/android/evidence/b01-native.json). The visible app
+remains the sample fit; B02 adds persistent fits and links next.

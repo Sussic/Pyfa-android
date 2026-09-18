@@ -103,15 +103,30 @@ Updated: 2026-09-18.
   physical/ARM64/older-API execution, release performance and large/long-lived graphs
   remain unverified. This is feasibility, not full Pyfa parity or usability sign-off.
 
-## Current work and exact next task
+## B01 completed and exact next task
 
-- **Active: B01 — Typed bridge operations and results.** Replace the app-facing raw JSON calls with one versioned typed mutation/query contract carrying raw units, stable fit handles, revisions and structured errors. Validate failed edits leave prior state intact, serialize all engine work and preserve existing native/desktop/benchmark gates. A10 is delivered. **A01–A10 are done: 10 of 72 work items;
-  62 remain**, plus four parent rollups. All 239 parity rows remain.
-- Exact next task: **B01 — Typed bridge operations and results**. Define a mutation/
-  query contract with raw values and units, errors and fit revisions. Preserve one
-  serialized worker, source/recipient invalidation, and no partial state on failed
-  edits. Reuse the independent fixtures and the native measurement/parity gates.
-- B02 follows with persistent fit storage and relationships. Continue one task at a time.
+- **B01:** [PR #11](https://github.com/Sussic/Pyfa-android/pull/11), merged as
+  `edca0e795aa086edd90db1bf5f216dcd1c704c53`. Tested head: `3963d553193b9983c464bd51bb99cdeeabe15f5b`.
+- Typed versioned Kotlin/Python operations carry raw values/units, stable fit IDs,
+  revisions and structured errors. Successful mutations update transitive recipients
+  together; failed edits rebuild the committed graph. Unknown transport outcomes or
+  failed recovery make the session unavailable until restart, preserving the last valid UI fit.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023667) passes build/lint/signing/package checks and
+  **seven native tests**: original five, separate A10 performance, separate B01 contract.
+  B01 compares 63 desktop snapshots × 39 raw statistics with exact scalar types/units,
+  checks stale revisions, queued bulk edits, partial-create recovery and 15 codec rejections.
+- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023583) passes **51 host tests** (29 existing,
+  14 contract, eight reference utilities), all independent references and real migration/backup.
+  An initial runner encoding error was fixed with explicit UTF-8; fixture checks were preserved.
+  Local mobile recovery plus all 123 benchmark observations also pass. EOS formulas,
+  the headless adapter, independent fixtures and all 239 parity rows remain intact.
+- [Contract/task/limits](tasks/B01-typed-bridge.md) and [durable evidence](evidence/b01-native.json).
+  Current support is the 39-field sample view and existing adapter edits. Full editing,
+  persistence, physical/ARM64/older-API execution and usability sign-off remain later work.
+- No task active. **11 of 72 work items done; 61 remain**, plus four parent rollups.
+- Exact next task: **B02 — Local fit persistence.** Save/reopen synthetic fits and
+  command/projection links across process restart, preserving identity, transactions
+  and reference-matching values. Continue one task at a time.
 
 ## Open questions and environment notes
 
@@ -142,8 +157,9 @@ Updated: 2026-09-18.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select B01.
-Read the retained architecture and typed-contract acceptance criteria. Preserve
-all five native functional tests, the separate performance invocation and both
-forced-collection source-refresh regressions. Keep benchmark processes isolated;
-unfiltered mixed-suite execution would contaminate the retained-fit counts.
+Read AGENTS.md and this file; verify live master and open PRs, then select B02.
+Read B01's contract and failure-recovery boundaries before adding persistent
+storage; its current recovery intentionally requires an exclusive in-memory session.
+Preserve all five original native tests and the separately invoked performance and
+contract classes. Keep those processes isolated and retain the A10 forced-collection
+source-refresh regressions. No golden fixture or parity inventory coverage may be removed.

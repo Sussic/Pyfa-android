@@ -117,8 +117,33 @@ independent fixtures. Steady fit counts remain 1/5/9 and the game database is
 unchanged. Two independent source reviews found no remaining blocker after fixes
 for ORM integer module states, terminal transport faults and nullable ammunition.
 
-Native build/emulator and Windows CI evidence are pending. Record their actual
-runs and retained receipt here before marking B01 done.
+Delivered in [PR #11](https://github.com/Sussic/Pyfa-android/pull/11), merged as
+`edca0e795aa086edd90db1bf5f216dcd1c704c53`. Tested head: `3963d553193b9983c464bd51bb99cdeeabe15f5b`.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023667) passes build, lint, signing, source/data/ABI
+inspection and all seven native tests: the original five, isolated A10 performance
+and isolated B01 contract. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35295023583) passes
+51 host tests, all three independent references and the real migration/backup.
+
+The typed native path matches **63 snapshots, each with 39 raw statistics and
+units**, across A01/A04/A05. It preserves scalar types and fit revisions, rejects
+invalid bulk and partial-create requests without state loss, and commits exactly
+one of two queued edits using the same revision. Fifteen malformed-response cases
+are rejected. Four actual Android screenshots were reviewed. The prior performance
+suite still matches all 120 edit snapshots and its three setups. No calculation
+formula or independent fixture changed.
+
+The first Windows run exposed an implicit file-encoding assumption in the new
+host runner. Explicit UTF-8 fixture/evidence reads and writes corrected it; the
+required comparisons were retained. The first Android run passed the original
+five tests and performance check; its new contract test found that a test-only
+JSON copy collapsed decimal values into integers. Copying the original fixture
+values directly preserved the strict scalar assertions. See the [durable receipt](../evidence/b01-native.json)
+for raw values, failed-attempt disposition, exact revisions, native type evidence,
+process isolation, complete packaging receipts and host checks.
+
+Debug APK: 70,442,615 bytes, SHA-256
+`eeda6acaff0a73652906d70de19c1eb69476feffc17d41978ed0e66778a78d45`. Artifact retention remains one day and APK upload remains
+manual opt-in. B02 is the exact next task.
 
 Physical phones, ARM64 execution, older Android APIs, persistence, the fit library
 and full Pyfa statistics/editing remain unverified or assigned to later tasks.

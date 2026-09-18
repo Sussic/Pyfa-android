@@ -33,8 +33,8 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
-| B01 | active | A10 | [Typed bridge operations and results](tasks/B01-typed-bridge.md) | One mutation/query contract carries raw units, errors and fit revisions; engine work stays off UI thread and serialized; failed edits do not leave partial state. |
-| B02 | queued | B01 | Local fit persistence | Save/reopen synthetic fits and command/projection links across process restart; transactions and relationship identity preserve results. |
+| B01 | done | A10 | [Typed bridge operations and results](tasks/B01-typed-bridge.md) | One mutation/query contract carries raw units, errors and fit revisions; engine work stays off UI thread and serialized; failed edits do not leave partial state. |
+| B02 | ready | B01 | Local fit persistence | Save/reopen synthetic fits and command/projection links across process restart; transactions and relationship identity preserve results. |
 | B03 | queued | B02 | Fit library screen | Create, find, rename, duplicate and remove fits using test fixtures; deletion behavior preserves or explicitly resolves references. Audit desktop organization options. |
 | B04 | queued | B03 | Equipment browser and fitting | Search/filter items and fit/unfit modules/rigs/charges with appropriate legality feedback and reference-matching recalculation. |
 | B05 | queued | B04 | Bulk weapon/module editing | Select compatible guns, change ammo/state or fill slots in one operation; incompatible mixed selections get clear behavior; one user action updates every intended module. |

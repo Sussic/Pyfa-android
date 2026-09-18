@@ -105,3 +105,15 @@ Checked 2026-09-12; recheck when choosing concrete version pins:
 - [Android Emulator Runner](https://github.com/ReactiveCircus/android-emulator-runner):
   candidate GitHub Actions emulator setup; verify the selected runner supports it.
 - [Upstream source baseline](https://github.com/pyfa-org/Pyfa/commit/8b04f3b271e614b3e103853b44a7851a63d79d0e).
+
+
+## B01 contract boundary
+
+[B01](tasks/B01-typed-bridge.md) formalizes the existing worker with strict typed
+operations/results, session-scoped logical handles and per-fit revisions. EOS
+remains the calculation authority. A mutation publishes every affected snapshot
+after calculation, serialization and SQL commit. Failed edits rebuild the last
+committed declarative graph in the original in-memory session; transport ambiguity
+or failed recovery prevents further dispatch until restart. This is deliberately
+transient recovery. B02 must design persistence and process-restart restoration
+without bypassing the revision, atomicity or native parity gates.
