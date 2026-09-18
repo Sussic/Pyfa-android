@@ -43,7 +43,7 @@ class AppShellTest {
         compose.onNodeWithText(context.getString(R.string.switch_ammunition)).performScrollTo().performClick()
         compose.waitUntil(30_000) {
             val state = EngineRuntime.state.value
-            state is EngineState.Ready && org.json.JSONObject(state.result).getString("ammunition") == "Iron Charge M"
+            state is EngineState.Ready && state.fit.modules.first().charge == "Iron Charge M"
         }
         compose.onNodeWithText(context.getString(R.string.sample_ammunition, "Iron Charge M")).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText(context.getString(R.string.all_attributes)).performScrollTo().assertIsDisplayed()
@@ -51,7 +51,7 @@ class AppShellTest {
         compose.onNodeWithText(context.getString(R.string.switch_ammunition)).performScrollTo().performClick()
         compose.waitUntil(30_000) {
             val state = EngineRuntime.state.value
-            state is EngineState.Ready && org.json.JSONObject(state.result).getString("ammunition") == "Antimatter Charge M"
+            state is EngineState.Ready && state.fit.modules.first().charge == "Antimatter Charge M"
         }
     }
 

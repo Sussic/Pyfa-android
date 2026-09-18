@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import org.json.JSONObject
 import java.text.NumberFormat
 
 class MainActivity : ComponentActivity() {
@@ -133,9 +132,9 @@ private fun Home(onAbout: () -> Unit) {
             Text(current.message, style = MaterialTheme.typography.bodySmall)
         }
         is EngineState.Ready -> {
-            val result = JSONObject(current.result)
-            val stats = result.getJSONObject("stats")
-            val ammunition = result.getString("ammunition")
+            val stats = current.fit.stats
+            val ammunition = current.fit.modules.first().charge ?: stringResource(R.string.no_ammunition)
+            current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
             Text(stringResource(R.string.sample_title), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.sample_ammunition, ammunition))
             Button(onClick = {
@@ -146,23 +145,23 @@ private fun Home(onAbout: () -> Unit) {
                 "drone_control_range" to R.string.drone_control_range,
                 "gun_optimal" to R.string.gun_optimal,
             )) {
-                Text(stringResource(label) + ": " + formatStat(stats.getJSONObject(name)))
+                Text(stringResource(label) + ": " + formatStat(stats.getValue(name)))
             }
             TextButton(onClick = { expanded = !expanded }) {
                 Text(stringResource(if (expanded) R.string.hide_attributes else R.string.all_attributes))
             }
             if (expanded) {
-                for (name in stats.keys().asSequence().sorted()) {
-                    Text(name.replace('_', ' ') + ": " + formatStat(stats.getJSONObject(name)))
+                for (name in stats.keys.sorted()) {
+                    Text(name.replace('_', ' ') + ": " + formatStat(stats.getValue(name)))
                 }
             }
         }
     }
 }
 
-private fun formatStat(stat: JSONObject): String {
-    val value = stat.get("value")
-    val unit = stat.getString("unit")
+private fun formatStat(stat: Stat): String {
+    val value = stat.value.raw
+    val unit = stat.unit
     val formatted = if (value is Number) NumberFormat.getNumberInstance().apply {
         maximumFractionDigits = 3
     }.format(value) else value.toString()

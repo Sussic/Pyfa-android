@@ -11,6 +11,7 @@ import time
 
 _engine = None
 _fit = None
+_bridge = None
 _case = None
 _manifest = None
 _boot_ms = None
@@ -50,17 +51,61 @@ def boot(database_path, manifest_json, case_json):
     return snapshot()
 
 
+def bridge_bootstrap():
+    """Adopt the boot sample into the versioned, worker-owned contract."""
+    global _bridge, _fit
+    if _bridge is not None:
+        raise RuntimeError("Android bridge has already started")
+    from android_bridge.contract import BridgeSession
+    spec = dict(_case)
+    del spec["edit"]
+    _bridge = BridgeSession(_engine, _fit, spec)
+    _fit = None  # Recovery may replace EOS objects; retain only logical IDs.
+    return _bridge.bootstrap()
+
+
+def bridge_dispatch(request_json):
+    if _bridge is None:
+        raise RuntimeError("Start the Android bridge before sending requests")
+    return _bridge.dispatch(request_json)
+
+
+def bridge_diagnostics():
+    """Read-only instrumentation provenance on the same engine worker."""
+    if _bridge is None:
+        raise RuntimeError("Start the bridge before reading diagnostics")
+    _engine._check_thread()
+    import eos.config
+    return encoded({
+        "engine_thread": threading.current_thread().name,
+        "main_thread": threading.current_thread() is threading.main_thread(),
+        "session_id": _bridge.session_id,
+        "retained_fit_count": len(_engine._fits),
+        "saveddata_connectionstring": eos.config.saveddata_connectionstring,
+        "desktop_import_attempts": list(_forbidden),
+        "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": dict(sorted(_engine.resolved_item_ids.items())),
+        "manifest": _manifest,
+    })
+
+
+def _sample_fit():
+    return _bridge.get_fit(_bridge.sample_id) if _bridge is not None else _fit
+
+
 def snapshot():
-    stats = _engine.snapshot(_fit)
+    fit = _sample_fit()
+    stats = _engine.snapshot(fit)
     if _forbidden:
         raise RuntimeError("An unsupported desktop import was attempted")
-    return encoded({"stats": stats, "ammunition": _fit.modules[0].charge.name})
+    return encoded({"stats": stats, "ammunition": fit.modules[0].charge.name})
 
 
 def set_ammunition(name):
     if name not in (_case["modules"][0]["charge"], _case["edit"]["charge"]):
         raise ValueError("The development sample supports Antimatter and Iron ammunition")
-    _engine.set_charges(_fit, _case["edit"]["module_indices"], name)
+    _engine.set_charges(_sample_fit(), _case["edit"]["module_indices"], name)
     return snapshot()
 
 
@@ -186,7 +231,7 @@ def prepare_benchmark(kind, case_json):
         raise RuntimeError("Start the Android engine before preparing benchmarks")
     if _benchmark is None:
         from performance_probe import PerformanceProbe
-        _benchmark = PerformanceProbe(_engine, _fit)
+        _benchmark = PerformanceProbe(_engine, _sample_fit())
     case = _case if kind == "ammunition" else json.loads(case_json)
     actual = _benchmark.prepare(kind, case)
     if _forbidden:

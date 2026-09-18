@@ -9,11 +9,12 @@
     <string name="engine_failed">The fitting engine could not start.</string>
     <string name="sample_title">Vexor · all skills V</string>
     <string name="sample_ammunition">Both guns: %1$s</string>
+    <string name="no_ammunition">No ammunition</string>
     <string name="switch_ammunition">Switch both guns’ ammunition</string>
     <string name="total_dps">Total damage</string>
     <string name="drone_control_range">Drone control range</string>
     <string name="gun_optimal">Gun optimal range</string>
-    <string name="all_attributes">Show all 38 sample attributes</string>
+    <string name="all_attributes">Show all 39 sample attributes</string>
     <string name="hide_attributes">Hide detailed attributes</string>
     <string name="about_button">About this build</string>
     <string name="about_title">About Pyfa Android</string>

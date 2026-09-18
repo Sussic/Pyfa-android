@@ -105,7 +105,7 @@ Updated: 2026-09-18.
 
 ## Current work and exact next task
 
-- No active task; A10 is delivered. **A01–A10 are done: 10 of 72 work items;
+- **Active: B01 — Typed bridge operations and results.** Replace the app-facing raw JSON calls with one versioned typed mutation/query contract carrying raw units, stable fit handles, revisions and structured errors. Validate failed edits leave prior state intact, serialize all engine work and preserve existing native/desktop/benchmark gates. A10 is delivered. **A01–A10 are done: 10 of 72 work items;
   62 remain**, plus four parent rollups. All 239 parity rows remain.
 - Exact next task: **B01 — Typed bridge operations and results**. Define a mutation/
   query contract with raw values and units, errors and fit revisions. Preserve one

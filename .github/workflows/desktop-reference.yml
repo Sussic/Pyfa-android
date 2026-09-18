@@ -102,6 +102,13 @@ jobs:
           -I tools/android_headless/check.py --scenario command
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-command-check"
+      - name: Verify typed bridge and atomic failure recovery
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_bridge.py
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-bridge-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -124,7 +131,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {
