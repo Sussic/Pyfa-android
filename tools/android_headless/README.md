@@ -113,3 +113,25 @@ add/remove two recipients while a refreshed source module is actually collected,
 then compare all source/recipient/control statistics and relationship directions.
 [The native/Windows receipt](../../docs/android/evidence/a10-native.json) records
 these checks and the unchanged independent fixtures. EOS formulas are unchanged.
+
+## B01 typed contract and failure recovery
+
+The application-facing contract is defined in
+[`android_bridge/contract.py`](../../android_bridge/contract.py) and
+[the B01 task](../../docs/android/tasks/B01-typed-bridge.md). Run its focused host
+suite in a separate process using the same pinned Python 3.11 environment:
+
+```sh
+python -I tools/android_headless/check_bridge.py \
+  --database /path/to/reference/eve.db \
+  --output /path/outside/checkout/new-bridge-check
+```
+
+The suite sends JSON requests to real EOS, compares all A01/A04/A05 stages with
+the independent fixtures, checks transitive/inactive-link revisions, and injects
+failures after real creation, link, skill, implant, serialization and SQL commit
+work. Recovery must preserve actual dependent skill nulls, logical IDs, revisions,
+session identity and saved-data cache identity; failed recovery is terminal.
+Desktop imports and network operations are blocked, and the database identity is
+checked before/after execution. Host evidence does not establish Android behavior;
+`BridgeContractTest` provides the separate native contract gate.

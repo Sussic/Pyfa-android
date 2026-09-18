@@ -1,9 +1,9 @@
-# Offline Android engine development (A10)
+# Offline Android engine development (B01)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
 without network access. Both guns can change ammunition together; the sample
-shows drone control range and all 38 sampled attributes. Creating/saving user
+shows drone control range and all 39 sampled attributes. Creating/saving user
 fits and the complete fitting UI are later tasks. A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
@@ -104,8 +104,9 @@ The process-owned `pyfa-engine` executor installs a checksum-verified database
 atomically into app-private files and boots EOS off the UI thread. Python source
 is packaged from the existing tree, not a maintained duplicate. EOS opens game
 data read-only and keeps sample fits in memory. Startup/call failures are visible;
-no substitute result is displayed. This is a provisional bridge, not B01's final
-API or R02's persistent-data update system.
+no substitute result is displayed. B01 adds a strict typed mutation/query contract,
+revision checks and failure recovery; see the [contract and boundaries](../docs/android/tasks/B01-typed-bridge.md).
+The game-data installation is not R02's persistent-data update system.
 
 Start a fresh API 36 x86_64 emulator with KVM and no previous installation of this
 app. On Linux/macOS with GNU `timeout`, Python 3 and adb available:
@@ -156,7 +157,11 @@ performance test. It verifies 120 edit snapshots against desktop fixtures and
 retains startup phases, raw edit samples and process-memory snapshots. Read the
 [A10 measurement boundaries](../docs/android/tasks/A10-embedding-feasibility.md)
 before interpreting these debug/emulator numbers. The performance class must run
-separately: do not invoke an unfiltered connected suite containing both classes.
+separately: do not invoke an unfiltered connected suite. B01 then force-stops the
+app and runs `BridgeContractTest` alone via `ci/check-contract.py`. That test
+exercises the typed request path, independent A01/A04/A05 values, stale revisions,
+atomic rejection, request serialization and strict codec errors. Its complete
+responses and provenance are retained in `contract-native.json`.
 The evidence writer uses the API 31+ UI automation stdin pipe on the API 36 test
 device, avoiding shell quoting and app storage permissions. This test transport
 does not raise the application's minimum API; API 24 execution remains unverified.
@@ -172,7 +177,8 @@ observation and its fixture/data/source provenance. A10 adds [separate startup/e
 and manual dispatches, with one Ubuntu job, read-only contents permission, pinned
 actions, KVM verification, a 25-minute timeout and cancellation of superseded runs.
 There are no push duplicates, schedules or persistent caches. The separate host
-reference workflow remains unchanged and runs for its existing engine paths.
+reference workflow also runs the B01 contract and failure-recovery host checks for
+its existing engine paths.
 
 To obtain an APK after this workflow is merged: open GitHub **Actions → Android
 native → Run workflow**, choose the intended branch and enable **Deliver the

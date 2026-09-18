@@ -11,13 +11,14 @@ import java.io.File
 import java.security.MessageDigest
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
+import java.util.UUID
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONObject
 
 sealed interface EngineState {
     data object Loading : EngineState
-    data class Ready(val result: String) : EngineState
+    data class Ready(val fit: FitSnapshot, val error: BridgeError? = null) : EngineState
     data class Failed(val message: String) : EngineState
 }
 
@@ -26,58 +27,74 @@ object EngineRuntime {
     private val executor = Executors.newSingleThreadExecutor { task -> Thread(task, "pyfa-engine") }
     private val mutableState = MutableStateFlow<EngineState>(EngineState.Loading)
     val state = mutableState.asStateFlow()
-    private var startup: CompletableFuture<String>? = null
+    private var startup: CompletableFuture<FitSnapshot>? = null
+    private var sessionId: String? = null // Worker only.
+    private var sampleId: String? = null // Worker only.
+    private var unavailable = false // A transport fault may follow an unknown commit.
     private var startupMetrics: JSONObject? = null // Written/read only on the engine worker.
     private var startupDrawRecorded = false
 
     @Synchronized
-    fun start(context: Context): CompletableFuture<String> {
+    fun start(context: Context): CompletableFuture<FitSnapshot> {
         startup?.let { return it }
         val app = context.applicationContext
         val requested = SystemClock.elapsedRealtimeNanos()
-        return submit {
-            check(Looper.myLooper() != Looper.getMainLooper())
-            val workerStarted = SystemClock.elapsedRealtimeNanos()
-            val manifestText = app.assets.open("engine/manifest.json").bufferedReader().use { it.readText() }
-            val manifest = JSONObject(manifestText)
-            val expectedHash = manifest.getString("database_sha256")
-            val directory = File(app.filesDir, "game").apply { mkdirs() }
-            val database = File(directory, "eve-$expectedHash.db")
-            var installed = false
-            if (!database.isFile || sha256(database) != expectedHash) {
-                val staging = File(directory, "eve-install.tmp")
-                try {
-                    app.assets.open("engine/eve.db").use { source ->
-                        staging.outputStream().use { destination -> source.copyTo(destination) }
+        return CompletableFuture.supplyAsync({
+            try {
+                check(Looper.myLooper() != Looper.getMainLooper())
+                val workerStarted = SystemClock.elapsedRealtimeNanos()
+                val manifestText = app.assets.open("engine/manifest.json").bufferedReader().use { it.readText() }
+                val manifest = JSONObject(manifestText)
+                val expectedHash = manifest.getString("database_sha256")
+                val directory = File(app.filesDir, "game").apply { mkdirs() }
+                val database = File(directory, "eve-$expectedHash.db")
+                var installed = false
+                if (!database.isFile || sha256(database) != expectedHash) {
+                    val staging = File(directory, "eve-install.tmp")
+                    try {
+                        app.assets.open("engine/eve.db").use { source ->
+                            staging.outputStream().use { destination -> source.copyTo(destination) }
+                        }
+                        check(staging.length() == manifest.getLong("database_bytes")) { "Bundled database size mismatch" }
+                        check(sha256(staging) == expectedHash) { "Bundled database checksum mismatch" }
+                        check(staging.renameTo(database)) { "Could not install bundled game data" }
+                        installed = true
+                    } finally {
+                        staging.delete()
                     }
-                    check(staging.length() == manifest.getLong("database_bytes")) { "Bundled database size mismatch" }
-                    check(sha256(staging) == expectedHash) { "Bundled database checksum mismatch" }
-                    check(staging.renameTo(database)) { "Could not install bundled game data" }
-                    installed = true
-                } finally {
-                    staging.delete()
                 }
+                val databaseReady = SystemClock.elapsedRealtimeNanos()
+                if (!Python.isStarted()) Python.start(AndroidPlatform(app))
+                val pythonReady = SystemClock.elapsedRealtimeNanos()
+                val case = app.assets.open("engine/vexor.json").bufferedReader().use { it.readText() }
+                val module = Python.getInstance().getModule("mobile_runtime")
+                module.callAttr("boot", database.absolutePath, manifestText, case)
+                val bootstrap = BridgeCodec.decodeResponse(module.callAttr("bridge_bootstrap").toString())
+                check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess && bootstrap.fits.size == 1) {
+                    "Invalid engine bootstrap response"
+                }
+                val result = bootstrap.fits.single()
+                sessionId = bootstrap.sessionId
+                sampleId = result.id
+                val ready = SystemClock.elapsedRealtimeNanos()
+                startupMetrics = JSONObject()
+                    .put("pid", Process.myPid())
+                    .put("process_start_elapsed_ms", Process.getStartElapsedRealtime())
+                    .put("engine_ready_elapsed_ms", ready / 1e6)
+                    .put("engine_start_to_ready_ms", (ready - requested) / 1e6)
+                    .put("queue_ms", (workerStarted - requested) / 1e6)
+                    .put("database_ms", (databaseReady - workerStarted) / 1e6)
+                    .put("python_start_ms", (pythonReady - databaseReady) / 1e6)
+                    .put("python_boot_snapshot_ms", (ready - pythonReady) / 1e6)
+                    .put("database_installed", installed)
+                    .put("database_sha256", expectedHash)
+                mutableState.value = EngineState.Ready(result)
+                result
+            } catch (error: Exception) {
+                mutableState.value = EngineState.Failed(error.message ?: "The fitting engine could not start.")
+                throw error
             }
-            val databaseReady = SystemClock.elapsedRealtimeNanos()
-            if (!Python.isStarted()) Python.start(AndroidPlatform(app))
-            val pythonReady = SystemClock.elapsedRealtimeNanos()
-            val case = app.assets.open("engine/vexor.json").bufferedReader().use { it.readText() }
-            val result = Python.getInstance().getModule("mobile_runtime")
-                .callAttr("boot", database.absolutePath, manifestText, case).toString()
-            val ready = SystemClock.elapsedRealtimeNanos()
-            startupMetrics = JSONObject()
-                .put("pid", Process.myPid())
-                .put("process_start_elapsed_ms", Process.getStartElapsedRealtime())
-                .put("engine_ready_elapsed_ms", ready / 1e6)
-                .put("engine_start_to_ready_ms", (ready - requested) / 1e6)
-                .put("queue_ms", (workerStarted - requested) / 1e6)
-                .put("database_ms", (databaseReady - workerStarted) / 1e6)
-                .put("python_start_ms", (pythonReady - databaseReady) / 1e6)
-                .put("python_boot_snapshot_ms", (ready - pythonReady) / 1e6)
-                .put("database_installed", installed)
-                .put("database_sha256", expectedHash)
-            result
-        }.also { startup = it }
+        }, executor).also { startup = it }
     }
 
     /** Called after Compose reports the ready data drawn; no disk I/O on the UI thread. */
@@ -132,12 +149,81 @@ object EngineRuntime {
         }, executor)
     }
 
-    fun setAmmunition(context: Context, name: String): CompletableFuture<String> {
+    /** All encoding, Python calls, decoding and publication use the same EOS worker. */
+    fun request(
+        context: Context,
+        operation: BridgeOperation,
+        expectedRevisions: Map<String, Long> = emptyMap(),
+    ): CompletableFuture<BridgeResponse> {
         val ready = start(context)
-        return submit {
+        // Capture caller-owned collections before enqueueing.
+        val capturedOperation = operation.snapshotArguments()
+        val revisions = expectedRevisions.toMap()
+        return CompletableFuture.supplyAsync({
             ready.join()
-            Python.getInstance().getModule("mobile_runtime").callAttr("set_ammunition", name).toString()
-        }
+            check(Looper.myLooper() != Looper.getMainLooper())
+            try {
+                val request = BridgeRequest(UUID.randomUUID().toString(), checkNotNull(sessionId), capturedOperation, revisions)
+                if (unavailable) {
+                    return@supplyAsync BridgeResponse(request.requestId, request.sessionId, BridgeStatus.ERROR,
+                        emptyList(), BridgeError(BridgeErrorCode.ENGINE_UNAVAILABLE,
+                            "Restart the app to recover the fitting engine."))
+                }
+                val encoded = try {
+                    BridgeCodec.encodeRequest(request)
+                } catch (_: BridgeProtocolException) {
+                    val error = BridgeError(BridgeErrorCode.INVALID_REQUEST, "The edit request is invalid.")
+                    val previous = mutableState.value as? EngineState.Ready
+                    if (previous != null) mutableState.value = previous.copy(error = error)
+                    return@supplyAsync BridgeResponse(request.requestId, request.sessionId,
+                        BridgeStatus.ERROR, emptyList(), error)
+                }
+                val response = BridgeCodec.decodeResponse(Python.getInstance().getModule("mobile_runtime")
+                    .callAttr("bridge_dispatch", encoded).toString())
+                check(response.requestId == request.requestId && response.sessionId == request.sessionId) {
+                    "Engine response does not match its request"
+                }
+                val previous = mutableState.value as? EngineState.Ready
+                if (response.isSuccess) {
+                    val sample = response.fits.find { it.id == sampleId } ?: previous?.fit
+                    if (sample != null) mutableState.value = EngineState.Ready(sample)
+                } else {
+                    if (response.error?.code == BridgeErrorCode.ENGINE_UNAVAILABLE) unavailable = true
+                    if (previous != null) mutableState.value = previous.copy(error = response.error)
+                }
+                response
+            } catch (error: Exception) {
+                // A failed call may have committed before its reply was lost. Do
+                // not accept later snapshots after losing that known boundary.
+                unavailable = true
+                val previous = mutableState.value as? EngineState.Ready
+                if (previous != null) mutableState.value = previous.copy(error = BridgeError(
+                    BridgeErrorCode.ENGINE_UNAVAILABLE, "The fitting engine returned an invalid response. Restart the app.",
+                ))
+                throw error
+            }
+        }, executor)
+    }
+
+    fun setAmmunition(context: Context, name: String): CompletableFuture<BridgeResponse> {
+        val current = (state.value as? EngineState.Ready)?.fit
+            ?: return CompletableFuture<BridgeResponse>().also {
+                it.completeExceptionally(IllegalStateException("Wait for the fit to load"))
+            }
+        return request(context, BridgeOperation.SetCharges(current.id, listOf(0, 1), name),
+            mapOf(current.id to current.revision))
+    }
+
+    fun bridgeDiagnostics(context: Context): CompletableFuture<String> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(Looper.myLooper() != Looper.getMainLooper())
+            JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("bridge_diagnostics").toString())
+                .put("android_worker_thread", Thread.currentThread().name)
+                .put("android_main_thread", Looper.myLooper() == Looper.getMainLooper()).toString()
+        }, executor)
     }
 
     fun verifyAmmunition(context: Context): CompletableFuture<String> {
@@ -170,16 +256,6 @@ object EngineRuntime {
             Python.getInstance().getModule("mobile_runtime").callAttr("verify_command", case).toString()
         }, executor)
     }
-
-    private fun submit(action: () -> String): CompletableFuture<String> =
-        CompletableFuture.supplyAsync({
-            try {
-                action().also { mutableState.value = EngineState.Ready(it) }
-            } catch (error: Exception) {
-                mutableState.value = EngineState.Failed(error.message ?: error.javaClass.simpleName)
-                throw error
-            }
-        }, executor)
 
     private fun sha256(file: File): String {
         val digest = MessageDigest.getInstance("SHA-256")

@@ -7,6 +7,7 @@ import struct
 import subprocess
 import xml.etree.ElementTree as ET
 from performance_summary import summarize
+from contract_summary import summarize as summarize_contract
 
 root = Path(__file__).resolve().parents[1]
 reports = sorted((root / "app/build/outputs/androidTest-results/connected").rglob("TEST-*.xml"))
@@ -73,8 +74,11 @@ performance = summarize(
     json.loads((evidence / "startup-native.json").read_text()),
     json.loads((evidence / "performance-native.json").read_text()), engine,
 )
+contract = summarize_contract(json.loads((evidence / "contract-native.json").read_text()), engine)
 summary = {
-    "task": "A10",
+    "task": "B01",
+    "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",
+    "contract": contract,
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
     "workflow_run": os.environ.get("GITHUB_RUN_ID"),
     "tests": tests,
@@ -115,3 +119,7 @@ if os.environ.get("GITHUB_STEP_SUMMARY"):
 if os.environ.get("GITHUB_STEP_SUMMARY"):
     with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
         stream.write("\nA10: five normal startup samples and a separate native test comparing 120 timed edits to desktop fixtures. Raw measurements and process-memory snapshots retained.\n")
+
+if os.environ.get("GITHUB_STEP_SUMMARY"):
+    with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
+        stream.write("\nB01: a separate native typed-contract test validates 63 desktop snapshots, raw scalar types/units, atomic rejection, revisions and queued edits. Complete responses retained.\n")
