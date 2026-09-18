@@ -203,7 +203,7 @@ Python boot through initial fit creation measured 5.29 s; the edit/report sequen
 measured 0.67 s on this emulator. These are not full cold-start or individual-edit
 benchmarks. The Python thread name `MainThread` identifies the interpreter's first
 thread; Kotlin started it on `pyfa-engine` and asserts it is off the Android UI
-thread. A10 owns fuller startup/edit/memory measurements.
+thread. See A10 below for separately measured startup, individual edits and process memory.
 ARM64 execution, physical phone behavior, API 24 execution, persistent fit storage
 and APK upgrades remain unverified. The existing lint data-extraction-rules warning
 belongs to storage/upgrade work. Manual APK upload remains opt-in.
@@ -226,5 +226,19 @@ including a complete same-worker repeat and A01/A04 after command operations.
 [The A09 receipt](../docs/android/evidence/a09-native.json) retains all raw values,
 source/data/build hashes, JUnit, package checks and focused host evidence.
 This is bounded command feasibility; full editors and remaining burst/overlap
-cases stay on the roadmap. A10 is next: complete performance measurements and the
-embedding feasibility decision, with hardware and API gaps kept explicit.
+cases stay on the roadmap. A10 follows with the measured embedding decision below.
+
+A10 is merged in [PR #10](https://github.com/Sussic/Pyfa-android/pull/10).
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35288937092) passes five
+functional tests plus one separate performance test. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35288937029)
+passes 37 host tests, independent references and real migration/backup. The longer
+benchmark also found and fixed source modules losing calculated bonuses after ORM
+relationship refresh; two forced-GC regressions guard all four add/remove paths.
+
+The [A10 decision](../docs/android/tasks/A10-embedding-feasibility.md) retains the
+embedded EOS/Chaquopy worker for B01. Normal process-to-ready-draw is 2.960 s first
+install and 2.008 s subsequent median; five edit medians range 10.258–60.421 ms.
+Normal ready-fit PSS is 154.1–184.8 MiB; instrumented graph snapshots are cumulative
+and are not peak/leak measurements. APK size: 70,395,255 bytes. [The durable receipt](../docs/android/evidence/a10-native.json)
+retains all observations and measured boundaries. These debug x86_64 results do
+not establish physical ARM64, older APIs, release speed, large graphs or full parity.

@@ -105,3 +105,11 @@ on both platforms; logical game-data hash is
 Linux was measured before commit (tracked changes recorded); Windows used GitHub's
 PR merge checkout, with the actual PR head and delivered merge recorded separately.
 Only evidence/documentation changed after that passing run.
+
+A10 adds one forced-GC source-refresh regression to each projection and command
+suite, bringing the total to **29 behavioral tests** (10 ammunition, nine projection,
+ten command). Both regressions fail before the adapter correction and pass after:
+add/remove two recipients while a refreshed source module is actually collected,
+then compare all source/recipient/control statistics and relationship directions.
+[The native/Windows receipt](../../docs/android/evidence/a10-native.json) records
+these checks and the unchanged independent fixtures. EOS formulas are unchanged.

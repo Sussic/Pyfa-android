@@ -35,6 +35,11 @@ Sources identify the actual controls and calculation routes, not a claim that
 every inherited behavior is bug-free. Suspected quirks, missing behavior and
 platform substitutions are tracked in [the audit notes](PARITY_AUDIT.md).
 
+A10 [retains the embedding design](tasks/A10-embedding-feasibility.md) after bounded
+native performance measurements and a source-refresh correction. [Its receipt](evidence/a10-native.json)
+adds rerun evidence for the same cases; it does not complete any broader parity
+row or remove UI, persistence or matrix requirements. All 239 rows are preserved.
+
 ## F01 — Fit library and notes
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |

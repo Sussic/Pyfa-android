@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-17.
+Updated: 2026-09-18.
 
 ## Baseline and goal
 
@@ -43,7 +43,7 @@ Updated: 2026-09-17.
   shell, offline About/navigation/recreation tests and build/CI setup.
   [Historical receipt](evidence/a06-native.json).
 
-## A07–A09 completed and delivered
+## A07–A10 completed and delivered
 
 - **A07:** [PR #7](https://github.com/Sussic/Pyfa-android/pull/7) embedded EOS and
   the pinned dataset. A01's 38 statistics in three ammunition states passed
@@ -77,26 +77,50 @@ Updated: 2026-09-17.
   overlapping sources and interactions. ARM64 package contents are verified;
   ARM64 execution, physical phones, persistence and upgrades remain unverified.
 
+## A10 result
+
+- **A10:** [PR #10](https://github.com/Sussic/Pyfa-android/pull/10), merged as
+  `7d16aa226df1b80e5e2f21740ac2587b3e0ac1f3`; tested head `ca331deb09756e3d3ccaec175a16dd52553746aa`.
+  [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35288937092) and
+  [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35288937029) pass on the first run.
+- Decision: **retain Kotlin/Compose + Chaquopy + serialized EOS** for B01.
+  Normal debug/emulator process-to-ready-draw: 2.960 s first install, 2.008 s
+  median of four subsequent process launches. Edit medians: 10.258 ms ammunition,
+  21.703 ms projection range, 60.421 ms projection links, 35.950 ms command charge,
+  60.140 ms command links; two recipients for graph operations.
+- Normal ready-fit PSS is 154.1–184.8 MiB. Instrumented cumulative snapshots with
+  nine retained fits reach 231.3 MiB at command setup and 200.5 MiB after edits;
+  these are not peaks or a leak test. Dual-ABI debug APK: 70,395,255 bytes.
+- Fixed source modules losing calculated bonuses after ORM relationship refresh:
+  recalculate sources in all four projection/command add/remove paths. Two forced-GC
+  regressions fail before and pass after the fix. EOS formulas/fixtures stay unchanged.
+- Five native functional tests plus one separate performance test pass; 100 measured
+  edits, 20 warmups and three setups all match the independent desktop fixtures.
+  Windows passes all 37 host tests, independent references and real migration/backup.
+  Local 29 headless tests, eight utilities and 123 benchmark snapshots also pass.
+- [Decision/method/limits](tasks/A10-embedding-feasibility.md) and
+  [durable raw evidence](evidence/a10-native.json). ARM64 contents are verified;
+  physical/ARM64/older-API execution, release performance and large/long-lived graphs
+  remain unverified. This is feasibility, not full Pyfa parity or usability sign-off.
+
 ## Current work and exact next task
 
-- **Active: A10 — Decide embedding feasibility.** Measure first-install and subsequent process startup, per-edit latency, process memory and APK size for the existing single-fit/projection/command fixtures; preserve all five native parity/UI tests and record a bounded architecture decision. The sustained host run also exposed source-module attributes lost after ORM relationship refresh; A10 includes the minimal adapter recalculation fix, deterministic regressions and both native/desktop gates. A09 is delivered. **A01–A09 are done: 9 of 72 work items;
-  63 remain**, plus four parent rollups. All 239 parity rows remain; evidence
-  stays partial where rows require broader behavior or UI/persistence checks.
-- Exact next task: **A10 — Decide embedding feasibility**. Measure full startup,
-  edit/recalculation latency, memory and APK size for single and interacting fits.
-  Record device/API/ABI details and measurement boundaries, the supported pins,
-  remaining hardware gaps and an evidence-based decision to retain or revise the
-  embedding approach. Reuse the A01/A04/A05 fixtures and existing native worker.
-- B01 follows that decision with a typed bridge contract. Continue one task at a time.
+- No active task; A10 is delivered. **A01–A10 are done: 10 of 72 work items;
+  62 remain**, plus four parent rollups. All 239 parity rows remain.
+- Exact next task: **B01 — Typed bridge operations and results**. Define a mutation/
+  query contract with raw values and units, errors and fit revisions. Preserve one
+  serialized worker, source/recipient invalidation, and no partial state on failed
+  edits. Reuse the independent fixtures and the native measurement/parity gates.
+- B02 follows with persistent fit storage and relationships. Continue one task at a time.
 
 ## Open questions and environment notes
 
 - Host dependencies remain Logbook 1.7.0.post0, SQLAlchemy 1.4.50 and Greenlet
   3.0.3. Android uses Greenlet 3.0.1 build 1 and chaquopy-libcxx 180000 build 0;
   all six input wheels are pinned/verified. Do not substitute desktop native wheels.
-- A07 measured about 5.29 s for Python boot through first fit creation and 0.67 s
-  for its edit/report sequence on this emulator. These exclude parts of cold
-  startup and are not single-edit benchmarks. A10 owns full latency/memory work.
+- A10 measurements are debug/emulator baselines with explicit clock and memory
+  boundaries. Do not compare earlier whole-probe timers to individual edits or
+  infer physical-phone/release performance. Keep raw sample counts and stage sizes.
 - Q07 still needs full projection/command stacking and cycle cases. Lazy GUI
   imports remain in some EOS makeRoom helpers. A05 avoids them with vacant-slot
   implant addition; C07 owns complete replacement/set/location behavior.
@@ -118,8 +142,8 @@ Updated: 2026-09-17.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select A10.
-Read the architecture feasibility gate and concise A07–A09 task/evidence summaries.
-Existing timings exclude parts of startup and are whole sequences, not individual
-edit benchmarks. Add the measurements A10 needs while preserving all five native
-tests. Keep ARM64 package inspection distinct from actual ARM64 execution.
+Read AGENTS.md and this file; verify live master and open PRs, then select B01.
+Read the retained architecture and typed-contract acceptance criteria. Preserve
+all five native functional tests, the separate performance invocation and both
+forced-collection source-refresh regressions. Keep benchmark processes isolated;
+unfiltered mixed-suite execution would contaminate the retained-fit counts.

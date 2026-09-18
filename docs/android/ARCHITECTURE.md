@@ -7,13 +7,13 @@ Pyfa capability and numerical parity; touch-friendly bulk editing. See
 [SCOPE.md](SCOPE.md). The initial reference is upstream commit
 `8b04f3b271e614b3e103853b44a7851a63d79d0e`, not an unversioned moving branch.
 
-## Implementation, with broader feasibility review pending
+## Implementation retained after A10
 
-- Kotlin with a native Android UI (Compose is the initial candidate).
-- Embed Python and this repository's EOS using Chaquopy if A03/A07–A09 validate
-  the actual dependencies and behavior on the target architectures.
-- A narrow Python adapter owns fits, operations and calculations. Kotlin sends
-  explicit edits and receives typed data including raw values, units and errors.
+- Kotlin with a native Android UI in Compose.
+- Embed Python and this repository's EOS using Chaquopy. A03–A10 establish the
+  bounded feasibility gate; physical ARM64 and older APIs still need execution.
+- A narrow Python adapter owns fits, operations and calculations. B01 formalizes explicit Kotlin edits and typed results with raw values, units,
+  errors and fit revisions.
   UI formatting does not recalculate fitting formulas.
 - Package a game database generated from the pinned source data during the build.
   Install it into a readable local location before importing database consumers;
@@ -31,8 +31,8 @@ A07 verifies this Kotlin/Compose + Chaquopy approach for the A01 baseline on API
 contents. See [the native evidence](evidence/a07-native.json). A08 adds [native A04 projection parity](evidence/a08-native.json), including
 multiple-recipient updates, repeated removal and same-worker reuse. A09 adds
 [native A05 command parity](evidence/a09-native.json), including source edits,
-all-recipient invalidation and pending-bonus cleanup. A10 records the broader feasibility and
-performance decision. ARM64 execution and user-data upgrades are not established.
+all-recipient invalidation and pending-bonus cleanup. A10 [retains this embedding design](tasks/A10-embedding-feasibility.md) after
+native startup/edit/memory measurements and an adapter source-refresh correction. ARM64 execution and user-data upgrades are not established.
 The two isolated upstream changes defer desktop config until an actual migration
 backup and give dynamic migration imports a valid `fromlist` sequence. Neither
 changes fitting formulas or migration functions.
@@ -61,7 +61,23 @@ Before broad UI implementation, produce an actual Android build that:
 4. Records startup, edit/recalculation latency, memory and APK size for single-fit
    and interacting-fit cases, with test hardware/API levels identified.
 
-A10 records whether to retain or revise the proposed embedding design. A technical
+A10 retains the design for B01. In the debug API 36 x86_64 run, normal process-to-ready
+startup measured 2.960 s on first installation and 2.008 s for the median of four
+subsequent process launches. Per-operation edit medians ranged 10.258–60.421 ms;
+graph operations updated two recipients and read all four roles. The 70.4 MB APK
+contains the offline dataset and both ABI libraries. Normal ready-fit PSS was
+154.1–184.8 MiB; cumulative instrumented snapshots with nine retained fits reached
+231.3 MiB at command setup. [Raw evidence](evidence/a10-native.json) retains every
+sample, phase and limitation. These are not release/phone/peak-memory guarantees.
+
+The longer benchmark exposed an adapter issue: ORM relationship refresh can reload
+source modules without calculated attributes. Recalculate the refreshed source,
+allowing EOS to invalidate remaining recipients; explicitly recalculate the removed
+target too. Forced-GC regressions and all native/Windows parity checks pass without
+changing EOS formulas or expected values. Keep these lifetime/invalidation checks
+when replacing the provisional bridge with B01's typed contract.
+
+The decision supports continued development, not user usability sign-off. A technical
 alternative may be investigated with evidence, but an online backend or a reduced
 feature set changes the agreed product and needs an explicit user decision.
 

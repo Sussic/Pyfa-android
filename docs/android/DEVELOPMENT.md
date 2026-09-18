@@ -10,11 +10,15 @@ ARM64 package inspection; [evidence](evidence/a07-native.json) and STATUS record
 the limits. A08 adds [native A04 projection evidence](evidence/a08-native.json)
 with multiple-recipient invalidation and repeated removal. A09 adds
 [native A05 command evidence](evidence/a09-native.json), including skills, implants
-and recipient cleanup; the suite now requires five native tests. The separate
+and recipient cleanup. A10 preserves those five native tests and adds a separate
+fresh-process performance test with 123 desktop-matched snapshots. Its source-refresh
+correction adds two forced-GC regressions: 29 headless tests plus eight utilities
+now pass on Windows, alongside all independent references and real migration/backup.
+[Decision and reproducible measurement boundaries](tasks/A10-embedding-feasibility.md). The separate
 `Desktop reference` workflow validates the independent host oracle, desktop
 migration compatibility and the separate headless adapter; it is not an Android
 build. [Headless commands and evidence](../../tools/android_headless/README.md)
-record the 27 behavioral tests and fresh-process comparisons.
+record the behavioral tests and fresh-process comparisons; A10 raises the count to 29.
 
 ## Working A01 reference command
 
