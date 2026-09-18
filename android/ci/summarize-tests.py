@@ -8,6 +8,7 @@ import subprocess
 import xml.etree.ElementTree as ET
 from performance_summary import summarize
 from contract_summary import summarize as summarize_contract
+from persistence_summary import summarize as summarize_persistence
 
 root = Path(__file__).resolve().parents[1]
 reports = sorted((root / "app/build/outputs/androidTest-results/connected").rglob("TEST-*.xml"))
@@ -75,8 +76,11 @@ performance = summarize(
     json.loads((evidence / "performance-native.json").read_text()), engine,
 )
 contract = summarize_contract(json.loads((evidence / "contract-native.json").read_text()), engine)
+persistence = summarize_persistence(json.loads((evidence / "persistence-native.json").read_text(encoding="utf-8")), engine)
 summary = {
-    "task": "B01",
+    "task": "B02",
+    "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
+    "persistence": persistence,
     "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",
     "contract": contract,
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
@@ -123,3 +127,7 @@ if os.environ.get("GITHUB_STEP_SUMMARY"):
 if os.environ.get("GITHUB_STEP_SUMMARY"):
     with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
         stream.write("\nB01: a separate native typed-contract test validates 63 desktop snapshots, raw scalar types/units, atomic rejection, revisions and queued edits. Complete responses retained.\n")
+
+if os.environ.get("GITHUB_STEP_SUMMARY"):
+    with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as stream:
+        stream.write("\nB02: three separate native processes retain fit identities, revisions, inputs and projection/command links; 45 snapshots match independent desktop values after saves and restarts. App data remains intact between phases.\n")

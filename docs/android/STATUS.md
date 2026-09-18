@@ -123,7 +123,7 @@ Updated: 2026-09-18.
 - [Contract/task/limits](tasks/B01-typed-bridge.md) and [durable evidence](evidence/b01-native.json).
   Current support is the 39-field sample view and existing adapter edits. Full editing,
   persistence, physical/ARM64/older-API execution and usability sign-off remain later work.
-- No task active. **11 of 72 work items done; 61 remain**, plus four parent rollups.
+- **Active: B02 — Local fit persistence.** Save the complete committed fit graph locally and restore it across process restart, preserving logical IDs, revisions and projected/command relationships. Require atomic saves and reference-matching recalculation; keep EOS recovery and existing native/host gates. **11 of 72 work items done; 61 remain**, plus four parent rollups.
 - Exact next task: **B02 — Local fit persistence.** Save/reopen synthetic fits and
   command/projection links across process restart, preserving identity, transactions
   and reference-matching values. Continue one task at a time.

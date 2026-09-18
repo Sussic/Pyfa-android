@@ -135,3 +135,23 @@ session identity and saved-data cache identity; failed recovery is terminal.
 Desktop imports and network operations are blocked, and the database identity is
 checked before/after execution. Host evidence does not establish Android behavior;
 `BridgeContractTest` provides the separate native contract gate.
+
+## B02 durable graphs and process recovery
+
+Run the persistence gate against the same pinned game database:
+
+```sh
+python -I tools/android_headless/check_persistence.py \
+  --database /path/to/reference/eve.db \
+  --output /path/outside/checkout/new-persistence-check
+```
+
+Eleven focused tests use separate operating-system processes, real EOS and a
+temporary SQLite store. They check nine-fit restoration, exact relationship and
+revision identity, dependent skill nulls, interrupted initial installation,
+process death before/after commit, errors after confirmed saves, stale writers,
+and preservation of invalid or incompatible files. The game database remains
+read-only; desktop imports and network operations stay blocked. Existing B01 and
+29 headless tests remain required. Native restart evidence comes from three
+separate `PersistenceTest` invocations with app data preserved between them.
+See [B02's storage contract and limits](../../docs/android/tasks/B02-local-persistence.md).
