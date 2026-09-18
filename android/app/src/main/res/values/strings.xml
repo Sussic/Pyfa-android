@@ -4,7 +4,7 @@
     <string name="home_title">Your first offline fit.</string>
     <string name="milestone">EARLY DEVELOPMENT</string>
     <string name="status_title">A working sample fit.</string>
-    <string name="status_body">This build calculates a Vexor with guns and drones on your device. Creating and saving your own fits is still in development.</string>
+    <string name="status_body">This build calculates a Vexor with guns and drones on your device and saves your ammunition changes. Creating your own fits is still in development.</string>
     <string name="engine_loading">Preparing the bundled game data and calculating…</string>
     <string name="engine_failed">The fitting engine could not start.</string>
     <string name="sample_title">Vexor · all skills V</string>

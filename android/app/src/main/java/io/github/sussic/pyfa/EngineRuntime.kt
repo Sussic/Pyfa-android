@@ -5,6 +5,7 @@ import android.os.Looper
 import android.os.Debug
 import android.os.Process
 import android.os.SystemClock
+import android.util.Log
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import java.io.File
@@ -33,6 +34,13 @@ object EngineRuntime {
     private var unavailable = false // A transport fault may follow an unknown commit.
     private var startupMetrics: JSONObject? = null // Written/read only on the engine worker.
     private var startupDrawRecorded = false
+    private var ephemeralDiagnostics = false // Selected before startup by the debug test runner.
+
+    @Synchronized
+    fun useEphemeralStorageForDiagnostics() {
+        check(BuildConfig.DEBUG && startup == null) { "Diagnostics must select storage before engine startup" }
+        ephemeralDiagnostics = true
+    }
 
     @Synchronized
     fun start(context: Context): CompletableFuture<FitSnapshot> {
@@ -68,12 +76,18 @@ object EngineRuntime {
                 val pythonReady = SystemClock.elapsedRealtimeNanos()
                 val case = app.assets.open("engine/vexor.json").bufferedReader().use { it.readText() }
                 val module = Python.getInstance().getModule("mobile_runtime")
-                module.callAttr("boot", database.absolutePath, manifestText, case)
+                val store = if (ephemeralDiagnostics) null else {
+                    val fits = File(app.noBackupFilesDir, "fits")
+                    check(fits.isDirectory || fits.mkdirs()) { "Could not open saved fit storage" }
+                    File(fits, "graph.sqlite3").absolutePath
+                }
+                module.callAttr("boot", database.absolutePath, manifestText, case, store)
                 val bootstrap = BridgeCodec.decodeResponse(module.callAttr("bridge_bootstrap").toString())
-                check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess && bootstrap.fits.size == 1) {
+                check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess && bootstrap.fits.isNotEmpty()) {
                     "Invalid engine bootstrap response"
                 }
-                val result = bootstrap.fits.single()
+                val savedSampleId = module.callAttr("bridge_sample_id").toString()
+                val result = bootstrap.fits.single { it.id == savedSampleId }
                 sessionId = bootstrap.sessionId
                 sampleId = result.id
                 val ready = SystemClock.elapsedRealtimeNanos()
@@ -91,6 +105,7 @@ object EngineRuntime {
                 mutableState.value = EngineState.Ready(result)
                 result
             } catch (error: Exception) {
+                if (BuildConfig.DEBUG) Log.e("PyfaEngine", "Engine startup failed", error)
                 mutableState.value = EngineState.Failed(error.message ?: "The fitting engine could not start.")
                 throw error
             }

@@ -21,7 +21,7 @@ path = "/sdcard/Download/pyfa-b01-contract.json"
 adb("shell", "rm", "-f", path)
 output = adb("shell", "am", "instrument", "-w", "-r", "-e", "class",
              "io.github.sussic.pyfa.BridgeContractTest",
-             f"{package}.test/androidx.test.runner.AndroidJUnitRunner", timeout=240)
+             f"{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner", timeout=240)
 (evidence / "contract-instrumentation.txt").write_text(output)
 assert re.search(r"OK \(1 test\)", output), output[-6000:]
 assert "INSTRUMENTATION_CODE: -1" in output, output[-6000:]

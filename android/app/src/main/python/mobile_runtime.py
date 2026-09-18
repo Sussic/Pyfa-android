@@ -15,6 +15,7 @@ _bridge = None
 _case = None
 _manifest = None
 _boot_ms = None
+_store_path = None
 _forbidden = []
 
 
@@ -29,14 +30,15 @@ def encoded(value):
     return json.dumps(value, sort_keys=True, allow_nan=False)
 
 
-def boot(database_path, manifest_json, case_json):
-    global _engine, _fit, _case, _manifest, _boot_ms
+def boot(database_path, manifest_json, case_json, store_path=None):
+    global _engine, _fit, _case, _manifest, _boot_ms, _store_path
     if _engine is not None:
         raise RuntimeError("Android engine has already started")
     start = time.monotonic()
     sys.meta_path.insert(0, NoDesktop())
     _manifest = json.loads(manifest_json)
     _case = json.loads(case_json)
+    _store_path = str(store_path) if store_path else None
     with closing(sqlite3.connect(Path(database_path).as_uri() + "?mode=ro", uri=True)) as db:
         if db.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
             raise ValueError("Bundled database failed SQLite quick_check")
@@ -46,22 +48,32 @@ def boot(database_path, manifest_json, case_json):
         raise ValueError("Bundled dataset metadata differs from the build manifest")
     spec = dict(_case)
     del spec["edit"]
-    _fit = _engine.create_fit(spec)
+    if _store_path is None:
+        _fit = _engine.create_fit(spec)
     _boot_ms = (time.monotonic() - start) * 1000
-    return snapshot()
+    return snapshot() if _fit is not None else encoded({"initialized": True})
 
 
 def bridge_bootstrap():
-    """Adopt the boot sample into the versioned, worker-owned contract."""
+    """Open saved fits, or adopt the explicitly ephemeral diagnostic sample."""
     global _bridge, _fit
     if _bridge is not None:
         raise RuntimeError("Android bridge has already started")
     from android_bridge.contract import BridgeSession
     spec = dict(_case)
     del spec["edit"]
-    _bridge = BridgeSession(_engine, _fit, spec)
+    if _store_path is None:
+        _bridge = BridgeSession(_engine, _fit, spec)
+    else:
+        _bridge = BridgeSession.open(
+            _engine, _store_path, _manifest["database_logical_sha256"], spec)
     _fit = None  # Recovery may replace EOS objects; retain only logical IDs.
     return _bridge.bootstrap()
+
+
+def bridge_sample_id():
+    _engine._check_thread()
+    return _bridge.sample_id
 
 
 def bridge_dispatch(request_json):
@@ -80,6 +92,13 @@ def bridge_diagnostics():
         "engine_thread": threading.current_thread().name,
         "main_thread": threading.current_thread() is threading.main_thread(),
         "session_id": _bridge.session_id,
+        "sample_id": _bridge.sample_id,
+        "persistence": _bridge.persistence_info,
+        "drones": {
+            fit_id: [{"name": drone.item.name, "amount": drone.amount,
+                      "active": drone.amountActive} for drone in fit.drones]
+            for fit_id, fit in _bridge._fits.items()
+        },
         "retained_fit_count": len(_engine._fits),
         "saveddata_connectionstring": eos.config.saveddata_connectionstring,
         "desktop_import_attempts": list(_forbidden),
@@ -94,6 +113,11 @@ def _sample_fit():
     return _bridge.get_fit(_bridge.sample_id) if _bridge is not None else _fit
 
 
+def _require_ephemeral():
+    if _store_path is not None:
+        raise RuntimeError("Legacy diagnostics require an ephemeral engine process")
+
+
 def snapshot():
     fit = _sample_fit()
     stats = _engine.snapshot(fit)
@@ -103,6 +127,7 @@ def snapshot():
 
 
 def set_ammunition(name):
+    _require_ephemeral()
     if name not in (_case["modules"][0]["charge"], _case["edit"]["charge"]):
         raise ValueError("The development sample supports Antimatter and Iron ammunition")
     _engine.set_charges(_sample_fit(), _case["edit"]["module_indices"], name)
@@ -124,6 +149,7 @@ def resolved_items(specs, additional_items):
 
 def verify_projection(case_json):
     """Exercise linked fits on the existing worker; return only observed values."""
+    _require_ephemeral()
     from projection_probe import run
     case = json.loads(case_json)
     start = time.monotonic()
@@ -150,6 +176,7 @@ def verify_projection(case_json):
 
 def verify_command(case_json):
     """Exercise command sources on the same worker; no expected values here."""
+    _require_ephemeral()
     from command_probe import run
     case = json.loads(case_json)
     start = time.monotonic()
@@ -227,6 +254,7 @@ _benchmark = None
 def prepare_benchmark(kind, case_json):
     """Prepare reusable fits outside measured edits; expose their provenance."""
     global _benchmark
+    _require_ephemeral()
     if _engine is None:
         raise RuntimeError("Start the Android engine before preparing benchmarks")
     if _benchmark is None:
@@ -253,6 +281,7 @@ def prepare_benchmark(kind, case_json):
 
 def step_benchmark(operation):
     """Apply one edit to existing benchmark fits and serialize observed values."""
+    _require_ephemeral()
     if _benchmark is None:
         raise RuntimeError("Prepare a benchmark before editing")
     actual = _benchmark.step(operation)

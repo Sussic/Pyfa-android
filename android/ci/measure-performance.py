@@ -71,7 +71,7 @@ adb("shell", "rm", "-f", "/sdcard/Download/pyfa-a10-performance.json")
 offline()
 runner = adb("shell", "am", "instrument", "-w", "-r", "-e", "class",
              "io.github.sussic.pyfa.PerformanceTest",
-             f"{package}.test/androidx.test.runner.AndroidJUnitRunner", timeout=240)
+             f"{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner", timeout=240)
 (evidence / "performance-instrumentation.txt").write_text(runner.stdout + runner.stderr)
 assert re.search(r"OK \(1 test\)", runner.stdout), runner.stdout[-6000:]
 assert "INSTRUMENTATION_CODE: -1" in runner.stdout, runner.stdout[-6000:]

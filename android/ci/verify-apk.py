@@ -74,6 +74,7 @@ def main():
             assert any(name.endswith("/libpython3.11.so") for name in libraries), abi
             assert any(name.endswith("/greenlet/_greenlet.so") for name in libraries), abi
             assert any("/_sqlite3" in name for name in libraries), abi
+            assert any(name.endswith("/fcntl.cpython-311.so") for name in libraries), abi
             shipped = {name.rsplit("/", 1)[-1] for name in libraries}
             for name, info in libraries.items():
                 assert set(info["needed"]) <= shipped | SYSTEM, (name, set(info["needed"]) - shipped - SYSTEM)

@@ -1,4 +1,4 @@
-# Offline Android engine development (B01)
+# Offline Android engine development (B02)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
@@ -103,10 +103,14 @@ Golden results are copied only into the instrumentation APK, never the app.
 The process-owned `pyfa-engine` executor installs a checksum-verified database
 atomically into app-private files and boots EOS off the UI thread. Python source
 is packaged from the existing tree, not a maintained duplicate. EOS opens game
-data read-only and keeps sample fits in memory. Startup/call failures are visible;
+data read-only and uses a transient calculation graph plus a separate durable fit
+store in app-private, no-backup storage. Startup/call failures are visible;
 no substitute result is displayed. B01 adds a strict typed mutation/query contract,
 revision checks and failure recovery; see the [contract and boundaries](../docs/android/tasks/B01-typed-bridge.md).
 The game-data installation is not R02's persistent-data update system.
+B02 saves the complete committed graph and recalculates it on restart; see the
+[storage boundary](../docs/android/tasks/B02-local-persistence.md). Invalid or
+incompatible saved data is preserved and startup fails visibly.
 
 Start a fresh API 36 x86_64 emulator with KVM and no previous installation of this
 app. On Linux/macOS with GNU `timeout`, Python 3 and adb available:
@@ -162,6 +166,13 @@ app and runs `BridgeContractTest` alone via `ci/check-contract.py`. That test
 exercises the typed request path, independent A01/A04/A05 values, stale revisions,
 atomic rejection, request serialization and strict codec errors. Its complete
 responses and provenance are retained in `contract-native.json`.
+B02 follows with `ci/check-persistence.py`: prepare, reopen/edit and verify run
+in three separate processes, with no uninstall or data clearing between them.
+Nine fits retain identities/revisions and active/inactive projection/command links;
+45 snapshots are compared with the independent fixtures. `PersistenceTest` must
+also be excluded from the initial connected suite. `DiagnosticTestRunner` selects
+ephemeral storage for the older direct-engine probes; only B02 instrumentation
+and normal app launches use production persistence.
 The evidence writer uses the API 31+ UI automation stdin pipe on the API 36 test
 device, avoiding shell quoting and app storage permissions. This test transport
 does not raise the application's minimum API; API 24 execution remains unverified.
@@ -177,7 +188,8 @@ observation and its fixture/data/source provenance. A10 adds [separate startup/e
 and manual dispatches, with one Ubuntu job, read-only contents permission, pinned
 actions, KVM verification, a 25-minute timeout and cancellation of superseded runs.
 There are no push duplicates, schedules or persistent caches. The separate host
-reference workflow also runs the B01 contract and failure-recovery host checks for
+reference workflow also runs B01 contract recovery and B02 subprocess persistence,
+interrupted-save and invalid-store checks for
 its existing engine paths.
 
 To obtain an APK after this workflow is merged: open GitHub **Actions → Android
@@ -258,4 +270,6 @@ snapshots and preserves raw types, units and revisions. Rejected and failed edit
 preserve the committed fit; malformed replies make the bridge unavailable until
 restart. [Contract and scope](../docs/android/tasks/B01-typed-bridge.md),
 [raw retained evidence](../docs/android/evidence/b01-native.json). The visible app
-remains the sample fit; B02 adds persistent fits and links next.
+remains the sample fit. B02 adds persistent fits and links, with the fit library
+screen reserved for B03. The retained A10 edit timings measure the ephemeral
+calculation path; they do not include B02 durable-save latency.

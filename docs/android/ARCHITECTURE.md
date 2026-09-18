@@ -114,6 +114,16 @@ operations/results, session-scoped logical handles and per-fit revisions. EOS
 remains the calculation authority. A mutation publishes every affected snapshot
 after calculation, serialization and SQL commit. Failed edits rebuild the last
 committed declarative graph in the original in-memory session; transport ambiguity
-or failed recovery prevents further dispatch until restart. This is deliberately
-transient recovery. B02 must design persistence and process-restart restoration
-without bypassing the revision, atomicity or native parity gates.
+or failed recovery prevents further dispatch until restart. EOS remains transient.
+
+## B02 persistence boundary
+
+[B02](tasks/B02-local-persistence.md) adds a separate app-private SQLite graph
+store in Android's no-backup directory. Ordered inputs, fit IDs/revisions and
+relationship identities commit together; cached statistics and process session
+IDs are excluded. Restart validates schema, logical dataset and EOS settings,
+then rebuilds and recalculates the saved graph through the original engine.
+Publication follows confirmed durable commit. An ambiguous write is checked using
+a fresh connection; an unresolved outcome stops dispatch until restart. Existing
+invalid/incompatible data is preserved. Diagnostic direct-engine probes use
+explicitly ephemeral processes so they cannot alter persistent user fits.

@@ -8,6 +8,8 @@ import json
 import math
 import uuid
 
+from .store import GraphStore, StoreError, StoreUncertain, StoreWriteRejected, decode_graph
+
 
 class ContractError(ValueError):
     def __init__(self, code, message):
@@ -137,6 +139,7 @@ class BridgeSession:
         self.session_id = uuid.uuid4().hex
         self.sample_id = uuid.uuid4().hex if sample_fit is not None else None
         self._available = True
+        self._store = None
         self._fits = {self.sample_id: sample_fit} if sample_fit is not None else {}
         self._revisions = {key: 1 for key in self._fits}
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
@@ -144,6 +147,137 @@ class BridgeSession:
         self._provenance = dict(engine.resolved_item_ids)
         self._serialize_success("bootstrap", list(self._snapshots.values()))
         eos.db.saveddata_session.commit()
+
+    @classmethod
+    def open(cls, engine, store_path, dataset_identity, initial_sample_spec):
+        """Open durable inputs on an empty engine; never reset an existing file."""
+        engine._check_thread()
+        if engine._fits:
+            raise ValueError("Open saved fits before creating transient fits")
+        if (type(dataset_identity) is not str or len(dataset_identity) != 64 or
+                any(char not in "0123456789abcdef" for char in dataset_identity)):
+            raise ValueError("A logical game database SHA-256 is required")
+        store = GraphStore(store_path)
+        if store.current is None:
+            _spec(initial_sample_spec)
+            fit = engine.create_fit(initial_sample_spec)
+            bridge = cls(engine, fit, initial_sample_spec)
+            bridge._store, bridge._dataset_identity = store, dataset_identity
+            attempt = store.prepare(bridge._graph(bridge._records, bridge._revisions))
+            if bridge._write_and_confirm(attempt) != "new":
+                raise StoreWriteRejected("The initial fit could not be saved; existing files were preserved")
+            store.accept(attempt)
+            return bridge
+        graph = decode_graph(store.current.payload)
+        cls._validate_graph(graph, dataset_identity, engine.settings)
+        bridge = cls(engine)
+        bridge._store, bridge._dataset_identity = store, dataset_identity
+        bridge.sample_id = graph["sample_id"]
+        bridge._records = {key: graph["records"][key] for key in graph["fit_order"]}
+        bridge._revisions = {key: graph["revisions"][key] for key in graph["fit_order"]}
+        try:
+            fits, snapshots = bridge._rebuild()
+            replayed = bridge._capture(fits, {key: record["spec"] for key, record in bridge._records.items()})
+            if _json(replayed) != _json(bridge._records):
+                raise StoreError("Saved fit inputs could not be restored exactly")
+            bridge._serialize_success("bootstrap", list(snapshots.values()))
+            bridge._session.commit()
+            bridge._fits, bridge._snapshots = fits, snapshots
+            bridge._provenance = dict(engine.resolved_item_ids)
+            return bridge
+        except Exception as error:
+            bridge._available = False
+            raise StoreError("Saved fits could not be restored; their file has been preserved") from error
+
+    @property
+    def persistence_info(self):
+        store = self._store
+        return {"enabled": store is not None, "path": str(store.path) if store else None,
+                "schema": 1 if store else None, "generation": store.current.generation if store and store.current else 0,
+                "opened_existing": store.opened_existing if store else False}
+
+    def _graph(self, records, revisions):
+        return {"format": 1, "dataset_identity": self._dataset_identity,
+                "eos_settings": deepcopy(self.engine.settings), "sample_id": self.sample_id,
+                "fit_order": list(records), "records": records, "revisions": revisions}
+
+    @staticmethod
+    def _validate_graph(graph, dataset_identity, settings):
+        try:
+            _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"))
+            if type(graph["format"]) is not int or graph["format"] != 1:
+                raise StoreError("Saved fits use an unsupported graph format")
+            if graph["dataset_identity"] != dataset_identity or _json(graph["eos_settings"]) != _json(settings):
+                raise StoreError("Saved fits require a different game dataset or calculation settings")
+            order = graph["fit_order"]
+            if type(order) is not list or not order:
+                _invalid()
+            for key in order:
+                _text(key, True)
+            if len(set(order)) != len(order):
+                _invalid()
+            _object(graph["records"], order)
+            _object(graph["revisions"], order)
+            _text(graph["sample_id"], True)
+            if graph["sample_id"] not in order:
+                _invalid()
+            for key in order:
+                _integer(graph["revisions"][key], 1)
+                record = graph["records"][key]
+                _object(record, ("spec", "skills", "implants", "projections", "commands"))
+                _spec(record["spec"])
+                if type(record["skills"]) is not dict:
+                    _invalid()
+                for name, level in record["skills"].items():
+                    _text(name)
+                    if level is not None:
+                        _integer(level, 0, 5)
+                slots = set()
+                if type(record["implants"]) is not list:
+                    _invalid()
+                for implant in record["implants"]:
+                    _object(implant, ("name", "slot", "active"))
+                    _text(implant["name"])
+                    _integer(implant["slot"], 1, 2**31 - 1)
+                    _boolean(implant["active"])
+                    if implant["slot"] in slots:
+                        _invalid()
+                    slots.add(implant["slot"])
+                for kind in ("projections", "commands"):
+                    if type(record[kind]) is not list:
+                        _invalid()
+                    sources = set()
+                    for edge in record[kind]:
+                        _object(edge, ("source_id", "active", "range_m", "amount") if kind == "projections" else ("source_id", "active"))
+                        _text(edge["source_id"], True)
+                        _boolean(edge["active"])
+                        if edge["source_id"] not in order or edge["source_id"] in sources:
+                            _invalid()
+                        sources.add(edge["source_id"])
+                        if kind == "projections":
+                            _integer(edge["amount"], 1, 2**31 - 1)
+                            if edge["range_m"] is not None:
+                                _number(edge["range_m"])
+                                if edge["range_m"] < 0:
+                                    _invalid()
+        except (ValueError, TypeError, KeyError, OverflowError) as error:
+            raise StoreError("Saved fits have invalid graph inputs; their file has been preserved") from error
+
+    def _write_and_confirm(self, attempt):
+        write_error = None
+        try:
+            self._store.write(attempt)
+        except Exception as error:
+            # A commit may have succeeded before an I/O exception was reported.
+            # Only a fresh read can distinguish the exact old/new generations.
+            write_error = error
+        try:
+            outcome = self._store.confirm(attempt)
+        except Exception as error:
+            raise StoreUncertain("Cannot confirm the saved fit commit; reopen the app") from error
+        if outcome == "old":
+            raise StoreWriteRejected("The edit could not be saved; previous saved fits are intact") from write_error
+        return outcome
 
     def get_fit(self, logical_id):
         self.engine._check_thread()
@@ -250,6 +384,7 @@ class BridgeSession:
             return self._error(request_id, "INVALID_REQUEST", "Malformed bridge request")
         operation, args = request["operation"], request["arguments"]
         editing = False
+        durable_confirmed = False
         try:
             if operation == "snapshot":
                 selected = args["fit_ids"] or list(self._fits)
@@ -280,13 +415,24 @@ class BridgeSession:
                     fits[key].clear()
             snapshots = self._snapshots_for(fits, revisions, [key for key in fits if key in affected])
             result = self._serialize_success(request_id, list(snapshots.values()))
+            all_snapshots = {**self._snapshots, **snapshots}
+            provenance = dict(self.engine.resolved_item_ids)
+            attempt = self._store.prepare(self._graph(records, revisions)) if self._store else None
             import eos.db
             eos.db.saveddata_session.commit()
+            if attempt is not None:
+                if self._write_and_confirm(attempt) != "new":
+                    raise StoreWriteRejected("The edit could not be saved; the previous saved fits are intact")
+                durable_confirmed = True
+                self._store.accept(attempt)
             self._fits, self._records, self._revisions = fits, records, revisions
-            self._snapshots = {**self._snapshots, **snapshots}
-            self._provenance = dict(self.engine.resolved_item_ids)
+            self._snapshots = all_snapshots
+            self._provenance = provenance
             return result
         except Exception as error:
+            if durable_confirmed or isinstance(error, StoreUncertain):
+                self._available = False
+                return self._error(request_id, "ENGINE_UNAVAILABLE", "Saved fit state needs to be reopened; restart the app")
             code = "INVALID_EDIT" if editing and isinstance(error, ValueError) else "ENGINE_ERROR"
             try:
                 self._recover()
@@ -294,6 +440,8 @@ class BridgeSession:
                 self._available = False
                 return self._error(request_id, "ENGINE_UNAVAILABLE", "Restart the app to recover the fitting engine")
             message = "The edit is not supported by this fit" if code == "INVALID_EDIT" else "The engine could not complete the request"
+            if isinstance(error, StoreWriteRejected):
+                message = str(error)
             return self._error(request_id, code, message)
 
     def _apply(self, operation, args, fits):
@@ -409,7 +557,7 @@ class BridgeSession:
             session.execute(table.delete())
         self.engine.resolved_item_ids.clear()
 
-    def _recover(self):
+    def _rebuild(self):
         self._reset_storage()
         fits = {}
         for key, record in self._records.items():
@@ -428,6 +576,10 @@ class BridgeSession:
         for fit in fits.values():
             fit.clear()
         snapshots = self._snapshots_for(fits, self._revisions, fits)
+        return fits, snapshots
+
+    def _recover(self):
+        fits, snapshots = self._rebuild()
         if _json(snapshots) != _json(self._snapshots):
             raise RuntimeError("Recovered fits do not match the last committed state")
         import eos.db
