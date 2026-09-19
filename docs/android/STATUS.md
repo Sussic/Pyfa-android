@@ -124,7 +124,7 @@ Updated: 2026-09-19.
   B01 established the 39-field sample view and existing adapter edits. Full editing,
   physical/ARM64/older-API execution and usability sign-off remain later work.
 
-## B02 completed and exact next task
+## B02 result
 
 - **B02:** [PR #12](https://github.com/Sussic/Pyfa-android/pull/12), merged as
   `9d96e0d8e8fc0fcb0a6a03023fb7cfe1a8ed8238`. Tested head: `225d0d15d8195e148aca5233c88b8b3a57086495`.
@@ -144,10 +144,17 @@ Updated: 2026-09-19.
   [durable evidence](evidence/b02-native.json). Physical/ARM64/older-API execution,
   user backup/restore, dataset migration, upgrades and full fit editing remain
   unverified or assigned to later tasks.
-- **12 of 72 work items done; 60 remain**, plus four parent rollups.
-- Exact next task: **B03 — Fit library screen.** Create, find, rename, duplicate
-  and remove fits, preserving or explicitly resolving references and auditing
-  desktop organization options. Continue one task at a time.
+
+## B03.1 completed and exact next task
+
+- **B03.1:** [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`.
+- Native saved-fit controls create from Vexor/Celestis/Vulture examples, search names/hulls, open, rename, independently copy and confirm/cancel deletion. Copies retain incoming linked-source identities; source deletion removes links and recalculates recipients in the same durable save.
+- Last-fit deletion commits an explicit empty marker and reopening stays empty. Nonempty B02 stores retain format 1; format 2 permits only the empty graph. Fixed source-before-recipient calculation for command-source copies and Chaquopy's null sample ID on empty startup. No EOS formulas or golden values changed.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35415142241) passes every build/package gate and **13 native test executions**, including three new production-storage UI/restart phases. Ten retained two-recipient snapshots × 39 raw statistics match desktop fixtures, with exact scalar types and units. All nine pre-existing synthetic fits remain unchanged, both restart boundaries match, and empty-reopen/create/delete passes.
+- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35415142288) and local checks pass **73 host tests**. Independent references, real desktop migration/backup and all previous native gates remain intact. Seven screenshots reviewed, including the rename keyboard and empty state.
+- [Task, desktop audit and limits](tasks/B03-fit-library.md); [raw evidence](evidence/b03-1-native.json). Creation is fixture-based; full hull/equipment editing remains B04/C work. Physical/ARM64/older-API execution, backup/restore/upgrades and user usability remain unverified.
+- B03 was split before implementation: B03.1 lifecycle/search is done; **B03.2 — Library organization and open-fit navigation** is ready. B03 stays incomplete until both children pass. All 239 parity rows remain.
+- **13 of 73 leaf work items done; 60 remain**, plus five parent rollups. Exact next task: **B03.2** — group/race/hull browsing and empty-group visibility, recently modified fits, multiple open fits, close one/all and optional restart restoration. Continue one task at a time.
 
 ## Open questions and environment notes
 
@@ -178,19 +185,19 @@ Updated: 2026-09-19.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master and open PRs, then select B03.
-Read B01's typed contract and B02's storage boundary before adding fit-library
-operations. Preserve stable IDs/revisions and explicitly resolve links when removing
-fits. EOS recovery still requires its exclusive in-memory session; durable inputs
-live in the separate app-private graph store. All initializers must use its locking
-protocol, including future import/restore paths.
-Preserve the original five native tests, separate performance and contract classes,
-and three persistence phases with app data retained. Keep diagnostic processes
-ephemeral and retain the A10 forced-collection regressions. No golden fixture or
-parity inventory coverage may be removed.
+Read AGENTS.md and this file; verify live master/open PRs, then select B03.2.
+Read B03's desktop organization audit and F01.03–F01.05 before implementation;
+preserve the parent until both children pass. Recently modified fits and recently
+opened fits are different concepts. Selection is currently process-local.
 
-## Active task — B03.1
+Preserve the lifecycle contract: new rename/copy/delete operations return the full
+surviving library; older edits return affected snapshots. Fit IDs/revisions stay
+stable. The engine still requires an exclusive in-memory EOS session, with durable
+inputs in the separate locked graph store. Nonempty stores use graph format 1;
+format 2 is exclusively the intentionally empty state. Startup results can be
+null and EngineState.Empty is a valid ready state. Never reseed an existing file.
 
-Live master verified at `349d9472d4aa29b85faa7b25c20986b1e64d513e`; no open PRs.
-B03 split before implementation into lifecycle/search (B03.1) and organization/open-fit navigation (B03.2). The parent remains incomplete.
-This task adds fixture-based creation, search/open, rename, independent duplication and confirmed deletion with transactional link cleanup, including deleting the last fit. All prior host/native gates remain required.
+Keep all 73 host tests and 13 native executions, the three new UI/restart phases,
+all prior parity/forced-GC checks, and the independent raw-value validators.
+No formula, oracle-fixture or parity-inventory coverage may be removed. A10's
+measurements are ephemeral engine baselines, not durable lifecycle timings.
