@@ -73,8 +73,8 @@ def main():
                    "database_logical_sha256": logical, "reference_fixture_sha256": fixture_hashes,
                    "source_sha256": {path: hashlib.sha256((ROOT / path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
                                       for path in ("android_bridge/contract.py", "android_bridge/engine.py",
-                                                   "tools/android_headless/tests/test_library.py", "tools/android_headless/check_bridge.py")},
-                   "all_three_reference_cases_matched": True, "game_database_unchanged": True})
+                                                   "tools/android_headless/tests/test_library.py", "tools/android_headless/check_library.py")},
+                   "lifecycle_regressions_passed": True, "game_database_unchanged": True})
     (args.output / "evidence.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"result": "PASS", "tests": result["tests_passed"], "host_only": True}))
 
