@@ -19,6 +19,7 @@ import org.json.JSONObject
 
 sealed interface EngineState {
     data object Loading : EngineState
+    data class Empty(val error: BridgeError? = null) : EngineState
     data class Ready(val fit: FitSnapshot, val error: BridgeError? = null) : EngineState
     data class Failed(val message: String) : EngineState
 }
@@ -28,7 +29,9 @@ object EngineRuntime {
     private val executor = Executors.newSingleThreadExecutor { task -> Thread(task, "pyfa-engine") }
     private val mutableState = MutableStateFlow<EngineState>(EngineState.Loading)
     val state = mutableState.asStateFlow()
-    private var startup: CompletableFuture<FitSnapshot>? = null
+    private val mutableLibrary = MutableStateFlow<List<FitSnapshot>>(emptyList())
+    val library = mutableLibrary.asStateFlow()
+    private var startup: CompletableFuture<FitSnapshot?>? = null
     private var sessionId: String? = null // Worker only.
     private var sampleId: String? = null // Worker only.
     private var unavailable = false // A transport fault may follow an unknown commit.
@@ -43,7 +46,7 @@ object EngineRuntime {
     }
 
     @Synchronized
-    fun start(context: Context): CompletableFuture<FitSnapshot> {
+    fun start(context: Context): CompletableFuture<FitSnapshot?> {
         startup?.let { return it }
         val app = context.applicationContext
         val requested = SystemClock.elapsedRealtimeNanos()
@@ -83,13 +86,13 @@ object EngineRuntime {
                 }
                 module.callAttr("boot", database.absolutePath, manifestText, case, store)
                 val bootstrap = BridgeCodec.decodeResponse(module.callAttr("bridge_bootstrap").toString())
-                check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess && bootstrap.fits.isNotEmpty()) {
+                check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess) {
                     "Invalid engine bootstrap response"
                 }
-                val savedSampleId = module.callAttr("bridge_sample_id").toString()
-                val result = bootstrap.fits.single { it.id == savedSampleId }
+                val savedSampleId = module.callAttr("bridge_sample_id")?.toString()
+                val result = bootstrap.fits.find { it.id == savedSampleId } ?: bootstrap.fits.firstOrNull()
                 sessionId = bootstrap.sessionId
-                sampleId = result.id
+                sampleId = result?.id
                 val ready = SystemClock.elapsedRealtimeNanos()
                 startupMetrics = JSONObject()
                     .put("pid", Process.myPid())
@@ -102,7 +105,8 @@ object EngineRuntime {
                     .put("python_boot_snapshot_ms", (ready - pythonReady) / 1e6)
                     .put("database_installed", installed)
                     .put("database_sha256", expectedHash)
-                mutableState.value = EngineState.Ready(result)
+                mutableLibrary.value = bootstrap.fits
+                mutableState.value = result?.let { EngineState.Ready(it) } ?: EngineState.Empty()
                 result
             } catch (error: Exception) {
                 if (BuildConfig.DEBUG) Log.e("PyfaEngine", "Engine startup failed", error)
@@ -115,7 +119,7 @@ object EngineRuntime {
     /** Called after Compose reports the ready data drawn; no disk I/O on the UI thread. */
     @Synchronized
     fun recordStartupDraw(context: Context) {
-        if (!BuildConfig.DEBUG || startupDrawRecorded || state.value !is EngineState.Ready) return
+        if (!BuildConfig.DEBUG || startupDrawRecorded || state.value !is EngineState.Ready && state.value !is EngineState.Empty) return
         startupDrawRecorded = true
         val drawn = SystemClock.elapsedRealtimeNanos() / 1e6
         val app = context.applicationContext
@@ -190,6 +194,7 @@ object EngineRuntime {
                     val error = BridgeError(BridgeErrorCode.INVALID_REQUEST, "The edit request is invalid.")
                     val previous = mutableState.value as? EngineState.Ready
                     if (previous != null) mutableState.value = previous.copy(error = error)
+                    else if (mutableState.value is EngineState.Empty) mutableState.value = EngineState.Empty(error)
                     return@supplyAsync BridgeResponse(request.requestId, request.sessionId,
                         BridgeStatus.ERROR, emptyList(), error)
                 }
@@ -200,11 +205,22 @@ object EngineRuntime {
                 }
                 val previous = mutableState.value as? EngineState.Ready
                 if (response.isSuccess) {
-                    val sample = response.fits.find { it.id == sampleId } ?: previous?.fit
-                    if (sample != null) mutableState.value = EngineState.Ready(sample)
+                    val complete = capturedOperation is BridgeOperation.RenameFit ||
+                        capturedOperation is BridgeOperation.DuplicateFit || capturedOperation is BridgeOperation.DeleteFit ||
+                        capturedOperation is BridgeOperation.Snapshot && capturedOperation.fitIds.isEmpty()
+                    val merged = if (complete) response.fits else {
+                        val changed = response.fits.associateBy { it.id }
+                        mutableLibrary.value.map { changed[it.id] ?: it } +
+                            response.fits.filter { fit -> mutableLibrary.value.none { it.id == fit.id } }
+                    }
+                    mutableLibrary.value = merged
+                    val selected = merged.find { it.id == sampleId } ?: merged.firstOrNull()
+                    sampleId = selected?.id
+                    mutableState.value = selected?.let { EngineState.Ready(it) } ?: EngineState.Empty()
                 } else {
                     if (response.error?.code == BridgeErrorCode.ENGINE_UNAVAILABLE) unavailable = true
                     if (previous != null) mutableState.value = previous.copy(error = response.error)
+                    else mutableState.value = EngineState.Empty(response.error)
                 }
                 response
             } catch (error: Exception) {
@@ -215,9 +231,36 @@ object EngineRuntime {
                 if (previous != null) mutableState.value = previous.copy(error = BridgeError(
                     BridgeErrorCode.ENGINE_UNAVAILABLE, "The fitting engine returned an invalid response. Restart the app.",
                 ))
+                if (previous == null) mutableState.value = EngineState.Empty(BridgeError(
+                    BridgeErrorCode.ENGINE_UNAVAILABLE, "Restart the app to recover the fitting engine."))
                 throw error
             }
         }, executor)
+    }
+
+    fun selectFit(context: Context, id: String): CompletableFuture<Unit> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            val fit = mutableLibrary.value.single { it.id == id }
+            sampleId = fit.id
+            mutableState.value = EngineState.Ready(fit)
+            Unit
+        }, executor)
+    }
+
+    fun createFromExample(context: Context, example: String, name: String): CompletableFuture<BridgeResponse> {
+        val ready = start(context)
+        val app = context.applicationContext
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(example in listOf("Vexor", "Celestis", "Vulture"))
+            val asset = when (example) { "Vexor" -> "vexor"; "Celestis" -> "projection"; else -> "command" }
+            val case = JSONObject(app.assets.open("engine/$asset.json").bufferedReader().use { it.readText() })
+            val spec = if (example == "Vexor") case.apply { remove("edit") } else case.getJSONObject("source")
+            BridgeCodec.decodeFitSpec(spec).copy(name = name)
+        }, executor).thenCompose { request(context, BridgeOperation.CreateFit(it)) }
     }
 
     fun setAmmunition(context: Context, name: String): CompletableFuture<BridgeResponse> {

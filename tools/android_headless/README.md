@@ -155,3 +155,7 @@ read-only; desktop imports and network operations stay blocked. Existing B01 and
 29 headless tests remain required. Native restart evidence comes from three
 separate `PersistenceTest` invocations with app data preserved between them.
 See [B02's storage contract and limits](../../docs/android/tasks/B02-local-persistence.md).
+
+## B03.1 fit lifecycle regressions
+
+Run `python -I tools/android_headless/check_library.py --database /absolute/eve.db --output /outside/checkout/library-check` with the pinned Python 3.11 environment. Eight tests cover Unicode/stale requests, copy input/relationship independence, source/recipient deletion, true subprocess reopen including an empty store, rollback of each lifecycle operation and confirmation after a lost commit acknowledgement. Uses the existing independent fixtures and the B02 guarded reopen worker. Native UI/restart evidence is a separate required gate.

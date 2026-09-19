@@ -54,7 +54,7 @@ class PersistenceTest {
             else -> null
         }
 
-        val sample = EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        val sample = checkNotNull(EngineRuntime.start(context).get(120, TimeUnit.SECONDS))
         val opened = EngineRuntime.request(context, BridgeOperation.Snapshot()).get(120, TimeUnit.SECONDS)
         assertTrue("Startup query failed: ${opened.error}", opened.isSuccess)
         sessionId = opened.sessionId

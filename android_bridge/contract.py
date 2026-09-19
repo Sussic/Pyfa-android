@@ -67,6 +67,8 @@ def _module_state(module):
 
 ARGUMENTS = {
     "snapshot": ("fit_ids",), "create_fit": ("spec",),
+    "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
+    "delete_fit": ("fit_id", "resolve_references"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
@@ -197,20 +199,23 @@ class BridgeSession:
                 "opened_existing": store.opened_existing if store else False}
 
     def _graph(self, records, revisions):
-        return {"format": 1, "dataset_identity": self._dataset_identity,
-                "eos_settings": deepcopy(self.engine.settings), "sample_id": self.sample_id,
+        sample_id = self.sample_id if self.sample_id in records else next(iter(records), None)
+        return {"format": 1 if records else 2, "dataset_identity": self._dataset_identity,
+                "eos_settings": deepcopy(self.engine.settings), "sample_id": sample_id,
                 "fit_order": list(records), "records": records, "revisions": revisions}
 
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
         try:
             _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"))
-            if type(graph["format"]) is not int or graph["format"] != 1:
+            if type(graph["format"]) is not int or graph["format"] not in (1, 2):
                 raise StoreError("Saved fits use an unsupported graph format")
             if graph["dataset_identity"] != dataset_identity or _json(graph["eos_settings"]) != _json(settings):
                 raise StoreError("Saved fits require a different game dataset or calculation settings")
             order = graph["fit_order"]
-            if type(order) is not list or not order:
+            if type(order) is not list or not order and graph["format"] == 1:
+                _invalid()
+            if graph["format"] == 2 and order:
                 _invalid()
             for key in order:
                 _text(key, True)
@@ -218,8 +223,11 @@ class BridgeSession:
                 _invalid()
             _object(graph["records"], order)
             _object(graph["revisions"], order)
-            _text(graph["sample_id"], True)
-            if graph["sample_id"] not in order:
+            if order:
+                _text(graph["sample_id"], True)
+                if graph["sample_id"] not in order:
+                    _invalid()
+            elif graph["sample_id"] is not None:
                 _invalid()
             for key in order:
                 _integer(graph["revisions"][key], 1)
@@ -319,6 +327,12 @@ class BridgeSession:
         if operation not in ARGUMENTS:
             raise ContractError("UNKNOWN_OPERATION", "Unknown bridge operation")
         _object(args, ARGUMENTS[operation])
+        if "name" in args:
+            _text(args["name"])
+            if not args["name"].strip() or len(args["name"]) > 200 or any(ord(c) < 32 for c in args["name"]):
+                _invalid("Fit names must contain 1–200 characters without control characters")
+        if "resolve_references" in args:
+            _boolean(args["resolve_references"])
         if "spec" in args:
             _spec(args["spec"])
         for key in ("fit_id", "source_id", "target_id"):
@@ -358,6 +372,12 @@ class BridgeSession:
             _invalid("Revision keys must match the operation's fit IDs")
         if any(revisions[key] != self._revisions[key] for key in named):
             raise ContractError("REVISION_CONFLICT", "The fit changed; reload it before editing")
+        if operation == "delete_fit" and not args["resolve_references"]:
+            deleted = args["fit_id"]
+            if any(record[kind] if key == deleted else
+                   any(edge["source_id"] == deleted for edge in record[kind])
+                   for key, record in self._records.items() for kind in ("projections", "commands")):
+                raise ContractError("INVALID_EDIT", "Confirm removal of this fit's references")
         return request, named
 
     def dispatch(self, request_json):
@@ -398,12 +418,48 @@ class BridgeSession:
                 fits[logical_id] = self.engine.create_fit(args["spec"])
                 specs[logical_id] = deepcopy(args["spec"])
                 named = {logical_id}
+            elif operation == "rename_fit":
+                fits[args["fit_id"]].name = args["name"]
+                specs[args["fit_id"]] = {**specs[args["fit_id"]], "name": args["name"]}
+            elif operation == "duplicate_fit":
+                logical_id = uuid.uuid4().hex
+                record = deepcopy(self._records[args["fit_id"]])
+                record["spec"]["name"] = args["name"]
+                copy = fits[logical_id] = self.engine.create_fit(record["spec"])
+                specs[logical_id] = record["spec"]
+                for name, level in record["skills"].items():
+                    copy.character.getSkill(name).setLevel(level, persist=True, ignoreRestrict=True)
+                for implant in record["implants"]:
+                    self.engine.add_implant(copy, implant["name"], active=implant["active"])
+                self.engine._recalculate(copy)
+                for edge in record["projections"]:
+                    self.engine.add_projection(fits[edge["source_id"]], copy,
+                        **{key: value for key, value in edge.items() if key != "source_id"})
+                for edge in record["commands"]:
+                    self.engine.add_command(fits[edge["source_id"]], copy, active=edge["active"])
+                named = {logical_id}
+            elif operation == "delete_fit":
+                deleted = args["fit_id"]
+                linked = any(record[kind] if key == deleted else
+                    any(edge["source_id"] == deleted for edge in record[kind])
+                    for key, record in self._records.items() for kind in ("projections", "commands"))
+                if linked and not args["resolve_references"]:
+                    raise ValueError("Confirm removal of this fit's references")
+                for target, record in self._records.items():
+                    for kind, method in (("projections", self.engine.remove_projection), ("commands", self.engine.remove_command)):
+                        for edge in record[kind]:
+                            if target == deleted or edge["source_id"] == deleted:
+                                method(fits[edge["source_id"]], fits[target])
+                removed = fits.pop(deleted)
+                self._session.delete(removed)
+                self.engine._fits.remove(removed)
+                specs.pop(deleted)
             else:
                 self._apply(operation, args, fits)
             editing = False
             records = self._capture(fits, specs)
-            affected = self._affected(named, self._records, records)
-            revisions = dict(self._revisions)
+            affected = self._affected(named, self._records, records) & fits.keys()
+            revisions = {key: value for key, value in self._revisions.items() if key in fits}
             for key in affected:
                 revisions[key] = revisions.get(key, 0) + 1
                 if revisions[key] > 2**63 - 1:
@@ -413,9 +469,18 @@ class BridgeSession:
             for key in fits:
                 if key in affected:
                     fits[key].clear()
-            snapshots = self._snapshots_for(fits, revisions, [key for key in fits if key in affected])
-            result = self._serialize_success(request_id, list(snapshots.values()))
-            all_snapshots = {**self._snapshots, **snapshots}
+            if operation in {"rename_fit", "duplicate_fit", "delete_fit"}:
+                # Relationship refresh during copy/removal can invalidate sources
+                # outside the edited set. Replay the candidate graph exactly as
+                # restart does before publishing its complete library snapshot.
+                fits, snapshots = self._rebuild(records, revisions)
+            else:
+                snapshots = self._snapshots_for(fits, revisions, [key for key in fits if key in affected])
+            all_snapshots = {key: snapshots.get(key, self._snapshots.get(key)) for key in fits}
+            # Lifecycle operations return the complete surviving library. Other
+            # operations retain the B01 affected-snapshots response contract.
+            library_operation = operation in {"rename_fit", "duplicate_fit", "delete_fit"}
+            result = self._serialize_success(request_id, list(all_snapshots.values() if library_operation else snapshots.values()))
             provenance = dict(self.engine.resolved_item_ids)
             attempt = self._store.prepare(self._graph(records, revisions)) if self._store else None
             import eos.db
@@ -427,6 +492,7 @@ class BridgeSession:
                 self._store.accept(attempt)
             self._fits, self._records, self._revisions = fits, records, revisions
             self._snapshots = all_snapshots
+            self.sample_id = self.sample_id if self.sample_id in fits else next(iter(fits), None)
             self._provenance = provenance
             return result
         except Exception as error:
@@ -504,6 +570,23 @@ class BridgeSession:
     def _snapshots_for(self, fits, revisions, selected):
         result = {}
         logical = {fit.ID: key for key, fit in fits.items()}
+        # EOS command-mode recursion marks a previously cold source calculated
+        # before applying that source's own local burst bonuses. Warm sources
+        # locally before their recipients, regardless of library insertion order.
+        prepared, visiting = set(), set()
+        def prepare(key):
+            if key in prepared or key in visiting:
+                return
+            visiting.add(key)
+            fit = fits[key]
+            for source in list(fit.projectedFitDict.values()) + list(fit.commandFitDict.values()):
+                prepare(logical[source.ID])
+            if not fit.calculated:
+                fit.calculateModifiedAttributes()
+            visiting.remove(key)
+            prepared.add(key)
+        for key in selected:
+            prepare(key)
         for key in selected:
             fit = fits[key]
             stats = self.engine.projection_snapshot(fit)
@@ -557,17 +640,19 @@ class BridgeSession:
             session.execute(table.delete())
         self.engine.resolved_item_ids.clear()
 
-    def _rebuild(self):
+    def _rebuild(self, records=None, revisions=None):
+        records = self._records if records is None else records
+        revisions = self._revisions if revisions is None else revisions
         self._reset_storage()
         fits = {}
-        for key, record in self._records.items():
+        for key, record in records.items():
             fit = fits[key] = self.engine.create_fit(record["spec"])
             for name, level in record["skills"].items():
                 fit.character.getSkill(name).setLevel(level, persist=True, ignoreRestrict=True)
             for implant in record["implants"]:
                 self.engine.add_implant(fit, implant["name"], active=implant["active"])
             self.engine._recalculate(fit)
-        for target, record in self._records.items():
+        for target, record in records.items():
             for edge in record["projections"]:
                 self.engine.add_projection(fits[edge["source_id"]], fits[target],
                                            **{key: value for key, value in edge.items() if key != "source_id"})
@@ -575,7 +660,7 @@ class BridgeSession:
                 self.engine.add_command(fits[edge["source_id"]], fits[target], active=edge["active"])
         for fit in fits.values():
             fit.clear()
-        snapshots = self._snapshots_for(fits, self._revisions, fits)
+        snapshots = self._snapshots_for(fits, revisions, fits)
         return fits, snapshots
 
     def _recover(self):

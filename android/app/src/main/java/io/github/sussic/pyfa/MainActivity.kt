@@ -1,6 +1,7 @@
 package io.github.sussic.pyfa
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
@@ -50,8 +51,8 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             val engine by EngineRuntime.state.collectAsState()
-            ReportDrawnWhen { engine is EngineState.Ready }
-            PyfaApp()
+            ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
+            PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java])
         }
     }
 
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp() {
+private fun PyfaApp(libraryModel: FitLibraryModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = showAbout) { showAbout = false }
     MaterialTheme(
@@ -92,7 +93,7 @@ private fun PyfaApp() {
                         if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {
-                            Home(onAbout = { showAbout = true })
+                            Home(libraryModel, onAbout = { showAbout = true })
                         }
                     }
                 }
@@ -102,7 +103,7 @@ private fun PyfaApp() {
 }
 
 @Composable
-private fun Home(onAbout: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     val context = LocalContext.current
     val engine by EngineRuntime.state.collectAsState()
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -125,19 +126,26 @@ private fun Home(onAbout: () -> Unit) {
     Button(onClick = onAbout, contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)) {
         Text(stringResource(R.string.about_button))
     }
+    if (engine is EngineState.Ready || engine is EngineState.Empty) FitLibrary(libraryModel)
     when (val current = engine) {
         EngineState.Loading -> Text(stringResource(R.string.engine_loading))
         is EngineState.Failed -> {
             Text(stringResource(R.string.engine_failed), color = MaterialTheme.colorScheme.error)
             Text(current.message, style = MaterialTheme.typography.bodySmall)
         }
+        is EngineState.Empty -> {
+            current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
+        }
         is EngineState.Ready -> {
             val stats = current.fit.stats
             val ammunition = current.fit.modules.first().charge ?: stringResource(R.string.no_ammunition)
             current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
-            Text(stringResource(R.string.sample_title), style = MaterialTheme.typography.titleLarge)
-            Text(stringResource(R.string.sample_ammunition, ammunition))
-            Button(onClick = {
+            Text(current.fit.name, style = MaterialTheme.typography.titleLarge)
+            val sampleGuns = current.fit.modules.take(2).size == 2 &&
+                current.fit.modules.take(2).all { it.name == "Dual 150mm Railgun II" }
+            if (sampleGuns) Text(stringResource(R.string.sample_ammunition, ammunition))
+            else Text(current.fit.ship + " · " + current.fit.modules.size + " modules")
+            if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }
             for ((name, label) in listOf(
@@ -159,7 +167,7 @@ private fun Home(onAbout: () -> Unit) {
     }
 }
 
-private fun formatStat(stat: Stat): String {
+internal fun formatStat(stat: Stat): String {
     val value = stat.value.raw
     val unit = stat.unit
     val formatted = if (value is Number) NumberFormat.getNumberInstance().apply {
