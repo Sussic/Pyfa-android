@@ -57,7 +57,10 @@ internal fun FitLibrary(model: FitLibraryModel) {
         action = kind
         targetId = fit?.id
         targetRevision = fit?.revision ?: 0
-        name = if (kind == "Duplicate") "${fit?.name?.take(190)} copy" else fit?.name ?: "New Vexor"
+        val copyName = fit?.name?.let {
+            it.substring(0, it.offsetByCodePoints(0, minOf(190, it.codePointCount(0, it.length))))
+        }
+        name = if (kind == "Duplicate") "$copyName copy" else fit?.name ?: "New Vexor"
         error = null
     }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {

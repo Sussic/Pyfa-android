@@ -89,7 +89,7 @@ object EngineRuntime {
                 check(bootstrap.requestId == "bootstrap" && bootstrap.isSuccess) {
                     "Invalid engine bootstrap response"
                 }
-                val savedSampleId = module.callAttr("bridge_sample_id").toString()
+                val savedSampleId = module.callAttr("bridge_sample_id")?.toString()
                 val result = bootstrap.fits.find { it.id == savedSampleId } ?: bootstrap.fits.firstOrNull()
                 sessionId = bootstrap.sessionId
                 sampleId = result?.id

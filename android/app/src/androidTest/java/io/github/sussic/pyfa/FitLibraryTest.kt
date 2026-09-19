@@ -92,6 +92,8 @@ class FitLibraryTest {
                 compose.onNodeWithTag("fit-name").performTextReplacement("探索 Δ renamed with a long fitting name")
                 compose.activityRule.scenario.recreate()
                 compose.onNodeWithTag("fit-name").assertTextContains("探索 Δ renamed with a long fitting name")
+                compose.onNodeWithTag("fit-name").performClick()
+                compose.waitUntil(10_000) { compose.activity.window.decorView.rootWindowInsets?.isVisible(android.view.WindowInsets.Type.ime()) == true }
                 screenshot("dialog")
                 compose.onNodeWithTag("fit-confirm").performClick()
                 waitFor { fit(created).name.endsWith("fitting name") }

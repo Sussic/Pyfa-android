@@ -20,6 +20,8 @@ prior_pids = {row["pid"] for row in json.loads((evidence / "startup-native.json"
 for name in ("performance", "contract"):
     prior_pids.add(json.loads((evidence / f"{name}-native.json").read_text(encoding="utf-8"))["pid"])
 prior_pids.update(row["pid"] for row in json.loads((evidence / "persistence-native.json").read_text(encoding="utf-8")))
+# Exercise the phone keyboard even when the emulator exposes a hardware keyboard.
+adb("shell", "settings", "put", "secure", "show_ime_with_hard_keyboard", "1")
 reports = []
 for phase in ("prepare", "reopen_delete", "empty_reopen"):
     adb("shell", "am", "force-stop", package)
@@ -38,12 +40,12 @@ for phase in ("prepare", "reopen_delete", "empty_reopen"):
     reports.append(report)
     (evidence / f"library-{phase}-native.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    for name in ({"prepare": ("library", "dialog"), "reopen_delete": ("empty",), "empty_reopen": ()}[phase]):
+        data = subprocess.check_output(["adb", "exec-out", "cat", f"/sdcard/Download/pyfa-b03-{name}.png"], timeout=30)
+        assert data.startswith(b"\x89PNG\r\n\x1a\n")
+        (evidence / f"library-{name}.png").write_bytes(data)
 (evidence / "library-native.json").write_text(json.dumps(reports, indent=2) + "\n", encoding="utf-8")
 print("B03.1 passed in three separate processes with saved app data retained.")
 
-for name in ("library", "dialog", "empty"):
-    data = subprocess.check_output(["adb", "exec-out", "cat", f"/sdcard/Download/pyfa-b03-{name}.png"], timeout=30)
-    assert data.startswith(b"\x89PNG\r\n\x1a\n")
-    (evidence / f"library-{name}.png").write_bytes(data)
 from library_summary import summarize
 print(json.dumps(summarize(reports), indent=2))
