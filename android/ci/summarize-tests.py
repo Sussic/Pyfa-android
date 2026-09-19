@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 from performance_summary import summarize
 from contract_summary import summarize as summarize_contract
 from persistence_summary import summarize as summarize_persistence
+from library_summary import summarize as summarize_library
 
 root = Path(__file__).resolve().parents[1]
 reports = sorted((root / "app/build/outputs/androidTest-results/connected").rglob("TEST-*.xml"))
@@ -78,7 +79,8 @@ performance = summarize(
 contract = summarize_contract(json.loads((evidence / "contract-native.json").read_text()), engine)
 persistence = summarize_persistence(json.loads((evidence / "persistence-native.json").read_text(encoding="utf-8")), engine)
 summary = {
-    "task": "B02",
+    "task": "B03.1",
+    "library": summarize_library(json.loads((evidence / "library-native.json").read_text(encoding="utf-8"))),
     "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
     "persistence": persistence,
     "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",

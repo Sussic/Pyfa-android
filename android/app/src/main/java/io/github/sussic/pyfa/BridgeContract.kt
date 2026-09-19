@@ -31,6 +31,9 @@ data class FitSpec(
 sealed interface BridgeOperation {
     data class Snapshot(val fitIds: List<String> = emptyList()) : BridgeOperation
     data class CreateFit(val spec: FitSpec) : BridgeOperation
+    data class RenameFit(val fitId: String, val name: String) : BridgeOperation
+    data class DuplicateFit(val fitId: String, val name: String) : BridgeOperation
+    data class DeleteFit(val fitId: String, val resolveReferences: Boolean) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
@@ -234,6 +237,9 @@ object BridgeCodec {
             unique(operation.fitIds, "fit_ids")
             "snapshot" to obj("fit_ids" to jsonArray(operation.fitIds))
         }
+        is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
+        is BridgeOperation.DuplicateFit -> "duplicate_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
+        is BridgeOperation.DeleteFit -> "delete_fit" to obj("fit_id" to operation.fitId, "resolve_references" to operation.resolveReferences)
         is BridgeOperation.CreateFit -> "create_fit" to obj("spec" to encodeFitSpec(operation.spec))
         is BridgeOperation.SetCharges -> "set_charges" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "charge" to operation.charge?.let { nonempty(it, "charge") })
@@ -255,6 +261,11 @@ object BridgeCodec {
         is BridgeOperation.AddCommand -> "add_command" to endpoints(operation.sourceId, operation.targetId).put("active", operation.active)
         is BridgeOperation.SetCommandActive -> "set_command_active" to endpoints(operation.sourceId, operation.targetId).put("active", operation.active)
         is BridgeOperation.RemoveCommand -> "remove_command" to endpoints(operation.sourceId, operation.targetId)
+    }
+
+    private fun fitName(name: String): String = name.also {
+        requireProtocol(it.isNotBlank() && it.codePointCount(0, it.length) <= 200 && it.none { c -> c.code < 32 },
+            "Fit names must contain 1–200 characters without control characters")
     }
 
     private fun projectionArguments(source: String, target: String, range: Double?, active: Boolean, amount: Int): JSONObject {

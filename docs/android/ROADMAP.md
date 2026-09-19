@@ -35,7 +35,9 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | B01 | done | A10 | [Typed bridge operations and results](tasks/B01-typed-bridge.md) | One mutation/query contract carries raw units, errors and fit revisions; engine work stays off UI thread and serialized; failed edits do not leave partial state. |
 | B02 | done | B01 | [Local fit persistence](tasks/B02-local-persistence.md) | Save/reopen synthetic fits and command/projection links across process restart; transactions and relationship identity preserve results. |
-| B03 | ready | B02 | Fit library screen | Create, find, rename, duplicate and remove fits using test fixtures; deletion behavior preserves or explicitly resolves references. Audit desktop organization options. |
+| B03 | active | B02 | Fit library screen (parent) | B03.1 and B03.2 complete; all original lifecycle and organization requirements retained. |
+| B03.1 | active | B02 | [Fit lifecycle and search](tasks/B03-fit-library.md) | Create from fixtures, find, open, rename, duplicate and delete; resolve links atomically, retain independent inputs and reopen an empty library. Host and native workflow checks pass. |
+| B03.2 | queued | B03.1 | Library organization and open-fit navigation | Hull group/race browsing, hide/show empty groups, back-to-hull navigation, recently modified fits and multiple open fits with close one/all and optional restart restoration; preserve F01.03–F01.05 and audit desktop preferences. |
 | B04 | queued | B03 | Equipment browser and fitting | Search/filter items and fit/unfit modules/rigs/charges with appropriate legality feedback and reference-matching recalculation. |
 | B05 | queued | B04 | Bulk weapon/module editing | Select compatible guns, change ammo/state or fill slots in one operation; incompatible mixed selections get clear behavior; one user action updates every intended module. |
 | B06 | queued | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |

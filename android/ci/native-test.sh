@@ -39,7 +39,7 @@ adb shell getprop ro.build.version.sdk > build/evidence/device-api.txt
 cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-version.txt
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest \
-  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest
+  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest,io.github.sussic.pyfa.FitLibraryTest
 collect_screenshots
 adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
 adb exec-out cat /sdcard/Download/pyfa-a08-projection.json > build/evidence/projection-native.json
@@ -47,4 +47,5 @@ adb exec-out cat /sdcard/Download/pyfa-a09-command.json > build/evidence/command
 python3 ci/measure-performance.py
 python3 ci/check-contract.py
 python3 ci/check-persistence.py
+python3 ci/check-library.py
 python3 ci/summarize-tests.py

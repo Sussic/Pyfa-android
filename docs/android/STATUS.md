@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-18.
+Updated: 2026-09-19.
 
 ## Baseline and goal
 
@@ -188,3 +188,9 @@ Preserve the original five native tests, separate performance and contract class
 and three persistence phases with app data retained. Keep diagnostic processes
 ephemeral and retain the A10 forced-collection regressions. No golden fixture or
 parity inventory coverage may be removed.
+
+## Active task — B03.1
+
+Live master verified at `349d9472d4aa29b85faa7b25c20986b1e64d513e`; no open PRs.
+B03 split before implementation into lifecycle/search (B03.1) and organization/open-fit navigation (B03.2). The parent remains incomplete.
+This task adds fixture-based creation, search/open, rename, independent duplication and confirmed deletion with transactional link cleanup, including deleting the last fit. All prior host/native gates remain required.

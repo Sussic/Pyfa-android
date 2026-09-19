@@ -60,7 +60,7 @@ class BridgeContractTest {
                 .put("inputs", input).put("eos_settings", golden.getJSONObject("eos_settings")))
         }
 
-        val sample = EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        val sample = checkNotNull(EngineRuntime.start(context).get(120, TimeUnit.SECONDS))
         assertEquals(1L, sample.revision)
         fits[sample.id] = sample
         val bootstrapQuery = EngineRuntime.request(context, BridgeOperation.Snapshot()).get(120, TimeUnit.SECONDS)

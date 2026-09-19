@@ -284,3 +284,9 @@ independent desktop values. [Windows CI](https://github.com/Sussic/Pyfa-android/
 independent references and migration/backup check. [Full evidence and limits](../docs/android/evidence/b02-native.json)
 remain in the repository after CI artifacts expire. The next task is B03's fit
 library screen; this build's UI still exposes the sample and grouped ammunition.
+
+## B03.1 fit library
+
+The development library creates bundled Vexor/Celestis/Vulture example fits, searches names/hulls, opens, renames, copies and confirms deletion. Equipment/hull selection and organization remain later tasks. Copies retain incoming linked-source identities; deleting a source refreshes recipients in the same durable transaction. Empty stores reopen empty.
+
+`ci/native-test.sh` retains every prior suite and runs `ci/check-library.py` in three additional production-storage processes after B02. It exercises native controls, dialog recreation, Unicode/search/open/cancel, independent ammunition edits, two-recipient projection/command deletion and empty-store reopen/recreation. `library_summary.py` independently checks retained raw outputs against pinned desktop fixtures. Screenshots and raw receipts share the existing one-day diagnostic artifact; no APK upload or release is added.
