@@ -1,6 +1,41 @@
 # Android project status
 
-Updated: 2026-09-19.
+Updated: 2026-09-21.
+
+## Windows setup checkpoint (complete, 2026-09-21)
+
+- `SETUP-WINDOWS`: branch `android/windows-development-setup`, based on
+  `6ba3412ccf069ea5d051f0d0cd8b463b36f234b5` (`origin/master`). The folder was
+  empty; cloned only the personal fork. Delivery review confirmed the base is still
+  current and no setup PR exists to reuse. Scope: seven documentation files only;
+  runtime sources, fixtures, build pins and CI requirements are unchanged. Check
+  the branch PR for live checks/merge state, not this pre-merge checkpoint.
+- Ready: Python 3.11.9 x64 in separate `.venv/headless` and `.venv/reference`,
+  Temurin 17.0.20.1+1, verified Gradle 8.13 wrapper, SDK platform 36 revision 2,
+  Build Tools 35.0.0. Gradle cache is in local AppData, outside OneDrive.
+- Repository scripts prepared all six Android wheels and the pinned engine data.
+  Debug/instrumentation APK builds, lint, signature and full data/source/ABI
+  inspection pass. Debug APK: `android/app/build/outputs/apk/debug/app-debug.apk`
+  (70,547,211 bytes); both ABIs contain 73 native libraries.
+- **73 host tests pass**, plus all independent desktop references/repeats and
+  real migration/backup. An initial concurrent persistence attempt had errors and
+  was interrupted; all 14 tests then passed in isolation with their original
+  assertions/timeouts and required count intact. The exact initial cause is unproven.
+- No local setup blocker. The **13 native runtime executions remain CI checks**;
+  none were run locally. The reference README path triggers both existing PR
+  workflows; require their successful completion before merging this setup PR.
+  No phone install, feature work, release or CI-policy change.
+- Reproduce with [Windows setup](WINDOWS.md); dot-source `build/windows-env.ps1`.
+  Final local delivery receipt: `build/WINDOWS-CHECKPOINT.md`. Build receipts/logs:
+  `android/build/evidence/`; host outputs are located by
+  `build/windows-check-path.txt`. Setup/workflow documentation and AGENTS are repaired.
+- Exact next development action, when feature work is authorized: read B03's
+  desktop organization audit and F01.03–F01.05, then begin **B03.2**. Its status and
+  all acceptance checks remain unchanged; this bounded setup ends here.
+- Fresh chat: open this workspace, read AGENTS, STATUS, ROADMAP and WINDOWS,
+  check live `origin/master`, local changes and open PRs, then dot-source
+  `. ./build/windows-env.ps1`. Start B03.2 only with explicit feature authorization;
+  its brief is [B03](tasks/B03-fit-library.md) and its inventory is [PARITY](PARITY.md).
 
 ## Baseline and goal
 
@@ -171,13 +206,15 @@ Updated: 2026-09-19.
   emulator work. The app declares minSdk 24 but runtime has been tested only on API 36.
   Native report transport uses API 31+ UI automation pipes; lower APIs need an
   appropriate evidence transport before running that suite.
-- Lint reports one missing-data-extraction-rules warning. B02 fit storage uses the app-private no-backup
-  directory. Complete user backup/restore and transfer policy remain I05 work;
+- Local lint passes with `DataExtractionRules` and `UnusedResources` warnings,
+  plus an `AutoboxingStateCreation` hint. B02 fit storage uses the app-private
+  no-backup directory. Complete user backup/restore and transfer policy remain I05 work;
   stable signing and upgrade preservation remain R02 work.
-- This workspace lacked KVM and local Java SDK downloads failed. Native build,
-  installation and tests succeeded on GitHub's Ubuntu runner; no local APK build
-  is claimed. Use the native workflow and recorded toolchain. Its KVM check now waits for
-  udev events and runs before the expensive build.
+- The earlier Linux workspace lacked KVM and had Java download failures; that
+  limitation does not describe the current Windows checkout. See the Windows
+  setup checkpoint above for local build/check results. Full native runtime
+  evidence still uses the Ubuntu/KVM workflow; its KVM check waits for udev and
+  runs before the expensive build. No physical-phone installation is part of setup.
 - Scratch runtimes and temporary databases can expire between sessions. Verify
   paths before reuse and rebuild from A01 if absent. An earlier workspace DB
   failed integrity for an unproven reason; fresh `/tmp` builds passed. Every
@@ -185,7 +222,8 @@ Updated: 2026-09-19.
 
 ## Resume
 
-Read AGENTS.md and this file; verify live master/open PRs, then select B03.2.
+Read AGENTS.md and this file; verify live master/open PRs and follow the current
+authorized scope. B03.2 is the next feature task; this setup does not start it.
 Read B03's desktop organization audit and F01.03–F01.05 before implementation;
 preserve the parent until both children pass. Recently modified fits and recently
 opened fits are different concepts. Selection is currently process-local.

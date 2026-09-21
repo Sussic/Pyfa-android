@@ -20,6 +20,15 @@ migration compatibility and the separate headless adapter; it is not an Android
 build. [Headless commands and evidence](../../tools/android_headless/README.md)
 record the behavioral tests and fresh-process comparisons; A10 raises the count to 29.
 
+B01 adds the typed bridge, B02 durable graph storage, and B03.1 the fit library
+lifecycle/search UI. The current required host suite has **73 tests**: 29 headless,
+14 bridge, 14 persistence, eight library and eight reference utilities. Native CI
+retains **13 executions**: five functional, separate A10 performance and B01
+contract, three B02 persistence phases and three B03.1 library phases. Earlier
+counts above describe historical milestones, not permission to omit newer gates.
+See [Windows setup](WINDOWS.md) for local builds and host verification; follow
+[STATUS](STATUS.md) for current evidence and the authorized next task.
+
 ## Working A01 reference command
 
 Follow [tools/android_reference/README.md](../../tools/android_reference/README.md)

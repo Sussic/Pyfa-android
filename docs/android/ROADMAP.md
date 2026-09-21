@@ -5,6 +5,10 @@ done. Only one task is active by default. States: `ready`, `queued`, `active`,
 `blocked`, `done`. A queued task becomes ready when its listed dependencies are
 verified. Completed setup documentation is not an implementation milestone.
 
+The 2026-09-21 local Windows setup and workflow maintenance is tracked in
+[STATUS](STATUS.md) and [Windows setup](WINDOWS.md). It does not advance B03.2,
+change the feature-task counts or reduce any host/native acceptance check.
+
 Each row is a bounded outcome with a minimum acceptance check, not a license to
 omit related Pyfa behavior. Before implementing a row, expand it with the
 [task template](../../.github/ISSUE_TEMPLATE/android-task.md) in the PR, issue or a

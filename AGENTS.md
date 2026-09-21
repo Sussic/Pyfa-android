@@ -16,13 +16,20 @@ The user confirms usability; agents are responsible for technical correctness.
    pointer, not proof that a branch or test result is still current.
 3. Read [scope](docs/android/SCOPE.md) and [architecture](docs/android/ARCHITECTURE.md)
    when the task touches product behavior or the engine boundary.
-4. Select one ready task with completed dependencies. Record its ID and intended
-   outcome in STATUS before implementation. Do not interpret "continue" as an
-   instruction to implement the whole roadmap at once.
+4. Select the user-authorized task or milestone with completed dependencies.
+   Record its ID, scope and intended outcome in STATUS before implementation.
+   A setup-only request does not authorize the next feature task. Do not interpret
+   "continue" as an instruction to implement the whole roadmap at once.
 
 ## Keep tasks bounded
 
 - Each task produces one reviewable outcome and names its acceptance checks.
+- Authorization for a milestone includes its related subtasks, necessary setup,
+  fixes and required verification within the agreed scope. Continue through those
+  subtasks without repeated "continue" prompts; child tasks organize the work and
+  do not create new approval gates. Ask only for missing authentication, required
+  system approval or a genuine scope/product decision. Do not expand into unrelated
+  roadmap work, release publication or phone-data changes without authorization.
 - If a task requires unrelated changes, split it into numbered child tasks before
   coding; retain the parent until every child is verified. Do not silently drop
   acceptance criteria to make a task appear small or complete.
@@ -37,7 +44,8 @@ The user confirms usability; agents are responsible for technical correctness.
 - The pinned desktop reference is the comparison target. Reuse this repository's
   EOS calculations wherever practical; do not independently approximate formulas
   in Kotlin or substitute another project's engine without evidence and a recorded
-  decision. The proposed embedding approach still needs its feasibility tests.
+  decision. A10 retains Kotlin/Compose, Chaquopy and serialized EOS within its
+  recorded feasibility limits; preserve that architecture and its required checks.
 - Keep the full feature inventory. An unimplemented field must never silently
   display a fabricated zero or a seemingly valid default result.
 - A phone UI may reorganize desktop interactions. It must retain their capabilities,
