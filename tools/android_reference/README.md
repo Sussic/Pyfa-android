@@ -12,12 +12,13 @@ checked. The fixture is deliberately small and does not establish full parity.
 
 Run from the development repository. Keep the reference unmodified; the exporter
 rejects a different HEAD, tracked changes and untracked files. Sparse checkout
-avoids fetching artwork and unrelated desktop UI files.
+avoids fetching artwork and unrelated desktop UI files. Explicit cone mode keeps
+required root files such as `db_update.py` and `config.py` on older Git versions.
 
 ```sh
 git clone --filter=blob:none --depth=1 --no-checkout https://github.com/Sussic/Pyfa-android.git ../pyfa-reference
 git -C ../pyfa-reference fetch --depth=1 origin 8b04f3b271e614b3e103853b44a7851a63d79d0e
-git -C ../pyfa-reference sparse-checkout set eos utils staticdata
+git -C ../pyfa-reference sparse-checkout set --cone eos utils staticdata
 git -C ../pyfa-reference checkout --detach 8b04f3b271e614b3e103853b44a7851a63d79d0e
 ```
 

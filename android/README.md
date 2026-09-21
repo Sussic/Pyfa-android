@@ -1,10 +1,12 @@
-# Offline Android engine development (B02)
+# Offline Android engine development (B03.1)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
 without network access. Both guns can change ammunition together; the sample
-shows drone control range and all 39 sampled attributes. Creating/saving user
-fits and the complete fitting UI are later tasks. A08/A09 add native projection
+shows drone control range and all 39 sampled attributes. B02 persists fit graphs;
+B03.1 adds creation from bundled examples, search, open, rename, copy and deletion.
+Full hull/equipment editing and library organization remain later tasks.
+A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
 The APK has no Internet permission. Root GPLv3 and EOS LGPL notices are included.
@@ -59,7 +61,7 @@ Wrapper JAR SHA-256:
 `81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f`.
 Both were checked against Gradle's published distribution/checksum endpoints.
 Do not edit the wrapper JAR or change pins without reviewing compatibility.
-CI installs the exact Temurin archive with SHA-256
+CI installs the exact Linux Temurin archive with SHA-256
 `3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e`.
 The four-part JDK version is not accepted by setup-java's version parser, so the
 workflow checks and extracts the pinned vendor archive directly.
@@ -72,6 +74,10 @@ Debug signing certificates also vary across fresh runners; APK hashes identify
 individual builds, not deterministic release binaries.
 
 ## Build and native checks
+
+For a local Windows checkout, follow [Windows setup](../docs/android/WINDOWS.md)
+for separate Python environments, PowerShell commands, certificate-store setup,
+host verification and the boundary between local checks and native CI.
 
 Install the pinned JDK, Android SDK platform 36 and build-tools 35.0.0. Set
 `JAVA_HOME` and `ANDROID_HOME` to those installations (or use an ignored
@@ -199,7 +205,7 @@ tests it before upload. Download `pyfa-android-dev-<commit>` from that run's
 Artifacts section and unzip it. APK and concise native evidence expire after one
 day. Routine PR runs retain evidence only, never APKs. No release is published.
 
-This is an early development APK without fit storage. Stable signing, versioned
+This development APK includes persistent fit storage. Stable signing, versioned
 upgrades and preserving personal fits belong to R02; do not use ephemeral debug
 signing for successive persistent-use releases.
 
@@ -222,8 +228,10 @@ measured 0.67 s on this emulator. These are not full cold-start or individual-ed
 benchmarks. The Python thread name `MainThread` identifies the interpreter's first
 thread; Kotlin started it on `pyfa-engine` and asserts it is off the Android UI
 thread. See A10 below for separately measured startup, individual edits and process memory.
-ARM64 execution, physical phone behavior, API 24 execution, persistent fit storage
-and APK upgrades remain unverified. The existing lint data-extraction-rules warning
+At A07, ARM64 execution, physical phone behavior, API 24 execution, persistent fit
+storage and APK upgrades remained unverified. B02/B03.1 subsequently verified
+storage on the CI emulator; physical devices, older APIs and upgrades remain
+open. The existing lint data-extraction-rules warning
 belongs to storage/upgrade work. Manual APK upload remains opt-in.
 
 A08 is merged in [PR #8](https://github.com/Sussic/Pyfa-android/pull/8).
@@ -234,7 +242,7 @@ pass; A01 also passes after projection verification. Package checks cover both
 mobile Python sources and both ABIs. [A08's durable receipt](../docs/android/evidence/a08-native.json)
 retains every native observation, exact build/data hashes, JUnit and host evidence.
 This adds bounded projection feasibility, not the projection editor or full
-D01/D02 coverage. Command parity is the next task, A09.
+D01/D02 coverage. A09 subsequently added the command evidence below.
 
 A09 is merged in [PR #9](https://github.com/Sussic/Pyfa-android/pull/9).
 [Native CI](https://github.com/Sussic/Pyfa-android/actions/runs/35161269681) passed all five tests on head
@@ -282,8 +290,8 @@ storage and process-restart restoration. [Android CI](https://github.com/Sussic/
 existing native tests plus three persistence phases; 45 new snapshots match the
 independent desktop values. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186269) passes 65 host tests, the
 independent references and migration/backup check. [Full evidence and limits](../docs/android/evidence/b02-native.json)
-remain in the repository after CI artifacts expire. The next task is B03's fit
-library screen; this build's UI still exposes the sample and grouped ammunition.
+remain in the repository after CI artifacts expire. B03.1 subsequently added the
+fit library described below. B03.2 remains the next feature task; setup work does not authorize starting it.
 
 ## B03.1 fit library
 
