@@ -44,7 +44,7 @@ row or remove UI, persistence or matrix requirements. All 239 rows are preserved
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F01.01 | Create a named fit for a ship or structure; duplicate without aliasing editable contents. | B03 | [s233][s233], [s129][s129] | NUP | D: —; A: — |
+| F01.01 | Create a named fit for a ship or structure; duplicate without aliasing editable contents. | B03 | [s233][s233], [s129][s129] | NUP | D: [437 empty hulls, original EOS values](evidence/b04-2-1-native.json); A: [creation/copy/restart](evidence/b04-2-1-native.json), [fitted-copy independence](evidence/b03-2-native.json) |
 | F01.02 | Rename and delete a fit; resolve projection/command references and open views consistently. | B03 | [s233][s233], [s129][s129] | NUP | D: —; A: — |
 | F01.03 | Browse by hull group and race, hide/show empty groups, and navigate back to a hull from its fit. | B03 | [s225][s225], [s130][s130], [s131][s131] | UP | D: [complete Market catalogue export](evidence/b03-2-native.json); A: [offline groups/races/back workflow](evidence/b03-2-native.json) |
 | F01.04 | Search saved fit names and access recent fits; opening a result selects the intended fit. | B03 | [s233][s233], [s130][s130] | UP | D: —; A: [offline search identity and modification-order workflow](evidence/b03-2-native.json) |

@@ -132,7 +132,7 @@ claimed by this task-selection checkpoint.
 The audit exposes a contract/statistics change for empty hulls, followed by
 separate fitting mutation families. Before code changes, split into:
 
-- **B04.2.1 — Arbitrary empty ship and structure creation** (active): choose any
+- **B04.2.1 — Arbitrary empty ship and structure creation** (delivered): choose any
   of the 437 independently enumerated bundled hulls, create/name/save/copy/reopen
   empty fits, and replace sample-gun assumptions with explicit absent values.
   Compare the complete hull set and raw statistics against the pinned original
@@ -152,9 +152,9 @@ separate fitting mutation families. Before code changes, split into:
 
 Complete, review and deliver each child before advancing. All existing parent
 requirements, atomic failure/restart checks and independent native evidence
-remain mandatory. Active branch is `codex/b04-2-1-empty-hulls`.
+remain mandatory. B04.2.1 used branch `codex/b04-2-1-empty-hulls`.
 
-### B04.2.1 implementation and checks in progress
+### B04.2.1 implementation and verification
 
 The new-fit picker searches/pages all 437 bundled hulls and retains the selected
 hull/name across activity recreation. The existing hull browser opens the same
@@ -182,6 +182,24 @@ prior host tests and 18 prior native executions remain required, becoming 90 and
 20 respectively. The complete 90-test local Windows suite passes, including all
 independent references/repeats and migration/backup. Local APK/test builds, lint,
 signature and inspection of 147 source files, the dataset and both ABI packages
-pass. Native CI, screenshot review and delivery are still pending. Review of the
+pass. Native CI, screenshot review and delivery subsequently passed as recorded below. Review of the
 raw comparator rejects seven mutations of nulls/types/units/values; no earlier
 scalar assertion or numerical tolerance was relaxed.
+
+## B04.2.1 delivered
+
+[PR #17](https://github.com/Sussic/Pyfa-android/pull/17) merged as
+`307d5c07580c7f2f48cd7755acc63cc72c2108c9` after review of tested head `645d6f45ae802fec415ed08cc0093314bbbd184b`.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35748120518) passes
+90 host tests, independent references/repeats and migration/backup; the complete
+installed local suite also passes. [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35748120466)
+passes APK/test builds, lint, signature/package checks and all 20 offline native
+executions. All 437 hulls and 39 fields match the independent reference; native
+creation/copy/rejection and process restart preserve prior and new saved fits.
+All 20 screenshots reviewed. Full raw observations, provenance and four new
+screens remain in the [delivery receipt](../evidence/b04-2-1-native.json).
+
+Only API36 x86_64 ran; ARM64 package contents were verified. No physical-device,
+upgrade/downgrade or usability sign-off is claimed. Exact next task:
+**B04.2.2 — Module editing, legality and recent use**, automatically authorized.
+B04.2/B04 remain incomplete until every retained child acceptance check passes.
