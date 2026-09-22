@@ -202,3 +202,14 @@ fresh process after failed saves. The checks prohibit desktop/network imports
 and preserve original raw scalar types and tolerances. Required totals become
 96 host tests and 22 separate native executions; host results do not establish
 Android runtime support.
+
+## B04.2.3.1 charge checks
+
+`check_charge_edits.py` takes `--database` and a new disposable `--output` directory,
+using the existing headless environment and `-I`. Six guarded checks require all
+14 original-command cases/74 states and 4,242 compatible sets; overlapping item/
+group IDs, read-only worker ownership, malformed/stale/incompatible rejection,
+active-fit discovery refresh, failed durable saves, independent copies and fresh
+process restart. Desktop imports and network attempts fail the run. This adds to
+the 96 prior tests; it does not replace any earlier gate. Host checks cannot
+establish native support; the separate Android charge phases remain required.

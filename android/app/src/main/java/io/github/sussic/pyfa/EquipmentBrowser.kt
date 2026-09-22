@@ -71,7 +71,7 @@ class EquipmentModel : ViewModel() {
 }
 
 @Composable
-internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorModel, onBack: () -> Unit, onViewFit: () -> Unit) {
+internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorModel, onBack: () -> Unit, onViewFit: () -> Unit, onCharges: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val recent by EngineRuntime.recent.collectAsState(context = Dispatchers.Main)
@@ -111,6 +111,9 @@ internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorMo
     TextButton(onClick = {
         focus.clearFocus(); model.group(null); model.showRecent = true; model.metas = EquipmentCatalog.metas.toSet()
     }, enabled = !model.busy, modifier = Modifier.testTag("equipment-recent")) { Text("Recent use (${recent.size})") }
+    TextButton(onClick = { focus.clearFocus(); onCharges() }, modifier = Modifier.testTag("equipment-charges")) {
+        Text("Charges for active fit")
+    }
     for (pair in EquipmentCatalog.metas.chunked(2)) Row {
         for (meta in pair) Row(Modifier.weight(1f)) {
             Checkbox(checked = meta in model.metas, onCheckedChange = {

@@ -62,7 +62,8 @@ class MainActivity : ComponentActivity() {
             val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
             PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java],
-                ViewModelProvider(this)[EquipmentModel::class.java], ViewModelProvider(this)[ModuleEditorModel::class.java])
+                ViewModelProvider(this)[EquipmentModel::class.java], ViewModelProvider(this)[ModuleEditorModel::class.java],
+                ViewModelProvider(this)[ChargeEditorModel::class.java])
         }
     }
 
@@ -73,10 +74,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
+    var showCharges by rememberSaveable { mutableStateOf(false) }
+    fun charges(position: Int?) {
+        chargeModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
+        showCharges = true
+    }
     BackHandler(enabled = showAbout) { showAbout = false }
     MaterialTheme(
         colorScheme = darkColorScheme(
@@ -91,22 +97,24 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules) {
+                key(showAbout, showEquipment, showModules, showCharges) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showEquipment) {
+                        if (showCharges) {
+                            ChargeEditor(chargeModel, onBack = { showCharges = false })
+                        } else if (showEquipment) {
                             EquipmentBrowser(equipmentModel, moduleModel, onBack = { showEquipment = false },
-                                onViewFit = { showEquipment = false; showModules = true })
+                                onViewFit = { showEquipment = false; showModules = true }, onCharges = { charges(null) })
                         } else if (showModules) {
-                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false })
+                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false }, onCharges = { charges(it) })
                         } else if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {

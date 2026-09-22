@@ -82,8 +82,10 @@ from navigation_summary import summarize as summarize_navigation
 from market_summary import summarize as summarize_market
 from empty_hull_summary import summarize as summarize_empty_hulls
 from module_edit_summary import summarize as summarize_module_edits
+from charge_edit_summary import summarize as summarize_charge_edits
 summary = {
-    "task": "B04.2.2",
+    "task": "B04.2.3.1",
+    "charge_edits": summarize_charge_edits(json.loads((evidence / "charge-edits-native.json").read_text(encoding="utf-8")), engine),
     "module_edits": summarize_module_edits(json.loads((evidence / "module-edits-native.json").read_text(encoding="utf-8")), engine),
     "empty_hulls": summarize_empty_hulls(json.loads((evidence / "empty-hulls-native.json").read_text(encoding="utf-8")), engine),
     "market": summarize_market(json.loads((evidence / "market-native.json").read_text(encoding="utf-8")), engine),

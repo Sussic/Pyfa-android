@@ -22,16 +22,18 @@ record the behavioral tests and fresh-process comparisons; A10 raises the count 
 
 B01 adds the typed bridge, B02 durable graph storage, B03.1 the fit library
 lifecycle/search UI, and B03.2 organization/navigation. The required host suite
-has **96 tests** with B04.2.2: 29 headless, 14 bridge, 14 persistence, 13 library,
-six equipment discovery, six empty-hull, six module-edit and eight reference utilities, plus
+has **102 required tests** with B04.2.3.1: 29 headless, 14 bridge, 14 persistence, 13 library,
+six equipment discovery, six empty-hull, six module-edit, six charge-edit and eight reference utilities, plus
 independent calculation/catalogue/empty-hull/module-command exports and migration.
-Native CI requires **22 executions**: five functional, separate A10 performance
+Native CI requires **24 executions**: five functional, separate A10 performance
 and B01 contract, three B02 persistence phases, three B03.1 library phases and
 four B03.2 organization/navigation phases, separate B04.1 equipment discovery and
 two B04.2.1 empty-hull creation/restart phases and two B04.2.2 module-edit/recent-use
-phases. The latter compares 91 states and 4,242 default module states, strict raw
+phases, followed by two B04.2.3.1 charge/discovery phases. B04.2.2 compares 91 states and 4,242 default module states, strict raw
 values/types, rejection/override/copy and real process restart, with seven screens.
-Earlier
+The charge phases add 14 cases/74 states, all 4,242 compatible sets and native
+load/replace/unload, scripts/crystals, discovery, copy and restart. Counts describe
+required gates; STATUS records which commit has actually passed them. Earlier
 counts above describe historical milestones, not permission to omit newer gates.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow
 [STATUS](STATUS.md) for current evidence and the authorized next task.

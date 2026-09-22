@@ -42,6 +42,9 @@ class HeadlessEngine:
         import eos.config
         eos.config.gamedata_connectionstring = lambda: sqlite3.connect(uri, uri=True)
         eos.config.saveddata_connectionstring = "sqlite:///:memory:"
+        # Match desktop config.init: the optional global query cache aliases
+        # item/group IDs. Charge discovery calls both with overlapping IDs.
+        eos.config.gamedataCache = False
         eos.config.set_lang("en")
         import eos.db
 

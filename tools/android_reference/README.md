@@ -175,3 +175,23 @@ holes, rejection/override/re-enable, state limits, resource/skill warnings,
 structure services, two projected recipients and subsystem vacancy retention.
 Identifiers, units, booleans, nulls and numeric kinds remain exact; floating
 values use the existing relative `1e-10` / absolute `1e-9` tolerance.
+
+## B04.2.3.1 charge commands and discovery
+
+`charge_edits.py` runs the unchanged pinned calculation command, original Ammo
+service and original browser union method in the isolated reference checkout.
+It compares two fresh processes and the unchanged logical dataset. The matrix
+covers 14 cases/74 states and complete compatible sets for 4,242 supported modules:
+ordinary/T2 ammunition, laser/mining crystals, scripts, cap-booster volume,
+ancillary paste, structure missiles, empty/no-charge fits and linked recipients.
+Recipient values are read only after EOS calculates their invalidated attributes.
+
+Use the installed reference Python with `-I tools/android_reference/charge_edits.py`,
+`--source` the clean pinned checkout, `--database` the verified reference database,
+`--output` a new disposable directory outside both checkouts, and
+`--check tools/android_reference/fixtures/charge-edits.json` for verification.
+The expected fixture contains original source hashes, settings, full inputs,
+identities, raw values and units. Integer/bool/null identities remain exact;
+float comparisons retain relative 1e-10 and absolute 1e-9 tolerances. The original
+desktop disables the optional global EOS gamedata cache; this exporter does too.
+No Android adapter is imported and no original calculation body is replaced.

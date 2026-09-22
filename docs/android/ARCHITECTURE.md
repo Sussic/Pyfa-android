@@ -208,3 +208,24 @@ failed durable writes preserve both. Unknown commit outcomes stop further edits.
 History survives an empty library; viewing does not change it. Earlier saves
 without metadata open with an empty history. Older apps reject the new fields
 and preserve their files; install-over-data and downgrade verification remain R02.
+
+## B04.2.3.1 charge boundary
+
+Charge discovery calls EOS `getValidCharges` and the pinned Market publicity
+policy on the serialized worker. Active-fit discovery is the union of local
+module choices. Versioned options carry fit ID/revision, exact module positions,
+current charge IDs and complete charge IDs/names. Native decoding rejects
+inconsistent unions, vacancies, duplicates and incorrect scalar types. Views
+reload on active-fit/revision changes; pending edits include the displayed revision.
+
+Single-module charge changes validate category and EOS compatibility before
+assignment, recalculate/check states and fill vacancies as the original desktop
+command does. Failed edits/writes use existing graph rollback; charge changes do
+not promote recent equipment. No storage schema or calculation formula changes.
+The earlier bulk operation remains available, with B05 retaining full selection
+semantics. Variation/reordering tasks remain separate retained B04 children.
+
+Engine initialization now matches desktop `config.init` by disabling the optional
+EOS gamedata query cache before imports. Its global cache otherwise aliases item
+and group integer IDs during charge enumeration. EOS session ownership and its
+normal ORM identity map remain; required prior performance/native gates still run.
