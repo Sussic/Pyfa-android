@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-22. B04.2.2 delivered; exact next task **B04.2.3 — Charges, variations and rack ordering**.
+Updated: 2026-09-22. Active: **B04.2.3.1 — Charge editing and active-fit discovery**.
 
 ## Current authorized work
 
@@ -28,10 +28,29 @@ Updated: 2026-09-22. B04.2.2 delivered; exact next task **B04.2.3 — Charges, v
   by preserving original numeric types; settings stay exact and no gate weakened.
   [Audit](tasks/B04-equipment-fitting.md) and [raw receipt](evidence/b04-2-2-native.json)
   retain the evidence and limitations.
-- Exact next task: **B04.2.3**, completing charges/scripts/crystals, active-fit
+- **B04.2.3** selected on `codex/b04-2-3-charges-variations-ordering` from clean
+  delivered master `6c71af9a6be24c1da783f51ab76fd018f21c52a7`; no open PRs.
+  Outcome: compatible charge load/replace/unload, active-fit charge discovery,
+  module and existing-addition variations, and rack swaps preserving state/charge
+  and EOS heat behavior. Audit original commands before implementation; require
+  independent raw values and native edit/failure/recreation/restart evidence.
+  Preserve all 96 host and 22 native gates. Before code changes, split the three
+  command families into B04.2.3.1 charges/discovery (active), B04.2.3.2 variations
+  and B04.2.3.3 ordering/heat. Parent acceptance remains intact. The first child
+  requires complete desktop charge sets, ammo/script/crystal raw-value cases,
+  atomic failures, linked recipients and native edit/recreation/restart checks.
+  Charge controls and typed options are implemented locally. The independent
+  export/repeat and six focused host tests pass 14 cases/74 states and all 4,242
+  compatible sets, including recipient updates, rejection, copies and restart.
+  The full local Windows gate passes all 102 host tests, independent repeats and
+  migration checks. Both APKs, lint, signature and 149-source/data/ABI package
+  inspection pass locally; native CI, visual review and merge remain.
+  The desktop cache setting and recipient-observation corrections are documented
+  in the task brief. Next after this child: **B04.2.3.2 — Fitted and addition variations**.
+- This task completes charges/scripts/crystals, active-fit
   charges, fitted/addition variations and rack ordering with independent values,
   native workflows and restart. B04/B04.2 remain incomplete; B05 bulk and B06 modes/
-  subsystems retain their scope. **17 of 76 leaf tasks done; 59 remain**, plus seven
+  subsystems retain their scope. **17 of 78 leaf tasks done; 61 remain**, plus eight
   rollups. All 239 parity rows remain; no full-feature/usability claim is made.
 - Prior B04.2.1 [PR #17](https://github.com/Sussic/Pyfa-android/pull/17) delivered
   all 437 empty hulls; B04.1 [PR #16](https://github.com/Sussic/Pyfa-android/pull/16)

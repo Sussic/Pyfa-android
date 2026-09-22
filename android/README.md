@@ -364,3 +364,19 @@ raw scalar types and values, two recipients, 13 malformed protocol cases, UI
 edits/recreation/warnings/override, visible history order, independent copies and
 real restart. Seven screenshots and complete raw results are required in the
 one-day diagnostic artifact. Final CI evidence is recorded in STATUS.
+
+## B04.2.3.1 charge editor
+
+Each occupied module opens a compatible-charge picker; the equipment browser also
+opens all charges for the active fit. Search/page, explicit per-module load and
+unload, current charge and saved/error state are reachable native controls.
+Activity recreation retains the picker target/filter/selection. Fit revision
+changes refresh its complete typed options; an active-fit change clears the old
+selection. Formulas stay in EOS and failed writes preserve the committed graph.
+
+`ci/check-charge-edits.py` runs two production-storage phases after all 22 prior
+native executions. They require all 14 charge cases/74 raw states, the complete
+4,242-module compatibility sets, four linked recipients, eleven malformed codec
+rejections, UI ammunition/script/crystal workflows, unchanged neighbouring
+modules/history, copies and real process restart. Eight additional screenshots
+require visual review. Successful builds alone do not establish these results.

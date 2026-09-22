@@ -170,3 +170,18 @@ Optional graph history and fit restriction/vacancy inputs survive copy/restart;
 older binaries reject these inputs without replacing the saved file. Full
 upgrade/downgrade verification remains R02. Charge/variation/order mutations are
 B04.2.3, bulk workflows B05, and dedicated subsystem/mode editing B06.
+
+## B04.2.3.1 charge editing and discovery
+
+`set_module_charge` takes fit ID, position and nullable bundled charge ID with an
+expected revision. It validates the complete edit before assignment, follows
+original EOS recalculation/state checks and preserves recent equipment history.
+`charge_options(fit_id)` returns complete compatible IDs/names for each module and
+the active local fit union, correlated with fit identity and revision. Reads do
+not save inputs. Vacancies have no item/charge and no choices. Earlier bulk
+`set_charges` remains unchanged; B05 retains its full editing/selection scope.
+
+The optional EOS gamedata cache is disabled before import, matching desktop
+initialization and preventing item/group ID collisions. All prior correctness,
+GC, restart and native performance gates remain required. See the architecture
+and task brief for the independent charge oracle and compatibility boundary.

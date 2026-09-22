@@ -99,7 +99,7 @@ internal fun FitLibrary(model: FitLibraryModel) {
     }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Saved fits", style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(libraryTitle))
-        Text("Choose a ship or structure to start an empty fit. Equipment editing is still in development.",
+        Text("Choose a ship or structure to start an empty fit, then add modules and compatible charges.",
             style = MaterialTheme.typography.bodySmall)
         Button(onClick = { model.beginEmpty() }, enabled = enabled, modifier = Modifier.testTag("library-create-empty")) {
             Text("New fit")

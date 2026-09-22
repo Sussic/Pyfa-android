@@ -315,3 +315,82 @@ Only API36 x86_64 ran; ARM64 package contents were verified. Physical-device,
 upgrade/downgrade and user usability evidence remain future gates. Exact next:
 **B04.2.3 — Charges, variations and rack ordering**, automatically authorized.
 B04.2/B04 remain incomplete until all retained child acceptance passes.
+
+## B04.2.3 active
+
+Selected from delivered master `6c71af9a6be24c1da783f51ab76fd018f21c52a7` on
+`codex/b04-2-3-charges-variations-ordering`, with a clean tree and no open PRs.
+Complete F02.03–F02.05 as specified above: charge/script/crystal operations and
+active-fit charge discovery; fitted and existing-addition variations with exact
+state/charge/location reconciliation; module swaps and positional heat effects.
+Audit unchanged pinned commands, then define independent raw-value cases before
+adapter changes. Keep atomic rejection/save/restart, recipient invalidation,
+all prior 96 host tests and 22 native executions, APK/lint/signature/package
+checks and actual screenshot review. B05 bulk and B06 modes retain their scope.
+
+### B04.2.3 implementation children
+
+Before adapter changes, separate the audited command families into three focused
+deliveries. This adds two leaves and one parent: 78 leaves plus eight parents.
+
+- **B04.2.3.1 — Charge editing and active-fit discovery** (active): native
+  load/replace/unload for compatible ammunition, scripts and crystals, a complete
+  compatible-charge picker and active-fit charge view. Independent original
+  `Ammo.getModuleFlatAmmo`, browser union and charge commands verify complete
+  sets, numeric effects, unchanged states, linked recipients and empty/rejected
+  cases. Failed writes, copy, recreation and real process restart are required.
+- **B04.2.3.2 — Fitted and addition variations**: all retained F02.05 behavior,
+  including existing addition inputs, desktop state/charge/location reconciliation,
+  independent values and native workflows/restart. Later addition editors retain
+  their separately assigned requirements.
+- **B04.2.3.3 — Rack ordering and heat behavior**: F02.04 swaps across occupied
+  and vacant positions in the same rack, with retained state/charge and independent
+  heat behavior, native workflows and restart.
+
+The parent remains active until all three pass. Review and merge one child before
+starting the next, retaining every prior host/native gate. No acceptance is moved
+out of B04. This split does not authorize unrelated additions or formula changes.
+
+### B04.2.3.1 audit and reference matrix
+
+Original `CalcChangeModuleChargesCommand` checks charge category and EOS
+`isValidCharge`, keeps module state, recalculates, checks other states and lets the
+GUI recalculate again when needed, then fills vacancies. It does not record recent
+use. The single-target mobile operation rejects incompatible inputs atomically;
+the existing bulk boundary remains unchanged for B05. Selecting an already loaded
+charge is a no-op for saved inputs. Discovery uses original `getValidCharges` plus
+Market publicity; active-fit discovery is the union over local modules, not the
+projected additions. It refreshes after fit edits and active-fit changes.
+
+The independent matrix covers hybrid/projectile/missile ammunition, laser/mining
+crystals, tracking/sensor/dampener scripts, cap-booster volume, ancillary paste,
+structure missiles, command charges, no-charge equipment and empty fits, including
+two projection and two command recipients. Compare complete charge sets for every
+supported catalogue module, strict identities/types/units and raw fit/module
+attributes. Original command and browser-method bodies execute unmodified; only
+their window identifier is supplied by the isolated reference harness.
+
+The first reference enumeration exposed EOS's optional global query cache mixing
+item/group integer IDs. Desktop `config.init` disables that cache. The reference
+now uses the same setting before EOS imports; the adapter must do likewise before
+charge discovery can call the original EOS methods safely. No EOS formulas or
+upstream sources change. Retain all prior correctness/performance gates to check
+the runtime effect of this initialization correction.
+
+### B04.2.3.1 development checkpoint
+
+The charge picker/worker operation, complete compatible/active-fit discovery and
+native test phases are implemented locally. The independent two-process export
+passes 14 cases/74 states and 4,242 compatibility sets with unchanged database.
+The first focused test run exposed stale recipient observations in the new
+reference harness; the corrected reference calculates invalidated recipients
+before reading, as the prior module oracle does. Corrected Windows export digest:
+`113db7f76d776984989b3163bfd587ffe01e6ddacefba3e279b052274625be30`.
+This is an observation fix before delivery, not a tolerance or EOS formula change.
+Six focused host checks pass, including atomic rejection/save failure, all charge
+sets, recipient updates, copies and process restart. The full local Windows gate
+also passes all 102 host tests, independent reference repeats and migration.
+Local builds of both APKs, lint, signature and package/data/license/ABI inspection
+pass with 149 engine sources. Native CI, visual review and delivery remain outstanding.
+Required totals are 102 host tests,
+24 native executions and 35 screenshots.

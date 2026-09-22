@@ -39,6 +39,7 @@ sealed interface BridgeOperation {
     data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
+    data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
     data class AddImplant(val fitId: String, val implant: String, val active: Boolean = true) : BridgeOperation
@@ -256,6 +257,9 @@ object BridgeCodec {
         is BridgeOperation.CreateFit -> "create_fit" to obj("spec" to encodeFitSpec(operation.spec))
         is BridgeOperation.SetCharges -> "set_charges" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "charge" to operation.charge?.let { nonempty(it, "charge") })
+        is BridgeOperation.SetModuleCharge -> "set_module_charge" to obj("fit_id" to operation.fitId,
+            "position" to integer(operation.position, "position", 0),
+            "charge_id" to operation.chargeId?.let { integer(it, "charge_id", 1) })
         is BridgeOperation.SetModuleStates -> "set_module_states" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "state" to operation.state.name)
         is BridgeOperation.SetSkillLevel -> "set_skill_level" to obj("fit_id" to operation.fitId,
@@ -384,6 +388,49 @@ object BridgeCodec {
         }
         unique(rows.map { it.id }, "module default IDs")
         return immutableList(rows)
+    }
+
+    private fun chargeIds(value: Any): List<Int> {
+        val ids = array(value, "charge_ids").map { integer(it, "charge_id", 1) }
+        unique(ids, "charge IDs")
+        return immutableList(ids)
+    }
+
+    fun decodeChargeCompatibility(json: String): List<ChargeCompatibility> {
+        val rows = array(StrictJson(json).parse(), "compatibility").map { entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("id", "charge_ids"), path = "module")
+            ChargeCompatibility(integer(row.get("id"), "module.id", 1), chargeIds(row.get("charge_ids")))
+        }
+        unique(rows.map { it.id }, "module IDs")
+        return immutableList(rows)
+    }
+
+    fun decodeChargeOptions(json: String): ChargeOptions {
+        val value = objectValue(StrictJson(json).parse(), "charges")
+        keys(value, setOf("version", "fit_id", "revision", "modules", "items"), path = "charges")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported charge version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid charge revision")
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("index", "item_id", "charge_id", "charge_ids"), path = "module")
+            val position = integer(row.get("index"), "module.index", 0)
+            requireProtocol(index == position, "Module positions are not contiguous")
+            val item = nullable(row.get("item_id"))?.let { integer(it, "item_id", 1) }
+            val charge = nullable(row.get("charge_id"))?.let { integer(it, "charge_id", 1) }
+            val ids = chargeIds(row.get("charge_ids"))
+            requireProtocol(item != null || charge == null && ids.isEmpty(), "Vacant slot has charges")
+            ModuleCharges(position, item, charge, ids)
+        }
+        val items = array(value.get("items"), "items").map { entry ->
+            val row = objectValue(entry, "charge")
+            keys(row, setOf("id", "name"), path = "charge")
+            ChargeItem(integer(row.get("id"), "charge.id", 1), nonempty(row.get("name"), "charge.name"))
+        }
+        unique(items.map { it.id }, "charge items")
+        requireProtocol(modules.flatMap { it.chargeIds }.toSet() == items.map { it.id }.toSet(), "Charge union differs from modules")
+        return ChargeOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules), immutableList(items))
     }
 
     fun decodeFitting(json: String): FittingDetails {

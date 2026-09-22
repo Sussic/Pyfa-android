@@ -76,7 +76,7 @@ class ModuleEditorModel : ViewModel() {
 }
 
 @Composable
-internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit) {
+internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit) {
     val context = LocalContext.current
     val state by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val fit = (state as? EngineState.Ready)?.fit
@@ -170,6 +170,8 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
                     model.submit(context, BridgeOperation.RemoveModule(fit.id, module.index))
                 }, enabled = enabled, modifier = Modifier.testTag("module-remove-${module.index}")) { Text("Remove") }
             }
+            if (module.id != null) TextButton(onClick = { onCharges(module.index) }, enabled = enabled,
+                modifier = Modifier.testTag("module-charges-${module.index}")) { Text("Charges") }
         }
     }
 }

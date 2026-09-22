@@ -106,6 +106,37 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun chargeOptions(context: Context, fitId: String): CompletableFuture<ChargeOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeChargeOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("charge_options", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
+    fun chargeCompatibilityDiagnostics(context: Context): CompletableFuture<List<ChargeCompatibility>> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join(); check(!unavailable)
+            BridgeCodec.decodeChargeCompatibility(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("charge_compatibility_diagnostics").toString())
+        }, executor)
+    }
+
+    fun chargeModuleDiagnostics(context: Context, fitId: String): CompletableFuture<String> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join(); check(!unavailable)
+            Python.getInstance().getModule("mobile_runtime").callAttr("charge_module_diagnostics", fitId).toString()
+        }, executor)
+    }
+
     @Synchronized
     fun useEphemeralStorageForDiagnostics() {
         check(BuildConfig.DEBUG && startup == null) { "Diagnostics must select storage before engine startup" }

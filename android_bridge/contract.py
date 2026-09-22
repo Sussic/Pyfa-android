@@ -74,6 +74,7 @@ ARGUMENTS = {
     "remove_module": ("fit_id", "position"),
     "set_fit_restrictions": ("fit_id", "ignore"),
     "set_charges": ("fit_id", "module_indices", "charge"),
+    "set_module_charge": ("fit_id", "position", "charge_id"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
     "add_implant": ("fit_id", "implant", "active"),
@@ -245,6 +246,14 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
 
+    def charge_options(self, fit_id):
+        from .charges import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
+
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
         try:
@@ -390,6 +399,8 @@ class BridgeSession:
             _boolean(args["ignore"])
         if "item_id" in args:
             _integer(args["item_id"], 1, 2**31 - 1)
+        if "charge_id" in args and args["charge_id"] is not None:
+            _integer(args["charge_id"], 1, 2**31 - 1)
         if "position" in args:
             _integer(args["position"], 0, 2**31 - 1)
         if "spec" in args:
@@ -622,6 +633,9 @@ class BridgeSession:
             return fitting.restrictions(self.engine, fit, args["ignore"])
         if operation == "set_charges":
             return self.engine.set_charges(fit, args["module_indices"], args["charge"])
+        if operation == "set_module_charge":
+            from .charges import change
+            return change(self.engine, fit, args["position"], args["charge_id"])
         if operation == "set_module_states":
             return self.engine.set_module_states(fit, args["module_indices"], args["state"])
         if operation == "set_skill_level":

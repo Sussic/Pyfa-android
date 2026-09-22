@@ -90,6 +90,46 @@ def fitting_details(fit_id):
     return encoded(_bridge.fitting_details(fit_id))
 
 
+def charge_options(fit_id):
+    return encoded(_bridge.charge_options(fit_id))
+
+
+def charge_compatibility_diagnostics():
+    """Complete native compatibility enumeration through production policy."""
+    _engine._check_thread()
+    from android_bridge.charges import compatible
+    from eos.saveddata.module import Module
+    import eos.db
+    rows = []
+    for item in json.loads(equipment_catalog())['items']:
+        if item['category'] not in ('Module', 'Structure Module'):
+            continue
+        value = eos.db.getItem(item['id'])
+        try:
+            module = Module(value)
+        except ValueError:
+            continue  # Original ModuleInfo excludes non-fitting quantum cores.
+        if module.slot in (1, 2, 3, 4, 8):
+            rows.append({'id': item['id'], 'charge_ids': sorted(value.ID for value in compatible(module))})
+    return encoded(rows)
+
+
+def charge_module_diagnostics(fit_id):
+    """Raw EOS charge effects for the debug native comparison, not UI formulas."""
+    _engine._check_thread()
+    from eos.const import FittingModuleState
+    fit = _bridge._fits[fit_id]
+    if not fit.calculated:
+        fit.calculateModifiedAttributes()
+    units = {'maxRange': 'm', 'falloff': 'm', 'trackingSpeed': 'rad/s',
+        'speed': 'ms', 'damageMultiplier': 'multiplier', 'capacitorNeed': 'GJ',
+        'capacitorBonus': 'GJ', 'armorDamageAmount': 'HP', 'shieldBonus': 'HP',
+        'miningAmount': 'm3', 'scanResolutionBonus': '%', 'maxTargetRangeBonus': '%'}
+    return encoded([{'index': i, 'id': mod.itemID, 'state': FittingModuleState(mod.state).name,
+        'charge_id': mod.chargeID, 'attributes': {key: {'value': mod.getModifiedItemAttr(key, None), 'unit': unit}
+            for key, unit in units.items()}} for i, mod in enumerate(fit.modules) if not mod.isEmpty])
+
+
 def recent_items():
     return encoded(_bridge.recent_items())
 
