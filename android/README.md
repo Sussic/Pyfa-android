@@ -1,4 +1,4 @@
-# Offline Android engine development (B03.2)
+# Offline Android engine development (B04.1)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
@@ -315,3 +315,19 @@ restart boundaries, desktop catalogue metadata and every retained raw statistic.
 Run the full `ci/native-test.sh` on its disposable CI emulator to retain all 17
 required executions. Do not run the unfiltered phase tests on a personal phone.
 The same one-day evidence artifact includes four additional screenshots.
+
+## B04.1 equipment discovery
+
+The equipment browser reads the complete offline Market catalogue on demand on
+the EOS worker, outside launch timing. It supports group navigation, name/regex/
+wildcard/default-jargon search, Normal/Faction/Complex/Officer filters, paginated
+results and a selected item's market-group jump. Browser state survives activity
+recreation. Fitting edits and recently used items remain B04.2; parent B04 stays
+open and all inventory requirements remain.
+
+`ci/check-market.py` adds a separate production-storage native execution after
+all 17 prior executions. Full typed catalogue equality covers 718 groups and
+6,822 items; all 22 real desktop search results are compared. Native touches check
+tree navigation, selection/jump, filters, empty results, pagination, recreation
+and unchanged saved fits. Raw catalogue/search data, provenance and five screens
+are retained in the existing one-day artifact. Current total: 18 native executions.

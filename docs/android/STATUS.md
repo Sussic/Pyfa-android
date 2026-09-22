@@ -1,6 +1,27 @@
 # Android project status
 
-Updated: 2026-09-22. No implementation task is active.
+Updated: 2026-09-22. Active: B04.1 under the authorized sequential roadmap goal.
+
+## Active B04 — equipment browser and fitting
+
+- Explicit chat confirmation supersedes the earlier B03.2 stopping instruction.
+  Implementation, required host/native checks, review, push/PR/merge and sequential
+  eligible roadmap work are authorized. No releases, phone installs or billing changes.
+- Live master `bd22ed6d83f7951813eb09c9d932470cad04ce0e`, clean checkout and no open
+  PRs verified. Installed Python 3.11.9 and Temurin 17.0.20.1+1 reused successfully.
+- **B04.1 — Offline equipment discovery** is active on
+  `android/b04-1-equipment-browser`: desktop-equivalent bundled market tree,
+  search/meta filtering and item-to-group navigation, with independent full
+  catalogue comparison, host regressions and native UI/offline checks.
+- **B04.2 — Fitting editor and item history** follows: arbitrary hull creation,
+  add/replace/remove/reorder, charges/variations, restrictions/legality and persistent
+  recently used items. All original B04 criteria remain in the
+  [task brief](tasks/B04-equipment-fitting.md); parent B04 remains incomplete.
+- Preserve all 78 host tests and 17 native executions; add meaningful checks for
+  each child. Complete/review/merge one child, update checkpoint, then advance.
+- B04.1 local evidence: independent full catalogue/search export and fresh-process
+  repeat (718 groups/6,822 items/22 queries), six guarded headless regressions and
+  both APK builds/lint pass. Required CI and native screenshot review pending.
 
 ## B03.2 delivered; exact next task B04
 
@@ -30,9 +51,8 @@ Updated: 2026-09-22. No implementation task is active.
   migration/backup, APK/test builds, lint, signing and package inspection. No
   local emulator/phone execution is claimed. EOS formulas, numerical fixtures,
   architecture, dependency pins, billing and artifact policy are unchanged.
-- **Exact next task: B04 — Equipment browser and fitting.** It is ready and has
-  not started. B03.2 authorization ends here; no release or phone installation.
-  14 of 73 leaf work items are done; 59 remain, plus five parent rollups.
+- B03.2 delivery is historical; the subsequent explicit authorization starts B04.
+  After splitting B04, 14 of 74 leaf work items are done; 60 remain, plus six rollups.
 
 ## Resume and installed environment
 
@@ -47,7 +67,7 @@ AppData outside OneDrive. [Windows guide](WINDOWS.md) has commands; the local
 `build/WINDOWS-CHECKPOINT.md` records receipts and continuation details. Do not
 replace the installed environment or run timed host suites alongside Gradle.
 
-Keep all **78 host tests and 17 native executions**, independent raw-value
+Keep all **84 host tests and 18 native executions**, independent raw-value
 validators, process restarts, forced-GC regressions and screenshot review.
 Native CI uses Ubuntu/KVM; the local Windows setup does not claim native runtime
 coverage. One-day diagnostics retention, deliberate APK uploads only, no scheduled

@@ -140,12 +140,14 @@ $db = "$run/reference/eve.db"
 & $reference -I tools/android_reference/projection.py --source build/reference-upstream --database $db --output "$run/projection-reference" --check tools/android_reference/fixtures/projection.json
 & $reference -I tools/android_reference/command.py --source build/reference-upstream --database $db --output "$run/command-reference" --check tools/android_reference/fixtures/command.json
 & $reference -I tools/android_reference/catalog.py --source build/reference-upstream --database $db --output "$run/catalog-reference" --check tools/android_reference/fixtures/catalog.json
+& $reference -I tools/android_reference/equipment.py --source build/reference-upstream --database $db --output "$run/equipment-reference" --check tools/android_reference/fixtures/equipment.json
 & $headless -I tools/android_headless/check.py --database $db --output "$run/headless"
 & $headless -I tools/android_headless/check.py --scenario projection --database $db --output "$run/projection"
 & $headless -I tools/android_headless/check.py --scenario command --database $db --output "$run/command"
 & $headless -I tools/android_headless/check_bridge.py --database $db --output "$run/bridge"
 & $headless -I tools/android_headless/check_persistence.py --database $db --output "$run/persistence"
 & $headless -I tools/android_headless/check_library.py --database $db --output "$run/library"
+& $headless -I tools/android_headless/check_market.py --database $db --output "$run/equipment"
 ```
 
 Reuse the existing clean reference worktree on subsequent runs. Run the timed
@@ -154,7 +156,7 @@ persistence attempt on this machine reported errors. Every output child director
 must be new and outside both checkouts. These scripts validate
 integrity, independent raw values, forbidden desktop/network imports and fresh
 process behavior; never substitute a personal fit database. The current total is
-78 tests (eight utility, 29 headless, 14 bridge, 14 persistence, 13 library),
+84 tests (eight utility, 29 headless, 14 bridge, 14 persistence, 13 library, six equipment discovery),
 plus independent calculation/catalogue exports/repeats and the real migration/backup check.
 The prepared workspace's ignored `build/check-windows.ps1` runs these gates with
 failure checking and records the new evidence path in `build/windows-check-path.txt`.
@@ -164,9 +166,9 @@ failure checking and records the new evidence path in `build/windows-check-path.
 A local APK, lint, signature, package inspection and host tests do not prove
 Android runtime behavior. Preserve every required gate in `.github/workflows/android.yml`
 and `android/ci/native-test.sh`. Their fresh offline API 36 x86_64 emulator
-sequence requires all **17 native executions**: five functional tests, separate
+sequence requires all **18 native executions**: five functional tests, separate
 A10 performance and B01 contract, three B02 persistence phases, and three B03.1
-library phases, plus four B03.2 organization/navigation phases. Preserve raw-value validators, restart boundaries and screenshot
+library phases, four B03.2 organization/navigation phases and B04.1 equipment discovery. Preserve raw-value validators, restart boundaries and screenshot
 review. Do not run an unfiltered connected suite or this fresh-install script on
 a personal phone. The supported full native harness uses Ubuntu/KVM and GNU
 `timeout`; this setup does not port it to Windows or claim to have run it locally.

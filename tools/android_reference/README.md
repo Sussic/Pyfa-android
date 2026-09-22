@@ -127,3 +127,19 @@ endings can produce different byte hashes; the verification compares parsed JSON
 and normalized source data. No numeric tolerance or expected value was changed to
 obtain the Windows pass. The first Windows check found open SQLite handles during
 cleanup; explicit connection closing fixed the actual resource lifetime.
+
+## B04.1 independent equipment reference
+
+Use the reference environment and clean pinned checkout (including `service/`):
+`python -I tools/android_reference/equipment.py --source /clean/pinned/checkout
+--database /absolute/eve.db --output /new/external/equipment-reference
+--check tools/android_reference/fixtures/equipment.json`.
+
+The exporter reads the original Market service and executes its actual search
+worker with wx event dispatch. It sets `gamedataCache=False` before EOS imports,
+matching desktop `config.init`; no source or search method is patched. It keeps
+settings in memory, validates source/dependencies/data, enumerates all 718 visible
+market groups and 6,822 items, records group membership/meta/parent/jump mappings
+and executes the 22 input queries in `equipment-queries.json`. A second process
+must produce the same result; the input database must remain unchanged. The
+Android adapter is never imported. The fixture is packaged only in the test APK.

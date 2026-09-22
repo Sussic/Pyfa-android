@@ -79,8 +79,10 @@ performance = summarize(
 contract = summarize_contract(json.loads((evidence / "contract-native.json").read_text()), engine)
 persistence = summarize_persistence(json.loads((evidence / "persistence-native.json").read_text(encoding="utf-8")), engine)
 from navigation_summary import summarize as summarize_navigation
+from market_summary import summarize as summarize_market
 summary = {
-    "task": "B03.2",
+    "task": "B04.1",
+    "market": summarize_market(json.loads((evidence / "market-native.json").read_text(encoding="utf-8")), engine),
     "navigation": summarize_navigation(json.loads((evidence / "navigation-native.json").read_text(encoding="utf-8"))),
     "library": summarize_library(json.loads((evidence / "library-native.json").read_text(encoding="utf-8"))),
     "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
