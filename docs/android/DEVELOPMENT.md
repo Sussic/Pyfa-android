@@ -22,11 +22,13 @@ record the behavioral tests and fresh-process comparisons; A10 raises the count 
 
 B01 adds the typed bridge, B02 durable graph storage, B03.1 the fit library
 lifecycle/search UI, and B03.2 organization/navigation. The required host suite
-has **84 tests**: 29 headless, 14 bridge, 14 persistence, 13 library, six equipment
-discovery and eight reference utilities, plus independent calculation/catalogue
-exports and migration. Native CI requires **18 executions**: five functional, separate A10 performance
+has **90 tests** with B04.2.1: 29 headless, 14 bridge, 14 persistence, 13 library,
+six equipment discovery, six empty-hull and eight reference utilities, plus
+independent calculation/catalogue/empty-hull exports and migration.
+Native CI requires **20 executions**: five functional, separate A10 performance
 and B01 contract, three B02 persistence phases, three B03.1 library phases and
-four B03.2 organization/navigation phases and separate B04.1 equipment discovery. Earlier
+four B03.2 organization/navigation phases, separate B04.1 equipment discovery and
+two B04.2.1 empty-hull creation/restart phases. Earlier
 counts above describe historical milestones, not permission to omit newer gates.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow
 [STATUS](STATUS.md) for current evidence and the authorized next task.

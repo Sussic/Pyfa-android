@@ -331,3 +331,19 @@ all 17 prior executions. Full typed catalogue equality covers 718 groups and
 tree navigation, selection/jump, filters, empty results, pagination, recreation
 and unchanged saved fits. Raw catalogue/search data, provenance and five screens
 are retained in the existing one-day artifact. Current total: 18 native executions.
+
+## B04.2.1 empty ships and structures
+
+New fit opens a searchable paginated picker for every bundled hull. The hull
+browser can preselect a ship or structure. Creation uses all-V skills and no
+equipment/additions; saved empty fits can be named, copied and reopened. Missing
+gun ranges display "Unavailable" while calculated zero damage stays numeric.
+Example fits remain accessible. Equipment mutations and structure modes retain
+their later B04/B06 scope.
+
+`ci/check-empty-hulls.py` adds two production-storage processes after all 18 prior
+executions. It verifies every one of the 437 hulls against the independent desktop
+reference, native picker/search/page/recreation and ship/structure creation/copy,
+atomic rejection and force-stop/reopen. The strict raw validator and four new
+screenshots use the existing one-day artifact policy. Older builds reject these
+empty-module fits without replacing the file; downgrade/upgrade safety is R02.

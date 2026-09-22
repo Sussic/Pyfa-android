@@ -89,6 +89,13 @@ jobs:
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-equipment-reference"
           --check tools/android_reference/fixtures/equipment.json
+      - name: Verify all independent empty ship and structure values
+        run: >-
+          python -I tools/android_reference/empty_hulls.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-empty-hulls-reference"
+          --check tools/android_reference/fixtures/empty-hulls.json
       - name: Create a separate environment without desktop dependencies
         run: python -m venv "${{ runner.temp }}/pyfa-headless-venv"
       - name: Install pinned headless dependencies
@@ -145,6 +152,13 @@ jobs:
           -I tools/android_headless/check_market.py
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-equipment-check"
+      - name: Verify complete empty hull parity, rejection and persistence
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_empty_hulls.py
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-empty-hulls-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -167,7 +181,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {

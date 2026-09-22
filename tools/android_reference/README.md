@@ -143,3 +143,16 @@ market groups and 6,822 items, records group membership/meta/parent/jump mapping
 and executes the 22 input queries in `equipment-queries.json`. A second process
 must produce the same result; the input database must remain unchanged. The
 Android adapter is never imported. The fixture is packaged only in the test APK.
+
+## B04.2.1 independent empty hull reference
+
+Run `python -I tools/android_reference/empty_hulls.py --source /clean/pinned/checkout
+--database /absolute/eve.db --output /new/external/empty-hulls-reference
+--check tools/android_reference/fixtures/empty-hulls.json` with the same installed
+reference environment. Original Market hull enumeration and EOS Ship/Citadel/Fit
+constructors produce all 437 empty fits under explicit all-V, uniform-damage,
+high-security/no-addition inputs. No desktop method is patched and no mobile
+adapter imported. All 39 raw fields/units/scalar types compare across two fresh
+processes and against the fixture; absent gun ranges are JSON null. The receipt
+binds the fixture digest to verified source/data identity. Existing fitted
+references and tolerances remain unchanged.

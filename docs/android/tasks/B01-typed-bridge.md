@@ -61,11 +61,13 @@ values retain integer, decimal, boolean and text types; units are explicit. A
 prerequisite edit can leave a dependent skill unset, represented as null rather
 than a fabricated zero.
 
-This version carries the **39-field sample view** already covered by the A04/A05
-oracles. It requires at least one fitted module because that view includes the
-first module's weapon attributes. Moduleless fit creation is explicitly rejected;
-complete fit/statistic views remain C01–C03. No parity inventory row is removed or
-marked complete merely because a transport exists.
+The B01 delivery carried the **39-field sample view** already covered by the
+A04/A05 oracles and required at least one fitted module for the first module's
+weapon attributes. [B04.2.1](B04-equipment-fitting.md) extends the bundled contract
+with empty-module fits and explicit absent statistic values, retaining all 39
+required fields/units and existing fitted scalar types. Complete fit/statistic
+views remain C01–C03. No parity inventory row is removed or marked complete
+merely because a transport exists.
 
 ## Revisions and publication
 

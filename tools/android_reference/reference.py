@@ -122,6 +122,7 @@ def snapshot(fit):
         return {"value": value, "unit": unit}
 
     ship = fit.ship.getModifiedItemAttr
+    weapon = fit.modules[0] if fit.modules else None
     stats = {
         "cpu_used": stat(fit.getItemAttrOnlineSum(fit.modules, "cpu"), "tf"),
         "cpu_output": stat(ship("cpuOutput"), "tf"),
@@ -142,8 +143,8 @@ def snapshot(fit):
         "capacitor_state": stat(fit.capState, "%" if fit.capStable else "s"),
         "max_velocity": stat(ship("maxVelocity"), "m/s"),
         "max_target_range": stat(ship("maxTargetRange"), "m"),
-        "gun_optimal": stat(fit.modules[0].getModifiedItemAttr("maxRange"), "m"),
-        "gun_falloff": stat(fit.modules[0].getModifiedItemAttr("falloff"), "m"),
+        "gun_optimal": stat(weapon.getModifiedItemAttr("maxRange") if weapon else None, "m"),
+        "gun_falloff": stat(weapon.getModifiedItemAttr("falloff") if weapon else None, "m"),
     }
     for layer in ("shield", "armor", "hull"):
         stats[layer + "_hp"] = stat(fit.hp[layer], "HP")

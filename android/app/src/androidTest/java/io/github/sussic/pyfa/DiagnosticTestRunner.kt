@@ -7,7 +7,8 @@ import androidx.test.runner.AndroidJUnitRunner
 class DiagnosticTestRunner : AndroidJUnitRunner() {
     override fun onCreate(arguments: Bundle) {
         if (!arguments.containsKey("b02_phase") && !arguments.containsKey("b03_phase") &&
-            !arguments.containsKey("b032_phase") && !arguments.containsKey("b041_phase")) EngineRuntime.useEphemeralStorageForDiagnostics()
+            !arguments.containsKey("b032_phase") && !arguments.containsKey("b041_phase") &&
+            !arguments.containsKey("b0421_phase")) EngineRuntime.useEphemeralStorageForDiagnostics()
         super.onCreate(arguments)
     }
 }

@@ -200,6 +200,7 @@ class FitLibraryTest {
             is StatValue.Decimal -> "decimal"
             is StatValue.BooleanValue -> "boolean"
             is StatValue.Text -> "string"
+            StatValue.Unavailable -> error("Existing fitted reference unexpectedly contains an absent value")
         })
         val skills = JSONObject()
         for ((name, level) in fit.skills) skills.put(name, level ?: JSONObject.NULL)

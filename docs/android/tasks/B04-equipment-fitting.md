@@ -44,7 +44,8 @@ by recently viewed items.
 
 B04 stays incomplete until both children pass. Bulk selection/fill remains B05;
 modes/subsystems B06, cargo B07 and undo/redo B09 retain their full requirements.
-The split adds one leaf and one rollup: 74 leaf tasks plus six parents.
+The initial split added one leaf and one rollup. The later B04.2 split below
+brings the total to 76 leaf tasks plus seven parents; no acceptance is dropped.
 
 ## Relevant pinned desktop audit
 
@@ -59,9 +60,10 @@ F02.01–F02.05/F02.09 and the existing F01.01 boundary remain acceptance source
 
 ## Required verification and delivery
 
-Preserve all 78 current host tests, independent references/repeats/migration,
-all 17 current offline native executions, APK/lint/signature/package gates and
-original numerical tolerances/types/units. Add focused host and real native
+Preserve all delivered host tests, independent references/repeats/migration,
+offline native executions, APK/lint/signature/package gates and original
+numerical tolerances/types/units. B04 started with 78 host tests and 17 native
+executions; B04.1 raised these to 84 and 18. Add focused host and real native
 workflow/failure/restart checks for each child. Validate complete catalogue sets,
 not a few familiar items. Inspect actual phone-sized screenshots and retain raw
 evidence/provenance. Update this brief, STATUS, ROADMAP and local checkpoint with
@@ -93,7 +95,7 @@ catalogue/search/page comparator to require exact scalar types (float/bool/near-
 mutations are rejected) and reduced equipment-screen spacing so group browsing
 starts sooner. The screenshot checks now scroll the group list and destination
 breadcrumb into view. Final-commit CI and screenshot review subsequently passed as recorded below.
-B04.2 not started.
+B04.2 subsequently starts after this child's delivery, as recorded below.
 
 ## B04.1 delivered
 
@@ -111,3 +113,75 @@ package contents only. No physical-device, upgrade or usability claim is made.
 
 Exact next task: **B04.2 — Fitting editor and item history**, automatically
 authorized by the current sequential roadmap request. Parent B04 remains active.
+
+## B04.2 active
+
+Selected on `codex/b04-2-fitting-editor` from delivered master
+`fd24947bbebbcb3f9d40d6c29d1f8a31dffcfbac`; no open PRs at selection. The complete
+B04.2 acceptance above is retained. Initial audit identifies the existing
+fixture-only nonempty-module contract and sample-gun statistic assumptions as
+necessary fixes for arbitrary empty hulls. Adapt the pinned desktop fitting
+commands around EOS, preserving the committed graph's atomic failure recovery.
+Require independent numerical/legality/charge/reorder/restriction references,
+focused host checks and native edit/rejection/recreation/restart workflows in
+addition to every delivered gate. No implementation or new verification is
+claimed by this task-selection checkpoint.
+
+### B04.2 implementation children
+
+The audit exposes a contract/statistics change for empty hulls, followed by
+separate fitting mutation families. Before code changes, split into:
+
+- **B04.2.1 — Arbitrary empty ship and structure creation** (active): choose any
+  of the 437 independently enumerated bundled hulls, create/name/save/copy/reopen
+  empty fits, and replace sample-gun assumptions with explicit absent values.
+  Compare the complete hull set and raw statistics against the pinned original
+  ship/Citadel construction and EOS; preserve the existing fitted reference
+  values and exact scalar types. Native full-set comparison and representative
+  touch/recreation/rejection/restart checks are required. Modes/subsystem editing
+  and structure fitting matrices retain their B06 ownership.
+- **B04.2.2 — Module editing, legality and recent use**: F02.02 and F02.09 plus
+  the recent-use portion of F02.01; add/replace/remove normal, rig and service
+  modules, preserve positions/state limits, show resources/skill warnings and
+  retain desktop restriction override/re-enable semantics. Persist real use in
+  a 20-entry promoted list with abyssal exclusion. No recently viewed substitute.
+- **B04.2.3 — Charges, variations and rack ordering**: complete F02.03–F02.05,
+  including scripts/crystals, active-fit charges, fitted and existing addition
+  variations, state/charge reconciliation and positional heat effects. Extend
+  recent-use behavior only where the audited desktop operations record it.
+
+Complete, review and deliver each child before advancing. All existing parent
+requirements, atomic failure/restart checks and independent native evidence
+remain mandatory. Active branch is `codex/b04-2-1-empty-hulls`.
+
+### B04.2.1 implementation and checks in progress
+
+The new-fit picker searches/pages all 437 bundled hulls and retains the selected
+hull/name across activity recreation. The existing hull browser opens the same
+picker with its hull selected. Original EOS Ship/Citadel construction and the
+existing atomic graph path handle empty creation, naming, independent copies and
+restart. All-V/no-equipment assumptions are visible. The existing example-fit
+workflow remains available. Gun optimal/falloff are explicitly absent and display
+"Unavailable"; calculated zero damage retains its numeric type. No formulas,
+original fitted fixtures, dependency pins or storage schema changed. See the
+[contract and compatibility boundary](../ARCHITECTURE.md#b0421-empty-hull-boundary).
+
+The independent exporter runs original EOS constructors for every hull from the
+unmodified desktop Market, with explicit skills/settings/security/damage and no
+modules, drones, implants or linked additions. It compares two fresh processes;
+the unchanged original A01/A04/A05 exporters remain required. The new fixture is
+test-only. Floating values keep relative `1e-10` / absolute `1e-9` tolerances;
+integers, booleans, identifiers, units and nulls are exact.
+
+Focused local checks passed for 437 hulls (419 ships and 18 structures), 39 fields
+each, plus six guarded bridge tests covering absence, failed mutations/saves,
+independent copies and real process restart. Required native coverage now adds
+complete typed hull observations and picker/search/page/recreation/cancel/name,
+ship/structure creation, rejection/copy and process-restart workflows. All 84
+prior host tests and 18 prior native executions remain required, becoming 90 and
+20 respectively. The complete 90-test local Windows suite passes, including all
+independent references/repeats and migration/backup. Local APK/test builds, lint,
+signature and inspection of 147 source files, the dataset and both ABI packages
+pass. Native CI, screenshot review and delivery are still pending. Review of the
+raw comparator rejects seven mutations of nulls/types/units/values; no earlier
+scalar assertion or numerical tolerance was relaxed.

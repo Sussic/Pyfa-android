@@ -159,7 +159,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
         }
         is EngineState.Ready -> {
             val stats = current.fit.stats
-            val ammunition = current.fit.modules.first().charge ?: stringResource(R.string.no_ammunition)
+            val ammunition = current.fit.modules.firstOrNull()?.charge ?: stringResource(R.string.no_ammunition)
             current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
             Text(current.fit.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(selectedTitle))
             TextButton(onClick = {
@@ -194,6 +194,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
 }
 
 internal fun formatStat(stat: Stat): String {
+    if (stat.value == StatValue.Unavailable) return "Unavailable"
     val value = stat.value.raw
     val unit = stat.unit
     val formatted = if (value is Number) NumberFormat.getNumberInstance().apply {

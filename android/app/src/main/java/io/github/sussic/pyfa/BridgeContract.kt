@@ -4,7 +4,7 @@ import java.util.Collections
 import org.json.JSONArray
 import org.json.JSONObject
 
-/** Version 1 describes the supported sample capabilities, not every Pyfa field. */
+/** Bundled bridge capabilities; this is not yet every Pyfa field. */
 enum class ModuleState { OFFLINE, ONLINE, ACTIVE, OVERHEATED }
 enum class SystemSecurity { HISEC, LOWSEC, NULLSEC, WSPACE }
 
@@ -78,12 +78,13 @@ sealed interface StatValue {
     fun numberOrNull(): Double? = when (this) {
         is Integer -> value.toDouble()
         is Decimal -> value
-        is BooleanValue, is Text -> null
+        is BooleanValue, is Text, Unavailable -> null
     }
     data class Integer(val value: Long) : StatValue { override val raw: Any get() = value }
     data class Decimal(val value: Double) : StatValue { override val raw: Any get() = value }
     data class BooleanValue(val value: Boolean) : StatValue { override val raw: Any get() = value }
     data class Text(val value: String) : StatValue { override val raw: Any get() = value }
+    data object Unavailable : StatValue { override val raw: Any get() = JSONObject.NULL }
 }
 
 data class Stat(val value: StatValue, val unit: String)
@@ -294,12 +295,13 @@ object BridgeCodec {
             val stat = objectValue(stats.get(name), "$path.stats.$name")
             keys(stat, setOf("value", "unit"), path = "$path.stats.$name")
             val scalar = when (val item = stat.get("value")) {
+                JSONObject.NULL -> StatValue.Unavailable
                 is Int -> StatValue.Integer(item.toLong())
                 is Long -> StatValue.Integer(item)
                 is Double -> StatValue.Decimal(finite(item, "$path.stats.$name.value"))
                 is Boolean -> StatValue.BooleanValue(item)
                 is String -> StatValue.Text(item)
-                else -> fail("$path.stats.$name.value must be an integer, decimal, boolean or string")
+                else -> fail("$path.stats.$name.value must be a scalar or explicit null")
             }
             Stat(scalar, text(stat.get("unit"), "$path.stats.$name.unit"))
         }
@@ -312,7 +314,6 @@ object BridgeCodec {
                 nullable(module.get("charge"))?.let { nonempty(it, "module.charge") },
                 enumValue<ModuleState>(module.get("state"), "module.state"))
         }
-        requireProtocol(modules.isNotEmpty(), "The version 1 statistics view requires a fitted module")
         val skillObject = objectValue(value.get("skills"), "$path.skills")
         val skills = skillObject.keys().asSequence().associateWith { name ->
             nonempty(name, "skill name")

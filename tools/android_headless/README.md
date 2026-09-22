@@ -180,3 +180,13 @@ repeat searches, invalid input, unchanged fitting data and worker ownership are
 checked without desktop imports or network access. The current required host
 total is 84; the separate native equipment workflow raises native executions to
 18. Earlier counts above are historical.
+
+## B04.2.1 empty hull creation
+
+Run `python -I tools/android_headless/check_empty_hulls.py --database /absolute/eve.db
+--output /new/external/empty-hulls-check` with the installed headless environment.
+Six guarded tests compare every hull and its 39 raw fields, distinguish absence
+from calculated zero, reject nonhulls/empty module indices atomically, copy
+independently and restore ships/structures in a fresh process after a failed save.
+This raises the required host total to 90. Native creation/restart and complete
+typed comparisons remain separate required gates, raising native executions to 20.
