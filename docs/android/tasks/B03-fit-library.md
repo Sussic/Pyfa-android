@@ -21,7 +21,7 @@ Create, search, select, rename, duplicate and confirm/cancel deletion in native 
 
 ## B03.2 acceptance and implementation boundary
 
-Active on `android/b03-2-library-navigation`, based on setup PR #14. User authorized
+Delivered from `android/b03-2-library-navigation`, based on setup PR #14. User authorized
 implementation, review, all required checks and merge; stop after B03.2.
 
 - Browse every pinned desktop hull group and race, including structures, limited
@@ -57,10 +57,10 @@ Verification gates: original 73 host tests plus five organization regressions;
 independent desktop catalogue export/repeat and existing independent calculation
 references/migration; APKs, lint, signature and complete package checks; all 13
 prior native executions plus four B03.2 process phases with raw desktop statistics,
-catalogue comparison, navigation/restarts and screenshots. Native results and
-delivery are pending; no physical-device or user usability claim.
+catalogue comparison, navigation/restarts and screenshots. All gates pass in the
+delivery below; no physical-device or user usability claim.
 
-### B03.2 first native attempt
+### B03.2 native verification history
 
 Head `661dee73` passed Windows CI (78 tests and independent references), Android
 build/lint/package gates and all 13 prior native executions in run
@@ -82,20 +82,21 @@ scrolling after the horizontal scroll too, and captures the UI tree/screen for
 visibility failures. Navigation now clears search focus when opening a fit,
 switching/closing views, changing browser mode or jumping back to a hull. A new
 assertion requires search focus to be cleared after opening its result. The
-original touch, identity, restart assertions and timeouts remain. Final native
-verification is pending; the second run's rename screenshot correctly shows
+original touch, identity, restart assertions and timeouts remain and pass in the
+final native run; the second run's rename screenshot correctly shows
 the keyboard with both dialog actions above it.
 
 Head `b75956bf` passed Windows run `35676211561` and Android build/package,
 engine, contract, three persistence phases and library-prepare checks. Run
 `35676211559` stopped in the existing library empty-state assertion, before
 B03.2, with `performMeasureAndLayout called during measure layout` inside
-Compose/Espresso. Both library UI test rules now use the installed
+Compose/Espresso. The next attempt changed both library UI test rules to use the installed
 `StandardTestDispatcher` through the supported
 [`effectContext` API](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/package-summary).
-This queues worker-driven composition instead of the test default's immediate
+This queued worker-driven composition instead of the test default's immediate
 unconfined resumption. Production scheduling, dependency pins, all original
-assertions and timeouts remain unchanged. Native confirmation is pending.
+assertions and timeouts remained unchanged. The later timeout and final
+replacement of this test-dispatcher experiment are recorded below.
 
 Head `37c73638` passed Windows run `35677078569` and Android's first ten native
 executions. Run `35677078568` exposed missing synchronization at library startup:
@@ -114,9 +115,9 @@ collection through an unconfined test effect context. EOS, decoding, storage and
 flow publication remain on the same serialized worker. The standard Compose
 rule, explicit UI synchronization and every original assertion/deadline remain.
 
-## Result
+## B03.1 result (historical)
 
-B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.
+B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03.2 subsequently completes the parent below.
 
 [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35415142241) passed build, lint, signing, package inspection and **13 native test executions** (five original tests, separate A10/B01 tests, three B02 phases and three B03.1 phases). All three B03 phases passed on the same offline API36 x86_64 installation. The independent validator checks 390 raw target statistics, exact scalar types/units, retained IDs/revisions and both restart boundaries. All nine prior synthetic fits remain unchanged; two new recipients persist, then the library empties and reopens empty before creating/deleting another fit.
 
@@ -145,3 +146,32 @@ The first complete emulator attempt at `0b8fd19f59838e315b23a14e09cd5cf4f0f0bf06
 - [Empty library](../evidence/b03-1-empty.png)
 
 Original PNG bytes are retained; hashes and dimensions are in the evidence receipt.
+
+## B03.2 delivery
+
+[PR #15](https://github.com/Sussic/Pyfa-android/pull/15) merged as
+`60582d91a6cc1cb2cd8c4584478ae913d7b6ce90`; tested head `dc3565433048a142f5a919eb37279ee25868f497`.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35679131057) passes build/lint/signing/package checks and all
+**17 native executions**, including four new production-storage processes after
+the original 13 checks on the same offline API36 x86_64 installation. The three
+restart boundaries preserve saved inputs/IDs/revisions/modification order;
+546 raw statistics match the unchanged independent desktop fixtures with exact
+scalar types/units and the existing justified numerical tolerances. Native
+catalogue equality covers all 55 groups and 437 hulls. Thirteen named organization
+and navigation assertions cover F01.03–F01.05, including duplicate-name identity,
+filters, back navigation, recents, close/delete behavior and restore on/off/empty.
+
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35679131050) and local checks pass **78 host tests**, independent
+references/repeats, real migration/backup and the independently exported desktop
+Market catalogue. Eleven screenshots were reviewed. The new pages and long names
+are legible, controls are reachable, and rename actions remain above the keyboard.
+Retained originals: [Recent](../evidence/b03-2-recent.png),
+[hull fits](../evidence/b03-2-hull.png), [open views](../evidence/b03-2-open.png),
+[closed views](../evidence/b03-2-closed.png),
+[rename keyboard](../evidence/b03-2-dialog.png).
+
+[Raw observations, test reports, provenance, review and failed-attempt history](../evidence/b03-2-native.json)
+remain durable. B03.1 and B03.2 are done, so B03 is complete within its recorded
+fixture-creation boundary. B04 is the exact next task and has not started.
+Arbitrary hull/equipment editing, physical ARM64/older APIs, upgrades and user
+usability remain later work. No release, APK upload or phone installation occurred.

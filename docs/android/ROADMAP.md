@@ -39,14 +39,14 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | B01 | done | A10 | [Typed bridge operations and results](tasks/B01-typed-bridge.md) | One mutation/query contract carries raw units, errors and fit revisions; engine work stays off UI thread and serialized; failed edits do not leave partial state. |
 | B02 | done | B01 | [Local fit persistence](tasks/B02-local-persistence.md) | Save/reopen synthetic fits and command/projection links across process restart; transactions and relationship identity preserve results. |
-| B03 | active | B02 | Fit library screen (parent) | B03.1 and B03.2 complete; all original lifecycle and organization requirements retained. |
+| B03 | done | B02 | Fit library screen (parent) | B03.1 and B03.2 complete; all original lifecycle and organization requirements retained. |
 | B03.1 | done | B02 | [Fit lifecycle and search](tasks/B03-fit-library.md) | Create from fixtures, find, open, rename, duplicate and delete; resolve links atomically, retain independent inputs and reopen an empty library. Host and native workflow checks pass. |
-| B03.2 | active | B03.1 | Library organization and open-fit navigation | Hull group/race browsing, hide/show empty groups, back-to-hull navigation, recently modified fits and multiple open fits with close one/all and optional restart restoration; preserve F01.03–F01.05 and audit desktop preferences. |
-| B04 | queued | B03 | Equipment browser and fitting | Search/filter items and fit/unfit modules/rigs/charges with appropriate legality feedback and reference-matching recalculation. |
+| B03.2 | done | B03.1 | Library organization and open-fit navigation | Hull group/race browsing, hide/show empty groups, back-to-hull navigation, recently modified fits and multiple open fits with close one/all and optional restart restoration; preserve F01.03–F01.05 and audit desktop preferences. |
+| B04 | ready | B03 | Equipment browser and fitting | Search/filter items and fit/unfit modules/rigs/charges with appropriate legality feedback and reference-matching recalculation. |
 | B05 | queued | B04 | Bulk weapon/module editing | Select compatible guns, change ammo/state or fill slots in one operation; incompatible mixed selections get clear behavior; one user action updates every intended module. |
 | B06 | queued | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |
 | B07 | queued | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
-| B08 | queued | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
+| B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | queued | B05 | Undo/redo for fit edits | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |
 
 ## C — expose the full fit inputs and statistics
@@ -58,7 +58,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | C03 | queued | B04 | Targeting/navigation and attribute inspector | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. |
 | C04 | queued | B04 | Drone editing | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
 | C05 | queued | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
-| C06 | queued | B01, B03 | Offline character profiles | All-V/custom skills can be selected, edited and saved; requirements and affectors are inspectable and bonuses match references. |
+| C06 | ready | B01, B03 | Offline character profiles | All-V/custom skills can be selected, edited and saved; requirements and affectors are inspectable and bonuses match references. |
 | C07 | queued | C06 | Implants and implant sets | Slot handling and applying/saving sets match Pyfa; profile changes update dependent fits. |
 | C08 | queued | C06 | Boosters and side effects | Add/toggle boosters and individual supported side effects; raw results and persistence match references. |
 | C09 | queued | B05 | Heat, reload and spool options | Audited state/reload/spool and adaptive-module options affect the correct stats; transitions and undo have reference tests. |

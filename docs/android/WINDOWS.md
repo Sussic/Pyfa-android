@@ -3,7 +3,7 @@
 Use this guide from the repository root in PowerShell. Work only in
 `Sussic/Pyfa-android`. Check `git status --short --branch`, remotes and open fork
 PRs before changing an existing checkout. Keep existing work. Setup does not
-start B03.2 or another feature milestone.
+authorize a feature milestone.
 
 ## Toolchain and isolation
 
