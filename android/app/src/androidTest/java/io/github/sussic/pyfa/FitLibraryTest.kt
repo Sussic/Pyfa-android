@@ -13,6 +13,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
+import kotlinx.coroutines.test.StandardTestDispatcher
 import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Assert.*
@@ -21,8 +22,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@OptIn(ExperimentalTestApi::class)
 class FitLibraryTest {
-    @get:Rule val compose = createAndroidComposeRule<MainActivity>()
+    // Queue worker-driven recomposition instead of re-entering an active layout
+    // through the test rule's default unconfined effect dispatcher.
+    @get:Rule val compose = createAndroidComposeRule<MainActivity>(effectContext = StandardTestDispatcher())
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
     private val observations = JSONArray()
     private val requests = JSONArray()

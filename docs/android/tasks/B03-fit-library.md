@@ -86,6 +86,17 @@ original touch, identity, restart assertions and timeouts remain. Final native
 verification is pending; the second run's rename screenshot correctly shows
 the keyboard with both dialog actions above it.
 
+Head `b75956bf` passed Windows run `35676211561` and Android build/package,
+engine, contract, three persistence phases and library-prepare checks. Run
+`35676211559` stopped in the existing library empty-state assertion, before
+B03.2, with `performMeasureAndLayout called during measure layout` inside
+Compose/Espresso. Both library UI test rules now use the installed
+`StandardTestDispatcher` through the supported
+[`effectContext` API](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/package-summary).
+This queues worker-driven composition instead of the test default's immediate
+unconfined resumption. Production scheduling, dependency pins, all original
+assertions and timeouts remain unchanged. Native confirmation is pending.
+
 ## Result
 
 B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.
