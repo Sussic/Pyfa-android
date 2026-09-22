@@ -28,8 +28,12 @@ class LibraryNavigationTest {
     private val checks = mutableListOf<String>()
     private fun fits() = EngineRuntime.library.value
     private fun nav() = EngineRuntime.navigation.value
+    private fun syncUi() {
+        compose.mainClock.advanceTimeByFrame()
+        compose.waitForIdle()
+    }
     private fun waitFor(predicate: () -> Boolean) {
-        try { compose.waitUntil(30_000, predicate) } catch (error: Throwable) {
+        try { compose.waitUntil(30_000, predicate); syncUi() } catch (error: Throwable) {
             println("Navigation at failure: ${nav()}; error: ${EngineRuntime.navigationError.value}")
             screenshot("failure") // Retain the app before the activity rule tears it down.
             throw error
@@ -45,6 +49,7 @@ class LibraryNavigationTest {
             else -> null
         }
         try {
+            syncUi()
             container?.let { compose.onNodeWithTag(it).performScrollTo() }
             compose.onNodeWithTag(tag).performScrollTo()
             container?.let { compose.onNodeWithTag(it).performScrollTo() }
@@ -58,7 +63,7 @@ class LibraryNavigationTest {
     private fun click(tag: String) {
         show(tag)
         compose.onNodeWithTag(tag).performClick()
-        compose.waitForIdle()
+        syncUi()
     }
     private fun open(id: String) {
         click("mode-All fits")
@@ -105,6 +110,8 @@ class LibraryNavigationTest {
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
         EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        syncUi()
+        compose.waitUntilExactlyOneExists(hasTestTag("library-create"), timeoutMillis = 30_000)
         val runtime = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS))
         assertTrue(runtime.getJSONObject("persistence").getBoolean("enabled"))
         val expectedCatalog = HullCatalog.decode(InstrumentationRegistry.getInstrumentation().context.assets
