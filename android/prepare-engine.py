@@ -95,6 +95,7 @@ def main():
     shutil.copyfile(golden_path, tests / "vexor-expected.json")
     shutil.copyfile(projection_path, tests / "projection-expected.json")
     shutil.copyfile(command_path, tests / "command-expected.json")
+    shutil.copyfile(ROOT / "tools/android_reference/fixtures/catalog.json", tests / "catalog-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

@@ -9,7 +9,8 @@ import unittest
 from unittest.mock import patch
 
 from android_bridge.contract import BridgeSession
-from android_bridge.store import GraphStore
+from android_bridge.store import GraphStore, StoreError
+from android_bridge.catalog import hull_catalog
 from tools.android_reference.reference import compare
 
 ENGINE = CASES = EXPECTED = IDENTITY = DATABASE = None
@@ -17,6 +18,58 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class LibraryTests(unittest.TestCase):
+    def test_hull_catalog_matches_independent_desktop(self):
+        expected = json.loads((ROOT / "tools/android_reference/fixtures/catalog.json").read_text())
+        self.assertEqual(hull_catalog(ENGINE), expected)
+        self.assertGreater(len(expected["hulls"]), 300)
+
+    def test_modification_order_reads_failures_and_restart(self):
+        original = self.bridge.organization()
+        self.current()
+        self.assertEqual(original, self.bridge.organization())
+        other = self.create()
+        self.assertGreater(self.bridge._modified[other], self.bridge._modified[self.sample])
+        self.send("rename_fit", {"fit_id": self.sample, "name": "Edited first fit"})
+        self.assertGreater(self.bridge._modified[self.sample], self.bridge._modified[other])
+        before = self.bridge.organization()
+        with patch.object(GraphStore, "_commit", side_effect=OSError("Injected disk failure")):
+            self.send("set_charges", {"fit_id": other, "module_indices": [0, 1], "charge": "Iron Charge M"}, "ENGINE_ERROR")
+        self.assertEqual(before, self.bridge.organization())
+        # Same-value operations and rejected stale edits are not modifications.
+        self.send("rename_fit", {"fit_id": self.sample, "name": "Edited first fit"})
+        self.assertEqual(before, self.bridge.organization())
+        self.send("rename_fit", {"fit_id": other, "name": "Stale"}, "REVISION_CONFLICT", {other: 0})
+        self.assertEqual(before, self.bridge.organization())
+        self.assertEqual(self.reopen()["organization"], before)
+
+    def test_recipient_recalculation_is_not_an_input_edit(self):
+        source = self.create("command", "source")
+        self.send("add_command", {"source_id": source, "target_id": self.sample, "active": True})
+        before = dict(self.bridge._modified)
+        self.send("set_skill_level", {"fit_id": source, "skill": "Shield Command Specialist", "level": 4})
+        self.assertEqual(before[self.sample], self.bridge._modified[self.sample])
+        self.assertGreater(self.bridge._modified[source], before[source])
+        self.delete(source)
+        self.assertEqual(set(self.bridge._modified), {self.sample})
+        self.assertGreater(self.bridge._modified[self.sample], before[self.sample])
+
+    def test_legacy_order_is_unknown_until_an_edit(self):
+        graph = self.bridge._graph(self.bridge._records, self.bridge._revisions)
+        del graph["modified"]
+        self.bridge._validate_graph(graph, IDENTITY, ENGINE.settings)
+        store = GraphStore(self.path)
+        store.write(store.prepare(graph))
+        before = self.path.read_bytes()
+        reopened = self.reopen()
+        self.assertEqual(reopened["organization"]["modified"], {self.sample: 0})
+        self.assertEqual(before, self.path.read_bytes())
+
+    def test_malformed_modification_metadata_is_rejected(self):
+        graph = self.bridge._graph(self.bridge._records, self.bridge._revisions)
+        for modified in ({}, {self.sample: -1}, {self.sample: True}, {self.sample: 1.5}, {self.sample: 2**63}, {self.sample: 1, "ghost": 2}):
+            with self.assertRaises(StoreError):
+                self.bridge._validate_graph({**graph, "modified": modified}, IDENTITY, ENGINE.settings)
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.path = Path(self.directory.name) / "fits.sqlite3"

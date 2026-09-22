@@ -19,6 +19,101 @@ Pinned source remains `8b04f3b271e614b3e103853b44a7851a63d79d0e`.
 
 Create, search, select, rename, duplicate and confirm/cancel deletion in native Compose. Retain IDs/revisions across restart; copies preserve actual modules, drones, skills, implants and incoming links without sharing editable fit contents. Source deletion refreshes both kinds of recipient and leaves unlinked controls unchanged. Reject stale/invalid requests; failure before durable commit restores the prior graph. An intentionally empty store must reopen empty, without restoring a sample. Preserve existing corrupt-store rejection and every existing regression gate. Inspect real screenshots including keyboard/long names and empty state.
 
+## B03.2 acceptance and implementation boundary
+
+Active on `android/b03-2-library-navigation`, based on setup PR #14. User authorized
+implementation, review, all required checks and merge; stop after B03.2.
+
+- Browse every pinned desktop hull group and race, including structures, limited
+  issue ships, Capsule's Shuttle placement and hidden converted/skinned hulls.
+  Hide/show empty groups and hulls, combine race filters, navigate back through
+  groups and jump from the selected fit to its hull. Search spans all saved fits.
+- Recent means up to 50 recently modified fits. Persist a monotonic input-edit
+  order in the same SQLite graph transaction. Reads, opening, switching, failed
+  edits and pure recipient recalculation do not change that order. Prior saves
+  have unknown order (zero), sorted last; no date is invented. Deleting a source
+  changes recipients' stored links and therefore their modification order.
+- Open an ordered set of stable fit IDs, select existing views without duplicate
+  tabs, close active/inactive/all views without deleting fits, and remove deleted
+  fit IDs. Activity recreation preserves navigation and browser/dialog state.
+  Opt-in restart restoration retains the ordered set and selected ID. Default
+  is off, as in `pyfaPrevOpenFits.enabled`; first use retains the B03.1 sample.
+- App-private `AtomicFile` stores open IDs, selected ID, restore and empty-group
+  preferences off the UI thread. It is independent of saved fitting inputs.
+  Invalid navigation preferences are preserved with an explicit session-only
+  fallback; missing/deleted IDs are removed on restore. A failed fit save retains
+  the previous modification order. Optional `modified` metadata extends existing
+  graph formats 1/2; old files open without rewriting. Earlier builds reject this
+  extension, so safe downgrade/upgrade distribution still belongs to R02.
+
+Desktop audit additionally checked `gui/builtinShipBrowser/navigationPanel.py`,
+`gui/builtinPreferenceViews/pyfaGeneralPreferences.py` and
+`eos/db/saveddata/queries.py:getRecentFits` (modified order, limit 50).
+Empty-group and race switches are transient desktop browser state; Android
+persists empty-group visibility and retains race selections during activity
+recreation. Kotlin/Compose, Chaquopy and serialized EOS remain unchanged.
+
+Verification gates: original 73 host tests plus five organization regressions;
+independent desktop catalogue export/repeat and existing independent calculation
+references/migration; APKs, lint, signature and complete package checks; all 13
+prior native executions plus four B03.2 process phases with raw desktop statistics,
+catalogue comparison, navigation/restarts and screenshots. Native results and
+delivery are pending; no physical-device or user usability claim.
+
+### B03.2 first native attempt
+
+Head `661dee73` passed Windows CI (78 tests and independent references), Android
+build/lint/package gates and all 13 prior native executions in run
+`35674055419`. The new prepare phase passed catalogue, recents, filtering,
+recreation, back-to-hull and search selection, then timed out closing an inactive
+view. The test scrolled the inner horizontal strip without first bringing it
+into the outer vertical viewport. AndroidX's
+[scroll helper](https://raw.githubusercontent.com/androidx/androidx/androidx-main/compose/ui/ui-test/src/commonMain/kotlin/androidx/compose/ui/test/Actions.kt)
+operates on the closest scroll parent. The correction scrolls the outer container
+first and asserts the target is displayed before the touch; the close assertion
+and 30-second timeout remain. Screenshots are now retained before test teardown
+and on partial-phase failures.
+
+Head `ea20293f` passed Windows run `35675176226`, Android build/package gates
+and all 13 prior native executions. Run `35675176247` passed the previously
+failing active/inactive close checks and deletion, then failed the visibility
+assertion before switching back to the first tab. The test now completes outer
+scrolling after the horizontal scroll too, and captures the UI tree/screen for
+visibility failures. Navigation now clears search focus when opening a fit,
+switching/closing views, changing browser mode or jumping back to a hull. A new
+assertion requires search focus to be cleared after opening its result. The
+original touch, identity, restart assertions and timeouts remain. Final native
+verification is pending; the second run's rename screenshot correctly shows
+the keyboard with both dialog actions above it.
+
+Head `b75956bf` passed Windows run `35676211561` and Android build/package,
+engine, contract, three persistence phases and library-prepare checks. Run
+`35676211559` stopped in the existing library empty-state assertion, before
+B03.2, with `performMeasureAndLayout called during measure layout` inside
+Compose/Espresso. Both library UI test rules now use the installed
+`StandardTestDispatcher` through the supported
+[`effectContext` API](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/package-summary).
+This queues worker-driven composition instead of the test default's immediate
+unconfined resumption. Production scheduling, dependency pins, all original
+assertions and timeouts remain unchanged. Native confirmation is pending.
+
+Head `37c73638` passed Windows run `35677078569` and Android's first ten native
+executions. Run `35677078568` exposed missing synchronization at library startup:
+EOS was ready, but the queued UI collector had not displayed `library-create`.
+The tests now advance the Compose frame clock after worker results, wait for
+UI idle, and require the actual library control at startup within the existing
+30-second deadline. No production code, timeout or behavioral assertion changed.
+
+Head `138d26ae` passed Windows run `35677935062`, but native run `35677935056`
+hit the existing 240-second library-prepare timeout. Its screenshot shows the
+ready library at the initial scroll position: the standard test dispatcher also
+queues scroll actions, and the pinned test scroll helper does not drain that
+queue. That dispatcher experiment is reverted. UI `StateFlow` collectors now
+explicitly use Android's main dispatcher, so worker emissions cannot resume UI
+collection through an unconfined test effect context. EOS, decoding, storage and
+flow publication remain on the same serialized worker. The standard Compose
+rule, explicit UI synchronization and every original assertion/deadline remain.
+
 ## Result
 
 B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.

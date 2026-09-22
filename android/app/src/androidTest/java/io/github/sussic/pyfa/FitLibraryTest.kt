@@ -21,6 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@OptIn(ExperimentalTestApi::class)
 class FitLibraryTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
@@ -28,10 +29,17 @@ class FitLibraryTest {
     private val requests = JSONArray()
     private fun fits() = EngineRuntime.library.value
     private fun fit(id: String) = fits().single { it.id == id }
-    private fun click(tag: String) { compose.onNodeWithTag(tag).performScrollTo().performClick() }
-    private fun waitFor(predicate: () -> Boolean) { compose.waitUntil(30_000, predicate) }
+    private fun syncUi() {
+        // A worker future can finish before its UI StateFlow collector runs.
+        // Advance the Compose clock on the UI thread before observing the tree.
+        compose.mainClock.advanceTimeByFrame()
+        compose.waitForIdle()
+    }
+    private fun click(tag: String) { syncUi(); compose.onNodeWithTag(tag).performScrollTo().performClick(); syncUi() }
+    private fun waitFor(predicate: () -> Boolean) { compose.waitUntil(30_000, predicate); syncUi() }
     private fun send(operation: BridgeOperation, vararg ids: String): BridgeResponse {
         val result = EngineRuntime.request(context, operation, ids.associateWith { fit(it).revision }).get(120, TimeUnit.SECONDS)
+        syncUi()
         assertTrue(result.error?.message, result.isSuccess)
         requests.put(JSONObject().put("operation", operation.javaClass.simpleName)
             .put("fits", JSONArray(result.fits.map(::snapshotJson))))
@@ -78,6 +86,8 @@ class FitLibraryTest {
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
         EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        syncUi()
+        compose.waitUntilExactlyOneExists(hasTestTag("library-create"), timeoutMillis = 30_000)
         val runtimeStart = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS))
         assertTrue(runtimeStart.getJSONObject("persistence").getBoolean("enabled"))
         val saved = File(context.noBackupFilesDir, "b03-test-expected.json")
@@ -172,6 +182,9 @@ class FitLibraryTest {
     private fun screenshot(name: String) {
         compose.waitForIdle()
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+        // WindowInsets reports the IME visible before its system animation ends.
+        // Wait for accessibility idle so the retained image includes the keyboard.
+        automation.waitForIdle(500, 10_000)
         ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(
             "screencap -p /sdcard/Download/pyfa-b03-$name.png")).use { it.readBytes() }
     }

@@ -1,0 +1,2849 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": 324,
+      "name": "Assault Frigate"
+    },
+    {
+      "id": 1201,
+      "name": "Attack Battlecruiser"
+    },
+    {
+      "id": 27,
+      "name": "Battleship"
+    },
+    {
+      "id": 898,
+      "name": "Black Ops"
+    },
+    {
+      "id": 1202,
+      "name": "Blockade Runner"
+    },
+    {
+      "id": 883,
+      "name": "Capital Industrial Ship"
+    },
+    {
+      "id": 29,
+      "name": "Capsule"
+    },
+    {
+      "id": 547,
+      "name": "Carrier"
+    },
+    {
+      "id": 1657,
+      "name": "Citadel"
+    },
+    {
+      "id": 419,
+      "name": "Combat Battlecruiser"
+    },
+    {
+      "id": 906,
+      "name": "Combat Recon Ship"
+    },
+    {
+      "id": 5120,
+      "name": "Command Carrier"
+    },
+    {
+      "id": 1534,
+      "name": "Command Destroyer"
+    },
+    {
+      "id": 540,
+      "name": "Command Ship"
+    },
+    {
+      "id": 237,
+      "name": "Corvette"
+    },
+    {
+      "id": 830,
+      "name": "Covert Ops"
+    },
+    {
+      "id": 26,
+      "name": "Cruiser"
+    },
+    {
+      "id": 380,
+      "name": "Deep Space Transport"
+    },
+    {
+      "id": 420,
+      "name": "Destroyer"
+    },
+    {
+      "id": 485,
+      "name": "Dreadnought"
+    },
+    {
+      "id": 893,
+      "name": "Electronic Attack Ship"
+    },
+    {
+      "id": 1404,
+      "name": "Engineering Complex"
+    },
+    {
+      "id": 543,
+      "name": "Exhumer"
+    },
+    {
+      "id": 4902,
+      "name": "Expedition Command Ship"
+    },
+    {
+      "id": 1283,
+      "name": "Expedition Frigate"
+    },
+    {
+      "id": 1972,
+      "name": "Flag Cruiser"
+    },
+    {
+      "id": 1538,
+      "name": "Force Auxiliary"
+    },
+    {
+      "id": 833,
+      "name": "Force Recon Ship"
+    },
+    {
+      "id": 513,
+      "name": "Freighter"
+    },
+    {
+      "id": 25,
+      "name": "Frigate"
+    },
+    {
+      "id": 28,
+      "name": "Hauler"
+    },
+    {
+      "id": 358,
+      "name": "Heavy Assault Cruiser"
+    },
+    {
+      "id": 894,
+      "name": "Heavy Interdiction Cruiser"
+    },
+    {
+      "id": 941,
+      "name": "Industrial Command Ship"
+    },
+    {
+      "id": 831,
+      "name": "Interceptor"
+    },
+    {
+      "id": 541,
+      "name": "Interdictor"
+    },
+    {
+      "id": 902,
+      "name": "Jump Freighter"
+    },
+    {
+      "id": 4594,
+      "name": "Lancer Dreadnought"
+    },
+    {
+      "id": -1,
+      "name": "Limited Issue Ships"
+    },
+    {
+      "id": 832,
+      "name": "Logistics"
+    },
+    {
+      "id": 1527,
+      "name": "Logistics Frigate"
+    },
+    {
+      "id": 900,
+      "name": "Marauder"
+    },
+    {
+      "id": 463,
+      "name": "Mining Barge"
+    },
+    {
+      "id": 1406,
+      "name": "Refinery"
+    },
+    {
+      "id": 31,
+      "name": "Shuttle"
+    },
+    {
+      "id": 5087,
+      "name": "Special Edition Yachts"
+    },
+    {
+      "id": 834,
+      "name": "Stealth Bomber"
+    },
+    {
+      "id": 963,
+      "name": "Strategic Cruiser"
+    },
+    {
+      "id": 659,
+      "name": "Supercarrier"
+    },
+    {
+      "id": 1305,
+      "name": "Tactical Destroyer"
+    },
+    {
+      "id": 30,
+      "name": "Titan"
+    },
+    {
+      "id": 2017,
+      "name": "Upwell Cyno Beacon"
+    },
+    {
+      "id": 2016,
+      "name": "Upwell Cyno Jammer"
+    },
+    {
+      "id": 1408,
+      "name": "Upwell Jump Bridge"
+    },
+    {
+      "id": 4744,
+      "name": "Upwell Moon Drill"
+    }
+  ],
+  "hulls": [
+    {
+      "id": 582,
+      "name": "Bantam",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 583,
+      "name": "Condor",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 584,
+      "name": "Griffin",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 585,
+      "name": "Slasher",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 586,
+      "name": "Probe",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 587,
+      "name": "Rifter",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 588,
+      "name": "Reaper",
+      "group_id": 237,
+      "race": "minmatar"
+    },
+    {
+      "id": 589,
+      "name": "Executioner",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 590,
+      "name": "Inquisitor",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 591,
+      "name": "Tormentor",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 592,
+      "name": "Navitas",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 593,
+      "name": "Tristan",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 594,
+      "name": "Incursus",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 596,
+      "name": "Impairor",
+      "group_id": 237,
+      "race": "amarr"
+    },
+    {
+      "id": 597,
+      "name": "Punisher",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 598,
+      "name": "Breacher",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 599,
+      "name": "Burst",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 601,
+      "name": "Ibis",
+      "group_id": 237,
+      "race": "caldari"
+    },
+    {
+      "id": 602,
+      "name": "Kestrel",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 603,
+      "name": "Merlin",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 605,
+      "name": "Heron",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 606,
+      "name": "Velator",
+      "group_id": 237,
+      "race": "gallente"
+    },
+    {
+      "id": 607,
+      "name": "Imicus",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 608,
+      "name": "Atron",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 609,
+      "name": "Maulus",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 615,
+      "name": "Immolator",
+      "group_id": 237,
+      "race": "sansha"
+    },
+    {
+      "id": 617,
+      "name": "Echo",
+      "group_id": 237,
+      "race": "angel"
+    },
+    {
+      "id": 620,
+      "name": "Osprey",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 621,
+      "name": "Caracal",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 622,
+      "name": "Stabber",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 623,
+      "name": "Moa",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 624,
+      "name": "Maller",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 625,
+      "name": "Augoror",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 626,
+      "name": "Vexor",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 627,
+      "name": "Thorax",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 628,
+      "name": "Arbitrator",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 629,
+      "name": "Rupture",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 630,
+      "name": "Bellicose",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 631,
+      "name": "Scythe",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 632,
+      "name": "Blackbird",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 633,
+      "name": "Celestis",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 634,
+      "name": "Exequror",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 635,
+      "name": "Opux Luxury Yacht",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 638,
+      "name": "Raven",
+      "group_id": 27,
+      "race": "caldari"
+    },
+    {
+      "id": 639,
+      "name": "Tempest",
+      "group_id": 27,
+      "race": "minmatar"
+    },
+    {
+      "id": 640,
+      "name": "Scorpion",
+      "group_id": 27,
+      "race": "caldari"
+    },
+    {
+      "id": 641,
+      "name": "Megathron",
+      "group_id": 27,
+      "race": "gallente"
+    },
+    {
+      "id": 642,
+      "name": "Apocalypse",
+      "group_id": 27,
+      "race": "amarr"
+    },
+    {
+      "id": 643,
+      "name": "Armageddon",
+      "group_id": 27,
+      "race": "amarr"
+    },
+    {
+      "id": 644,
+      "name": "Typhoon",
+      "group_id": 27,
+      "race": "minmatar"
+    },
+    {
+      "id": 645,
+      "name": "Dominix",
+      "group_id": 27,
+      "race": "gallente"
+    },
+    {
+      "id": 648,
+      "name": "Badger",
+      "group_id": 28,
+      "race": "caldari"
+    },
+    {
+      "id": 649,
+      "name": "Tayra",
+      "group_id": 28,
+      "race": "caldari"
+    },
+    {
+      "id": 650,
+      "name": "Nereus",
+      "group_id": 28,
+      "race": "gallente"
+    },
+    {
+      "id": 651,
+      "name": "Hoarder",
+      "group_id": 28,
+      "race": "minmatar"
+    },
+    {
+      "id": 652,
+      "name": "Mammoth",
+      "group_id": 28,
+      "race": "minmatar"
+    },
+    {
+      "id": 653,
+      "name": "Wreathe",
+      "group_id": 28,
+      "race": "minmatar"
+    },
+    {
+      "id": 654,
+      "name": "Kryos",
+      "group_id": 28,
+      "race": "gallente"
+    },
+    {
+      "id": 655,
+      "name": "Epithal",
+      "group_id": 28,
+      "race": "gallente"
+    },
+    {
+      "id": 656,
+      "name": "Miasmos",
+      "group_id": 28,
+      "race": "gallente"
+    },
+    {
+      "id": 657,
+      "name": "Iteron Mark V",
+      "group_id": 28,
+      "race": "gallente"
+    },
+    {
+      "id": 670,
+      "name": "Capsule",
+      "group_id": 31,
+      "race": "jove"
+    },
+    {
+      "id": 671,
+      "name": "Erebus",
+      "group_id": 30,
+      "race": "gallente"
+    },
+    {
+      "id": 672,
+      "name": "Caldari Shuttle",
+      "group_id": 31,
+      "race": "caldari"
+    },
+    {
+      "id": 1944,
+      "name": "Bestower",
+      "group_id": 28,
+      "race": "amarr"
+    },
+    {
+      "id": 2006,
+      "name": "Omen",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 2078,
+      "name": "Zephyr",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 2161,
+      "name": "Crucifier",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 2834,
+      "name": "Utu",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 2836,
+      "name": "Adrestia",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 2863,
+      "name": "Primae",
+      "group_id": -1,
+      "race": "ore"
+    },
+    {
+      "id": 2998,
+      "name": "Noctis",
+      "group_id": 28,
+      "race": "ore"
+    },
+    {
+      "id": 3514,
+      "name": "Revenant",
+      "group_id": 659,
+      "race": "sansha"
+    },
+    {
+      "id": 3516,
+      "name": "Malice",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 3518,
+      "name": "Vangel",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 3532,
+      "name": "Echelon",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 3756,
+      "name": "Gnosis",
+      "group_id": 419,
+      "race": "jove"
+    },
+    {
+      "id": 3764,
+      "name": "Leviathan",
+      "group_id": 30,
+      "race": "caldari"
+    },
+    {
+      "id": 3766,
+      "name": "Vigil",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 4302,
+      "name": "Oracle",
+      "group_id": 1201,
+      "race": "amarr"
+    },
+    {
+      "id": 4306,
+      "name": "Naga",
+      "group_id": 1201,
+      "race": "caldari"
+    },
+    {
+      "id": 4308,
+      "name": "Talos",
+      "group_id": 1201,
+      "race": "gallente"
+    },
+    {
+      "id": 4310,
+      "name": "Tornado",
+      "group_id": 1201,
+      "race": "minmatar"
+    },
+    {
+      "id": 4363,
+      "name": "Miasmos Quafe Ultra Edition",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 11011,
+      "name": "Guardian-Vexor",
+      "group_id": -1,
+      "race": "serpentis"
+    },
+    {
+      "id": 11129,
+      "name": "Gallente Shuttle",
+      "group_id": 31,
+      "race": "gallente"
+    },
+    {
+      "id": 11132,
+      "name": "Minmatar Shuttle",
+      "group_id": 31,
+      "race": "minmatar"
+    },
+    {
+      "id": 11134,
+      "name": "Amarr Shuttle",
+      "group_id": 31,
+      "race": "amarr"
+    },
+    {
+      "id": 11172,
+      "name": "Helios",
+      "group_id": 830,
+      "race": "gallente"
+    },
+    {
+      "id": 11174,
+      "name": "Keres",
+      "group_id": 893,
+      "race": "gallente"
+    },
+    {
+      "id": 11176,
+      "name": "Crow",
+      "group_id": 831,
+      "race": "caldari"
+    },
+    {
+      "id": 11178,
+      "name": "Raptor",
+      "group_id": 831,
+      "race": "caldari"
+    },
+    {
+      "id": 11182,
+      "name": "Cheetah",
+      "group_id": 830,
+      "race": "minmatar"
+    },
+    {
+      "id": 11184,
+      "name": "Crusader",
+      "group_id": 831,
+      "race": "amarr"
+    },
+    {
+      "id": 11186,
+      "name": "Malediction",
+      "group_id": 831,
+      "race": "amarr"
+    },
+    {
+      "id": 11188,
+      "name": "Anathema",
+      "group_id": 830,
+      "race": "amarr"
+    },
+    {
+      "id": 11190,
+      "name": "Sentinel",
+      "group_id": 893,
+      "race": "amarr"
+    },
+    {
+      "id": 11192,
+      "name": "Buzzard",
+      "group_id": 830,
+      "race": "caldari"
+    },
+    {
+      "id": 11194,
+      "name": "Kitsune",
+      "group_id": 893,
+      "race": "caldari"
+    },
+    {
+      "id": 11196,
+      "name": "Claw",
+      "group_id": 831,
+      "race": "minmatar"
+    },
+    {
+      "id": 11198,
+      "name": "Stiletto",
+      "group_id": 831,
+      "race": "minmatar"
+    },
+    {
+      "id": 11200,
+      "name": "Taranis",
+      "group_id": 831,
+      "race": "gallente"
+    },
+    {
+      "id": 11202,
+      "name": "Ares",
+      "group_id": 831,
+      "race": "gallente"
+    },
+    {
+      "id": 11365,
+      "name": "Vengeance",
+      "group_id": 324,
+      "race": "amarr"
+    },
+    {
+      "id": 11371,
+      "name": "Wolf",
+      "group_id": 324,
+      "race": "minmatar"
+    },
+    {
+      "id": 11377,
+      "name": "Nemesis",
+      "group_id": 834,
+      "race": "gallente"
+    },
+    {
+      "id": 11379,
+      "name": "Hawk",
+      "group_id": 324,
+      "race": "caldari"
+    },
+    {
+      "id": 11381,
+      "name": "Harpy",
+      "group_id": 324,
+      "race": "caldari"
+    },
+    {
+      "id": 11387,
+      "name": "Hyena",
+      "group_id": 893,
+      "race": "minmatar"
+    },
+    {
+      "id": 11393,
+      "name": "Retribution",
+      "group_id": 324,
+      "race": "amarr"
+    },
+    {
+      "id": 11400,
+      "name": "Jaguar",
+      "group_id": 324,
+      "race": "minmatar"
+    },
+    {
+      "id": 11567,
+      "name": "Avatar",
+      "group_id": 30,
+      "race": "amarr"
+    },
+    {
+      "id": 11936,
+      "name": "Apocalypse Imperial Issue",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 11938,
+      "name": "Armageddon Imperial Issue",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 11940,
+      "name": "Gold Magnate",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 11942,
+      "name": "Silver Magnate",
+      "group_id": -1,
+      "race": "amarr"
+    },
+    {
+      "id": 11957,
+      "name": "Falcon",
+      "group_id": 833,
+      "race": "caldari"
+    },
+    {
+      "id": 11959,
+      "name": "Rook",
+      "group_id": 906,
+      "race": "caldari"
+    },
+    {
+      "id": 11961,
+      "name": "Huginn",
+      "group_id": 906,
+      "race": "minmatar"
+    },
+    {
+      "id": 11963,
+      "name": "Rapier",
+      "group_id": 833,
+      "race": "minmatar"
+    },
+    {
+      "id": 11965,
+      "name": "Pilgrim",
+      "group_id": 833,
+      "race": "amarr"
+    },
+    {
+      "id": 11969,
+      "name": "Arazu",
+      "group_id": 833,
+      "race": "gallente"
+    },
+    {
+      "id": 11971,
+      "name": "Lachesis",
+      "group_id": 906,
+      "race": "gallente"
+    },
+    {
+      "id": 11978,
+      "name": "Scimitar",
+      "group_id": 832,
+      "race": "minmatar"
+    },
+    {
+      "id": 11985,
+      "name": "Basilisk",
+      "group_id": 832,
+      "race": "caldari"
+    },
+    {
+      "id": 11987,
+      "name": "Guardian",
+      "group_id": 832,
+      "race": "amarr"
+    },
+    {
+      "id": 11989,
+      "name": "Oneiros",
+      "group_id": 832,
+      "race": "gallente"
+    },
+    {
+      "id": 11993,
+      "name": "Cerberus",
+      "group_id": 358,
+      "race": "caldari"
+    },
+    {
+      "id": 11995,
+      "name": "Onyx",
+      "group_id": 894,
+      "race": "caldari"
+    },
+    {
+      "id": 11999,
+      "name": "Vagabond",
+      "group_id": 358,
+      "race": "minmatar"
+    },
+    {
+      "id": 12003,
+      "name": "Zealot",
+      "group_id": 358,
+      "race": "amarr"
+    },
+    {
+      "id": 12005,
+      "name": "Ishtar",
+      "group_id": 358,
+      "race": "gallente"
+    },
+    {
+      "id": 12011,
+      "name": "Eagle",
+      "group_id": 358,
+      "race": "caldari"
+    },
+    {
+      "id": 12013,
+      "name": "Broadsword",
+      "group_id": 894,
+      "race": "minmatar"
+    },
+    {
+      "id": 12015,
+      "name": "Muninn",
+      "group_id": 358,
+      "race": "minmatar"
+    },
+    {
+      "id": 12017,
+      "name": "Devoter",
+      "group_id": 894,
+      "race": "amarr"
+    },
+    {
+      "id": 12019,
+      "name": "Sacrilege",
+      "group_id": 358,
+      "race": "amarr"
+    },
+    {
+      "id": 12021,
+      "name": "Phobos",
+      "group_id": 894,
+      "race": "gallente"
+    },
+    {
+      "id": 12023,
+      "name": "Deimos",
+      "group_id": 358,
+      "race": "gallente"
+    },
+    {
+      "id": 12032,
+      "name": "Manticore",
+      "group_id": 834,
+      "race": "caldari"
+    },
+    {
+      "id": 12034,
+      "name": "Hound",
+      "group_id": 834,
+      "race": "minmatar"
+    },
+    {
+      "id": 12038,
+      "name": "Purifier",
+      "group_id": 834,
+      "race": "amarr"
+    },
+    {
+      "id": 12042,
+      "name": "Ishkur",
+      "group_id": 324,
+      "race": "gallente"
+    },
+    {
+      "id": 12044,
+      "name": "Enyo",
+      "group_id": 324,
+      "race": "gallente"
+    },
+    {
+      "id": 12729,
+      "name": "Crane",
+      "group_id": 1202,
+      "race": "caldari"
+    },
+    {
+      "id": 12731,
+      "name": "Bustard",
+      "group_id": 380,
+      "race": "caldari"
+    },
+    {
+      "id": 12733,
+      "name": "Prorator",
+      "group_id": 1202,
+      "race": "amarr"
+    },
+    {
+      "id": 12735,
+      "name": "Prowler",
+      "group_id": 1202,
+      "race": "minmatar"
+    },
+    {
+      "id": 12743,
+      "name": "Viator",
+      "group_id": 1202,
+      "race": "gallente"
+    },
+    {
+      "id": 12745,
+      "name": "Occator",
+      "group_id": 380,
+      "race": "gallente"
+    },
+    {
+      "id": 12747,
+      "name": "Mastodon",
+      "group_id": 380,
+      "race": "minmatar"
+    },
+    {
+      "id": 12753,
+      "name": "Impel",
+      "group_id": 380,
+      "race": "amarr"
+    },
+    {
+      "id": 13202,
+      "name": "Megathron Federate Issue",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 16227,
+      "name": "Ferox",
+      "group_id": 419,
+      "race": "caldari"
+    },
+    {
+      "id": 16229,
+      "name": "Brutix",
+      "group_id": 419,
+      "race": "gallente"
+    },
+    {
+      "id": 16231,
+      "name": "Cyclone",
+      "group_id": 419,
+      "race": "minmatar"
+    },
+    {
+      "id": 16233,
+      "name": "Prophecy",
+      "group_id": 419,
+      "race": "amarr"
+    },
+    {
+      "id": 16236,
+      "name": "Coercer",
+      "group_id": 420,
+      "race": "amarr"
+    },
+    {
+      "id": 16238,
+      "name": "Cormorant",
+      "group_id": 420,
+      "race": "caldari"
+    },
+    {
+      "id": 16240,
+      "name": "Catalyst",
+      "group_id": 420,
+      "race": "gallente"
+    },
+    {
+      "id": 16242,
+      "name": "Thrasher",
+      "group_id": 420,
+      "race": "minmatar"
+    },
+    {
+      "id": 17476,
+      "name": "Covetor",
+      "group_id": 463,
+      "race": "ore"
+    },
+    {
+      "id": 17478,
+      "name": "Retriever",
+      "group_id": 463,
+      "race": "ore"
+    },
+    {
+      "id": 17480,
+      "name": "Procurer",
+      "group_id": 463,
+      "race": "ore"
+    },
+    {
+      "id": 17619,
+      "name": "Caldari Navy Hookbill",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 17634,
+      "name": "Caracal Navy Issue",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 17636,
+      "name": "Raven Navy Issue",
+      "group_id": 27,
+      "race": "caldari"
+    },
+    {
+      "id": 17703,
+      "name": "Imperial Navy Slicer",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 17709,
+      "name": "Omen Navy Issue",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 17713,
+      "name": "Stabber Fleet Issue",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 17715,
+      "name": "Gila",
+      "group_id": 26,
+      "race": "guristas"
+    },
+    {
+      "id": 17718,
+      "name": "Phantasm",
+      "group_id": 26,
+      "race": "sansha"
+    },
+    {
+      "id": 17720,
+      "name": "Cynabal",
+      "group_id": 26,
+      "race": "angel"
+    },
+    {
+      "id": 17722,
+      "name": "Vigilant",
+      "group_id": 26,
+      "race": "serpentis"
+    },
+    {
+      "id": 17726,
+      "name": "Apocalypse Navy Issue",
+      "group_id": 27,
+      "race": "amarr"
+    },
+    {
+      "id": 17728,
+      "name": "Megathron Navy Issue",
+      "group_id": 27,
+      "race": "gallente"
+    },
+    {
+      "id": 17732,
+      "name": "Tempest Fleet Issue",
+      "group_id": 27,
+      "race": "minmatar"
+    },
+    {
+      "id": 17736,
+      "name": "Nightmare",
+      "group_id": 27,
+      "race": "sansha"
+    },
+    {
+      "id": 17738,
+      "name": "Machariel",
+      "group_id": 27,
+      "race": "angel"
+    },
+    {
+      "id": 17740,
+      "name": "Vindicator",
+      "group_id": 27,
+      "race": "serpentis"
+    },
+    {
+      "id": 17812,
+      "name": "Republic Fleet Firetail",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 17841,
+      "name": "Federation Navy Comet",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 17843,
+      "name": "Vexor Navy Issue",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 17918,
+      "name": "Rattlesnake",
+      "group_id": 27,
+      "race": "guristas"
+    },
+    {
+      "id": 17920,
+      "name": "Bhaalgorn",
+      "group_id": 27,
+      "race": "blood"
+    },
+    {
+      "id": 17922,
+      "name": "Ashimmu",
+      "group_id": 26,
+      "race": "blood"
+    },
+    {
+      "id": 17924,
+      "name": "Succubus",
+      "group_id": 25,
+      "race": "sansha"
+    },
+    {
+      "id": 17926,
+      "name": "Cruor",
+      "group_id": 25,
+      "race": "blood"
+    },
+    {
+      "id": 17928,
+      "name": "Daredevil",
+      "group_id": 25,
+      "race": "serpentis"
+    },
+    {
+      "id": 17930,
+      "name": "Worm",
+      "group_id": 25,
+      "race": "guristas"
+    },
+    {
+      "id": 17932,
+      "name": "Dramiel",
+      "group_id": 25,
+      "race": "angel"
+    },
+    {
+      "id": 19720,
+      "name": "Revelation",
+      "group_id": 485,
+      "race": "amarr"
+    },
+    {
+      "id": 19722,
+      "name": "Naglfar",
+      "group_id": 485,
+      "race": "minmatar"
+    },
+    {
+      "id": 19724,
+      "name": "Moros",
+      "group_id": 485,
+      "race": "gallente"
+    },
+    {
+      "id": 19726,
+      "name": "Phoenix",
+      "group_id": 485,
+      "race": "caldari"
+    },
+    {
+      "id": 19744,
+      "name": "Sigil",
+      "group_id": 28,
+      "race": "amarr"
+    },
+    {
+      "id": 20125,
+      "name": "Curse",
+      "group_id": 906,
+      "race": "amarr"
+    },
+    {
+      "id": 20183,
+      "name": "Providence",
+      "group_id": 513,
+      "race": "amarr"
+    },
+    {
+      "id": 20185,
+      "name": "Charon",
+      "group_id": 513,
+      "race": "caldari"
+    },
+    {
+      "id": 20187,
+      "name": "Obelisk",
+      "group_id": 513,
+      "race": "gallente"
+    },
+    {
+      "id": 20189,
+      "name": "Fenrir",
+      "group_id": 513,
+      "race": "minmatar"
+    },
+    {
+      "id": 22428,
+      "name": "Redeemer",
+      "group_id": 898,
+      "race": "amarr"
+    },
+    {
+      "id": 22430,
+      "name": "Sin",
+      "group_id": 898,
+      "race": "gallente"
+    },
+    {
+      "id": 22436,
+      "name": "Widow",
+      "group_id": 898,
+      "race": "caldari"
+    },
+    {
+      "id": 22440,
+      "name": "Panther",
+      "group_id": 898,
+      "race": "minmatar"
+    },
+    {
+      "id": 22442,
+      "name": "Eos",
+      "group_id": 540,
+      "race": "gallente"
+    },
+    {
+      "id": 22444,
+      "name": "Sleipnir",
+      "group_id": 540,
+      "race": "minmatar"
+    },
+    {
+      "id": 22446,
+      "name": "Vulture",
+      "group_id": 540,
+      "race": "caldari"
+    },
+    {
+      "id": 22448,
+      "name": "Absolution",
+      "group_id": 540,
+      "race": "amarr"
+    },
+    {
+      "id": 22452,
+      "name": "Heretic",
+      "group_id": 541,
+      "race": "amarr"
+    },
+    {
+      "id": 22456,
+      "name": "Sabre",
+      "group_id": 541,
+      "race": "minmatar"
+    },
+    {
+      "id": 22460,
+      "name": "Eris",
+      "group_id": 541,
+      "race": "gallente"
+    },
+    {
+      "id": 22464,
+      "name": "Flycatcher",
+      "group_id": 541,
+      "race": "caldari"
+    },
+    {
+      "id": 22466,
+      "name": "Astarte",
+      "group_id": 540,
+      "race": "gallente"
+    },
+    {
+      "id": 22468,
+      "name": "Claymore",
+      "group_id": 540,
+      "race": "minmatar"
+    },
+    {
+      "id": 22470,
+      "name": "Nighthawk",
+      "group_id": 540,
+      "race": "caldari"
+    },
+    {
+      "id": 22474,
+      "name": "Damnation",
+      "group_id": 540,
+      "race": "amarr"
+    },
+    {
+      "id": 22544,
+      "name": "Hulk",
+      "group_id": 543,
+      "race": "ore"
+    },
+    {
+      "id": 22546,
+      "name": "Skiff",
+      "group_id": 543,
+      "race": "ore"
+    },
+    {
+      "id": 22548,
+      "name": "Mackinaw",
+      "group_id": 543,
+      "race": "ore"
+    },
+    {
+      "id": 22852,
+      "name": "Hel",
+      "group_id": 659,
+      "race": "minmatar"
+    },
+    {
+      "id": 23757,
+      "name": "Archon",
+      "group_id": 547,
+      "race": "amarr"
+    },
+    {
+      "id": 23773,
+      "name": "Ragnarok",
+      "group_id": 30,
+      "race": "minmatar"
+    },
+    {
+      "id": 23911,
+      "name": "Thanatos",
+      "group_id": 547,
+      "race": "gallente"
+    },
+    {
+      "id": 23913,
+      "name": "Nyx",
+      "group_id": 659,
+      "race": "gallente"
+    },
+    {
+      "id": 23915,
+      "name": "Chimera",
+      "group_id": 547,
+      "race": "caldari"
+    },
+    {
+      "id": 23917,
+      "name": "Wyvern",
+      "group_id": 659,
+      "race": "caldari"
+    },
+    {
+      "id": 23919,
+      "name": "Aeon",
+      "group_id": 659,
+      "race": "amarr"
+    },
+    {
+      "id": 24483,
+      "name": "Nidhoggur",
+      "group_id": 547,
+      "race": "minmatar"
+    },
+    {
+      "id": 24688,
+      "name": "Rokh",
+      "group_id": 27,
+      "race": "caldari"
+    },
+    {
+      "id": 24690,
+      "name": "Hyperion",
+      "group_id": 27,
+      "race": "gallente"
+    },
+    {
+      "id": 24692,
+      "name": "Abaddon",
+      "group_id": 27,
+      "race": "amarr"
+    },
+    {
+      "id": 24694,
+      "name": "Maelstrom",
+      "group_id": 27,
+      "race": "minmatar"
+    },
+    {
+      "id": 24696,
+      "name": "Harbinger",
+      "group_id": 419,
+      "race": "amarr"
+    },
+    {
+      "id": 24698,
+      "name": "Drake",
+      "group_id": 419,
+      "race": "caldari"
+    },
+    {
+      "id": 24700,
+      "name": "Myrmidon",
+      "group_id": 419,
+      "race": "gallente"
+    },
+    {
+      "id": 24702,
+      "name": "Hurricane",
+      "group_id": 419,
+      "race": "minmatar"
+    },
+    {
+      "id": 26840,
+      "name": "Raven State Issue",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 26842,
+      "name": "Tempest Tribal Issue",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 28352,
+      "name": "Rorqual",
+      "group_id": 883,
+      "race": "ore"
+    },
+    {
+      "id": 28606,
+      "name": "Orca",
+      "group_id": 941,
+      "race": "ore"
+    },
+    {
+      "id": 28659,
+      "name": "Paladin",
+      "group_id": 900,
+      "race": "amarr"
+    },
+    {
+      "id": 28661,
+      "name": "Kronos",
+      "group_id": 900,
+      "race": "gallente"
+    },
+    {
+      "id": 28665,
+      "name": "Vargur",
+      "group_id": 900,
+      "race": "minmatar"
+    },
+    {
+      "id": 28710,
+      "name": "Golem",
+      "group_id": 900,
+      "race": "caldari"
+    },
+    {
+      "id": 28844,
+      "name": "Rhea",
+      "group_id": 902,
+      "race": "caldari"
+    },
+    {
+      "id": 28846,
+      "name": "Nomad",
+      "group_id": 902,
+      "race": "minmatar"
+    },
+    {
+      "id": 28848,
+      "name": "Anshar",
+      "group_id": 902,
+      "race": "gallente"
+    },
+    {
+      "id": 28850,
+      "name": "Ark",
+      "group_id": 902,
+      "race": "amarr"
+    },
+    {
+      "id": 29248,
+      "name": "Magnate",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 29266,
+      "name": "Apotheosis",
+      "group_id": 31,
+      "race": "jove"
+    },
+    {
+      "id": 29336,
+      "name": "Scythe Fleet Issue",
+      "group_id": 26,
+      "race": "minmatar"
+    },
+    {
+      "id": 29337,
+      "name": "Augoror Navy Issue",
+      "group_id": 26,
+      "race": "amarr"
+    },
+    {
+      "id": 29340,
+      "name": "Osprey Navy Issue",
+      "group_id": 26,
+      "race": "caldari"
+    },
+    {
+      "id": 29344,
+      "name": "Exequror Navy Issue",
+      "group_id": 26,
+      "race": "gallente"
+    },
+    {
+      "id": 29984,
+      "name": "Tengu",
+      "group_id": 963,
+      "race": "caldari"
+    },
+    {
+      "id": 29986,
+      "name": "Legion",
+      "group_id": 963,
+      "race": "amarr"
+    },
+    {
+      "id": 29988,
+      "name": "Proteus",
+      "group_id": 963,
+      "race": "gallente"
+    },
+    {
+      "id": 29990,
+      "name": "Loki",
+      "group_id": 963,
+      "race": "minmatar"
+    },
+    {
+      "id": 30842,
+      "name": "InterBus Shuttle",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 32207,
+      "name": "Freki",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 32209,
+      "name": "Mimir",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 32305,
+      "name": "Armageddon Navy Issue",
+      "group_id": 27,
+      "race": "amarr"
+    },
+    {
+      "id": 32307,
+      "name": "Dominix Navy Issue",
+      "group_id": 27,
+      "race": "gallente"
+    },
+    {
+      "id": 32309,
+      "name": "Scorpion Navy Issue",
+      "group_id": 27,
+      "race": "caldari"
+    },
+    {
+      "id": 32311,
+      "name": "Typhoon Fleet Issue",
+      "group_id": 27,
+      "race": "minmatar"
+    },
+    {
+      "id": 32788,
+      "name": "Cambion",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 32790,
+      "name": "Etana",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 32872,
+      "name": "Algos",
+      "group_id": 420,
+      "race": "gallente"
+    },
+    {
+      "id": 32874,
+      "name": "Dragoon",
+      "group_id": 420,
+      "race": "amarr"
+    },
+    {
+      "id": 32876,
+      "name": "Corax",
+      "group_id": 420,
+      "race": "caldari"
+    },
+    {
+      "id": 32878,
+      "name": "Talwar",
+      "group_id": 420,
+      "race": "minmatar"
+    },
+    {
+      "id": 32880,
+      "name": "Venture",
+      "group_id": 25,
+      "race": "ore"
+    },
+    {
+      "id": 33079,
+      "name": "Hematos",
+      "group_id": 237,
+      "race": "blood"
+    },
+    {
+      "id": 33081,
+      "name": "Taipan",
+      "group_id": 237,
+      "race": "guristas"
+    },
+    {
+      "id": 33083,
+      "name": "Violator",
+      "group_id": 237,
+      "race": "serpentis"
+    },
+    {
+      "id": 33151,
+      "name": "Brutix Navy Issue",
+      "group_id": 419,
+      "race": "gallente"
+    },
+    {
+      "id": 33153,
+      "name": "Drake Navy Issue",
+      "group_id": 419,
+      "race": "caldari"
+    },
+    {
+      "id": 33155,
+      "name": "Harbinger Navy Issue",
+      "group_id": 419,
+      "race": "amarr"
+    },
+    {
+      "id": 33157,
+      "name": "Hurricane Fleet Issue",
+      "group_id": 419,
+      "race": "minmatar"
+    },
+    {
+      "id": 33328,
+      "name": "Capsule - Genolution 'Auroral' 197-variant",
+      "group_id": 29,
+      "race": "jove"
+    },
+    {
+      "id": 33395,
+      "name": "Moracha",
+      "group_id": -1,
+      "race": "angel"
+    },
+    {
+      "id": 33397,
+      "name": "Chremoas",
+      "group_id": -1,
+      "race": "angel"
+    },
+    {
+      "id": 33468,
+      "name": "Astero",
+      "group_id": 25,
+      "race": "sisters"
+    },
+    {
+      "id": 33470,
+      "name": "Stratios",
+      "group_id": 26,
+      "race": "sisters"
+    },
+    {
+      "id": 33472,
+      "name": "Nestor",
+      "group_id": 27,
+      "race": "sisters"
+    },
+    {
+      "id": 33513,
+      "name": "Leopard",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 33553,
+      "name": "Stratios Emergency Responder",
+      "group_id": -1,
+      "race": "sisters"
+    },
+    {
+      "id": 33673,
+      "name": "Whiptail",
+      "group_id": -1,
+      "race": "guristas"
+    },
+    {
+      "id": 33675,
+      "name": "Chameleon",
+      "group_id": -1,
+      "race": "guristas"
+    },
+    {
+      "id": 33697,
+      "name": "Prospect",
+      "group_id": 1283,
+      "race": "ore"
+    },
+    {
+      "id": 33816,
+      "name": "Garmur",
+      "group_id": 25,
+      "race": "mordu"
+    },
+    {
+      "id": 33818,
+      "name": "Orthrus",
+      "group_id": 26,
+      "race": "mordu"
+    },
+    {
+      "id": 33820,
+      "name": "Barghest",
+      "group_id": 27,
+      "race": "mordu"
+    },
+    {
+      "id": 34317,
+      "name": "Confessor",
+      "group_id": 1305,
+      "race": "amarr"
+    },
+    {
+      "id": 34328,
+      "name": "Bowhead",
+      "group_id": 513,
+      "race": "ore"
+    },
+    {
+      "id": 34496,
+      "name": "Council Diplomatic Shuttle",
+      "group_id": -1,
+      "race": null
+    },
+    {
+      "id": 34562,
+      "name": "Svipul",
+      "group_id": 1305,
+      "race": "minmatar"
+    },
+    {
+      "id": 34590,
+      "name": "Victorieux Luxury Yacht",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 34828,
+      "name": "Jackdaw",
+      "group_id": 1305,
+      "race": "caldari"
+    },
+    {
+      "id": 35683,
+      "name": "Hecate",
+      "group_id": 1305,
+      "race": "gallente"
+    },
+    {
+      "id": 35779,
+      "name": "Imp",
+      "group_id": -1,
+      "race": "sansha"
+    },
+    {
+      "id": 35781,
+      "name": "Fiend",
+      "group_id": -1,
+      "race": "sansha"
+    },
+    {
+      "id": 35825,
+      "name": "Raitaru",
+      "group_id": 1404,
+      "race": "upwell"
+    },
+    {
+      "id": 35826,
+      "name": "Azbel",
+      "group_id": 1404,
+      "race": "upwell"
+    },
+    {
+      "id": 35827,
+      "name": "Sotiyo",
+      "group_id": 1404,
+      "race": "upwell"
+    },
+    {
+      "id": 35832,
+      "name": "Astrahus",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 35833,
+      "name": "Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 35834,
+      "name": "Keepstar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 35835,
+      "name": "Athanor",
+      "group_id": 1406,
+      "race": "upwell"
+    },
+    {
+      "id": 35836,
+      "name": "Tatara",
+      "group_id": 1406,
+      "race": "upwell"
+    },
+    {
+      "id": 35840,
+      "name": "Pharolux Cyno Beacon",
+      "group_id": 2017,
+      "race": "upwell"
+    },
+    {
+      "id": 35841,
+      "name": "Ansiblex Jump Bridge",
+      "group_id": 1408,
+      "race": "upwell"
+    },
+    {
+      "id": 37135,
+      "name": "Endurance",
+      "group_id": 1283,
+      "race": "ore"
+    },
+    {
+      "id": 37453,
+      "name": "Crucifier Navy Issue",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 37454,
+      "name": "Vigil Fleet Issue",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 37455,
+      "name": "Griffin Navy Issue",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 37456,
+      "name": "Maulus Navy Issue",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 37457,
+      "name": "Deacon",
+      "group_id": 1527,
+      "race": "amarr"
+    },
+    {
+      "id": 37458,
+      "name": "Kirin",
+      "group_id": 1527,
+      "race": "caldari"
+    },
+    {
+      "id": 37459,
+      "name": "Thalia",
+      "group_id": 1527,
+      "race": "gallente"
+    },
+    {
+      "id": 37460,
+      "name": "Scalpel",
+      "group_id": 1527,
+      "race": "minmatar"
+    },
+    {
+      "id": 37480,
+      "name": "Bifrost",
+      "group_id": 1534,
+      "race": "minmatar"
+    },
+    {
+      "id": 37481,
+      "name": "Pontifex",
+      "group_id": 1534,
+      "race": "amarr"
+    },
+    {
+      "id": 37482,
+      "name": "Stork",
+      "group_id": 1534,
+      "race": "caldari"
+    },
+    {
+      "id": 37483,
+      "name": "Magus",
+      "group_id": 1534,
+      "race": "gallente"
+    },
+    {
+      "id": 37534,
+      "name": "Tenebrex Cyno Jammer",
+      "group_id": 2016,
+      "race": "upwell"
+    },
+    {
+      "id": 37604,
+      "name": "Apostle",
+      "group_id": 1538,
+      "race": "amarr"
+    },
+    {
+      "id": 37605,
+      "name": "Minokawa",
+      "group_id": 1538,
+      "race": "caldari"
+    },
+    {
+      "id": 37606,
+      "name": "Lif",
+      "group_id": 1538,
+      "race": "minmatar"
+    },
+    {
+      "id": 37607,
+      "name": "Ninazu",
+      "group_id": 1538,
+      "race": "gallente"
+    },
+    {
+      "id": 40340,
+      "name": "Upwell Palatine Keepstar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 42124,
+      "name": "Vehement",
+      "group_id": 485,
+      "race": "serpentis"
+    },
+    {
+      "id": 42125,
+      "name": "Vendetta",
+      "group_id": 659,
+      "race": "serpentis"
+    },
+    {
+      "id": 42126,
+      "name": "Vanquisher",
+      "group_id": 30,
+      "race": "serpentis"
+    },
+    {
+      "id": 42241,
+      "name": "Molok",
+      "group_id": 30,
+      "race": "blood"
+    },
+    {
+      "id": 42242,
+      "name": "Dagon",
+      "group_id": 1538,
+      "race": "blood"
+    },
+    {
+      "id": 42243,
+      "name": "Chemosh",
+      "group_id": 485,
+      "race": "blood"
+    },
+    {
+      "id": 42244,
+      "name": "Porpoise",
+      "group_id": 941,
+      "race": "ore"
+    },
+    {
+      "id": 42245,
+      "name": "Rabisu",
+      "group_id": -1,
+      "race": "blood"
+    },
+    {
+      "id": 42246,
+      "name": "Caedes",
+      "group_id": -1,
+      "race": "blood"
+    },
+    {
+      "id": 42685,
+      "name": "Sunesis",
+      "group_id": 420,
+      "race": "jove"
+    },
+    {
+      "id": 44993,
+      "name": "Pacifier",
+      "group_id": 830,
+      "race": "concord"
+    },
+    {
+      "id": 44995,
+      "name": "Enforcer",
+      "group_id": 833,
+      "race": "concord"
+    },
+    {
+      "id": 44996,
+      "name": "Marshal",
+      "group_id": 898,
+      "race": "concord"
+    },
+    {
+      "id": 45530,
+      "name": "Virtuoso",
+      "group_id": -1,
+      "race": "serpentis"
+    },
+    {
+      "id": 45531,
+      "name": "Victor",
+      "group_id": -1,
+      "race": "serpentis"
+    },
+    {
+      "id": 45534,
+      "name": "Monitor",
+      "group_id": 1972,
+      "race": "concord"
+    },
+    {
+      "id": 45645,
+      "name": "Loggerhead",
+      "group_id": 1538,
+      "race": "guristas"
+    },
+    {
+      "id": 45647,
+      "name": "Caiman",
+      "group_id": 485,
+      "race": "guristas"
+    },
+    {
+      "id": 45649,
+      "name": "Komodo",
+      "group_id": 30,
+      "race": "guristas"
+    },
+    {
+      "id": 47269,
+      "name": "Damavik",
+      "group_id": 25,
+      "race": "triglavian"
+    },
+    {
+      "id": 47270,
+      "name": "Vedmak",
+      "group_id": 26,
+      "race": "triglavian"
+    },
+    {
+      "id": 47271,
+      "name": "Leshak",
+      "group_id": 27,
+      "race": "triglavian"
+    },
+    {
+      "id": 47466,
+      "name": "Praxis",
+      "group_id": 27,
+      "race": "jove"
+    },
+    {
+      "id": 47512,
+      "name": "'Moreau' Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 47513,
+      "name": "'Draccous' Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 47514,
+      "name": "'Horizon' Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 47515,
+      "name": "'Marginis' Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 47516,
+      "name": "'Prometheus' Fortizar",
+      "group_id": 1657,
+      "race": "upwell"
+    },
+    {
+      "id": 48635,
+      "name": "Tiamat",
+      "group_id": -1,
+      "race": "triglavian"
+    },
+    {
+      "id": 48636,
+      "name": "Hydra",
+      "group_id": -1,
+      "race": "triglavian"
+    },
+    {
+      "id": 49710,
+      "name": "Kikimora",
+      "group_id": 420,
+      "race": "triglavian"
+    },
+    {
+      "id": 49711,
+      "name": "Drekavac",
+      "group_id": 419,
+      "race": "triglavian"
+    },
+    {
+      "id": 49712,
+      "name": "Rodiva",
+      "group_id": 26,
+      "race": "triglavian"
+    },
+    {
+      "id": 49713,
+      "name": "Zarmazd",
+      "group_id": 832,
+      "race": "triglavian"
+    },
+    {
+      "id": 52250,
+      "name": "Nergal",
+      "group_id": 324,
+      "race": "triglavian"
+    },
+    {
+      "id": 52252,
+      "name": "Ikitursa",
+      "group_id": 358,
+      "race": "triglavian"
+    },
+    {
+      "id": 52254,
+      "name": "Draugur",
+      "group_id": 1534,
+      "race": "triglavian"
+    },
+    {
+      "id": 52907,
+      "name": "Zirnitra",
+      "group_id": 485,
+      "race": "triglavian"
+    },
+    {
+      "id": 54731,
+      "name": "Skybreaker",
+      "group_id": 25,
+      "race": "upwell"
+    },
+    {
+      "id": 54732,
+      "name": "Stormbringer",
+      "group_id": 26,
+      "race": "upwell"
+    },
+    {
+      "id": 54733,
+      "name": "Thunderchild",
+      "group_id": 27,
+      "race": "upwell"
+    },
+    {
+      "id": 60764,
+      "name": "Laelaps",
+      "group_id": -1,
+      "race": "mordu"
+    },
+    {
+      "id": 60765,
+      "name": "Raiju",
+      "group_id": -1,
+      "race": "mordu"
+    },
+    {
+      "id": 64034,
+      "name": "Boobook",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 72811,
+      "name": "Cyclone Fleet Issue",
+      "group_id": 419,
+      "race": "minmatar"
+    },
+    {
+      "id": 72812,
+      "name": "Ferox Navy Issue",
+      "group_id": 419,
+      "race": "caldari"
+    },
+    {
+      "id": 72869,
+      "name": "Myrmidon Navy Issue",
+      "group_id": 419,
+      "race": "gallente"
+    },
+    {
+      "id": 72872,
+      "name": "Prophecy Navy Issue",
+      "group_id": 419,
+      "race": "amarr"
+    },
+    {
+      "id": 72903,
+      "name": "Probe Fleet Issue",
+      "group_id": 25,
+      "race": "minmatar"
+    },
+    {
+      "id": 72904,
+      "name": "Heron Navy Issue",
+      "group_id": 25,
+      "race": "caldari"
+    },
+    {
+      "id": 72907,
+      "name": "Magnate Navy Issue",
+      "group_id": 25,
+      "race": "amarr"
+    },
+    {
+      "id": 72913,
+      "name": "Imicus Navy Issue",
+      "group_id": 25,
+      "race": "gallente"
+    },
+    {
+      "id": 73787,
+      "name": "Naglfar Fleet Issue",
+      "group_id": 485,
+      "race": "minmatar"
+    },
+    {
+      "id": 73789,
+      "name": "Coercer Navy Issue",
+      "group_id": 420,
+      "race": "amarr"
+    },
+    {
+      "id": 73790,
+      "name": "Revelation Navy Issue",
+      "group_id": 485,
+      "race": "amarr"
+    },
+    {
+      "id": 73792,
+      "name": "Moros Navy Issue",
+      "group_id": 485,
+      "race": "gallente"
+    },
+    {
+      "id": 73793,
+      "name": "Phoenix Navy Issue",
+      "group_id": 485,
+      "race": "caldari"
+    },
+    {
+      "id": 73794,
+      "name": "Thrasher Fleet Issue",
+      "group_id": 420,
+      "race": "minmatar"
+    },
+    {
+      "id": 73795,
+      "name": "Cormorant Navy Issue",
+      "group_id": 420,
+      "race": "caldari"
+    },
+    {
+      "id": 73796,
+      "name": "Catalyst Navy Issue",
+      "group_id": 420,
+      "race": "gallente"
+    },
+    {
+      "id": 74141,
+      "name": "Geri",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 74316,
+      "name": "Bestla",
+      "group_id": -1,
+      "race": "minmatar"
+    },
+    {
+      "id": 77114,
+      "name": "Metamorphosis",
+      "group_id": 25,
+      "race": "jove"
+    },
+    {
+      "id": 77281,
+      "name": "Hubris",
+      "group_id": 4594,
+      "race": "gallente"
+    },
+    {
+      "id": 77283,
+      "name": "Bane",
+      "group_id": 4594,
+      "race": "amarr"
+    },
+    {
+      "id": 77284,
+      "name": "Karura",
+      "group_id": 4594,
+      "race": "caldari"
+    },
+    {
+      "id": 77288,
+      "name": "Valravn",
+      "group_id": 4594,
+      "race": "minmatar"
+    },
+    {
+      "id": 77726,
+      "name": "Cybele",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 78333,
+      "name": "Mekubal",
+      "group_id": 420,
+      "race": "angel"
+    },
+    {
+      "id": 78366,
+      "name": "Alligator",
+      "group_id": 419,
+      "race": "guristas"
+    },
+    {
+      "id": 78367,
+      "name": "Mamba",
+      "group_id": 420,
+      "race": "guristas"
+    },
+    {
+      "id": 78369,
+      "name": "Khizriel",
+      "group_id": 419,
+      "race": "angel"
+    },
+    {
+      "id": 78414,
+      "name": "Shapash",
+      "group_id": -1,
+      "race": "gallente"
+    },
+    {
+      "id": 78576,
+      "name": "Azariel",
+      "group_id": 30,
+      "race": "angel"
+    },
+    {
+      "id": 81008,
+      "name": "Squall",
+      "group_id": 28,
+      "race": "upwell"
+    },
+    {
+      "id": 81040,
+      "name": "Avalanche",
+      "group_id": 513,
+      "race": "upwell"
+    },
+    {
+      "id": 81046,
+      "name": "Deluge",
+      "group_id": 1202,
+      "race": "upwell"
+    },
+    {
+      "id": 81047,
+      "name": "Torrent",
+      "group_id": 380,
+      "race": "upwell"
+    },
+    {
+      "id": 81826,
+      "name": "Metenox Moon Drill",
+      "group_id": 4744,
+      "race": "upwell"
+    },
+    {
+      "id": 85062,
+      "name": "Sidewinder",
+      "group_id": -1,
+      "race": "guristas"
+    },
+    {
+      "id": 85086,
+      "name": "Cenotaph",
+      "group_id": 419,
+      "race": "deathless"
+    },
+    {
+      "id": 85087,
+      "name": "Tholos",
+      "group_id": 420,
+      "race": "deathless"
+    },
+    {
+      "id": 85229,
+      "name": "Cobra",
+      "group_id": -1,
+      "race": "guristas"
+    },
+    {
+      "id": 85236,
+      "name": "Python",
+      "group_id": -1,
+      "race": "guristas"
+    },
+    {
+      "id": 87381,
+      "name": "Sarathiel",
+      "group_id": 485,
+      "race": "angel"
+    },
+    {
+      "id": 88001,
+      "name": "Babaroga",
+      "group_id": 900,
+      "race": "triglavian"
+    },
+    {
+      "id": 89240,
+      "name": "Pioneer",
+      "group_id": 420,
+      "race": "ore"
+    },
+    {
+      "id": 89607,
+      "name": "Odysseus",
+      "group_id": 4902,
+      "race": "sisters"
+    },
+    {
+      "id": 89647,
+      "name": "Pioneer Consortium Issue",
+      "group_id": 420,
+      "race": "ore"
+    },
+    {
+      "id": 89648,
+      "name": "Venture Consortium Issue",
+      "group_id": 25,
+      "race": "ore"
+    },
+    {
+      "id": 89649,
+      "name": "Outrider",
+      "group_id": 1534,
+      "race": "ore"
+    },
+    {
+      "id": 89807,
+      "name": "Anhinga",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 89808,
+      "name": "Skua",
+      "group_id": -1,
+      "race": "caldari"
+    },
+    {
+      "id": 91174,
+      "name": "Perseverance",
+      "group_id": 420,
+      "race": "ore"
+    },
+    {
+      "id": 91775,
+      "name": "Dragoon Navy Issue",
+      "group_id": 420,
+      "race": "amarr"
+    },
+    {
+      "id": 91849,
+      "name": "Algos Navy Issue",
+      "group_id": 420,
+      "race": "gallente"
+    },
+    {
+      "id": 91857,
+      "name": "Corax Navy Issue",
+      "group_id": 420,
+      "race": "caldari"
+    },
+    {
+      "id": 91858,
+      "name": "Talwar Fleet Issue",
+      "group_id": 420,
+      "race": "minmatar"
+    },
+    {
+      "id": 92282,
+      "name": "Tenzin YC128 Campaign Bus",
+      "group_id": 5087,
+      "race": "gallente"
+    },
+    {
+      "id": 92283,
+      "name": "Moreau YC128 Campaign Bus",
+      "group_id": 5087,
+      "race": "gallente"
+    },
+    {
+      "id": 92284,
+      "name": "Roden YC128 Campaign Bus",
+      "group_id": 5087,
+      "race": "gallente"
+    },
+    {
+      "id": 92822,
+      "name": "Salvation",
+      "group_id": 5120,
+      "race": "amarr"
+    },
+    {
+      "id": 92823,
+      "name": "Simurgh",
+      "group_id": 5120,
+      "race": "caldari"
+    },
+    {
+      "id": 92824,
+      "name": "Gaia",
+      "group_id": 5120,
+      "race": "gallente"
+    },
+    {
+      "id": 92825,
+      "name": "Ymir",
+      "group_id": 5120,
+      "race": "minmatar"
+    }
+  ]
+}

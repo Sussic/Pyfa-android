@@ -132,4 +132,21 @@ explicitly ephemeral processes so they cannot alter persistent user fits.
 
 [B03.1](tasks/B03-fit-library.md) extends typed operations with rename, independent copy and explicit reference-resolving deletion. These operations return the complete surviving library after replay, calculation and confirmed durable commit. EOS sources are calculated locally before dependent recipients, irrespective of insertion order. Other B01 edits retain affected-only responses.
 
-An intentionally empty library is represented by graph format 2 with null sample ID and empty records/order/revisions, within the existing SQLite schema. Nonempty graphs retain format 1, including existing B02 saves. Startup accepts an empty result and Chaquopy's Java null sample ID; it never replaces saved data with a new sample. B03.2 retains organization, recents and persistent multiple-open-fit navigation.
+An intentionally empty library is represented by graph format 2 with null sample ID and empty records/order/revisions, within the existing SQLite schema. Nonempty graphs retain format 1, including existing B02 saves. Startup accepts an empty result and Chaquopy's Java null sample ID; it never replaces saved data with a new sample.
+
+## B03.2 organization and navigation boundary
+
+The offline hull catalogue uses EOS data and the pinned desktop Market display
+policy, verified against an independent desktop export. Optional `modified`
+metadata commits with saved fit inputs in existing graph formats 1/2. Only actual
+input changes advance the order; earlier saves without metadata remain explicitly
+unknown. Opening a fit or recalculating a recipient does not count as editing it.
+
+Ordered open-fit IDs, active selection, restart restoration and empty-group
+visibility live in a separate app-private `AtomicFile`, accessed on the same
+serialized worker. Closing a view leaves its fit intact; deleting a fit prunes its
+view. Restoration defaults off. Invalid preferences remain preserved with a
+visible session-only fallback. UI collectors explicitly use Android's main
+dispatcher; decoding, calculations, storage and flow publication stay on the
+serialized worker. EOS, fitting calculations and the typed operation
+boundary remain unchanged. Upgrade/downgrade distribution remains R02.

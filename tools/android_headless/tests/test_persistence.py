@@ -178,6 +178,7 @@ def worker(mode, database, identity, store_path, output):
         raise ValueError("Unknown persistence worker")
     result = {"session_id": bridge.session_id, "sample_id": bridge.sample_id,
               "persistence": bridge.persistence_info, "bootstrap": json.loads(bridge.bootstrap()),
+              "organization": bridge.organization(),
               "retained_fit_count": len(engine._fits), "detail": detail}
     if mode == "competing_initializer":
         result.update(outcome="won", payload=bridge._store.current.payload)

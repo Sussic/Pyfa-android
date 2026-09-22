@@ -159,3 +159,13 @@ See [B02's storage contract and limits](../../docs/android/tasks/B02-local-persi
 ## B03.1 fit lifecycle regressions
 
 Run `python -I tools/android_headless/check_library.py --database /absolute/eve.db --output /outside/checkout/library-check` with the pinned Python 3.11 environment. Eight tests cover Unicode/stale requests, copy input/relationship independence, source/recipient deletion, true subprocess reopen including an empty store, rollback of each lifecycle operation and confirmation after a lost commit acknowledgement. Uses the existing independent fixtures and the B02 guarded reopen worker. Native UI/restart evidence is a separate required gate.
+
+B03.2 extends this same gate to 13 tests. Five additional cases compare all hull
+metadata with the pinned desktop catalogue, preserve modification order through
+reads/failures/restart, distinguish recipient recalculation from changed inputs,
+open legacy saves without inventing historical order and reject malformed metadata.
+The full host total is now 78. Reproduce the independent catalogue with the
+reference environment: `python -I tools/android_reference/catalog.py --source
+/clean/pinned/checkout --database /absolute/eve.db --output /new/external/catalog
+--check tools/android_reference/fixtures/catalog.json`. Its checkout also needs
+`service/`; no mobile adapter is imported by that exporter.
