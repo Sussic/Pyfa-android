@@ -67,7 +67,7 @@ not a few familiar items. Inspect actual phone-sized screenshots and retain raw
 evidence/provenance. Update this brief, STATUS, ROADMAP and local checkpoint with
 actual outcomes. No child is complete on a launch or host-only result.
 
-## Current outcome
+## Implementation and review history
 
 B04.1 implements on-demand worker-owned catalogue/search and the native browser.
 The isolated display-policy adaptation retains upstream notices and default
@@ -92,5 +92,22 @@ offline native executions on API 36 x86_64. Review then tightened the raw
 catalogue/search/page comparator to require exact scalar types (float/bool/near-ID
 mutations are rejected) and reduced equipment-screen spacing so group browsing
 starts sooner. The screenshot checks now scroll the group list and destination
-breadcrumb into view. Final-commit CI and screenshot review remain pending.
+breadcrumb into view. Final-commit CI and screenshot review subsequently passed as recorded below.
 B04.2 not started.
+
+## B04.1 delivered
+
+[PR #16](https://github.com/Sussic/Pyfa-android/pull/16) merged as
+`794f4b1c80f714432d8dff8709d8e33682bfbf00` after review of tested head `6f53682807372d82b610b15d3ee57b64a8ebeee3`.
+[Final Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35741516902)
+passes 84 host tests and all independent references/repeats/migration.
+[Final Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35741516907)
+passes both APK builds, lint, signature/package verification and all 18 offline
+native executions. All 16 screenshots were reviewed; the five equipment views
+and full raw catalogue/search observations are retained in the
+[delivery receipt](../evidence/b04-1-native.json). Catalogue scalar types are
+exact; earlier numeric tolerances remain unchanged. API36 x86_64 ran; ARM64
+package contents only. No physical-device, upgrade or usability claim is made.
+
+Exact next task: **B04.2 — Fitting editor and item history**, automatically
+authorized by the current sequential roadmap request. Parent B04 remains active.

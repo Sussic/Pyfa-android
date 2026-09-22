@@ -56,7 +56,7 @@ row or remove UI, persistence or matrix requirements. All 239 rows are preserved
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F02.01 | Browse bundled market groups, search items and recent items, filter meta variants, and jump to an item's market group. | B04 | [s222][s222], [s116][s116], [s117][s117], [s089][s089] | UP | D: —; A: — |
+| F02.01 | Browse bundled market groups, search items and recent items, filter meta variants, and jump to an item's market group. | B04 | [s222][s222], [s116][s116], [s117][s117], [s089][s089] | UP | D: [complete catalogue/search export](evidence/b04-1-native.json); A: [offline discovery/navigation](evidence/b04-1-native.json); partial row: actual recent use remains B04.2 |
 | F02.02 | Add, replace and remove modules, rigs and service modules; preserve positions and show slot/resource/skill legality. | B04 | [s198][s198], [s207][s207], [s206][s206], [s019][s019] | NUP | D: —; A: — |
 | F02.03 | Load, replace and unload compatible charges/scripts/crystals; reject incompatible charges without partial edits. | B04 | [s093][s093], [s175][s175] | NUP | D: —; A: — |
 | F02.04 | Swap/reorder fitted modules, retaining states/charges and changing rack-dependent heat behavior correctly. | B04 | [s208][s208], [s179][s179] | NUP | D: —; A: — |

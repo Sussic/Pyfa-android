@@ -1,58 +1,42 @@
 # Android project status
 
-Updated: 2026-09-22. Active: B04.1 under the authorized sequential roadmap goal.
+Updated: 2026-09-22. B04.1 delivered; exact next task **B04.2 — Fitting editor and item history**.
 
-## Active B04 — equipment browser and fitting
+## Current authorized work
 
 - Explicit chat confirmation supersedes the earlier B03.2 stopping instruction.
-  Implementation, required host/native checks, review, push/PR/merge and sequential
-  eligible roadmap work are authorized. No releases, phone installs or billing changes.
-- Live master `bd22ed6d83f7951813eb09c9d932470cad04ce0e`, clean checkout and no open
-  PRs verified. Installed Python 3.11.9 and Temurin 17.0.20.1+1 reused successfully.
-- **B04.1 — Offline equipment discovery** is active on
-  `android/b04-1-equipment-browser`: desktop-equivalent bundled market tree,
-  search/meta filtering and item-to-group navigation, with independent full
-  catalogue comparison, host regressions and native UI/offline checks.
-- **B04.2 — Fitting editor and item history** follows: arbitrary hull creation,
-  add/replace/remove/reorder, charges/variations, restrictions/legality and persistent
-  recently used items. All original B04 criteria remain in the
-  [task brief](tasks/B04-equipment-fitting.md); parent B04 remains incomplete.
-- Preserve all 78 host tests and 17 native executions; add meaningful checks for
-  each child. Complete/review/merge one child, update checkpoint, then advance.
-- B04.1 local evidence: independent full catalogue/search export and fresh-process
-  repeat (718 groups/6,822 items/22 queries), six guarded headless regressions and
-  both APK builds/lint pass. Required CI and native screenshot review pending.
-
-## B03.2 delivered; exact next task B04
-
-- **B03.2 — Library organization and open-fit navigation** is delivered in
-  [PR #15](https://github.com/Sussic/Pyfa-android/pull/15), merged as
-  `60582d91a6cc1cb2cd8c4584478ae913d7b6ce90`. Tested head: `dc3565433048a142f5a919eb37279ee25868f497`.
-  B03.1 and B03.2 are done, so parent **B03 is done**.
-- Offline hull group/race browsing, hide/show empty groups and hulls, back-to-hull
-  navigation, recently modified fits, ordered open views, close one/all and
-  opt-in restart restoration are implemented. Opening/switching does not count
-  as editing. Closing a view preserves the saved fit. Older saves retain unknown
-  historical edit order. Search navigation clears keyboard focus.
-- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35679131050) passes **78 tests**, all independent calculation
-  references/repeats, the new desktop catalogue/repeat and real migration/backup.
-  The independent unmodified Market catalogue matches **55 groups / 437 hulls**.
-- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35679131057) passes APK builds, lint, signing, complete package
-  inspection and **17 offline native executions** on API 36 x86_64. Four new
-  processes verify three restart boundaries and 546 desktop statistics with exact
-  scalar types/units. All 13 earlier executions remain required and pass.
-- Eleven screenshots reviewed, including hulls/recents/open/closed views and the
-  rename keyboard. Earlier attempts exposed nested test scrolling and a Compose
-  test-dispatcher layout exception; the same checks now pass without relaxed
-  assertions/timeouts.
-  [Task, audit and fixes](tasks/B03-fit-library.md),
-  [raw evidence, screenshots and provenance](evidence/b03-2-native.json).
-- Local installed environment also passed 78 host tests, references/repeats,
-  migration/backup, APK/test builds, lint, signing and package inspection. No
-  local emulator/phone execution is claimed. EOS formulas, numerical fixtures,
-  architecture, dependency pins, billing and artifact policy are unchanged.
-- B03.2 delivery is historical; the subsequent explicit authorization starts B04.
-  After splitting B04, 14 of 74 leaf work items are done; 60 remain, plus six rollups.
+  Continue B04, then sequential eligible approved roadmap tasks, one outcome at
+  a time, including required checks, review and PR merges. No releases, phone
+  installs, billing changes or unrelated work.
+- **B04.1 — Offline equipment discovery** is delivered in
+  [PR #16](https://github.com/Sussic/Pyfa-android/pull/16), merged as
+  `794f4b1c80f714432d8dff8709d8e33682bfbf00`. Tested head: `6f53682807372d82b610b15d3ee57b64a8ebeee3`.
+- Browse all bundled desktop market groups and published/forced items, search
+  words/wildcards/regex/default jargon, filter meta variants, page results and
+  jump to an item's group. Browser state survives activity recreation. Reads
+  preserve saved fits and modification order; EOS owns all data on its worker.
+- Independent pinned desktop export and fresh-process repeat exactly match
+  **718 groups, 6,822 items and 22 searches**. Raw IDs/types/memberships are exact.
+  [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35741516902)
+  passes **84 host tests**, independent references/repeats and migration/backup.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35741516907)
+  passes APK/test builds, lint, signature, source/data/ABI package inspection and
+  **18 offline native executions** on API 36 x86_64. All prior numerical,
+  persistence/restart and forced-GC gates remain required and pass.
+- All **16 screenshots** reviewed. Review tightened numeric-type validation and
+  reduced equipment-screen spacing; final CI tests those changes. Local focused
+  evidence covers the new six host tests, eight utilities, independent export/
+  repeat, APK builds/lint/signature/package checks. Full 84-test evidence is CI.
+  [Task/audit](tasks/B04-equipment-fitting.md),
+  [raw evidence, screenshots and provenance](evidence/b04-1-native.json).
+- **B04.2** retains arbitrary-hull creation, module/rig/service edits, compatible
+  charges/scripts/crystals, reorder/variations, restrictions/legality and actual
+  persistent recent-item use. Discovery is partial F02.01; B04 remains active.
+  15 of 74 leaf tasks are done; 59 remain, plus six rollups.
+- B03.2 remains delivered in [PR #15](https://github.com/Sussic/Pyfa-android/pull/15)
+  (`60582d91a6cc1cb2cd8c4584478ae913d7b6ce90`);
+  [its task](tasks/B03-fit-library.md) and
+  [receipt](evidence/b03-2-native.json) retain historical evidence.
 
 ## Resume and installed environment
 
@@ -93,7 +77,7 @@ runs or automatic releases remain the policy.
 
 ## Prior delivery and remaining limits
 
-A01–A10 and B01–B03.2 are delivered. Historical task details, PR links and raw
+A01–A10, B01–B03.2 and B04.1 are delivered. Historical task details, PR links and raw
 receipts remain in [ROADMAP](ROADMAP.md), the task briefs and
 [evidence](evidence). Windows setup was delivered in
 [PR #14](https://github.com/Sussic/Pyfa-android/pull/14). All **239 parity rows**
