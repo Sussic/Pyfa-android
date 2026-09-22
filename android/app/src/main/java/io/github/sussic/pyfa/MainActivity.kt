@@ -61,7 +61,8 @@ class MainActivity : ComponentActivity() {
             // test recomposer uses an unconfined effect dispatcher.
             val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
-            PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java])
+            PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java],
+                ViewModelProvider(this)[EquipmentModel::class.java])
         }
     }
 
@@ -72,8 +73,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
+    var showEquipment by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = showAbout) { showAbout = false }
     MaterialTheme(
         colorScheme = darkColorScheme(
@@ -88,7 +90,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel) {
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout) {
+                key(showAbout, showEquipment) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
@@ -99,10 +101,12 @@ private fun PyfaApp(libraryModel: FitLibraryModel) {
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showAbout) {
+                        if (showEquipment) {
+                            EquipmentBrowser(equipmentModel, onBack = { showEquipment = false })
+                        } else if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {
-                            Home(libraryModel, onAbout = { showAbout = true })
+                            Home(libraryModel, onAbout = { showAbout = true }, onEquipment = { showEquipment = true })
                         }
                     }
                 }
@@ -112,7 +116,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel) {
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -140,7 +144,10 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     Button(onClick = onAbout, contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)) {
         Text(stringResource(R.string.about_button))
     }
-    if (engine is EngineState.Ready || engine is EngineState.Empty) OpenFits()
+    if (engine is EngineState.Ready || engine is EngineState.Empty) {
+        Button(onClick = onEquipment, modifier = Modifier.testTag("equipment-open")) { Text("Browse equipment") }
+        OpenFits()
+    }
     when (val current = engine) {
         EngineState.Loading -> Text(stringResource(R.string.engine_loading))
         is EngineState.Failed -> {

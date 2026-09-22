@@ -150,3 +150,13 @@ visible session-only fallback. UI collectors explicitly use Android's main
 dispatcher; decoding, calculations, storage and flow publication stay on the
 serialized worker. EOS, fitting calculations and the typed operation
 boundary remain unchanged. Upgrade/downgrade distribution remains R02.
+
+## B04.1 equipment discovery boundary
+
+Equipment catalogue and search load on demand on the existing EOS worker. The
+isolated display-policy adaptation retains pinned Market exceptions and default
+jargon without importing desktop services. Independent unmodified desktop
+exports compare complete groups/items/memberships and actual search results.
+Kotlin decodes typed catalogue records and manages UI filters/navigation/pages;
+fitting formulas and persisted inputs remain untouched. The expected catalogue
+belongs only to the instrumentation APK, never the production asset path.

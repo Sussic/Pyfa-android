@@ -16,6 +16,7 @@ import java.util.UUID
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONObject
+import org.json.JSONArray
 
 sealed interface EngineState {
     data object Loading : EngineState
@@ -48,6 +49,37 @@ object EngineRuntime {
     private var startupMetrics: JSONObject? = null // Written/read only on the engine worker.
     private var startupDrawRecorded = false
     private var ephemeralDiagnostics = false // Selected before startup by the debug test runner.
+    private var equipment: EquipmentCatalog? = null // Loaded on demand, worker only.
+    private var equipmentRaw: String? = null
+
+    fun equipmentCatalog(context: Context): CompletableFuture<EquipmentCatalog> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            equipment ?: Python.getInstance().getModule("mobile_runtime").callAttr("equipment_catalog").toString().let { raw ->
+                EquipmentCatalog.decode(raw).also { equipment = it; equipmentRaw = raw }
+            }
+        }, executor)
+    }
+
+    fun equipmentDiagnostics(context: Context): CompletableFuture<String> {
+        check(BuildConfig.DEBUG)
+        val ready = equipmentCatalog(context)
+        return CompletableFuture.supplyAsync({ ready.join(); checkNotNull(equipmentRaw) }, executor)
+    }
+
+    fun searchEquipment(context: Context, query: String): CompletableFuture<List<Int>> {
+        val ready = equipmentCatalog(context)
+        return CompletableFuture.supplyAsync({
+            val catalog = ready.join()
+            val rows = JSONArray(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("equipment_search", query).toString())
+            val ids = (0 until rows.length()).map { rows.getInt(it) }
+            check(ids.distinct().size == ids.size && ids.all { catalog.itemById[it]?.searchable == true })
+            ids
+        }, executor)
+    }
 
     @Synchronized
     fun useEphemeralStorageForDiagnostics() {

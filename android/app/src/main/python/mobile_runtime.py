@@ -17,6 +17,7 @@ _manifest = None
 _boot_ms = None
 _store_path = None
 _forbidden = []
+_equipment = None
 
 
 class NoDesktop(importlib.abc.MetaPathFinder):
@@ -83,6 +84,21 @@ def library_catalog():
 
 def library_organization():
     return encoded(_bridge.organization())
+
+
+def equipment_catalog():
+    global _equipment
+    _engine._check_thread()
+    if _equipment is None:
+        from android_bridge.market import EquipmentMarket
+        _equipment = EquipmentMarket(_engine)
+    return encoded(_equipment.catalog())
+
+
+def equipment_search(text):
+    if _equipment is None:
+        equipment_catalog()
+    return encoded(_equipment.search(text))
 
 
 def bridge_dispatch(request_json):

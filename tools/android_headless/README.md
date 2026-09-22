@@ -169,3 +169,14 @@ reference environment: `python -I tools/android_reference/catalog.py --source
 /clean/pinned/checkout --database /absolute/eve.db --output /new/external/catalog
 --check tools/android_reference/fixtures/catalog.json`. Its checkout also needs
 `service/`; no mobile adapter is imported by that exporter.
+
+## B04.1 equipment discovery
+
+Run `python -I tools/android_headless/check_market.py --database /absolute/eve.db
+--output /new/external/equipment-check` with the installed headless environment.
+Six additional guarded tests compare all 718 groups, 6,822 items, memberships,
+metadata and 22 searches to the independent desktop exporter. Cache isolation,
+repeat searches, invalid input, unchanged fitting data and worker ownership are
+checked without desktop imports or network access. The current required host
+total is 84; the separate native equipment workflow raises native executions to
+18. Earlier counts above are historical.
