@@ -190,3 +190,15 @@ from calculated zero, reject nonhulls/empty module indices atomically, copy
 independently and restore ships/structures in a fresh process after a failed save.
 This raises the required host total to 90. Native creation/restart and complete
 typed comparisons remain separate required gates, raising native executions to 20.
+
+## B04.2.2 module mutation and history checks
+
+Run `python -I tools/android_headless/check_module_edits.py --database /absolute/eve.db
+--output /new/external/module-edits-check` with the installed headless environment.
+Six guarded tests compare the independent 11-case/91-state matrix and 4,242
+module defaults, validate bounded history and failed/stale/malformed attempts,
+retain vacancies/overrides/independent copies and reopen the durable graph in a
+fresh process after failed saves. The checks prohibit desktop/network imports
+and preserve original raw scalar types and tolerances. Required totals become
+96 host tests and 22 separate native executions; host results do not establish
+Android runtime support.

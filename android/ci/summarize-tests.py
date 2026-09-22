@@ -81,8 +81,10 @@ persistence = summarize_persistence(json.loads((evidence / "persistence-native.j
 from navigation_summary import summarize as summarize_navigation
 from market_summary import summarize as summarize_market
 from empty_hull_summary import summarize as summarize_empty_hulls
+from module_edit_summary import summarize as summarize_module_edits
 summary = {
-    "task": "B04.2.1",
+    "task": "B04.2.2",
+    "module_edits": summarize_module_edits(json.loads((evidence / "module-edits-native.json").read_text(encoding="utf-8")), engine),
     "empty_hulls": summarize_empty_hulls(json.loads((evidence / "empty-hulls-native.json").read_text(encoding="utf-8")), engine),
     "market": summarize_market(json.loads((evidence / "market-native.json").read_text(encoding="utf-8")), engine),
     "navigation": summarize_navigation(json.loads((evidence / "navigation-native.json").read_text(encoding="utf-8"))),

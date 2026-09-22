@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +30,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
 
 class EquipmentModel : ViewModel() {
     var catalog by mutableStateOf<EquipmentCatalog?>(null)
@@ -41,6 +43,7 @@ class EquipmentModel : ViewModel() {
     var selectedId by mutableStateOf<Int?>(null)
     var metas by mutableStateOf(EquipmentCatalog.metas.toSet())
     var page by mutableStateOf(0)
+    var showRecent by mutableStateOf(false)
     fun load(context: Context) {
         if (catalog != null || busy) return
         busy = true
@@ -58,19 +61,20 @@ class EquipmentModel : ViewModel() {
         EngineRuntime.searchEquipment(context, submitted).whenCompleteAsync({ ids, failure ->
             busy = false
             if (failure == null) {
-                results = ids; searched = submitted; selectedId = null; page = 0; error = null
+                results = ids; searched = submitted; selectedId = null; page = 0; error = null; showRecent = false
             } else error = "Search could not be completed. Try again."
         }, ContextCompat.getMainExecutor(context))
     }
     fun group(id: Int?) {
-        groupId = id; searched = null; query = ""; selectedId = null; page = 0; error = null
+        groupId = id; searched = null; query = ""; selectedId = null; page = 0; error = null; showRecent = false
     }
 }
 
 @Composable
-internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
+internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorModel, onBack: () -> Unit, onViewFit: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
+    val recent by EngineRuntime.recent.collectAsState(context = Dispatchers.Main)
     val selectedCard = remember { BringIntoViewRequester() }
     LaunchedEffect(model.selectedId) { if (model.selectedId != null) selectedCard.bringIntoView() }
     LaunchedEffect(Unit) { model.load(context) }
@@ -78,6 +82,7 @@ internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
         focus.clearFocus()
         when {
             model.selectedId != null -> model.selectedId = null
+            model.showRecent -> model.group(null)
             model.searched != null -> model.group(model.groupId)
             model.groupId != null -> model.group(model.catalog?.groupById?.get(model.groupId)?.parentId)
             else -> onBack()
@@ -103,6 +108,9 @@ internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
         TextButton(onClick = { focus.clearFocus(); model.group(null) }, enabled = !model.busy,
             modifier = Modifier.testTag("equipment-root")) { Text("All groups") }
     }
+    TextButton(onClick = {
+        focus.clearFocus(); model.group(null); model.showRecent = true; model.metas = EquipmentCatalog.metas.toSet()
+    }, enabled = !model.busy, modifier = Modifier.testTag("equipment-recent")) { Text("Recent use (${recent.size})") }
     for (pair in EquipmentCatalog.metas.chunked(2)) Row {
         for (meta in pair) Row(Modifier.weight(1f)) {
             Checkbox(checked = meta in model.metas, onCheckedChange = {
@@ -118,6 +126,7 @@ internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(item.name, style = MaterialTheme.typography.titleMedium)
                 Text("${item.category} · ${item.meta}")
+                EquipmentFittingActions(moduleModel, item, onViewFit)
                 catalog.itemById[item.parentId]?.takeIf { it.id != item.id }?.let { Text("Variation of ${it.name}") }
                 val group = catalog.groupById[item.marketGroupId]
                 if (group == null) Text("This item has no visible market group.") else TextButton(onClick = {
@@ -127,7 +136,8 @@ internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
             }
         }
     }
-    if (model.searched != null) Text("Results for “${model.searched}” · up to 100 matches", modifier = Modifier.testTag("equipment-location"))
+    if (model.showRecent) Text("Recent use · newest first", modifier = Modifier.testTag("equipment-location"))
+    else if (model.searched != null) Text("Results for “${model.searched}” · up to 100 matches", modifier = Modifier.testTag("equipment-location"))
     else {
         val path = model.groupId?.let { catalog.path(it).joinToString(" › ") { group -> group.name } } ?: "All equipment groups"
         Text(path, modifier = Modifier.testTag("equipment-location"))
@@ -136,14 +146,16 @@ internal fun EquipmentBrowser(model: EquipmentModel, onBack: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().testTag("equipment-group-${group.id}")) { Text(group.name) }
         }
     }
-    val ids = if (model.searched != null) model.results else catalog.groupById[model.groupId]?.itemIds.orEmpty()
-    val rows = ids.map { catalog.itemById.getValue(it) }.filter { it.meta in model.metas }.sortedWith(compareBy<EquipmentItem> { it.name.lowercase() }.thenBy { it.id })
+    val ids = if (model.showRecent) recent else if (model.searched != null) model.results else catalog.groupById[model.groupId]?.itemIds.orEmpty()
+    val filtered = ids.mapNotNull { catalog.itemById[it] }.filter { it.meta in model.metas }
+    val rows = if (model.showRecent) filtered else filtered.sortedWith(compareBy<EquipmentItem> { it.name.lowercase() }.thenBy { it.id })
     val size = 20
     val pages = maxOf(1, (rows.size + size - 1) / size)
     val page = model.page.coerceIn(0, pages - 1)
     Text("${rows.size} items · Page ${page + 1} of $pages", modifier = Modifier.testTag("equipment-count"))
-    if (rows.isEmpty() && (model.searched != null || model.groupId != null && catalog.children(model.groupId).isEmpty())) {
-        Text("No matching items. Change the search or meta filters.", modifier = Modifier.testTag("equipment-empty"))
+    if (rows.isEmpty() && (model.showRecent || model.searched != null || model.groupId != null && catalog.children(model.groupId).isEmpty())) {
+        Text(if (model.showRecent) "No recently used items match these filters. Add, replace or remove equipment to build this list."
+            else "No matching items. Change the search or meta filters.", modifier = Modifier.testTag("equipment-empty"))
     }
     for (item in rows.drop(page * size).take(size)) {
         TextButton(onClick = { focus.clearFocus(); model.selectedId = item.id }, enabled = !model.busy,

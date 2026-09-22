@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
             val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
             PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java],
-                ViewModelProvider(this)[EquipmentModel::class.java])
+                ViewModelProvider(this)[EquipmentModel::class.java], ViewModelProvider(this)[ModuleEditorModel::class.java])
         }
     }
 
@@ -73,9 +73,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
+    var showModules by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = showAbout) { showAbout = false }
     MaterialTheme(
         colorScheme = darkColorScheme(
@@ -90,11 +91,11 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment) {
+                key(showAbout, showEquipment, showModules) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
@@ -102,11 +103,16 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             color = MaterialTheme.colorScheme.primary,
                         )
                         if (showEquipment) {
-                            EquipmentBrowser(equipmentModel, onBack = { showEquipment = false })
+                            EquipmentBrowser(equipmentModel, moduleModel, onBack = { showEquipment = false },
+                                onViewFit = { showEquipment = false; showModules = true })
+                        } else if (showModules) {
+                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false })
                         } else if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {
-                            Home(libraryModel, onAbout = { showAbout = true }, onEquipment = { showEquipment = true })
+                            Home(libraryModel, onAbout = { showAbout = true },
+                                onEquipment = { moduleModel.replacePosition = null; showEquipment = true },
+                                onModules = { showModules = true })
                         }
                     }
                 }
@@ -116,7 +122,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -169,7 +175,8 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             val sampleGuns = current.fit.modules.take(2).size == 2 &&
                 current.fit.modules.take(2).all { it.name == "Dual 150mm Railgun II" }
             if (sampleGuns) Text(stringResource(R.string.sample_ammunition, ammunition))
-            else Text(current.fit.ship + " · " + current.fit.modules.size + " modules")
+            else Text(current.fit.ship + " · " + current.fit.modules.count { it.emptySlot == null } + " modules")
+            Button(onClick = onModules, modifier = Modifier.testTag("modules-open")) { Text("Edit modules") }
             if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }

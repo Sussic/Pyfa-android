@@ -86,6 +86,39 @@ def library_organization():
     return encoded(_bridge.organization())
 
 
+def fitting_details(fit_id):
+    return encoded(_bridge.fitting_details(fit_id))
+
+
+def recent_items():
+    return encoded(_bridge.recent_items())
+
+
+def module_defaults_diagnostics():
+    """Real module construction policy for the debug native catalogue gate."""
+    _engine._check_thread()
+    from android_bridge import fitting
+    from eos.const import FittingModuleState, FittingSlot
+    catalogue = json.loads(equipment_catalog())
+    before = dict(_engine.resolved_item_ids)
+    rows = []
+    try:
+        for item in catalogue['items']:
+            if item['category'] not in ('Module', 'Structure Module'):
+                continue
+            try:
+                module = fitting.new_module(_engine, item['id'])
+            except ValueError:
+                continue
+            rows.append({'id': module.itemID, 'name': module.item.name, 'slot': FittingSlot(module.slot).name,
+                'state': FittingModuleState(module.state).name,
+                'limit': 'ONLINE' if fitting.ONLINE_EFFECTS.intersection(module.item.effects) else 'ACTIVE'})
+        return encoded(rows)
+    finally:
+        _engine.resolved_item_ids.clear()
+        _engine.resolved_item_ids.update(before)
+
+
 def equipment_catalog():
     global _equipment
     _engine._check_thread()

@@ -156,3 +156,22 @@ adapter imported. All 39 raw fields/units/scalar types compare across two fresh
 processes and against the fixture; absent gun ranges are JSON null. The receipt
 binds the fixture digest to verified source/data identity. Existing fitted
 references and tolerances remain unchanged.
+
+## B04.2.2 independent module command reference
+
+Run `python -I tools/android_reference/module_edits.py --source /clean/pinned/checkout
+--database /absolute/eve.db --output /new/external/module-edits-reference
+--check tools/android_reference/fixtures/module-edits.json` in the installed
+reference environment. Include `gui` in the pinned sparse checkout. The oracle
+AST-loads original, unchanged command/helper/service definitions with real
+wx/Market/EOS to avoid unrelated login/window dependencies. It records original
+file hashes and does not import the adapter or patch calculation methods.
+GUI window dispatch is outside this oracle; restriction-toggle orchestration is
+audited separately and invokes original removal commands.
+
+Two fresh processes must match 11 cases/91 states, all 4,242 default module states
+and 25 recent-use attempts under explicit inputs/settings. Cases include racks,
+holes, rejection/override/re-enable, state limits, resource/skill warnings,
+structure services, two projected recipients and subsystem vacancy retention.
+Identifiers, units, booleans, nulls and numeric kinds remain exact; floating
+values use the existing relative `1e-10` / absolute `1e-9` tolerance.

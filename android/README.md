@@ -347,3 +347,20 @@ reference, native picker/search/page/recreation and ship/structure creation/copy
 atomic rejection and force-stop/reopen. The strict raw validator and four new
 screenshots use the existing one-day artifact policy. Older builds reject these
 empty-module fits without replacing the file; downgrade/upgrade safety is R02.
+
+## B04.2.2 module editing and recent use
+
+Open a saved fit's module editor to add, replace or remove normal modules, rigs
+and structure service modules. Removal retains the position; replacement uses
+desktop default states. CPU, powergrid, calibration and recursive skill warnings
+are visible. Explicit restriction override/re-enable preserves desktop rules,
+including retained excess hardpoints. Equipment browsing exposes actual recent
+use in newest-first order, capped at 20 entries with duplicate promotion.
+Charges, variations and rack ordering remain B04.2.3; subsystems/modes remain B06.
+
+`ci/check-module-edits.py` adds two production-storage processes after all 20
+prior gates. It compares 11 cases/91 states and all 4,242 default module states,
+raw scalar types and values, two recipients, 13 malformed protocol cases, UI
+edits/recreation/warnings/override, visible history order, independent copies and
+real restart. Seven screenshots and complete raw results are required in the
+one-day diagnostic artifact. Final CI evidence is recorded in STATUS.

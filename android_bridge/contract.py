@@ -69,6 +69,10 @@ ARGUMENTS = {
     "snapshot": ("fit_ids",), "create_fit": ("spec",),
     "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
     "delete_fit": ("fit_id", "resolve_references"),
+    "add_module": ("fit_id", "item_id"),
+    "replace_module": ("fit_id", "position", "item_id"),
+    "remove_module": ("fit_id", "position"),
+    "set_fit_restrictions": ("fit_id", "ignore"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
@@ -88,7 +92,9 @@ STATES = {"OFFLINE", "ONLINE", "ACTIVE", "OVERHEATED"}
 def _spec(spec):
     _object(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
                    "modules", "drones", "target_profile", "implants", "boosters", "projections",
-                   "commands", "environments"))
+                   "commands", "environments"), ("ignore_restrictions",))
+    if "ignore_restrictions" in spec:
+        _boolean(spec["ignore_restrictions"])
     for key in ("name", "ship"):
         _text(spec[key])
     _integer(spec["skill_level"], 0, 5)
@@ -107,6 +113,12 @@ def _spec(spec):
     if type(spec["modules"]) is not list or type(spec["drones"]) is not list:
         _invalid()
     for module in spec["modules"]:
+        if type(module) is dict and "empty_slot" in module:
+            from .fitting import VACANT_SLOTS
+            _object(module, ("empty_slot",))
+            if type(module["empty_slot"]) is not str or module["empty_slot"] not in VACANT_SLOTS:
+                _invalid()
+            continue
         _object(module, ("name", "state"), ("charge",))
         _text(module["name"])
         if type(module["state"]) is not str or module["state"] not in STATES:
@@ -143,6 +155,7 @@ class BridgeSession:
         self._fits = {self.sample_id: sample_fit} if sample_fit is not None else {}
         self._revisions = {key: 1 for key in self._fits}
         self._modified = {key: 1 for key in self._fits}
+        self._recent = []
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
         self._snapshots = self._snapshots_for(self._fits, self._revisions, self._fits)
         self._provenance = dict(engine.resolved_item_ids)
@@ -179,7 +192,11 @@ class BridgeSession:
         # Older saves did not retain modification order. Zero means unknown,
         # never a fabricated timestamp or an inference from opening a fit.
         bridge._modified = graph.get("modified", {key: 0 for key in graph["fit_order"]})
+        bridge._recent = graph.get("recent", [])
         try:
+            from .fitting import item
+            if any(item(engine, identity).isAbyssal for identity in bridge._recent):
+                raise StoreError("Saved recent use contains an unsupported item")
             fits, snapshots = bridge._rebuild()
             replayed = bridge._capture(fits, {key: record["spec"] for key, record in bridge._records.items()})
             if _json(replayed) != _json(bridge._records):
@@ -200,22 +217,46 @@ class BridgeSession:
                 "schema": 1 if store else None, "generation": store.current.generation if store and store.current else 0,
                 "opened_existing": store.opened_existing if store else False}
 
-    def _graph(self, records, revisions, modified=None):
+    def _graph(self, records, revisions, modified=None, recent=None):
         sample_id = self.sample_id if self.sample_id in records else next(iter(records), None)
-        return {"format": 1 if records else 2, "dataset_identity": self._dataset_identity,
+        result = {"format": 1 if records else 2, "dataset_identity": self._dataset_identity,
                 "eos_settings": deepcopy(self.engine.settings), "sample_id": sample_id,
                 "fit_order": list(records), "records": records, "revisions": revisions,
                 "modified": self._modified if modified is None else modified}
+        history = self._recent if recent is None else recent
+        if history:
+            result["recent"] = list(history)
+        return result
 
     def organization(self):
         """Read-only library metadata; opening/querying never counts as editing."""
         self.engine._check_thread()
         return {"version": 1, "modified": dict(self._modified)}
 
+    def recent_items(self):
+        self.engine._check_thread()
+        return {"version": 1, "item_ids": list(self._recent)}
+
+    def fitting_details(self, fit_id):
+        from .fitting import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
         try:
-            _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"), ("modified",))
+            _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"), ("modified", "recent"))
+            if "recent" in graph:
+                recent = graph["recent"]
+                if type(recent) is not list or len(recent) > 20:
+                    _invalid()
+                for identity in recent:
+                    _integer(identity, 1, 2**31 - 1)
+                if len(recent) != len(set(recent)):
+                    _invalid()
             if type(graph["format"]) is not int or graph["format"] not in (1, 2):
                 raise StoreError("Saved fits use an unsupported graph format")
             if graph["dataset_identity"] != dataset_identity or _json(graph["eos_settings"]) != _json(settings):
@@ -345,6 +386,12 @@ class BridgeSession:
                 _invalid("Fit names must contain 1–200 characters without control characters")
         if "resolve_references" in args:
             _boolean(args["resolve_references"])
+        if "ignore" in args:
+            _boolean(args["ignore"])
+        if "item_id" in args:
+            _integer(args["item_id"], 1, 2**31 - 1)
+        if "position" in args:
+            _integer(args["position"], 0, 2**31 - 1)
         if "spec" in args:
             _spec(args["spec"])
         for key in ("fit_id", "source_id", "target_id"):
@@ -415,6 +462,7 @@ class BridgeSession:
         except (ValueError, TypeError, OverflowError, RecursionError):
             return self._error(request_id, "INVALID_REQUEST", "Malformed bridge request")
         operation, args = request["operation"], request["arguments"]
+        from .fitting import FittingRejected, promote
         editing = False
         durable_confirmed = False
         try:
@@ -423,6 +471,7 @@ class BridgeSession:
                 snapshots = self._snapshots_for(self._fits, self._revisions, selected)
                 return self._serialize_success(request_id, list(snapshots.values()))
             fits = dict(self._fits)
+            recent = list(self._recent)
             specs = {key: value["spec"] for key, value in self._records.items()}
             editing = True
             if operation == "create_fit":
@@ -437,7 +486,7 @@ class BridgeSession:
                 logical_id = uuid.uuid4().hex
                 record = deepcopy(self._records[args["fit_id"]])
                 record["spec"]["name"] = args["name"]
-                copy = fits[logical_id] = self.engine.create_fit(record["spec"])
+                copy = fits[logical_id] = self.engine.create_fit(record["spec"], restore=True)
                 specs[logical_id] = record["spec"]
                 for name, level in record["skills"].items():
                     copy.character.getSkill(name).setLevel(level, persist=True, ignoreRestrict=True)
@@ -467,7 +516,9 @@ class BridgeSession:
                 self.engine._fits.remove(removed)
                 specs.pop(deleted)
             else:
-                self._apply(operation, args, fits)
+                used = self._apply(operation, args, fits)
+                if operation in {"add_module", "replace_module", "remove_module"} and used:
+                    recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
             modified = {key: self._modified.get(key, 0) for key in records}
@@ -501,7 +552,7 @@ class BridgeSession:
             library_operation = operation in {"rename_fit", "duplicate_fit", "delete_fit"}
             result = self._serialize_success(request_id, list(all_snapshots.values() if library_operation else snapshots.values()))
             provenance = dict(self.engine.resolved_item_ids)
-            attempt = self._store.prepare(self._graph(records, revisions, modified)) if self._store else None
+            attempt = self._store.prepare(self._graph(records, revisions, modified, recent)) if self._store else None
             import eos.db
             eos.db.saveddata_session.commit()
             if attempt is not None:
@@ -511,6 +562,7 @@ class BridgeSession:
                 self._store.accept(attempt)
             self._fits, self._records, self._revisions = fits, records, revisions
             self._modified = modified
+            self._recent = recent
             self._snapshots = all_snapshots
             self.sample_id = self.sample_id if self.sample_id in fits else next(iter(fits), None)
             self._provenance = provenance
@@ -525,6 +577,29 @@ class BridgeSession:
             except Exception:
                 self._available = False
                 return self._error(request_id, "ENGINE_UNAVAILABLE", "Restart the app to recover the fitting engine")
+            if isinstance(error, FittingRejected):
+                # Desktop records valid-item attempts even when legality rejects
+                # the fit mutation. Fit inputs, values and revisions stay intact.
+                recent = promote(self.engine, self._recent, [error.item_id])
+                if recent != self._recent:
+                    history_confirmed = False
+                    try:
+                        if self._store:
+                            attempt = self._store.prepare(self._graph(self._records, self._revisions, recent=recent))
+                            if self._write_and_confirm(attempt) != "new":
+                                raise StoreWriteRejected("The attempt could not be saved; previous fits and recent use are intact")
+                            history_confirmed = True
+                            self._store.accept(attempt)
+                        self._recent = recent
+                    except StoreUncertain:
+                        self._available = False
+                        return self._error(request_id, "ENGINE_UNAVAILABLE", "Restart the app to confirm saved recent use")
+                    except Exception:
+                        if history_confirmed:
+                            self._available = False
+                            return self._error(request_id, "ENGINE_UNAVAILABLE", "Restart the app to reopen saved recent use")
+                        return self._error(request_id, "ENGINE_ERROR", "The attempt could not be saved; previous fits and recent use are intact")
+                return self._error(request_id, "INVALID_EDIT", str(error))
             message = "The edit is not supported by this fit" if code == "INVALID_EDIT" else "The engine could not complete the request"
             if isinstance(error, StoreWriteRejected):
                 message = str(error)
@@ -536,6 +611,15 @@ class BridgeSession:
             kwargs = {key: value for key, value in args.items() if key not in ("source_id", "target_id")}
             return getattr(self.engine, operation)(*positional, **kwargs)
         fit = fits[args["fit_id"]]
+        from . import fitting
+        if operation == "add_module":
+            return fitting.add(self.engine, fit, args["item_id"])
+        if operation == "replace_module":
+            return fitting.replace(self.engine, fit, args["position"], args["item_id"])
+        if operation == "remove_module":
+            return fitting.remove(self.engine, fit, args["position"])
+        if operation == "set_fit_restrictions":
+            return fitting.restrictions(self.engine, fit, args["ignore"])
         if operation == "set_charges":
             return self.engine.set_charges(fit, args["module_indices"], args["charge"])
         if operation == "set_module_states":
@@ -564,8 +648,12 @@ class BridgeSession:
         records = {}
         for key, fit in fits.items():
             spec = deepcopy(specs[key])
-            spec["modules"] = [{"name": module.item.name, "charge": module.charge.name if module.charge else None,
-                                "state": _module_state(module)} for module in fit.modules]
+            from eos.const import FittingSlot
+            spec["modules"] = [({"empty_slot": FittingSlot(module.slot).name} if module.isEmpty else
+                                {"name": module.item.name, "charge": module.charge.name if module.charge else None,
+                                 "state": _module_state(module)}) for module in fit.modules]
+            if "ignore_restrictions" in spec or fit.ignoreRestrictions or any(module.isEmpty for module in fit.modules):
+                spec["ignore_restrictions"] = fit.ignoreRestrictions
             skills = {skill.item.name: skill.activeLevel for skill in fit.character.skills
                       if skill.activeLevel != spec["skill_level"]}
             # EOS edits activeLevel while SQL maps the saved level. Commit the
@@ -588,6 +676,7 @@ class BridgeSession:
         return records
 
     def _snapshots_for(self, fits, revisions, selected):
+        from eos.const import FittingSlot
         result = {}
         logical = {fit.ID: key for key, fit in fits.items()}
         # EOS command-mode recursion marks a previously cold source calculated
@@ -628,8 +717,9 @@ class BridgeSession:
                 commands.append({"source_id": logical[source.ID], "active": source.getCommandInfo(fit.ID).active})
             result[key] = {"id": key, "revision": revisions[key], "name": fit.name, "ship": fit.ship.item.name,
                            "stats": stats,
-                           "modules": [{"index": index, "name": module.item.name,
-                                        "charge": module.charge.name if module.charge else None, "state": _module_state(module)}
+                           "modules": [({"index": index, "empty_slot": FittingSlot(module.slot).name}
+                                        if module.isEmpty else {"index": index, "name": module.item.name,
+                                        "charge": module.charge.name if module.charge else None, "state": _module_state(module)})
                                        for index, module in enumerate(fit.modules)],
                            "skills": {skill.item.name: skill.activeLevel for skill in fit.character.skills
                                       if skill.activeLevel != default_level},
@@ -666,7 +756,7 @@ class BridgeSession:
         self._reset_storage()
         fits = {}
         for key, record in records.items():
-            fit = fits[key] = self.engine.create_fit(record["spec"])
+            fit = fits[key] = self.engine.create_fit(record["spec"], restore=True)
             for name, level in record["skills"].items():
                 fit.character.getSkill(name).setLevel(level, persist=True, ignoreRestrict=True)
             for implant in record["implants"]:

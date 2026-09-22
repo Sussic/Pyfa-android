@@ -203,3 +203,76 @@ Only API36 x86_64 ran; ARM64 package contents were verified. No physical-device,
 upgrade/downgrade or usability sign-off is claimed. Exact next task:
 **B04.2.2 — Module editing, legality and recent use**, automatically authorized.
 B04.2/B04 remain incomplete until every retained child acceptance check passes.
+
+## B04.2.2 active
+
+Selected on `codex/b04-2-2-module-editing` from delivered master
+`9e16cf21d9ba0f117419e99ac3d5e544b9196541`; no open PRs. Retain the complete
+module/rig/service mutation, slot/state, legality/restriction and actual recent-use
+scope above. The outcome must be reachable through the equipment browser and fit
+editor and survive saved-data restart with atomic rejection. Audit the original
+desktop commands and enumerate the reference matrix before implementation.
+All 90 host tests, independent references, 20 native executions and APK/package/
+signature gates remain mandatory. Charges/variations/reordering remain B04.2.3,
+bulk editing B05 and structure modes/subsystems B06. No new implementation or
+verification is claimed by this selection checkpoint.
+
+### B04.2.2 reference matrix and boundary decisions
+
+Before adapter implementation, use original EOS and the pinned calculation
+command bodies for add/remove/replace, `ModuleInfo`, `activeStateLimit`,
+`Fit.checkStates`, `Fit.recalc` and `Character.checkRequirements`. The isolated
+oracle loads these definitions unchanged from the verified checkout, with real
+wx, Market and EOS. It does not import the Android adapter or replace calculation
+methods. Definition loading avoids unrelated desktop login/window imports;
+desktop window event dispatch is outside this oracle. Record source-file hashes,
+full operation inputs, raw values/units and two fresh-process results.
+
+The matrix covers high/medium/low/rig/service slots, first matching empty slot,
+removal holes and same-slot replacement; active/default-online policies; limits
+on online/active groups; slot, hardpoint, hull, capital, rig-size and group
+restrictions; explicit override and reverse-order re-enable (desktop deliberately
+ignores hardpoint limits during removal); allowed CPU/PG/calibration overload and
+recursive missing-skill warnings (rig skill requirements excluded as desktop).
+Also check unchanged existing charged/stateful neighbours, copies, saved reload,
+linked recipient invalidation, malformed inputs and rejected durable writes.
+
+Recent use is the desktop command history, including attempted valid-item
+add/replace commands rejected by fitting restrictions. Opening/searching an item
+is not use. Record the attempted item's history separately from the unchanged
+fit on a legality rejection; malformed/stale requests and failed storage writes
+must not change either. Keep at most 20 IDs, promote duplicates, exclude abyssal
+items, and retain the list across an empty library and process restart.
+
+Existing fits and empty-hull snapshots retain their current positions until a
+module edit. Then original `fill()` materializes vacant slots without moving
+occupied positions. Persist explicit vacant slots and restriction state so
+reload/copy cannot compact holes, discard overrides or silently remove an
+over-hardpoint fit retained by desktop re-enable. Expose vacant slots explicitly
+in the typed native boundary; retain every existing scalar assertion and gate.
+
+### B04.2.2 implementation checkpoint
+
+The worker adapts the audited module commands around unchanged EOS. Declarative
+vacancies and optional restriction/history fields preserve holes, overrides and
+recent attempts in the atomic graph store. Legality rejection restores all fit
+inputs/revisions/results before separately confirming the attempted recent item;
+malformed requests and rejected writes preserve history too. Re-enable retains
+desktop's over-hardpoint behavior, and saved/copy reconstruction preserves it.
+The native editor provides racks, add/replace/remove, explicit restriction
+controls, resource/skill warnings and recent-use browsing. Vacant snapshot entries
+are explicit typed alternatives with no invented name/state. Original scalar
+assertions remain; old tests explicitly require occupied module state as before.
+
+Six focused host checks pass eleven cases/91 states and all 4,242 default states,
+with real restart, failed saves, copies and headless/network guards. The matrix
+includes two projection recipients, shared recent history and strategic-cruiser
+subsystem vacancies retained for B06. The test found unassigned ORM owners on
+new vacancies; flushing after `fill()` fixes snapshots before durable commit.
+Review aligns replacement acceptance with desktop's recalculation order.
+The complete Windows suite passed 96 tests before these final refinements.
+Local APK/test builds, lint, signature and source/data/ABI inspection passed.
+Two native phases now require every reference value/type, UI workflows, 13
+malformed-protocol rejections, unchanged prior fits, 20-item visible order and
+fresh-process retention, with seven screenshots. Final build/CI, visual review
+and delivery remain outstanding. Existing gates and tolerances remain required.

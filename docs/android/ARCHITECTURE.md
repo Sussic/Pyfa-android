@@ -181,3 +181,30 @@ process reconstruction use the existing atomic graph path. Expected values for
 all 437 hulls are independently exported from pinned desktop EOS and included
 only in the test APK. Module editing and full structure modes remain later B04
 children and B06 respectively.
+
+## B04.2.2 module editing boundary
+
+Module add/replace/remove and restriction changes run only on the serialized EOS
+worker. The isolated desktop-command adaptation delegates fitting, states and all
+numeric resources to EOS. Read-only fitting details expose exact resource values,
+slot/hardpoint totals and recursive skill warnings. CPU, powergrid, calibration
+and missing skills are warnings; EOS slots and restrictions determine acceptance.
+Re-enabling restrictions removes invalid modules in reverse position order and
+retains excess hardpoints, matching the desktop command.
+
+Optional `ignore_restrictions` and explicit `{"empty_slot":"HIGH"}` module inputs
+preserve overrides and vacancies in the existing declarative graph. Fitted module
+inputs remain unchanged. Snapshot vacancies use `index` plus `empty_slot`; the
+typed Kotlin alternative has absent name/charge/state. Subsystem vacancies are
+retained but subsystem editing remains B06. Reconstruction appends positions
+without filling holes and preserves over-hardpoint fits left by re-enabling.
+The bundled version-1 contract is still not a mixed-version public API.
+
+Optional graph `recent` holds at most 20 unique bundled IDs. Successful edits and
+their history commit together. A valid-item add/replace rejected by legality
+first restores all fit inputs/revisions/results, then separately confirms the
+attempted recent item, matching desktop history. Malformed/stale requests and
+failed durable writes preserve both. Unknown commit outcomes stop further edits.
+History survives an empty library; viewing does not change it. Earlier saves
+without metadata open with an empty history. Older apps reject the new fields
+and preserve their files; install-over-data and downgrade verification remain R02.
