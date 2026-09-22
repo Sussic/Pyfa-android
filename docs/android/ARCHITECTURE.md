@@ -160,3 +160,24 @@ exports compare complete groups/items/memberships and actual search results.
 Kotlin decodes typed catalogue records and manages UI filters/navigation/pages;
 fitting formulas and persisted inputs remain untouched. The expected catalogue
 belongs only to the instrumentation APK, never the production asset path.
+
+## B04.2.1 empty hull boundary
+
+Empty creation uses the original EOS `Ship` or `Citadel`, with explicit all-V
+skills, uniform damage, high-security space, zero pilot security and no equipment
+or additions. The worker accepts every hull in the bundled desktop catalogue.
+The typed snapshot still requires all 39 named fields and their units. An absent
+value is explicit JSON `null` / `StatValue.Unavailable`, displayed as
+"Unavailable"; a calculated zero remains numeric. Empty hulls have absent gun
+optimal/falloff, while the existing fitted reference values retain their types.
+The bundled version-1 contract gains this nullable scalar variant; it is not a
+public mixed-version protocol. Older app builds reject empty-module fits and
+preserve the incompatible file. No downgrade or install-over-data guarantee is
+claimed; R02 retains those checks.
+
+Empty fits use ordinary nonempty graph format 1 with empty module/drone arrays;
+format 2 still exclusively means an empty library. Save, copy, rollback and
+process reconstruction use the existing atomic graph path. Expected values for
+all 437 hulls are independently exported from pinned desktop EOS and included
+only in the test APK. Module editing and full structure modes remain later B04
+children and B06 respectively.

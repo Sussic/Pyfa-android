@@ -96,6 +96,7 @@ class HeadlessEngine:
 
         from eos.const import FittingModuleState, FitSystemSecurity, ImplantLocation
         from eos.saveddata.character import Character
+        from eos.saveddata.citadel import Citadel
         from eos.saveddata.damagePattern import DamagePattern
         from eos.saveddata.drone import Drone
         from eos.saveddata.fit import Fit
@@ -106,7 +107,9 @@ class HeadlessEngine:
             security = FitSystemSecurity[spec["security"]["system"]]
         except (KeyError, TypeError) as error:
             raise ValueError("Invalid system security") from error
-        fit = Fit(Ship(self._item(spec["ship"])), name=spec["name"])
+        item = self._item(spec["ship"])
+        hull = Citadel(item) if item.category.name == "Structure" else Ship(item)
+        fit = Fit(hull, name=spec["name"])
         fit.character = Character("Headless synthetic skills", defaultLevel=spec["skill_level"])
         fit.damagePattern = DamagePattern(**spec["damage_pattern"])
         fit.targetProfile = None
@@ -359,7 +362,7 @@ class HeadlessEngine:
         instead of importing the desktop reference exporter or porting formulas.
         """
         self._check_fit(fit)
-        _integer(weapon_index, 0, len(fit.modules) - 1)
+        _integer(weapon_index, 0, max(0, len(fit.modules) - 1))
         # Calculating a changed source invalidates its direct recipients in EOS.
         # Read after recalculation, as desktop getFit does before displaying it.
         if not fit.calculated:
@@ -392,9 +395,9 @@ class HeadlessEngine:
                 ("capacitor_stable", fit.capStable, "boolean"),
                 ("capacitor_state", fit.capState, "%" if fit.capStable else "s")):
             put(name, value, unit)
-        weapon = fit.modules[weapon_index]
-        put("gun_optimal", weapon.getModifiedItemAttr("maxRange"), "m")
-        put("gun_falloff", weapon.getModifiedItemAttr("falloff"), "m")
+        weapon = fit.modules[weapon_index] if fit.modules else None
+        put("gun_optimal", weapon.getModifiedItemAttr("maxRange") if weapon else None, "m")
+        put("gun_falloff", weapon.getModifiedItemAttr("falloff") if weapon else None, "m")
         for layer, prefix in (("shield", "shield"), ("armor", "armor"), ("hull", "")):
             put(layer + "_hp", fit.hp[layer], "HP")
             put(layer + "_ehp_uniform", fit.ehp[layer], "HP")

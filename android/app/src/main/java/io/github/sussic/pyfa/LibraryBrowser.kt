@@ -101,7 +101,10 @@ internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
     }
     if (hullName != null) {
         Text(hullName!!, style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("hull-title"))
-        if (counts[hullName] == null) Text("No saved fits for this hull. New fits currently use the three example hulls.")
+        if (counts[hullName] == null) Text("No saved fits for this hull.")
+        TextButton(onClick = { model.beginEmpty(hullName!!) }, modifier = Modifier.testTag("create-selected-hull")) {
+            Text("New $hullName fit")
+        }
         return
     }
     Row(verticalAlignment = Alignment.CenterVertically) {

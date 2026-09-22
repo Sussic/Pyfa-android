@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-22. B04.1 delivered; exact next task **B04.2 — Fitting editor and item history**.
+Updated: 2026-09-22. Active: **B04.2.1 — Arbitrary empty ship and structure creation**.
 
 ## Current authorized work
 
@@ -29,10 +29,22 @@ Updated: 2026-09-22. B04.1 delivered; exact next task **B04.2 — Fitting editor
   repeat, APK builds/lint/signature/package checks. Full 84-test evidence is CI.
   [Task/audit](tasks/B04-equipment-fitting.md),
   [raw evidence, screenshots and provenance](evidence/b04-1-native.json).
-- **B04.2** retains arbitrary-hull creation, module/rig/service edits, compatible
-  charges/scripts/crystals, reorder/variations, restrictions/legality and actual
-  persistent recent-item use. Discovery is partial F02.01; B04 remains active.
-  15 of 74 leaf tasks are done; 59 remain, plus six rollups.
+- **B04.2.1** is active on `codex/b04-2-1-empty-hulls`, based on clean live master
+  `fd24947bbebbcb3f9d40d6c29d1f8a31dffcfbac` with no open PRs. Its outcome is
+  creation of named empty fits for every bundled hull, with independently matched
+  EOS values and explicit absent attributes, copy/rejection and native restart.
+  B04.2.2 retains module/rig/service edits, restrictions/legality and recent use;
+  B04.2.3 retains charges/scripts/crystals, active-fit charges, variations and
+  ordering. Keep EOS calculations, atomic rollback and all 84 host/18 native gates.
+  The [task brief](tasks/B04-equipment-fitting.md) retains the full parent scope.
+  Discovery is partial F02.01; B04 and B04.2 remain active.
+  15 of 76 leaf tasks are done; 61 remain, plus seven rollups.
+- B04.2.1 implementation adds empty-hull creation and explicit absent ranges.
+  The complete 90-test local host suite, independent exports/repeats and
+  migration/backup pass, including all 437 empty hulls and their 39 raw fields.
+  Both APKs, lint, signature and source/data/ABI package checks pass locally.
+  Native CI and screenshot review are pending; no delivery is claimed yet.
+  Required native executions increase to 20 while retaining every prior check.
 - B03.2 remains delivered in [PR #15](https://github.com/Sussic/Pyfa-android/pull/15)
   (`60582d91a6cc1cb2cd8c4584478ae913d7b6ce90`);
   [its task](tasks/B03-fit-library.md) and
@@ -51,7 +63,7 @@ AppData outside OneDrive. [Windows guide](WINDOWS.md) has commands; the local
 `build/WINDOWS-CHECKPOINT.md` records receipts and continuation details. Do not
 replace the installed environment or run timed host suites alongside Gradle.
 
-Keep all **84 host tests and 18 native executions**, independent raw-value
+Keep all **90 host tests and 20 native executions**, independent raw-value
 validators, process restarts, forced-GC regressions and screenshot review.
 Native CI uses Ubuntu/KVM; the local Windows setup does not claim native runtime
 coverage. One-day diagnostics retention, deliberate APK uploads only, no scheduled
@@ -83,8 +95,9 @@ receipts remain in [ROADMAP](ROADMAP.md), the task briefs and
 [PR #14](https://github.com/Sussic/Pyfa-android/pull/14). All **239 parity rows**
 remain in [PARITY](PARITY.md); no full-feature or user-usability sign-off is claimed.
 
-Creation still uses Vexor/Celestis/Vulture fixtures; arbitrary hull/equipment
-editing remains B04/C work. Physical ARM64 and older APIs have not run; package
+The delivered build creates Vexor/Celestis/Vulture fixtures; arbitrary empty-hull
+creation is under B04.2.1 verification and equipment editing remains B04/C work.
+Physical ARM64 and older APIs have not run; package
 contents support both ABIs. The phone model/API is unconfirmed. Native report
 transport currently needs API 31+, while the app declares minSdk 24.
 

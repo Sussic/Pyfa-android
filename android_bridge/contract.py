@@ -106,8 +106,6 @@ def _spec(spec):
         raise ContractError("INVALID_EDIT", "Those fit features are not supported by this bridge yet")
     if type(spec["modules"]) is not list or type(spec["drones"]) is not list:
         _invalid()
-    if not spec["modules"]:
-        raise ContractError("INVALID_EDIT", "This statistics view requires at least one module")
     for module in spec["modules"]:
         _object(module, ("name", "state"), ("charge",))
         _text(module["name"])
@@ -615,7 +613,7 @@ class BridgeSession:
             for statistic in stats.values():
                 value = statistic["value"]
                 if (set(statistic) != {"value", "unit"} or type(statistic["unit"]) is not str or
-                        type(value) not in (str, bool, int, float) or
+                        value is not None and type(value) not in (str, bool, int, float) or
                         type(value) is float and not math.isfinite(value) or
                         type(value) is int and not -(2**63) <= value < 2**63):
                     raise RuntimeError("The engine returned an invalid statistic")

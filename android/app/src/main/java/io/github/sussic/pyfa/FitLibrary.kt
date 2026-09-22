@@ -51,6 +51,13 @@ class FitLibraryModel : ViewModel() {
     val targetRevision = mutableStateOf(0L)
     val name = mutableStateOf("")
     val example = mutableStateOf("Vexor")
+    val newHull = mutableStateOf("Vexor")
+    val newHullSearch = mutableStateOf("")
+    val newHullPage = mutableStateOf(0)
+    fun beginEmpty(hull: String = hullName.value ?: "Vexor") {
+        newHull.value = hull; newHullSearch.value = ""; newHullPage.value = 0
+        name.value = "New $hull"; error.value = null; action.value = "Create empty"
+    }
     val busy = mutableStateOf(false)
     val error = mutableStateOf<String?>(null)
 }
@@ -92,10 +99,13 @@ internal fun FitLibrary(model: FitLibraryModel) {
     }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Saved fits", style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(libraryTitle))
-        Text("Create from an example fit. Equipment editing is coming in a later milestone.",
+        Text("Choose a ship or structure to start an empty fit. Equipment editing is still in development.",
             style = MaterialTheme.typography.bodySmall)
-        Button(onClick = { openDialog("Create") }, enabled = enabled, modifier = Modifier.testTag("library-create")) {
+        Button(onClick = { model.beginEmpty() }, enabled = enabled, modifier = Modifier.testTag("library-create-empty")) {
             Text("New fit")
+        }
+        Button(onClick = { openDialog("Create") }, enabled = enabled, modifier = Modifier.testTag("library-create")) {
+            Text("Example fit")
         }
         OutlinedTextField(value = search, onValueChange = { search = it }, label = { Text("Search fits or hulls") },
             singleLine = true, modifier = Modifier.fillMaxWidth().testTag("library-search"))
@@ -140,6 +150,10 @@ internal fun FitLibrary(model: FitLibraryModel) {
         }
     }
     action?.let { kind ->
+        if (kind == "Create empty") {
+            EmptyHullDialog(model)
+            return@let
+        }
         AlertDialog(
             onDismissRequest = { if (!busy) action = null },
             title = { Text("$kind fit") },

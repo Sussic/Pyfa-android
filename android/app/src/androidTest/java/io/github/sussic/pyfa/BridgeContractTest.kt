@@ -334,6 +334,7 @@ class BridgeContractTest {
                 is StatValue.Decimal -> "decimal"
                 is StatValue.BooleanValue -> "boolean"
                 is StatValue.Text -> "text"
+                StatValue.Unavailable -> error("Existing fitted reference unexpectedly contains an absent value")
             })
             assertEquals("$path.$key.unit", reference.getString("unit"), stat.unit)
             when (val value = reference.get("value")) {

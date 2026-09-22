@@ -359,6 +359,16 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun createEmptyFit(context: Context, hull: String, name: String): CompletableFuture<BridgeResponse> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(catalog.value.hulls.any { it.name == hull }) { "Choose a bundled hull" }
+            FitSpec(name, hull, 5, false, DamagePattern(25.0, 25.0, 25.0, 25.0),
+                Security(SystemSecurity.HISEC, 0.0), emptyList(), emptyList())
+        }, executor).thenCompose { request(context, BridgeOperation.CreateFit(it)) }
+    }
+
     fun createFromExample(context: Context, example: String, name: String): CompletableFuture<BridgeResponse> {
         val ready = start(context)
         val app = context.applicationContext

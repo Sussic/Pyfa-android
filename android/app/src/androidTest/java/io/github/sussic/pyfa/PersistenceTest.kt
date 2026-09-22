@@ -370,6 +370,7 @@ class PersistenceTest {
                 is StatValue.Decimal -> "decimal"
                 is StatValue.BooleanValue -> "boolean"
                 is StatValue.Text -> "text"
+                StatValue.Unavailable -> error("Existing fitted reference unexpectedly contains an absent value")
             }
             val value = reference.get("value")
             val expectedType = when (value) {
