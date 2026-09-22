@@ -33,7 +33,7 @@ internal fun OpenFits() {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Open fits", style = MaterialTheme.typography.titleLarge)
         if (navigation.openIds.isEmpty()) Text("No open fits. Open a saved fit below.", modifier = Modifier.testTag("no-open-fits"))
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("open-fit-tabs"), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             for (id in navigation.openIds) {
                 val fit = fits.find { it.id == id } ?: continue
                 Card(Modifier.widthIn(max = 240.dp).testTag("tab-$id")) {
@@ -117,7 +117,7 @@ internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
         Text(group.name, style = MaterialTheme.typography.titleMedium)
         val hulls = catalog.hulls.filter { it.groupId == group.id }
         val available = hulls.mapNotNull { it.race }.distinct().sorted()
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("race-filters"), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterChip(selected = races.isEmpty(), onClick = { model.races.value = emptySet() }, label = { Text("All races") }, modifier = Modifier.testTag("race-all"))
             for (race in available) FilterChip(selected = race in races, onClick = {
                 model.races.value = if (race in races) races - race else races + race

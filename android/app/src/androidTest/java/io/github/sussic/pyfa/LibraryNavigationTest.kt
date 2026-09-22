@@ -26,8 +26,24 @@ class LibraryNavigationTest {
     private val checks = mutableListOf<String>()
     private fun fits() = EngineRuntime.library.value
     private fun nav() = EngineRuntime.navigation.value
-    private fun waitFor(predicate: () -> Boolean) { compose.waitUntil(30_000, predicate) }
-    private fun click(tag: String) { compose.onNodeWithTag(tag).performScrollTo().performClick(); compose.waitForIdle() }
+    private fun waitFor(predicate: () -> Boolean) {
+        try { compose.waitUntil(30_000, predicate) } catch (error: Throwable) {
+            println("Navigation at failure: ${nav()}; error: ${EngineRuntime.navigationError.value}")
+            screenshot("failure") // Retain the app before the activity rule tears it down.
+            throw error
+        }
+    }
+    private fun click(tag: String) {
+        // performScrollTo scrolls only the nearest ancestor. Bring a nested
+        // horizontal strip into the vertical viewport before scrolling its child.
+        if (tag.startsWith("switch-") || tag.startsWith("close-") && tag != "close-all") {
+            compose.onNodeWithTag("open-fit-tabs").performScrollTo()
+        } else if (tag.startsWith("race-")) {
+            compose.onNodeWithTag("race-filters").performScrollTo()
+        }
+        compose.onNodeWithTag(tag).performScrollTo().assertIsDisplayed().performClick()
+        compose.waitForIdle()
+    }
     private fun open(id: String) {
         click("mode-All fits")
         click("open-$id")
@@ -59,6 +75,7 @@ class LibraryNavigationTest {
     }
     private fun screenshot(name: String) {
         compose.waitForIdle()
+        InstrumentationRegistry.getInstrumentation().uiAutomation.waitForIdle(500, 10_000)
         ParcelFileDescriptor.AutoCloseInputStream(InstrumentationRegistry.getInstrumentation().uiAutomation
             .executeShellCommand("screencap -p /sdcard/Download/pyfa-b032-$name.png")).use { it.readBytes() }
     }
@@ -176,6 +193,7 @@ class LibraryNavigationTest {
                 compose.activityRule.scenario.recreate()
                 assertEquals(listOf(a, c), nav().openIds)
                 assertEquals(a, nav().activeId)
+                compose.onNodeWithTag("open-fit-tabs").performScrollTo()
                 compose.onNodeWithTag("switch-$a").performScrollTo().assertIsDisplayed()
                 screenshot("open")
                 saved.writeText(JSONObject().put("a", a).put("c", c).put("expected", snapshot()).toString())
@@ -219,6 +237,8 @@ class LibraryNavigationTest {
                 open(JSONObject(saved.readText()).getString("a"))
                 click("close-all")
                 waitFor { nav().openIds.isEmpty() }
+                compose.activityRule.scenario.recreate()
+                assertTrue(nav().openIds.isEmpty() && EngineRuntime.state.value is EngineState.Empty)
                 checks += "disabled_restart_keeps_library_and_enabled_close_all"
             }
             "closed" -> {

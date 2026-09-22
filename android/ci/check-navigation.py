@@ -25,6 +25,14 @@ for phase in ("prepare", "restored", "disabled", "closed"):
         "io.github.sussic.pyfa.LibraryNavigationTest", "-e", "b032_phase", phase,
         f"{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner", timeout=240)
     (evidence / f"navigation-{phase}-instrumentation.txt").write_text(output, encoding="utf-8")
+    # Keep completed screens even if a later assertion in this phase fails.
+    names = {"prepare": ("recent", "hull", "open"), "restored": ("closed",), "disabled": (), "closed": ()}[phase]
+    for name in (*names, "failure"):
+        picture = f"/sdcard/Download/pyfa-b032-{name}.png"
+        if subprocess.run(["adb", "shell", "test", "-f", picture], timeout=30).returncode == 0:
+            png = subprocess.check_output(["adb", "exec-out", "cat", picture], timeout=30)
+            assert png.startswith(b"\x89PNG\r\n\x1a\n")
+            (evidence / f"navigation-{name}.png").write_bytes(png)
     assert re.search(r"OK \(1 test\)", output), output[-6000:]
     assert "INSTRUMENTATION_CODE: -1" in output, output[-6000:]
     assert not re.search(r"FAILURES!!!|INSTRUMENTATION_FAILED|shortMsg=", output), output[-6000:]
@@ -33,10 +41,8 @@ for phase in ("prepare", "restored", "disabled", "closed"):
     prior.add(report["pid"])
     reports.append(report)
     (evidence / f"navigation-{phase}-native.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    for name in {"prepare": ("recent", "hull", "open"), "restored": ("closed",), "disabled": (), "closed": ()}[phase]:
-        png = subprocess.check_output(["adb", "exec-out", "cat", f"/sdcard/Download/pyfa-b032-{name}.png"], timeout=30)
-        assert png.startswith(b"\x89PNG\r\n\x1a\n")
-        (evidence / f"navigation-{name}.png").write_bytes(png)
+    for name in names:
+        assert (evidence / f"navigation-{name}.png").is_file()
 (evidence / "navigation-native.json").write_text(json.dumps(reports, indent=2) + "\n", encoding="utf-8")
 from navigation_summary import summarize
 print(json.dumps(summarize(reports), indent=2))

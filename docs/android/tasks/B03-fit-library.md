@@ -60,6 +60,20 @@ prior native executions plus four B03.2 process phases with raw desktop statisti
 catalogue comparison, navigation/restarts and screenshots. Native results and
 delivery are pending; no physical-device or user usability claim.
 
+### B03.2 first native attempt
+
+Head `661dee73` passed Windows CI (78 tests and independent references), Android
+build/lint/package gates and all 13 prior native executions in run
+`35674055419`. The new prepare phase passed catalogue, recents, filtering,
+recreation, back-to-hull and search selection, then timed out closing an inactive
+view. The test scrolled the inner horizontal strip without first bringing it
+into the outer vertical viewport. AndroidX's
+[scroll helper](https://raw.githubusercontent.com/androidx/androidx/androidx-main/compose/ui/ui-test/src/commonMain/kotlin/androidx/compose/ui/test/Actions.kt)
+operates on the closest scroll parent. The correction scrolls the outer container
+first and asserts the target is displayed before the touch; the close assertion
+and 30-second timeout remain. Screenshots are now retained before test teardown
+and on partial-phase failures. Verification of the correction is pending.
+
 ## Result
 
 B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.

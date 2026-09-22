@@ -172,6 +172,9 @@ class FitLibraryTest {
     private fun screenshot(name: String) {
         compose.waitForIdle()
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+        // WindowInsets reports the IME visible before its system animation ends.
+        // Wait for accessibility idle so the retained image includes the keyboard.
+        automation.waitForIdle(500, 10_000)
         ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(
             "screencap -p /sdcard/Download/pyfa-b03-$name.png")).use { it.readBytes() }
     }
