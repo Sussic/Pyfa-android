@@ -78,6 +78,7 @@ class EquipmentBrowserTest {
             compose.waitUntil(30_000) { model.catalog != null && !model.busy }
             sync()
             actual.roots.forEach { compose.onNodeWithTag("equipment-group-$it").assertExists() }
+            compose.onNodeWithTag("equipment-group-${actual.children(null).first().id}").performScrollTo().assertIsDisplayed()
             screenshot("root")
             val weapon = expected.items.single { it.name == "Dual 150mm Railgun II" }
             search(weapon.name)
@@ -94,7 +95,8 @@ class EquipmentBrowserTest {
             assertNull(model.searched)
             assertEquals(weapon.marketGroupId, model.groupId)
             assertEquals(setOf(weapon.meta), model.metas)
-            compose.onNodeWithTag("equipment-location").assertTextEquals(expected.path(checkNotNull(weapon.marketGroupId)).joinToString(" › ") { it.name })
+            compose.onNodeWithTag("equipment-location").performScrollTo().assertIsDisplayed()
+                .assertTextEquals(expected.path(checkNotNull(weapon.marketGroupId)).joinToString(" › ") { it.name })
             screenshot("group")
             click("equipment-back") // Dismiss item detail.
             click("equipment-back") // Parent group.

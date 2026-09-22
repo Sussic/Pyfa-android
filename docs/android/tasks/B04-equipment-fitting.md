@@ -86,5 +86,11 @@ database was then used, with unchanged logical identity and file digest.
 
 Six new guarded headless regressions pass, including every catalogue membership,
 all 22 search results, repeat/cache isolation, unchanged fit/modification data,
-invalid input and worker ownership. Build/lint and required CI remain pending.
+invalid input and worker ownership. Local APK builds, lint, signature and package
+inspection pass. The first required CI attempt passed all 84 host checks and 18
+offline native executions on API 36 x86_64. Review then tightened the raw
+catalogue/search/page comparator to require exact scalar types (float/bool/near-ID
+mutations are rejected) and reduced equipment-screen spacing so group browsing
+starts sooner. The screenshot checks now scroll the group list and destination
+breadcrumb into view. Final-commit CI and screenshot review remain pending.
 B04.2 not started.
