@@ -24,14 +24,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 internal fun OpenFits() {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
-    val fits by EngineRuntime.library.collectAsState()
-    val navigation by EngineRuntime.navigation.collectAsState()
-    val error by EngineRuntime.navigationError.collectAsState()
+    val fits by EngineRuntime.library.collectAsState(context = Dispatchers.Main)
+    val navigation by EngineRuntime.navigation.collectAsState(context = Dispatchers.Main)
+    val error by EngineRuntime.navigationError.collectAsState(context = Dispatchers.Main)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Open fits", style = MaterialTheme.typography.titleLarge)
         if (navigation.openIds.isEmpty()) Text("No open fits. Open a saved fit below.", modifier = Modifier.testTag("no-open-fits"))
@@ -67,8 +68,8 @@ internal fun OpenFits() {
 internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
-    val catalog by EngineRuntime.catalog.collectAsState()
-    val navigation by EngineRuntime.navigation.collectAsState()
+    val catalog by EngineRuntime.catalog.collectAsState(context = Dispatchers.Main)
+    val navigation by EngineRuntime.navigation.collectAsState(context = Dispatchers.Main)
     val mode by model.mode
     val groupId by model.groupId
     val hullName by model.hullName
@@ -87,7 +88,7 @@ internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
     if (searching) return // Search always spans the entire saved library.
     if (mode == "Recent") {
         Text("Recently modified · up to 50 fits. Opening a fit does not move it here.", style = MaterialTheme.typography.bodySmall)
-        if (EngineRuntime.modified.collectAsState().value.values.any { it == 0L }) {
+        if (EngineRuntime.modified.collectAsState(context = Dispatchers.Main).value.values.any { it == 0L }) {
             Text("Fits saved by an earlier build have no recorded edit order and appear last.", style = MaterialTheme.typography.bodySmall)
         }
         return

@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.text.NumberFormat
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,9 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
         )
         setContent {
-            val engine by EngineRuntime.state.collectAsState()
+            // Keep worker emissions on the Android UI queue, including when a
+            // test recomposer uses an unconfined effect dispatcher.
+            val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
             PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java])
         }
@@ -112,7 +115,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel) {
 private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
-    val engine by EngineRuntime.state.collectAsState()
+    val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     var expanded by rememberSaveable { mutableStateOf(false) }
     val selectedTitle = remember { BringIntoViewRequester() }
     LaunchedEffect(libraryModel.fitJump.value) {

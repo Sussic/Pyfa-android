@@ -146,5 +146,7 @@ Ordered open-fit IDs, active selection, restart restoration and empty-group
 visibility live in a separate app-private `AtomicFile`, accessed on the same
 serialized worker. Closing a view leaves its fit intact; deleting a fit prunes its
 view. Restoration defaults off. Invalid preferences remain preserved with a
-visible session-only fallback. EOS, fitting calculations and the typed operation
+visible session-only fallback. UI collectors explicitly use Android's main
+dispatcher; decoding, calculations, storage and flow publication stay on the
+serialized worker. EOS, fitting calculations and the typed operation
 boundary remain unchanged. Upgrade/downgrade distribution remains R02.

@@ -13,7 +13,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
-import kotlinx.coroutines.test.StandardTestDispatcher
 import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Assert.*
@@ -24,16 +23,14 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalTestApi::class)
 class FitLibraryTest {
-    // Queue worker-driven recomposition instead of re-entering an active layout
-    // through the test rule's default unconfined effect dispatcher.
-    @get:Rule val compose = createAndroidComposeRule<MainActivity>(effectContext = StandardTestDispatcher())
+    @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
     private val observations = JSONArray()
     private val requests = JSONArray()
     private fun fits() = EngineRuntime.library.value
     private fun fit(id: String) = fits().single { it.id == id }
     private fun syncUi() {
-        // A worker future can finish before its queued StateFlow collector runs.
+        // A worker future can finish before its UI StateFlow collector runs.
         // Advance the Compose clock on the UI thread before observing the tree.
         compose.mainClock.advanceTimeByFrame()
         compose.waitForIdle()

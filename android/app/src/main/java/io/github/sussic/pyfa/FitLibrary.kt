@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
 
 class FitLibraryModel : ViewModel() {
     val mode = mutableStateOf("All fits")
@@ -59,10 +60,10 @@ class FitLibraryModel : ViewModel() {
 internal fun FitLibrary(model: FitLibraryModel) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
-    val fits by EngineRuntime.library.collectAsState()
-    val state by EngineRuntime.state.collectAsState()
-    val navigation by EngineRuntime.navigation.collectAsState()
-    val modified by EngineRuntime.modified.collectAsState()
+    val fits by EngineRuntime.library.collectAsState(context = Dispatchers.Main)
+    val state by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
+    val navigation by EngineRuntime.navigation.collectAsState(context = Dispatchers.Main)
+    val modified by EngineRuntime.modified.collectAsState(context = Dispatchers.Main)
     var search by model.search
     var action by model.action
     var targetId by model.targetId

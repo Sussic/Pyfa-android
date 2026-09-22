@@ -104,6 +104,16 @@ The tests now advance the Compose frame clock after worker results, wait for
 UI idle, and require the actual library control at startup within the existing
 30-second deadline. No production code, timeout or behavioral assertion changed.
 
+Head `138d26ae` passed Windows run `35677935062`, but native run `35677935056`
+hit the existing 240-second library-prepare timeout. Its screenshot shows the
+ready library at the initial scroll position: the standard test dispatcher also
+queues scroll actions, and the pinned test scroll helper does not drain that
+queue. That dispatcher experiment is reverted. UI `StateFlow` collectors now
+explicitly use Android's main dispatcher, so worker emissions cannot resume UI
+collection through an unconfined test effect context. EOS, decoding, storage and
+flow publication remain on the same serialized worker. The standard Compose
+rule, explicit UI synchronization and every original assertion/deadline remain.
+
 ## Result
 
 B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.
