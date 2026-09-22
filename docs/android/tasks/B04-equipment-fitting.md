@@ -276,3 +276,14 @@ Two native phases now require every reference value/type, UI workflows, 13
 malformed-protocol rejections, unchanged prior fits, 20-item visible order and
 fresh-process retention, with seven screenshots. Final build/CI, visual review
 and delivery remain outstanding. Existing gates and tolerances remain required.
+
+PR #18's first Windows run (35759228642) passes all 96 tests and independent
+references/repeats/migration. Android run 35759228624 passes every one of the 22
+instrumented executions, then the final report validator rejects
+`globalDefaultSpoolupPercentage`: JSONObject writes the original decimal as an
+integer. The diagnostic report now preserves the original numeric-kind metadata;
+settings values still compare exactly. Wrong-kind and sub-tolerance setting
+mutations are rejected. This is a report-transport correction, with no formula,
+fixture, production behavior or tolerance change. The local rebuild passes;
+fresh final CI remains required. All seven new screens from this run were
+inspected; final-run review still covers all 27 required screens.

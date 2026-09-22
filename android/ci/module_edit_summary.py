@@ -5,7 +5,7 @@ from pathlib import Path
 from market_summary import exact
 
 
-def typed_compare(expected, observed):
+def typed_compare(expected, observed, *, numeric_tolerance=True):
     assert observed.keys() == {'data', 'numeric_types'}
     kinds = {}
     def check(left, right, path):
@@ -23,7 +23,10 @@ def typed_compare(expected, observed):
                 exact(left, right)
             else:
                 assert type(right) in (int, float) and math.isfinite(right), path
-                assert math.isclose(left, right, rel_tol=1e-10, abs_tol=1e-9), path
+                if numeric_tolerance:
+                    assert math.isclose(left, right, rel_tol=1e-10, abs_tol=1e-9), path
+                else:
+                    assert left == right, path
         else:
             exact(left, right)
     check(expected, observed['data'], 'root')
@@ -42,7 +45,8 @@ def summarize(reports, engine):
             assert runtime['persistence']['enabled'] and runtime['persistence']['opened_existing']
             assert runtime['android_worker_thread'] == 'pyfa-engine' and runtime['android_main_thread'] is False
             assert runtime['saveddata_connectionstring'] == 'sqlite:///:memory:' and not runtime['desktop_import_attempts']
-            exact(fixture['eos_settings'], runtime['eos_settings'])
+            typed_compare(fixture['eos_settings'], {'data': runtime['eos_settings'],
+                          'numeric_types': runtime['eos_settings_numeric_types']}, numeric_tolerance=False)
             exact(engine['eos_settings'], runtime['eos_settings'])
             for key in ('database_sha256', 'database_logical_sha256', 'engine_source_sha256', 'source_data_sha256',
                         'desktop_source_commit', 'dataset_metadata'):

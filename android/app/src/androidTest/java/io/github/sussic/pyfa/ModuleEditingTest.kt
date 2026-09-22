@@ -58,7 +58,11 @@ class ModuleEditingTest {
     private fun library() = typed(array(fits().map(ModuleTestJson::fit)))
     private fun allDetails() = typed(array(fits().map { fit -> ModuleTestJson.details(details(fit.id))
         .put("fit_id", fit.id).put("revision", fit.revision) }))
-    private fun diagnostics() = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS))
+    private fun diagnostics() = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS)).also {
+        // Preserve the original diagnostic wire kinds before JSONObject's writer
+        // normalizes whole-number decimals (for example 1.0) into integers.
+        it.put("eos_settings_numeric_types", ModuleTestJson.numericKinds(it.getJSONObject("eos_settings")))
+    }
     private fun report(id: String, recipients: List<String>): JSONObject = ModuleTestJson.details(details(id))
         .put("stats", ModuleTestJson.stats(fit(id))).put("recent", array(EngineRuntime.recent.value))
         .put("recipients", array(recipients.map { obj("name" to fit(it).name, "stats" to ModuleTestJson.stats(fit(it))) }))

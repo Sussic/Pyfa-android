@@ -38,8 +38,12 @@ Updated: 2026-09-22. Active: **B04.2.2 — Module editing, legality and recent u
   atomic failed saves, copies and process restore. The complete local Windows
   gate passed 96 tests before the final vacancy/order refinements. APK/test
   builds, lint, signature and 148-file/source/data/ABI inspection pass before
-  final test refinements. Two native workflow/restart phases and raw validators
-  are implemented; final build, required CI and screenshot review/merge remain.
+  final test refinements. [PR #18](https://github.com/Sussic/Pyfa-android/pull/18)
+  is open. Windows CI 35759228642 passes all 96 tests and references. The first
+  Android run passes all 22 native executions, then its report validator fails
+  because JSONObject normalizes one decimal setting to an integer. The report
+  now retains original numeric types and exact setting values; local rebuild and
+  corruption probes pass. Final CI and full screenshot review/merge remain.
   B04.2.3 retains charges/scripts/crystals, active-fit charges, fitted/addition
   variations and ordering. Parent B04/B04.2 remain incomplete; F02.01 is partial.
   16 of 76 leaf tasks are done; 60 remain, plus seven rollups.
