@@ -394,3 +394,29 @@ Local builds of both APKs, lint, signature and package/data/license/ABI inspecti
 pass with 149 engine sources. Native CI, visual review and delivery remain outstanding.
 Required totals are 102 host tests,
 24 native executions and 35 screenshots.
+
+
+### B04.2.3.1 delivered
+
+[PR #19](https://github.com/Sussic/Pyfa-android/pull/19) merged as
+`a1c784532035ebf7b5e75fc42ee74d5d2d5e3266` after review of head
+`b6b24010b45bff5e0fdcbc2c1c80fcd0693807a2`.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35790288102)
+passes all 102 host tests, independent references/repeats and migration/backup.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35790287983)
+passes both APKs, lint, signature/package checks and all 24 offline native
+executions. The first PR CI round passed: Windows 16m27s, Android 17m23s.
+
+All 14 charge cases/74 states and 4,242 compatible sets match the independent
+original command/Ammo/browser method. Four linked recipients, atomic rejection,
+unchanged history, scripts/crystals, UI recreation and 12 saved fits after a real
+restart pass. Eleven malformed protocol inputs are rejected. All 35 screenshots
+viewed; the eight new charge screens and raw/provenance reports are retained in
+the [receipt](../evidence/b04-2-3-1-native.json). Raw validators rerun on the download;
+artifact SHA-256 and CI tree match the reviewed head. Nine report corruptions are
+rejected, including missing cases/sets, changed history, same PID, wrong numeric
+kind and a 1e-12 settings mutation. No required check or tolerance was weakened.
+
+Only API36 x86_64 ran; both ABIs were inspected. Physical-device/upgrade/usability
+limits remain. Next authorized task: **B04.2.3.2 — Fitted and addition variations**.
+B04.2.3/B04.2/B04 stay incomplete until their remaining children pass.
