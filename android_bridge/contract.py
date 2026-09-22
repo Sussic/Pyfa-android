@@ -144,6 +144,7 @@ class BridgeSession:
         self._store = None
         self._fits = {self.sample_id: sample_fit} if sample_fit is not None else {}
         self._revisions = {key: 1 for key in self._fits}
+        self._modified = {key: 1 for key in self._fits}
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
         self._snapshots = self._snapshots_for(self._fits, self._revisions, self._fits)
         self._provenance = dict(engine.resolved_item_ids)
@@ -177,6 +178,9 @@ class BridgeSession:
         bridge.sample_id = graph["sample_id"]
         bridge._records = {key: graph["records"][key] for key in graph["fit_order"]}
         bridge._revisions = {key: graph["revisions"][key] for key in graph["fit_order"]}
+        # Older saves did not retain modification order. Zero means unknown,
+        # never a fabricated timestamp or an inference from opening a fit.
+        bridge._modified = graph.get("modified", {key: 0 for key in graph["fit_order"]})
         try:
             fits, snapshots = bridge._rebuild()
             replayed = bridge._capture(fits, {key: record["spec"] for key, record in bridge._records.items()})
@@ -198,16 +202,22 @@ class BridgeSession:
                 "schema": 1 if store else None, "generation": store.current.generation if store and store.current else 0,
                 "opened_existing": store.opened_existing if store else False}
 
-    def _graph(self, records, revisions):
+    def _graph(self, records, revisions, modified=None):
         sample_id = self.sample_id if self.sample_id in records else next(iter(records), None)
         return {"format": 1 if records else 2, "dataset_identity": self._dataset_identity,
                 "eos_settings": deepcopy(self.engine.settings), "sample_id": sample_id,
-                "fit_order": list(records), "records": records, "revisions": revisions}
+                "fit_order": list(records), "records": records, "revisions": revisions,
+                "modified": self._modified if modified is None else modified}
+
+    def organization(self):
+        """Read-only library metadata; opening/querying never counts as editing."""
+        self.engine._check_thread()
+        return {"version": 1, "modified": dict(self._modified)}
 
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
         try:
-            _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"))
+            _object(graph, ("format", "dataset_identity", "eos_settings", "sample_id", "fit_order", "records", "revisions"), ("modified",))
             if type(graph["format"]) is not int or graph["format"] not in (1, 2):
                 raise StoreError("Saved fits use an unsupported graph format")
             if graph["dataset_identity"] != dataset_identity or _json(graph["eos_settings"]) != _json(settings):
@@ -223,6 +233,10 @@ class BridgeSession:
                 _invalid()
             _object(graph["records"], order)
             _object(graph["revisions"], order)
+            if "modified" in graph:
+                _object(graph["modified"], order)
+                for value in graph["modified"].values():
+                    _integer(value)
             if order:
                 _text(graph["sample_id"], True)
                 if graph["sample_id"] not in order:
@@ -458,6 +472,13 @@ class BridgeSession:
                 self._apply(operation, args, fits)
             editing = False
             records = self._capture(fits, specs)
+            modified = {key: self._modified.get(key, 0) for key in records}
+            changed_inputs = [key for key in records if records[key] != self._records.get(key)]
+            if changed_inputs:
+                sequence = max(self._modified.values(), default=0) + 1
+                _integer(sequence)
+                for key in changed_inputs:
+                    modified[key] = sequence
             affected = self._affected(named, self._records, records) & fits.keys()
             revisions = {key: value for key, value in self._revisions.items() if key in fits}
             for key in affected:
@@ -482,7 +503,7 @@ class BridgeSession:
             library_operation = operation in {"rename_fit", "duplicate_fit", "delete_fit"}
             result = self._serialize_success(request_id, list(all_snapshots.values() if library_operation else snapshots.values()))
             provenance = dict(self.engine.resolved_item_ids)
-            attempt = self._store.prepare(self._graph(records, revisions)) if self._store else None
+            attempt = self._store.prepare(self._graph(records, revisions, modified)) if self._store else None
             import eos.db
             eos.db.saveddata_session.commit()
             if attempt is not None:
@@ -491,6 +512,7 @@ class BridgeSession:
                 durable_confirmed = True
                 self._store.accept(attempt)
             self._fits, self._records, self._revisions = fits, records, revisions
+            self._modified = modified
             self._snapshots = all_snapshots
             self.sample_id = self.sample_id if self.sample_id in fits else next(iter(fits), None)
             self._provenance = provenance

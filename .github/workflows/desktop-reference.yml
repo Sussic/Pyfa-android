@@ -41,6 +41,7 @@ jobs:
             eos
             utils
             staticdata
+            service
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11'
@@ -74,6 +75,13 @@ jobs:
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-command-reference"
           --check tools/android_reference/fixtures/command.json
+      - name: Verify the independent desktop hull catalogue
+        run: >-
+          python -I tools/android_reference/catalog.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-catalog-reference"
+          --check tools/android_reference/fixtures/catalog.json
       - name: Create a separate environment without desktop dependencies
         run: python -m venv "${{ runner.temp }}/pyfa-headless-venv"
       - name: Install pinned headless dependencies

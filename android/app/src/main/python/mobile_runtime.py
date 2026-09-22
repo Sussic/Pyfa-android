@@ -76,6 +76,15 @@ def bridge_sample_id():
     return _bridge.sample_id
 
 
+def library_catalog():
+    from android_bridge.catalog import hull_catalog
+    return encoded(hull_catalog(_engine))
+
+
+def library_organization():
+    return encoded(_bridge.organization())
+
+
 def bridge_dispatch(request_json):
     if _bridge is None:
         raise RuntimeError("Start the Android bridge before sending requests")

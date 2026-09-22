@@ -53,7 +53,7 @@ def main():
         tests.ENGINE, tests.CASES, tests.EXPECTED = HeadlessEngine(args.database), cases, fixtures
         tests.DATABASE, tests.IDENTITY = args.database, fixtures["ammunition"]["database_logical_sha256"]
         result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(tests.LibraryTests))
-        if result.testsRun != 8 or not result.wasSuccessful() or result.skipped or result.expectedFailures or guard.attempts or network_attempts:
+        if result.testsRun != 13 or not result.wasSuccessful() or result.skipped or result.expectedFailures or guard.attempts or network_attempts:
             raise RuntimeError("Bridge tests failed, skipped or attempted forbidden operations")
         args.output.write_text(json.dumps({"tests_passed": result.testsRun,
             "desktop_import_attempts": guard.attempts, "network_attempts": network_attempts}, indent=2) + "\n", encoding="utf-8")
@@ -69,10 +69,11 @@ def main():
                        check=True, stdout=log, stderr=subprocess.STDOUT, timeout=180)
     compare(before, digest_file(args.database), "unchanged_database")
     result = json.loads((args.output / "tests.json").read_text(encoding="utf-8"))
-    result.update({"task": "B03.1", "host_only": True, "database_sha256": before,
+    result.update({"task": "B03.2", "host_only": True, "database_sha256": before,
+                   "reference_catalog_sha256": digest_file(ROOT / "tools/android_reference/fixtures/catalog.json"),
                    "database_logical_sha256": logical, "reference_fixture_sha256": fixture_hashes,
                    "source_sha256": {path: hashlib.sha256((ROOT / path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
-                                      for path in ("android_bridge/contract.py", "android_bridge/engine.py",
+                                      for path in ("android_bridge/contract.py", "android_bridge/engine.py", "android_bridge/catalog.py",
                                                    "tools/android_headless/tests/test_library.py", "tools/android_headless/check_library.py")},
                    "lifecycle_regressions_passed": True, "game_database_unchanged": True})
     (args.output / "evidence.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")

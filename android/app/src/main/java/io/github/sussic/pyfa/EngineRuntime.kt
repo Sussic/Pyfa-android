@@ -31,6 +31,16 @@ object EngineRuntime {
     val state = mutableState.asStateFlow()
     private val mutableLibrary = MutableStateFlow<List<FitSnapshot>>(emptyList())
     val library = mutableLibrary.asStateFlow()
+    private val mutableCatalog = MutableStateFlow(HullCatalog())
+    val catalog = mutableCatalog.asStateFlow()
+    private val mutableModified = MutableStateFlow<Map<String, Long>>(emptyMap())
+    val modified = mutableModified.asStateFlow()
+    private val mutableNavigation = MutableStateFlow(LibraryNavigation())
+    val navigation = mutableNavigation.asStateFlow()
+    private val mutableNavigationError = MutableStateFlow<String?>(null)
+    val navigationError = mutableNavigationError.asStateFlow()
+    private var navigationStore: NavigationStore? = null // Worker only.
+    private var navigationWritable = true
     private var startup: CompletableFuture<FitSnapshot?>? = null
     private var sessionId: String? = null // Worker only.
     private var sampleId: String? = null // Worker only.
@@ -93,6 +103,26 @@ object EngineRuntime {
                 val result = bootstrap.fits.find { it.id == savedSampleId } ?: bootstrap.fits.firstOrNull()
                 sessionId = bootstrap.sessionId
                 sampleId = result?.id
+                mutableCatalog.value = HullCatalog.decode(module.callAttr("library_catalog").toString())
+                readOrganization()
+                if (!ephemeralDiagnostics) {
+                    navigationStore = NavigationStore(File(app.noBackupFilesDir, "library-navigation.json"))
+                }
+                var navigation = LibraryNavigation(result?.let { listOf(it.id) } ?: emptyList(), result?.id)
+                try {
+                    navigationStore?.load()?.let { saved ->
+                        navigation = (if (saved.restore) saved else saved.copy(openIds = emptyList(), activeId = null))
+                            .retain(bootstrap.fits.map { it.id }.toSet())
+                    }
+                    navigationStore?.save(navigation)
+                } catch (_: Exception) {
+                    // Preserve damaged preferences and the independently valid fit store.
+                    navigationWritable = false
+                    mutableNavigationError.value = "Saved navigation could not be read or confirmed. Navigation will last for this session only."
+                    navigation = LibraryNavigation()
+                }
+                mutableNavigation.value = navigation
+                sampleId = navigation.activeId
                 val ready = SystemClock.elapsedRealtimeNanos()
                 startupMetrics = JSONObject()
                     .put("pid", Process.myPid())
@@ -106,7 +136,7 @@ object EngineRuntime {
                     .put("database_installed", installed)
                     .put("database_sha256", expectedHash)
                 mutableLibrary.value = bootstrap.fits
-                mutableState.value = result?.let { EngineState.Ready(it) } ?: EngineState.Empty()
+                publishSelection()
                 result
             } catch (error: Exception) {
                 if (BuildConfig.DEBUG) Log.e("PyfaEngine", "Engine startup failed", error)
@@ -214,9 +244,14 @@ object EngineRuntime {
                             response.fits.filter { fit -> mutableLibrary.value.none { it.id == fit.id } }
                     }
                     mutableLibrary.value = merged
-                    val selected = merged.find { it.id == sampleId } ?: merged.firstOrNull()
-                    sampleId = selected?.id
-                    mutableState.value = selected?.let { EngineState.Ready(it) } ?: EngineState.Empty()
+                    readOrganization()
+                    val retained = mutableNavigation.value.retain(merged.map { it.id }.toSet())
+                    if (retained != mutableNavigation.value) {
+                        // Deletion already committed; never keep a deleted view active if preference I/O fails.
+                        saveNavigation(retained)
+                        mutableNavigation.value = retained
+                    }
+                    publishSelection()
                 } else {
                     if (response.error?.code == BridgeErrorCode.ENGINE_UNAVAILABLE) unavailable = true
                     if (previous != null) mutableState.value = previous.copy(error = response.error)
@@ -244,8 +279,50 @@ object EngineRuntime {
             ready.join()
             check(!unavailable) { "Restart the app to recover the fitting engine." }
             val fit = mutableLibrary.value.single { it.id == id }
-            sampleId = fit.id
-            mutableState.value = EngineState.Ready(fit)
+            val next = mutableNavigation.value.open(fit.id)
+            if (saveNavigation(next)) {
+                mutableNavigation.value = next
+                publishSelection()
+            }
+            Unit
+        }, executor)
+    }
+
+    private fun readOrganization() {
+        val value = JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("library_organization").toString())
+        check(value.getInt("version") == 1)
+        val rows = value.getJSONObject("modified")
+        mutableModified.value = rows.keys().asSequence().associateWith { id -> rows.getLong(id).also { check(it >= 0) } }
+    }
+
+    private fun publishSelection() {
+        sampleId = mutableNavigation.value.activeId
+        val error = if (unavailable) BridgeError(BridgeErrorCode.ENGINE_UNAVAILABLE,
+            "Restart the app to recover the fitting engine.") else null
+        mutableState.value = mutableLibrary.value.find { it.id == sampleId }?.let { EngineState.Ready(it, error) } ?: EngineState.Empty(error)
+    }
+
+    private fun saveNavigation(next: LibraryNavigation): Boolean {
+        if (!navigationWritable) return true // Explicitly reported session-only fallback.
+        return try {
+            navigationStore?.save(next)
+            mutableNavigationError.value = null
+            true
+        } catch (_: Exception) {
+            mutableNavigationError.value = "Could not confirm saved navigation preferences. The current view is unchanged; try again."
+            false
+        }
+    }
+
+    fun navigate(context: Context, change: (LibraryNavigation) -> LibraryNavigation): CompletableFuture<Unit> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            val next = change(mutableNavigation.value).retain(mutableLibrary.value.map { it.id }.toSet())
+            if (saveNavigation(next)) {
+                mutableNavigation.value = next
+                publishSelection()
+            }
             Unit
         }, executor)
     }

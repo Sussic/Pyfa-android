@@ -1,6 +1,24 @@
 # Android project status
 
-Updated: 2026-09-21.
+Updated: 2026-09-22.
+
+## Active: B03.2 — library organization and open-fit navigation
+
+- Authorized implementation, related fixes, focused PR, required CI and merge.
+- Clean base `e3b5cc524717c478d50485ad15af75335be01ae6`; live fork master
+  verified and no open PRs. Branch: `android/b03-2-library-navigation`.
+- Outcome: bundled hull group/race browsing, hide/show empty groups/hulls,
+  back-to-hull navigation, recently modified fits, multiple open fits with
+  close one/all and optional restart restoration (F01.03–F01.05).
+- Acceptance: audited desktop semantics; host regression and independent
+  references; preserve all 13 native executions and add organization/navigation
+  workflows across process restarts; build/lint/package checks and screenshots.
+- Local: all 78 host tests, independent references/repeats, real migration/backup,
+  55-group/437-hull independent catalogue/repeat, both APK builds, lint, signature
+  and source/data/ABI inspection pass. Review fixes are included. Native runtime
+  and PR delivery remain pending; four new process phases are required.
+- Reuse `build/windows-env.ps1` and installed environments. No B04, release or
+  phone installation. Local continuation details: `build/WINDOWS-CHECKPOINT.md`.
 
 ## Windows setup checkpoint (complete, 2026-09-21)
 

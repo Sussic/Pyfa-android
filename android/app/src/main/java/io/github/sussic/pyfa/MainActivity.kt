@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -26,6 +28,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -37,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.text.NumberFormat
@@ -107,6 +112,10 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     val context = LocalContext.current
     val engine by EngineRuntime.state.collectAsState()
     var expanded by rememberSaveable { mutableStateOf(false) }
+    val selectedTitle = remember { BringIntoViewRequester() }
+    LaunchedEffect(libraryModel.fitJump.value) {
+        if (libraryModel.fitJump.value > 0) selectedTitle.bringIntoView()
+    }
     Text(
         stringResource(R.string.home_title),
         style = MaterialTheme.typography.headlineLarge,
@@ -126,7 +135,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     Button(onClick = onAbout, contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)) {
         Text(stringResource(R.string.about_button))
     }
-    if (engine is EngineState.Ready || engine is EngineState.Empty) FitLibrary(libraryModel)
+    if (engine is EngineState.Ready || engine is EngineState.Empty) OpenFits()
     when (val current = engine) {
         EngineState.Loading -> Text(stringResource(R.string.engine_loading))
         is EngineState.Failed -> {
@@ -140,7 +149,10 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
             val stats = current.fit.stats
             val ammunition = current.fit.modules.first().charge ?: stringResource(R.string.no_ammunition)
             current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
-            Text(current.fit.name, style = MaterialTheme.typography.titleLarge)
+            Text(current.fit.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(selectedTitle))
+            TextButton(onClick = {
+                EngineRuntime.catalog.value.hulls.find { it.name == current.fit.ship }?.let(libraryModel::showHull)
+            }, modifier = Modifier.testTag("back-to-hull")) { Text("Browse ${current.fit.ship} fits") }
             val sampleGuns = current.fit.modules.take(2).size == 2 &&
                 current.fit.modules.take(2).all { it.name == "Dual 150mm Railgun II" }
             if (sampleGuns) Text(stringResource(R.string.sample_ammunition, ammunition))
@@ -165,6 +177,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
             }
         }
     }
+    if (engine is EngineState.Ready || engine is EngineState.Empty) FitLibrary(libraryModel)
 }
 
 internal fun formatStat(stat: Stat): String {

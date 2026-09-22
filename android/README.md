@@ -1,11 +1,12 @@
-# Offline Android engine development (B03.1)
+# Offline Android engine development (B03.2)
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
 without network access. Both guns can change ammunition together; the sample
 shows drone control range and all 39 sampled attributes. B02 persists fit graphs;
 B03.1 adds creation from bundled examples, search, open, rename, copy and deletion.
-Full hull/equipment editing and library organization remain later tasks.
+B03.2 adds hull/race browsing, recently modified fits and saved open-fit navigation.
+Full hull/equipment editing remains later work.
 A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
@@ -291,10 +292,26 @@ existing native tests plus three persistence phases; 45 new snapshots match the
 independent desktop values. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35389186269) passes 65 host tests, the
 independent references and migration/backup check. [Full evidence and limits](../docs/android/evidence/b02-native.json)
 remain in the repository after CI artifacts expire. B03.1 subsequently added the
-fit library described below. B03.2 remains the next feature task; setup work does not authorize starting it.
+fit library described below. B03.2 adds the organization workflow below.
 
 ## B03.1 fit library
 
-The development library creates bundled Vexor/Celestis/Vulture example fits, searches names/hulls, opens, renames, copies and confirms deletion. Equipment/hull selection and organization remain later tasks. Copies retain incoming linked-source identities; deleting a source refreshes recipients in the same durable transaction. Empty stores reopen empty.
+The development library creates bundled Vexor/Celestis/Vulture example fits, searches names/hulls, opens, renames, copies and confirms deletion. Equipment/hull selection remains later work. Copies retain incoming linked-source identities; deleting a source refreshes recipients in the same durable transaction. Empty stores reopen empty.
 
 `ci/native-test.sh` retains every prior suite and runs `ci/check-library.py` in three additional production-storage processes after B02. It exercises native controls, dialog recreation, Unicode/search/open/cancel, independent ammunition edits, two-recipient projection/command deletion and empty-store reopen/recreation. `library_summary.py` independently checks retained raw outputs against pinned desktop fixtures. Screenshots and raw receipts share the existing one-day diagnostic artifact; no APK upload or release is added.
+
+## B03.2 organization and open fits
+
+Browse all 55 desktop hull groups and 437 hulls, filter races and empty groups,
+return from a fit to its hull, and find the 50 most recently modified fits.
+Opening or switching fits does not affect modification order. Multiple open
+views can be closed individually or together without deleting saved fits.
+Restart restoration is opt-in and includes the active fit. Older fit stores
+remain readable; their historical edit order is explicitly unknown.
+
+`ci/check-navigation.py` follows B03.1 with four separate offline processes,
+without reinstalling or clearing app data. `navigation_summary.py` verifies
+restart boundaries, desktop catalogue metadata and every retained raw statistic.
+Run the full `ci/native-test.sh` on its disposable CI emulator to retain all 17
+required executions. Do not run the unfiltered phase tests on a personal phone.
+The same one-day evidence artifact includes four additional screenshots.

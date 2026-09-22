@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -13,6 +15,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +29,20 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 
 class FitLibraryModel : ViewModel() {
+    val mode = mutableStateOf("All fits")
+    val groupId = mutableStateOf<Int?>(null)
+    val hullName = mutableStateOf<String?>(null)
+    val races = mutableStateOf<Set<String>>(emptySet())
+    val hullJump = mutableStateOf(0)
+    val fitJump = mutableStateOf(0)
+    fun showHull(hull: Hull) {
+        mode.value = "Hulls"
+        groupId.value = hull.groupId
+        hullName.value = hull.name
+        search.value = ""
+        races.value = emptySet()
+        hullJump.value++
+    }
     val search = mutableStateOf("")
     val action = mutableStateOf<String?>(null)
     val targetId = mutableStateOf<String?>(null)
@@ -41,6 +59,8 @@ internal fun FitLibrary(model: FitLibraryModel) {
     val context = LocalContext.current
     val fits by EngineRuntime.library.collectAsState()
     val state by EngineRuntime.state.collectAsState()
+    val navigation by EngineRuntime.navigation.collectAsState()
+    val modified by EngineRuntime.modified.collectAsState()
     var search by model.search
     var action by model.action
     var targetId by model.targetId
@@ -53,6 +73,10 @@ internal fun FitLibrary(model: FitLibraryModel) {
     val unavailable = (state as? EngineState.Ready)?.error?.code == BridgeErrorCode.ENGINE_UNAVAILABLE ||
         (state as? EngineState.Empty)?.error?.code == BridgeErrorCode.ENGINE_UNAVAILABLE
     val enabled = !busy && !unavailable
+    val libraryTitle = remember { BringIntoViewRequester() }
+    LaunchedEffect(model.hullJump.value) {
+        if (model.hullJump.value > 0) libraryTitle.bringIntoView()
+    }
     fun openDialog(kind: String, fit: FitSnapshot? = null) {
         action = kind
         targetId = fit?.id
@@ -64,7 +88,7 @@ internal fun FitLibrary(model: FitLibraryModel) {
         error = null
     }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text("Saved fits", style = MaterialTheme.typography.titleLarge)
+        Text("Saved fits", style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(libraryTitle))
         Text("Create from an example fit. Equipment editing is coming in a later milestone.",
             style = MaterialTheme.typography.bodySmall)
         Button(onClick = { openDialog("Create") }, enabled = enabled, modifier = Modifier.testTag("library-create")) {
@@ -72,23 +96,32 @@ internal fun FitLibrary(model: FitLibraryModel) {
         }
         OutlinedTextField(value = search, onValueChange = { search = it }, label = { Text("Search fits or hulls") },
             singleLine = true, modifier = Modifier.fillMaxWidth().testTag("library-search"))
+        LibraryBrowser(model, fits)
         error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("library-error")) }
         if (busy) Text("Saving…")
-        val matches = fits.filter { it.name.contains(search, ignoreCase = true) || it.ship.contains(search, ignoreCase = true) }
-            .sortedWith(compareBy<FitSnapshot> { it.name.lowercase() }.thenBy { it.id })
+        val query = search.trim()
+        val searching = query.isNotEmpty()
+        val visible = fits.filter { it.name.contains(query, ignoreCase = true) || it.ship.contains(query, ignoreCase = true) }
+        val matches = when {
+            searching -> visible.sortedWith(compareBy<FitSnapshot> { it.name.lowercase() }.thenBy { it.id })
+            model.mode.value == "Recent" -> visible.sortedWith(compareByDescending<FitSnapshot> { modified[it.id] ?: 0 }.thenBy { it.id }).take(50)
+            model.mode.value == "Hulls" -> visible.filter { it.ship == model.hullName.value }.sortedBy { it.name.lowercase() }
+            else -> visible.sortedWith(compareBy<FitSnapshot> { it.name.lowercase() }.thenBy { it.id })
+        }
         if (fits.isEmpty()) Text("No saved fits. Create a fit to get started.", modifier = Modifier.testTag("library-empty"))
-        else if (matches.isEmpty()) Text("No matching fits.")
+        else if (matches.isEmpty() && (searching || model.mode.value != "Hulls" || model.hullName.value != null)) Text("No matching fits.")
         for (fit in matches) {
             Card(Modifier.fillMaxWidth().testTag("fit-${fit.id}")) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(fit.name, style = MaterialTheme.typography.titleMedium)
-                    Text(fit.ship + if (selected?.id == fit.id) " · Open" else "")
+                    Text(fit.ship + if (selected?.id == fit.id) " · Active" else if (fit.id in navigation.openIds) " · Open" else "")
                     Row {
                         TextButton(onClick = {
                             busy = true
                             EngineRuntime.selectFit(context, fit.id).whenCompleteAsync({ _, failure ->
                                 busy = false
                                 error = if (failure == null) null else "Could not open this fit. Restart the app."
+                                if (failure == null && EngineRuntime.navigation.value.activeId == fit.id) model.fitJump.value++
                             }, ContextCompat.getMainExecutor(context))
                         }, enabled = enabled, modifier = Modifier.testTag("open-${fit.id}")) { Text("Open") }
                         TextButton(onClick = { openDialog("Rename", fit) }, enabled = enabled,
@@ -152,6 +185,7 @@ internal fun FitLibrary(model: FitLibraryModel) {
                             action = null
                             if (kind == "Create" || kind == "Duplicate") {
                                 search = ""
+                                model.mode.value = "All fits"
                                 response.fits.singleOrNull { it.id !in before }?.let { EngineRuntime.selectFit(context, it.id) }
                             }
                         }

@@ -4,7 +4,7 @@
     <string name="home_title">Your offline fits.</string>
     <string name="milestone">EARLY DEVELOPMENT</string>
     <string name="status_title">A saved fit library.</string>
-    <string name="status_body">Create from example fits, search, rename, copy and delete them offline. Full equipment editing and library organization are still in development.</string>
+    <string name="status_body">Organize saved fits by hull and race, find recent edits, and keep several fits open offline. New fits use three examples; full equipment editing is still in development.</string>
     <string name="engine_loading">Preparing the bundled game data and calculating…</string>
     <string name="engine_failed">The fitting engine could not start.</string>
     <string name="sample_title">Vexor · all skills V</string>

@@ -19,6 +19,47 @@ Pinned source remains `8b04f3b271e614b3e103853b44a7851a63d79d0e`.
 
 Create, search, select, rename, duplicate and confirm/cancel deletion in native Compose. Retain IDs/revisions across restart; copies preserve actual modules, drones, skills, implants and incoming links without sharing editable fit contents. Source deletion refreshes both kinds of recipient and leaves unlinked controls unchanged. Reject stale/invalid requests; failure before durable commit restores the prior graph. An intentionally empty store must reopen empty, without restoring a sample. Preserve existing corrupt-store rejection and every existing regression gate. Inspect real screenshots including keyboard/long names and empty state.
 
+## B03.2 acceptance and implementation boundary
+
+Active on `android/b03-2-library-navigation`, based on setup PR #14. User authorized
+implementation, review, all required checks and merge; stop after B03.2.
+
+- Browse every pinned desktop hull group and race, including structures, limited
+  issue ships, Capsule's Shuttle placement and hidden converted/skinned hulls.
+  Hide/show empty groups and hulls, combine race filters, navigate back through
+  groups and jump from the selected fit to its hull. Search spans all saved fits.
+- Recent means up to 50 recently modified fits. Persist a monotonic input-edit
+  order in the same SQLite graph transaction. Reads, opening, switching, failed
+  edits and pure recipient recalculation do not change that order. Prior saves
+  have unknown order (zero), sorted last; no date is invented. Deleting a source
+  changes recipients' stored links and therefore their modification order.
+- Open an ordered set of stable fit IDs, select existing views without duplicate
+  tabs, close active/inactive/all views without deleting fits, and remove deleted
+  fit IDs. Activity recreation preserves navigation and browser/dialog state.
+  Opt-in restart restoration retains the ordered set and selected ID. Default
+  is off, as in `pyfaPrevOpenFits.enabled`; first use retains the B03.1 sample.
+- App-private `AtomicFile` stores open IDs, selected ID, restore and empty-group
+  preferences off the UI thread. It is independent of saved fitting inputs.
+  Invalid navigation preferences are preserved with an explicit session-only
+  fallback; missing/deleted IDs are removed on restore. A failed fit save retains
+  the previous modification order. Optional `modified` metadata extends existing
+  graph formats 1/2; old files open without rewriting. Earlier builds reject this
+  extension, so safe downgrade/upgrade distribution still belongs to R02.
+
+Desktop audit additionally checked `gui/builtinShipBrowser/navigationPanel.py`,
+`gui/builtinPreferenceViews/pyfaGeneralPreferences.py` and
+`eos/db/saveddata/queries.py:getRecentFits` (modified order, limit 50).
+Empty-group and race switches are transient desktop browser state; Android
+persists empty-group visibility and retains race selections during activity
+recreation. Kotlin/Compose, Chaquopy and serialized EOS remain unchanged.
+
+Verification gates: original 73 host tests plus five organization regressions;
+independent desktop catalogue export/repeat and existing independent calculation
+references/migration; APKs, lint, signature and complete package checks; all 13
+prior native executions plus four B03.2 process phases with raw desktop statistics,
+catalogue comparison, navigation/restarts and screenshots. Native results and
+delivery are pending; no physical-device or user usability claim.
+
 ## Result
 
 B03.1 completed in [PR #13](https://github.com/Sussic/Pyfa-android/pull/13), merged as `bc6434b67846aba1bae6aa450afe5817b6560645`. Tested head `1468ab9513aa4d69cb17a48b384c27357a8d64e7`; source tree `1aafebd1794ae94c8ba5ca8579a91e4bc275df18`. B03 remains incomplete; B03.2 is ready.
