@@ -65,7 +65,7 @@ class EmptyHullTest {
         return JSONObject().put("id", fit.id).put("revision", fit.revision).put("name", fit.name).put("ship", fit.ship)
             .put("stats", stats).put("scalar_types", types)
             .put("modules", JSONArray(fit.modules.map { JSONObject().put("index", it.index).put("name", it.name)
-                .put("state", it.state.name).put("charge", it.charge ?: JSONObject.NULL) }))
+                .put("state", checkNotNull(it.state).name).put("charge", it.charge ?: JSONObject.NULL) }))
             .put("skills", JSONObject(fit.skills)).put("implants", JSONArray(fit.implants.map { JSONObject()
                 .put("name", it.name).put("slot", it.slot).put("active", it.active) }))
             .put("projections", JSONArray(fit.projections.map { JSONObject().put("source_id", it.sourceId)

@@ -39,7 +39,7 @@ adb shell getprop ro.build.version.sdk > build/evidence/device-api.txt
 cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-version.txt
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest \
-  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest,io.github.sussic.pyfa.FitLibraryTest,io.github.sussic.pyfa.LibraryNavigationTest,io.github.sussic.pyfa.EquipmentBrowserTest,io.github.sussic.pyfa.EmptyHullTest
+  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest,io.github.sussic.pyfa.FitLibraryTest,io.github.sussic.pyfa.LibraryNavigationTest,io.github.sussic.pyfa.EquipmentBrowserTest,io.github.sussic.pyfa.EmptyHullTest,io.github.sussic.pyfa.ModuleEditingTest
 collect_screenshots
 adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
 adb exec-out cat /sdcard/Download/pyfa-a08-projection.json > build/evidence/projection-native.json
@@ -51,4 +51,5 @@ python3 ci/check-library.py
 python3 ci/check-navigation.py
 python3 ci/check-market.py
 python3 ci/check-empty-hulls.py
+python3 ci/check-module-edits.py
 python3 ci/summarize-tests.py

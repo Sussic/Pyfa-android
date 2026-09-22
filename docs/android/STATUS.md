@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-22. B04.2.1 delivered; exact next task **B04.2.2 — Module editing, legality and recent use**.
+Updated: 2026-09-22. Active: **B04.2.2 — Module editing, legality and recent use**.
 
 ## Current authorized work
 
@@ -27,9 +27,26 @@ Updated: 2026-09-22. B04.2.1 delivered; exact next task **B04.2.2 — Module edi
   atomic rejection and real process restart. All **20 screenshots** reviewed.
   [Task/audit](tasks/B04-equipment-fitting.md) and
   [raw results/provenance/screens](evidence/b04-2-1-native.json) retain evidence.
-- **B04.2.2** is the exact next task: add/replace/remove modules, rigs and service
+- **B04.2.2** is active on `codex/b04-2-2-module-editing`, based on clean live
+  master `9e16cf21d9ba0f117419e99ac3d5e544b9196541` with no open PRs.
+  Outcome: add/replace/remove modules, rigs and service
   modules, preserve positions/state limits, expose EOS legality/skill/resource
   warnings, restriction override/re-enable and persistent 20-item recent use.
+  Worker edits and native editor are implemented locally but not delivered.
+  Six focused host checks pass the 91-state/4,242-module reference, including
+  two projection recipients, shared history, subsystem vacancy preservation,
+  atomic failed saves, copies and process restore. The complete local Windows
+  gate passed 96 tests before the final vacancy/order refinements. APK/test
+  builds, lint, signature and 148-file/source/data/ABI inspection pass before
+  final test refinements. [PR #18](https://github.com/Sussic/Pyfa-android/pull/18)
+  is open. Windows CI 35759228642 passes all 96 tests and references. The first
+  Android run passes all 22 native executions, then its report validator fails
+  because JSONObject normalizes one decimal setting to an integer. The second
+  run also passes all 22 executions but catches the type map being captured after
+  an earlier serialization in EngineRuntime. Capture now occurs inside the worker
+  before that first writer. A local installed-JSON/JDK probe reproduces the loss
+  and verifies preservation through both writers. Exact settings and corruption
+  guards remain required. Final CI and full screenshot review/merge remain.
   B04.2.3 retains charges/scripts/crystals, active-fit charges, fitted/addition
   variations and ordering. Parent B04/B04.2 remain incomplete; F02.01 is partial.
   16 of 76 leaf tasks are done; 60 remain, plus seven rollups.
@@ -50,7 +67,7 @@ AppData outside OneDrive. [Windows guide](WINDOWS.md) has commands; the local
 `build/WINDOWS-CHECKPOINT.md` records receipts and continuation details. Do not
 replace the installed environment or run timed host suites alongside Gradle.
 
-Keep all **90 host tests and 20 native executions**, independent raw-value
+Keep all **96 host tests and 22 native executions**, independent raw-value
 validators, process restarts, forced-GC regressions and screenshot review.
 Native CI uses Ubuntu/KVM; the local Windows setup does not claim native runtime
 coverage. One-day diagnostics retention, deliberate APK uploads only, no scheduled

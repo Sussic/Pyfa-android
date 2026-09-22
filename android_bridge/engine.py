@@ -71,12 +71,12 @@ class HeadlessEngine:
         self.resolved_item_ids[name] = item.ID
         return item
 
-    def create_fit(self, spec):
+    def create_fit(self, spec, *, restore=False):
         """Create a local ship/modules/drones fit; reject unimplemented inputs."""
         self._check_thread()
         _keys(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern",
                      "security", "modules", "drones", "target_profile", "implants",
-                     "boosters", "projections", "commands", "environments"))
+                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions",))
         if spec["target_profile"] is not None or any(spec[key] != [] for key in (
                 "implants", "boosters", "projections", "commands", "environments")):
             raise ValueError("This adapter does not implement those scenario inputs yet")
@@ -117,8 +117,17 @@ class HeadlessEngine:
         fit.implantLocation = ImplantLocation.FIT
         fit.systemSecurity = security
         fit.pilotSecurity = pilot
-        fit.ignoreRestrictions = False
+        fit.ignoreRestrictions = spec.get("ignore_restrictions", False)
+        if type(fit.ignoreRestrictions) is not bool:
+            raise ValueError("Invalid restriction override")
         for row in spec["modules"]:
+            if "empty_slot" in row:
+                from .fitting import VACANT_SLOTS
+                _keys(row, ("empty_slot",))
+                if type(row["empty_slot"]) is not str or row["empty_slot"] not in VACANT_SLOTS:
+                    raise ValueError("Invalid empty module slot")
+                fit.modules.appendIgnoreEmpty(Module.buildEmpty(VACANT_SLOTS[row["empty_slot"]]))
+                continue
             _keys(row, ("name", "state"), ("charge",))
             module = Module(self._item(row["name"]))
             try:
@@ -134,7 +143,7 @@ class HeadlessEngine:
                 if not module.isValidCharge(charge):
                     raise ValueError("Incompatible module charge")
                 module.charge = charge
-            fit.modules.append(module)
+            fit.modules.appendIgnoreEmpty(module)
         for row in spec["drones"]:
             _keys(row, ("name", "amount", "active"))
             _integer(row["amount"], 1, 2**31 - 1)
@@ -145,7 +154,10 @@ class HeadlessEngine:
             drone.owner = fit
             fit.drones.append(drone)
         fit.calculateModifiedAttributes()
-        if not fit.fits:
+        # Desktop restriction re-enable deliberately retains over-hardpoint fits.
+        # Saved/copy replay must preserve them; new fitting still checks them.
+        if any(not module.isEmpty and not module.fits(fit, hardpointLimit=not restore)
+               for module in fit.modules):
             raise ValueError("Fit contains incompatible equipment")
         # EOS projection associations need unique fit IDs and the mapped reverse
         # relationships. This database is in memory; disk persistence is B02.
@@ -313,7 +325,7 @@ class HeadlessEngine:
         except (KeyError, TypeError) as error:
             raise ValueError("Invalid module state") from error
         modules = [fit.modules[index] for index in module_indices]
-        if any(not module.isValidState(state) for module in modules):
+        if any(module.isEmpty or not module.isValidState(state) for module in modules):
             raise ValueError("A selected module cannot use that state")
         previous = [module.state for module in modules]
         try:
@@ -337,7 +349,7 @@ class HeadlessEngine:
             raise ValueError("Module selection contains duplicates")
         charge = None if charge_name is None else self._item(charge_name)
         modules = [fit.modules[index] for index in module_indices]
-        if any(not module.isValidCharge(charge) for module in modules):
+        if any(module.isEmpty or not module.isValidCharge(charge) for module in modules):
             raise ValueError("Charge is incompatible with the selection")
         previous = [module.charge for module in modules]
         try:

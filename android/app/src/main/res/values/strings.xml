@@ -4,7 +4,7 @@
     <string name="home_title">Your offline fits.</string>
     <string name="milestone">EARLY DEVELOPMENT</string>
     <string name="status_title">A saved fit library.</string>
-    <string name="status_body">Create empty ship and structure fits, browse equipment, organize recent edits, and keep several fits open offline. Full equipment editing is still in development.</string>
+    <string name="status_body">Create ship and structure fits, add or replace modules, review fitting warnings, and reuse recent equipment offline. Charges, variations and rack ordering are still in development.</string>
     <string name="engine_loading">Preparing the bundled game data and calculating…</string>
     <string name="engine_failed">The fitting engine could not start.</string>
     <string name="sample_title">Vexor · all skills V</string>

@@ -1,0 +1,66 @@
+[
+  {"name":"racks-and-holes","ship":"Rifter","skills":5,"operations":[
+    ["add","200mm AutoCannon II",true], ["add","150mm Light AutoCannon II",true],
+    ["add","Damage Control II",true], ["add","1MN Afterburner II",true],
+    ["add","Small Projectile Burst Aerator II",true], ["remove",7,true],
+    ["replace",8,"125mm Gatling AutoCannon II",true], ["add","200mm AutoCannon II",true],
+    ["replace",8,"1MN Afterburner II",false], ["replace",4,"5MN Microwarpdrive II",true],
+    ["replace",10,"Small Projectile Collision Accelerator I",true], ["remove",10,true],
+    ["add","Small Projectile Collision Accelerator II",true], ["add","Gyrostabilizer II",true],
+    ["add","Gyrostabilizer II",true], ["add","Gyrostabilizer II",true], ["add","Gyrostabilizer II",false],
+    ["add","Damage Control II",false], ["add","Medium Core Defense Field Extender I",false]
+  ]},
+  {"name":"group-and-hull-override","ship":"Rifter","skills":5,"operations":[
+    ["add","Damage Control II",true], ["add","Damage Control II",false],
+    ["add","Capital Armor Repairer I",false], ["add","Interdiction Sphere Launcher I",false],
+    ["restrictions",true,true], ["add","Damage Control II",true],
+    ["add","Capital Armor Repairer I",true], ["add","Interdiction Sphere Launcher I",true],
+    ["add","Medium Core Defense Field Extender I",true], ["restrictions",false,true]
+  ]},
+  {"name":"hardpoint-reenable","ship":"Kestrel","skills":5,"operations":[
+    ["add","200mm AutoCannon II",false], ["restrictions",true,true],
+    ["add","200mm AutoCannon II",true], ["restrictions",false,true],
+    ["add","200mm AutoCannon II",false], ["remove",6,true]
+  ]},
+  {"name":"active-group-and-cloak","ship":"Rifter","skills":5,"operations":[
+    ["add","5MN Microwarpdrive II",true], ["add","5MN Microwarpdrive II",true],
+    ["add","Prototype Cloaking Device I",true], ["remove",5,true],
+    ["replace",4,"1MN Afterburner II",true], ["add","Warp Core Stabilizer I",true]
+  ]},
+  {"name":"online-group","ship":"Rifter","skills":5,"operations":[
+    ["restrictions",true,true], ["add","Armor Command Burst I",true],
+    ["add","Armor Command Burst I",true], ["remove",8,true]
+  ]},
+  {"name":"overloaded-resources","ship":"Rifter","skills":5,"operations":[
+    ["add","Large Shield Extender II",true], ["add","1600mm Steel Plates II",true],
+    ["add","Small Projectile Burst Aerator II",true], ["add","Small Projectile Burst Aerator II",true],
+    ["add","Small Projectile Burst Aerator II",true]
+  ]},
+  {"name":"skill-warnings","ship":"Rifter","skills":0,"operations":[
+    ["add","200mm AutoCannon II",true], ["add","Small Projectile Burst Aerator II",true],
+    ["add","1MN Afterburner II",true], ["add","Damage Control II",true]
+  ]},
+  {"name":"structure-racks-services","ship":"Astrahus","skills":5,"operations":[
+    ["add","Standup Multirole Missile Launcher I",true], ["add","Standup Stasis Webifier I",true],
+    ["add","Standup Ballistic Control System I",true], ["add","Standup M-Set Missile Precision I",true],
+    ["add","Standup Manufacturing Plant I",true], ["add","Standup Reprocessing Facility I",true],
+    ["add","Standup Research Lab I",true], ["add","Standup Manufacturing Plant I",false],
+    ["add","200mm AutoCannon II",false], ["add","Standup L-Set Missile Flight Processor I",false],
+    ["remove",15,true], ["replace",14,"Standup Reprocessing Facility I",true],
+    ["add","Standup Manufacturing Plant I",true], ["remove",11,true],
+    ["add","Standup M-Set Missile Precision I",true]
+  ]},
+  {"name":"existing-charged-neighbours","ship":"Vexor","skills":5,"modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Antimatter Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"}
+  ],"operations":[
+    ["add","Damage Control II",true], ["remove",0,true],
+    ["add","250mm Railgun II",true], ["replace",1,"Dual 150mm Railgun II",true]
+  ]},
+  {"name":"projection-recipients","ship":"Celestis","skills":5,
+   "recipients":[{"name":"Receiver Rifter","ship":"Rifter"},{"name":"Receiver Vexor","ship":"Vexor"}],
+   "operations":[["add","Remote Sensor Dampener II",true], ["replace",5,"Sensor Booster II",true],
+     ["replace",5,"Remote Sensor Dampener II",true], ["remove",5,true], ["add","Remote Sensor Dampener II",true]]},
+  {"name":"strategic-cruiser-vacancies","ship":"Tengu","skills":5,
+   "operations":[["restrictions",true,true],["restrictions",false,true]]}
+]

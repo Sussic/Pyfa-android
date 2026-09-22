@@ -152,3 +152,21 @@ Other UI coupling remains: `eos/effectHandlerHelpers.py` has lazy `gui` imports 
 implant, booster and projected-environment `makeRoom` helpers. A03–A05 do not call
 them. Investigate relevant paths in the owning later task; do not stub wx, inject
 a fake config module or claim the entire engine is already decoupled.
+
+## B04.2.2 module mutations
+
+The serialized contract adds `add_module`, `replace_module`, `remove_module` and
+`set_fit_restrictions`, with expected revisions and the existing atomic graph
+commit. `fitting_details` returns worker-owned slot/resource/skill/legality data;
+`recent_items` returns up to 20 actual-use item IDs. EOS retains every formula.
+The isolated `fitting.py` policy follows the pinned desktop commands and preserves
+vacant positions, default states, group/hull/rig/hardpoint limits and overrides.
+Resource/skill overloads warn without rejecting edits. Re-enable deliberately
+retains excess hardpoints as desktop does.
+
+Valid-item attempts rejected by legality still promote recent use after restoring
+the unchanged fit graph. Malformed/stale requests and failed saves preserve both.
+Optional graph history and fit restriction/vacancy inputs survive copy/restart;
+older binaries reject these inputs without replacing the saved file. Full
+upgrade/downgrade verification remains R02. Charge/variation/order mutations are
+B04.2.3, bulk workflows B05, and dedicated subsystem/mode editing B06.

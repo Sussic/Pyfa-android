@@ -36,6 +36,8 @@ object EngineRuntime {
     val catalog = mutableCatalog.asStateFlow()
     private val mutableModified = MutableStateFlow<Map<String, Long>>(emptyMap())
     val modified = mutableModified.asStateFlow()
+    private val mutableRecent = MutableStateFlow<List<Int>>(emptyList())
+    val recent = mutableRecent.asStateFlow()
     private val mutableNavigation = MutableStateFlow(LibraryNavigation())
     val navigation = mutableNavigation.asStateFlow()
     private val mutableNavigationError = MutableStateFlow<String?>(null)
@@ -78,6 +80,29 @@ object EngineRuntime {
             val ids = (0 until rows.length()).map { rows.getInt(it) }
             check(ids.distinct().size == ids.size && ids.all { catalog.itemById[it]?.searchable == true })
             ids
+        }, executor)
+    }
+
+    fun fittingDetails(context: Context, fitId: String): CompletableFuture<FittingDetails> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeFitting(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("fitting_details", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
+    fun moduleDefaultsDiagnostics(context: Context): CompletableFuture<List<ModuleDefault>> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable)
+            BridgeCodec.decodeModuleDefaults(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("module_defaults_diagnostics").toString())
         }, executor)
     }
 
@@ -137,6 +162,7 @@ object EngineRuntime {
                 sampleId = result?.id
                 mutableCatalog.value = HullCatalog.decode(module.callAttr("library_catalog").toString())
                 readOrganization()
+                readRecent()
                 if (!ephemeralDiagnostics) {
                     navigationStore = NavigationStore(File(app.noBackupFilesDir, "library-navigation.json"))
                 }
@@ -289,6 +315,9 @@ object EngineRuntime {
                     if (previous != null) mutableState.value = previous.copy(error = response.error)
                     else mutableState.value = EngineState.Empty(response.error)
                 }
+                // Desktop recent use includes rejected fitting attempts. A stale
+                // or malformed request leaves this independently confirmed list unchanged.
+                if (!unavailable) readRecent()
                 response
             } catch (error: Exception) {
                 // A failed call may have committed before its reply was lost. Do
@@ -325,6 +354,11 @@ object EngineRuntime {
         check(value.getInt("version") == 1)
         val rows = value.getJSONObject("modified")
         mutableModified.value = rows.keys().asSequence().associateWith { id -> rows.getLong(id).also { check(it >= 0) } }
+    }
+
+    private fun readRecent() {
+        mutableRecent.value = BridgeCodec.decodeRecent(Python.getInstance().getModule("mobile_runtime")
+            .callAttr("recent_items").toString())
     }
 
     private fun publishSelection() {
@@ -397,7 +431,18 @@ object EngineRuntime {
         return CompletableFuture.supplyAsync({
             ready.join()
             check(Looper.myLooper() != Looper.getMainLooper())
-            JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("bridge_diagnostics").toString())
+            val report = JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("bridge_diagnostics").toString())
+            // Capture the original Python JSON types before this first native
+            // serialization normalizes whole-number decimals into integers.
+            val settings = report.getJSONObject("eos_settings")
+            val numericTypes = JSONObject()
+            settings.keys().forEach { name ->
+                when (settings.get(name)) {
+                    is Int, is Long -> numericTypes.put("root.$name", "integer")
+                    is Double -> numericTypes.put("root.$name", "decimal")
+                }
+            }
+            report.put("eos_settings_numeric_types", numericTypes)
                 .put("android_worker_thread", Thread.currentThread().name)
                 .put("android_main_thread", Looper.myLooper() == Looper.getMainLooper()).toString()
         }, executor)

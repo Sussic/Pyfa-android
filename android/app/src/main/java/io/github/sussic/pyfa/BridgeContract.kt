@@ -34,6 +34,10 @@ sealed interface BridgeOperation {
     data class RenameFit(val fitId: String, val name: String) : BridgeOperation
     data class DuplicateFit(val fitId: String, val name: String) : BridgeOperation
     data class DeleteFit(val fitId: String, val resolveReferences: Boolean) : BridgeOperation
+    data class AddModule(val fitId: String, val itemId: Int) : BridgeOperation
+    data class ReplaceModule(val fitId: String, val position: Int, val itemId: Int) : BridgeOperation
+    data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
+    data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
@@ -88,7 +92,8 @@ sealed interface StatValue {
 }
 
 data class Stat(val value: StatValue, val unit: String)
-data class ModuleSnapshot(val index: Int, val name: String, val charge: String?, val state: ModuleState)
+data class ModuleSnapshot(val index: Int, val name: String?, val charge: String?, val state: ModuleState?,
+    val emptySlot: ModuleSlot? = null)
 data class ImplantSnapshot(val name: String, val slot: Int, val active: Boolean)
 data class ProjectionSnapshot(val sourceId: String, val rangeM: Double?, val active: Boolean, val amount: Int)
 data class CommandSnapshot(val sourceId: String, val active: Boolean)
@@ -241,6 +246,13 @@ object BridgeCodec {
         is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.DuplicateFit -> "duplicate_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.DeleteFit -> "delete_fit" to obj("fit_id" to operation.fitId, "resolve_references" to operation.resolveReferences)
+        is BridgeOperation.AddModule -> "add_module" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.ReplaceModule -> "replace_module" to obj("fit_id" to operation.fitId,
+            "position" to integer(operation.position, "position", 0), "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.RemoveModule -> "remove_module" to obj("fit_id" to operation.fitId,
+            "position" to integer(operation.position, "position", 0))
+        is BridgeOperation.SetFitRestrictions -> "set_fit_restrictions" to obj("fit_id" to operation.fitId, "ignore" to operation.ignore)
         is BridgeOperation.CreateFit -> "create_fit" to obj("spec" to encodeFitSpec(operation.spec))
         is BridgeOperation.SetCharges -> "set_charges" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "charge" to operation.charge?.let { nonempty(it, "charge") })
@@ -307,12 +319,17 @@ object BridgeCodec {
         }
         val modules = array(value.get("modules"), "$path.modules").mapIndexed { index, entry ->
             val module = objectValue(entry, "$path.modules[$index]")
-            keys(module, setOf("index", "name", "charge", "state"), path = "$path.modules[$index]")
             val position = integer(module.get("index"), "module.index", 0)
             requireProtocol(position == index, "Module indices must match their array positions")
-            ModuleSnapshot(position, nonempty(module.get("name"), "module.name"),
-                nullable(module.get("charge"))?.let { nonempty(it, "module.charge") },
-                enumValue<ModuleState>(module.get("state"), "module.state"))
+            if (module.has("empty_slot")) {
+                keys(module, setOf("index", "empty_slot"), path = "$path.modules[$index]")
+                ModuleSnapshot(position, null, null, null, enumValue<ModuleSlot>(module.get("empty_slot"), "module.empty_slot"))
+            } else {
+                keys(module, setOf("index", "name", "charge", "state"), path = "$path.modules[$index]")
+                ModuleSnapshot(position, nonempty(module.get("name"), "module.name"),
+                    nullable(module.get("charge"))?.let { nonempty(it, "module.charge") },
+                    enumValue<ModuleState>(module.get("state"), "module.state"))
+            }
         }
         val skillObject = objectValue(value.get("skills"), "$path.skills")
         val skills = skillObject.keys().asSequence().associateWith { name ->
@@ -345,6 +362,107 @@ object BridgeCodec {
             nonempty(value.get("name"), "$path.name"), nonempty(value.get("ship"), "$path.ship"),
             immutableMap(decodedStats), immutableList(modules), immutableMap(skills), immutableList(implants),
             immutableList(projections), immutableList(commands))
+    }
+
+    fun decodeRecent(json: String): List<Int> {
+        val value = objectValue(StrictJson(json).parse(), "recent")
+        keys(value, setOf("version", "item_ids"), path = "recent")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported recent-use version")
+        val ids = array(value.get("item_ids"), "item_ids").map { integer(it, "item_id", 1) }
+        requireProtocol(ids.size <= 20, "Recent-use list exceeds 20 items")
+        unique(ids, "recent IDs")
+        return immutableList(ids)
+    }
+
+    fun decodeModuleDefaults(json: String): List<ModuleDefault> {
+        val rows = array(StrictJson(json).parse(), "module_defaults").map { entry ->
+            val row = objectValue(entry, "module_default")
+            keys(row, setOf("id", "name", "slot", "state", "limit"), path = "module_default")
+            ModuleDefault(integer(row.get("id"), "item_id", 1), nonempty(row.get("name"), "name"),
+                enumValue<ModuleSlot>(row.get("slot"), "slot"), enumValue<ModuleState>(row.get("state"), "state"),
+                enumValue<ModuleState>(row.get("limit"), "limit"))
+        }
+        unique(rows.map { it.id }, "module default IDs")
+        return immutableList(rows)
+    }
+
+    fun decodeFitting(json: String): FittingDetails {
+        val value = objectValue(StrictJson(json).parse(), "fitting")
+        keys(value, setOf("version", "fit_id", "revision", "ignore_restrictions", "modules", "resources",
+            "slots", "hardpoints", "skill_warnings"), path = "fitting")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported fitting version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid fitting revision")
+        fun numeric(raw: Any, path: String): StatValue = when (raw) {
+            is Int -> StatValue.Integer(raw.toLong())
+            is Long -> StatValue.Integer(raw)
+            is Double -> StatValue.Decimal(finite(raw, path))
+            else -> fail("$path must be a numeric scalar")
+        }
+        fun requirements(raw: Any, depth: Int = 0): List<SkillRequirement> {
+            requireProtocol(depth <= 16, "Skill requirements exceed nesting limit")
+            val rows = array(raw, "requirements").map { entry ->
+                val row = objectValue(entry, "requirement")
+                keys(row, setOf("id", "name", "required", "actual", "requirements"), path = "requirement")
+                SkillRequirement(integer(row.get("id"), "skill.id", 1), nonempty(row.get("name"), "skill.name"),
+                    integer(row.get("required"), "required", 1, 5), integer(row.get("actual"), "actual", 0, 5),
+                    requirements(row.get("requirements"), depth + 1))
+            }
+            unique(rows.map { it.id }, "requirement IDs")
+            return immutableList(rows)
+        }
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("index", "id", "name", "slot", "state", "charge", "legal", "overridden"), path = "module")
+            val position = integer(row.get("index"), "module.index", 0)
+            requireProtocol(position == index, "Module positions are not contiguous")
+            val id = nullable(row.get("id"))?.let { integer(it, "module.id", 1) }
+            val name = nullable(row.get("name"))?.let { nonempty(it, "module.name") }
+            val charge = nullable(row.get("charge"))?.let { nonempty(it, "module.charge") }
+            val legal = nullable(row.get("legal"))?.let { bool(it, "module.legal") }
+            val overridden = bool(row.get("overridden"), "overridden")
+            requireProtocol(if (id == null) name == null && charge == null && legal == null && !overridden
+                else name != null && legal != null, "Inconsistent empty or fitted module")
+            FittingModule(position, id, name, enumValue<ModuleSlot>(row.get("slot"), "module.slot"),
+                enumValue<ModuleState>(row.get("state"), "module.state"), charge, legal, overridden)
+        }
+        val resourceObject = objectValue(value.get("resources"), "resources")
+        keys(resourceObject, setOf("cpu", "powergrid", "calibration"), path = "resources")
+        val resources = resourceObject.keys().asSequence().associateWith { name ->
+            val row = objectValue(resourceObject.get(name), "resource")
+            keys(row, setOf("used", "total", "unit", "overloaded"), path = "resource")
+            val unit = nonempty(row.get("unit"), "resource.unit")
+            requireProtocol(unit == mapOf("cpu" to "tf", "powergrid" to "MW", "calibration" to "points").getValue(name),
+                "Unexpected resource unit")
+            ResourceUse(numeric(row.get("used"), "used"), numeric(row.get("total"), "total"), unit,
+                bool(row.get("overloaded"), "overloaded"))
+        }
+        val slots = array(value.get("slots"), "slots").map { entry ->
+            val row = objectValue(entry, "slot")
+            keys(row, setOf("slot", "used", "total"), path = "slot")
+            SlotUse(enumValue<ModuleSlot>(row.get("slot"), "slot"), integer(row.get("used"), "slot.used", 0),
+                numeric(row.get("total"), "slot.total"))
+        }
+        unique(slots.map { it.slot }, "slot types")
+        requireProtocol(slots.map { it.slot }.toSet() == ModuleSlot.entries.filter { it.editable }.toSet(), "Missing slot totals")
+        val hardpoints = array(value.get("hardpoints"), "hardpoints").map { entry ->
+            val row = objectValue(entry, "hardpoint")
+            keys(row, setOf("kind", "used", "total"), path = "hardpoint")
+            HardpointUse(nonempty(row.get("kind"), "hardpoint.kind"), integer(row.get("used"), "hardpoint.used", 0),
+                numeric(row.get("total"), "hardpoint.total"))
+        }
+        requireProtocol(hardpoints.size == 2 && hardpoints.map { it.kind }.toSet() == setOf("TURRET", "MISSILE"),
+            "Missing or unknown hardpoint types")
+        val warnings = array(value.get("skill_warnings"), "skill_warnings").map { entry ->
+            val row = objectValue(entry, "skill_warning")
+            keys(row, setOf("id", "name", "requirements"), path = "skill_warning")
+            SkillWarning(integer(row.get("id"), "warning.id", 1), nonempty(row.get("name"), "warning.name"),
+                requirements(row.get("requirements")))
+        }
+        unique(warnings.map { it.id }, "skill warning IDs")
+        return FittingDetails(identifier(value.get("fit_id"), "fit_id"), revision,
+            bool(value.get("ignore_restrictions"), "ignore_restrictions"), immutableList(modules),
+            immutableMap(resources), immutableList(slots), immutableList(hardpoints), immutableList(warnings))
     }
 
     private val STAT_NAMES = setOf(

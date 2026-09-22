@@ -419,7 +419,7 @@ class PersistenceTest {
         return JSONObject().put("id", fit.id).put("revision", fit.revision).put("name", fit.name).put("ship", fit.ship)
             .put("stats", stats).put("skills", skills)
             .put("modules", JSONArray(fit.modules.map { JSONObject().put("index", it.index).put("name", it.name)
-                .put("state", it.state.name).put("charge", it.charge ?: JSONObject.NULL) }))
+                .put("state", checkNotNull(it.state).name).put("charge", it.charge ?: JSONObject.NULL) }))
             .put("implants", JSONArray(fit.implants.map { JSONObject().put("name", it.name).put("slot", it.slot).put("active", it.active) }))
             .put("projections", JSONArray(fit.projections.map { JSONObject().put("source_id", it.sourceId)
                 .put("range_m", it.rangeM ?: JSONObject.NULL).put("active", it.active).put("amount", it.amount) }))
