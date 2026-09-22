@@ -431,7 +431,18 @@ object EngineRuntime {
         return CompletableFuture.supplyAsync({
             ready.join()
             check(Looper.myLooper() != Looper.getMainLooper())
-            JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("bridge_diagnostics").toString())
+            val report = JSONObject(Python.getInstance().getModule("mobile_runtime").callAttr("bridge_diagnostics").toString())
+            // Capture the original Python JSON types before this first native
+            // serialization normalizes whole-number decimals into integers.
+            val settings = report.getJSONObject("eos_settings")
+            val numericTypes = JSONObject()
+            settings.keys().forEach { name ->
+                when (settings.get(name)) {
+                    is Int, is Long -> numericTypes.put("root.$name", "integer")
+                    is Double -> numericTypes.put("root.$name", "decimal")
+                }
+            }
+            report.put("eos_settings_numeric_types", numericTypes)
                 .put("android_worker_thread", Thread.currentThread().name)
                 .put("android_main_thread", Looper.myLooper() == Looper.getMainLooper()).toString()
         }, executor)

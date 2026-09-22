@@ -287,3 +287,12 @@ mutations are rejected. This is a report-transport correction, with no formula,
 fixture, production behavior or tolerance change. The local rebuild passes;
 fresh final CI remains required. All seven new screens from this run were
 inspected; final-run review still covers all 27 required screens.
+
+The second run (Windows 35761981241, Android 35761981271) again passes 96 host
+tests and all 22 instrumented executions, but its strict type-map comparison
+correctly detects that capture occurred after EngineRuntime's earlier JSON
+serialization. Capture moves into that worker method, before its first writer,
+with an early native assertion against the independent setting types. A probe
+using the installed JDK/JSON library reproduces the first-writer normalization
+and verifies that early type metadata survives both writer boundaries with exact
+values. No fitting behavior or reference expectation changes.

@@ -58,11 +58,7 @@ class ModuleEditingTest {
     private fun library() = typed(array(fits().map(ModuleTestJson::fit)))
     private fun allDetails() = typed(array(fits().map { fit -> ModuleTestJson.details(details(fit.id))
         .put("fit_id", fit.id).put("revision", fit.revision) }))
-    private fun diagnostics() = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS)).also {
-        // Preserve the original diagnostic wire kinds before JSONObject's writer
-        // normalizes whole-number decimals (for example 1.0) into integers.
-        it.put("eos_settings_numeric_types", ModuleTestJson.numericKinds(it.getJSONObject("eos_settings")))
-    }
+    private fun diagnostics() = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS))
     private fun report(id: String, recipients: List<String>): JSONObject = ModuleTestJson.details(details(id))
         .put("stats", ModuleTestJson.stats(fit(id))).put("recent", array(EngineRuntime.recent.value))
         .put("recipients", array(recipients.map { obj("name" to fit(it).name, "stats" to ModuleTestJson.stats(fit(it))) }))
@@ -142,6 +138,8 @@ class ModuleEditingTest {
         fun item(name: String) = catalogue.items.single { it.name == name }.id
         val before = library()
         val runtimeStart = diagnostics()
+        compare(ModuleTestJson.numericKinds(fixture.getJSONObject("eos_settings")),
+            runtimeStart.getJSONObject("eos_settings_numeric_types"), "original_settings_numeric_types")
         val observed = JSONArray()
         val defaults = JSONArray()
         val history = JSONArray()

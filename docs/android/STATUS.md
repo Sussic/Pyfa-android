@@ -41,9 +41,12 @@ Updated: 2026-09-22. Active: **B04.2.2 — Module editing, legality and recent u
   final test refinements. [PR #18](https://github.com/Sussic/Pyfa-android/pull/18)
   is open. Windows CI 35759228642 passes all 96 tests and references. The first
   Android run passes all 22 native executions, then its report validator fails
-  because JSONObject normalizes one decimal setting to an integer. The report
-  now retains original numeric types and exact setting values; local rebuild and
-  corruption probes pass. Final CI and full screenshot review/merge remain.
+  because JSONObject normalizes one decimal setting to an integer. The second
+  run also passes all 22 executions but catches the type map being captured after
+  an earlier serialization in EngineRuntime. Capture now occurs inside the worker
+  before that first writer. A local installed-JSON/JDK probe reproduces the loss
+  and verifies preservation through both writers. Exact settings and corruption
+  guards remain required. Final CI and full screenshot review/merge remain.
   B04.2.3 retains charges/scripts/crystals, active-fit charges, fitted/addition
   variations and ordering. Parent B04/B04.2 remain incomplete; F02.01 is partial.
   16 of 76 leaf tasks are done; 60 remain, plus seven rollups.
