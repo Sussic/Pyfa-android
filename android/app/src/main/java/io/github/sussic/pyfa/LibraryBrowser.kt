@@ -21,12 +21,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun OpenFits() {
     val context = LocalContext.current
+    val focus = LocalFocusManager.current
     val fits by EngineRuntime.library.collectAsState()
     val navigation by EngineRuntime.navigation.collectAsState()
     val error by EngineRuntime.navigationError.collectAsState()
@@ -38,10 +40,10 @@ internal fun OpenFits() {
                 val fit = fits.find { it.id == id } ?: continue
                 Card(Modifier.widthIn(max = 240.dp).testTag("tab-$id")) {
                     Column(Modifier.padding(8.dp)) {
-                        TextButton(onClick = { EngineRuntime.selectFit(context, id) }, modifier = Modifier.testTag("switch-$id")) {
+                        TextButton(onClick = { focus.clearFocus(); EngineRuntime.selectFit(context, id) }, modifier = Modifier.testTag("switch-$id")) {
                             Text(fit.name + if (navigation.activeId == id) " · Active" else "")
                         }
-                        TextButton(onClick = { EngineRuntime.navigate(context) { it.close(id) } }, modifier = Modifier.testTag("close-$id")) {
+                        TextButton(onClick = { focus.clearFocus(); EngineRuntime.navigate(context) { it.close(id) } }, modifier = Modifier.testTag("close-$id")) {
                             Text("Close")
                         }
                     }
@@ -49,6 +51,7 @@ internal fun OpenFits() {
             }
         }
         if (navigation.openIds.isNotEmpty()) TextButton(onClick = {
+            focus.clearFocus()
             EngineRuntime.navigate(context) { it.copy(openIds = emptyList(), activeId = null) }
         }, modifier = Modifier.testTag("close-all")) { Text("Close all fits") }
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -63,6 +66,7 @@ internal fun OpenFits() {
 @Composable
 internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
     val context = LocalContext.current
+    val focus = LocalFocusManager.current
     val catalog by EngineRuntime.catalog.collectAsState()
     val navigation by EngineRuntime.navigation.collectAsState()
     val mode by model.mode
@@ -76,7 +80,7 @@ internal fun LibraryBrowser(model: FitLibraryModel, fits: List<FitSnapshot>) {
     BackHandler(enabled = mode == "Hulls" && groupId != null && !searching && model.action.value == null) { back() }
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         for (choice in listOf("All fits", "Hulls", "Recent")) {
-            FilterChip(selected = mode == choice, onClick = { model.mode.value = choice; model.search.value = "" },
+            FilterChip(selected = mode == choice, onClick = { focus.clearFocus(); model.mode.value = choice; model.search.value = "" },
                 label = { Text(choice) }, modifier = Modifier.testTag("mode-$choice"))
         }
     }

@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -110,6 +111,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel) {
 @Composable
 private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
     val context = LocalContext.current
+    val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState()
     var expanded by rememberSaveable { mutableStateOf(false) }
     val selectedTitle = remember { BringIntoViewRequester() }
@@ -151,6 +153,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit) {
             current.error?.let { Text(it.message, color = MaterialTheme.colorScheme.error) }
             Text(current.fit.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier.bringIntoViewRequester(selectedTitle))
             TextButton(onClick = {
+                focus.clearFocus()
                 EngineRuntime.catalog.value.hulls.find { it.name == current.fit.ship }?.let(libraryModel::showHull)
             }, modifier = Modifier.testTag("back-to-hull")) { Text("Browse ${current.fit.ship} fits") }
             val sampleGuns = current.fit.modules.take(2).size == 2 &&

@@ -128,7 +128,7 @@ working tree as its own oracle. One local option sharing the fork's Git objects:
 
 ```powershell
 git worktree add --detach --no-checkout build/reference-upstream 8b04f3b271e614b3e103853b44a7851a63d79d0e
-git -C build/reference-upstream sparse-checkout set --cone eos utils staticdata
+git -C build/reference-upstream sparse-checkout set --cone eos utils staticdata service
 git -C build/reference-upstream checkout --detach 8b04f3b271e614b3e103853b44a7851a63d79d0e
 git -C build/reference-upstream status --short --branch
 $run = Join-Path $env:TEMP ('pyfa-windows-' + [guid]::NewGuid().ToString('N'))
@@ -139,6 +139,7 @@ $db = "$run/reference/eve.db"
 & $reference -I tools/android_headless/check_desktop_migration.py --database $db
 & $reference -I tools/android_reference/projection.py --source build/reference-upstream --database $db --output "$run/projection-reference" --check tools/android_reference/fixtures/projection.json
 & $reference -I tools/android_reference/command.py --source build/reference-upstream --database $db --output "$run/command-reference" --check tools/android_reference/fixtures/command.json
+& $reference -I tools/android_reference/catalog.py --source build/reference-upstream --database $db --output "$run/catalog-reference" --check tools/android_reference/fixtures/catalog.json
 & $headless -I tools/android_headless/check.py --database $db --output "$run/headless"
 & $headless -I tools/android_headless/check.py --scenario projection --database $db --output "$run/projection"
 & $headless -I tools/android_headless/check.py --scenario command --database $db --output "$run/command"
@@ -153,19 +154,19 @@ persistence attempt on this machine reported errors. Every output child director
 must be new and outside both checkouts. These scripts validate
 integrity, independent raw values, forbidden desktop/network imports and fresh
 process behavior; never substitute a personal fit database. The current total is
-73 tests (eight utility, 29 headless, 14 bridge, 14 persistence, eight library),
-plus independent desktop exports/repeats and the real migration/backup check.
+78 tests (eight utility, 29 headless, 14 bridge, 14 persistence, 13 library),
+plus independent calculation/catalogue exports/repeats and the real migration/backup check.
 The prepared workspace's ignored `build/check-windows.ps1` runs these gates with
 failure checking and records the new evidence path in `build/windows-check-path.txt`.
 
 ## Required native evidence
 
 A local APK, lint, signature, package inspection and host tests do not prove
-Android runtime behavior. Preserve `.github/workflows/android.yml` and
-`android/ci/native-test.sh` unchanged. Their fresh offline API 36 x86_64 emulator
-sequence requires all **13 native executions**: five functional tests, separate
+Android runtime behavior. Preserve every required gate in `.github/workflows/android.yml`
+and `android/ci/native-test.sh`. Their fresh offline API 36 x86_64 emulator
+sequence requires all **17 native executions**: five functional tests, separate
 A10 performance and B01 contract, three B02 persistence phases, and three B03.1
-library phases. Preserve raw-value validators, restart boundaries and screenshot
+library phases, plus four B03.2 organization/navigation phases. Preserve raw-value validators, restart boundaries and screenshot
 review. Do not run an unfiltered connected suite or this fresh-install script on
 a personal phone. The supported full native harness uses Ubuntu/KVM and GNU
 `timeout`; this setup does not port it to Windows or claim to have run it locally.

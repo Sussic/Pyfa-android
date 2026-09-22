@@ -72,7 +72,19 @@ into the outer vertical viewport. AndroidX's
 operates on the closest scroll parent. The correction scrolls the outer container
 first and asserts the target is displayed before the touch; the close assertion
 and 30-second timeout remain. Screenshots are now retained before test teardown
-and on partial-phase failures. Verification of the correction is pending.
+and on partial-phase failures.
+
+Head `ea20293f` passed Windows run `35675176226`, Android build/package gates
+and all 13 prior native executions. Run `35675176247` passed the previously
+failing active/inactive close checks and deletion, then failed the visibility
+assertion before switching back to the first tab. The test now completes outer
+scrolling after the horizontal scroll too, and captures the UI tree/screen for
+visibility failures. Navigation now clears search focus when opening a fit,
+switching/closing views, changing browser mode or jumping back to a hull. A new
+assertion requires search focus to be cleared after opening its result. The
+original touch, identity, restart assertions and timeouts remain. Final native
+verification is pending; the second run's rename screenshot correctly shows
+the keyboard with both dialog actions above it.
 
 ## Result
 

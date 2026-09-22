@@ -33,15 +33,29 @@ class LibraryNavigationTest {
             throw error
         }
     }
-    private fun click(tag: String) {
+    private fun show(tag: String) {
         // performScrollTo scrolls only the nearest ancestor. Bring a nested
-        // horizontal strip into the vertical viewport before scrolling its child.
-        if (tag.startsWith("switch-") || tag.startsWith("close-") && tag != "close-all") {
-            compose.onNodeWithTag("open-fit-tabs").performScrollTo()
-        } else if (tag.startsWith("race-")) {
-            compose.onNodeWithTag("race-filters").performScrollTo()
+        // horizontal strip into the vertical viewport on both sides of its child
+        // scroll, which may also trigger focus/bring-into-view positioning.
+        val container = when {
+            tag.startsWith("switch-") || tag.startsWith("close-") && tag != "close-all" -> "open-fit-tabs"
+            tag.startsWith("race-") -> "race-filters"
+            else -> null
         }
-        compose.onNodeWithTag(tag).performScrollTo().assertIsDisplayed().performClick()
+        try {
+            container?.let { compose.onNodeWithTag(it).performScrollTo() }
+            compose.onNodeWithTag(tag).performScrollTo()
+            container?.let { compose.onNodeWithTag(it).performScrollTo() }
+            compose.onNodeWithTag(tag).assertIsDisplayed()
+        } catch (error: Throwable) {
+            println(compose.onRoot(useUnmergedTree = true).printToString())
+            screenshot("failure")
+            throw error
+        }
+    }
+    private fun click(tag: String) {
+        show(tag)
+        compose.onNodeWithTag(tag).performClick()
         compose.waitForIdle()
     }
     private fun open(id: String) {
@@ -165,6 +179,7 @@ class LibraryNavigationTest {
                 click("open-$b")
                 waitFor { nav().activeId == b }
                 assertEquals(b, (EngineRuntime.state.value as EngineState.Ready).fit.id)
+                compose.onNodeWithTag("library-search").assertIsNotFocused()
                 checks += "search_opens_intended_id"
                 click("mode-All fits")
                 click("close-$c") // Closing an inactive view does not change the selected fit.
@@ -193,8 +208,7 @@ class LibraryNavigationTest {
                 compose.activityRule.scenario.recreate()
                 assertEquals(listOf(a, c), nav().openIds)
                 assertEquals(a, nav().activeId)
-                compose.onNodeWithTag("open-fit-tabs").performScrollTo()
-                compose.onNodeWithTag("switch-$a").performScrollTo().assertIsDisplayed()
+                show("switch-$a")
                 screenshot("open")
                 saved.writeText(JSONObject().put("a", a).put("c", c).put("expected", snapshot()).toString())
                 checks += "activity_recreation_and_restore_enabled"

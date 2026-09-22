@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -57,6 +58,7 @@ class FitLibraryModel : ViewModel() {
 @Composable
 internal fun FitLibrary(model: FitLibraryModel) {
     val context = LocalContext.current
+    val focus = LocalFocusManager.current
     val fits by EngineRuntime.library.collectAsState()
     val state by EngineRuntime.state.collectAsState()
     val navigation by EngineRuntime.navigation.collectAsState()
@@ -117,6 +119,7 @@ internal fun FitLibrary(model: FitLibraryModel) {
                     Text(fit.ship + if (selected?.id == fit.id) " · Active" else if (fit.id in navigation.openIds) " · Open" else "")
                     Row {
                         TextButton(onClick = {
+                            focus.clearFocus()
                             busy = true
                             EngineRuntime.selectFit(context, fit.id).whenCompleteAsync({ _, failure ->
                                 busy = false
