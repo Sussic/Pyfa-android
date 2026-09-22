@@ -1,58 +1,41 @@
 # Android project status
 
-Updated: 2026-09-22. Active: **B04.2.2 — Module editing, legality and recent use**.
+Updated: 2026-09-22. B04.2.2 delivered; exact next task **B04.2.3 — Charges, variations and rack ordering**.
 
 ## Current authorized work
 
-- Explicit chat confirmation authorizes B04 and then sequential eligible approved
-  roadmap tasks, one outcome at a time, including review, checks and PR merges.
+- Explicit chat confirmation authorizes B04 and sequential eligible approved
+  roadmap tasks, one outcome at a time, including review/checks/PR merges.
   No releases, phone installs, billing changes, unrelated work or delegation.
-- **B04.2.1 — Arbitrary empty ship and structure creation** is delivered in
-  [PR #17](https://github.com/Sussic/Pyfa-android/pull/17), merged as
-  `307d5c07580c7f2f48cd7755acc63cc72c2108c9`. Tested head `645d6f45ae802fec415ed08cc0093314bbbd184b`.
-- Create a named empty fit for any of **437 hulls** (419 ships, 18 structures),
-  search/page the picker, retain selection/name on recreation, or start from the
-  hull browser. Copy and reopen through the existing atomic store. All-V and
-  no-equipment assumptions are visible. Absent gun ranges display “Unavailable”;
-  calculated zeroes remain numeric. Existing example workflows remain.
-- Independent pinned EOS export/repeat checks all **39 raw fields per hull**.
-  [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35748120518) and
-  the complete local suite pass **90 host tests**, independent references/repeats
-  and migration/backup. No original fitted expectation or tolerance changed.
-- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35748120466)
-  passes both APKs, lint, signature, source/data/ABI inspection and **20 offline
-  native executions** on API36 x86_64. All prior numerical, forced-GC and process
-  restart gates remain required. The new native cases compare every hull and
-  exercise picker/search/page/recreation/cancel, ship/structure creation, copy,
-  atomic rejection and real process restart. All **20 screenshots** reviewed.
-  [Task/audit](tasks/B04-equipment-fitting.md) and
-  [raw results/provenance/screens](evidence/b04-2-1-native.json) retain evidence.
-- **B04.2.2** is active on `codex/b04-2-2-module-editing`, based on clean live
-  master `9e16cf21d9ba0f117419e99ac3d5e544b9196541` with no open PRs.
-  Outcome: add/replace/remove modules, rigs and service
-  modules, preserve positions/state limits, expose EOS legality/skill/resource
-  warnings, restriction override/re-enable and persistent 20-item recent use.
-  Worker edits and native editor are implemented locally but not delivered.
-  Six focused host checks pass the 91-state/4,242-module reference, including
-  two projection recipients, shared history, subsystem vacancy preservation,
-  atomic failed saves, copies and process restore. The complete local Windows
-  gate passed 96 tests before the final vacancy/order refinements. APK/test
-  builds, lint, signature and 148-file/source/data/ABI inspection pass before
-  final test refinements. [PR #18](https://github.com/Sussic/Pyfa-android/pull/18)
-  is open. Windows CI 35759228642 passes all 96 tests and references. The first
-  Android run passes all 22 native executions, then its report validator fails
-  because JSONObject normalizes one decimal setting to an integer. The second
-  run also passes all 22 executions but catches the type map being captured after
-  an earlier serialization in EngineRuntime. Capture now occurs inside the worker
-  before that first writer. A local installed-JSON/JDK probe reproduces the loss
-  and verifies preservation through both writers. Exact settings and corruption
-  guards remain required. Final CI and full screenshot review/merge remain.
-  B04.2.3 retains charges/scripts/crystals, active-fit charges, fitted/addition
-  variations and ordering. Parent B04/B04.2 remain incomplete; F02.01 is partial.
-  16 of 76 leaf tasks are done; 60 remain, plus seven rollups.
-- B04.1 remains delivered in [PR #16](https://github.com/Sussic/Pyfa-android/pull/16)
-  with complete market discovery; B03.2 in [PR #15](https://github.com/Sussic/Pyfa-android/pull/15).
-  Historical receipts and task details remain linked from the roadmap.
+- **B04.2.2** is delivered in [PR #18](https://github.com/Sussic/Pyfa-android/pull/18),
+  merge `b4b254071a3bdcddbd88ec5711feccc374d264fc`, tested head `cf9c51857cd37615c2ff9e2b592d3a6bb24dd1ae`.
+  Add/replace/remove modules, rigs and structure services through the native
+  editor/browser. Preserve vacancies and desktop default/state/restriction rules;
+  show resource/recursive skill warnings and explicit override/re-enable effects.
+  Actual use persists as 20 newest-first IDs with duplicate promotion and abyssal
+  exclusion. Valid-item legality rejects enter history; stale/malformed/failed
+  saves preserve both fit and history. EOS and atomic graph architecture remain.
+- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35775027054) passes
+  **96 host tests**, all independent references/repeats and migration/backup.
+  The new oracle covers **11 cases/91 states and 4,242 module defaults**, including
+  two recipients, resource/skill warnings, restrictions and subsystem vacancies.
+  Local full/focused host tests and APK/lint/signature/package checks also pass.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35775027092) passes
+  both APKs, lint, signature, 148-source/data/ABI inspection and **22 offline native
+  executions** on API36 x86_64. UI edits/recreation, exact typed reference values,
+  13 malformed protocol rejections, copies/history and process restart pass.
+  All **27 screenshots** reviewed. The initial report-writer type loss was fixed
+  by preserving original numeric types; settings stay exact and no gate weakened.
+  [Audit](tasks/B04-equipment-fitting.md) and [raw receipt](evidence/b04-2-2-native.json)
+  retain the evidence and limitations.
+- Exact next task: **B04.2.3**, completing charges/scripts/crystals, active-fit
+  charges, fitted/addition variations and rack ordering with independent values,
+  native workflows and restart. B04/B04.2 remain incomplete; B05 bulk and B06 modes/
+  subsystems retain their scope. **17 of 76 leaf tasks done; 59 remain**, plus seven
+  rollups. All 239 parity rows remain; no full-feature/usability claim is made.
+- Prior B04.2.1 [PR #17](https://github.com/Sussic/Pyfa-android/pull/17) delivered
+  all 437 empty hulls; B04.1 [PR #16](https://github.com/Sussic/Pyfa-android/pull/16)
+  delivered complete equipment discovery. Earlier receipts remain in the roadmap.
 
 ## Resume and installed environment
 
@@ -93,15 +76,15 @@ runs or automatic releases remain the policy.
 
 ## Prior delivery and remaining limits
 
-A01–A10, B01–B03.2, B04.1 and B04.2.1 are delivered. Historical task details, PR links and raw
+A01–A10, B01–B03.2, B04.1, B04.2.1 and B04.2.2 are delivered. Historical task details, PR links and raw
 receipts remain in [ROADMAP](ROADMAP.md), the task briefs and
 [evidence](evidence). Windows setup was delivered in
 [PR #14](https://github.com/Sussic/Pyfa-android/pull/14). All **239 parity rows**
 remain in [PARITY](PARITY.md); no full-feature or user-usability sign-off is claimed.
 
-Empty ship/structure creation is delivered. Module/legality/recent-use edits
-remain B04.2.2; charges/variations/reordering remain B04.2.3. Structure modes
-remain B06. Older builds reject saved empty-module fits and preserve the file.
+Empty ship/structure creation and module/legality/recent-use edits are delivered.
+Charges/variations/reordering remain B04.2.3; modes/subsystems remain B06. Older
+builds reject new vacancy/restriction/history inputs and preserve the file.
 Physical ARM64 and older APIs have not run; package
 contents support both ABIs. The phone model/API is unconfirmed. Native report
 transport currently needs API 31+, while the app declares minSdk 24.

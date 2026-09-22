@@ -296,3 +296,22 @@ with an early native assertion against the independent setting types. A probe
 using the installed JDK/JSON library reproduces the first-writer normalization
 and verifies that early type metadata survives both writer boundaries with exact
 values. No fitting behavior or reference expectation changes.
+
+## B04.2.2 delivered
+
+[PR #18](https://github.com/Sussic/Pyfa-android/pull/18) merged as
+`b4b254071a3bdcddbd88ec5711feccc374d264fc` after review of tested head `cf9c51857cd37615c2ff9e2b592d3a6bb24dd1ae`.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35775027054) passes
+all 96 host tests, independent exports/repeats and migration/backup.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35775027092) passes
+both APKs, lint, signature/package checks and all 22 offline native executions.
+The 91 fitting states and 4,242 defaults match the independent original commands;
+native editing, warnings, restriction confirmation/recreation, history, copy and
+real restart retain exact identities/types/values. Thirteen malformed protocol
+cases are rejected. All 27 screenshots reviewed; the seven module screens and
+complete raw/provenance results remain in the [receipt](../evidence/b04-2-2-native.json).
+
+Only API36 x86_64 ran; ARM64 package contents were verified. Physical-device,
+upgrade/downgrade and user usability evidence remain future gates. Exact next:
+**B04.2.3 — Charges, variations and rack ordering**, automatically authorized.
+B04.2/B04 remain incomplete until all retained child acceptance passes.

@@ -56,15 +56,15 @@ row or remove UI, persistence or matrix requirements. All 239 rows are preserved
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F02.01 | Browse bundled market groups, search items and recent items, filter meta variants, and jump to an item's market group. | B04 | [s222][s222], [s116][s116], [s117][s117], [s089][s089] | UP | D: [complete catalogue/search export](evidence/b04-1-native.json); A: [offline discovery/navigation](evidence/b04-1-native.json); partial row: actual recent use remains B04.2 |
-| F02.02 | Add, replace and remove modules, rigs and service modules; preserve positions and show slot/resource/skill legality. | B04 | [s198][s198], [s207][s207], [s206][s206], [s019][s019] | NUP | D: —; A: — |
+| F02.01 | Browse bundled market groups, search items and recent items, filter meta variants, and jump to an item's market group. | B04 | [s222][s222], [s116][s116], [s117][s117], [s089][s089] | UP | D: [complete catalogue/search export](evidence/b04-1-native.json); A: [offline discovery/navigation](evidence/b04-1-native.json), [actual recent-use/restart](evidence/b04-2-2-native.json) |
+| F02.02 | Add, replace and remove modules, rigs and service modules; preserve positions and show slot/resource/skill legality. | B04 | [s198][s198], [s207][s207], [s206][s206], [s019][s019] | NUP | D: [91 command states and 4,242 defaults](evidence/b04-2-2-native.json); A: [module/rig/service edits, warnings, copy/restart](evidence/b04-2-2-native.json) |
 | F02.03 | Load, replace and unload compatible charges/scripts/crystals; reject incompatible charges without partial edits. | B04 | [s093][s093], [s175][s175] | NUP | D: —; A: — |
 | F02.04 | Swap/reorder fitted modules, retaining states/charges and changing rack-dependent heat behavior correctly. | B04 | [s208][s208], [s179][s179] | NUP | D: —; A: — |
 | F02.05 | Switch an item to a supported variation in fitted and addition panes; retain or reconcile states and charges. | B04 | [s092][s092], [s174][s174] | NUP | D: —; A: — |
 | F02.06 | Change tactical modes and supported primary/secondary/tertiary modes; recalculate bonuses and restore the prior mode. | B06 | [s100][s100], [s183][s183], [s018][s018] | NUP | D: —; A: — |
 | F02.07 | Replace strategic-cruiser subsystems and reconcile altered slots, fitting legality and hull bonuses. | B06 | [s019][s019], [s178][s178], [s017][s017] | NUP | D: —; A: — |
 | F02.08 | Fit structures with service slots and structure-specific restrictions/bonuses; compare a structure fixture independently of ship fixtures. | B06 | [s013][s013], [s017][s017] | NUP | D: —; A: — |
-| F02.09 | Explicitly disable fitting restrictions for experimentation; re-enabling handles illegal items visibly and matches desktop removals. | B04 | [s220][s220], [s186][s186] | NUP | D: —; A: — |
+| F02.09 | Explicitly disable fitting restrictions for experimentation; re-enabling handles illegal items visibly and matches desktop removals. | B04 | [s220][s220], [s186][s186] | NUP | D: [override/re-enable original-command matrix](evidence/b04-2-2-native.json); A: [explicit confirmation, removals and retained hardpoints](evidence/b04-2-2-native.json) |
 
 ## F03 — Bulk edits and undo
 
