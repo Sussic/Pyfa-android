@@ -195,3 +195,21 @@ identities, raw values and units. Integer/bool/null identities remain exact;
 float comparisons retain relative 1e-10 and absolute 1e-9 tolerances. The original
 desktop disables the optional global EOS gamedata cache; this exporter does too.
 No Android adapter is imported and no original calculation body is replaced.
+
+## B04.2.3.2 variation commands and menus
+
+Run installed reference Python with `-I tools/android_reference/variation_edits.py`,
+`--source` the clean pin, `--database` the verified dataset, `--output` a fresh
+external directory, and `--check tools/android_reference/fixtures/variation-edits.json`.
+`variation_oracle.py` executes unchanged AST definitions for original GUI/calc
+commands and the variation menu, using real wx command history, Market and Fit.
+Inert menu/event recipients replace only presentation, capturing the original
+ordering, grouping and enablement decisions. EOS bodies are unchanged.
+
+Two fresh processes compare 5,226 published supported families (including every
+additional member returned by the original menu) and 17 cases/55 states. Cases
+cover charge retention/unloading, active Breach Control falling back to online,
+rig/structure edits, separate drone stack order/quantities, active/inactive FIT
+implants (including families spanning multiple slots) and six projection/command recipients. Settings, source hashes, full
+inputs, raw values/types/units and unchanged database digest remain recorded.
+Use the existing exact identity/type and 1e-10 relative/1e-9 absolute numeric rules.

@@ -185,3 +185,17 @@ The optional EOS gamedata cache is disabled before import, matching desktop
 initialization and preventing item/group ID collisions. All prior correctness,
 GC, restart and native performance gates remain required. See the architecture
 and task brief for the independent charge oracle and compatibility boundary.
+
+## B04.2.3.2 existing item variations
+
+`variation_options(fit_id)` returns revision-correlated module/drone/fit-implant
+targets, current inputs and complete ordered desktop choices with hull enablement.
+`change_variation` takes fit ID, context (`module`, `drone`, `implant`), position
+and bundled item ID. It validates family/enablement before editing. Modules
+reconcile states and charges, drone replacements append a separate stack while
+retaining total/active counts, and implant replacement retains activation and
+FIT location. Recent use remains unchanged. Drone capture now records current
+stack inputs in the same atomic graph. No schema, EOS formula or session changes.
+Accepted unchanged selections advance the B01 acknowledgement revision while
+preserving inputs, values, history and modified order. Bulk selection remains B05;
+later addition editors retain their assigned features.

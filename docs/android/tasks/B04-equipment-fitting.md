@@ -419,4 +419,50 @@ kind and a 1e-12 settings mutation. No required check or tolerance was weakened.
 
 Only API36 x86_64 ran; both ABIs were inspected. Physical-device/upgrade/usability
 limits remain. Next authorized task: **B04.2.3.2 — Fitted and addition variations**.
+
+### B04.2.3.2 selected scope and desktop audit
+
+Selected on `codex/b04-2-3-2-variations` from delivered master `6c8b217a`.
+The existing bridge accepts local modules, drone stacks and fit-local implants,
+plus linked fits. Expose single-item variations for those three local contexts;
+changes to linked source fits must invalidate every recipient. Fighter, booster,
+cargo and directly projected addition editors retain their assigned later rows.
+
+Pinned `itemVariationChange.py` obtains complete families from Market, excludes
+abyssal meta group 15, sorts modules/drones by remapped meta group, meta level and
+name, sorts implants by name, and enables local choices with EOS `fit.canFit`.
+Variation edits do not promote recent use. Original module `changeMetas` copies
+ModuleInfo, retains valid state (otherwise getMaxState), keeps compatible charge
+and unloads incompatible charge after replacement/legality/state reconciliation.
+Drone `changeMetas` removes the selected stack and appends a distinct replacement
+with unchanged total/active quantities, without merging. Implant `changeMeta`
+uses slot replacement and retains activation; this bridge's location remains FIT.
+Drone capture must record the edited stacks rather than replay the original spec.
+
+Acceptance: independent unchanged desktop command/menu definitions and complete
+supported catalogue families; meaningful raw-value cases for charge retention/
+unloading, offline/online/active/overheated state, drone stack order/quantities,
+implant activation/location and linked recipients. Native controls must provide
+search/pagination, disabled choices and current input details. Require strict
+wire types/revisions, atomic malformed/incompatible/stale/write failures, unchanged
+recent history, independent copy, recreation and actual process restart. Preserve
+all 102 host tests, 24 native executions and raw-value/type/unit/GC/performance/
+screenshot gates. Implement no new calculation formulas or storage architecture.
+
+The independent reference now passes 16 cases/51 states and all 5,226 supported
+families in two fresh processes. It includes the only audited mixed-state family:
+active Breach Control becomes online when changed to Damage Control II, and
+switching back retains online. Windows export SHA-256 is
+`62141d902d3e7b71d95f29f44e03418f28e4386973f0d6bd7c30ab288681ed4b`.
+Native/host delivery checks remain in progress; this reference alone does not
+establish Android support. The new host checks add six tests to the prior 102;
+the two native phases add to the prior 24 and require eight new screenshots.
+
+Review identified a family that spans implant slots (Genolution/Source). Desktop
+can keep the selected implant and add or replace the occupant of the chosen
+variation's different slot. Add explicit original-command coverage, atomic
+duplicate-target rejection, copy/restart and native workflow checks. This raises
+the final matrix to 17 cases/55 states; full verification is in progress. Picker
+wording explains this behavior. The original GUI can fail on an already fitted
+target; the bridge returns a structured atomic rejection instead.
 B04.2.3/B04.2/B04 stay incomplete until their remaining children pass.

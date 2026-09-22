@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-22. Next: **B04.2.3.2 — Fitted and addition variations**.
+Updated: 2026-09-23. Active: **B04.2.3.2 — Fitted and addition variations**.
 
 ## Current authorized work
 
@@ -27,11 +27,20 @@ Updated: 2026-09-22. Next: **B04.2.3.2 — Fitted and addition variations**.
   artifact digest and CI tree match the tested head. Local APK/lint/package checks
   also pass. [Audit](tasks/B04-equipment-fitting.md) and
   [raw receipt](evidence/b04-2-3-1-native.json) retain the evidence and limits.
-- Next authorized outcome: **B04.2.3.2 — Fitted and addition variations**. Audit
+- Selected **B04.2.3.2 — Fitted and addition variations** on
+  `codex/b04-2-3-2-variations` from clean delivered master
+  `6c8b217a4615cff70d5616ab6947c831b098cb8e`; live master verified and no open PRs. Audit
   original variation commands and existing addition inputs; implement supported
   switches with desktop state/charge/location reconciliation, atomic failure and
   save/restart. Require independent raw values and native workflow evidence.
   Preserve all 102 host and 24 native gates. B04.2.3.3 ordering/heat follows.
+  The audit and uncommitted adapter/native picker are implemented for modules,
+  drone stacks and fit-local implants. Initial independent reference passes all
+  5,226 families; 16 cases/51 states and six focused host tests pass, including
+  concrete state fallback. Review added cross-slot implant coverage for a final
+  17 cases/55 states. Full host and final build checks are running; native evidence
+  and delivery remain in progress;
+  no B04.2.3.2 completion claim. The ignored checkpoint has exact running paths.
 - B04.2.3, B04.2 and B04 remain incomplete. B05 bulk edits, B06 modes/subsystems,
   B07 cargo and B09 undo/redo retain their accepted scope. **18 of 78 leaf tasks
   done; 60 remain**, plus eight rollups. All 239 parity rows remain.

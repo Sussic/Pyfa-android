@@ -213,3 +213,15 @@ active-fit discovery refresh, failed durable saves, independent copies and fresh
 process restart. Desktop imports and network attempts fail the run. This adds to
 the 96 prior tests; it does not replace any earlier gate. Host checks cannot
 establish native support; the separate Android charge phases remain required.
+
+## B04.2.3.2 variation checks
+
+Run `python -I tools/android_headless/check_variation_edits.py --database /absolute/eve.db
+--output /new/external/variation-check` with the installed environment. Six guarded
+tests require all 17 original-command cases/55 states and 5,226 ordered/enabled
+families; malformed/stale/wrong-family/legality failures are atomic. Reads remain
+on the owner thread. Failed writes in each supported context preserve the file;
+copies remain independent and a fresh process restores module/drone/implant
+inputs. Accepted no-ops retain inputs/history/modified order while acknowledging
+the next B01 revision. All prior 102 tests remain required; native evidence is
+separate and cannot be established by these host results.

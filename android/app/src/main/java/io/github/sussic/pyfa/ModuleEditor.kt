@@ -76,7 +76,7 @@ class ModuleEditorModel : ViewModel() {
 }
 
 @Composable
-internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit) {
+internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit, onVariations: (Int) -> Unit) {
     val context = LocalContext.current
     val state by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val fit = (state as? EngineState.Ready)?.fit
@@ -172,6 +172,8 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
             }
             if (module.id != null) TextButton(onClick = { onCharges(module.index) }, enabled = enabled,
                 modifier = Modifier.testTag("module-charges-${module.index}")) { Text("Charges") }
+            if (module.id != null) TextButton(onClick = { onVariations(module.index) }, enabled = enabled,
+                modifier = Modifier.testTag("module-variations-${module.index}")) { Text("Variations") }
         }
     }
 }

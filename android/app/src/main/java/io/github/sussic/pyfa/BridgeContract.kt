@@ -40,6 +40,7 @@ sealed interface BridgeOperation {
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
+    data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
     data class AddImplant(val fitId: String, val implant: String, val active: Boolean = true) : BridgeOperation
@@ -260,6 +261,9 @@ object BridgeCodec {
         is BridgeOperation.SetModuleCharge -> "set_module_charge" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0),
             "charge_id" to operation.chargeId?.let { integer(it, "charge_id", 1) })
+        is BridgeOperation.ChangeVariation -> "change_variation" to obj("fit_id" to operation.fitId,
+            "context" to operation.context.wire, "position" to integer(operation.position, "position", 0),
+            "item_id" to integer(operation.itemId, "item_id", 1))
         is BridgeOperation.SetModuleStates -> "set_module_states" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "state" to operation.state.name)
         is BridgeOperation.SetSkillLevel -> "set_skill_level" to obj("fit_id" to operation.fitId,
@@ -431,6 +435,76 @@ object BridgeCodec {
         unique(items.map { it.id }, "charge items")
         requireProtocol(modules.flatMap { it.chargeIds }.toSet() == items.map { it.id }.toSet(), "Charge union differs from modules")
         return ChargeOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules), immutableList(items))
+    }
+
+    private fun variationContext(raw: Any): VariationContext =
+        VariationContext.entries.find { it.wire == nonempty(raw, "context") } ?: fail("Unknown variation context")
+
+    private fun variationChoices(raw: Any): List<VariationChoice> {
+        val rows = array(raw, "choices").map { entry ->
+            val row = objectValue(entry, "choice")
+            keys(row, setOf("id", "name", "group", "enabled"), path = "choice")
+            VariationChoice(integer(row.get("id"), "choice.id", 1), nonempty(row.get("name"), "choice.name"),
+                nullable(row.get("group"))?.let { nonempty(it, "choice.group") }, bool(row.get("enabled"), "choice.enabled"))
+        }
+        unique(rows.map { it.id }, "variation choices")
+        return immutableList(rows)
+    }
+
+    fun decodeVariationFamilies(json: String): List<VariationFamily> {
+        val rows = array(StrictJson(json).parse(), "families").map { entry ->
+            val row = objectValue(entry, "family")
+            keys(row, setOf("id", "context", "choices"), path = "family")
+            VariationFamily(integer(row.get("id"), "family.id", 1), variationContext(row.get("context")),
+                variationChoices(row.get("choices")))
+        }
+        unique(rows.map { it.id }, "variation families")
+        return immutableList(rows)
+    }
+
+    fun decodeVariationOptions(json: String): VariationOptions {
+        val value = objectValue(StrictJson(json).parse(), "variations")
+        keys(value, setOf("version", "fit_id", "revision", "targets"), path = "variations")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported variation version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid variation revision")
+        val targets = array(value.get("targets"), "targets").map { entry ->
+            val row = objectValue(entry, "target")
+            keys(row, setOf("context", "index", "item_id", "name", "current", "choices"), path = "target")
+            val context = variationContext(row.get("context"))
+            val current = objectValue(row.get("current"), "current")
+            val input = when (context) {
+                VariationContext.MODULE -> {
+                    keys(current, setOf("state", "charge_id"), path = "current")
+                    val state = ModuleState.entries.find { it.name == nonempty(current.get("state"), "state") }
+                        ?: fail("Invalid module state")
+                    VariationInput.Module(state, nullable(current.get("charge_id"))?.let { integer(it, "charge_id", 1) })
+                }
+                VariationContext.DRONE -> {
+                    keys(current, setOf("amount", "active"), path = "current")
+                    val amount = integer(current.get("amount"), "amount", 1)
+                    VariationInput.Drone(amount, integer(current.get("active"), "active", 0, amount))
+                }
+                VariationContext.IMPLANT -> {
+                    keys(current, setOf("slot", "active", "location"), path = "current")
+                    val location = nonempty(current.get("location"), "location")
+                    requireProtocol(location == "FIT", "Unsupported implant location")
+                    VariationInput.Implant(integer(current.get("slot"), "slot", 1), bool(current.get("active"), "active"), location)
+                }
+            }
+            val choices = variationChoices(row.get("choices"))
+            requireProtocol(choices.all { (it.group == null) == (context == VariationContext.IMPLANT) }, "Incorrect variation group")
+            VariationTarget(context, integer(row.get("index"), "index", 0), integer(row.get("item_id"), "item_id", 1),
+                nonempty(row.get("name"), "name"), input, choices)
+        }
+        unique(targets.map { it.context to it.index }, "variation targets")
+        requireProtocol(targets == targets.sortedWith(compareBy<VariationTarget> { it.context.ordinal }.thenBy { it.index }),
+            "Variation targets are out of order")
+        for (context in listOf(VariationContext.DRONE, VariationContext.IMPLANT))
+            requireProtocol(targets.filter { it.context == context }.map { it.index }.withIndex().all { it.index == it.value },
+                "Addition positions are not contiguous")
+        unique(targets.mapNotNull { (it.current as? VariationInput.Implant)?.slot }, "implant slots")
+        return VariationOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(targets))
     }
 
     fun decodeFitting(json: String): FittingDetails {
