@@ -11,6 +11,7 @@ on:
       - 'staticdata/**'
       - 'db_update.py'
       - 'tools/android_reference/**'
+      - 'tools/android_headless/**'
       - '.github/workflows/android.yml'
       - '.gitattributes'
       - 'LICENSE'

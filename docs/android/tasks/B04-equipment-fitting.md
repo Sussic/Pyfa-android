@@ -556,3 +556,13 @@ lint, signature and 152-source/data/license/ABI package inspection pass. The ful
 114-host suite and 28 native executions remain required before delivery. Native
 tests retain complete raw observations, ten malformed protocol cases, seven
 screens and two separate production-storage processes. No gate was weakened.
+
+First CI round: Windows `35928790741` completed the numerical/copy/save/restart
+cases but failed the heat-body audit because the sparse application checkout has
+no `gui` directory. Read that body from the already-verified independent pinned
+checkout, validating its commit and recorded file hash. Retain the AST equality
+assertion. Native `35928791055` attempt one passed the inherited B03.1 library
+instrumentation and in-app full-report comparison, then ADB returned only 2,048
+bytes and reported the device offline. A fresh-runner retry was started; the
+corrected commit supersedes it. No product failure or heat mismatch was observed
+in these failures, but complete native ordering evidence is still required.

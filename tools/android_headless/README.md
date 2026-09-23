@@ -230,7 +230,9 @@ separate and cannot be established by these host results.
 
 Run installed Python with `-I tools/android_headless/check_rack_ordering.py`,
 `--database /absolute/eve.db` and a new external `--output` directory. Six guarded
-tests compare nine original-command cases/48 states, including four recipients
+tests use `--source /absolute/pinned-reference` (local default
+`build/reference-upstream`) for the unchanged desktop heat-body check, verifying
+its commit and recorded file hash. They compare nine original-command cases/48 states, including four recipients
 and positional heat. They require strict positions, atomic failures, unchanged
 history, original Thermodynamics AST, unavailable failed heat, owner-thread reads,
 forced GC, independent copies, failed-save recovery and real process restart.

@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from tools.android_reference.reference import compare, digest_file, logical_database_digest
+from tools.android_reference.reference import compare, digest_file, logical_database_digest, validate_source
 from tools.android_headless.check import DEPENDENCIES, NoDesktop
 
 
@@ -22,10 +22,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--database', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--source', type=Path, default=ROOT / 'build/reference-upstream')
     parser.add_argument('--worker', action='store_true')
     parser.add_argument('--restore', action='store_true')
     args = parser.parse_args()
     args.database, args.output = args.database.resolve(strict=True), args.output.resolve()
+    args.source = args.source.resolve(strict=True)
+    validate_source(args.source)
     if args.output.is_relative_to(ROOT) or args.database.is_relative_to(args.output):
         raise ValueError('Use a new output outside checkout and input database')
     compare(DEPENDENCIES, {name: importlib.metadata.version(name) for name in DEPENDENCIES})
@@ -38,7 +41,8 @@ def main():
         args.output.mkdir(parents=True, exist_ok=False)
         with (args.output / 'tests.log').open('w', encoding='utf-8') as log:
             subprocess.run([sys.executable, '-I', str(Path(__file__).resolve()), '--database', str(args.database),
-                '--output', str(args.output), '--worker'], check=True, stdout=log, stderr=subprocess.STDOUT, timeout=360)
+                '--output', str(args.output), '--source', str(args.source), '--worker'],
+                check=True, stdout=log, stderr=subprocess.STDOUT, timeout=360)
         compare(before, digest_file(args.database))
         evidence = json.loads((args.output / 'evidence.json').read_text())
         evidence.update({'task': 'B04.2.3.3', 'host_only': True, 'database_sha256': before,
@@ -150,7 +154,9 @@ def main():
             def body(path):
                 return ast.dump(next(n for n in ast.parse(path.read_text(encoding='utf-8')).body
                                      if isinstance(n, ast.ClassDef) and n.name == 'Thermodynamics'))
-            self.assertEqual(body(ROOT/'gui/builtinViewColumns/heat.py'), body(ROOT/'android_bridge/thermodynamics.py'))
+            original = args.source / 'gui/builtinViewColumns/heat.py'
+            self.assertEqual(expected['source_files']['gui/builtinViewColumns/heat.py'], digest_file(original))
+            self.assertEqual(body(original), body(ROOT/'android_bridge/thermodynamics.py'))
             for case in expected['cases'][:3]:
                 key = self.create(case)
                 initial = self.bridge.rack_options(key)
@@ -176,7 +182,8 @@ def main():
             (args.output/'before-restart.json').write_text(json.dumps(saved(self.bridge)))
             with (args.output/'restart.log').open('w') as log:
                 subprocess.run([sys.executable,'-I',str(Path(__file__).resolve()),'--database',str(args.database),
-                    '--output',str(args.output),'--restore'],check=True,stdout=log,stderr=subprocess.STDOUT,timeout=90)
+                    '--output',str(args.output),'--source',str(args.source),'--restore'],
+                    check=True,stdout=log,stderr=subprocess.STDOUT,timeout=90)
             self.assertEqual({'matched':True,'fits':2},json.loads((args.output/'restored.json').read_text()))
 
     result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(OrderingTests))

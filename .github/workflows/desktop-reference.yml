@@ -215,6 +215,7 @@ jobs:
         run: >-
           & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
           -I tools/android_headless/check_rack_ordering.py
+          --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-rack-ordering-check"
       - name: Show concise evidence or failure excerpt
