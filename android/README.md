@@ -395,3 +395,17 @@ prior native executions, with 17 cases/55 states, 5,226 complete families, six
 linked recipients, thirteen protocol rejections, copy and restart checks. Eight
 screens require actual review. The test APK alone bundles reference expectations;
 the application packages production policy and EOS. See STATUS for actual results.
+
+## B04.2.3.3 rack ordering
+
+The module editor opens **Arrange rack and view heat**. Choose a fitted module,
+then an occupied or empty destination in its rack; states and charges move with
+it. Back cancels selection before leaving. Rotation retains selection; changed
+fit revisions clear it. Overheated modules show the original desktop burnout
+estimate with units, or an unavailable value if calculation fails.
+
+`ci/check-rack-ordering.py` adds two production-storage phases after all 26 prior
+native executions. Nine cases/48 states compare raw positions, heat types/units
+and four recipients. Touch swaps/vacancies, medium/service controls, recreation,
+stale selection, ten protocol guards, independent copies and actual restart
+remain required, along with seven reviewed screens. Full heat options remain C09.

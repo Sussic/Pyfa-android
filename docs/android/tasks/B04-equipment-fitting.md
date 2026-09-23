@@ -502,3 +502,57 @@ APK checks also pass. The Compose transition correction retains its regression;
 no formulas, protocol assertions or performance thresholds were weakened.
 Build 14 is a development build. ARM64 execution, older APIs, phone upgrades and
 usability remain unverified. Next: **B04.2.3.3 — Rack ordering and heat behavior**.
+
+## B04.2.3.3 active
+
+Selected from clean delivered master `1e72427aa87c8331c25027a6fa080977712c5566`
+on `codex/b04-2-3-3-rack-ordering`. Live fork master matches; no open PRs.
+Deliver F02.04: swap occupied/vacant positions within a rack while retaining
+module identity, state, charge and other inputs. Audit original swap commands and
+positional heat before defining independent raw-value cases. Expose reachable
+native ordering controls and verify atomic invalid/stale/write failures, linked
+recipients, unchanged recent use, independent copies, recreation and real restart.
+Preserve all 108 host tests/26 native executions, raw types/units, performance/GC
+gates and actual screenshot review. No EOS formula changes. B04 remains incomplete
+until this child passes; B05 bulk and C09 heat options retain their full scope.
+
+### Desktop ordering audit and initial reference
+
+`fittingView.startDrag` rejects an empty source; `swapItems` accepts only the same
+rack. `CalcSwapLocalModuleCommand` frees both positions, then replaces them with
+the original objects, preserving state/charge. The GUI command commits and emits
+FitChanged without recording recent use; identical source/destination is a no-op.
+The touch editor therefore selects a fitted source and an occupied or vacant
+destination. Empty-source attempts are rejected before mutation. A first reference
+probe called the command with an unreachable empty source and exposed an ORM
+deleted-vacancy error; the corrected cases follow the actual startDrag guard.
+
+Positional heat is the pinned `Thermodynamics` class in
+`gui/builtinViewColumns/heat.py`, separate from EOS but using its modified
+attributes. Preserve its complete class body and 600-second simulation, including
+the different duration/speed precedence in the estimator and display. Kotlin
+formats raw results only. Non-overheated modules have no burnout estimate;
+calculation failure must be visibly unavailable. Heat options remain C09.
+
+The independent original swap/heat export and fresh-process repeat pass for
+**nine cases/48 states** across high/medium/low/rig/service racks, mixed states,
+charges/scripts/crystals, vacancies and four linked recipients. Initial reference
+SHA `afbc1bef55a806a7c431d6c5f67c22fc552504ef7df198a00987716689a7172a`;
+data/source unchanged. Android comparison and native evidence remain pending.
+
+### Implementation and local checks
+
+The worker-owned `swap_modules` operation validates occupied source/same-rack
+destination, retains original objects and uses the existing atomic graph save.
+`rack_options` returns strict integer positions/cycles and decimal seconds/
+probabilities. The complete original Thermodynamics body is reused; EOS formulas
+remain untouched. A native rack editor supports swap/move, cancellation, visible
+states/charges/heat and selection recreation. Revision changes clear stale
+selection; opening another fit defaults to its high rack.
+
+Six focused host checks pass, including original raw heat values, all recipients,
+failed writes, independent copies, forced GC and a real restart. Both local APKs,
+lint, signature and 152-source/data/license/ABI package inspection pass. The full
+114-host suite and 28 native executions remain required before delivery. Native
+tests retain complete raw observations, ten malformed protocol cases, seven
+screens and two separate production-storage processes. No gate was weakened.

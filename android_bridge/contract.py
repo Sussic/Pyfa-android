@@ -76,6 +76,7 @@ ARGUMENTS = {
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_charge": ("fit_id", "position", "charge_id"),
     "change_variation": ("fit_id", "context", "position", "item_id"),
+    "swap_modules": ("fit_id", "from_position", "to_position"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
     "add_implant": ("fit_id", "implant", "active"),
@@ -262,6 +263,14 @@ class BridgeSession:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **options(self.engine, self._fits[fit_id])}
+
+    def rack_options(self, fit_id):
+        from .ordering import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
 
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
@@ -652,6 +661,9 @@ class BridgeSession:
         if operation == "change_variation":
             from .variations import change
             return change(self.engine, fit, args["context"], args["position"], args["item_id"])
+        if operation == "swap_modules":
+            from .ordering import swap
+            return swap(self.engine, fit, args["from_position"], args["to_position"])
         if operation == "set_module_states":
             return self.engine.set_module_states(fit, args["module_indices"], args["state"])
         if operation == "set_skill_level":

@@ -22,10 +22,11 @@ record the behavioral tests and fresh-process comparisons; A10 raises the count 
 
 B01 adds the typed bridge, B02 durable graph storage, B03.1 the fit library
 lifecycle/search UI, and B03.2 organization/navigation. The required host suite
-has **108 required tests** with B04.2.3.2: 29 headless, 14 bridge, 14 persistence, 13 library,
-six equipment discovery, six empty-hull, six module-edit, six charge-edit, six variation-edit and eight reference utilities, plus
+has **114 required tests** with B04.2.3.3: 29 headless, 14 bridge, 14 persistence, 13 library,
+six equipment discovery, six empty-hull, six module-edit, six charge-edit, six variation-edit,
+six rack-ordering and eight reference utilities, plus
 independent calculation/catalogue/empty-hull/module-command exports and migration.
-Native CI requires **26 executions**: five functional, separate A10 performance
+Native CI requires **28 executions**: five functional, separate A10 performance
 and B01 contract, three B02 persistence phases, three B03.1 library phases and
 four B03.2 organization/navigation phases, separate B04.1 equipment discovery and
 two B04.2.1 empty-hull creation/restart phases and two B04.2.2 module-edit/recent-use
@@ -34,7 +35,9 @@ values/types, rejection/override/copy and real process restart, with seven scree
 The charge phases add 14 cases/74 states, all 4,242 compatible sets and native
 load/replace/unload, scripts/crystals, discovery, copy and restart. Two variation
 phases add 17 cases/55 states, 5,226 families, six linked recipients, native
-module/drone/implant controls and persistence, with eight more screens. Counts describe
+module/drone/implant controls and persistence, with eight more screens. Two ordering
+phases add nine cases/48 states, positional heat and four recipients, touch swaps,
+vacancies, recreation and restart, with seven more screens. Counts describe
 required gates; STATUS records which commit has actually passed them. Earlier
 counts above describe historical milestones, not permission to omit newer gates.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow

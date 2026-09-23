@@ -41,6 +41,7 @@ sealed interface BridgeOperation {
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
     data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
+    data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
     data class AddImplant(val fitId: String, val implant: String, val active: Boolean = true) : BridgeOperation
@@ -264,6 +265,9 @@ object BridgeCodec {
         is BridgeOperation.ChangeVariation -> "change_variation" to obj("fit_id" to operation.fitId,
             "context" to operation.context.wire, "position" to integer(operation.position, "position", 0),
             "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.SwapModules -> "swap_modules" to obj("fit_id" to operation.fitId,
+            "from_position" to integer(operation.fromPosition, "from_position", 0),
+            "to_position" to integer(operation.toPosition, "to_position", 0))
         is BridgeOperation.SetModuleStates -> "set_module_states" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "state" to operation.state.name)
         is BridgeOperation.SetSkillLevel -> "set_skill_level" to obj("fit_id" to operation.fitId,
@@ -505,6 +509,58 @@ object BridgeCodec {
                 "Addition positions are not contiguous")
         unique(targets.mapNotNull { (it.current as? VariationInput.Implant)?.slot }, "implant slots")
         return VariationOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(targets))
+    }
+
+    fun decodeRackOptions(json: String): RackOptions {
+        val value = objectValue(StrictJson(json).parse(), "rack")
+        keys(value, setOf("version", "fit_id", "revision", "modules"), path = "rack")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported rack version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid rack revision")
+        fun decimal(raw: Any, path: String): Double =
+            finite(raw as? Double ?: fail("$path must be decimal"), path)
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("index", "id", "name", "slot", "state", "charge_id", "charge", "heat"), path = "module")
+            requireProtocol(integer(row.get("index"), "index", 0) == index, "Module positions are not contiguous")
+            val id = nullable(row.get("id"))?.let { integer(it, "id", 1) }
+            val name = nullable(row.get("name"))?.let { nonempty(it, "name") }
+            val chargeId = nullable(row.get("charge_id"))?.let { integer(it, "charge_id", 1) }
+            val charge = nullable(row.get("charge"))?.let { nonempty(it, "charge") }
+            val state = enumValue<ModuleState>(row.get("state"), "state")
+            val slot = enumValue<ModuleSlot>(row.get("slot"), "slot")
+            requireProtocol((id == null) == (name == null) && (chargeId == null) == (charge == null) &&
+                (id != null || chargeId == null && state == ModuleState.ONLINE), "Inconsistent vacant module")
+            val heat = nullable(row.get("heat"))?.let { raw ->
+                val h = objectValue(raw, "heat")
+                keys(h, setOf("cycles", "seconds", "probabilities"), path = "heat")
+                fun measure(key: String, unit: String): Any? {
+                    val metric = objectValue(h.get(key), key)
+                    keys(metric, setOf("value", "unit"), path = key)
+                    requireProtocol(text(metric.get("unit"), "unit") == unit, "Unexpected heat unit")
+                    return nullable(metric.get("value"))
+                }
+                val cycles = measure("cycles", "cycles")?.let { long(it, "cycles").also { count ->
+                    requireProtocol(count >= 0, "Invalid burnout cycles") } }
+                val seconds = measure("seconds", "s")?.let { decimal(it, "seconds").also { time ->
+                    requireProtocol(time >= 0, "Invalid burnout time") } }
+                requireProtocol((cycles == null) == (seconds == null), "Incomplete heat estimate")
+                val probabilities = array(h.get("probabilities"), "probabilities").map { sample ->
+                    val p = objectValue(sample, "probability")
+                    keys(p, setOf("seconds", "value", "unit"), path = "probability")
+                    requireProtocol(text(p.get("unit"), "unit") == "probability", "Unexpected probability unit")
+                    HeatProbability(decimal(p.get("seconds"), "seconds"), decimal(p.get("value"), "value").also {
+                        requireProtocol(it in 0.0..1.0, "Invalid heat probability") })
+                }
+                requireProtocol(probabilities.map { it.seconds } == if (cycles == null) emptyList<Double>()
+                    else listOf(1.0, 10.0, 60.0, 600.0), "Incomplete heat samples")
+                HeatEstimate(Stat(cycles?.let { StatValue.Integer(it) } ?: StatValue.Unavailable, "cycles"),
+                    Stat(seconds?.let { StatValue.Decimal(it) } ?: StatValue.Unavailable, "s"), immutableList(probabilities))
+            }
+            requireProtocol((heat != null) == (state == ModuleState.OVERHEATED), "Heat estimate has wrong module state")
+            RackModule(index, id, name, slot, state, chargeId, charge, heat)
+        }
+        return RackOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules))
     }
 
     fun decodeFitting(json: String): FittingDetails {

@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-23. **B04.2.3.2 delivered**; next **B04.2.3.3 — Rack ordering and heat behavior**.
+Updated: 2026-09-23. Active: **B04.2.3.3 — Rack ordering and heat behavior**.
 
 ## Current authorized work
 
@@ -34,11 +34,20 @@ Updated: 2026-09-23. **B04.2.3.2 delivered**; next **B04.2.3.3 — Rack ordering
   test to use Gecko's actual 94-choice family; Hobgoblin quantity/order coverage
   remains. A transient Windows checkout trust failure cleared on a fresh runner
   with certificate validation unchanged.
-- Next **B04.2.3.3**: audit original occupied/vacant same-rack swaps and positional
+- Selected **B04.2.3.3** on `codex/b04-2-3-3-rack-ordering`, from clean delivered
+  master `1e72427aa87c8331c25027a6fa080977712c5566`; live master matches and no PRs
+  remain open. Audit original occupied/vacant same-rack swaps and positional
   heat, implement native ordering with preserved inputs, prove independent heat
   values and real restart. B04.2.3/B04.2/B04 remain incomplete until it passes.
   B05 bulk, B06 modes/subsystems, B07 cargo and B09 undo/redo retain full scope.
   **19 of 78 leaves done; 59 remain**, plus eight rollups. All 239 parity rows remain.
+- Ordering implementation now has an independent nine-case/48-state desktop
+  export/repeat and six passing focused host tests, including heat, four linked
+  recipients, strict rejection, failed-save rollback, copies and process restart.
+  Native rack controls and two additional native phases are implemented. Both
+  local APKs, lint, signature and 152-source/data/license/ABI inspection pass.
+  Full 114-host regression and required 28-execution native CI remain pending;
+  B04.2.3.3 is not delivered. No access or product decision currently blocks work.
 - Earlier deliveries: [charges / PR #19](https://github.com/Sussic/Pyfa-android/pull/19),
   [modules / PR #18](https://github.com/Sussic/Pyfa-android/pull/18),
   [empty hulls / PR #17](https://github.com/Sussic/Pyfa-android/pull/17),
@@ -53,7 +62,7 @@ SDK36/build35 and Gradle8.13. Reuse installed tools and local AppData Gradle cac
 [Windows guide](WINDOWS.md) and ignored `build/WINDOWS-CHECKPOINT.md` retain commands,
 continuation paths and the forecast. No timed host suites alongside local Gradle.
 Native CI uses Ubuntu/KVM; Windows builds alone do not establish Android support.
-Keep all 108 host/26 native executions and raw type/unit/GC/restart/performance/screenshot gates,
+Keep all 114 host/28 native executions and raw type/unit/GC/restart/performance/screenshot gates,
 one-day diagnostics, deliberate APK uploads only and no scheduled/releases jobs.
 
 ## Architecture and comparison target

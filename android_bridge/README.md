@@ -199,3 +199,16 @@ stack inputs in the same atomic graph. No schema, EOS formula or session changes
 Accepted unchanged selections advance the B01 acknowledgement revision while
 preserving inputs, values, history and modified order. Bulk selection remains B05;
 later addition editors retain their assigned features.
+
+## B04.2.3.3 rack ordering and heat
+
+`swap_modules` takes fit ID and integer `from_position`/`to_position`. An occupied
+source and either an occupied or empty destination must share an editable rack.
+Original module objects retain state and charge; the enclosing transaction handles
+revision checks, recipient recalculation and save rollback. Recent use stays intact.
+Same-position acknowledgement preserves inputs and modified order.
+`rack_options(fit_id)` returns revision-correlated positions and the original
+desktop Thermodynamics class's burnout estimates and probability samples. EOS
+supplies modified attributes; Kotlin formats results. Failed estimates use null,
+never a fabricated zero. These are desktop estimates, not measured game duration.
+Subsystem configuration and heat options remain B06 and C09 respectively.

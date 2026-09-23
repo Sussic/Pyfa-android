@@ -213,3 +213,16 @@ rig/structure edits, separate drone stack order/quantities, active/inactive FIT
 implants (including families spanning multiple slots) and six projection/command recipients. Settings, source hashes, full
 inputs, raw values/types/units and unchanged database digest remain recorded.
 Use the existing exact identity/type and 1e-10 relative/1e-9 absolute numeric rules.
+
+## B04.2.3.3 rack ordering and heat
+
+Run `rack_ordering.py` with the installed reference Python, `-I`, pinned `--source`,
+verified `--database`, a new external `--output`, and
+`--check tools/android_reference/fixtures/rack-ordering.json`. The oracle executes
+unchanged original GUI/calculation swap commands and the complete Thermodynamics
+class, with real wx command history, Fit and EOS. Its nine cases/48 states cover
+all five editable racks, occupied/vacant swaps, mixed states and charges, heat
+distances and four recipients. Original startDrag requires an occupied source.
+Fresh-process repeat, source hashes, settings and unchanged data remain required.
+Burnout cycles are integers, seconds and probabilities decimals; raw units and
+the existing 1e-10 relative/1e-9 absolute tolerance remain unchanged.
