@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-22. Next: **B04.2.3.2 — Fitted and addition variations**.
+Updated: 2026-09-23. Active: **B04.2.3.2 — Fitted and addition variations**.
 
 ## Current authorized work
 
@@ -27,11 +27,28 @@ Updated: 2026-09-22. Next: **B04.2.3.2 — Fitted and addition variations**.
   artifact digest and CI tree match the tested head. Local APK/lint/package checks
   also pass. [Audit](tasks/B04-equipment-fitting.md) and
   [raw receipt](evidence/b04-2-3-1-native.json) retain the evidence and limits.
-- Next authorized outcome: **B04.2.3.2 — Fitted and addition variations**. Audit
+- Selected **B04.2.3.2 — Fitted and addition variations** on
+  `codex/b04-2-3-2-variations` from clean delivered master
+  `6c8b217a4615cff70d5616ab6947c831b098cb8e`; live master verified and no open PRs. Audit
   original variation commands and existing addition inputs; implement supported
   switches with desktop state/charge/location reconciliation, atomic failure and
   save/restart. Require independent raw values and native workflow evidence.
   Preserve all 102 host and 24 native gates. B04.2.3.3 ordering/heat follows.
+  Implementation is in [PR #20](https://github.com/Sussic/Pyfa-android/pull/20).
+  Final independent reference/repeat passes 17 cases/55 states and all 5,226
+  families, including state fallback and cross-slot implants. Local 22 gates/108
+  host tests and APK/lint/signature/package checks pass. First Windows CI passes
+  all 108 host tests; native CI retained the earlier gates but exposed a Compose
+  crash returning from choices to fitted items. Separate list composition scopes
+  and stable row keys pass that transition in the second run. It then exposed a
+  test-data assumption: Hobgoblin has five variations, not enough for a second
+  page. Use the independently verified 94-choice Gecko family for pagination,
+  previous-page and recreation assertions; retain the Hobgoblin stack tests.
+  Windows CI passes again; final native verification remains required.
+  The measured first native run reached that failure after 24m38s; workflow time
+  allowance is now 30 minutes for the remaining workflows/restart. Assertions,
+  performance thresholds and scope remain unchanged. No .2 completion claim.
+  The ignored checkpoint retains exact runs, paths and current verification.
 - B04.2.3, B04.2 and B04 remain incomplete. B05 bulk edits, B06 modes/subsystems,
   B07 cargo and B09 undo/redo retain their accepted scope. **18 of 78 leaf tasks
   done; 60 remain**, plus eight rollups. All 239 parity rows remain.

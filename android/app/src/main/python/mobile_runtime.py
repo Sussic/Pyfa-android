@@ -94,6 +94,51 @@ def charge_options(fit_id):
     return encoded(_bridge.charge_options(fit_id))
 
 
+def variation_options(fit_id):
+    return encoded(_bridge.variation_options(fit_id))
+
+
+def variation_families_diagnostics(fit_id):
+    """Complete native menu enumeration using the production family policy."""
+    from android_bridge.variations import choices
+    from android_bridge.market_policy import MarketPolicy
+    from eos.saveddata.module import Module
+    import eos.db
+    _engine._check_thread()
+    fit, policy, rows = _bridge._fits[fit_id], MarketPolicy(), []
+    for row in json.loads(equipment_catalog())['items']:
+        category = row['category']
+        if category not in ('Module', 'Structure Module', 'Drone', 'Implant'):
+            continue
+        item = eos.db.getItem(row['id'])
+        if category in ('Module', 'Structure Module'):
+            try:
+                module = Module(item)
+            except ValueError:
+                continue
+            if module.slot not in (1, 2, 3, 4, 8):
+                continue
+            context = 'module'
+        elif category == 'Drone':
+            context = 'drone'
+        else:
+            if 'implantness' not in item.attributes:
+                continue
+            context = 'implant'
+        rows.append({'id': item.ID, 'context': context, 'choices': choices(_engine, fit, item, context, policy)})
+    return encoded(rows)
+
+
+def variation_addition_diagnostics(fit_id):
+    _engine._check_thread()
+    from eos.const import ImplantLocation
+    fit = _bridge._fits[fit_id]
+    return encoded({'drones': [{'index': i, 'id': drone.itemID, 'amount': drone.amount, 'active': drone.amountActive}
+                              for i, drone in enumerate(fit.drones)],
+        'implants': [{'index': i, 'id': implant.itemID, 'slot': implant.slot, 'active': implant.active}
+                     for i, implant in enumerate(fit.implants)], 'implant_location': ImplantLocation(fit.implantLocation).name})
+
+
 def charge_compatibility_diagnostics():
     """Complete native compatibility enumeration through production policy."""
     _engine._check_thread()

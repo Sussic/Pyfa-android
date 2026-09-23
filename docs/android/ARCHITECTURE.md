@@ -229,3 +229,18 @@ Engine initialization now matches desktop `config.init` by disabling the optiona
 EOS gamedata query cache before imports. Its global cache otherwise aliases item
 and group integer IDs during charge enumeration. EOS session ownership and its
 normal ORM identity map remain; required prior performance/native gates still run.
+
+## B04.2.3.2 variation boundary
+
+Revision-correlated variation options and mutations stay on the same serialized
+worker. The bridge delegates family discovery to the retained Market policy and
+hull enablement to EOS, validating the full choice before mutation. Module state
+fallback and charge reconciliation follow the original replacement command order.
+Drone variation removes/appends a distinct stack with retained quantities;
+fit-local implant variation replaces the matching slot with retained activation.
+Recent equipment history remains unchanged, including rejected variation edits.
+
+The existing graph now captures current drone stack inputs on every accepted
+operation, so copies, rollback and restart replay edited data. No schema version
+or session boundary changes. These operations expose only existing bridge inputs;
+later addition editors retain their inventory rows. Full undo/redo remains B09.

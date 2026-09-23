@@ -106,6 +106,37 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun variationOptions(context: Context, fitId: String): CompletableFuture<VariationOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeVariationOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("variation_options", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
+    fun variationFamiliesDiagnostics(context: Context, fitId: String): CompletableFuture<List<VariationFamily>> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join(); check(!unavailable)
+            BridgeCodec.decodeVariationFamilies(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("variation_families_diagnostics", fitId).toString())
+        }, executor)
+    }
+
+    fun variationAdditionDiagnostics(context: Context, fitId: String): CompletableFuture<String> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join(); check(!unavailable)
+            Python.getInstance().getModule("mobile_runtime").callAttr("variation_addition_diagnostics", fitId).toString()
+        }, executor)
+    }
+
     fun chargeOptions(context: Context, fitId: String): CompletableFuture<ChargeOptions> {
         val ready = start(context)
         return CompletableFuture.supplyAsync({

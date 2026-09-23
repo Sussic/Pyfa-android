@@ -380,3 +380,18 @@ native executions. They require all 14 charge cases/74 raw states, the complete
 rejections, UI ammunition/script/crystal workflows, unchanged neighbouring
 modules/history, copies and real process restart. Eight additional screenshots
 require visual review. Successful builds alone do not establish these results.
+
+## B04.2.3.2 fitted and addition variations
+
+The active fit and each occupied module open the variation picker. It includes
+existing drone stacks and fit-local implants, current inputs, search/pagination,
+hull-disabled choices and explicit change/save feedback. Rotation preserves the
+selection; fit/revision changes refresh it. Unsupported charges unload as desktop
+does, drone replacements retain quantities and append without merging, and
+implants retain activation/location. Full addition editors remain later tasks.
+
+`ci/check-variation-edits.py` adds two production-storage processes after all 24
+prior native executions, with 17 cases/55 states, 5,226 complete families, six
+linked recipients, thirteen protocol rejections, copy and restart checks. Eight
+screens require actual review. The test APK alone bundles reference expectations;
+the application packages production policy and EOS. See STATUS for actual results.

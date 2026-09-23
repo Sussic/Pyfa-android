@@ -21,7 +21,8 @@ concurrency:
 jobs:
   reference:
     runs-on: windows-latest
-    timeout-minutes: 20
+    # B04.2.3.2 adds measured 4.6 min reference + 2.8 min host coverage.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -188,6 +189,20 @@ jobs:
           -I tools/android_headless/check_charge_edits.py
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-charge-edits-check"
+      - name: Verify independent variation commands and all supported families
+        run: >-
+          python -I tools/android_reference/variation_edits.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-variation-edits-reference"
+          --check tools/android_reference/fixtures/variation-edits.json
+      - name: Verify variation parity, atomic saves and process restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_variation_edits.py
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-variation-edits-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -210,7 +225,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check', 'pyfa-variation-edits-reference', 'pyfa-variation-edits-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {

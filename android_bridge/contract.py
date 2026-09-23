@@ -75,6 +75,7 @@ ARGUMENTS = {
     "set_fit_restrictions": ("fit_id", "ignore"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_charge": ("fit_id", "position", "charge_id"),
+    "change_variation": ("fit_id", "context", "position", "item_id"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
     "add_implant": ("fit_id", "implant", "active"),
@@ -254,6 +255,14 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **options(self.engine, self._fits[fit_id])}
 
+    def variation_options(self, fit_id):
+        from .variations import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
+
     @staticmethod
     def _validate_graph(graph, dataset_identity, settings):
         try:
@@ -403,6 +412,10 @@ class BridgeSession:
             _integer(args["charge_id"], 1, 2**31 - 1)
         if "position" in args:
             _integer(args["position"], 0, 2**31 - 1)
+        if "context" in args:
+            _text(args["context"])
+            if args["context"] not in ("module", "drone", "implant"):
+                _invalid()
         if "spec" in args:
             _spec(args["spec"])
         for key in ("fit_id", "source_id", "target_id"):
@@ -636,6 +649,9 @@ class BridgeSession:
         if operation == "set_module_charge":
             from .charges import change
             return change(self.engine, fit, args["position"], args["charge_id"])
+        if operation == "change_variation":
+            from .variations import change
+            return change(self.engine, fit, args["context"], args["position"], args["item_id"])
         if operation == "set_module_states":
             return self.engine.set_module_states(fit, args["module_indices"], args["state"])
         if operation == "set_skill_level":
@@ -666,6 +682,8 @@ class BridgeSession:
             spec["modules"] = [({"empty_slot": FittingSlot(module.slot).name} if module.isEmpty else
                                 {"name": module.item.name, "charge": module.charge.name if module.charge else None,
                                  "state": _module_state(module)}) for module in fit.modules]
+            spec["drones"] = [{"name": drone.item.name, "amount": drone.amount, "active": drone.amountActive}
+                              for drone in fit.drones]
             if "ignore_restrictions" in spec or fit.ignoreRestrictions or any(module.isEmpty for module in fit.modules):
                 spec["ignore_restrictions"] = fit.ignoreRestrictions
             skills = {skill.item.name: skill.activeLevel for skill in fit.character.skills

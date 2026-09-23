@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
             PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java],
                 ViewModelProvider(this)[EquipmentModel::class.java], ViewModelProvider(this)[ModuleEditorModel::class.java],
-                ViewModelProvider(this)[ChargeEditorModel::class.java])
+                ViewModelProvider(this)[ChargeEditorModel::class.java], ViewModelProvider(this)[VariationEditorModel::class.java])
         }
     }
 
@@ -74,11 +74,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
     var showCharges by rememberSaveable { mutableStateOf(false) }
+    var showVariations by rememberSaveable { mutableStateOf(false) }
+    fun variations(position: Int?) {
+        variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
+        showVariations = true
+    }
     fun charges(position: Int?) {
         chargeModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showCharges = true
@@ -97,30 +102,32 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showCharges) {
+                        if (showVariations) {
+                            VariationEditor(variationModel, onBack = { showVariations = false })
+                        } else if (showCharges) {
                             ChargeEditor(chargeModel, onBack = { showCharges = false })
                         } else if (showEquipment) {
                             EquipmentBrowser(equipmentModel, moduleModel, onBack = { showEquipment = false },
                                 onViewFit = { showEquipment = false; showModules = true }, onCharges = { charges(null) })
                         } else if (showModules) {
-                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false }, onCharges = { charges(it) })
+                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false }, onCharges = { charges(it) }, onVariations = { variations(it) })
                         } else if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {
                             Home(libraryModel, onAbout = { showAbout = true },
                                 onEquipment = { moduleModel.replacePosition = null; showEquipment = true },
-                                onModules = { showModules = true })
+                                onModules = { showModules = true }, onVariations = { variations(null) })
                         }
                     }
                 }
@@ -130,7 +137,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -185,6 +192,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             if (sampleGuns) Text(stringResource(R.string.sample_ammunition, ammunition))
             else Text(current.fit.ship + " · " + current.fit.modules.count { it.emptySlot == null } + " modules")
             Button(onClick = onModules, modifier = Modifier.testTag("modules-open")) { Text("Edit modules") }
+            TextButton(onClick = onVariations, modifier = Modifier.testTag("variations-open")) { Text("Item variations") }
             if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }
