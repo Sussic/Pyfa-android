@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -170,19 +171,12 @@ internal fun VariationEditor(model: VariationEditorModel, onBack: () -> Unit) {
         "No ${model.context.label.lowercase()} in this fit." else "No supported variations for this item.",
         modifier = Modifier.testTag("variations-empty"))
     if (target == null) {
-        for (row in targets.drop(page * 20).take(20)) Card(Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(12.dp)) {
-                Text("${row.index + 1} · ${row.name}", style = MaterialTheme.typography.titleSmall)
-                VariationCurrent(row, fit)
-                TextButton(onClick = { focus.clearFocus(); model.choose(row) }, enabled = enabled,
-                    modifier = Modifier.testTag("variation-target-${row.context.wire}-${row.index}")) { Text("Variations") }
-            }
+        VariationTargets(targets.drop(page * 20).take(20), fit, enabled) { row ->
+            focus.clearFocus(); model.choose(row)
         }
-    } else for (row in choices.drop(page * 20).take(20)) {
-        TextButton(onClick = { focus.clearFocus(); model.selected = row.id }, enabled = enabled && row.enabled,
-            modifier = Modifier.fillMaxWidth().testTag("variation-item-${row.id}")) {
-            Text(row.name + (row.group?.let { " · $it" } ?: "") +
-                if (row.id == target.itemId) " · Current" else if (!row.enabled) " · Unavailable on this hull" else "")
+    } else {
+        VariationChoices(choices.drop(page * 20).take(20), target.itemId, enabled) { row ->
+            focus.clearFocus(); model.selected = row.id
         }
     }
     if (pages > 1) Row {
@@ -190,6 +184,35 @@ internal fun VariationEditor(model: VariationEditorModel, onBack: () -> Unit) {
             modifier = Modifier.testTag("variations-previous")) { Text("Previous") }
         TextButton(onClick = { focus.clearFocus(); model.page = page + 1 }, enabled = page + 1 < pages,
             modifier = Modifier.testTag("variations-next")) { Text("Next") }
+    }
+}
+
+// Separate composition scopes keep the two list shapes independent when saving
+// or navigating changes a choice picker back into a fitted-item list.
+@Composable
+private fun VariationTargets(rows: List<VariationTarget>, fit: FitSnapshot, enabled: Boolean,
+                             onChoose: (VariationTarget) -> Unit) {
+    for (row in rows) key(row.context, row.index, row.itemId) {
+        Card(Modifier.fillMaxWidth()) {
+            Column(Modifier.padding(12.dp)) {
+                Text("${row.index + 1} · ${row.name}", style = MaterialTheme.typography.titleSmall)
+                VariationCurrent(row, fit)
+                TextButton(onClick = { onChoose(row) }, enabled = enabled,
+                    modifier = Modifier.testTag("variation-target-${row.context.wire}-${row.index}")) { Text("Variations") }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VariationChoices(rows: List<VariationChoice>, currentId: Int, enabled: Boolean,
+                             onChoose: (VariationChoice) -> Unit) {
+    for (row in rows) key(row.id) {
+        TextButton(onClick = { onChoose(row) }, enabled = enabled && row.enabled,
+            modifier = Modifier.fillMaxWidth().testTag("variation-item-${row.id}")) {
+            Text(row.name + (row.group?.let { " · $it" } ?: "") +
+                if (row.id == currentId) " · Current" else if (!row.enabled) " · Unavailable on this hull" else "")
+        }
     }
 }
 

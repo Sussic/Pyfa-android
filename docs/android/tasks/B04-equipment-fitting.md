@@ -466,3 +466,13 @@ the final matrix to 17 cases/55 states; full verification is in progress. Picker
 wording explains this behavior. The original GUI can fail on an already fitted
 target; the bridge returns a structured atomic rejection instead.
 B04.2.3/B04.2/B04 stay incomplete until their remaining children pass.
+
+First PR #20 verification: full local 22 gates/108 host tests, independent
+17-case/55-state reference/repeat, both APKs/lint/signature/package pass. Windows
+run `35798892136` passes all 108 host tests. Native run `35798891774` passes the
+retained suites, then fails in `VariationEditor.kt` returning from variation
+choices to target cards (`FocusOwnerImpl` cast to `ComposableLambdaImpl`). Split
+those lists into separate composition scopes with stable row keys; retain the
+same recreation/save/navigation regression. This run took 24m38s before the
+remaining UI/restart checks, so allow 30 minutes at workflow level without changing
+test assertions or performance limits. New native evidence is required.

@@ -34,13 +34,17 @@ Updated: 2026-09-23. Active: **B04.2.3.2 — Fitted and addition variations**.
   switches with desktop state/charge/location reconciliation, atomic failure and
   save/restart. Require independent raw values and native workflow evidence.
   Preserve all 102 host and 24 native gates. B04.2.3.3 ordering/heat follows.
-  The audit and uncommitted adapter/native picker are implemented for modules,
-  drone stacks and fit-local implants. Initial independent reference passes all
-  5,226 families; 16 cases/51 states and six focused host tests pass, including
-  concrete state fallback. Review added cross-slot implant coverage for a final
-  17 cases/55 states. Full host and final build checks are running; native evidence
-  and delivery remain in progress;
-  no B04.2.3.2 completion claim. The ignored checkpoint has exact running paths.
+  Implementation is in [PR #20](https://github.com/Sussic/Pyfa-android/pull/20).
+  Final independent reference/repeat passes 17 cases/55 states and all 5,226
+  families, including state fallback and cross-slot implants. Local 22 gates/108
+  host tests and APK/lint/signature/package checks pass. First Windows CI passes
+  all 108 host tests; native CI retained the earlier gates but exposed a Compose
+  crash returning from choices to fitted items. Isolate the two list composition
+  scopes with stable row keys and rerun required native evidence before delivery.
+  The measured first native run reached that failure after 24m38s; workflow time
+  allowance is now 30 minutes for the remaining workflows/restart. Assertions,
+  performance thresholds and scope remain unchanged. No .2 completion claim.
+  The ignored checkpoint retains exact runs, paths and current verification.
 - B04.2.3, B04.2 and B04 remain incomplete. B05 bulk edits, B06 modes/subsystems,
   B07 cargo and B09 undo/redo retain their accepted scope. **18 of 78 leaf tasks
   done; 60 remain**, plus eight rollups. All 239 parity rows remain.
