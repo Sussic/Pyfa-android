@@ -486,3 +486,19 @@ actual pagination identity/count/page values and require them in the raw checker
 Windows run `35918007020` passes on attempt two; its first runner failed checkout
 certificate validation before tests, and a fresh runner passed both checkouts
 with unchanged TLS validation. No test or required coverage is removed.
+
+### B04.2.3.2 delivery evidence
+
+Delivered in [PR #20](https://github.com/Sussic/Pyfa-android/pull/20), merge `d14441eb771157127d768668200396cea3d2750a`;
+tested head `b0fa526cf1c0c9ce3d8038d39d908b56dccda43e`. The final Windows reference/repeat SHA is
+`0723086610da6b97887831b1cf58126111c7562780710ccd83e151b650cdcd75`. All 17 cases/55 states and 5,226 families pass, with six recipients,
+state fallback, cross-slot implants, atomic failures, unchanged history and copy/
+restart. Windows CI `35921791052` passes 108 host tests; Android CI `35921790783`
+passes 26 native executions, both APKs, lint, signature and package inspection of
+150 sources/data/licenses/ABIs. All 43 screenshots reviewed;
+strict raw validators/corruption probes pass, artifact digest and CI tree match.
+See [raw receipt](../evidence/b04-2-3-2-native.json). Local 22 gates/108 tests and final
+APK checks also pass. The Compose transition correction retains its regression;
+no formulas, protocol assertions or performance thresholds were weakened.
+Build 14 is a development build. ARM64 execution, older APIs, phone upgrades and
+usability remain unverified. Next: **B04.2.3.3 — Rack ordering and heat behavior**.
