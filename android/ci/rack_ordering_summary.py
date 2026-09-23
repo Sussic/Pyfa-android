@@ -51,8 +51,12 @@ def summarize(reports, engine):
             states += 1
     assert states == 48
     exact(PREPARE, prepare['checks']); exact(RESTORED, restored['checks'])
-    exact([{'label': label, 'code': 'INVALID_EDIT'} for label in ('empty_source', 'cross_rack', 'negative', 'out_of_range')] +
-          [{'label': 'stale', 'code': 'REVISION_CONFLICT'}], prepare['rejections'])
+    # Negative positions are rejected by the strict Kotlin request encoder,
+    # before Python receives an edit. Valid integers outside the fit reach EOS.
+    exact([{'label': label, 'code': code} for label, code in (
+        ('empty_source', 'INVALID_EDIT'), ('cross_rack', 'INVALID_EDIT'),
+        ('negative', 'INVALID_REQUEST'), ('out_of_range', 'INVALID_EDIT'),
+        ('stale', 'REVISION_CONFLICT'))], prepare['rejections'])
     exact(CODEC, prepare['codec_rejections'])
     exact(prepare['saved'], restored['saved'])
     exact(prepare['before'], prepare['saved']['prior']); exact(prepare['after'], prepare['saved']['fits'])

@@ -566,3 +566,12 @@ instrumentation and in-app full-report comparison, then ADB returned only 2,048
 bytes and reported the device offline. A fresh-runner retry was started; the
 corrected commit supersedes it. No product failure or heat mismatch was observed
 in these failures, but complete native ordering evidence is still required.
+
+Corrected-head Windows `35930553789` passes all 114 tests and independent exports
+in 21m55s. Android `35930553774` passes all 28 instrumentation executions, including
+the complete 48-state heat matrix and both ordering workflows/restart. Its raw
+summary then rejects a mistaken expectation: a negative position is caught by
+the strict Kotlin encoder as `INVALID_REQUEST`, while valid out-of-fit integers
+reach Python and return `INVALID_EDIT`. Correct that exact expected code; retain
+every rejection and atomic-state assertion. Validate the captured reports and
+screens, then obtain green required CI on the final head before delivery.
