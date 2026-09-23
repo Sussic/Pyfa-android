@@ -53,6 +53,9 @@ def summarize(reports, engine):
     assert states == 55
     exact(fixture['families'], prepare['families'])
     assert len(prepare['families']) == 5226
+    exact({'item_id': 33681, 'choices': 94, 'recreated_page': 1, 'previous_page': 0}, prepare['pagination'])
+    paged = next(row for row in fixture['families'] if row['id'] == prepare['pagination']['item_id'])
+    assert paged['context'] == 'drone' and len(paged['choices']) == prepare['pagination']['choices']
     exact(PREPARE, prepare['checks']); exact(RESTORED, restored['checks'])
     exact([{'label': 'wrong_family', 'code': 'INVALID_EDIT'}, {'label': 'disabled_hull', 'code': 'INVALID_EDIT'},
            {'label': 'unknown', 'code': 'INVALID_EDIT'}, {'label': 'stale', 'code': 'REVISION_CONFLICT'}], prepare['rejections'])
@@ -90,4 +93,5 @@ def summarize(reports, engine):
             assert current['active'] is active and current['location'] == 'FIT'
         assert len({row['current']['slot'] for row in implants}) == 4
     return {'cases': 17, 'states': states, 'variation_families': 5226, 'new_fits': 2,
-            'restored_fits': len(after), 'protocol_rejections': len(CODEC), 'checks': {'prepare': PREPARE, 'restored': RESTORED}}
+            'restored_fits': len(after), 'protocol_rejections': len(CODEC), 'pagination': prepare['pagination'],
+            'checks': {'prepare': PREPARE, 'restored': RESTORED}}

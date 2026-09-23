@@ -39,8 +39,12 @@ Updated: 2026-09-23. Active: **B04.2.3.2 — Fitted and addition variations**.
   families, including state fallback and cross-slot implants. Local 22 gates/108
   host tests and APK/lint/signature/package checks pass. First Windows CI passes
   all 108 host tests; native CI retained the earlier gates but exposed a Compose
-  crash returning from choices to fitted items. Isolate the two list composition
-  scopes with stable row keys and rerun required native evidence before delivery.
+  crash returning from choices to fitted items. Separate list composition scopes
+  and stable row keys pass that transition in the second run. It then exposed a
+  test-data assumption: Hobgoblin has five variations, not enough for a second
+  page. Use the independently verified 94-choice Gecko family for pagination,
+  previous-page and recreation assertions; retain the Hobgoblin stack tests.
+  Windows CI passes again; final native verification remains required.
   The measured first native run reached that failure after 24m38s; workflow time
   allowance is now 30 minutes for the remaining workflows/restart. Assertions,
   performance thresholds and scope remain unchanged. No .2 completion claim.

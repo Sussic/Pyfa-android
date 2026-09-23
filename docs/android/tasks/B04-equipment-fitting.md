@@ -476,3 +476,13 @@ those lists into separate composition scopes with stable row keys; retain the
 same recreation/save/navigation regression. This run took 24m38s before the
 remaining UI/restart checks, so allow 30 minutes at workflow level without changing
 test assertions or performance limits. New native evidence is required.
+
+Second native run `35918007006` passes the repaired recreation/edit/return
+transition, then exposes an incorrect pagination fixture: Hobgoblin has five
+choices in the independent export. Use a temporary Gecko fit with its actual
+94-choice family to assert next/previous pages, recreation and empty filtering,
+then remove it and retain the original Hobgoblin quantity/order workflow. Record
+actual pagination identity/count/page values and require them in the raw checker.
+Windows run `35918007020` passes on attempt two; its first runner failed checkout
+certificate validation before tests, and a fresh runner passed both checkouts
+with unchanged TLS validation. No test or required coverage is removed.

@@ -132,6 +132,7 @@ class VariationEditingTest {
         val before = library(); val recentBefore = array(EngineRuntime.recent.value); val runtimeStart = diagnostics()
         compare(ModuleTestJson.numericKinds(fixture.getJSONObject("eos_settings")), runtimeStart.getJSONObject("eos_settings_numeric_types"))
         val observed = JSONArray(); val families = JSONArray(); val rejections = JSONArray(); var codec = JSONArray()
+        val pagination = JSONObject()
         val saved = File(context.noBackupFilesDir, "b04232-test-expected.json")
         try {
             when (phase) {
@@ -198,8 +199,27 @@ class VariationEditingTest {
                     assertEquals("Dual 150mm Railgun I", fit(ship).modules[0].name); assertNull(fit(ship).modules[0].charge)
                     assertEquals("Antimatter Charge M", fit(ship).modules[1].charge); assertEquals(ModuleState.OVERHEATED, fit(ship).modules[1].state)
                     compose.onNodeWithTag("variations-saved").performScrollTo(); screenshot("unloaded")
-                    target(VariationContext.DRONE, 0); assertTrue(picker.options!!.targets.first { it.context == VariationContext.DRONE }.choices.size > 20)
-                    click("variations-next"); assertEquals(1, picker.page); screenshot("drone-picker")
+                    // The pinned Hobgoblin family has five choices. Gecko's
+                    // independently enumerated 94-choice family exercises pages.
+                    val pagedFit = create("Vexor", "B04 variation pagination", drones = listOf(DroneSpec("Gecko", 1, 0)))
+                    EngineRuntime.selectFit(context, pagedFit).get(30, TimeUnit.SECONDS)
+                    waitFor { !picker.loading && picker.options?.fitId == pagedFit }
+                    target(VariationContext.DRONE, 0)
+                    val pagedTarget = picker.options!!.targets.single()
+                    assertEquals(94, pagedTarget.choices.size)
+                    pagination.put("item_id", pagedTarget.itemId).put("choices", pagedTarget.choices.size)
+                    click("variations-next"); assertEquals(1, picker.page)
+                    compose.activityRule.scenario.recreate(); sync()
+                    assertEquals(VariationContext.DRONE, picker.context); assertEquals(0, picker.position)
+                    assertEquals(1, picker.page); pagination.put("recreated_page", picker.page)
+                    screenshot("drone-picker")
+                    click("variations-previous"); assertEquals(0, picker.page); pagination.put("previous_page", picker.page)
+                    edit("zz-no-such-variation"); compose.onNodeWithTag("variations-empty").assertExists()
+                    click("variations-back")
+                    send(BridgeOperation.DeleteFit(pagedFit, true), listOf(pagedFit))
+                    EngineRuntime.selectFit(context, ship).get(30, TimeUnit.SECONDS)
+                    waitFor { !picker.loading && picker.options?.fitId == ship }
+                    target(VariationContext.DRONE, 0)
                     edit("zz-no-such-variation"); compose.onNodeWithTag("variations-empty").assertExists()
                     choose("Hobgoblin II", item("Hobgoblin II"))
                     val stacks = options(ship).targets.filter { it.context == VariationContext.DRONE }
@@ -267,7 +287,7 @@ class VariationEditingTest {
             retain(obj("task" to "B04.2.3.2", "phase" to phase, "pid" to Process.myPid(), "runtime_start" to runtimeStart,
                 "runtime_end" to diagnostics(), "before" to before, "after" to library(), "options" to allOptions(),
                 "recent_before" to recentBefore, "recent_after" to array(EngineRuntime.recent.value), "cases" to observed,
-                "families" to families, "rejections" to rejections, "codec_rejections" to codec,
+                "families" to families, "rejections" to rejections, "codec_rejections" to codec, "pagination" to pagination,
                 "saved" to JSONObject(saved.readText(Charsets.UTF_8)), "checks" to array(if (phase == "prepare") listOf(
                     "complete_matrix", "all_5226_families", "all_six_recipients", "prior_fits_unchanged", "picker_recreation",
                     "charge_reconciliation", "neighbour_retained", "drone_pagination_search", "distinct_stacks_quantities_order",
