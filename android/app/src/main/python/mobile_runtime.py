@@ -94,6 +94,10 @@ def charge_options(fit_id):
     return encoded(_bridge.charge_options(fit_id))
 
 
+def bulk_charge_options(fit_id):
+    return encoded(_bridge.bulk_charge_options(fit_id))
+
+
 def variation_options(fit_id):
     return encoded(_bridge.variation_options(fit_id))
 

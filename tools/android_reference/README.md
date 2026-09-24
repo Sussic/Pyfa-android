@@ -226,3 +226,16 @@ distances and four recipients. Original startDrag requires an occupied source.
 Fresh-process repeat, source hashes, settings and unchanged data remain required.
 Burnout cycles are integers, seconds and probabilities decimals; raw units and
 the existing 1e-10 relative/1e-9 absolute tolerance remain unchanged.
+
+### B05.1 bulk ammunition reference
+
+`bulk_charges.py` executes the pinned original context-menu selector, command
+wrapper, calculation command and similar-module helper with real Market/Ammo/EOS
+and wx history. Only window/mouse input plumbing is supplied. Nine synthetic cases
+and 41 states cover asymmetric mixed compatibility, related variants, explicit
+selected/all-similar scopes, modifier inversion, ammo/scripts/crystals, no-ops
+and four linked recipients. It checks source/data identity and repeats in fresh
+processes; Android code is never imported.
+
+Run with the existing reference Python:
+`python -I tools/android_reference/bulk_charges.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory> --check tools/android_reference/fixtures/bulk-charges.json`.

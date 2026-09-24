@@ -76,7 +76,7 @@ class ModuleEditorModel : ViewModel() {
 }
 
 @Composable
-internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit, onVariations: (Int) -> Unit, onArrange: () -> Unit) {
+internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit, onVariations: (Int) -> Unit, onArrange: () -> Unit, onBulk: () -> Unit) {
     val context = LocalContext.current
     val state by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val fit = (state as? EngineState.Ready)?.fit
@@ -87,6 +87,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
     LaunchedEffect(fit.id, fit.revision) { model.load(context, fit) }
     Text(fit.name, style = MaterialTheme.typography.titleLarge)
     Text(fit.ship)
+    TextButton(onClick = onBulk, modifier = Modifier.testTag("modules-bulk")) { Text("Change ammunition together") }
     model.error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("modules-error")) }
     model.message?.let { Text(it, modifier = Modifier.testTag("modules-saved")) }
     if (model.loading) Text("Loading fitting details…")

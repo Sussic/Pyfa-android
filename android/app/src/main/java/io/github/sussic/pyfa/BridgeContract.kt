@@ -40,6 +40,8 @@ sealed interface BridgeOperation {
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
+    data class SetBulkCharges(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
+        val scope: BulkScope, val chargeId: Int?) : BridgeOperation
     data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
@@ -265,6 +267,10 @@ object BridgeCodec {
         is BridgeOperation.ChangeVariation -> "change_variation" to obj("fit_id" to operation.fitId,
             "context" to operation.context.wire, "position" to integer(operation.position, "position", 0),
             "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.SetBulkCharges -> "set_bulk_charges" to obj("fit_id" to operation.fitId,
+            "main_position" to integer(operation.mainPosition, "main_position", 0),
+            "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
+            "charge_id" to operation.chargeId?.let { integer(it, "charge_id", 1) })
         is BridgeOperation.SwapModules -> "swap_modules" to obj("fit_id" to operation.fitId,
             "from_position" to integer(operation.fromPosition, "from_position", 0),
             "to_position" to integer(operation.toPosition, "to_position", 0))
@@ -439,6 +445,53 @@ object BridgeCodec {
         unique(items.map { it.id }, "charge items")
         requireProtocol(modules.flatMap { it.chargeIds }.toSet() == items.map { it.id }.toSet(), "Charge union differs from modules")
         return ChargeOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules), immutableList(items))
+    }
+
+    fun decodeBulkChargeOptions(json: String): BulkChargeOptions {
+        val value = objectValue(StrictJson(json).parse(), "charges")
+        keys(value, setOf("version", "fit_id", "revision", "modules", "items"), path = "charges")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported charge version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid charge revision")
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("index", "item_id", "charge_id", "charge_ids", "selection_candidates", "similar_candidates"), path = "module")
+            val position = integer(row.get("index"), "module.index", 0)
+            requireProtocol(index == position, "Module positions are not contiguous")
+            val item = nullable(row.get("item_id"))?.let { integer(it, "item_id", 1) }
+            val charge = nullable(row.get("charge_id"))?.let { integer(it, "charge_id", 1) }
+            val ids = chargeIds(row.get("charge_ids"))
+            requireProtocol(item != null || charge == null && ids.isEmpty(), "Vacant slot has charges")
+            fun candidates(key: String): List<Int> {
+                val positions = array(row.get(key), key).map { integer(it, key, 0) }
+                unique(positions, key)
+                requireProtocol(positions == positions.sorted(), "Bulk candidates must follow fit order")
+                requireProtocol(item != null || positions.isEmpty(), "Vacancy has bulk candidates")
+                requireProtocol(item == null || position in positions, "Reference missing from bulk candidates")
+                return immutableList(positions)
+            }
+            BulkModuleCharges(position, item, charge, ids, candidates("selection_candidates"), candidates("similar_candidates"))
+        }
+        val items = array(value.get("items"), "items").map { entry ->
+            val row = objectValue(entry, "charge")
+            keys(row, setOf("id", "name"), path = "charge")
+            ChargeItem(integer(row.get("id"), "charge.id", 1), nonempty(row.get("name"), "charge.name"))
+        }
+        unique(items.map { it.id }, "charge items")
+        requireProtocol(modules.flatMap { it.chargeIds }.toSet() == items.map { it.id }.toSet(), "Charge union differs from modules")
+        for (module in modules) {
+            requireProtocol((module.selectionCandidates + module.similarCandidates).all {
+                modules.getOrNull(it)?.itemId != null
+            }, "Bulk candidate is outside fitted modules")
+            val expected = if (module.itemId == null) emptyList() else modules.filter {
+                it.itemId != null && module.chargeIds.containsAll(it.chargeIds)
+            }.map { it.index }
+            requireProtocol(module.selectionCandidates == expected, "Bulk selection capability differs from charges")
+            if (module.itemId != null) requireProtocol(modules.filter { it.itemId == module.itemId }.all {
+                it.index in module.similarCandidates
+            }, "Identical module absent from similar scope")
+        }
+        return BulkChargeOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules), immutableList(items))
     }
 
     private fun variationContext(raw: Any): VariationContext =

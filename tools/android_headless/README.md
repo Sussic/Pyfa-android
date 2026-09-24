@@ -237,3 +237,12 @@ and positional heat. They require strict positions, atomic failures, unchanged
 history, original Thermodynamics AST, unavailable failed heat, owner-thread reads,
 forced GC, independent copies, failed-save recovery and real process restart.
 All prior 108 tests remain required. Native UI/transport/restart checks are separate.
+
+### B05.1 bulk ammunition checks
+
+`python -I tools/android_headless/check_bulk_charges.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory>`
+runs six focused tests with desktop imports/network forbidden. They compare all
+nine independent cases/41 states and four recipients, complete capability maps,
+mixed skips and similar variants, strict/stale rejection, no-op modification
+order, failed durable writes, independent copies and real process restoration.
+Required Windows CI includes this suite and the separate original reference.

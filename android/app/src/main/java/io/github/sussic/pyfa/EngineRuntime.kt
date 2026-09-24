@@ -127,6 +127,15 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun bulkChargeOptionsDiagnostics(context: Context, fitId: String): CompletableFuture<String> {
+        check(BuildConfig.DEBUG)
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join(); check(!unavailable)
+            Python.getInstance().getModule("mobile_runtime").callAttr("bulk_charge_options", fitId).toString()
+        }, executor)
+    }
+
     fun variationOptions(context: Context, fitId: String): CompletableFuture<VariationOptions> {
         val ready = start(context)
         return CompletableFuture.supplyAsync({
@@ -165,6 +174,18 @@ object EngineRuntime {
             check(!unavailable) { "Restart the app to recover the fitting engine." }
             BridgeCodec.decodeChargeOptions(Python.getInstance().getModule("mobile_runtime")
                 .callAttr("charge_options", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
+    fun bulkChargeOptions(context: Context, fitId: String): CompletableFuture<BulkChargeOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeBulkChargeOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("bulk_charge_options", fitId).toString()).also { result ->
                 check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
             }
         }, executor)
