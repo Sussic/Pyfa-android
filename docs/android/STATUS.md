@@ -1,57 +1,55 @@
 # Android project status
 
-Updated: 2026-09-23. Active: **B04.2.3.3 — Rack ordering and heat behavior**.
+Updated: 2026-09-24. **B04 delivered. Next: B05 — Bulk weapon/module editing.**
 
 ## Current authorized work
 
-- Explicit chat confirmation authorizes B04 and sequential eligible approved
-  roadmap tasks, one outcome at a time through review/checks/PR merge. No releases,
-  phone installs, billing changes, unrelated work or delegation.
-- **B04.2.3.2 delivered** in [PR #20](https://github.com/Sussic/Pyfa-android/pull/20), merge
-  `d14441eb771157127d768668200396cea3d2750a`, tested head
-  `b0fa526cf1c0c9ce3d8038d39d908b56dccda43e`. The variation picker supports modules, drone stacks and
-  fit-local implants with search/pagination, current inputs and disabled choices.
-  Original family ordering, state/charge reconciliation, distinct drone stacks,
-  cross-slot implant behavior and linked recipients match the pinned desktop.
-  Atomic rejection/save recovery, independent copies, recreation and real restart
-  retain inputs and values. Recent-use history stays unchanged. EOS remains.
-- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35921791052) passes
-  **108 host tests**, independent references/repeats and migration/backup.
-  New variations cover **17 cases/55 states and all 5,226 families**, including
-  six recipients. Full local Windows checks pass in 23 minutes of gate execution.
-- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35921790783) passes
-  both APKs, lint, signature, 150-source/data/license/ABI inspection and **26 offline
-  native executions** on API36 x86_64. Strict types/units, 13 new protocol rejections
-  and all 14 saved fits after restart pass. All **43 screenshots** reviewed.
-  Downloaded raw validators and corruption probes pass; artifact digest and CI
-  tree match the tested head. Local APK/lint/package checks also pass.
-  [Audit](tasks/B04-equipment-fitting.md) and
-  [raw receipt](evidence/b04-2-3-2-native.json) retain evidence and limitations.
-- The first native run found a Compose crash returning to fitted items. Separate
-  list composition scopes and stable row keys fix the tested transition. The
-  observed 24m38s run justified a 30-minute workflow allowance; assertions and
-  performance thresholds remain unchanged. A second run corrected the pagination
-  test to use Gecko's actual 94-choice family; Hobgoblin quantity/order coverage
-  remains. A transient Windows checkout trust failure cleared on a fresh runner
-  with certificate validation unchanged.
-- Selected **B04.2.3.3** on `codex/b04-2-3-3-rack-ordering`, from clean delivered
-  master `1e72427aa87c8331c25027a6fa080977712c5566`; live master matches and no PRs
-  remain open. Audit original occupied/vacant same-rack swaps and positional
-  heat, implement native ordering with preserved inputs, prove independent heat
-  values and real restart. B04.2.3/B04.2/B04 remain incomplete until it passes.
-  B05 bulk, B06 modes/subsystems, B07 cargo and B09 undo/redo retain full scope.
-  **19 of 78 leaves done; 59 remain**, plus eight rollups. All 239 parity rows remain.
-- Ordering implementation now has an independent nine-case/48-state desktop
-  export/repeat and six passing focused host tests, including heat, four linked
-  recipients, strict rejection, failed-save rollback, copies and process restart.
-  Native rack controls and two additional native phases are implemented. Both
-  local APKs, lint, signature and 152-source/data/license/ABI inspection pass.
-  Full 114-host regression and required 28-execution native CI remain pending;
-  B04.2.3.3 is not delivered. No access or product decision currently blocks work.
-- Earlier deliveries: [charges / PR #19](https://github.com/Sussic/Pyfa-android/pull/19),
-  [modules / PR #18](https://github.com/Sussic/Pyfa-android/pull/18),
-  [empty hulls / PR #17](https://github.com/Sussic/Pyfa-android/pull/17),
-  [equipment / PR #16](https://github.com/Sussic/Pyfa-android/pull/16).
+- Explicit chat confirmation authorizes sequential eligible approved roadmap
+  tasks, one outcome at a time through review/checks/PR merge. No releases, phone
+  installs, billing changes, unrelated work or delegation. The goal remains active.
+- **B04.2.3.3 and B04 delivered** in [PR #21](https://github.com/Sussic/Pyfa-android/pull/21),
+  merge `9e5f3706db2f4e6b8e30a4c30cdf66715b30ed59`, tested head
+  `c9e8cec217f11561f36302e53b9b7d2c472d7e0b`. Move or swap fitted modules within a
+  rack, preserving states/charges, and inspect original desktop positional heat.
+  Atomic save/recovery, recipients, selection/recreation and real restart pass.
+  EOS and the unchanged Thermodynamics class remain the calculation source.
+- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35933294633)
+  passes **114 host tests**, independent references/repeats and migration gates
+  in **22m11s**. Local validation passes **24 gates** in **30m27s**. Ordering covers
+  **nine cases/48 states/four recipients** against the independent desktop pin.
+- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35933294598)
+  passes both APKs, lint, signature, 152-source/data/license/ABI inspection and
+  **28 offline native executions** in **27m12s**. All **50 screenshots** reviewed;
+  all **16 saved fits** restored. Artifact digest/tree, raw validators, 13 summary
+  corruption probes and 11 numeric transport probes pass. Local APK/lint/package
+  checks pass. [Task audit](tasks/B04-equipment-fitting.md) and
+  [receipt](evidence/b04-2-3-3-native.json) retain evidence and limits.
+- Extra CI rounds resolved an emulator report-transfer failure, a source-audit
+  path unavailable in the sparse checkout, and an exact error-code expectation
+  at the Kotlin/Python boundary. No checks, type/unit rules or tolerances were weakened.
+- B04 covers discovery, hull creation, modules/legality/history, charges,
+  variations and ordering/heat. Full parity is not established. B05 bulk, B06
+  modes/subsystems, B07 cargo, B09 undo/redo and C09 heat options retain scope.
+- **Exact next task B05:** audit selection/fill/mixed-compatibility behaviors,
+  bound the task in a brief, then implement native bulk actions with independent
+  desktop, atomicity and persistence evidence. No current access or product decision blocks it.
+
+## Forecast after B04 delivery
+
+| Next milestone | Remaining work | Elapsed estimate / confidence |
+| --- | --- | --- |
+| B05 bulk editing | Selection, multi-module ammo/state/fill and mixed compatibility; reference, host/native checks and delivery. | Unknown until the selection/fill/mixed-compatibility audit resolves command families; low confidence before that audit. |
+| B06 hull configuration | Modes, subsystems and structure controls; changing slots/bonuses and persistence. | Unknown until the mode/subsystem/structure audit resolves scope; low confidence. |
+| B07 cargo | Stack quantities and equipment/ammo transfers with restart and desktop comparisons. | Unknown until the stack/transfer audit resolves command behavior; low confidence. |
+
+Allow **25–35 minutes per full CI round** based on the latest 22m11s Windows and
+27m12s Android jobs running together; corrections can require another round.
+B04's extra rounds above were the material delay. Build **15 (`0.1.0-b04.2.3.3`)
+is meaningful for development workflow testing now**, including saved fits and
+rack heat. Safe persistent phone use is **unknown until R02 signing/upgrade
+checks and phone/API compatibility are resolved**. No phone installation occurs.
+No decision/access needed now; whole-queue time remains unknown until later audits
+and device/upgrade gates resolve. Refresh this forecast after each milestone.
 
 ## Resume and installed environment
 
@@ -60,12 +58,12 @@ live fork master and open PRs. Work only in Sussic/Pyfa-android. Dot-source
 `build/windows-env.ps1`: Python 3.11.9 reference/headless, JDK17.0.20.1+1,
 SDK36/build35 and Gradle8.13. Reuse installed tools and local AppData Gradle cache.
 [Windows guide](WINDOWS.md) and ignored `build/WINDOWS-CHECKPOINT.md` retain commands,
-continuation paths and the forecast. No timed host suites alongside local Gradle.
+continuation paths and forecast. No timed host suites alongside local Gradle.
 Native CI uses Ubuntu/KVM; Windows builds alone do not establish Android support.
-Keep all 114 host/28 native executions and raw type/unit/GC/restart/performance/screenshot gates,
-one-day diagnostics, deliberate APK uploads only and no scheduled/releases jobs.
+Keep all 114 host/28 native executions and raw type/unit/GC/restart/performance/screenshot
+checks, one-day diagnostics, deliberate APK uploads only and no scheduled/release jobs.
 
-## Architecture and comparison target
+## Architecture and remaining limits
 
 Kotlin/Compose + Chaquopy + serialized EOS remain A10. Follow [scope](SCOPE.md),
 [architecture](ARCHITECTURE.md) and [evidence rules](DEVELOPMENT.md). No Kotlin
@@ -77,14 +75,10 @@ graphs atomically. Navigation preferences stay separate. Preserve invalid files.
 Keep desktop `gamedataCache=False`. Host Logbook 1.7.0.post0, SQLAlchemy 1.4.50 and
 Greenlet 3.0.3; Android Greenlet 3.0.1 build 1 and chaquopy-libcxx 180000 build 0 remain.
 
-## Remaining limits
-
-Development build 14 (`0.1.0-b04.2.3.2`) supports hull/module/charge/variation workflow
-testing and saved fits. ARM64 execution, older APIs, safe upgrades/downgrades and
-user usability remain unverified; no full-parity claim. Both ABIs are packaged.
-Phone model/API unconfirmed; native report transport needs API31+, app minSdk24.
-No phone installation authorized or performed. Backup/transfer I05, stable signing
-and upgrades R02, usability R03, full implant profiles/locations C07 and complete
-projection/command matrices Q07 retain scope. Older builds reject newer fields
-and preserve storage. Legacy tox remains unaudited. A10 measurements remain debug
-emulator baselines. Restore-off opens the library while EOS rebuilds saved fits.
+ARM64 execution, older APIs, safe upgrades/downgrades and user usability remain
+unverified. Both ABIs are packaged. Phone model/API unconfirmed; native report
+transport needs API31+, app minSdk24. Backup/transfer I05, stable signing/upgrades
+R02, usability R03, full implant profiles/locations C07 and complete projection/
+command matrices Q07 retain scope. Older builds reject newer fields and preserve
+storage. Legacy tox remains unaudited. A10 measurements are debug emulator baselines.
+Restore-off opens the library while EOS rebuilds saved fits.

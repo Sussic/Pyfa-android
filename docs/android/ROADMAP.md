@@ -42,18 +42,18 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B03 | done | B02 | Fit library screen (parent) | B03.1 and B03.2 complete; all original lifecycle and organization requirements retained. |
 | B03.1 | done | B02 | [Fit lifecycle and search](tasks/B03-fit-library.md) | Create from fixtures, find, open, rename, duplicate and delete; resolve links atomically, retain independent inputs and reopen an empty library. Host and native workflow checks pass. |
 | B03.2 | done | B03.1 | Library organization and open-fit navigation | Hull group/race browsing, hide/show empty groups, back-to-hull navigation, recently modified fits and multiple open fits with close one/all and optional restart restoration; preserve F01.03–F01.05 and audit desktop preferences. |
-| B04 | active | B03 | [Equipment browser and fitting (parent)](tasks/B04-equipment-fitting.md) | B04.1 and B04.2 complete; all F02.01–F02.05/F02.09 requirements and arbitrary-hull creation retained. |
+| B04 | done | B03 | [Equipment browser and fitting (parent)](tasks/B04-equipment-fitting.md) | B04.1 and B04.2 complete; all F02.01–F02.05/F02.09 requirements and arbitrary-hull creation retained. |
 | B04.1 | done | B03 | Offline equipment discovery | Complete pinned market catalogue, group/search/meta filters and item-to-group navigation pass independent host and offline native checks. |
-| B04.2 | active | B04.1 | Fitting editor and item history (parent) | B04.2.1–B04.2.3 complete; all arbitrary-hull, fitted-item, charge/variation/reorder, restriction/legality and recent-item requirements retained. |
+| B04.2 | done | B04.1 | Fitting editor and item history (parent) | B04.2.1–B04.2.3 complete; all arbitrary-hull, fitted-item, charge/variation/reorder, restriction/legality and recent-item requirements retained. |
 | B04.2.1 | done | B04.1 | Arbitrary empty ship and structure creation | Every bundled hull can create a named empty fit with desktop-matched raw values and explicit absent attributes; native creation, copy, rejection and restart preserve inputs. |
 | B04.2.2 | done | B04.2.1 | Module editing, legality and recent use | Add/replace/remove modules, rigs and service modules with positions, state rules, EOS legality and restriction re-enable behavior; persist a desktop-matched bounded recent-use list. |
-| B04.2.3 | active | B04.2.2 | Charges, variations and rack ordering (parent) | B04.2.3.1–B04.2.3.3 complete; all charge/discovery, variation/addition and ordering/heat acceptance retained. |
+| B04.2.3 | done | B04.2.2 | Charges, variations and rack ordering (parent) | B04.2.3.1–B04.2.3.3 complete; all charge/discovery, variation/addition and ordering/heat acceptance retained. |
 | B04.2.3.1 | done | B04.2.2 | Charge editing and active-fit discovery | Load/replace/unload compatible ammo, scripts and crystals through native controls; complete compatible and active-fit sets match desktop; atomic failures, recipients and restart retain exact results. |
 | B04.2.3.2 | done | B04.2.3.1 | Fitted and addition variations | Supported module and existing addition variations reconcile states/charges/locations exactly as desktop with atomic failures, independent values and native restart evidence. |
-| B04.2.3.3 | active | B04.2.3.2 | Rack ordering and heat behavior | Swap occupied or vacant same-rack positions without losing states/charges; independent positional heat results and native reorder/restart workflows pass. |
-| B05 | queued | B04 | Bulk weapon/module editing | Select compatible guns, change ammo/state or fill slots in one operation; incompatible mixed selections get clear behavior; one user action updates every intended module. |
-| B06 | queued | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |
-| B07 | queued | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
+| B04.2.3.3 | done | B04.2.3.2 | Rack ordering and heat behavior | Swap occupied or vacant same-rack positions without losing states/charges; independent positional heat results and native reorder/restart workflows pass. |
+| B05 | ready | B04 | Bulk weapon/module editing | Select compatible guns, change ammo/state or fill slots in one operation; incompatible mixed selections get clear behavior; one user action updates every intended module. |
+| B06 | ready | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |
+| B07 | ready | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
 | B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | queued | B05 | Undo/redo for fit edits | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |
 
@@ -61,11 +61,11 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
-| C01 | queued | B04 | Resources, capacitor and defenses | Every audited resource/capacitor/tank field has correct units/rounding and matches raw reference results under relevant assumptions. |
-| C02 | queued | B04 | Firepower, bombs and mining stats | Audited outgoing fields match representative turret, missile, bomb and mining cases; unsupported/absent values remain distinguishable from zero. |
-| C03 | queued | B04 | Targeting/navigation and attribute inspector | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. |
-| C04 | queued | B04 | Drone editing | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
-| C05 | queued | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
+| C01 | ready | B04 | Resources, capacitor and defenses | Every audited resource/capacitor/tank field has correct units/rounding and matches raw reference results under relevant assumptions. |
+| C02 | ready | B04 | Firepower, bombs and mining stats | Audited outgoing fields match representative turret, missile, bomb and mining cases; unsupported/absent values remain distinguishable from zero. |
+| C03 | ready | B04 | Targeting/navigation and attribute inspector | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. |
+| C04 | ready | B04 | Drone editing | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
+| C05 | ready | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
 | C06 | ready | B01, B03 | Offline character profiles | All-V/custom skills can be selected, edited and saved; requirements and affectors are inspectable and bonuses match references. |
 | C07 | queued | C06 | Implants and implant sets | Slot handling and applying/saving sets match Pyfa; profile changes update dependent fits. |
 | C08 | queued | C06 | Boosters and side effects | Add/toggle boosters and individual supported side effects; raw results and persistence match references. |
@@ -107,10 +107,10 @@ each graph. Keep heavy sample calculation off the UI thread.
 
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
-| I01 | queued | B04 | EFT import/export and phone sharing | Paste/import/export a fit; valid states/charges round-trip as supported, and malformed input does not partially overwrite saved work. |
+| I01 | ready | B04 | EFT import/export and phone sharing | Paste/import/export a fit; valid states/charges round-trip as supported, and malformed input does not partially overwrite saved work. |
 | I02 | queued | I02.01, I02.02, I02.03, I02.04, I02.05, I02.06, I02.07, I02.08 | Remaining Pyfa interchange formats — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
 | I03 | queued | I03.01, I03.02, I03.03, I03.04 | Optional character/fitting synchronization — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
-| I04 | queued | B04 | Prices and price preferences | Refresh supported sources online, retain timestamped cached values offline and preserve supported pricing options; resolve the manual-price question in PARITY_AUDIT Q02. Unavailable values are not zero. |
+| I04 | ready | B04 | Prices and price preferences | Refresh supported sources online, retain timestamped cached values offline and preserve supported pricing options; resolve the manual-price question in PARITY_AUDIT Q02. Unavailable values are not zero. |
 | I05 | queued | I05.01, I05.02 | Data refresh and user backups — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
 | I06 | queued | I06.01, I06.02, I06.03, I06.04, I06.05, I06.06, I06.07 | Remaining preferences and localization — rollup | Every listed child is verified, including its assigned PARITY rows and unresolved audit dispositions. This parent is not an additional implementation task. |
 

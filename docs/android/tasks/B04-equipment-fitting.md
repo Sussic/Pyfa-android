@@ -575,3 +575,26 @@ the strict Kotlin encoder as `INVALID_REQUEST`, while valid out-of-fit integers
 reach Python and return `INVALID_EDIT`. Correct that exact expected code; retain
 every rejection and atomic-state assertion. Validate the captured reports and
 screens, then obtain green required CI on the final head before delivery.
+
+
+### B04.2.3.3 delivery and B04 rollup
+
+Delivered in [PR #21](https://github.com/Sussic/Pyfa-android/pull/21), tested head
+`c9e8cec217f11561f36302e53b9b7d2c472d7e0b`, merge `9e5f3706db2f4e6b8e30a4c30cdf66715b30ed59`.
+Windows run `35933294633` passes all **114 host tests** and every
+independent reference/repeat/migration gate. Android run `35933294598`
+passes **28 offline native executions**, both APKs, lint, signature and inspection
+of 152 bundled sources/data/licenses/ABIs. All **50 screenshots** were reviewed,
+including seven new ordering views. Artifact digest/CI tree and downloaded raw
+validators/corruption probes pass. [Full receipt](../evidence/b04-2-3-3-native.json).
+The local 24-gate host run and APK/lint/package checks pass independently.
+
+All B04.1/B04.2 children are now verified: discovery, arbitrary hull creation,
+module/rig/service edits, legality/restrictions, recent use, charges, variations
+and rack ordering/heat. B04.2.3, B04.2 and B04 close together. F01.01 continuation
+and F02.01–F02.05/F02.09 retain their recorded matrices and evidence limits;
+this does not establish full Pyfa parity or user usability. Build 15 is a debug
+development build; ARM64 execution, older APIs and upgrades remain unverified.
+Exact next task: **B05 — Bulk weapon/module editing**, audit and bound its full
+selection/fill/mixed-compatibility scope before implementation. B06 modes and
+subsystems, B07 cargo, B09 undo/redo and C09 heat options remain separate.
