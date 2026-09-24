@@ -76,7 +76,7 @@ class ModuleEditorModel : ViewModel() {
 }
 
 @Composable
-internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit, onVariations: (Int) -> Unit) {
+internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onCharges: (Int) -> Unit, onVariations: (Int) -> Unit, onArrange: () -> Unit) {
     val context = LocalContext.current
     val state by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val fit = (state as? EngineState.Ready)?.fit
@@ -140,6 +140,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
     }
     Button(onClick = { model.replacePosition = null; onBrowse() }, enabled = enabled,
         modifier = Modifier.testTag("modules-add")) { Text("Add equipment") }
+    TextButton(onClick = onArrange, enabled = enabled, modifier = Modifier.testTag("modules-arrange")) { Text("Arrange rack and view heat") }
     for (row in ModuleSlot.entries.chunked(3)) Row {
         for (slot in row) TextButton(onClick = { model.rack = slot }, modifier = Modifier.weight(1f).testTag("modules-rack-${slot.name}")) {
             Text(slot.label + if (slot == model.rack) " ✓" else "")

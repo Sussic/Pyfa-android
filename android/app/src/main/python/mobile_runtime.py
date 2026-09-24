@@ -98,6 +98,10 @@ def variation_options(fit_id):
     return encoded(_bridge.variation_options(fit_id))
 
 
+def rack_options(fit_id):
+    return encoded(_bridge.rack_options(fit_id))
+
+
 def variation_families_diagnostics(fit_id):
     """Complete native menu enumeration using the production family policy."""
     from android_bridge.variations import choices

@@ -225,3 +225,15 @@ copies remain independent and a fresh process restores module/drone/implant
 inputs. Accepted no-ops retain inputs/history/modified order while acknowledging
 the next B01 revision. All prior 102 tests remain required; native evidence is
 separate and cannot be established by these host results.
+
+## B04.2.3.3 rack ordering checks
+
+Run installed Python with `-I tools/android_headless/check_rack_ordering.py`,
+`--database /absolute/eve.db` and a new external `--output` directory. Six guarded
+tests use `--source /absolute/pinned-reference` (local default
+`build/reference-upstream`) for the unchanged desktop heat-body check, verifying
+its commit and recorded file hash. They compare nine original-command cases/48 states, including four recipients
+and positional heat. They require strict positions, atomic failures, unchanged
+history, original Thermodynamics AST, unavailable failed heat, owner-thread reads,
+forced GC, independent copies, failed-save recovery and real process restart.
+All prior 108 tests remain required. Native UI/transport/restart checks are separate.

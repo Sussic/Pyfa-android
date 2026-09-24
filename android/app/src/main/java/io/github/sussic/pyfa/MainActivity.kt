@@ -63,7 +63,8 @@ class MainActivity : ComponentActivity() {
             ReportDrawnWhen { engine is EngineState.Ready || engine is EngineState.Empty }
             PyfaApp(ViewModelProvider(this)[FitLibraryModel::class.java],
                 ViewModelProvider(this)[EquipmentModel::class.java], ViewModelProvider(this)[ModuleEditorModel::class.java],
-                ViewModelProvider(this)[ChargeEditorModel::class.java], ViewModelProvider(this)[VariationEditorModel::class.java])
+                ViewModelProvider(this)[ChargeEditorModel::class.java], ViewModelProvider(this)[VariationEditorModel::class.java],
+                ViewModelProvider(this)[RackEditorModel::class.java])
         }
     }
 
@@ -74,12 +75,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
     var showCharges by rememberSaveable { mutableStateOf(false) }
     var showVariations by rememberSaveable { mutableStateOf(false) }
+    var showRack by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showVariations = true
@@ -102,18 +104,20 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations || showRack) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showVariations) {
+                        if (showRack) {
+                            RackEditor(rackModel, onBack = { showRack = false })
+                        } else if (showVariations) {
                             VariationEditor(variationModel, onBack = { showVariations = false })
                         } else if (showCharges) {
                             ChargeEditor(chargeModel, onBack = { showCharges = false })
@@ -121,7 +125,11 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             EquipmentBrowser(equipmentModel, moduleModel, onBack = { showEquipment = false },
                                 onViewFit = { showEquipment = false; showModules = true }, onCharges = { charges(null) })
                         } else if (showModules) {
-                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false }, onCharges = { charges(it) }, onVariations = { variations(it) })
+                            ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false },
+                                onCharges = { charges(it) }, onVariations = { variations(it) }, onArrange = {
+                                    rackModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, null)
+                                    showRack = true
+                                })
                         } else if (showAbout) {
                             AboutBuild(onBack = { showAbout = false })
                         } else {
