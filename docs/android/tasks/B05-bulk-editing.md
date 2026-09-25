@@ -68,7 +68,7 @@ retain the existing inventory rather than imply completion of those behaviors.
 
 ## B05.1 implementation and acceptance
 
-The selected child is **B05.1** on `codex/b05-1-bulk-ammunition`. Add revision-bound
+**B05.1 is delivered** from `codex/b05-1-bulk-ammunition`. It adds revision-bound
 bulk charge discovery/preview and one serialized mutation. Native selection,
 reference module and scope are explicit; show current charges, exact targets,
 skips and empty results. Revalidate on fit/revision changes, preserve selection
@@ -82,24 +82,37 @@ edits. Every accepted action commits once with all affected recipients.
 - [x] Focused host checks compare exact IDs/positions/types/units/inputs and raw
   values (existing justified floating tolerance only); malformed/duplicate/stale
   selection and failed-save rollback preserve graph, revisions and history.
-- [ ] Native offline touch selection/scope/preview/action, empty fit, mixed skips,
+- [x] Native offline touch selection/scope/preview/action, empty fit, mixed skips,
   rotation, navigation, independent copy and real process restart pass. Retain raw
   reports, strict Kotlin decoder rejection checks and screenshots actually reviewed.
-- [ ] All existing 114 host tests, references/repeats/migration, 28 native executions,
+- [x] All existing 114 host tests, references/repeats/migration, 28 native executions,
   type/unit/GC/performance/restart gates, APKs/lint/signature/data/license/ABI
   checks remain required, extended with the new cases. No phone installation.
-- [ ] Review, both required CI jobs on final head, artifact provenance/raw checks,
+- [x] Review, both required CI jobs on final head, artifact provenance/raw checks,
   screenshot review, PR merge and evidence/status/forecast update complete.
 
 ## Evidence and forecast
 
 Independent reference/repeat pass nine cases/41 states/four recipients (fixture
 SHA `a13fe41af114f36834ed14be66f5714662346c0fd9bc710506262e69ff054a09`). Six focused
-host tests pass in 28.741s. Local APKs/lint/signature/153-source/data/license/ABI
-inspection pass. Native implementation and instrumentation compile; execution
-and full regression/CI/evidence review/delivery remain pending. Provisional B05.1
-remaining 2–5 hours, moderate-to-low confidence until the first native workflow.
-B05 total remains unknown until clone/fill/override termination is verified.
-Observed B04 full local checks take about 30 minutes; parallel CI takes 25–35
-minutes per round, plus corrections/review. B06 and B07 remain unknown until
-their specific audits. No access or product decision is needed now.
+host tests pass in 28.741s. The completed delivery below supersedes the initial
+pending-native forecast. [Current status](../STATUS.md) records the updated
+remaining-task forecast and measured final CI times.
+
+## B05.1 delivery
+
+Delivered in [PR #22](https://github.com/Sussic/Pyfa-android/pull/22), tested head
+`b031c985be5acfcf79e3b06c45079b0ea11564a0`, merge `18de3c72eea047aaa0f94ec4a809e34b79665b6d`.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35944859296)
+passes **120 host tests** and all independent reference/repeat/migration gates.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35944859268)
+passes **30 offline native executions**, both APKs, lint, signature and
+153-source/data/license/ABI inspection. All **56 screenshots** were actually
+reviewed, including six bulk-ammunition views. Artifact digest/CI tree and raw
+validators/corruption probes pass. Local full 26-gate host and APK/package checks
+also pass. [Retained evidence](../evidence/b05-1-native.json).
+
+Build 16 is a development build. ARM64 execution, older APIs, user usability and
+safe upgrades remain unverified. B05 stays active: exact next task **B05.2 — Bulk
+module states**, followed by B05.3 clone/fill and B05.4 variation/removal. The
+parent's complete scope and B09 undo/redo requirement remain unchanged.

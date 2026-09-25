@@ -83,6 +83,18 @@ The user confirms usability; agents are responsible for technical correctness.
 - Batch related fixes before expensive CI. Check for an existing run for the same
   commit before triggering another. Cancel superseded branch runs once workflows
   support concurrency; do not cancel another active task's run.
+- Resume from the live repository and existing checkpoint; keep delivered work
+  closed. Use focused checks while developing, then run every required check for
+  the final revision. Reuse valid passing results and artifacts for an unchanged
+  tested revision; do not rerun them merely because work resumed.
+- Follow long-running checks through an existing watcher or completion notice.
+  Investigate the specific failure before retrying; group related corrections,
+  avoid duplicate log polling and bookkeeping, and update the checkpoint when a
+  milestone, decision or blocker changes. Explain material delays once.
+- For quota, billing or access blocks, record the exact error and owner action
+  once. Do not retry an unchanged block; continue independent authorized work
+  within existing work-in-progress limits, or save the checkpoint and pause.
+  After access returns, rerun only necessary failed or blocked jobs.
 - Keep billing/spending settings unchanged. Avoid duplicate APK uploads, full
   workspace archives, permanent emulator images and unbounded caches. Initial CI
   policy is one-day retention for diagnostic/test artifacts, no scheduled runs,
