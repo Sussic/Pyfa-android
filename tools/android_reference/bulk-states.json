@@ -1,0 +1,8 @@
+[
+  {"basis":"Mixed railguns and asymmetric selection","operations":[[0,[0,1,2,3],"SELECTED","left"],[0,[0,1,2,3],"SELECTED","right"],[0,[0,1,2,3],"SELECTED","ctrl"],[3,[0,1,2,3],"SELECTED","left"],[0,[0],"SIMILAR","left"]]},
+  {"basis":"Selected projectile pair and untouched gun","operations":[[0,[0,1],"SELECTED","right"],[0,[0],"SIMILAR","ctrl"],[1,[0,1,2],"SELECTED","left"],[0,[0,1],"SELECTED","left"]]},
+  {"basis":"Sensor scripts and unrelated tracking","operations":[[3,[3],"SELECTED","right"],[0,[0,1,2,3],"SELECTED","right"],[0,[0,1,2,3],"SELECTED","left"],[3,[0,1,2,3],"SELECTED","ctrl"],[3,[0,1,2,3],"SELECTED","ctrl"],[0,[0],"SIMILAR","left"]]},
+  {"basis":"Projected bulk script recipients","operations":[[0,[0,1],"SELECTED","ctrl"],[0,[0],"SIMILAR","left"],[1,[0,1],"SELECTED","right"]]},
+  {"basis":"Bulk command charge recipients","operations":[[0,[0,1],"SELECTED","ctrl"],[0,[0],"SIMILAR","left"],[1,[0,1],"SELECTED","right"]]},
+  {"basis":"Empty bulk editor","operations":[]}
+]

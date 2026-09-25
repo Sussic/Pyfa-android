@@ -36,7 +36,8 @@ jobs:
     runs-on: ubuntu-24.04
     # The first B04.2.3.2 run reached the new picker after 24m38s; retain time
     # for its remaining workflows, process restart and evidence collection.
-    timeout-minutes: 30
+    # B05.1 took up to 28m; B05.2 adds two real-process state phases.
+    timeout-minutes: 40
     defaults:
       run:
         working-directory: android

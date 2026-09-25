@@ -1,4 +1,4 @@
-# Offline Android engine development (B04.1)
+# Offline Android engine development
 
 Native Kotlin/Compose application in `app/`. A07 embeds the existing Python EOS,
 bundles the complete pinned game database and calculates the synthetic A01 Vexor
@@ -7,7 +7,8 @@ shows drone control range and all 39 sampled attributes. B02 persists fit graphs
 B03.1 adds creation from bundled examples, search, open, rename, copy and deletion.
 B03.2 adds hull/race browsing, recently modified fits and saved open-fit navigation.
 B04 adds arbitrary hull creation and module, charge, variation and rack editing;
-B05.1 adds explicit bulk-ammunition selection. Other bulk actions remain in progress.
+B05.1 adds explicit bulk-ammunition selection. B05.2 adds selected/similar module
+state changes; clone/fill and variation/removal remain in progress.
 A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
@@ -423,3 +424,17 @@ CI retains the original nine-case/41-state matrix, strict numeric transport guar
 selection/scope/script/mixed/empty/recreation workflows, independent copies and all
 saved fits after a real process restart. Six screenshots require actual review.
 Build 16 remains a development build; STATUS records executed checks and limits.
+
+### B05.2 bulk module states (candidate build 17)
+
+From Fit modules, choose Change module states together. Select modules and a
+reference, choose selection-only or all-similar scope, then cycle, request
+overheat or take them offline. The preview uses EOS-supported states for each
+target and identifies modules outside the scope. The saved result shows actual
+states after fit-wide restrictions reconcile; recent equipment is unchanged.
+
+`BulkStatesTest` compares six pinned desktop cases/27 states and four recipients
+offline, then checks selection/recreation, fallbacks, similar modules outside the
+selection, no-ops, malformed/stale requests, independent copies and real process
+restart. Five screenshots and raw transport guards require review. Required host
+and native CI results for build 17 are recorded in STATUS when delivered.

@@ -223,3 +223,16 @@ desktop subset/compatibility policy in one durable action, reconciling states an
 all linked recipients. Rejected/failed writes recover the committed graph; recent
 equipment is unchanged. Full states/clone/fill/variation/removal and history remain
 the other B05 children and B09 respectively.
+
+### B05.2 bulk module states
+
+`bulk_state_options(fit_id)` reports a revision-bound EOS state/click matrix and
+original similar-module positions. `set_bulk_states` accepts a reference position,
+unique selection, `SELECTED` or `SIMILAR` scope and the desktop click action
+(`left` cycle, `right` overheat, `ctrl` offline). It calls EOS
+`Module.getProposedState` for the reference and every target, recalculates and
+reconciles fit-wide restrictions with the reference preferred, then fills slots
+and atomically saves the affected graph. Unsupported states fall back by EOS;
+unselected unrelated modules may also be reconciled. Malformed/stale requests and
+durable write failures preserve committed fits and recipients. No new schema or
+recent-equipment promotion is introduced. B06 retains subsystem controls.

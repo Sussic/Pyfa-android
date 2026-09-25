@@ -257,3 +257,15 @@ Intentional desktop skips are visible; malformed/stale requests and failed saves
 leave committed inputs intact. Recent equipment stays unchanged. Native selection
 survives recreation, and external fit/revision changes discard stale selections.
 No new storage schema, parallel engine execution or fitting formulas are introduced.
+
+## B05.2 bulk state boundary
+
+The serialized worker exposes revision-bound per-module click proposals and
+supported-state fallbacks from the existing EOS `Module` API. Kotlin renders
+selection-only/all-similar scope and requested/skipped outcomes; it never
+calculates state transitions. A single bridge command validates every position
+and click, applies the original reference-first state command, recalculates and
+reconciles fit-wide restrictions with the reference preferred. The graph and
+linked recipients save atomically; errors recover the preceding committed graph.
+The UI reads actual saved states after reconciliation. Subsystems remain B06,
+and undo/redo remains B09. No schema, engine concurrency or formula changes.

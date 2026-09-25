@@ -37,6 +37,24 @@ Updated: 2026-09-25. **B05.1 delivered. Next: B05.2 — Bulk module states.**
   and delivered. Exact next task: **B05.2 — Bulk module states (F03.03)**. Record
   its selected branch/scope before implementation. B09 retains all undo/redo work.
 
+## Selected B05.2 — Bulk module states
+
+Branch `codex/b05-2-bulk-module-states` starts from delivered master
+`e5098cc1ff017819f07c9afbdc99e0eab2a378d8`. Deliver one touch-accessible
+action for selected versus all-similar module state changes: original cycle,
+offline and overheat transitions, per-module supported-state fallback, fit-wide
+restrictions, explicit affected/skipped results and atomic persistence. Compare
+independent pinned desktop cases and recipients, then run focused host/native
+checks, final-revision required CI, review and a focused PR. B05.3/B05.4 remain
+outside this child. Transition/restriction audit is the next development step.
+
+The pinned state-column command and EOS transition/fallback/restriction paths are
+audited. A six-case/27-state independent desktop export and fresh-process repeat
+pass with four linked recipients; five focused headless checks pass against it,
+including malformed/stale requests, no-op history, failed save and restart.
+Candidate build 17 compiles both APKs and passes local lint. Native execution,
+complete regression, final-head CI, screenshot review and delivery remain pending.
+
 ## Forecast after B05.1 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
