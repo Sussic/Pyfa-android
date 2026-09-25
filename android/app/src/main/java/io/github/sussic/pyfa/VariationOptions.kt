@@ -13,5 +13,6 @@ data class VariationTarget(
     val context: VariationContext, val index: Int, val itemId: Int, val name: String,
     val current: VariationInput, val choices: List<VariationChoice>,
 )
-data class VariationOptions(val fitId: String, val revision: Long, val targets: List<VariationTarget>)
+data class VariationOptions(val fitId: String, val revision: Long, val targets: List<VariationTarget>,
+    val familyCandidates: Map<Int, List<Int>> = emptyMap())
 data class VariationFamily(val id: Int, val context: VariationContext, val choices: List<VariationChoice>)
