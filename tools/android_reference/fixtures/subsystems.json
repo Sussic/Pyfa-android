@@ -1,0 +1,5852 @@
+{
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_files": {
+    "service/fit.py": "ce08d3d56223ac49a9f71bd84f09490185baa76a7d3d287d7ebe92b040a178d4",
+    "gui/fitCommands/helpers.py": "d76cb6bc5cadc43d82c649b600d5b84d343a24a285ff6837441005759ef86466",
+    "gui/fitCommands/calc/module/localRemove.py": "68e7089da81aa08982a68c6ad62e7184b822127bfc0c14688149162160dbd662",
+    "gui/fitCommands/calc/module/localReplace.py": "75bca8a43c1f8b908d7456bb8ee84827bac9732591add3ff2da6f6980b76460d",
+    "gui/fitCommands/calc/module/localAdd.py": "ddb880d3aa4e91c1e0963a992480926368e90e4820ba5a3a3fe7b5efadda7b40",
+    "service/character.py": "339f24436b93fd692e423200aa2d1d7bddb698fecc50b43a02eabbb3d7242a03"
+  },
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "choices": {
+    "Tengu": [
+      {
+        "id": 45625,
+        "name": "Tengu Core - Electronic Efficiency Gate",
+        "type": 125
+      },
+      {
+        "id": 45626,
+        "name": "Tengu Core - Augmented Graviton Reactor",
+        "type": 125
+      },
+      {
+        "id": 45627,
+        "name": "Tengu Core - Obfuscation Manifold",
+        "type": 125
+      },
+      {
+        "id": 45589,
+        "name": "Tengu Defensive - Covert Reconfiguration",
+        "type": 126
+      },
+      {
+        "id": 45590,
+        "name": "Tengu Defensive - Supplemental Screening",
+        "type": 126
+      },
+      {
+        "id": 45591,
+        "name": "Tengu Defensive - Amplification Node",
+        "type": 126
+      },
+      {
+        "id": 45601,
+        "name": "Tengu Offensive - Accelerated Ejection Bay",
+        "type": 127
+      },
+      {
+        "id": 45602,
+        "name": "Tengu Offensive - Magnetic Infusion Basin",
+        "type": 127
+      },
+      {
+        "id": 45603,
+        "name": "Tengu Offensive - Support Processor",
+        "type": 127
+      },
+      {
+        "id": 45613,
+        "name": "Tengu Propulsion - Interdiction Nullifier",
+        "type": 128
+      },
+      {
+        "id": 45614,
+        "name": "Tengu Propulsion - Chassis Optimization",
+        "type": 128
+      },
+      {
+        "id": 45615,
+        "name": "Tengu Propulsion - Fuel Catalyst",
+        "type": 128
+      }
+    ],
+    "Legion": [
+      {
+        "id": 45622,
+        "name": "Legion Core - Dissolution Sequencer",
+        "type": 125
+      },
+      {
+        "id": 45623,
+        "name": "Legion Core - Augmented Antimatter Reactor",
+        "type": 125
+      },
+      {
+        "id": 45624,
+        "name": "Legion Core - Energy Parasitic Complex",
+        "type": 125
+      },
+      {
+        "id": 45586,
+        "name": "Legion Defensive - Covert Reconfiguration",
+        "type": 126
+      },
+      {
+        "id": 45587,
+        "name": "Legion Defensive - Augmented Plating",
+        "type": 126
+      },
+      {
+        "id": 45588,
+        "name": "Legion Defensive - Nanobot Injector",
+        "type": 126
+      },
+      {
+        "id": 45598,
+        "name": "Legion Offensive - Liquid Crystal Magnifiers",
+        "type": 127
+      },
+      {
+        "id": 45599,
+        "name": "Legion Offensive - Assault Optimization",
+        "type": 127
+      },
+      {
+        "id": 45600,
+        "name": "Legion Offensive - Support Processor",
+        "type": 127
+      },
+      {
+        "id": 45610,
+        "name": "Legion Propulsion - Interdiction Nullifier",
+        "type": 128
+      },
+      {
+        "id": 45611,
+        "name": "Legion Propulsion - Intercalated Nanofibers",
+        "type": 128
+      },
+      {
+        "id": 45612,
+        "name": "Legion Propulsion - Wake Limiter",
+        "type": 128
+      }
+    ],
+    "Loki": [
+      {
+        "id": 45631,
+        "name": "Loki Core - Dissolution Sequencer",
+        "type": 125
+      },
+      {
+        "id": 45632,
+        "name": "Loki Core - Augmented Nuclear Reactor",
+        "type": 125
+      },
+      {
+        "id": 45633,
+        "name": "Loki Core - Immobility Drivers",
+        "type": 125
+      },
+      {
+        "id": 45595,
+        "name": "Loki Defensive - Covert Reconfiguration",
+        "type": 126
+      },
+      {
+        "id": 45596,
+        "name": "Loki Defensive - Augmented Durability",
+        "type": 126
+      },
+      {
+        "id": 45597,
+        "name": "Loki Defensive - Adaptive Defense Node",
+        "type": 126
+      },
+      {
+        "id": 45607,
+        "name": "Loki Offensive - Projectile Scoping Array",
+        "type": 127
+      },
+      {
+        "id": 45608,
+        "name": "Loki Offensive - Launcher Efficiency Configuration",
+        "type": 127
+      },
+      {
+        "id": 45609,
+        "name": "Loki Offensive - Support Processor",
+        "type": 127
+      },
+      {
+        "id": 45619,
+        "name": "Loki Propulsion - Interdiction Nullifier",
+        "type": 128
+      },
+      {
+        "id": 45620,
+        "name": "Loki Propulsion - Intercalated Nanofibers",
+        "type": 128
+      },
+      {
+        "id": 45621,
+        "name": "Loki Propulsion - Wake Limiter",
+        "type": 128
+      }
+    ],
+    "Proteus": [
+      {
+        "id": 45628,
+        "name": "Proteus Core - Electronic Efficiency Gate",
+        "type": 125
+      },
+      {
+        "id": 45629,
+        "name": "Proteus Core - Augmented Fusion Reactor",
+        "type": 125
+      },
+      {
+        "id": 45630,
+        "name": "Proteus Core - Friction Extension Processor",
+        "type": 125
+      },
+      {
+        "id": 45592,
+        "name": "Proteus Defensive - Covert Reconfiguration",
+        "type": 126
+      },
+      {
+        "id": 45593,
+        "name": "Proteus Defensive - Augmented Plating",
+        "type": 126
+      },
+      {
+        "id": 45594,
+        "name": "Proteus Defensive - Nanobot Injector",
+        "type": 126
+      },
+      {
+        "id": 45604,
+        "name": "Proteus Offensive - Hybrid Encoding Platform",
+        "type": 127
+      },
+      {
+        "id": 45605,
+        "name": "Proteus Offensive - Drone Synthesis Projector",
+        "type": 127
+      },
+      {
+        "id": 45606,
+        "name": "Proteus Offensive - Support Processor",
+        "type": 127
+      },
+      {
+        "id": 45616,
+        "name": "Proteus Propulsion - Interdiction Nullifier",
+        "type": 128
+      },
+      {
+        "id": 45617,
+        "name": "Proteus Propulsion - Hyperspatial Optimization",
+        "type": 128
+      },
+      {
+        "id": 45618,
+        "name": "Proteus Propulsion - Localized Injectors",
+        "type": 128
+      }
+    ],
+    "Vexor": []
+  },
+  "cases": [
+    {
+      "ship": "Tengu",
+      "steps": [
+        {
+          "operation": null,
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 4,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 5,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 6,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 0,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 0,
+                "total": 0.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 0.0,
+              "cpu_total": 387.5,
+              "powergrid_used": 0.0,
+              "powergrid_total": 525.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 0.0,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 387.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 0.0,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 525.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 0,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 1750.0,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 16.666666666666668,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 212.5,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 3250.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 5531.914893617022,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Offensive - Accelerated Ejection Bay"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 5,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 6,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 7,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 1,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 0,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 0,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 0.0,
+              "cpu_total": 587.5,
+              "powergrid_used": 0.0,
+              "powergrid_total": 762.5
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 0.0,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 0.0,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 762.5,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 0,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 1750.0,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 16.666666666666668,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 212.5,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 3250.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 5531.914893617022,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Heavy Missile Launcher II",
+            "Scourge Heavy Missile"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 5,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 6,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 1,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 762.5
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 762.5,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 1750.0,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 16.666666666666668,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 212.5,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 3250.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 5531.914893617022,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Defensive - Supplemental Screening"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 6,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 2,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 2.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 2.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 762.5
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 762.5,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 1750.0,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 16.666666666666668,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 212.5,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Propulsion - Chassis Optimization"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 3,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 762.5
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 762.5,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 1750.0,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 16.666666666666668,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Core - Augmented Graviton Reactor"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Offensive - Support Processor"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45603,
+                "name": "Tengu Offensive - Support Processor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 4.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 41.25,
+              "cpu_total": 387.5,
+              "powergrid_used": 94.5,
+              "powergrid_total": 720.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 41.25,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 387.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 94.5,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 720.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 24.797264584846285,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 24.797264584846285,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 204.875,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2421.875,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 23.065476190476193,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "replace",
+            "Tengu Offensive - Accelerated Ejection Bay",
+            "Tengu Offensive - Support Processor"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "remove",
+            "Tengu Offensive - Accelerated Ejection Bay"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": false
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 3,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 0.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 41.25,
+              "cpu_total": 387.5,
+              "powergrid_used": 94.5,
+              "powergrid_total": 630.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 41.25,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 387.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 94.5,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 630.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 24.797264584846285,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 24.797264584846285,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 204.875,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Offensive - Accelerated Ejection Bay"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "replace",
+            "Tengu Defensive - Covert Reconfiguration",
+            "Tengu Defensive - Supplemental Screening"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45589,
+                "name": "Tengu Defensive - Covert Reconfiguration",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 8.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 6.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2578.125,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 24.55357142857143,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 3250.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 5531.914893617022,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 3000.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 5363.128491620112,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2875.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 4291.044776119403,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "remove",
+            "Tengu Defensive - Covert Reconfiguration"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": null,
+                "name": null,
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 3,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 3250.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 5531.914893617022,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Tengu Defensive - Supplemental Screening"
+          ],
+          "accepted": true,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        },
+        {
+          "operation": [
+            "add",
+            "Legion Core - Augmented Antimatter Reactor"
+          ],
+          "accepted": false,
+          "result": {
+            "modules": [
+              {
+                "index": 0,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 1,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 2,
+                "id": null,
+                "name": null,
+                "slot": "RIG",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 3,
+                "id": 45601,
+                "name": "Tengu Offensive - Accelerated Ejection Bay",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 4,
+                "id": 45590,
+                "name": "Tengu Defensive - Supplemental Screening",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 5,
+                "id": 45614,
+                "name": "Tengu Propulsion - Chassis Optimization",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 6,
+                "id": 45626,
+                "name": "Tengu Core - Augmented Graviton Reactor",
+                "slot": "SUBSYSTEM",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": true
+              },
+              {
+                "index": 7,
+                "id": 2410,
+                "name": "Heavy Missile Launcher II",
+                "slot": "HIGH",
+                "state": "ACTIVE",
+                "charge": "Scourge Heavy Missile",
+                "legal": true
+              },
+              {
+                "index": 8,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 9,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 10,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 11,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 12,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 13,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 14,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 15,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 16,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 17,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 18,
+                "id": null,
+                "name": null,
+                "slot": "HIGH",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 19,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 20,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 21,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 22,
+                "id": null,
+                "name": null,
+                "slot": "MED",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              },
+              {
+                "index": 23,
+                "id": null,
+                "name": null,
+                "slot": "LOW",
+                "state": "ONLINE",
+                "charge": null,
+                "legal": null
+              }
+            ],
+            "slots": [
+              {
+                "slot": "SUBSYSTEM",
+                "used": 4,
+                "total": 4.0
+              },
+              {
+                "slot": "HIGH",
+                "used": 1,
+                "total": 7.0
+              },
+              {
+                "slot": "MED",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "LOW",
+                "used": 0,
+                "total": 5.0
+              },
+              {
+                "slot": "RIG",
+                "used": 0,
+                "total": 3.0
+              },
+              {
+                "slot": "SERVICE",
+                "used": 0,
+                "total": 0
+              }
+            ],
+            "hardpoints": [
+              {
+                "kind": "TURRET",
+                "used": 0,
+                "total": 0.0
+              },
+              {
+                "kind": "MISSILE",
+                "used": 1,
+                "total": 6.0
+              }
+            ],
+            "resources": {
+              "cpu_used": 30.94,
+              "cpu_total": 587.5,
+              "powergrid_used": 70.88,
+              "powergrid_total": 915.0
+            },
+            "stats": {
+              "cpu_used": {
+                "value": 30.94,
+                "unit": "tf"
+              },
+              "cpu_output": {
+                "value": 587.5,
+                "unit": "tf"
+              },
+              "powergrid_used": {
+                "value": 70.88,
+                "unit": "MW"
+              },
+              "powergrid_output": {
+                "value": 915.0,
+                "unit": "MW"
+              },
+              "drone_control_range": {
+                "value": 60000.0,
+                "unit": "m"
+              },
+              "drone_bandwidth_used": {
+                "value": 0,
+                "unit": "Mbit/s"
+              },
+              "weapon_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "drone_dps": {
+                "value": 0,
+                "unit": "HP/s"
+              },
+              "total_dps": {
+                "value": 49.59452916969257,
+                "unit": "HP/s"
+              },
+              "total_volley": {
+                "value": 256.09375,
+                "unit": "HP"
+              },
+              "capacitor_capacity": {
+                "value": 2265.625,
+                "unit": "GJ"
+              },
+              "capacitor_recharge_time": {
+                "value": 262500.0,
+                "unit": "ms"
+              },
+              "capacitor_used": {
+                "value": 0,
+                "unit": "GJ/s"
+              },
+              "capacitor_recharge": {
+                "value": 21.577380952380956,
+                "unit": "GJ/s"
+              },
+              "capacitor_stable": {
+                "value": true,
+                "unit": "boolean"
+              },
+              "capacitor_state": {
+                "value": 100,
+                "unit": "%"
+              },
+              "max_velocity": {
+                "value": 244.375,
+                "unit": "m/s"
+              },
+              "max_target_range": {
+                "value": 93750.0,
+                "unit": "m"
+              },
+              "gun_optimal": {
+                "value": 0.0,
+                "unit": "m"
+              },
+              "gun_falloff": {
+                "value": 1.0,
+                "unit": "m"
+              },
+              "shield_hp": {
+                "value": 5625.0,
+                "unit": "HP"
+              },
+              "shield_ehp_uniform": {
+                "value": 9574.468085106384,
+                "unit": "HP"
+              },
+              "armor_hp": {
+                "value": 2625.0,
+                "unit": "HP"
+              },
+              "armor_ehp_uniform": {
+                "value": 4692.737430167598,
+                "unit": "HP"
+              },
+              "hull_hp": {
+                "value": 2125.0,
+                "unit": "HP"
+              },
+              "hull_ehp_uniform": {
+                "value": 3171.641791044776,
+                "unit": "HP"
+              },
+              "shield_em_resonance": {
+                "value": 1.0,
+                "unit": "fraction"
+              },
+              "shield_thermal_resonance": {
+                "value": 0.4,
+                "unit": "fraction"
+              },
+              "shield_kinetic_resonance": {
+                "value": 0.45,
+                "unit": "fraction"
+              },
+              "shield_explosive_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_em_resonance": {
+                "value": 0.5,
+                "unit": "fraction"
+              },
+              "armor_thermal_resonance": {
+                "value": 0.275,
+                "unit": "fraction"
+              },
+              "armor_kinetic_resonance": {
+                "value": 0.5625,
+                "unit": "fraction"
+              },
+              "armor_explosive_resonance": {
+                "value": 0.9,
+                "unit": "fraction"
+              },
+              "hull_em_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_thermal_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_kinetic_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "hull_explosive_resonance": {
+                "value": 0.67,
+                "unit": "fraction"
+              },
+              "scan_resolution": {
+                "value": 262.5,
+                "unit": "mm"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "command": "Original local add/replace/remove Do plus desktop GUI flush/recalc/fill."
+}

@@ -163,6 +163,24 @@ and [raw report](evidence/b06-1-hull-modes-native.json) retain matching
 CI/merge tree, artifact provenance and limits. **Exact next task: B06.2 —
 Strategic-cruiser subsystems.**
 
+## Selected B06.2 — Strategic-cruiser subsystems
+
+Selected on `codex/b06-2-subsystems` from delivered master `c102ae09`.
+Deliver exact T3 cruiser subsystem choices, add/replace/remove, dynamic slot and
+bonus reconciliation, fitting legality and charge/state handling, durable
+offline copy/restart and touch controls. Compare original pinned desktop
+commands and independent raw values before Android implementation; keep B06.3
+structure behavior and B09 undo/redo separate. No access or product decision is
+needed; the desktop command audit determines the focused case matrix.
+
+The pinned original add/replace/remove sequence repeats 14 raw-value states
+in fresh processes and enumerates 48 choices across four strategic cruisers.
+The focused host suite passes three cases, including all states, strict choice
+rejection, failed-save recovery and illegal charged-launcher copy/restart.
+Local main/test Kotlin compilation, debug/test APKs, lint and package inspection
+pass (158 bundled engine sources and both ABIs). Native execution, screenshot
+review, final-head CI and PR merge remain.
+
 ## Resume, environment and architecture
 
 Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored

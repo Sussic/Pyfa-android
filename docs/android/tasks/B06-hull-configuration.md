@@ -40,3 +40,33 @@ and [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/3611
 pass. The [receipt](../evidence/b06-1-native.json) retains provenance and limits;
 four mode screenshots were reviewed. Exact next child: B06.2 strategic-cruiser
 subsystems.
+
+## B06.2 selected scope and audit
+
+Selected 2026-09-25 on `codex/b06-2-subsystems` from master `c102ae09`.
+The pinned desktop fitting view sends subsystem market additions through
+`CalcAddLocalModuleCommand`. That command replaces an occupied subsystem type
+through `CalcReplaceLocalModuleCommand`; removals run the original local remove
+command. EOS owns the type restriction, subsystem bonuses and slot counts;
+`Fit.fill` adds/removes only vacancies after recalculation. The existing bridge
+already stores subsystem vacancies and decodes their slot but deliberately
+blocks their ordinary editor. B06.2 adds a dedicated typed editor and must
+preserve exact module order, legality and non-subsystem state/charge behavior
+when available slots change.
+
+The original command audit now repeats one Tengu sequence with 14 states in
+fresh processes and enumerates 12 choices for each of the four T3 hulls (none
+for Vexor). Removing the offensive subsystem retains a charged, ACTIVE Heavy
+Missile Launcher II despite its HIGH slot and launcher hardpoint totals falling
+to zero; EOS marks it illegal and restores legality on re-add. Saved/copy replay
+must retain that visible invalid fit instead of discarding the launcher or
+fabricating a legal state.
+
+- [x] Export a focused pinned desktop add/replace/remove/reversal matrix for a
+  strategic cruiser, with source/data/settings, raw values, slots and tolerances.
+- [x] Implement strict subsystem choices/edits, atomic rejection and durable
+  graph replay; compare all original states and fresh-process copies on host.
+- [ ] Verify touch controls, dynamic slots, warnings and offline process restart
+  in native instrumentation; inspect changed screenshots and package contents.
+- [ ] Pass final-head Windows/reference and Android/native gates; review and
+  merge the focused PR, retain evidence and refresh status/forecast.

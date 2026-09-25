@@ -293,6 +293,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-hull-mode-check"
+      - name: Verify original desktop strategic-cruiser subsystem commands
+        run: >-
+          python -I tools/android_reference/subsystems.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-subsystem-reference"
+          --check tools/android_reference/fixtures/subsystems.json
+      - name: Verify subsystem parity, atomic saves and process restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_subsystems.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-subsystem-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
