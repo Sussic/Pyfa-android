@@ -242,5 +242,8 @@ success, failed storage and fresh-process recovery. The first forced-rejection
 run exposed reattachment of a SQLAlchemy-deleted module; rollback now rebuilds
 the displaced EOS module like desktop CalcReplace.Undo. Existing variation
 regressions (17 cases/55 states/5,226 families) pass. Local offline debug and
-instrumented APK assembly plus lint pass; native execution and final-head CI
-remain pending.
+instrumented APK assembly plus lint pass. Initial Windows CI passed in 17m47s.
+The initial Android run reached the existing single-item variation test, where
+the expanded bulk preview left Back outside the visible keyboard viewport.
+Bulk controls now expand on request or multi-selection, and a Back action stays
+beside the filter. Final-head native execution and CI remain pending.

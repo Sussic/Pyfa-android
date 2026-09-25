@@ -35,16 +35,20 @@ def positions(engine, fit, main_position, indices, scope, kind):
             policy.getVariationsByItems((fit.modules[index].item,)) == family]
 
 
-def candidates(engine, fit, module):
-    """Read-only desktop selection previews for each fitted ordinary module."""
+def family_options(engine, fit):
+    """Read-only exact-family previews, evaluating each distinct item once."""
+    engine._check_fit(fit)
     from .market_policy import MarketPolicy
     policy = MarketPolicy()
-    family = policy.getVariationsByItems((module.item,))
-    return {'family_candidates': [index for index, other in enumerate(fit.modules)
-                if not other.isEmpty and other.slot in fitting.SLOTS.values() and
-                (other is module or policy.getVariationsByItems((other.item,)) == family)],
-            'similar_candidates': [index for index in similar(fit.modules, module, policy)
-                if fit.modules[index].slot in fitting.SLOTS.values()]}
+    modules = [(index, module) for index, module in enumerate(fit.modules)
+               if not module.isEmpty and module.slot in fitting.SLOTS.values()]
+    families = {}
+    for _, module in modules:
+        if module.itemID not in families:
+            families[module.itemID] = policy.getVariationsByItems((module.item,))
+    return [{'index': index, 'candidates': [other_index for other_index, other in modules
+                if families[other.itemID] == families[module.itemID]]}
+            for index, module in modules]
 
 
 def _inputs(fit):

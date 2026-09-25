@@ -138,6 +138,19 @@ def main():
                             predicted = positions(engine, self.bridge._fits[key], request['main_position'],
                                 request['selected_positions'], request['scope'],
                                 'variation' if kind == 'variation' else 'remove')
+                            variation_options = self.bridge.variation_options(key)
+                            families = {row['index']: row['candidates']
+                                        for row in variation_options['module_families']}
+                            compare([row['index'] for row in variation_options['targets']
+                                     if row['context'] == 'module'], list(families), case['name'] + '.family_rows')
+                            if request['scope'] == 'SIMILAR':
+                                preview = self.bridge.bulk_state_options(key)['modules'][request['main_position']]['similar_candidates']
+                            elif kind == 'variation':
+                                preview = [index for index in families[request['main_position']]
+                                           if index in request['selected_positions']]
+                            else:
+                                preview = request['selected_positions']
+                            compare(predicted, preview, case['name'] + '.preview')
                             if operation['kind'] != 'variation_direct':
                                 compare(step['positions'], predicted, case['name'] + '.positions')
                             self.dispatch('change_bulk_variations' if kind == 'variation' else 'remove_bulk_modules',

@@ -124,6 +124,7 @@ class BulkVariationRemovalTest {
                         ModuleSpec("Dual 150mm Railgun II", ModuleState.OVERHEATED, "Spike M"),
                         ModuleSpec("200mm Railgun II", ModuleState.ACTIVE, "Iron Charge M")))
                     open(similar); click("variation-target-module-0")
+                    click("bulk-edits-expand")
                     click("bulk-edits-scope-SIMILAR")
                     compose.onNodeWithTag("bulk-edits-preview-2").performScrollTo()
                         .assertTextContains("variation target", substring = true)

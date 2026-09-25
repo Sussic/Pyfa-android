@@ -120,7 +120,11 @@ variation family; the preview now uses pinned-family candidates from the bridge.
 Four focused host checks pass, including a forced later replacement rejection,
 failed-save recovery and process restart; the existing 17-case/5,226-family
 variation regression passes. Local debug/test APK assembly and lint pass.
-Native offline touch/restart, final-head CI, review, PR and merge remain.
+PR [#25](https://github.com/Sussic/Pyfa-android/pull/25) initial Windows CI
+passed. The initial Android run found an existing variation Back action obscured
+by the keyboard after the new preview grew; bulk controls now collapse for
+single edits, with Back beside the filter. Final-head native offline touch/
+restart, CI, review and merge remain.
 
 ## Resume, environment and architecture
 

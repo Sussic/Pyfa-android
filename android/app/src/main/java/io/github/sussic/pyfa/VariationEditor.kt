@@ -38,6 +38,7 @@ class VariationEditorModel : ViewModel() {
     var bulkOptions by mutableStateOf<BulkStateOptions?>(null)
     var bulkSelected by mutableStateOf<Set<Int>>(emptySet())
     var bulkScope by mutableStateOf(BulkScope.SELECTED)
+    var bulkExpanded by mutableStateOf(false)
     var context by mutableStateOf(VariationContext.MODULE)
     var position by mutableStateOf<Int?>(null)
     var selected by mutableStateOf<Int?>(null)
@@ -53,7 +54,10 @@ class VariationEditorModel : ViewModel() {
 
     fun choose(target: VariationTarget?) {
         if (target != null) context = target.context
-        if (target?.context == VariationContext.MODULE) bulkSelected = bulkSelected + target.index
+        if (target?.context == VariationContext.MODULE) {
+            bulkSelected = bulkSelected + target.index
+            if (bulkSelected.size > 1) bulkExpanded = true
+        }
         position = target?.index; selected = null; query = ""; page = 0
     }
 
@@ -61,7 +65,7 @@ class VariationEditorModel : ViewModel() {
         ++generation; requested = null; loading = false
         if (options?.fitId != fitId) options = null
         bulkOptions = null; bulkSelected = module?.let { setOf(it) } ?: emptySet()
-        bulkScope = BulkScope.SELECTED; ownRevision = null
+        bulkScope = BulkScope.SELECTED; bulkExpanded = false; ownRevision = null
         context = VariationContext.MODULE; position = module; selected = null
         query = ""; page = 0; error = null; message = null
     }
@@ -90,12 +94,13 @@ class VariationEditorModel : ViewModel() {
                     if (old != null && old.itemId != current?.itemId) choose(null)
                     if (previous != null && (previous.fitId != value.fitId ||
                             previous.revision != value.revision && ownRevision != next)) {
-                        bulkSelected = emptySet(); choose(null)
+                        bulkSelected = emptySet(); bulkExpanded = false; choose(null)
                     }
                     bulkSelected = bulkSelected.filterTo(mutableSetOf()) { index ->
                         value.targets.any { it.context == VariationContext.MODULE && it.index == index &&
-                            previous?.targets?.any { oldRow -> oldRow.context == VariationContext.MODULE &&
-                                oldRow.index == index && oldRow.itemId == it.itemId } == true }
+                            (previous == null || previous.targets.any { oldRow ->
+                                oldRow.context == VariationContext.MODULE &&
+                                    oldRow.index == index && oldRow.itemId == it.itemId }) }
                     }
                     options = value
                     bulkOptions = bulk
@@ -118,7 +123,7 @@ class VariationEditorModel : ViewModel() {
                 if (failure != null) error = "The fitting engine could not confirm the edit. Restart the app."
                 else if (!result.isSuccess) error = result.error?.message
                 else {
-                    choose(null)
+                    choose(null); bulkSelected = emptySet(); bulkExpanded = false
                     message = if (target.context == VariationContext.IMPLANT) "${item.name} applied to its slot. Fit saved."
                         else "Changed to ${item.name}. Fit saved."
                 }
@@ -143,7 +148,7 @@ class VariationEditorModel : ViewModel() {
                     if (failure != null) error = "The fitting engine could not confirm the edit. Restart the app."
                     else if (!result.isSuccess) error = result.error?.message
                     else {
-                        choose(null); bulkSelected = emptySet()
+                        choose(null); bulkSelected = emptySet(); bulkExpanded = false
                         message = if (item == null) "Modules removed and fit saved."
                             else "Selected variations changed and fit saved."
                     }
@@ -166,7 +171,7 @@ internal fun VariationEditor(model: VariationEditorModel, onBack: () -> Unit) {
     fun back() { if (model.position != null) model.choose(null) else onBack() }
     BackHandler { back() }
     Text("Item variations", style = MaterialTheme.typography.headlineLarge)
-    TextButton(onClick = { back() }, modifier = Modifier.testTag("variations-back")) { Text("Back") }
+    TextButton(onClick = { back() }, modifier = Modifier.testTag("variations-top-back")) { Text("Back") }
     if (fit == null) { Text("Open a fit to change its item variations.", modifier = Modifier.testTag("variations-no-fit")); return }
     LaunchedEffect(fit.id, fit.revision) { model.load(context, fit) }
     Text(fit.name, style = MaterialTheme.typography.titleLarge)
@@ -218,6 +223,11 @@ internal fun VariationEditor(model: VariationEditorModel, onBack: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().bringIntoViewRequester(action).testTag("variation-apply")) { Text("Change to ${chosen.name}") }
         }
         if (target.context == VariationContext.MODULE) {
+            TextButton(onClick = { model.bulkExpanded = !model.bulkExpanded }, enabled = enabled,
+                modifier = Modifier.testTag("bulk-edits-expand")) {
+                Text(if (model.bulkExpanded) "Hide bulk actions" else "Bulk variation and removal")
+            }
+            if (model.bulkExpanded) {
             Text("${model.bulkSelected.size} selected · Reference: ${target.name}",
                 modifier = Modifier.testTag("bulk-edits-reference"))
             for ((scope, label) in listOf(BulkScope.SELECTED to "Selection only",
@@ -271,8 +281,10 @@ internal fun VariationEditor(model: VariationEditorModel, onBack: () -> Unit) {
                     }
                 }
             }
+            }
         }
     }
+    TextButton(onClick = { focus.clearFocus(); back() }, modifier = Modifier.testTag("variations-back")) { Text("Back") }
     OutlinedTextField(value = model.query, onValueChange = { model.query = it; model.page = 0 }, singleLine = true,
         label = { Text(if (target == null) "Filter fitted items" else "Filter variations") },
         modifier = Modifier.fillMaxWidth().testTag("variations-search"))
