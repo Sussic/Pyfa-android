@@ -278,6 +278,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-bulk-variation-removal-check"
+      - name: Verify original desktop hull mode commands
+        run: >-
+          python -I tools/android_reference/hull_modes.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-hull-mode-reference"
+          --check tools/android_reference/fixtures/hull-modes.json
+      - name: Verify hull mode parity, atomic saves and process restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_hull_modes.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-hull-mode-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
