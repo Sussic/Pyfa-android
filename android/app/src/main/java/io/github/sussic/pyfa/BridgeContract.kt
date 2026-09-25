@@ -49,6 +49,10 @@ sealed interface BridgeOperation {
     data class CloneSelectedModules(val fitId: String, val moduleIndices: List<Int>) : BridgeOperation
     data class CloneModuleAt(val fitId: String, val sourcePosition: Int, val destinationPosition: Int) : BridgeOperation
     data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
+    data class ChangeBulkVariations(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
+        val scope: BulkScope, val itemId: Int) : BridgeOperation
+    data class RemoveBulkModules(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
+        val scope: BulkScope) : BridgeOperation
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
@@ -78,6 +82,8 @@ fun BridgeOperation.snapshotArguments(): BridgeOperation = when (this) {
     is BridgeOperation.SetCharges -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.SetModuleStates -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.SetBulkStates -> copy(moduleIndices = immutableList(moduleIndices))
+    is BridgeOperation.ChangeBulkVariations -> copy(moduleIndices = immutableList(moduleIndices))
+    is BridgeOperation.RemoveBulkModules -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.CloneSelectedModules -> copy(moduleIndices = immutableList(moduleIndices))
     else -> this
 }
@@ -275,6 +281,13 @@ object BridgeCodec {
         is BridgeOperation.ChangeVariation -> "change_variation" to obj("fit_id" to operation.fitId,
             "context" to operation.context.wire, "position" to integer(operation.position, "position", 0),
             "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.ChangeBulkVariations -> "change_bulk_variations" to obj("fit_id" to operation.fitId,
+            "main_position" to integer(operation.mainPosition, "main_position", 0),
+            "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
+            "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.RemoveBulkModules -> "remove_bulk_modules" to obj("fit_id" to operation.fitId,
+            "main_position" to integer(operation.mainPosition, "main_position", 0),
+            "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name)
         is BridgeOperation.SetBulkCharges -> "set_bulk_charges" to obj("fit_id" to operation.fitId,
             "main_position" to integer(operation.mainPosition, "main_position", 0),
             "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
@@ -624,7 +637,7 @@ object BridgeCodec {
 
     fun decodeVariationOptions(json: String): VariationOptions {
         val value = objectValue(StrictJson(json).parse(), "variations")
-        keys(value, setOf("version", "fit_id", "revision", "targets"), path = "variations")
+        keys(value, setOf("version", "fit_id", "revision", "targets"), setOf("module_families"), "variations")
         requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported variation version")
         val revision = long(value.get("revision"), "revision")
         requireProtocol(revision >= 1, "Invalid variation revision")
@@ -664,7 +677,29 @@ object BridgeCodec {
             requireProtocol(targets.filter { it.context == context }.map { it.index }.withIndex().all { it.index == it.value },
                 "Addition positions are not contiguous")
         unique(targets.mapNotNull { (it.current as? VariationInput.Implant)?.slot }, "implant slots")
-        return VariationOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(targets))
+        val modules = targets.filter { it.context == VariationContext.MODULE }
+        val families = if (!value.has("module_families")) emptyMap() else {
+            val rows = array(value.get("module_families"), "module_families").map { entry ->
+                val row = objectValue(entry, "module family")
+                keys(row, setOf("index", "candidates"), path = "module family")
+                val index = integer(row.get("index"), "family index", 0)
+                val candidates = array(row.get("candidates"), "family candidates").map {
+                    integer(it, "family candidate", 0)
+                }
+                unique(candidates, "family candidates")
+                requireProtocol(candidates == candidates.sorted() && index in candidates,
+                    "Module family candidates must be ordered and contain the reference")
+                index to immutableList(candidates)
+            }
+            unique(rows.map { it.first }, "module families")
+            requireProtocol(rows.map { it.first } == modules.map { it.index },
+                "Module families differ from fitted module targets")
+            val mapping = rows.toMap()
+            requireProtocol(rows.all { (_, candidates) -> candidates.all { mapping[it] == candidates } },
+                "Module family candidates are not symmetric")
+            immutableMap(mapping)
+        }
+        return VariationOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(targets), families)
     }
 
     fun decodeRackOptions(json: String): RackOptions {

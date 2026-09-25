@@ -263,6 +263,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-clone-fill-check"
+      - name: Verify original desktop bulk variation and removal commands
+        run: >-
+          python -I tools/android_reference/bulk_variation_removal.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-bulk-variation-removal-reference"
+          --check tools/android_reference/fixtures/bulk-variation-removal.json
+      - name: Verify bulk variation/removal parity, atomic saves and process restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_bulk_variation_removal.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-bulk-variation-removal-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -285,7 +300,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check', 'pyfa-variation-edits-reference', 'pyfa-variation-edits-check', 'pyfa-rack-ordering-reference', 'pyfa-rack-ordering-check', 'pyfa-bulk-charges-reference', 'pyfa-bulk-charges-check', 'pyfa-bulk-states-reference', 'pyfa-bulk-states-check', 'pyfa-clone-fill-reference', 'pyfa-clone-fill-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check', 'pyfa-variation-edits-reference', 'pyfa-variation-edits-check', 'pyfa-rack-ordering-reference', 'pyfa-rack-ordering-check', 'pyfa-bulk-charges-reference', 'pyfa-bulk-charges-check', 'pyfa-bulk-states-reference', 'pyfa-bulk-states-check', 'pyfa-clone-fill-reference', 'pyfa-clone-fill-check', 'pyfa-bulk-variation-removal-reference', 'pyfa-bulk-variation-removal-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {

@@ -82,6 +82,8 @@ ARGUMENTS = {
     "clone_selected_modules": ("fit_id", "module_indices"),
     "clone_module_at": ("fit_id", "source_position", "destination_position"),
     "change_variation": ("fit_id", "context", "position", "item_id"),
+    "change_bulk_variations": ("fit_id", "main_position", "module_indices", "scope", "item_id"),
+    "remove_bulk_modules": ("fit_id", "main_position", "module_indices", "scope"),
     "swap_modules": ("fit_id", "from_position", "to_position"),
     "set_module_states": ("fit_id", "module_indices", "state"),
     "set_skill_level": ("fit_id", "skill", "level"),
@@ -601,7 +603,7 @@ class BridgeSession:
                 specs.pop(deleted)
             else:
                 used = self._apply(operation, args, fits)
-                if operation in {"add_module", "replace_module", "remove_module", "fill_modules_item"} and used:
+                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
@@ -730,6 +732,13 @@ class BridgeSession:
         if operation == "change_variation":
             from .variations import change
             return change(self.engine, fit, args["context"], args["position"], args["item_id"])
+        if operation == "change_bulk_variations":
+            from .bulk_edits import change_variations
+            return change_variations(self.engine, fit, args["main_position"], args["module_indices"],
+                                     args["scope"], args["item_id"])
+        if operation == "remove_bulk_modules":
+            from .bulk_edits import remove_modules
+            return remove_modules(self.engine, fit, args["main_position"], args["module_indices"], args["scope"])
         if operation == "swap_modules":
             from .ordering import swap
             return swap(self.engine, fit, args["from_position"], args["to_position"])

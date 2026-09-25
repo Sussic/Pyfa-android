@@ -99,5 +99,6 @@ def load(source):
         return result
 
     return {**oracle, 'variation_commands': command_types, 'choices': choices,
+            'module_menu_type': menu_type, 'module_menu_scope': menu_scope,
             'DroneInfo': common['DroneInfo'], 'ImplantInfo': common['ImplantInfo'],
             'event_receiver': receiver}

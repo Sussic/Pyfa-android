@@ -219,7 +219,7 @@ pinned desktop variation-family filter, replacement reconciliation, removal
 ordering and recent-item history, with one atomic serialized edit. B06 retains
 subsystem and hull-mode controls; B09 retains undo/redo.
 
-- [ ] Execute pinned original selected/similar variation and removal commands
+- [x] Execute pinned original selected/similar variation and removal commands
   in independent cases and a fresh process, including mixed families, charge/
   state reconciliation, skips, removal order, recent use and linked recipients.
 - [ ] Verify revision-bound exact target/skip previews, malformed/stale selection
@@ -230,3 +230,20 @@ subsystem and hull-mode controls; B09 retains undo/redo.
 - [ ] Retain all host/native reference, type/unit, GC, performance, restart,
   APK/lint/signature/data/license/ABI gates and merge a reviewed final-head PR
   with evidence and refreshed forecast.
+
+Pinned desktop audit: eight synthetic cases/17 states repeat in a fresh process,
+including a direct original-command partial replacement rejection and two linked
+recipients. Selection-only variation filters exact variation families; all-similar
+uses game group, market group and effects and may reach a different variation
+family. Removal frees every chosen slot before reconciliation and promotes recent
+ordinary modules in descending slot order. Four focused host tests compare all
+menu cases, malformed/stale input, a forced later EOS rejection after earlier
+success, failed storage and fresh-process recovery. The first forced-rejection
+run exposed reattachment of a SQLAlchemy-deleted module; rollback now rebuilds
+the displaced EOS module like desktop CalcReplace.Undo. Existing variation
+regressions (17 cases/55 states/5,226 families) pass. Local offline debug and
+instrumented APK assembly plus lint pass. Initial Windows CI passed in 17m47s.
+The initial Android run reached the existing single-item variation test, where
+the expanded bulk preview left Back outside the visible keyboard viewport.
+Bulk controls now expand on request or multi-selection, and a Back action stays
+beside the filter. Final-head native execution and CI remain pending.

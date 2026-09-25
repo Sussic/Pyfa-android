@@ -36,6 +36,7 @@ def choices(engine, fit, item, context, policy=None):
 
 def options(engine, fit):
     engine._check_fit(fit)
+    from .bulk_edits import family_options
     from .market_policy import MarketPolicy
     from eos.const import FittingModuleState, ImplantLocation
     if not fit.calculated:
@@ -53,7 +54,7 @@ def options(engine, fit):
                                            'location': ImplantLocation(fit.implantLocation).name})
             targets.append({'context': context, 'index': index, 'item_id': thing.itemID, 'name': thing.item.name,
                             'current': current, 'choices': choices(engine, fit, thing.item, context, policy)})
-    return {'targets': targets}
+    return {'targets': targets, 'module_families': family_options(engine, fit)}
 
 
 def change(engine, fit, context, position, identity):

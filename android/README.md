@@ -8,7 +8,8 @@ B03.1 adds creation from bundled examples, search, open, rename, copy and deleti
 B03.2 adds hull/race browsing, recently modified fits and saved open-fit navigation.
 B04 adds arbitrary hull creation and module, charge, variation and rack editing;
 B05.1 adds explicit bulk-ammunition selection. B05.2 adds selected/similar module
-state changes; clone/fill and variation/removal remain in progress.
+state changes. B05.3 adds clone/fill; B05.4 adds selected/similar variation and
+removal with explicit target previews.
 A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
