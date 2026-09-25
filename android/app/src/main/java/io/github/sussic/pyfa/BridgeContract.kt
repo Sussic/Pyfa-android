@@ -44,6 +44,10 @@ sealed interface BridgeOperation {
         val scope: BulkScope, val chargeId: Int?) : BridgeOperation
     data class SetBulkStates(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
         val scope: BulkScope, val click: StateClick) : BridgeOperation
+    data class FillModulesItem(val fitId: String, val itemId: Int) : BridgeOperation
+    data class FillModulesClone(val fitId: String, val position: Int) : BridgeOperation
+    data class CloneSelectedModules(val fitId: String, val moduleIndices: List<Int>) : BridgeOperation
+    data class CloneModuleAt(val fitId: String, val sourcePosition: Int, val destinationPosition: Int) : BridgeOperation
     data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
@@ -74,6 +78,7 @@ fun BridgeOperation.snapshotArguments(): BridgeOperation = when (this) {
     is BridgeOperation.SetCharges -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.SetModuleStates -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.SetBulkStates -> copy(moduleIndices = immutableList(moduleIndices))
+    is BridgeOperation.CloneSelectedModules -> copy(moduleIndices = immutableList(moduleIndices))
     else -> this
 }
 
@@ -278,6 +283,15 @@ object BridgeCodec {
             "main_position" to integer(operation.mainPosition, "main_position", 0),
             "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
             "click" to operation.click.wire)
+        is BridgeOperation.FillModulesItem -> "fill_modules_item" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.FillModulesClone -> "fill_modules_clone" to obj("fit_id" to operation.fitId,
+            "position" to integer(operation.position, "position", 0))
+        is BridgeOperation.CloneSelectedModules -> "clone_selected_modules" to obj("fit_id" to operation.fitId,
+            "module_indices" to indices(operation.moduleIndices))
+        is BridgeOperation.CloneModuleAt -> "clone_module_at" to obj("fit_id" to operation.fitId,
+            "source_position" to integer(operation.sourcePosition, "source_position", 0),
+            "destination_position" to integer(operation.destinationPosition, "destination_position", 0))
         is BridgeOperation.SwapModules -> "swap_modules" to obj("fit_id" to operation.fitId,
             "from_position" to integer(operation.fromPosition, "from_position", 0),
             "to_position" to integer(operation.toPosition, "to_position", 0))
@@ -548,6 +562,39 @@ object BridgeCodec {
             }, "Identical module absent from similar scope")
         }
         return BulkStateOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules))
+    }
+
+    fun decodeFillItemOptions(json: String): FillItemOptions {
+        val value = objectValue(StrictJson(json).parse(), "fill_item")
+        keys(value, setOf("version", "fit_id", "revision", "item_id", "slot",
+            "vacancies", "ignore_restrictions"), path = "fill_item")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported fill-options version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid fill-options revision")
+        val slot = enumValue<ModuleSlot>(value.get("slot"), "slot")
+        requireProtocol(slot.editable, "Unsupported fill slot")
+        return FillItemOptions(identifier(value.get("fit_id"), "fit_id"), revision,
+            integer(value.get("item_id"), "item_id", 1), slot,
+            integer(value.get("vacancies"), "vacancies", 0, 1024),
+            bool(value.get("ignore_restrictions"), "ignore_restrictions"))
+    }
+
+    fun decodeCloneVacancyOptions(json: String): CloneVacancyOptions {
+        val value = objectValue(StrictJson(json).parse(), "clone_vacancies")
+        keys(value, setOf("version", "fit_id", "revision", "vacancies"), path = "clone_vacancies")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported vacancy-options version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid vacancy-options revision")
+        val rows = array(value.get("vacancies"), "vacancies").map { entry ->
+            val row = objectValue(entry, "vacancy")
+            keys(row, setOf("index", "slot"), path = "vacancy")
+            val slot = enumValue<ModuleSlot>(row.get("slot"), "slot")
+            requireProtocol(slot.editable, "Unsupported clone vacancy")
+            CloneVacancy(integer(row.get("index"), "index", 0), slot)
+        }
+        unique(rows.map { it.index }, "vacancy positions")
+        requireProtocol(rows.map { it.index } == rows.map { it.index }.sorted(), "Vacancies out of order")
+        return CloneVacancyOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(rows))
     }
 
     private fun variationContext(raw: Any): VariationContext =

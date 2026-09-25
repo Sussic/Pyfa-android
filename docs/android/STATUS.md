@@ -63,6 +63,7 @@ and safe upgrades remain unverified.
 
 ## Selected B05.3 — Clone and fill modules
 
+Selected on `codex/b05-3-clone-fill` from delivered master `266b682a`.
 Exact next task **B05.3 (F03.04 and cloning part of F03.05)**. Audit the pinned
 desktop fill-add, fill-clone and single-module clone commands for stopping,
 legality, override, retained state/charge and recent-item rules. Then deliver

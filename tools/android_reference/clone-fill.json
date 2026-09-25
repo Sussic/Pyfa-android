@@ -1,0 +1,22 @@
+[
+  {"name":"market-capacity","ship":"Vexor","operations":[
+    ["fill_item","Dual 150mm Railgun II"],["fill_item","Dual 150mm Railgun II"]]},
+  {"name":"group-and-rig-stop","ship":"Rifter","operations":[
+    ["fill_item","Damage Control II"],["fill_item","Medium Core Defense Field Extender I"]]},
+  {"name":"override-rig-capacity","ship":"Rifter","ignore_restrictions":true,"operations":[
+    ["fill_item","Medium Core Defense Field Extender I"]]},
+  {"name":"charged-source-fill","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Antimatter Charge M"}],
+    "operations":[["fill_clone",0],["fill_clone",0]]},
+  {"name":"selected-pair-clone","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Antimatter Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"}],
+    "operations":[["clone_pair",0,1]]},
+  {"name":"targeted-vacancy","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Antimatter Charge M"}],
+    "operations":[["clone_at",0,10]]},
+  {"name":"projected-clone","ship":"Celestis","modules":[
+    {"name":"Remote Sensor Dampener II","state":"ACTIVE","charge":"Scan Resolution Dampening Script"}],
+    "recipients":[{"name":"Clone target Rifter","ship":"Rifter"}],
+    "operations":[["fill_clone",0]]}
+]

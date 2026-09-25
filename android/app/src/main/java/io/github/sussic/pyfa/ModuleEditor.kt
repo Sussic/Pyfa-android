@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -18,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 
 class ModuleEditorModel : ViewModel() {
     var details by mutableStateOf<FittingDetails?>(null)
+    var vacancyOptions by mutableStateOf<CloneVacancyOptions?>(null)
     var loading by mutableStateOf(false)
     var editing by mutableStateOf(false)
     var message by mutableStateOf<String?>(null)
@@ -37,6 +40,8 @@ class ModuleEditorModel : ViewModel() {
     var rack by mutableStateOf(ModuleSlot.HIGH)
     var showSkills by mutableStateOf(false)
     var confirmRestrictions by mutableStateOf(false)
+    var selectedForClone by mutableStateOf<Set<Int>>(emptySet())
+    var cloneSource by mutableStateOf<Int?>(null)
     private var requested: Pair<String, Long>? = null
     private var generation = 0
 
@@ -44,16 +49,28 @@ class ModuleEditorModel : ViewModel() {
         val next = fit.id to fit.revision
         if (!retry && requested == next) return
         if (requested?.first != fit.id) {
-            details = null; replacePosition = null; confirmRestrictions = false; message = null; error = null
+            details = null; vacancyOptions = null; replacePosition = null; confirmRestrictions = false; message = null; error = null
+            selectedForClone = emptySet()
+            cloneSource = null
         }
         requested = next
         val token = ++generation
         loading = true
-        EngineRuntime.fittingDetails(context, fit.id).whenCompleteAsync({ value, failure ->
+        EngineRuntime.fittingDetails(context, fit.id)
+            .thenCombine(EngineRuntime.cloneVacancyOptions(context, fit.id)) { value, vacant -> value to vacant }
+            .whenCompleteAsync({ result, failure ->
             if (token == generation) {
                 loading = false
-                if (failure == null) details = value
-                else { details = null; error = "Fitting details could not be loaded. Try again." }
+                if (failure == null) {
+                    val (value, vacant) = result
+                    if (details?.revision != value.revision) {
+                        selectedForClone = emptySet()
+                        cloneSource = null
+                    }
+                    details = value
+                    vacancyOptions = vacant
+                }
+                else { details = null; vacancyOptions = null; error = "Fitting details could not be loaded. Try again." }
             }
         }, ContextCompat.getMainExecutor(context))
     }
@@ -97,6 +114,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
         return
     }
     val enabled = !model.loading && !model.editing && details.revision == fit.revision &&
+        model.vacancyOptions?.revision == fit.revision &&
         (state as? EngineState.Ready)?.error?.code != BridgeErrorCode.ENGINE_UNAVAILABLE
     if (model.editing) Text("Saving fit…")
     Card(Modifier.fillMaxWidth().testTag("modules-resources")) {
@@ -142,6 +160,35 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
     }
     Button(onClick = { model.replacePosition = null; onBrowse() }, enabled = enabled,
         modifier = Modifier.testTag("modules-add")) { Text("Add equipment") }
+    val vacancies = model.vacancyOptions?.vacancies.orEmpty()
+    model.cloneSource?.let { index ->
+        val source = details.modules.getOrNull(index)
+        if (source?.id != null) Text("Clone source: " + source.name + " · choose a vacant " +
+            source.slot.label.lowercase() + " position below.")
+    }
+    val available = vacancies.groupBy { it.slot }.mapValues { (_, rows) -> rows.map { it.index }.toMutableList() }
+    val cloneTargets = model.selectedForClone.sorted().mapNotNull { index ->
+        val source = details.modules.getOrNull(index) ?: return@mapNotNull null
+        val destination = available[source.slot]?.removeFirstOrNull() ?: return@mapNotNull null
+        source to destination
+    }
+    Card(Modifier.fillMaxWidth().testTag("modules-clone-preview")) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text("Clone selected modules", style = MaterialTheme.typography.titleMedium)
+            Text(model.selectedForClone.size.toString() + " selected · " + vacancies.size + " vacant slots")
+            for ((source, destination) in cloneTargets)
+                Text((source.index + 1).toString() + " · " + source.name + " → vacancy " + (destination + 1))
+            if (model.selectedForClone.isNotEmpty() && cloneTargets.size != model.selectedForClone.size)
+                Text("Not enough vacant slots in the selected racks.")
+            Text("All selected clones must fit; otherwise no changes are saved.",
+                style = MaterialTheme.typography.bodySmall)
+            Button(onClick = { model.submit(context,
+                BridgeOperation.CloneSelectedModules(fit.id, model.selectedForClone.sorted())) },
+                enabled = enabled && model.selectedForClone.isNotEmpty() &&
+                    cloneTargets.size == model.selectedForClone.size,
+                modifier = Modifier.testTag("modules-clone-selected")) { Text("Clone selected once each") }
+        }
+    }
     TextButton(onClick = onArrange, enabled = enabled, modifier = Modifier.testTag("modules-arrange")) { Text("Arrange rack and view heat") }
     for (row in ModuleSlot.entries.chunked(3)) Row {
         for (slot in row) TextButton(onClick = { model.rack = slot }, modifier = Modifier.weight(1f).testTag("modules-rack-${slot.name}")) {
@@ -156,7 +203,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
     Text("${rack.slot.label} slots: ${rack.used} / ${formatStat(Stat(rack.total, "")).trim()}",
         modifier = Modifier.testTag("modules-rack-count"))
     val modules = details.modules.filter { it.slot == model.rack }
-    if (modules.isEmpty()) Text("No modules in this rack. Choose Add equipment.")
+    if (modules.isEmpty()) Text("No fitted modules in this rack. Choose Add equipment or clone a fitted source.")
     for ((rackIndex, module) in modules.withIndex()) Card(Modifier.fillMaxWidth().testTag("module-${module.index}")) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text("${module.slot.label} ${rackIndex + 1} · ${module.name ?: "Empty slot"}", style = MaterialTheme.typography.titleMedium)
@@ -166,6 +213,32 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
                 if (module.overridden) Text("Fitting restriction overridden", color = MaterialTheme.colorScheme.error)
                 if (module.legal == false) Text("Exceeds a fitting restriction", color = MaterialTheme.colorScheme.error)
             }
+            if (module.id != null) Row {
+                Checkbox(checked = module.index in model.selectedForClone, onCheckedChange = { checked ->
+                    model.selectedForClone = if (checked) model.selectedForClone + module.index
+                        else model.selectedForClone - module.index
+                }, enabled = enabled, modifier = Modifier.testTag("module-clone-select-" + module.index))
+                Text("Select for cloning", modifier = Modifier.padding(top = 12.dp))
+            }
+            if (module.id != null) {
+                val free = vacancies.count { it.slot == module.slot }
+                TextButton(onClick = { model.cloneSource = module.index }, enabled = enabled && free > 0,
+                    modifier = Modifier.testTag("module-clone-source-" + module.index)) {
+                    Text(if (model.cloneSource == module.index) "Clone source ✓" else "Choose as clone source")
+                }
+                TextButton(onClick = { model.submit(context, BridgeOperation.FillModulesClone(fit.id, module.index)) },
+                    enabled = enabled && free > 0, modifier = Modifier.testTag("module-fill-clone-" + module.index)) {
+                    Text("Fill up to " + free + " vacant " + module.slot.label.lowercase() + " slots from this module")
+                }
+                Text("Copies retain state and charge. EOS may stop earlier; recent market use is unchanged.",
+                    style = MaterialTheme.typography.bodySmall)
+            }
+            if (module.id == null && model.cloneSource?.let { details.modules.getOrNull(it)?.slot == module.slot } == true)
+                TextButton(onClick = { model.submit(context,
+                    BridgeOperation.CloneModuleAt(fit.id, checkNotNull(model.cloneSource), module.index)) },
+                    enabled = enabled, modifier = Modifier.testTag("module-clone-here-" + module.index)) {
+                    Text("Clone into this vacancy")
+                }
             Row {
                 TextButton(onClick = { model.replacePosition = module.index; onBrowse() }, enabled = enabled,
                     modifier = Modifier.testTag("module-replace-${module.index}")) { Text(if (module.id == null) "Fit here" else "Replace") }
@@ -179,6 +252,19 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
                 modifier = Modifier.testTag("module-variations-${module.index}")) { Text("Variations") }
         }
     }
+    for (vacancy in vacancies.filter { it.slot == model.rack && it.index >= details.modules.size })
+        Card(Modifier.fillMaxWidth().testTag("module-virtual-" + vacancy.index)) {
+            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(model.rack.label + " empty slot", style = MaterialTheme.typography.titleMedium)
+                Text("Available for a clone from this rack.")
+                if (model.cloneSource?.let { details.modules.getOrNull(it)?.slot == vacancy.slot } == true)
+                    TextButton(onClick = { model.submit(context, BridgeOperation.CloneModuleAt(
+                        fit.id, checkNotNull(model.cloneSource), vacancy.index)) },
+                        enabled = enabled, modifier = Modifier.testTag("module-clone-here-" + vacancy.index)) {
+                        Text("Clone into this vacancy")
+                    }
+            }
+        }
 }
 
 @Composable
@@ -200,6 +286,15 @@ internal fun EquipmentFittingActions(model: ModuleEditorModel, item: EquipmentIt
     LaunchedEffect(fit.id, fit.revision) { model.load(context, fit) }
     Text("Fitting to ${fit.name}")
     val details = model.details?.takeIf { it.fitId == fit.id && it.revision == fit.revision }
+    var fillOptions by remember(fit.id, fit.revision, item.id) { mutableStateOf<FillItemOptions?>(null) }
+    var fillUnavailable by remember(fit.id, fit.revision, item.id) { mutableStateOf(false) }
+    LaunchedEffect(fit.id, fit.revision, item.id) {
+        if (item.category in setOf("Module", "Structure Module")) {
+            EngineRuntime.fillItemOptions(context, fit.id, item.id).whenCompleteAsync({ value, failure ->
+                if (failure == null) fillOptions = value else fillUnavailable = true
+            }, ContextCompat.getMainExecutor(context))
+        }
+    }
     val position = model.replacePosition
     val target = position?.let { details?.modules?.getOrNull(it) }
     if (target != null) Text("Replace ${target.name ?: "empty ${target.slot.label.lowercase()} slot"}")
@@ -211,5 +306,16 @@ internal fun EquipmentFittingActions(model: ModuleEditorModel, item: EquipmentIt
     }, enabled = details != null && !model.loading && !model.editing &&
         (state as? EngineState.Ready)?.error?.code != BridgeErrorCode.ENGINE_UNAVAILABLE,
         modifier = Modifier.testTag("equipment-fit")) { Text(if (position == null) "Add to fit" else "Replace in fit") }
+    if (position == null && item.category in setOf("Module", "Structure Module")) {
+        Text(fillOptions?.let { "Up to " + it.vacancies + " vacant " + it.slot.label.lowercase() +
+            " slots; EOS may stop earlier." } ?: if (fillUnavailable) "Slot preview unavailable for this item."
+            else "Checking vacant slots…", modifier = Modifier.testTag("equipment-fill-preview"))
+        Text("A failed market attempt still enters recent use.",
+            style = MaterialTheme.typography.bodySmall)
+        Button(onClick = { model.submit(context, BridgeOperation.FillModulesItem(fit.id, item.id)) },
+            enabled = details != null && !model.loading && !model.editing &&
+                (state as? EngineState.Ready)?.error?.code != BridgeErrorCode.ENGINE_UNAVAILABLE,
+            modifier = Modifier.testTag("equipment-fill")) { Text("Fill free slots with this item") }
+    }
     TextButton(onClick = onViewFit, modifier = Modifier.testTag("equipment-view-fit")) { Text("View fitting") }
 }

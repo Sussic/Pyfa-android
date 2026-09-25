@@ -77,6 +77,10 @@ ARGUMENTS = {
     "set_module_charge": ("fit_id", "position", "charge_id"),
     "set_bulk_charges": ("fit_id", "main_position", "module_indices", "scope", "charge_id"),
     "set_bulk_states": ("fit_id", "main_position", "module_indices", "scope", "click"),
+    "fill_modules_item": ("fit_id", "item_id"),
+    "fill_modules_clone": ("fit_id", "position"),
+    "clone_selected_modules": ("fit_id", "module_indices"),
+    "clone_module_at": ("fit_id", "source_position", "destination_position"),
     "change_variation": ("fit_id", "context", "position", "item_id"),
     "swap_modules": ("fit_id", "from_position", "to_position"),
     "set_module_states": ("fit_id", "module_indices", "state"),
@@ -282,6 +286,22 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **options(self.engine, self._fits[fit_id])}
 
+    def fill_item_options(self, fit_id, item_id):
+        from .cloning import item_options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **item_options(self.engine, self._fits[fit_id], item_id)}
+
+    def clone_vacancy_options(self, fit_id):
+        from .cloning import vacancy_options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **vacancy_options(self.engine, self._fits[fit_id])}
+
     def rack_options(self, fit_id):
         from .ordering import details
         self.engine._check_thread()
@@ -441,6 +461,9 @@ class BridgeSession:
             _integer(args["position"], 0, 2**31 - 1)
         if "main_position" in args:
             _integer(args["main_position"], 0, 2**31 - 1)
+        for key in ("source_position", "destination_position"):
+            if key in args:
+                _integer(args[key], 0, 2**31 - 1)
         if "scope" in args:
             _text(args["scope"])
             if args["scope"] not in ("SELECTED", "SIMILAR"):
@@ -578,7 +601,7 @@ class BridgeSession:
                 specs.pop(deleted)
             else:
                 used = self._apply(operation, args, fits)
-                if operation in {"add_module", "replace_module", "remove_module"} and used:
+                if operation in {"add_module", "replace_module", "remove_module", "fill_modules_item"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
@@ -692,6 +715,18 @@ class BridgeSession:
         if operation == "set_bulk_states":
             from .states import change
             return change(self.engine, fit, args["main_position"], args["module_indices"], args["scope"], args["click"])
+        if operation == "fill_modules_item":
+            from .cloning import fill_item
+            return fill_item(self.engine, fit, args["item_id"])
+        if operation == "fill_modules_clone":
+            from .cloning import fill_clone
+            return fill_clone(self.engine, fit, args["position"])
+        if operation == "clone_selected_modules":
+            from .cloning import clone_selected
+            return clone_selected(self.engine, fit, args["module_indices"])
+        if operation == "clone_module_at":
+            from .cloning import clone_at
+            return clone_at(self.engine, fit, args["source_position"], args["destination_position"])
         if operation == "change_variation":
             from .variations import change
             return change(self.engine, fit, args["context"], args["position"], args["item_id"])

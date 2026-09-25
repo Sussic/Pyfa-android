@@ -236,3 +236,17 @@ and atomically saves the affected graph. Unsupported states fall back by EOS;
 unselected unrelated modules may also be reconciled. Malformed/stale requests and
 durable write failures preserve committed fits and recipients. No new schema or
 recent-equipment promotion is introduced. B06 retains subsystem controls.
+
+### B05.3 clone and fill
+
+`fill_item_options(fit_id, item_id)` and `clone_vacancy_options(fit_id)` give
+revision-bound read-only previews. The vacancy preview follows EOS `Fit.fill`
+ordering, including subsystem positions, without materializing dummy rows.
+`fill_modules_item` repeats original market adds until EOS rejects one and
+promotes the attempted item even when no copy fits. `fill_modules_clone`
+repeats from a fitted source, retaining state and charge without recent-use
+promotion. `clone_module_at` targets a chosen vacancy; `clone_selected_modules`
+maps unique fitted sources in fit order to the first available vacancies in
+their racks and rejects the entire request if any copy is illegal. All edits
+use the existing serialized EOS worker and atomic graph save. B05.4 retains
+variation/removal and B09 retains undo/redo.

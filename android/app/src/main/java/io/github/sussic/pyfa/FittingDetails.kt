@@ -18,3 +18,7 @@ data class FittingDetails(val fitId: String, val revision: Long, val ignoreRestr
     val hardpoints: List<HardpointUse>, val skillWarnings: List<SkillWarning>)
 data class ModuleDefault(val id: Int, val name: String, val slot: ModuleSlot,
     val state: ModuleState, val limit: ModuleState)
+data class FillItemOptions(val fitId: String, val revision: Long, val itemId: Int,
+    val slot: ModuleSlot, val vacancies: Int, val ignoreRestrictions: Boolean)
+data class CloneVacancy(val index: Int, val slot: ModuleSlot)
+data class CloneVacancyOptions(val fitId: String, val revision: Long, val vacancies: List<CloneVacancy>)
