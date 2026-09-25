@@ -212,6 +212,31 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun fillItemOptions(context: Context, fitId: String, itemId: Int): CompletableFuture<FillItemOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeFillItemOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("fill_item_options", fitId, itemId).toString()).also { result ->
+                check(result.fitId == fitId && result.itemId == itemId &&
+                    mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
+    fun cloneVacancyOptions(context: Context, fitId: String): CompletableFuture<CloneVacancyOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeCloneVacancyOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("clone_vacancy_options", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
     fun chargeCompatibilityDiagnostics(context: Context): CompletableFuture<List<ChargeCompatibility>> {
         check(BuildConfig.DEBUG)
         val ready = start(context)

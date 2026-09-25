@@ -167,3 +167,25 @@ Build 17 is a development build tested on an API36 x86_64 emulator. ARM64
 execution, older APIs, phone usability and safe upgrades remain unverified.
 Exact next task **B05.3 — Clone and fill modules**; B05.4 variation/removal and
 B09 undo/redo remain in scope later.
+
+## B05.3 selected scope and acceptance
+
+Selected on `codex/b05-3-clone-fill` from delivered master `266b682a`.
+Deliver F03.04 and cloning in F03.05: fill vacancies from a market item or
+fitted source and clone selected fitted modules into explicit vacant positions
+in one touch action. Preserve the original command's order, EOS legality,
+restriction override, charge/state inputs and market-history distinction.
+B05.4 retains variation and removal; B09 retains undo/redo.
+
+- [ ] Execute pinned original fill-add, fill-clone and single clone commands;
+  repeat in a fresh process. Cover capacity, early EOS rejection, override,
+  retained state/charge, no-op/recent history and linked recipients.
+- [ ] Verify one serialized, revision-bound bridge edit, strict selection and
+  vacancy validation, deterministic selected-group mapping, atomic failure
+  recovery, saved graph/revisions/history and independent values.
+- [ ] Verify touch previews/actions, empty and mixed racks, fit switch,
+  recreation and real offline process restart. Retain raw reports, decoder
+  rejection checks and reviewed screenshots.
+- [ ] Retain all host/native reference, type/unit, GC, performance, restart,
+  APK/lint/signature/data/license/ABI gates; review and merge a focused
+  final-head PR with artifact provenance and updated status forecast.

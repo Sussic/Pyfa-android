@@ -102,6 +102,14 @@ def bulk_state_options(fit_id):
     return encoded(_bridge.bulk_state_options(fit_id))
 
 
+def fill_item_options(fit_id, item_id):
+    return encoded(_bridge.fill_item_options(fit_id, item_id))
+
+
+def clone_vacancy_options(fit_id):
+    return encoded(_bridge.clone_vacancy_options(fit_id))
+
+
 def variation_options(fit_id):
     return encoded(_bridge.variation_options(fit_id))
 
