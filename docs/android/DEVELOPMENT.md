@@ -46,8 +46,9 @@ B05.2 extends the required final-head suite to **125 host tests** with five
 bulk-state checks and **32 native executions** with two offline state phases.
 The pinned original state command supplies six cases/27 states, four recipients
 and EOS-supported fallbacks; native phases retain touch selection/scope,
-recreation, actual saved outcomes, raw guards and process restart. These are
-requirements for candidate build 17, not a claim of passing CI before it runs.
+recreation, actual saved outcomes, raw guards and process restart. Final-head
+[B05.2 evidence](evidence/b05-2-native.json) records the passing build 17 checks
+and their device limits.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow
 [STATUS](STATUS.md) for current evidence and the authorized next task.
 

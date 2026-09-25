@@ -1,0 +1,1101 @@
+{
+  "delivery": {
+    "android_attempt": 2,
+    "android_conclusion": "success",
+    "android_run": 36083151805,
+    "android_seconds": 1866,
+    "artifact_bytes": 10790134,
+    "artifact_created_at": "2026-09-25T02:29:04Z",
+    "artifact_digest_and_merge_tree_verified": true,
+    "artifact_id": 10843539760,
+    "artifact_sha256": "dbf2325d3e60682aa88e57cb8a9e4ac251b46d5424d644cbf23a4cc8b4255f23",
+    "base": "e5098cc1ff017819f07c9afbdc99e0eab2a378d8",
+    "ci_checkout": "fbd7daa9f9652e421ae1ade015caaf935a417601",
+    "ci_checkout_parents": [
+      "e5098cc1ff017819f07c9afbdc99e0eab2a378d8",
+      "2e6bb7af1a9af6e552f0970561f83cf738fb328f"
+    ],
+    "ci_tree": "c831c554607de9d53101e0db8dec6de96833cfed",
+    "merge": "eb7e3039bf612e4c6672bf8af10db32ad6ab90aa",
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/23",
+    "tested_head": "2e6bb7af1a9af6e552f0970561f83cf738fb328f",
+    "windows_conclusion": "success",
+    "windows_run": 36083151800,
+    "windows_seconds": 1348
+  },
+  "host_focused": {
+    "cases": 6,
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "bb54d6ce78005570f5f6ba263326ea9a699bb23fcc48c423c8c038ada6d41196",
+    "desktop_import_attempts": [],
+    "fresh_process_restore": true,
+    "game_database_unchanged": true,
+    "host_only": true,
+    "network_attempts": [],
+    "reference_sha256": "0702e181adc1b994a429a743fdb7996688519d4787f85a8944d0333e3f2d93c0",
+    "states": 27,
+    "task": "B05.2",
+    "tests_passed": 5
+  },
+  "limitations": [
+    "API36 x86_64 debug emulator execution; ARM64 APK contents verified, execution unverified.",
+    "Physical-device usability, older APIs and safe signing/install upgrades remain unverified.",
+    "B05.3 clone/fill and B05.4 variation/removal remain; bulk undo/redo remains B09."
+  ],
+  "native_raw": {
+    "deliberate_corruptions_rejected": [
+      "missing_case",
+      "missing_state",
+      "wrong_state",
+      "changed_recent",
+      "same_process",
+      "changed_generation",
+      "missing_protocol_guard",
+      "wrong_rejection_code",
+      "lost_restored_fit",
+      "changed_numeric_kind"
+    ],
+    "instrumentation_reports_passed": 27,
+    "junit_files_passed": 1,
+    "new_protocol_guards_passed": 9,
+    "path": "b05-2-bulk-states-native.json",
+    "raw_validators_passed": 13,
+    "sha256": "7ad7baae158d6e7267edb6619e6e36b97cae89750688d82fbbd1031aeb708020"
+  },
+  "native_summary": {
+    "airplane_mode": true,
+    "apk_bytes": 70807455,
+    "apk_sha256": "d68afefb3fb55d1363601fdac23066a1e2254a6e26a3e28e2b0ea35e516e92db",
+    "app_internet_permission": false,
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false,
+    "bulk_charges": {
+      "cases": 9,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "selected_ammo",
+          "asymmetric_skip",
+          "similar_variants",
+          "script_controls",
+          "empty_fit",
+          "clear_selection",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "bulk_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "new_fits": 2,
+      "protocol_rejections": 10,
+      "recipients": 4,
+      "restored_fits": 18,
+      "states": 41
+    },
+    "bulk_states": {
+      "cases": 6,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "similar_outside_selection",
+          "selected_only",
+          "supported_fallbacks",
+          "empty_fit",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "state_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "new_fits": 2,
+      "protocol_rejections": 9,
+      "recipients": 4,
+      "restored_fits": 20,
+      "states": 27
+    },
+    "charge_edits": {
+      "cases": 14,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_4242_charge_sets",
+          "projection_and_command_recipients",
+          "prior_fits_unchanged",
+          "picker_pagination_search",
+          "picker_recreation",
+          "load_replace_unload",
+          "neighbour_state_charge_retained",
+          "script",
+          "laser_crystal",
+          "mining_crystal",
+          "active_fit_discovery",
+          "empty_fit_refresh",
+          "independent_copy",
+          "rejections_atomic",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_states_charges_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "module_compatibility_sets": 4242,
+      "new_fits": 4,
+      "protocol_rejections": 11,
+      "restored_fits": 12,
+      "states": 74
+    },
+    "checkout_sha": "fbd7daa9f9652e421ae1ade015caaf935a417601",
+    "command_parity_tested": "A05: 39 statistics per fit, two fits, 19 states; two recipients, 18 phases, five apply/remove cycles; 112 empty pending-bonus observations; same-worker repeat",
+    "command_repeat_sequence_ms": 1627.254105000006,
+    "command_sequence_ms": 1679.8382289999977,
+    "contract": {
+      "android_worker_thread": "pyfa-engine",
+      "assertions": {
+        "all_snapshots_matched_desktop": true,
+        "bulk_rejection_unchanged": true,
+        "desktop_snapshots_checked": 63,
+        "invalid_create_unchanged": true,
+        "missing_revision_rejected_before_dispatch": true,
+        "queries_unchanged": true,
+        "queued_arguments_copied": true,
+        "queued_same_revision_one_success_one_conflict": true,
+        "raw_scalar_types_checked": true,
+        "retained_fit_count": 5,
+        "stale_revision_unchanged": true,
+        "statistics_per_snapshot": 39,
+        "ui_preserved_after_errors": true,
+        "units_checked": true,
+        "unrelated_revisions_unchanged": true
+      },
+      "codec_rejections": [
+        "unknown_response_field",
+        "missing_session",
+        "unknown_status",
+        "boolean_version",
+        "unsupported_version",
+        "negative_revision",
+        "boolean_revision",
+        "unknown_module_state",
+        "missing_raw_unit",
+        "unknown_error_code",
+        "duplicate_keys",
+        "decimal_version",
+        "decimal_revision",
+        "nonfinite_number",
+        "trailing_document"
+      ],
+      "desktop_snapshots": 63,
+      "fit_count": 5,
+      "fresh_process_pid": 4720,
+      "responses_retained": 44,
+      "statistics_per_snapshot": 39,
+      "structured_errors": [
+        "INVALID_EDIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT",
+        "INVALID_REQUEST",
+        "UNKNOWN_FIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT"
+      ]
+    },
+    "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",
+    "device": {
+      "abi": "x86_64",
+      "api": "36",
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys"
+    },
+    "edit_sequence_ms": 45.926332999997044,
+    "empty_hulls": {
+      "checks": {
+        "prepare": [
+          "complete_hulls",
+          "prior_fits_unchanged",
+          "picker_pagination",
+          "picker_search_and_empty",
+          "picker_recreation",
+          "blank_name_rejected",
+          "ship_creation",
+          "independent_copy",
+          "hull_browser_structure_creation",
+          "cancel_unchanged",
+          "failed_edits_unchanged",
+          "explicit_absence"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "reopen_each_fit",
+          "explicit_absence"
+        ]
+      },
+      "hulls": 437,
+      "new_empty_fits": 3,
+      "rejected_edits": 5,
+      "restart_fits": 5,
+      "ships": 419,
+      "statistics_per_hull": 39,
+      "structures": 18
+    },
+    "engine_boot_ms": 3559.199168999996,
+    "engine_packaged": true,
+    "engine_parity_tested": "A01: 38 statistics across three ammunition states",
+    "fresh_install": true,
+    "library": {
+      "desktop_stat_comparisons": 390,
+      "distinct_processes": 3,
+      "distinct_sessions": 3,
+      "empty_store_reopened": true,
+      "native_ui_assertions_passed": true,
+      "phases": 3,
+      "restart_graphs_matched": true,
+      "two_recipient_projection_and_command_deletion": true
+    },
+    "market": {
+      "checks": [
+        "complete_desktop_catalogue",
+        "all_desktop_searches",
+        "tree_and_item_jump",
+        "meta_filters_and_empty",
+        "pagination",
+        "activity_recreation",
+        "saved_fits_unchanged"
+      ],
+      "groups": 718,
+      "items": 6822,
+      "searches": 22
+    },
+    "module_edits": {
+      "cases": 11,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_default_states",
+          "two_recipients",
+          "prior_fits_unchanged",
+          "ui_add_replace_remove",
+          "vacant_position_reused",
+          "picker_recreation",
+          "resource_warning",
+          "skill_warning",
+          "restriction_confirmation_recreation",
+          "override_reenable",
+          "independent_copy",
+          "structure_service_replacement",
+          "twenty_recent_items",
+          "recent_order_visible",
+          "views_do_not_record_use",
+          "stale_unknown_atomic",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_positions_states_values_retained",
+          "recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "default_module_states": 4242,
+      "history_attempts": 25,
+      "new_fits": 3,
+      "recent_items": 20,
+      "retained_fits": 8,
+      "states": 91
+    },
+    "navigation": {
+      "checks": [
+        "activity_recreation_and_restore_enabled",
+        "back_to_correct_hull",
+        "close_active_inactive_and_delete_open",
+        "close_all_preserves_saved_fits_and_disable_restore",
+        "corrupt_preferences_preserved",
+        "disabled_restart_keeps_library_and_enabled_close_all",
+        "empty_open_set_stays_empty_after_restart",
+        "groups_races_empty_visibility_and_back",
+        "independent_desktop_catalog",
+        "opening_does_not_modify_recents",
+        "previous_set_and_active_restored",
+        "rename_updates_recents",
+        "search_opens_intended_id"
+      ],
+      "desktop_catalog_groups": 55,
+      "desktop_catalog_hulls": 437,
+      "desktop_statistics_checked": 546,
+      "processes": 4,
+      "restart_boundaries": 3
+    },
+    "performance": {
+      "checked_edit_snapshots": 120,
+      "checked_setup_snapshots": 3,
+      "edits": {
+        "ammunition": {
+          "directions": {
+            "iron_ammunition": {
+              "max_ms": 13.577827,
+              "median_ms": 12.716171,
+              "min_ms": 12.22421,
+              "observed_p95_ms": 13.577827,
+              "samples": 10
+            },
+            "restored": {
+              "max_ms": 13.455574,
+              "median_ms": 12.677603000000001,
+              "min_ms": 12.294835,
+              "observed_p95_ms": 13.455574,
+              "samples": 10
+            }
+          },
+          "max_ms": 13.577827,
+          "median_ms": 12.6894725,
+          "min_ms": 12.22421,
+          "observed_p95_ms": 13.455574,
+          "retained_fit_count": 1,
+          "samples": 20
+        },
+        "command_charge": {
+          "directions": {
+            "extension_restored": {
+              "max_ms": 87.218632,
+              "median_ms": 42.597291999999996,
+              "min_ms": 40.834452,
+              "observed_p95_ms": 87.218632,
+              "samples": 10
+            },
+            "harmonizing": {
+              "max_ms": 53.400619,
+              "median_ms": 42.080927,
+              "min_ms": 40.548557,
+              "observed_p95_ms": 53.400619,
+              "samples": 10
+            }
+          },
+          "max_ms": 87.218632,
+          "median_ms": 42.136441000000005,
+          "min_ms": 40.548557,
+          "observed_p95_ms": 53.400619,
+          "retained_fit_count": 9,
+          "samples": 20
+        },
+        "command_link": {
+          "directions": {
+            "link_active": {
+              "max_ms": 70.350939,
+              "median_ms": 67.056512,
+              "min_ms": 66.458154,
+              "observed_p95_ms": 70.350939,
+              "samples": 10
+            },
+            "link_inactive": {
+              "max_ms": 70.369199,
+              "median_ms": 57.823469,
+              "min_ms": 55.478429,
+              "observed_p95_ms": 70.369199,
+              "samples": 10
+            }
+          },
+          "max_ms": 70.369199,
+          "median_ms": 66.525967,
+          "min_ms": 55.478429,
+          "observed_p95_ms": 70.350939,
+          "retained_fit_count": 9,
+          "samples": 20
+        },
+        "projection_link": {
+          "directions": {
+            "applied_zero": {
+              "max_ms": 73.58247,
+              "median_ms": 72.26096749999999,
+              "min_ms": 70.625196,
+              "observed_p95_ms": 73.58247,
+              "samples": 10
+            },
+            "removed": {
+              "max_ms": 59.364138,
+              "median_ms": 58.4576235,
+              "min_ms": 57.736408,
+              "observed_p95_ms": 59.364138,
+              "samples": 10
+            }
+          },
+          "max_ms": 73.58247,
+          "median_ms": 64.99466699999999,
+          "min_ms": 57.736408,
+          "observed_p95_ms": 73.062507,
+          "retained_fit_count": 5,
+          "samples": 20
+        },
+        "projection_range": {
+          "directions": {
+            "applied_zero": {
+              "max_ms": 27.364434,
+              "median_ms": 24.884707499999998,
+              "min_ms": 24.067029,
+              "observed_p95_ms": 27.364434,
+              "samples": 10
+            },
+            "falloff": {
+              "max_ms": 25.114923,
+              "median_ms": 24.727854999999998,
+              "min_ms": 24.361519,
+              "observed_p95_ms": 25.114923,
+              "samples": 10
+            }
+          },
+          "max_ms": 27.364434,
+          "median_ms": 24.771959000000003,
+          "min_ms": 24.067029,
+          "observed_p95_ms": 27.049864,
+          "retained_fit_count": 5,
+          "samples": 20
+        }
+      },
+      "measurement_limits": [
+        "Debug APK, API36 x86_64 emulator; not a physical-phone or release-build benchmark.",
+        "Startup is process-start to ready Compose draw; excludes earlier system dispatch/zygote time. Raw ADB request-to-receipt also includes transport, report writing and polling.",
+        "One fresh installation and four force-stopped process launches reuse OS page/disk caches. No device reboot/cold disk, warm/hot Activity or startup percentile claim.",
+        "Edits include serialized queue, JNI, EOS mutation, refreshed role snapshots and both JSON directions; exclude golden assertions and UI interaction/rendering. No contention injected.",
+        "Projection/command operations update two recipients; four roles are read including unlinked control. Commands include the reference mindlink.",
+        "Four warmups, twenty alternating samples (ten per direction); p95 is descriptive of these samples, not a reliable device-tail estimate.",
+        "Memory is current process PSS/private dirty, not peak or a leak test; protected graphics may be omitted. Edit-test memory includes instrumentation, assertions and reports.",
+        "Fit counts stay1/5/9 by stage: earlier fit graphs remain alive. Graph setup and memory are cumulative; no per-fit or command-only memory claim."
+      ],
+      "memory_snapshots": {
+        "after_ammunition": {
+          "java_heap_used_bytes": 15972528,
+          "native_heap_allocated_bytes": 42043328,
+          "total_private_dirty_kb": 167220,
+          "total_pss_kb": 200765
+        },
+        "after_ammunition_setup": {
+          "java_heap_used_bytes": 12826800,
+          "native_heap_allocated_bytes": 41959232,
+          "total_private_dirty_kb": 164020,
+          "total_pss_kb": 197537
+        },
+        "after_command_charge": {
+          "java_heap_used_bytes": 10498272,
+          "native_heap_allocated_bytes": 43495872,
+          "total_private_dirty_kb": 176380,
+          "total_pss_kb": 210168
+        },
+        "after_command_link": {
+          "java_heap_used_bytes": 10580192,
+          "native_heap_allocated_bytes": 43504144,
+          "total_private_dirty_kb": 176016,
+          "total_pss_kb": 209808
+        },
+        "after_command_setup": {
+          "java_heap_used_bytes": 45938960,
+          "native_heap_allocated_bytes": 44223536,
+          "total_private_dirty_kb": 209924,
+          "total_pss_kb": 243504
+        },
+        "after_projection_link": {
+          "java_heap_used_bytes": 44808464,
+          "native_heap_allocated_bytes": 43573408,
+          "total_private_dirty_kb": 202228,
+          "total_pss_kb": 235808
+        },
+        "after_projection_range": {
+          "java_heap_used_bytes": 30898352,
+          "native_heap_allocated_bytes": 43279936,
+          "total_private_dirty_kb": 188416,
+          "total_pss_kb": 221953
+        },
+        "after_projection_setup": {
+          "java_heap_used_bytes": 17021104,
+          "native_heap_allocated_bytes": 42998096,
+          "total_private_dirty_kb": 174552,
+          "total_pss_kb": 208081
+        },
+        "before_activity": {
+          "java_heap_used_bytes": 3188640,
+          "native_heap_allocated_bytes": 5638960,
+          "total_private_dirty_kb": 74884,
+          "total_pss_kb": 83205
+        },
+        "single_fit_ready": {
+          "java_heap_used_bytes": 9939120,
+          "native_heap_allocated_bytes": 41913472,
+          "total_private_dirty_kb": 160996,
+          "total_pss_kb": 194401
+        }
+      },
+      "normal_startup": {
+        "cold_process_reusing_database": {
+          "max_ms": 3199.3561580000096,
+          "median_ms": 3160.431264999992,
+          "min_ms": 3005.179249000008,
+          "samples": 4
+        },
+        "first_install_ms": 4200.647257000004
+      },
+      "normal_startup_memory_snapshots": [
+        {
+          "java_heap_used_bytes": 25200640,
+          "native_heap_allocated_bytes": 41760256,
+          "total_private_dirty_kb": 147736,
+          "total_pss_kb": 179578
+        },
+        {
+          "java_heap_used_bytes": 8980320,
+          "native_heap_allocated_bytes": 41639024,
+          "total_private_dirty_kb": 128160,
+          "total_pss_kb": 161258
+        },
+        {
+          "java_heap_used_bytes": 9008992,
+          "native_heap_allocated_bytes": 41639344,
+          "total_private_dirty_kb": 127540,
+          "total_pss_kb": 160455
+        },
+        {
+          "java_heap_used_bytes": 8976128,
+          "native_heap_allocated_bytes": 41486752,
+          "total_private_dirty_kb": 127964,
+          "total_pss_kb": 160873
+        },
+        {
+          "java_heap_used_bytes": 8943360,
+          "native_heap_allocated_bytes": 41472368,
+          "total_private_dirty_kb": 127836,
+          "total_pss_kb": 160592
+        }
+      ],
+      "setup_ms": {
+        "ammunition": 18.269421,
+        "command": 332.110294,
+        "projection": 323.66774
+      }
+    },
+    "performance_test": "io.github.sussic.pyfa.PerformanceTest.repeatedEditsMatchDesktopWithStableFitCountOffline",
+    "persistence": {
+      "android_worker_thread": "pyfa-engine",
+      "desktop_snapshots": 45,
+      "fit_count": 9,
+      "limits": [
+        "API 36 x86_64 emulator; no physical, ARM64 or older-API execution claim.",
+        "Same installed APK across process restarts; no upgrade, migration or backup/restore claim."
+      ],
+      "phases": [
+        {
+          "desktop_snapshots": 9,
+          "generation_end": 15,
+          "generation_start": 1,
+          "phase": "prepare",
+          "pid": 4784,
+          "session_id": "b267a80507ee4106a181820828ff18a9",
+          "structured_errors": [],
+          "successful_mutations": 14
+        },
+        {
+          "desktop_snapshots": 27,
+          "generation_end": 25,
+          "generation_start": 15,
+          "phase": "reopen_edit",
+          "pid": 4836,
+          "session_id": "741a3dc832404f58a1470d9b82fe4325",
+          "structured_errors": [
+            "INVALID_EDIT"
+          ],
+          "successful_mutations": 10
+        },
+        {
+          "desktop_snapshots": 9,
+          "generation_end": 25,
+          "generation_start": 25,
+          "phase": "verify",
+          "pid": 4893,
+          "session_id": "5dffe0daab264625ae286578275d40f1",
+          "structured_errors": [],
+          "successful_mutations": 0
+        }
+      ],
+      "process_restarts": 2,
+      "responses_retained": 25,
+      "stable_ids_and_revisions": true,
+      "statistics_per_snapshot": 39,
+      "structured_errors": [
+        "INVALID_EDIT"
+      ],
+      "successful_mutations": 24,
+      "two_recipient_source_edits": true,
+      "whole_graph_reopened": true
+    },
+    "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
+    "projection_parity_tested": "A04: 39 statistics per fit, two fits, 11 states; two recipients, nine phases, five apply/remove cycles; same-worker repeat",
+    "projection_repeat_sequence_ms": 1056.9397719999927,
+    "projection_sequence_ms": 1845.0971609999983,
+    "python_dependencies": {
+      "greenlet": "3.0.1",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "rack_ordering": {
+      "cases": 9,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "occupied_swap",
+          "vacant_move",
+          "states_charges_retained",
+          "positional_heat",
+          "medium_and_service_controls",
+          "cancel_selection",
+          "empty_rack",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "heat_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "new_fits": 2,
+      "protocol_rejections": 10,
+      "recipients": 4,
+      "restored_fits": 16,
+      "states": 48
+    },
+    "screenshots": {
+      "about": {
+        "height": 1920,
+        "sha256": "d49852b4c27867a25643c6e4bcd8efaabb59d0cdcc16dee12d9761f325c7f361",
+        "width": 1080
+      },
+      "about-landscape": {
+        "height": 1080,
+        "sha256": "ef4d7ccaee5d924f34dc6da646aa38255256d67e4a984af83d28fa99786ed0f8",
+        "width": 1920
+      },
+      "fit": {
+        "height": 1920,
+        "sha256": "37c982756c3ff3eca0f4135a15612947ed005fbfabac590c3e214b00f6d9fd42",
+        "width": 1080
+      },
+      "home": {
+        "height": 1920,
+        "sha256": "8634e0532483b56d6a86b2e0e69a10af9753ad86a0b611836c6bf620ba22787f",
+        "width": 1080
+      }
+    },
+    "task": "B05.2",
+    "tests": [
+      "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
+      "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack",
+      "io.github.sussic.pyfa.EngineParityTest.projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline",
+      "io.github.sussic.pyfa.EngineParityTest.commandBurstsMatchDesktopAndClearRecipientBonusesOffline",
+      "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline"
+    ],
+    "variation_edits": {
+      "cases": 17,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_5226_families",
+          "all_six_recipients",
+          "prior_fits_unchanged",
+          "picker_recreation",
+          "charge_reconciliation",
+          "neighbour_retained",
+          "drone_pagination_search",
+          "distinct_stacks_quantities_order",
+          "implant_activation_location",
+          "disabled_choices",
+          "empty_fit_refresh",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      },
+      "new_fits": 2,
+      "pagination": {
+        "choices": 94,
+        "item_id": 33681,
+        "previous_page": 0,
+        "recreated_page": 1
+      },
+      "protocol_rejections": 13,
+      "restored_fits": 14,
+      "states": 55,
+      "variation_families": 5226
+    },
+    "workflow_run": "36083151805"
+  },
+  "reference": {
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "desktop_source": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "exact_positions_states_ids_inputs_units_numeric_kinds": true,
+    "fixture_sha256": "0702e181adc1b994a429a743fdb7996688519d4787f85a8944d0333e3f2d93c0",
+    "floating_comparison": "Existing relative 1e-10 / absolute 1e-9 tolerance permits platform noise; identifiers, states, integers, booleans, nulls and numeric kinds compare exactly.",
+    "fresh_process_repeat": true,
+    "linked_recipients": 4,
+    "original_command_cases": 6,
+    "states": 27
+  },
+  "scope": "Original cycle, overheat and offline state actions for selected or all-similar editable fitted modules with EOS fallback, fit-wide restrictions, explicit skipped/actual outcomes, atomic persistence and native restart.",
+  "screenshots": {
+    "all_61_visually_reviewed": true,
+    "files": {
+      "about-landscape.png": {
+        "height": 1080,
+        "sha256": "ef4d7ccaee5d924f34dc6da646aa38255256d67e4a984af83d28fa99786ed0f8",
+        "width": 1920
+      },
+      "about.png": {
+        "height": 1920,
+        "sha256": "d49852b4c27867a25643c6e4bcd8efaabb59d0cdcc16dee12d9761f325c7f361",
+        "width": 1080
+      },
+      "bulk-charges-empty.png": {
+        "height": 1920,
+        "sha256": "f21b02636bc155b706efc44bc144e219dd73a410553389190c81635330b8b266",
+        "width": 1080
+      },
+      "bulk-charges-mixed.png": {
+        "height": 1920,
+        "sha256": "9a47b96ebeb41f17e47d6dfdbfd184276b14567bd011bbfc528e6049920f9a69",
+        "width": 1080
+      },
+      "bulk-charges-restored.png": {
+        "height": 1920,
+        "sha256": "7955a5a233a6df6efbe905ae741345a957758e806be6788f790e0cf4aa55a96f",
+        "width": 1080
+      },
+      "bulk-charges-scripts.png": {
+        "height": 1920,
+        "sha256": "132072d0a14107792de872e841090c8e9a6f6d8e813a8ca04b8ed0ba9e0b16e8",
+        "width": 1080
+      },
+      "bulk-charges-selection.png": {
+        "height": 1920,
+        "sha256": "7fb6142a208411aa6388fcecb7cdf564a8152eb6cfc72b4e23a8250f769e4080",
+        "width": 1080
+      },
+      "bulk-charges-similar.png": {
+        "height": 1920,
+        "sha256": "65adb027668ee3d591cb25330f0adf375fd011891a389d1bfcfb2232a66fd4b4",
+        "width": 1080
+      },
+      "bulk-states-empty.png": {
+        "height": 1920,
+        "sha256": "db06e86ee642dc3dad0ae016274c15d0c9e8432b48367ae4e7c3a74c6718b40b",
+        "width": 1080
+      },
+      "bulk-states-restored.png": {
+        "height": 1920,
+        "sha256": "362af1deb96c7835e0cd0260d3baebbbe15a22f95427adccddf6f5badd36db83",
+        "width": 1080
+      },
+      "bulk-states-saved.png": {
+        "height": 1920,
+        "sha256": "f0bc41a60f2b66485a8efad60bb4bf6def66cdc87181895395d47d3a43e9517e",
+        "width": 1080
+      },
+      "bulk-states-selection.png": {
+        "height": 1920,
+        "sha256": "6de0a55fa354cd919fa185661500fe4546d4e6c2178a632fdc70ca3054dbaaf1",
+        "width": 1080
+      },
+      "bulk-states-similar.png": {
+        "height": 1920,
+        "sha256": "3baa6f68a7707618784e862cf3c0ac948302c348fed9356f17a22ab470e9452b",
+        "width": 1080
+      },
+      "charge-edits-active.png": {
+        "height": 1920,
+        "sha256": "00142e4a7da715c17a3d5bb32c2e8fc66905ad4411b1061f86a9a2e92180e772",
+        "width": 1080
+      },
+      "charge-edits-crystal.png": {
+        "height": 1920,
+        "sha256": "5d90bc2a18a18edc0801f2b334985b7b8dfb2418bb38345b9fd775c1acf131bd",
+        "width": 1080
+      },
+      "charge-edits-empty.png": {
+        "height": 1920,
+        "sha256": "992519ed8d27f6b549c44ced695fbd935ea0e7a754d1f1e760b55737844b94b8",
+        "width": 1080
+      },
+      "charge-edits-loaded.png": {
+        "height": 1920,
+        "sha256": "a1fe12776330fb6b922af66962cbc4adb8acda9820b54dc482751b91a8fa2407",
+        "width": 1080
+      },
+      "charge-edits-mining.png": {
+        "height": 1920,
+        "sha256": "f1642d487d1edb5c11066810c20bfb374f11d126c5284b238db48275325384a5",
+        "width": 1080
+      },
+      "charge-edits-picker.png": {
+        "height": 1920,
+        "sha256": "9fbbb01a523b793faa716b4096f949b34c9516ef872de8415d91c41825bc2a52",
+        "width": 1080
+      },
+      "charge-edits-restored.png": {
+        "height": 1920,
+        "sha256": "5c7a76e36085cd71c5fc0fb636ef4f4f50db5966ba65d2db8cd5460cee84d053",
+        "width": 1080
+      },
+      "charge-edits-script.png": {
+        "height": 1920,
+        "sha256": "58956f4af272fce7c839b19700789842d871ff2c2267af4cb05aa6ac616b2f7f",
+        "width": 1080
+      },
+      "empty-hulls-picker.png": {
+        "height": 1920,
+        "sha256": "c367b8e05093350d735c1be34c1bb5239956b120be0e79a8e582ddb6dbb517a7",
+        "width": 1080
+      },
+      "empty-hulls-restored.png": {
+        "height": 1920,
+        "sha256": "28850ed0f0c7d960dbe8a3f103a25d7f42cc1b403585ea0e1d1b5fbfaff1ba6a",
+        "width": 1080
+      },
+      "empty-hulls-ship.png": {
+        "height": 1920,
+        "sha256": "c1ae49bf072515b72c2f9dbe5365e9b77b0ccc3f683e2ade8fad900fb6e46276",
+        "width": 1080
+      },
+      "empty-hulls-structure.png": {
+        "height": 1920,
+        "sha256": "8d17e03667174146d4b8d6bfbb926733971dfa0b14944da79ff96783fff12800",
+        "width": 1080
+      },
+      "fit.png": {
+        "height": 1920,
+        "sha256": "37c982756c3ff3eca0f4135a15612947ed005fbfabac590c3e214b00f6d9fd42",
+        "width": 1080
+      },
+      "home.png": {
+        "height": 1920,
+        "sha256": "8634e0532483b56d6a86b2e0e69a10af9753ad86a0b611836c6bf620ba22787f",
+        "width": 1080
+      },
+      "library-dialog.png": {
+        "height": 1920,
+        "sha256": "009812219068037af54efc7d71a4b9a36b080ab62f5c86bf6264553371783f0c",
+        "width": 1080
+      },
+      "library-empty.png": {
+        "height": 1920,
+        "sha256": "7376a6a27fe4dec535b7674c56dfcf3fed4b9c0f251004fca4bbf4beca53285c",
+        "width": 1080
+      },
+      "library-library.png": {
+        "height": 1920,
+        "sha256": "a9042c50d2e889bb5bcdb145228972c0ab7b26d21ea6d89084978b7d4870a00f",
+        "width": 1080
+      },
+      "market-empty.png": {
+        "height": 1920,
+        "sha256": "5c0be8253bda70eb5e839845c177409a221ce1ffcd46201b029c0e3cf82f60df",
+        "width": 1080
+      },
+      "market-group.png": {
+        "height": 1920,
+        "sha256": "6a8176693c3b6578cbab18336a81aae07b4e0b3516a4b459afcbc30cd5d4acb0",
+        "width": 1080
+      },
+      "market-meta.png": {
+        "height": 1920,
+        "sha256": "b98a8ac0b7b99bb35fb450f4c68e64a9f8e8d360a565ae94f15c35720da4e3e2",
+        "width": 1080
+      },
+      "market-root.png": {
+        "height": 1920,
+        "sha256": "6270f3c2636c78f2f6917b2c37080042f0fe5394d23c3a65743149cdc862a8f3",
+        "width": 1080
+      },
+      "market-search.png": {
+        "height": 1920,
+        "sha256": "04ea08595696cc32587a3827e8b5e70a07f9921999b569b943f0045bc2202ecd",
+        "width": 1080
+      },
+      "module-edits-override.png": {
+        "height": 1920,
+        "sha256": "e6eec96b5925a814c4d7cd757854d3cb15c98fca31809dd42abdbeee618e98bb",
+        "width": 1080
+      },
+      "module-edits-rack.png": {
+        "height": 1920,
+        "sha256": "318dee0247029477391bed29eac6771c94755c00b33fd6d26a18244f18a5aa46",
+        "width": 1080
+      },
+      "module-edits-recent.png": {
+        "height": 1920,
+        "sha256": "5d6a265abe641a00483685b172128522cbe0eff88f14d8825e644655e14f3560",
+        "width": 1080
+      },
+      "module-edits-resources.png": {
+        "height": 1920,
+        "sha256": "5dd7c78ff8d01589b1b8d0c256877506630420a816e6ebb92e740683fd7a0789",
+        "width": 1080
+      },
+      "module-edits-restored.png": {
+        "height": 1920,
+        "sha256": "96dc73b82e2a2fc5e6de6f7ae92793349b3ef727c419f24df8ba706c459c345a",
+        "width": 1080
+      },
+      "module-edits-service.png": {
+        "height": 1920,
+        "sha256": "7da4dac4823cb8af28586950ada0a6e9d2197c7768e2eb742e5bcdd7d34208df",
+        "width": 1080
+      },
+      "module-edits-skills.png": {
+        "height": 1920,
+        "sha256": "17a8bd7d629ba32c599285c11a78cd4505689239a70a2da0e974ecac9c5b472c",
+        "width": 1080
+      },
+      "navigation-closed.png": {
+        "height": 1920,
+        "sha256": "b5650aaf2faad506a27e2c54e30a14a4004e76c21b7553b8ddfde22c67e4c934",
+        "width": 1080
+      },
+      "navigation-hull.png": {
+        "height": 1920,
+        "sha256": "159fbd818fe68f4b0c9fb74cdbcc564c3d8d1c02b096e86310118f21ea649443",
+        "width": 1080
+      },
+      "navigation-open.png": {
+        "height": 1920,
+        "sha256": "f20451aad90367f5e9bb3cd9c2c0d205a4d470a25cb9927f00dc7864eaacd87c",
+        "width": 1080
+      },
+      "navigation-recent.png": {
+        "height": 1920,
+        "sha256": "f5fd45a73bc1fc003ab0b7dc3e92dcaa7b2fd68f0311c6e83047858310b8e598",
+        "width": 1080
+      },
+      "rack-ordering-empty.png": {
+        "height": 1920,
+        "sha256": "78838f695b384b6a2e934ddfb3062497db8f889e7bb1318f219179f22cd7cf43",
+        "width": 1080
+      },
+      "rack-ordering-initial.png": {
+        "height": 1920,
+        "sha256": "ed3884ebc9b8151833458e0fda34f52f3b4899c9689e1d5635a361a22e62da0d",
+        "width": 1080
+      },
+      "rack-ordering-medium.png": {
+        "height": 1920,
+        "sha256": "eb0bac84554d08ff25ace869cf5df78d75214f742ab0774a0644afd7e553e2ac",
+        "width": 1080
+      },
+      "rack-ordering-restored.png": {
+        "height": 1920,
+        "sha256": "ed3884ebc9b8151833458e0fda34f52f3b4899c9689e1d5635a361a22e62da0d",
+        "width": 1080
+      },
+      "rack-ordering-service.png": {
+        "height": 1920,
+        "sha256": "8038c290a672a5ca147fbaa9cdc97868cc65645c78bef3a0808f1631d659c878",
+        "width": 1080
+      },
+      "rack-ordering-swapped.png": {
+        "height": 1920,
+        "sha256": "08d4bd2a9e12e6531a29813d0efdcc85c873757f8cd83ced6c5baa010b21fe82",
+        "width": 1080
+      },
+      "rack-ordering-vacant.png": {
+        "height": 1920,
+        "sha256": "a9259e941e38b638fc8141f25cfd6415476b889f17e5704d698f11e64b1d682b",
+        "width": 1080
+      },
+      "variation-edits-disabled.png": {
+        "height": 1920,
+        "sha256": "9b56b0bf2a87a221dfff03606aa687699c19d3361f534084de306601777ef862",
+        "width": 1080
+      },
+      "variation-edits-drone-picker.png": {
+        "height": 1920,
+        "sha256": "951049e81fc7337bea7808417d78482bb2f7e48ad48b54272dca361f3f3cae9d",
+        "width": 1080
+      },
+      "variation-edits-drone.png": {
+        "height": 1920,
+        "sha256": "26036c853f86ce9ac48f546216535478b11d57a488a3c078a6ba207fbd6fba4b",
+        "width": 1080
+      },
+      "variation-edits-empty.png": {
+        "height": 1920,
+        "sha256": "9e4697b852bcb33cc8647a2dd0441ea35f8ada94c35991b6989499f6d7ffb04b",
+        "width": 1080
+      },
+      "variation-edits-implant.png": {
+        "height": 1920,
+        "sha256": "e334959a23f3803f3034165cc26a88438d2196d796411675bf7b036029baa357",
+        "width": 1080
+      },
+      "variation-edits-module.png": {
+        "height": 1920,
+        "sha256": "30d2bf6118aad7a877f12115ad93ab7b02bf706033abac0064bca8fc74db1c62",
+        "width": 1080
+      },
+      "variation-edits-restored.png": {
+        "height": 1920,
+        "sha256": "52f39af85deb39387bc6ee69321f4458994179ce7e912344500fbcb408119d6b",
+        "width": 1080
+      },
+      "variation-edits-unloaded.png": {
+        "height": 1920,
+        "sha256": "18da5382028c0a7bd6eef3bc55de4b9516804177b105d8067f9e2743e03a0b33",
+        "width": 1080
+      }
+    },
+    "new_b05_2": {
+      "bulk-states-empty.png": "b05-2-empty.png",
+      "bulk-states-restored.png": "b05-2-restored.png",
+      "bulk-states-saved.png": "b05-2-saved.png",
+      "bulk-states-selection.png": "b05-2-selection.png",
+      "bulk-states-similar.png": "b05-2-similar.png"
+    }
+  },
+  "task": "B05.2",
+  "verification_delays": [
+    "Initial head d385724 native UI test exposed an omitted skipped-row preview; one-line fix on final head 2e6bb7af lists every editable fitted module, with exact skipped outcomes. No engine rule changed.",
+    "Final-head Android attempt 1 lost ADB during transfer of an existing empty-hull report, producing truncated JSON and device-offline errors. One same-head native-only rerun on a fresh hosted emulator passed; no test or gate was weakened."
+  ]
+}

@@ -425,7 +425,7 @@ selection/scope/script/mixed/empty/recreation workflows, independent copies and 
 saved fits after a real process restart. Six screenshots require actual review.
 Build 16 remains a development build; STATUS records executed checks and limits.
 
-### B05.2 bulk module states (candidate build 17)
+### B05.2 bulk module states (development build 17)
 
 From Fit modules, choose Change module states together. Select modules and a
 reference, choose selection-only or all-similar scope, then cycle, request
@@ -436,5 +436,7 @@ states after fit-wide restrictions reconcile; recent equipment is unchanged.
 `BulkStatesTest` compares six pinned desktop cases/27 states and four recipients
 offline, then checks selection/recreation, fallbacks, similar modules outside the
 selection, no-ops, malformed/stale requests, independent copies and real process
-restart. Five screenshots and raw transport guards require review. Required host
-and native CI results for build 17 are recorded in STATUS when delivered.
+restart. Five screenshots and raw transport guards are reviewed. Passing final-head
+host/native CI and device limits are recorded in
+[STATUS](../docs/android/STATUS.md) and the
+[retained receipt](../docs/android/evidence/b05-2-native.json).

@@ -113,9 +113,9 @@ validators/corruption probes pass. Local full 26-gate host and APK/package check
 also pass. [Retained evidence](../evidence/b05-1-native.json).
 
 Build 16 is a development build. ARM64 execution, older APIs, user usability and
-safe upgrades remain unverified. B05 stays active: exact next task **B05.2 — Bulk
-module states**, followed by B05.3 clone/fill and B05.4 variation/removal. The
-parent's complete scope and B09 undo/redo requirement remain unchanged.
+safe upgrades remain unverified. B05 stays active through B05.3 clone/fill and
+B05.4 variation/removal. The parent's complete scope and B09 undo/redo
+requirement remain unchanged.
 
 ## B05.2 selected scope and acceptance
 
@@ -129,17 +129,41 @@ fit-wide `checkStates` favors the reference module. The native workflow will
 expose reference, selected/all-similar scope and cycle/overheat/offline choices
 without relying on modifier keys. B06 retains subsystem controls.
 
-- [ ] Execute pinned original state command and fresh-process repeat over
+- [x] Execute pinned original state command and fresh-process repeat over
   mixed active/passive/overheat capabilities, restrictions, similar variants,
   no-ops and linked recipients. Compare exact positions, states, inputs and
   independent values with justified numeric tolerances.
-- [ ] Bridge rejects malformed/stale selections atomically, applies original
+- [x] Bridge rejects malformed/stale selections atomically, applies original
   reference-first transitions and fit-wide fallback, saves once and preserves
   charges, order, unrelated fits and recent use. Verify rejected durable writes
   leave graph/revisions/recipients unchanged.
-- [ ] Native touch workflow shows supported requested outcomes and skips, handles
+- [x] Native touch workflow shows supported requested outcomes and skips, handles
   empty fits, recreation, fit switching, restart and all-similar modules outside
   selection. Show actual saved states after fit-wide reconciliation.
-- [ ] Retain all existing host/native, type/unit, GC, performance, restart,
+- [x] Retain all existing host/native, type/unit, GC, performance, restart,
   screenshot, APK/lint/signature/data/license/ABI gates; review and merge a
   focused final-head PR with verified artifact provenance and status forecast.
+
+## B05.2 delivery
+
+Delivered in [PR #23](https://github.com/Sussic/Pyfa-android/pull/23), tested head
+`2e6bb7af1a9af6e552f0970561f83cf738fb328f`, merge
+`eb7e3039bf612e4c6672bf8af10db32ad6ab90aa`. The pinned original command
+passes six cases/27 states/four recipients and a fresh-process repeat; five
+focused host tests cover parity, rejection, atomic recovery and restart.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36083151800)
+passes the complete **125-host-test** suite. [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36083151805)
+attempt 2 passes **32 offline native executions**, both APKs, lint, signature,
+source/data/license/ABI checks and process restart. All **61 screenshots** were
+visually reviewed. Artifact SHA-256 and CI merge tree match; 13 raw validators,
+nine native protocol guards and ten deliberate report corruptions pass.
+[Retained receipt and five views](../evidence/b05-2-native.json) preserve the
+synthetic B05.2 evidence. The initial native UI test exposed an omitted skipped
+preview row, corrected on the tested head. Final-head Android attempt 1 lost ADB
+while transferring a prior empty-hull report; one same-head native-only retry
+passed without changing gates.
+
+Build 17 is a development build tested on an API36 x86_64 emulator. ARM64
+execution, older APIs, phone usability and safe upgrades remain unverified.
+Exact next task **B05.3 — Clone and fill modules**; B05.4 variation/removal and
+B09 undo/redo remain in scope later.
