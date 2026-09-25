@@ -212,3 +212,14 @@ desktop Thermodynamics class's burnout estimates and probability samples. EOS
 supplies modified attributes; Kotlin formats results. Failed estimates use null,
 never a fabricated zero. These are desktop estimates, not measured game duration.
 Subsystem configuration and heat options remain B06 and C09 respectively.
+
+### B05.1 bulk ammunition
+
+`bulk_charge_options(fit_id)` returns strict revision-correlated charge choices,
+selection-subset and similar-module candidate positions. `set_bulk_charges` takes
+`fit_id`, `main_position`, `module_indices`, `scope` (`SELECTED` or `SIMILAR`) and
+nullable `charge_id`. It revalidates the complete request and applies the original
+desktop subset/compatibility policy in one durable action, reconciling states and
+all linked recipients. Rejected/failed writes recover the committed graph; recent
+equipment is unchanged. Full states/clone/fill/variation/removal and history remain
+the other B05 children and B09 respectively.

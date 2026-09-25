@@ -244,3 +244,16 @@ The existing graph now captures current drone stack inputs on every accepted
 operation, so copies, rollback and restart replay edited data. No schema version
 or session boundary changes. These operations expose only existing bridge inputs;
 later addition editors retain their inventory rows. Full undo/redo remains B09.
+
+## B05.1 bulk ammunition boundary
+
+The serialized worker returns revision-bound charge capabilities plus original
+selection-subset and similar-module candidate positions. Kotlin presents those
+capabilities, current charges and explicit targets/skips; EOS supplies compatibility
+and calculation. A selected reference module determines the charge family.
+One bulk mutation revalidates all positions, scope and charge, applies original
+per-module filtering, reconciles states and atomically saves the affected graph.
+Intentional desktop skips are visible; malformed/stale requests and failed saves
+leave committed inputs intact. Recent equipment stays unchanged. Native selection
+survives recreation, and external fit/revision changes discard stale selections.
+No new storage schema, parallel engine execution or fitting formulas are introduced.

@@ -75,6 +75,7 @@ ARGUMENTS = {
     "set_fit_restrictions": ("fit_id", "ignore"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_charge": ("fit_id", "position", "charge_id"),
+    "set_bulk_charges": ("fit_id", "main_position", "module_indices", "scope", "charge_id"),
     "change_variation": ("fit_id", "context", "position", "item_id"),
     "swap_modules": ("fit_id", "from_position", "to_position"),
     "set_module_states": ("fit_id", "module_indices", "state"),
@@ -264,6 +265,14 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **options(self.engine, self._fits[fit_id])}
 
+    def bulk_charge_options(self, fit_id):
+        from .bulk import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
+
     def rack_options(self, fit_id):
         from .ordering import details
         self.engine._check_thread()
@@ -421,6 +430,12 @@ class BridgeSession:
             _integer(args["charge_id"], 1, 2**31 - 1)
         if "position" in args:
             _integer(args["position"], 0, 2**31 - 1)
+        if "main_position" in args:
+            _integer(args["main_position"], 0, 2**31 - 1)
+        if "scope" in args:
+            _text(args["scope"])
+            if args["scope"] not in ("SELECTED", "SIMILAR"):
+                _invalid()
         if "context" in args:
             _text(args["context"])
             if args["context"] not in ("module", "drone", "implant"):
@@ -658,6 +673,9 @@ class BridgeSession:
         if operation == "set_module_charge":
             from .charges import change
             return change(self.engine, fit, args["position"], args["charge_id"])
+        if operation == "set_bulk_charges":
+            from .bulk import change_charges
+            return change_charges(self.engine, fit, args["main_position"], args["module_indices"], args["scope"], args["charge_id"])
         if operation == "change_variation":
             from .variations import change
             return change(self.engine, fit, args["context"], args["position"], args["item_id"])

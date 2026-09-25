@@ -85,8 +85,10 @@ from module_edit_summary import summarize as summarize_module_edits
 from charge_edit_summary import summarize as summarize_charge_edits
 from variation_edit_summary import summarize as summarize_variation_edits
 from rack_ordering_summary import summarize as summarize_rack_ordering
+from bulk_charge_summary import summarize as summarize_bulk_charges
 summary = {
-    "task": "B04.2.3.3",
+    "task": "B05.1",
+    "bulk_charges": summarize_bulk_charges(json.loads((evidence / "bulk-charges-native.json").read_text(encoding="utf-8")), engine),
     "rack_ordering": summarize_rack_ordering(json.loads((evidence / "rack-ordering-native.json").read_text(encoding="utf-8")), engine),
     "variation_edits": summarize_variation_edits(json.loads((evidence / "variation-edits-native.json").read_text(encoding="utf-8")), engine),
     "charge_edits": summarize_charge_edits(json.loads((evidence / "charge-edits-native.json").read_text(encoding="utf-8")), engine),

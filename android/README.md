@@ -6,7 +6,8 @@ without network access. Both guns can change ammunition together; the sample
 shows drone control range and all 39 sampled attributes. B02 persists fit graphs;
 B03.1 adds creation from bundled examples, search, open, rename, copy and deletion.
 B03.2 adds hull/race browsing, recently modified fits and saved open-fit navigation.
-Full hull/equipment editing remains later work.
+B04 adds arbitrary hull creation and module, charge, variation and rack editing;
+B05.1 adds explicit bulk-ammunition selection. Other bulk actions remain in progress.
 A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.
@@ -409,3 +410,16 @@ native executions. Nine cases/48 states compare raw positions, heat types/units
 and four recipients. Touch swaps/vacancies, medium/service controls, recreation,
 stale selection, ten protocol guards, independent copies and actual restart
 remain required, along with seven reviewed screens. Full heat options remain C09.
+
+### B05.1 bulk ammunition workflow
+
+From Fit modules, choose Change ammunition together, select modules and a reference
+module, then choose selection-only or all-similar scope. The preview identifies
+modules that will change, are already set or are skipped by original desktop
+compatibility. Apply once to save all changes and recalculate recipients.
+
+`BulkChargesTest` adds offline prepare/restart phases after rack ordering. Required
+CI retains the original nine-case/41-state matrix, strict numeric transport guards,
+selection/scope/script/mixed/empty/recreation workflows, independent copies and all
+saved fits after a real process restart. Six screenshots require actual review.
+Build 16 remains a development build; STATUS records executed checks and limits.

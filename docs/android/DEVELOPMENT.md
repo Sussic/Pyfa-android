@@ -22,11 +22,11 @@ record the behavioral tests and fresh-process comparisons; A10 raises the count 
 
 B01 adds the typed bridge, B02 durable graph storage, B03.1 the fit library
 lifecycle/search UI, and B03.2 organization/navigation. The required host suite
-has **114 required tests** with B04.2.3.3: 29 headless, 14 bridge, 14 persistence, 13 library,
+has **120 required tests** with B05.1: 29 headless, 14 bridge, 14 persistence, 13 library,
 six equipment discovery, six empty-hull, six module-edit, six charge-edit, six variation-edit,
-six rack-ordering and eight reference utilities, plus
+six rack-ordering, six bulk-charge and eight reference utilities, plus
 independent calculation/catalogue/empty-hull/module-command exports and migration.
-Native CI requires **28 executions**: five functional, separate A10 performance
+Native CI requires **30 executions**: five functional, separate A10 performance
 and B01 contract, three B02 persistence phases, three B03.1 library phases and
 four B03.2 organization/navigation phases, separate B04.1 equipment discovery and
 two B04.2.1 empty-hull creation/restart phases and two B04.2.2 module-edit/recent-use
@@ -37,7 +37,9 @@ load/replace/unload, scripts/crystals, discovery, copy and restart. Two variatio
 phases add 17 cases/55 states, 5,226 families, six linked recipients, native
 module/drone/implant controls and persistence, with eight more screens. Two ordering
 phases add nine cases/48 states, positional heat and four recipients, touch swaps,
-vacancies, recreation and restart, with seven more screens. Counts describe
+vacancies, recreation and restart, with seven more screens. B05.1 adds two
+bulk-ammunition phases for nine original selection/command cases and 41 states,
+four recipients, explicit scopes/skips, recreation and restart with six screens. Counts describe
 required gates; STATUS records which commit has actually passed them. Earlier
 counts above describe historical milestones, not permission to omit newer gates.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow

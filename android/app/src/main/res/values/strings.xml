@@ -4,7 +4,7 @@
     <string name="home_title">Your offline fits.</string>
     <string name="milestone">EARLY DEVELOPMENT</string>
     <string name="status_title">A saved fit library.</string>
-    <string name="status_body">Create ship and structure fits, edit modules and charges, and switch fitted module, drone and implant variations offline. Arrange modules within a rack and inspect desktop heat estimates. Bulk editing is still in development.</string>
+    <string name="status_body">Create ship and structure fits, edit modules and charges, and switch fitted module, drone and implant variations offline. Arrange racks, inspect desktop heat estimates, and change selected or similar modules’ ammunition together. Further bulk actions are still in development.</string>
     <string name="engine_loading">Preparing the bundled game data and calculating…</string>
     <string name="engine_failed">The fitting engine could not start.</string>
     <string name="sample_title">Vexor · all skills V</string>

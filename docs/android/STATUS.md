@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-24. **B04 delivered. Next: B05 — Bulk weapon/module editing.**
+Updated: 2026-09-24. **B04 delivered. Active: B05.1 — Bulk ammunition selection.**
 
 ## Current authorized work
 
@@ -30,9 +30,20 @@ Updated: 2026-09-24. **B04 delivered. Next: B05 — Bulk weapon/module editing.*
 - B04 covers discovery, hull creation, modules/legality/history, charges,
   variations and ordering/heat. Full parity is not established. B05 bulk, B06
   modes/subsystems, B07 cargo, B09 undo/redo and C09 heat options retain scope.
-- **Exact next task B05:** audit selection/fill/mixed-compatibility behaviors,
-  bound the task in a brief, then implement native bulk actions with independent
-  desktop, atomicity and persistence evidence. No current access or product decision blocks it.
+- **Selected B05.1** on `codex/b05-1-bulk-ammunition`, from delivered master
+  `d599ccb8523ecf9c75c0ac3963b6e53b8f1fe473`. [B05 audit and brief](tasks/B05-bulk-editing.md)
+  split the full scope into ammunition selection, states, clone/fill and
+  variation/removal. Implement explicit selection-only/all-similar scopes and
+  exact affected/skipped-module previews, preserving original asymmetric charge
+  compatibility, atomic graphs and recipients. No current access/product decision
+  blocks work. B05 remains incomplete until every child passes and merges.
+- B05.1 independent original handler/commands and fresh-process repeat pass
+  **nine cases/41 states/four recipients**. Six focused host tests pass, including
+  mixed selection, strict rejection, no-op ordering, failed-write recovery and
+  real restart. Both local APKs, lint, signature and 153-source/data/license/ABI
+  inspection pass. Native instrumentation and raw validators are implemented;
+  full 120-host/30-native checks and delivery remain pending. Candidate build 16
+  has not yet passed native execution.
 
 ## Forecast after B04 delivery
 
@@ -50,6 +61,12 @@ rack heat. Safe persistent phone use is **unknown until R02 signing/upgrade
 checks and phone/API compatibility are resolved**. No phone installation occurs.
 No decision/access needed now; whole-queue time remains unknown until later audits
 and device/upgrade gates resolve. Refresh this forecast after each milestone.
+
+B05.1 update: independent matrix/repeat, six focused host tests (29s), local
+APKs/lint (2m38s plus 27s runner rebuild) and packaging pass. Provisional remaining
+**2–5 hours**, moderate-to-low confidence until the first native workflow run.
+This includes full regression, CI, evidence review and delivery; the B05 parent
+estimate still depends on clone/fill verification.
 
 ## Resume and installed environment
 
