@@ -29,7 +29,14 @@ copy/restart and reject cross-hull choices rather than accept EOS fallback.
   record source/data/settings, raw values, units and justified tolerance.
 - [x] Add strict mode choice/edit protocol and graph persistence with atomic
   rejection and fresh-process host cases.
-- [ ] Expose touch selection and current/default state; verify native offline
+- [x] Expose touch selection and current/default state; verify native offline
   change, fit switch, copy and real process restart with reviewed screenshots.
-- [ ] Pass final-head Windows/reference and Android/native CI, inspect artifact
+- [x] Pass final-head Windows/reference and Android/native CI, inspect artifact
   provenance, review and merge the focused PR. Refresh status/forecast.
+
+B06.1 delivered in [PR #26](https://github.com/Sussic/Pyfa-android/pull/26),
+merge `7f08c3d8`, tested head `90688456`. [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275320)
+and [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275344)
+pass. The [receipt](../evidence/b06-1-native.json) retains provenance and limits;
+four mode screenshots were reviewed. Exact next child: B06.2 strategic-cruiser
+subsystems.

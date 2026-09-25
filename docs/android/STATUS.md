@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-25. **B05 delivered. Next: B06 — Hull-specific configuration.**
+Updated: 2026-09-25. **B06.1 delivered. Next: B06.2 — Strategic-cruiser subsystems.**
 
 ## Authorized work and latest delivery
 
@@ -84,19 +84,19 @@ prior report, then revealed the new test phase used ephemeral diagnostic storage
 The corrected final head passed without changing engine gates. ARM64 execution,
 older APIs, phone usability and safe upgrades remain unverified.
 
-## Forecast after B05.4 delivery
+## Forecast after B06.1 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
 | --- | --- | --- |
-| B06 hull configuration | Audit and split mode, subsystem and structure controls; preserve changing slots, bonuses and saved state with desktop/native checks. | **Unknown until the mode/subsystem/structure audit resolves scope**; low confidence. |
+| B06 hull configuration | B06.1 modes delivered; audit/implement B06.2 strategic-cruiser subsystems and B06.3 structure controls, each with independent desktop and native restart evidence. | **Unknown until the subsystem and structure audits resolve slot/bonus behavior**; low confidence. |
 | B07 cargo | Audit stack counts and equipment/ammunition transfer commands; implement values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
 | B08 fit notes | Audit desktop note editing; retain multiline/non-ASCII unsaved text across navigation and durable reopen. | **Unknown until the notes/navigation audit resolves scope**; low confidence. |
 
 Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
-Windows/Android runs; B05.4's final round took 22m24s/33m02s. Confidence is
-medium for one passing round and low for elapsed delivery because the first
-B05.4 native run found a keyboard navigation regression. Build **16 was the
-first meaningful development build**; build **19 (`0.1.0-b05.4`) is the latest
+Windows/Android runs; B06.1 took 23m57s/31m52s. Confidence is medium for one
+passing round and low for elapsed delivery because subsystem/structure scope
+is not yet audited. Build **16 was the first meaningful development build**;
+build **20 (`0.1.0-b06.1`) is the latest
 emulator-tested build**. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
 occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
@@ -134,7 +134,7 @@ preview grew; the final head collapses bulk controls for single edits and keeps
 Back beside the filter. **Exact next task B06 — Hull-specific configuration**:
 audit and split modes, strategic-cruiser subsystems and structure controls.
 
-## Selected B06.1 — Hull modes
+## B06.1 delivered — Hull modes
 
 B06 is split into [mode, subsystem and structure children](tasks/B06-hull-configuration.md)
 because the pinned desktop routes them through distinct EOS/command systems.
@@ -152,8 +152,16 @@ Four focused host checks pass for all 16 states, cross-hull/stale rejection,
 failed-save recovery, selected-mode copy/restart and older default-mode graphs.
 The mode bridge preserves the legacy implicit default while storing explicit
 changes. Local Kotlin/main+instrumented compilation, both debug APKs, lint and
-APK source/data/license/ARM64/x86_64 inspection pass; native offline execution,
-final-head CI, screenshot review and merge remain.
+APK source/data/license/ARM64/x86_64 inspection pass. PR
+[#26](https://github.com/Sussic/Pyfa-android/pull/26) merged as `7f08c3d8`,
+tested head `90688456`. [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275320)
+passed in 23m57s; [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275344)
+passed in 31m52s, including 16 independent states, five new/34 restored fits,
+four protocol guards, fresh offline restart and all inherited native gates.
+All four mode screenshots were reviewed. The [receipt](evidence/b06-1-native.json)
+and [raw report](evidence/b06-1-hull-modes-native.json) retain matching
+CI/merge tree, artifact provenance and limits. **Exact next task: B06.2 —
+Strategic-cruiser subsystems.**
 
 ## Resume, environment and architecture
 
