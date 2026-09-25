@@ -116,3 +116,30 @@ Build 16 is a development build. ARM64 execution, older APIs, user usability and
 safe upgrades remain unverified. B05 stays active: exact next task **B05.2 — Bulk
 module states**, followed by B05.3 clone/fill and B05.4 variation/removal. The
 parent's complete scope and B09 undo/redo requirement remain unchanged.
+
+## B05.2 selected scope and acceptance
+
+Selected on `codex/b05-2-bulk-module-states` from B05.1 delivery master
+`e5098cc1ff017819f07c9afbdc99e0eab2a378d8`. The desktop state-column click
+uses the clicked module as the reference; a click outside the selection affects
+only that module, while Alt targets all similar modules. Left cycles by the
+original local state map, right asks for overheat and Ctrl asks for offline.
+EOS `Module.getProposedState` clamps each target to a supported state, then
+fit-wide `checkStates` favors the reference module. The native workflow will
+expose reference, selected/all-similar scope and cycle/overheat/offline choices
+without relying on modifier keys. B06 retains subsystem controls.
+
+- [ ] Execute pinned original state command and fresh-process repeat over
+  mixed active/passive/overheat capabilities, restrictions, similar variants,
+  no-ops and linked recipients. Compare exact positions, states, inputs and
+  independent values with justified numeric tolerances.
+- [ ] Bridge rejects malformed/stale selections atomically, applies original
+  reference-first transitions and fit-wide fallback, saves once and preserves
+  charges, order, unrelated fits and recent use. Verify rejected durable writes
+  leave graph/revisions/recipients unchanged.
+- [ ] Native touch workflow shows supported requested outcomes and skips, handles
+  empty fits, recreation, fit switching, restart and all-similar modules outside
+  selection. Show actual saved states after fit-wide reconciliation.
+- [ ] Retain all existing host/native, type/unit, GC, performance, restart,
+  screenshot, APK/lint/signature/data/license/ABI gates; review and merge a
+  focused final-head PR with verified artifact provenance and status forecast.

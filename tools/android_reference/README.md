@@ -239,3 +239,16 @@ processes; Android code is never imported.
 
 Run with the existing reference Python:
 `python -I tools/android_reference/bulk_charges.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory> --check tools/android_reference/fixtures/bulk-charges.json`.
+
+### B05.2 bulk state reference
+
+`bulk_states.py` executes the pinned original
+`CalcChangeLocalModuleStatesCommand` and `getSimilarModPositions` with real
+Market/EOS/wx, followed by the original GUI recalc/fill boundary. Six synthetic
+cases/27 states cover active/passive/overheat fallback, selected versus similar
+scope, no-ops, charges retained and four linked recipients. The exporter verifies
+source/dataset identity, repeats in fresh processes and never imports Android
+policy. Its fixture is `fixtures/bulk-states.json`.
+
+Run with the existing reference Python:
+`python -I tools/android_reference/bulk_states.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory> --check tools/android_reference/fixtures/bulk-states.json`.

@@ -246,3 +246,12 @@ nine independent cases/41 states and four recipients, complete capability maps,
 mixed skips and similar variants, strict/stale rejection, no-op modification
 order, failed durable writes, independent copies and real process restoration.
 Required Windows CI includes this suite and the separate original reference.
+
+### B05.2 bulk state checks
+
+`python -I tools/android_headless/check_bulk_states.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory>`
+runs five focused tests with desktop imports/network forbidden. They compare all
+six original cases/27 states and four recipients, EOS click proposals and
+supported fallbacks, strict/stale rejection, no-op history, failed durable writes,
+independent copies and real process restoration. Required Windows CI includes
+this suite alongside the original desktop export.

@@ -103,6 +103,7 @@ def main():
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/variation-edits.json", tests / "variation-edits-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/rack-ordering.json", tests / "rack-ordering-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/bulk-charges.json", tests / "bulk-charges-expected.json")
+    shutil.copyfile(ROOT / "tools/android_reference/fixtures/bulk-states.json", tests / "bulk-states-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

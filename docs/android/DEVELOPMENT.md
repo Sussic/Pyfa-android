@@ -42,6 +42,12 @@ bulk-ammunition phases for nine original selection/command cases and 41 states,
 four recipients, explicit scopes/skips, recreation and restart with six screens. Counts describe
 required gates; STATUS records which commit has actually passed them. Earlier
 counts above describe historical milestones, not permission to omit newer gates.
+B05.2 extends the required final-head suite to **125 host tests** with five
+bulk-state checks and **32 native executions** with two offline state phases.
+The pinned original state command supplies six cases/27 states, four recipients
+and EOS-supported fallbacks; native phases retain touch selection/scope,
+recreation, actual saved outcomes, raw guards and process restart. These are
+requirements for candidate build 17, not a claim of passing CI before it runs.
 See [Windows setup](WINDOWS.md) for local builds and host verification; follow
 [STATUS](STATUS.md) for current evidence and the authorized next task.
 

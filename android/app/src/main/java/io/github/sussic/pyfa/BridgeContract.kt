@@ -42,6 +42,8 @@ sealed interface BridgeOperation {
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
     data class SetBulkCharges(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
         val scope: BulkScope, val chargeId: Int?) : BridgeOperation
+    data class SetBulkStates(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
+        val scope: BulkScope, val click: StateClick) : BridgeOperation
     data class ChangeVariation(val fitId: String, val context: VariationContext, val position: Int, val itemId: Int) : BridgeOperation
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
@@ -71,6 +73,7 @@ fun BridgeOperation.snapshotArguments(): BridgeOperation = when (this) {
     ))
     is BridgeOperation.SetCharges -> copy(moduleIndices = immutableList(moduleIndices))
     is BridgeOperation.SetModuleStates -> copy(moduleIndices = immutableList(moduleIndices))
+    is BridgeOperation.SetBulkStates -> copy(moduleIndices = immutableList(moduleIndices))
     else -> this
 }
 
@@ -271,6 +274,10 @@ object BridgeCodec {
             "main_position" to integer(operation.mainPosition, "main_position", 0),
             "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
             "charge_id" to operation.chargeId?.let { integer(it, "charge_id", 1) })
+        is BridgeOperation.SetBulkStates -> "set_bulk_states" to obj("fit_id" to operation.fitId,
+            "main_position" to integer(operation.mainPosition, "main_position", 0),
+            "module_indices" to indices(operation.moduleIndices), "scope" to operation.scope.name,
+            "click" to operation.click.wire)
         is BridgeOperation.SwapModules -> "swap_modules" to obj("fit_id" to operation.fitId,
             "from_position" to integer(operation.fromPosition, "from_position", 0),
             "to_position" to integer(operation.toPosition, "to_position", 0))
@@ -492,6 +499,55 @@ object BridgeCodec {
             }, "Identical module absent from similar scope")
         }
         return BulkChargeOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules), immutableList(items))
+    }
+
+    fun decodeBulkStateOptions(json: String): BulkStateOptions {
+        val value = objectValue(StrictJson(json).parse(), "states")
+        keys(value, setOf("version", "fit_id", "revision", "modules"), path = "states")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported state-options version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid state-options revision")
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "module")
+            keys(row, setOf("index", "item_id", "state", "editable", "similar_candidates", "click_states", "supported_states"), path = "module")
+            val position = integer(row.get("index"), "index", 0)
+            requireProtocol(position == index, "State module positions are not contiguous")
+            val item = nullable(row.get("item_id"))?.let { integer(it, "item_id", 1) }
+            fun state(raw: Any, label: String): ModuleState =
+                ModuleState.entries.find { it.name == nonempty(raw, label) } ?: fail("Invalid module state")
+            val current = nullable(row.get("state"))?.let { state(it, "state") }
+            requireProtocol((item == null) == (current == null), "Vacant slot has a state")
+            val editable = bool(row.get("editable"), "editable")
+            requireProtocol(item != null || !editable, "Vacant slot is editable")
+            val similar = array(row.get("similar_candidates"), "similar_candidates").map {
+                integer(it, "similar candidate", 0)
+            }
+            unique(similar, "similar candidates")
+            requireProtocol(similar == similar.sorted(), "Similar candidates are out of order")
+            requireProtocol(editable || similar.isEmpty(), "Unsupported slot has similar candidates")
+            requireProtocol(!editable || position in similar, "Reference missing from similar scope")
+            val clicks = objectValue(row.get("click_states"), "click_states")
+            keys(clicks, if (item == null) emptySet() else StateClick.entries.map { it.wire }.toSet(), path = "click_states")
+            val clickStates = if (item == null) emptyMap() else StateClick.entries.associateWith {
+                state(clicks.get(it.wire), "click state")
+            }
+            val supported = objectValue(row.get("supported_states"), "supported_states")
+            keys(supported, if (item == null) emptySet() else ModuleState.entries.map { it.name }.toSet(), path = "supported_states")
+            val supportedStates = if (item == null) emptyMap() else ModuleState.entries.associateWith { requested ->
+                state(supported.get(requested.name), "supported state").also { outcome ->
+                    requireProtocol(outcome.ordinal <= requested.ordinal, "State fallback exceeds requested state")
+                }
+            }
+            BulkModuleStates(position, item, current, editable, immutableList(similar), clickStates, supportedStates)
+        }
+        for (module in modules) {
+            requireProtocol(module.similarCandidates.all { modules.getOrNull(it)?.editable == true },
+                "Similar scope contains a vacant or missing module")
+            if (module.editable) requireProtocol(modules.filter { it.editable && it.itemId == module.itemId }.all {
+                it.index in module.similarCandidates
+            }, "Identical module absent from similar scope")
+        }
+        return BulkStateOptions(identifier(value.get("fit_id"), "fit_id"), revision, immutableList(modules))
     }
 
     private fun variationContext(raw: Any): VariationContext =
