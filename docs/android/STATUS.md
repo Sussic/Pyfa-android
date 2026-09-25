@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-25. **B06.1 delivered. Next: B06.2 — Strategic-cruiser subsystems.**
+Updated: 2026-09-25. **B06.2 delivered. Next: B06.3 — Structure-specific controls.**
 
 ## Authorized work and latest delivery
 
@@ -84,19 +84,21 @@ prior report, then revealed the new test phase used ephemeral diagnostic storage
 The corrected final head passed without changing engine gates. ARM64 execution,
 older APIs, phone usability and safe upgrades remain unverified.
 
-## Forecast after B06.1 delivery
+## Forecast after B06.2 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
 | --- | --- | --- |
-| B06 hull configuration | B06.1 modes delivered; audit/implement B06.2 strategic-cruiser subsystems and B06.3 structure controls, each with independent desktop and native restart evidence. | **Unknown until the subsystem and structure audits resolve slot/bonus behavior**; low confidence. |
+| B06 hull configuration | B06.1 modes and B06.2 subsystems delivered; audit/implement B06.3 structure service slots, restrictions and bonuses with independent desktop and native restart evidence. | **Unknown until the structure audit resolves scope**; low confidence. |
 | B07 cargo | Audit stack counts and equipment/ammunition transfer commands; implement values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
 | B08 fit notes | Audit desktop note editing; retain multiline/non-ASCII unsaved text across navigation and durable reopen. | **Unknown until the notes/navigation audit resolves scope**; low confidence. |
 
 Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
-Windows/Android runs; B06.1 took 23m57s/31m52s. Confidence is medium for one
-passing round and low for elapsed delivery because subsystem/structure scope
-is not yet audited. Build **16 was the first meaningful development build**;
-build **20 (`0.1.0-b06.1`) is the latest
+Windows/Android runs; B06.2 final-head runs took 25m49s/27m51s. Confidence is
+medium for one passing round and low for elapsed delivery because later audits
+remain. The initial B06.2 native run stopped after 7m38s when a new phase test
+entered the unphased smoke suite; its focused runner correction required a
+second CI round. Build **16 was the first meaningful development build**;
+build **21 (`0.1.0-b06.2`) is the latest
 emulator-tested build**. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
 occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
@@ -163,7 +165,7 @@ and [raw report](evidence/b06-1-hull-modes-native.json) retain matching
 CI/merge tree, artifact provenance and limits. **Exact next task: B06.2 —
 Strategic-cruiser subsystems.**
 
-## Selected B06.2 — Strategic-cruiser subsystems
+## B06.2 delivered — Strategic-cruiser subsystems
 
 Selected on `codex/b06-2-subsystems` from delivered master `c102ae09`.
 Deliver exact T3 cruiser subsystem choices, add/replace/remove, dynamic slot and
@@ -178,8 +180,16 @@ in fresh processes and enumerates 48 choices across four strategic cruisers.
 The focused host suite passes three cases, including all states, strict choice
 rejection, failed-save recovery and illegal charged-launcher copy/restart.
 Local main/test Kotlin compilation, debug/test APKs, lint and package inspection
-pass (158 bundled engine sources and both ABIs). Native execution, screenshot
-review, final-head CI and PR merge remain.
+pass (158 bundled engine sources and both ABIs). [PR #27](https://github.com/Sussic/Pyfa-android/pull/27)
+merged as `8e4b085e`, tested head `b1473e47`; the CI checkout and merge share
+tree `42b64f73`. [Windows/reference](https://github.com/Sussic/Pyfa-android/actions/runs/36127361579)
+passes in 25m49s and [Android/native](https://github.com/Sussic/Pyfa-android/actions/runs/36127361376)
+passes in 27m51s, including 14 matching native states, six protocol guards,
+three new/37 restored fits and offline copy/restart. All six new screenshots
+were reviewed; the invalid charged launcher and dynamic slot counts remain
+visible. [Receipt](evidence/b06-2-native.json) and [raw report](evidence/b06-2-subsystems-native.json)
+retain provenance and limits. **Exact next task: B06.3 — Structure-specific
+controls.**
 
 ## Resume, environment and architecture
 
@@ -188,8 +198,8 @@ Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
 Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
 Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
 No timed host suites alongside local Gradle. Native CI uses Ubuntu/KVM; local
-Windows builds alone do not establish Android execution. Preserve all 125 host/
-34 native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
+Windows builds alone do not establish Android execution. Preserve all inherited
+host/native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
 deliberate APK uploads only and no scheduled/release jobs.
 
 Kotlin/Compose + Chaquopy + serialized EOS remain A10. Follow [scope](SCOPE.md),

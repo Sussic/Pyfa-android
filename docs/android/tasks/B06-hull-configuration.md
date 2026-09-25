@@ -66,7 +66,16 @@ fabricating a legal state.
   strategic cruiser, with source/data/settings, raw values, slots and tolerances.
 - [x] Implement strict subsystem choices/edits, atomic rejection and durable
   graph replay; compare all original states and fresh-process copies on host.
-- [ ] Verify touch controls, dynamic slots, warnings and offline process restart
+- [x] Verify touch controls, dynamic slots, warnings and offline process restart
   in native instrumentation; inspect changed screenshots and package contents.
-- [ ] Pass final-head Windows/reference and Android/native gates; review and
+- [x] Pass final-head Windows/reference and Android/native gates; review and
   merge the focused PR, retain evidence and refresh status/forecast.
+
+[PR #27](https://github.com/Sussic/Pyfa-android/pull/27) merged as `8e4b085e`,
+tested head `b1473e47`; [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36127361579)
+passed in 25m49s and [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36127361376)
+passed in 27m51s. Fourteen native raw states, 48 choices, six protocol guards,
+three new/37 restored fits and real offline restart passed. All six new
+screenshots were reviewed. The [receipt](../evidence/b06-2-native.json) and
+[raw report](../evidence/b06-2-subsystems-native.json) retain artifact and
+matching CI/merge-tree provenance. Next child: B06.3 structure controls.
