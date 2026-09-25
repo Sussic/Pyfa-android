@@ -179,7 +179,7 @@ internal fun BulkStateEditor(model: BulkStateEditorModel, onBack: () -> Unit) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text("Reference requests ${requested.label()}")
             Text("${changed.size} modules request a change", modifier = Modifier.testTag("bulk-states-change-count"))
-            for (index in (model.selected + candidates).sorted()) {
+            for (index in options.modules.filter { it.editable }.map { it.index }) {
                 val row = options.modules[index]
                 val outcome = when {
                     index !in candidates -> "Skipped · outside scope"
