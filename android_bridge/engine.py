@@ -168,8 +168,20 @@ class HeadlessEngine:
         fit.calculateModifiedAttributes()
         # Desktop restriction re-enable deliberately retains over-hardpoint fits.
         # Saved/copy replay must preserve them; new fitting still checks them.
-        if any(not module.isEmpty and not module.fits(fit, hardpointLimit=not restore)
-               for module in fit.modules):
+        def valid_saved_module(module):
+            if module.isEmpty or module.fits(fit, hardpointLimit=not restore):
+                return True
+            # The original subsystem-removal command leaves equipped modules
+            # in place when their HIGH/MED/LOW slot disappears, with fits=False.
+            # Reopening our own durable graph must retain that visible warning.
+            # EOS still checks all non-slot restrictions, including hull type.
+            from eos.const import FittingSlot
+            return (restore and fit.ship.item.group.name == "Strategic Cruiser"
+                    and module.slot in (FittingSlot.HIGH, FittingSlot.MED, FittingSlot.LOW)
+                    and fit.getSlotsUsed(module.slot) > fit.getNumSlots(module.slot)
+                    and module._Module__fitRestrictions(fit, hardpointLimit=False))
+
+        if any(not valid_saved_module(module) for module in fit.modules):
             raise ValueError("Fit contains incompatible equipment")
         # EOS projection associations need unique fit IDs and the mapped reverse
         # relationships. This database is in memory; disk persistence is B02.

@@ -74,6 +74,7 @@ ARGUMENTS = {
     "remove_module": ("fit_id", "position"),
     "set_fit_restrictions": ("fit_id", "ignore"),
     "change_mode": ("fit_id", "item_id"),
+    "set_subsystem": ("fit_id", "kind", "item_id"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_charge": ("fit_id", "position", "charge_id"),
     "set_bulk_charges": ("fit_id", "main_position", "module_indices", "scope", "charge_id"),
@@ -261,6 +262,14 @@ class BridgeSession:
 
     def mode_options(self, fit_id):
         from .modes import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
+
+    def subsystem_options(self, fit_id):
+        from .subsystems import options
         self.engine._check_thread()
         if not self._available:
             raise RuntimeError("Restart the fitting engine")
@@ -466,8 +475,10 @@ class BridgeSession:
             _boolean(args["resolve_references"])
         if "ignore" in args:
             _boolean(args["ignore"])
-        if "item_id" in args:
+        if "item_id" in args and not (operation == "set_subsystem" and args["item_id"] is None):
             _integer(args["item_id"], 1, 2**31 - 1)
+        if operation == "set_subsystem":
+            _integer(args["kind"], 1, 2**31 - 1)
         if "charge_id" in args and args["charge_id"] is not None:
             _integer(args["charge_id"], 1, 2**31 - 1)
         if "position" in args:
@@ -614,7 +625,7 @@ class BridgeSession:
                 specs.pop(deleted)
             else:
                 used = self._apply(operation, args, fits)
-                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item"} and used:
+                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
@@ -720,6 +731,9 @@ class BridgeSession:
         if operation == "change_mode":
             from .modes import change
             return change(self.engine, fit, args["item_id"])
+        if operation == "set_subsystem":
+            from .subsystems import change
+            return change(self.engine, fit, args["kind"], args["item_id"])
         if operation == "set_charges":
             return self.engine.set_charges(fit, args["module_indices"], args["charge"])
         if operation == "set_module_charge":

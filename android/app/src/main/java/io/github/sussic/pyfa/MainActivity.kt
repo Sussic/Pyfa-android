@@ -66,7 +66,8 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[ChargeEditorModel::class.java], ViewModelProvider(this)[VariationEditorModel::class.java],
                 ViewModelProvider(this)[RackEditorModel::class.java], ViewModelProvider(this)[BulkChargeEditorModel::class.java],
                 ViewModelProvider(this)[BulkStateEditorModel::class.java],
-                ViewModelProvider(this)[ModeEditorModel::class.java])
+                ViewModelProvider(this)[ModeEditorModel::class.java],
+                ViewModelProvider(this)[SubsystemEditorModel::class.java])
         }
     }
 
@@ -77,7 +78,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -87,6 +88,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showBulk by rememberSaveable { mutableStateOf(false) }
     var showBulkStates by rememberSaveable { mutableStateOf(false) }
     var showModes by rememberSaveable { mutableStateOf(false) }
+    var showSubsystems by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showVariations = true
@@ -109,18 +111,20 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations || showRack || showBulk || showBulkStates || showModes) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations || showRack || showBulk || showBulkStates || showModes || showSubsystems) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showModes) {
+                        if (showSubsystems) {
+                            SubsystemEditor(subsystemModel, onBack = { showSubsystems = false })
+                        } else if (showModes) {
                             ModeEditor(modeModel, onBack = { showModes = false })
                         } else if (showBulkStates) {
                             BulkStateEditor(bulkStateModel, onBack = { showBulkStates = false })
@@ -151,7 +155,8 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             Home(libraryModel, onAbout = { showAbout = true },
                                 onEquipment = { moduleModel.replacePosition = null; showEquipment = true },
                                 onModules = { showModules = true }, onVariations = { variations(null) },
-                                onModes = { modeModel.open(); showModes = true })
+                                onModes = { modeModel.open(); showModes = true },
+                                onSubsystems = { subsystemModel.open(); showSubsystems = true })
                         }
                     }
                 }
@@ -161,7 +166,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -218,6 +223,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             Button(onClick = onModules, modifier = Modifier.testTag("modules-open")) { Text("Edit modules") }
             TextButton(onClick = onVariations, modifier = Modifier.testTag("variations-open")) { Text("Item variations") }
             TextButton(onClick = onModes, modifier = Modifier.testTag("modes-open")) { Text("Hull modes") }
+            TextButton(onClick = onSubsystems, modifier = Modifier.testTag("subsystems-open")) { Text("Strategic cruiser subsystems") }
             if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }

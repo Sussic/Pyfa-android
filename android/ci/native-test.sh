@@ -60,4 +60,5 @@ python3 ci/check-bulk-states.py
 python3 ci/check-clone-fill.py
 python3 ci/check-bulk-variation-removal.py
 python3 ci/check-hull-modes.py
+python3 ci/check-subsystems.py
 python3 ci/summarize-tests.py

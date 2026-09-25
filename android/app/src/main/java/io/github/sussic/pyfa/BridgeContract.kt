@@ -40,6 +40,7 @@ sealed interface BridgeOperation {
     data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class ChangeMode(val fitId: String, val itemId: Int) : BridgeOperation
+    data class SetSubsystem(val fitId: String, val kind: Int, val itemId: Int?) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
     data class SetBulkCharges(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
@@ -279,6 +280,11 @@ object BridgeCodec {
         is BridgeOperation.SetFitRestrictions -> "set_fit_restrictions" to obj("fit_id" to operation.fitId, "ignore" to operation.ignore)
         is BridgeOperation.ChangeMode -> "change_mode" to obj("fit_id" to operation.fitId,
             "item_id" to integer(operation.itemId, "item_id", 1))
+        is BridgeOperation.SetSubsystem -> {
+            requireProtocol(operation.kind in 125..128, "Unknown subsystem type")
+            "set_subsystem" to obj("fit_id" to operation.fitId, "kind" to operation.kind,
+                "item_id" to operation.itemId?.let { integer(it, "item_id", 1) })
+        }
         is BridgeOperation.CreateFit -> "create_fit" to obj("spec" to encodeFitSpec(operation.spec))
         is BridgeOperation.SetCharges -> "set_charges" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "charge" to operation.charge?.let { nonempty(it, "charge") })
@@ -658,6 +664,38 @@ object BridgeCodec {
         requireProtocol((choices.isEmpty() && current == null) ||
             (choices.isNotEmpty() && choices.any { it.id == current }), "Current mode is outside hull choices")
         return ModeOptions(nonempty(value.get("fit_id"), "fit_id"), revision, current, immutableList(choices))
+    }
+
+    fun decodeSubsystemOptions(json: String): SubsystemOptions {
+        val value = objectValue(StrictJson(json).parse(), "subsystems")
+        keys(value, setOf("version", "fit_id", "revision", "capacity", "groups"), path = "subsystems")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported subsystem version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid subsystem revision")
+        val capacity = integer(value.get("capacity"), "capacity", 0)
+        val names = mapOf(125 to "Core", 126 to "Defensive", 127 to "Offensive", 128 to "Propulsion")
+        val groups = array(value.get("groups"), "groups").map { entry ->
+            val row = objectValue(entry, "subsystem group")
+            keys(row, setOf("kind", "name", "current", "choices"), path = "subsystem group")
+            val kind = integer(row.get("kind"), "kind", 125, 128)
+            requireProtocol(nonempty(row.get("name"), "name") == names[kind], "Unknown subsystem group")
+            val choices = array(row.get("choices"), "choices").map { item ->
+                val choice = objectValue(item, "subsystem choice")
+                keys(choice, setOf("id", "name"), path = "subsystem choice")
+                SubsystemChoice(integer(choice.get("id"), "id", 1), nonempty(choice.get("name"), "name"))
+            }
+            requireProtocol(choices.isNotEmpty(), "Empty subsystem group")
+            unique(choices.map { it.id }, "subsystem choices")
+            val current = nullable(row.get("current"))?.let { integer(it, "current", 1) }
+            requireProtocol(current == null || choices.any { it.id == current }, "Current subsystem is outside choices")
+            SubsystemGroup(kind, names.getValue(kind), current, immutableList(choices))
+        }
+        requireProtocol(groups.isEmpty() || groups.map { it.kind } == listOf(125, 126, 127, 128),
+            "Missing or reordered subsystem groups")
+        requireProtocol((groups.isEmpty() && capacity == 0) ||
+            (groups.isNotEmpty() && capacity == groups.size), "Invalid subsystem capacity")
+        unique(groups.flatMap { group -> group.choices.map { it.id } }, "subsystem IDs")
+        return SubsystemOptions(nonempty(value.get("fit_id"), "fit_id"), revision, capacity, immutableList(groups))
     }
 
     fun decodeVariationOptions(json: String): VariationOptions {
