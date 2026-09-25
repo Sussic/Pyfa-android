@@ -89,8 +89,10 @@ from bulk_charge_summary import summarize as summarize_bulk_charges
 from bulk_state_summary import summarize as summarize_bulk_states
 from clone_fill_summary import summarize as summarize_clone_fill
 from bulk_variation_removal_summary import summarize as summarize_bulk_variation_removal
+from hull_mode_summary import summarize as summarize_hull_modes
 summary = {
-    "task": "B05.4",
+    "task": "B06.1",
+    "hull_modes": summarize_hull_modes(json.loads((evidence / "hull-modes-native.json").read_text(encoding="utf-8")), engine),
     "bulk_variation_removal": summarize_bulk_variation_removal(json.loads((evidence / "bulk-variation-removal-native.json").read_text(encoding="utf-8")), engine),
     "clone_fill": summarize_clone_fill(json.loads((evidence / "clone-fill-native.json").read_text(encoding="utf-8")), engine),
     "bulk_states": summarize_bulk_states(json.loads((evidence / "bulk-states-native.json").read_text(encoding="utf-8")), engine),

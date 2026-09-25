@@ -26,6 +26,7 @@ data class FitSpec(
     val security: Security,
     val modules: List<ModuleSpec>,
     val drones: List<DroneSpec>,
+    val modeId: Int? = null,
 )
 
 sealed interface BridgeOperation {
@@ -38,6 +39,7 @@ sealed interface BridgeOperation {
     data class ReplaceModule(val fitId: String, val position: Int, val itemId: Int) : BridgeOperation
     data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
+    data class ChangeMode(val fitId: String, val itemId: Int) : BridgeOperation
     data class SetCharges(val fitId: String, val moduleIndices: List<Int>, val charge: String?) : BridgeOperation
     data class SetModuleCharge(val fitId: String, val position: Int, val chargeId: Int?) : BridgeOperation
     data class SetBulkCharges(val fitId: String, val mainPosition: Int, val moduleIndices: List<Int>,
@@ -203,7 +205,8 @@ object BridgeCodec {
     /** A JSONObject has already lost duplicate-key information. Use String for untrusted JSON. */
     fun decodeFitSpec(value: JSONObject): FitSpec {
         keys(value, setOf("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
-            "modules", "drones", "target_profile", "implants", "boosters", "projections", "commands", "environments"), path = "spec")
+            "modules", "drones", "target_profile", "implants", "boosters", "projections", "commands", "environments"),
+            setOf("mode"), path = "spec")
         requireProtocol(value.get("target_profile") === JSONObject.NULL, "target_profile is unsupported")
         for (key in listOf("implants", "boosters", "projections", "commands", "environments")) {
             requireProtocol(array(value.get(key), "spec.$key").isEmpty(), "Initial $key are unsupported")
@@ -235,6 +238,7 @@ object BridgeCodec {
                 DroneSpec(nonempty(drone.get("name"), "drone.name"), amount,
                     integer(drone.get("active"), "drone.active", 0, amount))
             },
+            if (value.has("mode")) integer(value.get("mode"), "spec.mode", 1) else null,
         )
     }
 
@@ -252,6 +256,7 @@ object BridgeCodec {
             "target_profile" to null, "implants" to JSONArray(), "boosters" to JSONArray(),
             "projections" to JSONArray(), "commands" to JSONArray(), "environments" to JSONArray(),
         )
+        spec.modeId?.let { value.put("mode", integer(it, "spec.mode", 1)) }
         decodeFitSpec(value) // Keep construction and fixture decoding subject to the same shape checks.
         return value
     }
@@ -272,6 +277,8 @@ object BridgeCodec {
         is BridgeOperation.RemoveModule -> "remove_module" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0))
         is BridgeOperation.SetFitRestrictions -> "set_fit_restrictions" to obj("fit_id" to operation.fitId, "ignore" to operation.ignore)
+        is BridgeOperation.ChangeMode -> "change_mode" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1))
         is BridgeOperation.CreateFit -> "create_fit" to obj("spec" to encodeFitSpec(operation.spec))
         is BridgeOperation.SetCharges -> "set_charges" to obj("fit_id" to operation.fitId,
             "module_indices" to indices(operation.moduleIndices), "charge" to operation.charge?.let { nonempty(it, "charge") })
@@ -633,6 +640,24 @@ object BridgeCodec {
         }
         unique(rows.map { it.id }, "variation families")
         return immutableList(rows)
+    }
+
+    fun decodeModeOptions(json: String): ModeOptions {
+        val value = objectValue(StrictJson(json).parse(), "modes")
+        keys(value, setOf("version", "fit_id", "revision", "current", "choices"), path = "modes")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported mode version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid mode revision")
+        val choices = array(value.get("choices"), "choices").map { entry ->
+            val row = objectValue(entry, "mode")
+            keys(row, setOf("id", "name"), path = "mode")
+            HullModeChoice(integer(row.get("id"), "mode.id", 1), nonempty(row.get("name"), "mode.name"))
+        }
+        unique(choices.map { it.id }, "mode choices")
+        val current = nullable(value.get("current"))?.let { integer(it, "current", 1) }
+        requireProtocol((choices.isEmpty() && current == null) ||
+            (choices.isNotEmpty() && choices.any { it.id == current }), "Current mode is outside hull choices")
+        return ModeOptions(nonempty(value.get("fit_id"), "fit_id"), revision, current, immutableList(choices))
     }
 
     fun decodeVariationOptions(json: String): VariationOptions {

@@ -56,7 +56,10 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B05.2 | done | B05.1 | Bulk module states | Native multi-selection exposes original cycle/offline/overheat behavior and supported state fallbacks; recipients, restrictions and restart match desktop. |
 | B05.3 | done | B05.2 | Clone and fill modules | Clone selected modules and fill free slots from an item or fitted module; preserve inputs, stopping limits, legality and history with native persistence evidence. |
 | B05.4 | done | B05.3 | Bulk variations and removal | Selection-only/all-similar actions apply original family and removal rules; show affected/skipped modules and retain atomic graph/history/restart behavior. |
-| B06 | ready | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |
+| B06 | active | B04 | [Hull-specific configuration (parent)](tasks/B06-hull-configuration.md) | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. |
+| B06.1 | active | B04 | Hull modes | Expose exact available tactical/other ship modes, recalculate EOS bonuses and persist/reopen the chosen mode with native touch and independent desktop evidence. |
+| B06.2 | queued | B06.1 | Strategic-cruiser subsystems | Add/replace/remove subsystem choices; reconcile changed slots, fitting legality and hull bonuses with desktop/native restart evidence. |
+| B06.3 | queued | B06.2 | Structure-specific controls | Complete service-slot/restriction/bonus interactions and compare independent structure fixtures with native restart evidence. |
 | B07 | ready | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
 | B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | queued | B05 | Undo/redo for fit edits | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |

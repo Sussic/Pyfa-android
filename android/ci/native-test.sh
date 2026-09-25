@@ -39,7 +39,7 @@ adb shell getprop ro.build.version.sdk > build/evidence/device-api.txt
 cat "${ANDROID_HOME}/emulator/source.properties" > build/evidence/emulator-version.txt
 sdkmanager --list_installed > build/evidence/sdk-packages.txt
 timeout 8m ./gradlew --no-daemon --console=plain :app:connectedDebugAndroidTest \
-  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest,io.github.sussic.pyfa.FitLibraryTest,io.github.sussic.pyfa.LibraryNavigationTest,io.github.sussic.pyfa.EquipmentBrowserTest,io.github.sussic.pyfa.EmptyHullTest,io.github.sussic.pyfa.ModuleEditingTest,io.github.sussic.pyfa.ChargeEditingTest,io.github.sussic.pyfa.VariationEditingTest,io.github.sussic.pyfa.RackOrderingTest,io.github.sussic.pyfa.BulkChargesTest,io.github.sussic.pyfa.BulkStatesTest,io.github.sussic.pyfa.CloneFillTest,io.github.sussic.pyfa.BulkVariationRemovalTest
+  -Pandroid.testInstrumentationRunnerArguments.notClass=io.github.sussic.pyfa.PerformanceTest,io.github.sussic.pyfa.BridgeContractTest,io.github.sussic.pyfa.PersistenceTest,io.github.sussic.pyfa.FitLibraryTest,io.github.sussic.pyfa.LibraryNavigationTest,io.github.sussic.pyfa.EquipmentBrowserTest,io.github.sussic.pyfa.EmptyHullTest,io.github.sussic.pyfa.ModuleEditingTest,io.github.sussic.pyfa.ChargeEditingTest,io.github.sussic.pyfa.VariationEditingTest,io.github.sussic.pyfa.RackOrderingTest,io.github.sussic.pyfa.BulkChargesTest,io.github.sussic.pyfa.BulkStatesTest,io.github.sussic.pyfa.CloneFillTest,io.github.sussic.pyfa.BulkVariationRemovalTest,io.github.sussic.pyfa.HullModeTest
 collect_screenshots
 adb exec-out cat /sdcard/Download/pyfa-a07-engine.json > build/evidence/engine-native.json
 adb exec-out cat /sdcard/Download/pyfa-a08-projection.json > build/evidence/projection-native.json
@@ -59,4 +59,5 @@ python3 ci/check-bulk-charges.py
 python3 ci/check-bulk-states.py
 python3 ci/check-clone-fill.py
 python3 ci/check-bulk-variation-removal.py
+python3 ci/check-hull-modes.py
 python3 ci/summarize-tests.py

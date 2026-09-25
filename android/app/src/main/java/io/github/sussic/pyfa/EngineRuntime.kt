@@ -157,6 +157,18 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun modeOptions(context: Context, fitId: String): CompletableFuture<ModeOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeModeOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("mode_options", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
     fun variationFamiliesDiagnostics(context: Context, fitId: String): CompletableFuture<List<VariationFamily>> {
         check(BuildConfig.DEBUG)
         val ready = start(context)

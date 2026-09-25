@@ -114,6 +114,10 @@ def variation_options(fit_id):
     return encoded(_bridge.variation_options(fit_id))
 
 
+def mode_options(fit_id):
+    return encoded(_bridge.mode_options(fit_id))
+
+
 def rack_options(fit_id):
     return encoded(_bridge.rack_options(fit_id))
 

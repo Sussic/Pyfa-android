@@ -73,6 +73,7 @@ ARGUMENTS = {
     "replace_module": ("fit_id", "position", "item_id"),
     "remove_module": ("fit_id", "position"),
     "set_fit_restrictions": ("fit_id", "ignore"),
+    "change_mode": ("fit_id", "item_id"),
     "set_charges": ("fit_id", "module_indices", "charge"),
     "set_module_charge": ("fit_id", "position", "charge_id"),
     "set_bulk_charges": ("fit_id", "main_position", "module_indices", "scope", "charge_id"),
@@ -103,7 +104,9 @@ STATES = {"OFFLINE", "ONLINE", "ACTIVE", "OVERHEATED"}
 def _spec(spec):
     _object(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
                    "modules", "drones", "target_profile", "implants", "boosters", "projections",
-                   "commands", "environments"), ("ignore_restrictions",))
+                   "commands", "environments"), ("ignore_restrictions", "mode"))
+    if "mode" in spec:
+        _integer(spec["mode"], 1, 2**31 - 1)
     if "ignore_restrictions" in spec:
         _boolean(spec["ignore_restrictions"])
     for key in ("name", "ship"):
@@ -255,6 +258,14 @@ class BridgeSession:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
+
+    def mode_options(self, fit_id):
+        from .modes import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
 
     def charge_options(self, fit_id):
         from .charges import options
@@ -706,6 +717,9 @@ class BridgeSession:
             return fitting.remove(self.engine, fit, args["position"])
         if operation == "set_fit_restrictions":
             return fitting.restrictions(self.engine, fit, args["ignore"])
+        if operation == "change_mode":
+            from .modes import change
+            return change(self.engine, fit, args["item_id"])
         if operation == "set_charges":
             return self.engine.set_charges(fit, args["module_indices"], args["charge"])
         if operation == "set_module_charge":
@@ -774,6 +788,14 @@ class BridgeSession:
                                  "state": _module_state(module)}) for module in fit.modules]
             spec["drones"] = [{"name": drone.item.name, "amount": drone.amount, "active": drone.amountActive}
                               for drone in fit.drones]
+            # Older graphs contain no mode key and rely on EOS's hull default.
+            # Keep that representation while it still describes the same mode;
+            # persist an explicit choice whenever the selected mode differs.
+            if fit.mode is not None and ("mode" in spec or
+                    fit.mode.item.ID != fit.ship.modeItems[0].ID):
+                spec["mode"] = fit.mode.item.ID
+            else:
+                spec.pop("mode", None)
             if "ignore_restrictions" in spec or fit.ignoreRestrictions or any(module.isEmpty for module in fit.modules):
                 spec["ignore_restrictions"] = fit.ignoreRestrictions
             skills = {skill.item.name: skill.activeLevel for skill in fit.character.skills

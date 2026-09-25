@@ -134,6 +134,27 @@ preview grew; the final head collapses bulk controls for single edits and keeps
 Back beside the filter. **Exact next task B06 — Hull-specific configuration**:
 audit and split modes, strategic-cruiser subsystems and structure controls.
 
+## Selected B06.1 — Hull modes
+
+B06 is split into [mode, subsystem and structure children](tasks/B06-hull-configuration.md)
+because the pinned desktop routes them through distinct EOS/command systems.
+B06.1 starts on `codex/b06-1-hull-modes` from delivered master `5991fe99`.
+The pinned mode menu changes `fit.mode`, recalculates/fills and commits; EOS
+offers mode items for tactical destroyers and Anhinga. The bridge currently
+starts with the EOS default but omits mode from its declarative graph, so the
+selected outcome is strict hull-specific choice/edit, independent stats,
+touch access and durable offline copy/restart. B06.2 retains subsystem changes;
+B06.3 retains structure-specific controls. No decision or access block.
+
+The pinned original mode command repeats four hull cases/16 raw-value states
+in fresh processes, including Confessor, Jackdaw, Anhinga and no-mode Vexor.
+Four focused host checks pass for all 16 states, cross-hull/stale rejection,
+failed-save recovery, selected-mode copy/restart and older default-mode graphs.
+The mode bridge preserves the legacy implicit default while storing explicit
+changes. Local Kotlin/main+instrumented compilation, both debug APKs, lint and
+APK source/data/license/ARM64/x86_64 inspection pass; native offline execution,
+final-head CI, screenshot review and merge remain.
+
 ## Resume, environment and architecture
 
 Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
