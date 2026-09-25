@@ -135,6 +135,8 @@ class CloneFillTest {
         val before = library()
         val recentBefore = array(EngineRuntime.recent.value)
         val runtimeStart = diagnostics()
+        assertTrue(runtimeStart.getJSONObject("persistence").getBoolean("enabled"))
+        assertTrue(runtimeStart.getJSONObject("persistence").getBoolean("opened_existing"))
         val saved = File(context.noBackupFilesDir, "b053-test-expected.json")
         val checks = JSONArray()
         val rejections = JSONArray()
