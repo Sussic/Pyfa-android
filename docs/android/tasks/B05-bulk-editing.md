@@ -177,15 +177,56 @@ in one touch action. Preserve the original command's order, EOS legality,
 restriction override, charge/state inputs and market-history distinction.
 B05.4 retains variation and removal; B09 retains undo/redo.
 
-- [ ] Execute pinned original fill-add, fill-clone and single clone commands;
+- [x] Execute pinned original fill-add, fill-clone and single clone commands;
   repeat in a fresh process. Cover capacity, early EOS rejection, override,
   retained state/charge, no-op/recent history and linked recipients.
-- [ ] Verify one serialized, revision-bound bridge edit, strict selection and
+- [x] Verify one serialized, revision-bound bridge edit, strict selection and
   vacancy validation, deterministic selected-group mapping, atomic failure
   recovery, saved graph/revisions/history and independent values.
-- [ ] Verify touch previews/actions, empty and mixed racks, fit switch,
+- [x] Verify touch previews/actions, empty and mixed racks, fit switch,
   recreation and real offline process restart. Retain raw reports, decoder
   rejection checks and reviewed screenshots.
-- [ ] Retain all host/native reference, type/unit, GC, performance, restart,
+- [x] Retain all host/native reference, type/unit, GC, performance, restart,
   APK/lint/signature/data/license/ABI gates; review and merge a focused
   final-head PR with artifact provenance and updated status forecast.
+
+## B05.3 delivery
+
+Delivered in [PR #24](https://github.com/Sussic/Pyfa-android/pull/24), tested
+head `bd122061e55045136c549d7fbb0cb276132a6109`, merge
+`0bef5a67eaba0fa797973cef296b52b8f1588d0c`. Build 18 exposes market
+fill, fitted-source fill, chosen-vacancy clone and one-action selected-group
+cloning. Seven pinned original cases/17 states repeat in a fresh process; four
+focused host checks pass. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964569)
+passes all retained references and host gates. [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964629)
+passes 34 offline native executions, APK/lint/signature/data/license/ABI gates,
+touch actions and durable restart. All 69 screenshots were reviewed; 25 fits
+restore. The [receipt](../evidence/b05-3-native.json) and
+[raw report](../evidence/b05-3-clone-fill-native.json) retain provenance and
+synthetic evidence. The native test needed a Compose text-node assertion and
+persistent diagnostic phase; one unrelated ADB outage required a same-head
+native-only retry. No engine gate was weakened. ARM64 execution, older APIs,
+phone usability and safe upgrades remain unverified.
+
+Exact next task **B05.4 — Selected/similar variation and removal**; B09
+undo/redo remains later.
+
+## B05.4 selected scope and acceptance
+
+Selected after B05.3 delivery. Deliver selection-only and all-similar variation
+and removal for fitted modules with explicit target/skip previews. Preserve the
+pinned desktop variation-family filter, replacement reconciliation, removal
+ordering and recent-item history, with one atomic serialized edit. B06 retains
+subsystem and hull-mode controls; B09 retains undo/redo.
+
+- [ ] Execute pinned original selected/similar variation and removal commands
+  in independent cases and a fresh process, including mixed families, charge/
+  state reconciliation, skips, removal order, recent use and linked recipients.
+- [ ] Verify revision-bound exact target/skip previews, malformed/stale selection
+  rejection, one atomic graph save, failed-save rollback and independent values.
+- [ ] Verify native offline touch workflows, mixed/empty fits, selection across
+  recreation and fit switch, saved outcomes and real process restart. Retain raw
+  reports, decoder guards and reviewed screenshots.
+- [ ] Retain all host/native reference, type/unit, GC, performance, restart,
+  APK/lint/signature/data/license/ABI gates and merge a reviewed final-head PR
+  with evidence and refreshed forecast.

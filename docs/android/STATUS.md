@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-25. **B05.2 delivered. Next: B05.3 — Clone and fill modules.**
+Updated: 2026-09-25. **B05.3 delivered. Next: B05.4 — Variation and removal.**
 
 ## Authorized work and latest delivery
 
@@ -33,7 +33,7 @@ Updated: 2026-09-25. **B05.2 delivered. Next: B05.3 — Clone and fill modules.*
   artifact was retained and only the native job was rerun on a fresh runner.
   No production failure or weakened assertion was involved.
 - B04 was delivered in [PR #21](https://github.com/Sussic/Pyfa-android/pull/21).
-  B05 remains active through clone/fill and variation/removal. B09 retains all
+  B05 remains active through variation/removal. B09 retains all
   undo/redo work.
 
 ## B05.2 delivered — Bulk module states (F03.03)
@@ -61,37 +61,58 @@ ADB during transfer of an earlier empty-hull report; a same-head native-only
 retry passed with no gate weakened. ARM64 execution, older APIs, phone usability
 and safe upgrades remain unverified.
 
-## Selected B05.3 — Clone and fill modules
+## B05.3 delivered — Clone and fill modules (F03.04/F03.05)
 
-Selected on `codex/b05-3-clone-fill` from delivered master `266b682a`.
-Exact next task **B05.3 (F03.04 and cloning part of F03.05)**. Audit the pinned
-desktop fill-add, fill-clone and single-module clone commands for stopping,
-legality, override, retained state/charge and recent-item rules. Then deliver
-touch-accessible cloning of a selected group and filling vacancies from a market
-item or fitted module, with independent desktop/host comparisons, atomic saves,
-native offline persistence and all required final-head checks. B05.4
-variation/removal stays separate; do not start it before B05.3 delivery.
+[PR #24](https://github.com/Sussic/Pyfa-android/pull/24) merged as
+`0bef5a67eaba0fa797973cef296b52b8f1588d0c`, tested head
+`bd122061e55045136c549d7fbb0cb276132a6109`. Build 18 adds market and
+fitted-source fill, chosen-vacancy clone and selected-group clone. EOS determines
+stopping, legality and override; state/charge and the market-history distinction
+survive atomic offline saves. The pinned original commands pass seven cases/17
+states and a fresh-process repeat; four focused host tests pass.
 
-## Forecast after B05.2 delivery
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964569)
+passes all existing host/reference/migration gates in **19m02s**.
+[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964629)
+passes **34 offline native executions**, both APKs, lint, signature,
+source/data/license/ABI and real restart in **26m23s**. All **69 screenshots**
+were reviewed. The retained [receipt](evidence/b05-3-native.json) and
+[raw report](evidence/b05-3-clone-fill-native.json) record artifact digest,
+matching CI/merge tree, 14 validators, seven new protocol guards, ten rejected
+report corruptions and 25 restored fits. The first native run exposed a Compose
+test assertion on a parent Card; a later attempt lost ADB while transferring a
+prior report, then revealed the new test phase used ephemeral diagnostic storage.
+The corrected final head passed without changing engine gates. ARM64 execution,
+older APIs, phone usability and safe upgrades remain unverified.
+
+## Forecast after B05.3 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
 | --- | --- | --- |
-| B05 bulk editing | B05.3 clone/fill and B05.4 variation/removal, each with original-command comparisons, native touch/persistence and PR delivery. | **Unknown until the clone/fill stopping and override audit resolves behavior**; low confidence. B05.2's two CI rounds plus one transient native retry show that a failed gate can add a full round. |
+| B05 bulk editing | B05.4 selected/similar variation and removal, original-command comparisons, native touch/persistence and PR delivery. | **Roughly 2–5 hours if the audit confirms bounded command scope**, low confidence; otherwise unknown until its variation/removal audit resolves the difference. |
 | B06 hull configuration | Modes, subsystems, structure controls, changing slots/bonuses and persistence. | **Unknown until the mode/subsystem/structure audit resolves scope**; low confidence. |
 | B07 cargo | Stack counts and equipment/ammunition transfers, values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
 
-Allow roughly **25–35 minutes per full parallel CI round** from recent checks;
-this final round took 22m28s on Windows and 31m06s on Android. B05.2 took an
-extra round to fix the preview and one native-only retry for transient ADB
-report transfer; those are material delays, not a reduced gate. Build **16 was
-the first meaningful development build**; build **17 (`0.1.0-b05.2`) is the latest
-emulator-tested build**, adding bulk states to the library/hull/module/charge/
-variation/rack and bulk ammunition workflows. The local debug APK is
+Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
+Windows/Android runs; this final round took 19m02s/26m23s. Confidence is medium
+for one passing round and low for elapsed delivery because B05.3 required two
+test-harness corrections and one transient ADB retry. Build **16 was the first
+meaningful development build**; build **18 (`0.1.0-b05.3`) is the latest
+emulator-tested build**. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
 occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
 and phone/API compatibility are resolved**. No user decision or access is needed
 now; whole-queue elapsed time remains unknown until later audits and device/
 upgrade gates resolve. Refresh this forecast after each delivered milestone.
+
+## Selected B05.4 — Bulk variation and removal
+
+Selected after B05.3 merge `0bef5a67`. Audit the pinned desktop selection,
+variation-family filtering, replacement reconciliation, removal order and
+recent-item rules. Deliver touch-accessible selection-only and all-similar
+variation/removal with exact affected/skipped previews, one atomic serialized
+save, independent desktop/host comparisons, native offline restart and final-head
+CI. B09 keeps undo/redo; B06 keeps subsystem and hull-mode controls.
 
 ## Resume, environment and architecture
 
@@ -101,7 +122,7 @@ Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
 Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
 No timed host suites alongside local Gradle. Native CI uses Ubuntu/KVM; local
 Windows builds alone do not establish Android execution. Preserve all 125 host/
-32 native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
+34 native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
 deliberate APK uploads only and no scheduled/release jobs.
 
 Kotlin/Compose + Chaquopy + serialized EOS remain A10. Follow [scope](SCOPE.md),

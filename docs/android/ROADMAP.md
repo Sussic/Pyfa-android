@@ -54,8 +54,8 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B05 | active | B04 | [Bulk weapon/module editing (parent)](tasks/B05-bulk-editing.md) | B05.1–B05.4 complete; all selection/ammo/state/fill/clone/variation/removal requirements remain. |
 | B05.1 | done | B04 | Bulk ammunition selection | Selection-only and all-similar touch scopes expose exact targets/skips; original mixed-compatibility rules, atomic save/recovery and native restart pass. |
 | B05.2 | done | B05.1 | Bulk module states | Native multi-selection exposes original cycle/offline/overheat behavior and supported state fallbacks; recipients, restrictions and restart match desktop. |
-| B05.3 | ready | B05.2 | Clone and fill modules | Clone selected modules and fill free slots from an item or fitted module; preserve inputs, stopping limits, legality and history with native persistence evidence. |
-| B05.4 | queued | B05.3 | Bulk variations and removal | Selection-only/all-similar actions apply original family and removal rules; show affected/skipped modules and retain atomic graph/history/restart behavior. |
+| B05.3 | done | B05.2 | Clone and fill modules | Clone selected modules and fill free slots from an item or fitted module; preserve inputs, stopping limits, legality and history with native persistence evidence. |
+| B05.4 | ready | B05.3 | Bulk variations and removal | Selection-only/all-similar actions apply original family and removal rules; show affected/skipped modules and retain atomic graph/history/restart behavior. |
 | B06 | ready | B04 | Hull-specific configuration | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. Split further if A02 identifies distinct systems. |
 | B07 | ready | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
 | B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |

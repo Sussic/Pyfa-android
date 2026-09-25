@@ -1,0 +1,103 @@
+{
+  "delivery": {
+    "android_attempt": 1,
+    "android_conclusion": "success",
+    "android_run": 36098964629,
+    "android_seconds": 1583,
+    "artifact_bytes": 11955215,
+    "artifact_digest": "sha256:9b03d9e550f8f6c344d00a503300f290080a594efa2c717abc73f1245559bb13",
+    "artifact_id": 10848634768,
+    "base": "266b682acd7c062a72910a5905503e32637159d2",
+    "ci_checkout": "c0ee955f5a49eb0535be39f4c1e2f89827091adb",
+    "ci_checkout_parents": [
+      "266b682acd7c062a72910a5905503e32637159d2",
+      "bd122061e55045136c549d7fbb0cb276132a6109"
+    ],
+    "ci_tree": "8cf4021f0696d9876711b54d451bb20699e7e511",
+    "ci_tree_matches_merge": true,
+    "merge": "0bef5a67eaba0fa797973cef296b52b8f1588d0c",
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/24",
+    "tested_head": "bd122061e55045136c549d7fbb0cb276132a6109",
+    "windows_conclusion": "success",
+    "windows_run": 36098964569,
+    "windows_seconds": 1142
+  },
+  "desktop_reference": {
+    "cases": 7,
+    "fixture_sha256": "4a1a74bae8e537dc52e83ff6b9a779d9c607a56879a8cffd3ac9c4db50f78369",
+    "fresh_process_repeat": true,
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "states": 17
+  },
+  "host_focused_ci": {
+    "cases": 7,
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "desktop_import_attempts": [],
+    "fresh_process_restore": true,
+    "game_database_unchanged": true,
+    "network_attempts": [],
+    "states": 17,
+    "tests_passed": 4
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; ARM64 APK contents verified but ARM64 execution unverified.",
+    "Physical-device usability, older APIs and safe signing/install upgrades remain unverified.",
+    "B05.4 variation/removal and B09 undo/redo remain in scope."
+  ],
+  "native_raw": {
+    "corruptions_rejected": [
+      "same_pid",
+      "disabled_persistence",
+      "wrong_worker",
+      "missing_check",
+      "missing_codec_guard",
+      "wrong_rejection",
+      "lost_restored_fit",
+      "changed_recent",
+      "changed_clone_state",
+      "changed_recipient"
+    ],
+    "instrumentation_reports_passed": 29,
+    "junit_files_passed": 1,
+    "path": "b05-3-clone-fill-native.json",
+    "protocol_rejections": 7,
+    "raw_validators_passed": 14,
+    "screenshots_reviewed": 69,
+    "sha256": "5a7255317d682df8b4832cc65915ec6fed02c844c88e38a64839103a59661255"
+  },
+  "native_summary": {
+    "airplane_mode": true,
+    "apk_bytes": 70824507,
+    "apk_sha256": "d8f2364af61eacd5c946860abfade6cdad928b13456529a52f66002b03149f0a",
+    "app_internet_permission": false,
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false,
+    "checkout_sha": "c0ee955f5a49eb0535be39f4c1e2f89827091adb",
+    "clone_fill": {
+      "checks": {
+        "prepare": [
+          "selection_recreation",
+          "selected_positions_states_charges",
+          "targeted_vacancy",
+          "fitted_source_fill",
+          "market_touch_preview_stop_history",
+          "linked_recipient",
+          "atomic_rejections",
+          "typed_fill_preview"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      },
+      "new_fits": 5,
+      "protocol_rejections": 7,
+      "restored_fits": 25,
+      "screenshots": 8
+    },
+    "engine_packaged": true,
+    "fresh_install": true,
+    "task": "B05.3",
+    "workflow_run": "36098964629"
+  }
+}
