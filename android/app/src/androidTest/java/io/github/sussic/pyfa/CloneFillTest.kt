@@ -154,7 +154,7 @@ class CloneFillTest {
                     click("module-clone-select-0"); click("module-clone-select-1")
                     assertEquals(setOf(0, 1), editor.selectedForClone)
                     compose.onNodeWithTag("modules-clone-preview").performScrollTo()
-                        .assertTextContains("2 selected", substring = true)
+                    compose.onNodeWithText("2 selected", substring = true).assertIsDisplayed()
                     screenshot("selection")
                     compose.activityRule.scenario.recreate(); sync()
                     assertEquals(setOf(0, 1), editor.selectedForClone)

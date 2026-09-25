@@ -180,7 +180,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
                 Text((source.index + 1).toString() + " · " + source.name + " → vacancy " + (destination + 1))
             if (model.selectedForClone.isNotEmpty() && cloneTargets.size != model.selectedForClone.size)
                 Text("Not enough vacant slots in the selected racks.")
-            Text("EOS checks each clone in order. The whole action is rejected if any clone is illegal.",
+            Text("All selected clones must fit; otherwise no changes are saved.",
                 style = MaterialTheme.typography.bodySmall)
             Button(onClick = { model.submit(context,
                 BridgeOperation.CloneSelectedModules(fit.id, model.selectedForClone.sorted())) },
@@ -256,7 +256,7 @@ internal fun ModuleEditor(model: ModuleEditorModel, onBrowse: () -> Unit, onBack
         Card(Modifier.fillMaxWidth().testTag("module-virtual-" + vacancy.index)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(model.rack.label + " empty slot", style = MaterialTheme.typography.titleMedium)
-                Text("This vacancy is materialized when a fitting edit is saved.")
+                Text("Available for a clone from this rack.")
                 if (model.cloneSource?.let { details.modules.getOrNull(it)?.slot == vacancy.slot } == true)
                     TextButton(onClick = { model.submit(context, BridgeOperation.CloneModuleAt(
                         fit.id, checkNotNull(model.cloneSource), vacancy.index)) },
