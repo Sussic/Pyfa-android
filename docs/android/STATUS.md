@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-25. **B05.3 delivered. Next: B05.4 — Variation and removal.**
+Updated: 2026-09-25. **B05 delivered. Next: B06 — Hull-specific configuration.**
 
 ## Authorized work and latest delivery
 
@@ -33,8 +33,7 @@ Updated: 2026-09-25. **B05.3 delivered. Next: B05.4 — Variation and removal.**
   artifact was retained and only the native job was rerun on a fresh runner.
   No production failure or weakened assertion was involved.
 - B04 was delivered in [PR #21](https://github.com/Sussic/Pyfa-android/pull/21).
-  B05 remains active through variation/removal. B09 retains all
-  undo/redo work.
+  B05 is delivered through B05.4; B09 retains undo/redo work.
 
 ## B05.2 delivered — Bulk module states (F03.03)
 
@@ -85,19 +84,19 @@ prior report, then revealed the new test phase used ephemeral diagnostic storage
 The corrected final head passed without changing engine gates. ARM64 execution,
 older APIs, phone usability and safe upgrades remain unverified.
 
-## Forecast after B05.3 delivery
+## Forecast after B05.4 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
 | --- | --- | --- |
-| B05 bulk editing | B05.4 selected/similar variation and removal, original-command comparisons, native touch/persistence and PR delivery. | **Roughly 2–5 hours if the audit confirms bounded command scope**, low confidence; otherwise unknown until its variation/removal audit resolves the difference. |
-| B06 hull configuration | Modes, subsystems, structure controls, changing slots/bonuses and persistence. | **Unknown until the mode/subsystem/structure audit resolves scope**; low confidence. |
-| B07 cargo | Stack counts and equipment/ammunition transfers, values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
+| B06 hull configuration | Audit and split mode, subsystem and structure controls; preserve changing slots, bonuses and saved state with desktop/native checks. | **Unknown until the mode/subsystem/structure audit resolves scope**; low confidence. |
+| B07 cargo | Audit stack counts and equipment/ammunition transfer commands; implement values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
+| B08 fit notes | Audit desktop note editing; retain multiline/non-ASCII unsaved text across navigation and durable reopen. | **Unknown until the notes/navigation audit resolves scope**; low confidence. |
 
 Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
-Windows/Android runs; this final round took 19m02s/26m23s. Confidence is medium
-for one passing round and low for elapsed delivery because B05.3 required two
-test-harness corrections and one transient ADB retry. Build **16 was the first
-meaningful development build**; build **18 (`0.1.0-b05.3`) is the latest
+Windows/Android runs; B05.4's final round took 22m24s/33m02s. Confidence is
+medium for one passing round and low for elapsed delivery because the first
+B05.4 native run found a keyboard navigation regression. Build **16 was the
+first meaningful development build**; build **19 (`0.1.0-b05.4`) is the latest
 emulator-tested build**. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
 occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
@@ -105,7 +104,7 @@ and phone/API compatibility are resolved**. No user decision or access is needed
 now; whole-queue elapsed time remains unknown until later audits and device/
 upgrade gates resolve. Refresh this forecast after each delivered milestone.
 
-## Selected B05.4 — Bulk variation and removal
+## B05.4 delivered — Bulk variation and removal
 
 Selected after B05.3 merge `0bef5a67`. Audit the pinned desktop selection,
 variation-family filtering, replacement reconciliation, removal order and
@@ -120,11 +119,20 @@ variation family; the preview now uses pinned-family candidates from the bridge.
 Four focused host checks pass, including a forced later replacement rejection,
 failed-save recovery and process restart; the existing 17-case/5,226-family
 variation regression passes. Local debug/test APK assembly and lint pass.
-PR [#25](https://github.com/Sussic/Pyfa-android/pull/25) initial Windows CI
-passed. The initial Android run found an existing variation Back action obscured
-by the keyboard after the new preview grew; bulk controls now collapse for
-single edits, with Back beside the filter. Final-head native offline touch/
-restart, CI, review and merge remain.
+PR [#25](https://github.com/Sussic/Pyfa-android/pull/25) merged as
+`4da3b2a09b7a395c7633c0b809d54e00644b0a61`, tested head `e1d8d344`.
+[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925169)
+passed in 22m24s and [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925181)
+passed in 33m02s on the final head: all retained host/reference/migration and
+native type/unit/GC/performance/restart/APK/lint/signature/data/license/ABI
+gates, four new fits, 29 restored fits and nine new protocol guards. All eight
+B05.4 and seven affected B04 variation screenshots were reviewed. The retained
+[receipt](evidence/b05-4-native.json) and [raw report](evidence/b05-4-variation-removal-native.json)
+record offline touch/restart and matching CI/merge tree. The first Android run
+found an existing variation Back action obscured by the keyboard after the new
+preview grew; the final head collapses bulk controls for single edits and keeps
+Back beside the filter. **Exact next task B06 — Hull-specific configuration**:
+audit and split modes, strategic-cruiser subsystems and structure controls.
 
 ## Resume, environment and architecture
 

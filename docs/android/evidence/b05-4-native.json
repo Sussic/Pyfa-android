@@ -1,0 +1,65 @@
+{
+  "delivery": {
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/25",
+    "base": "0adeeb81bce0d8a2b513f385f209fe99b03da5d0",
+    "tested_head": "e1d8d344a1b7813794caf62377228cd5f17adc1a",
+    "merge": "4da3b2a09b7a395c7633c0b809d54e00644b0a61",
+    "ci_checkout": "23006a69de1b435b0d85ab8bf1f9ab0f4e12d19b",
+    "ci_checkout_parents": [
+      "0adeeb81bce0d8a2b513f385f209fe99b03da5d0",
+      "e1d8d344a1b7813794caf62377228cd5f17adc1a"
+    ],
+    "ci_tree": "3a6ecf0fb8ba5a057668b12cc23c0e59f1152fb2",
+    "ci_tree_matches_merge": true,
+    "windows_run": 36108925169,
+    "windows_conclusion": "success",
+    "windows_seconds": 1344,
+    "android_run": 36108925181,
+    "android_conclusion": "success",
+    "android_seconds": 1982,
+    "artifact_id": 10852882614,
+    "artifact_bytes": 13214065,
+    "artifact_digest": "sha256:a4b0667c56ae2c379abd2a12d2fb1a4f558a070a3a46004d2b85941a495fea08"
+  },
+  "desktop_reference": {
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "cases": 8,
+    "states": 17,
+    "fresh_process_repeat": true
+  },
+  "host_focused_ci": {
+    "tests_passed": 4,
+    "atomic_replacement_recovery": true,
+    "failed_durable_save_recovery": true,
+    "fresh_process_restore": true
+  },
+  "native_raw": {
+    "path": "b05-4-variation-removal-native.json",
+    "sha256": "edecc1ee0b10434c2ccddc4f884b7dae9f114f75ecfbc37b8e2ecf3ac6b22177",
+    "new_fits": 4,
+    "restored_fits": 29,
+    "protocol_rejections": 9,
+    "screenshots_reviewed_for_changed_flow": 15,
+    "fresh_process_restart": true
+  },
+  "native_summary": {
+    "task": "B05.4",
+    "checkout_sha": "23006a69de1b435b0d85ab8bf1f9ab0f4e12d19b",
+    "workflow_run": "36108925181",
+    "api": 36,
+    "abi": "x86_64",
+    "airplane_mode": true,
+    "fresh_install": true,
+    "app_internet_permission": false,
+    "apk_bytes": 70857527,
+    "apk_sha256": "52e47459f708b6b9cf233845f14a1203738fec61b8eb4c99786f9fc11184d455",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; no ARM64 or older-API runtime claim.",
+    "Physical-device usability and safe signing/install upgrades remain unverified.",
+    "B09 undo/redo remains a separate roadmap outcome."
+  ]
+}

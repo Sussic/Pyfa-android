@@ -18,7 +18,7 @@ the existing graph store, skill/settings pins and all prior gates remain.
 | B05.3 | F03.04 and cloning part of F03.05 | Clone into vacancies, clone selected modules in one action, fill from a market item or fitted clone; states/charges, stopping/legality/history rules. |
 | B05.4 | Variation/removal part of F03.05 | Complete selected or similar module operations, matching variation-family filtering, rejected replacements and removal/history order. |
 
-B05 remains active until all four are delivered. F03.06–F03.07 undo/redo remain
+B05 is delivered through all four children. F03.06–F03.07 undo/redo remain
 B09 and must encompass these actions as one user action later. Hull modes and
 subsystems remain B06, cargo B07, additional heat/reload/spool options C09,
 mutation UI C10 and persistent interaction preferences I06.02. These boundaries
@@ -222,12 +222,12 @@ subsystem and hull-mode controls; B09 retains undo/redo.
 - [x] Execute pinned original selected/similar variation and removal commands
   in independent cases and a fresh process, including mixed families, charge/
   state reconciliation, skips, removal order, recent use and linked recipients.
-- [ ] Verify revision-bound exact target/skip previews, malformed/stale selection
+- [x] Verify revision-bound exact target/skip previews, malformed/stale selection
   rejection, one atomic graph save, failed-save rollback and independent values.
-- [ ] Verify native offline touch workflows, mixed/empty fits, selection across
+- [x] Verify native offline touch workflows, mixed/empty fits, selection across
   recreation and fit switch, saved outcomes and real process restart. Retain raw
   reports, decoder guards and reviewed screenshots.
-- [ ] Retain all host/native reference, type/unit, GC, performance, restart,
+- [x] Retain all host/native reference, type/unit, GC, performance, restart,
   APK/lint/signature/data/license/ABI gates and merge a reviewed final-head PR
   with evidence and refreshed forecast.
 
@@ -246,4 +246,17 @@ instrumented APK assembly plus lint pass. Initial Windows CI passed in 17m47s.
 The initial Android run reached the existing single-item variation test, where
 the expanded bulk preview left Back outside the visible keyboard viewport.
 Bulk controls now expand on request or multi-selection, and a Back action stays
-beside the filter. Final-head native execution and CI remain pending.
+beside the filter. The reviewed final-head [PR #25](https://github.com/Sussic/Pyfa-android/pull/25)
+merged as `4da3b2a09b7a395c7633c0b809d54e00644b0a61`, tested head
+`e1d8d344a1b7813794caf62377228cd5f17adc1a`. [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925169)
+passes in 22m24s; [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925181)
+passes in 33m02s with four new fits, 29 restored fits, nine protocol guards,
+both APKs, lint, signature, source/data/license/ABI checks and real offline
+restart. The [receipt](../evidence/b05-4-native.json) and
+[raw report](../evidence/b05-4-variation-removal-native.json) preserve provenance
+and synthetic evidence. All eight B05.4 and seven affected B04 variation screens
+were visually reviewed. CI checkout and merge have the same tree. ARM64 runtime,
+older APIs, physical-phone usability and safe upgrades remain unverified.
+
+Exact next task **B06 — Hull-specific configuration**; split modes, subsystems
+and structure controls into bounded children after the desktop audit.
