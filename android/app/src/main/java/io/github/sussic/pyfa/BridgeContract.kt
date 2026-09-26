@@ -38,6 +38,9 @@ sealed interface BridgeOperation {
     data class AddModule(val fitId: String, val itemId: Int) : BridgeOperation
     data class ReplaceModule(val fitId: String, val position: Int, val itemId: Int) : BridgeOperation
     data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
+    data class AddCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
+    data class SetCargoQuantity(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
+    data class RemoveCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class ChangeMode(val fitId: String, val itemId: Int) : BridgeOperation
     data class SetSubsystem(val fitId: String, val kind: Int, val itemId: Int?) : BridgeOperation
@@ -277,6 +280,15 @@ object BridgeCodec {
             "position" to integer(operation.position, "position", 0), "item_id" to integer(operation.itemId, "item_id", 1))
         is BridgeOperation.RemoveModule -> "remove_module" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0))
+        is BridgeOperation.AddCargo -> "add_cargo" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1),
+            "quantity" to operation.quantity.also { requireProtocol(it > 0, "Cargo quantity must be positive") })
+        is BridgeOperation.SetCargoQuantity -> "set_cargo_quantity" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1),
+            "quantity" to operation.quantity.also { requireProtocol(it > 0, "Cargo quantity must be positive") })
+        is BridgeOperation.RemoveCargo -> "remove_cargo" to obj("fit_id" to operation.fitId,
+            "item_id" to integer(operation.itemId, "item_id", 1),
+            "quantity" to operation.quantity.also { requireProtocol(it > 0, "Cargo quantity must be positive") })
         is BridgeOperation.SetFitRestrictions -> "set_fit_restrictions" to obj("fit_id" to operation.fitId, "ignore" to operation.ignore)
         is BridgeOperation.ChangeMode -> "change_mode" to obj("fit_id" to operation.fitId,
             "item_id" to integer(operation.itemId, "item_id", 1))
@@ -718,6 +730,32 @@ object BridgeCodec {
             "Non-structure hull cannot have service choices")
         return StructureServiceOptions(nonempty(value.get("fit_id"), "fit_id"), revision,
             isStructure, capacity, immutableList(choices))
+    }
+
+    fun decodeCargoDetails(json: String): CargoDetails {
+        val value = objectValue(StrictJson(json).parse(), "cargo")
+        keys(value, setOf("version", "fit_id", "revision", "is_structure", "capacity_m3", "used_m3", "over_capacity", "cargo"),
+            path = "cargo")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported cargo version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid cargo revision")
+        val capacity = number(value.get("capacity_m3"), "capacity_m3")
+        val used = number(value.get("used_m3"), "used_m3")
+        requireProtocol(capacity >= 0 && used >= 0, "Negative cargo volume")
+        val over = bool(value.get("over_capacity"), "over_capacity")
+        requireProtocol(over == (used > capacity), "Cargo over-capacity state disagrees with volume")
+        val stacks = array(value.get("cargo"), "cargo").map { entry ->
+            val row = objectValue(entry, "cargo stack")
+            keys(row, setOf("id", "name", "amount", "unit_volume_m3"), path = "cargo stack")
+            val amount = long(row.get("amount"), "amount")
+            requireProtocol(amount > 0, "Cargo amount must be positive")
+            val volume = number(row.get("unit_volume_m3"), "unit_volume_m3")
+            requireProtocol(volume >= 0, "Negative cargo item volume")
+            CargoStack(integer(row.get("id"), "id", 1), nonempty(row.get("name"), "name"), amount, volume)
+        }
+        unique(stacks.map { it.id }, "cargo stack IDs")
+        return CargoDetails(identifier(value.get("fit_id"), "fit_id"), revision,
+            bool(value.get("is_structure"), "is_structure"), capacity, used, over, immutableList(stacks))
     }
 
     fun decodeVariationOptions(json: String): VariationOptions {

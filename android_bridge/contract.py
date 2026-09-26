@@ -72,6 +72,9 @@ ARGUMENTS = {
     "add_module": ("fit_id", "item_id"),
     "replace_module": ("fit_id", "position", "item_id"),
     "remove_module": ("fit_id", "position"),
+    "add_cargo": ("fit_id", "item_id", "quantity"),
+    "set_cargo_quantity": ("fit_id", "item_id", "quantity"),
+    "remove_cargo": ("fit_id", "item_id", "quantity"),
     "set_fit_restrictions": ("fit_id", "ignore"),
     "change_mode": ("fit_id", "item_id"),
     "set_subsystem": ("fit_id", "kind", "item_id"),
@@ -105,7 +108,7 @@ STATES = {"OFFLINE", "ONLINE", "ACTIVE", "OVERHEATED"}
 def _spec(spec):
     _object(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
                    "modules", "drones", "target_profile", "implants", "boosters", "projections",
-                   "commands", "environments"), ("ignore_restrictions", "mode"))
+                   "commands", "environments"), ("ignore_restrictions", "mode", "cargo"))
     if "mode" in spec:
         _integer(spec["mode"], 1, 2**31 - 1)
     if "ignore_restrictions" in spec:
@@ -145,6 +148,17 @@ def _spec(spec):
         _text(drone["name"])
         _integer(drone["amount"], 1, 2**31 - 1)
         _integer(drone["active"], 0, drone["amount"])
+    if "cargo" in spec:
+        if type(spec["cargo"]) is not list:
+            _invalid()
+        names = set()
+        for row in spec["cargo"]:
+            _object(row, ("name", "amount"))
+            _text(row["name"])
+            _integer(row["amount"], 1, 2**63 - 1)
+            if row["name"] in names:
+                _invalid("Duplicate cargo stack")
+            names.add(row["name"])
 
 
 class BridgeSession:
@@ -254,6 +268,14 @@ class BridgeSession:
 
     def fitting_details(self, fit_id):
         from .fitting import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
+    def cargo_details(self, fit_id):
+        from .cargo import details
         self.engine._check_thread()
         if not self._available:
             raise RuntimeError("Restart the fitting engine")
@@ -485,6 +507,8 @@ class BridgeSession:
             _boolean(args["ignore"])
         if "item_id" in args and not (operation == "set_subsystem" and args["item_id"] is None):
             _integer(args["item_id"], 1, 2**31 - 1)
+        if "quantity" in args:
+            _integer(args["quantity"], 1, 2**63 - 1)
         if operation == "set_subsystem":
             _integer(args["kind"], 1, 2**31 - 1)
         if "charge_id" in args and args["charge_id"] is not None:
@@ -633,7 +657,7 @@ class BridgeSession:
                 specs.pop(deleted)
             else:
                 used = self._apply(operation, args, fits)
-                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem"} and used:
+                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem", "add_cargo", "remove_cargo"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
@@ -734,6 +758,11 @@ class BridgeSession:
             return fitting.replace(self.engine, fit, args["position"], args["item_id"])
         if operation == "remove_module":
             return fitting.remove(self.engine, fit, args["position"])
+        if operation in ("add_cargo", "set_cargo_quantity", "remove_cargo"):
+            from .cargo import change
+            action = {"add_cargo": "add", "set_cargo_quantity": "set",
+                      "remove_cargo": "remove"}[operation]
+            return change(self.engine, fit, action, args["item_id"], args["quantity"])
         if operation == "set_fit_restrictions":
             return fitting.restrictions(self.engine, fit, args["ignore"])
         if operation == "change_mode":
@@ -810,6 +839,8 @@ class BridgeSession:
                                  "state": _module_state(module)}) for module in fit.modules]
             spec["drones"] = [{"name": drone.item.name, "amount": drone.amount, "active": drone.amountActive}
                               for drone in fit.drones]
+            if "cargo" in spec or fit.cargo:
+                spec["cargo"] = [{"name": cargo.item.name, "amount": cargo.amount} for cargo in fit.cargo]
             # Older graphs contain no mode key and rely on EOS's hull default.
             # Keep that representation while it still describes the same mode;
             # persist an explicit choice whenever the selected mode differs.

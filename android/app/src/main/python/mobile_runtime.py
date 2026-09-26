@@ -90,6 +90,10 @@ def fitting_details(fit_id):
     return encoded(_bridge.fitting_details(fit_id))
 
 
+def cargo_details(fit_id):
+    return encoded(_bridge.cargo_details(fit_id))
+
+
 def charge_options(fit_id):
     return encoded(_bridge.charge_options(fit_id))
 

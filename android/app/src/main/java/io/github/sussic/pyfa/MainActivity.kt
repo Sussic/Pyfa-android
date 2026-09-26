@@ -68,7 +68,8 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[BulkStateEditorModel::class.java],
                 ViewModelProvider(this)[ModeEditorModel::class.java],
                 ViewModelProvider(this)[SubsystemEditorModel::class.java],
-                ViewModelProvider(this)[StructureServiceEditorModel::class.java])
+                ViewModelProvider(this)[StructureServiceEditorModel::class.java],
+                ViewModelProvider(this)[CargoEditorModel::class.java])
         }
     }
 
@@ -79,7 +80,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -91,6 +92,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showModes by rememberSaveable { mutableStateOf(false) }
     var showSubsystems by rememberSaveable { mutableStateOf(false) }
     var showServices by rememberSaveable { mutableStateOf(false) }
+    var showCargo by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showVariations = true
@@ -113,18 +115,26 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations || showRack || showBulk || showBulkStates || showModes || showSubsystems || showServices) 8.dp else 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(if (showEquipment || showModules || showCharges || showVariations || showRack || showBulk || showBulkStates || showModes || showSubsystems || showServices || showCargo) 8.dp else 24.dp),
                     ) {
                         Text(
                             stringResource(R.string.brand),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showServices) {
+                        if (showEquipment) {
+                            EquipmentBrowser(equipmentModel, moduleModel, cargoModel, onBack = { showEquipment = false },
+                                onViewFit = { showEquipment = false; showCargo = false; showModules = true },
+                                onCharges = { showEquipment = false; showCargo = false; charges(null) }, onCargo = {
+                                    showEquipment = false; showCargo = true
+                                })
+                        } else if (showCargo) {
+                            CargoEditor(cargoModel, onBrowse = { showEquipment = true }, onBack = { showCargo = false })
+                        } else if (showServices) {
                             StructureServiceEditor(structureModel, onBack = { showServices = false })
                         } else if (showSubsystems) {
                             SubsystemEditor(subsystemModel, onBack = { showSubsystems = false })
@@ -140,9 +150,6 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             VariationEditor(variationModel, onBack = { showVariations = false })
                         } else if (showCharges) {
                             ChargeEditor(chargeModel, onBack = { showCharges = false })
-                        } else if (showEquipment) {
-                            EquipmentBrowser(equipmentModel, moduleModel, onBack = { showEquipment = false },
-                                onViewFit = { showEquipment = false; showModules = true }, onCharges = { charges(null) })
                         } else if (showModules) {
                             ModuleEditor(moduleModel, onBrowse = { showEquipment = true }, onBack = { showModules = false },
                                 onCharges = { charges(it) }, onVariations = { variations(it) }, onBulk = {
@@ -161,7 +168,8 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                                 onModules = { showModules = true }, onVariations = { variations(null) },
                                 onModes = { modeModel.open(); showModes = true },
                                 onSubsystems = { subsystemModel.open(); showSubsystems = true },
-                                onServices = { structureModel.open(); showServices = true })
+                                onServices = { structureModel.open(); showServices = true },
+                                onCargo = { cargoModel.open(); showCargo = true })
                         }
                     }
                 }
@@ -171,7 +179,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -230,6 +238,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             TextButton(onClick = onModes, modifier = Modifier.testTag("modes-open")) { Text("Hull modes") }
             TextButton(onClick = onSubsystems, modifier = Modifier.testTag("subsystems-open")) { Text("Strategic cruiser subsystems") }
             TextButton(onClick = onServices, modifier = Modifier.testTag("services-open")) { Text("Structure services") }
+            TextButton(onClick = onCargo, modifier = Modifier.testTag("cargo-open")) { Text("Cargo") }
             if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }

@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-26. **B06 delivered through B06.3. Next: B07 — Cargo management.**
+Updated: 2026-09-26. **B06 delivered. B07 cargo management selected.**
 
 ## Authorized work and latest delivery
 
@@ -218,6 +218,48 @@ limits. Review corrected the full-slot Add label and asserted its disabled
 state in native CI, requiring a second CI round. B09 retains undo/redo and
 D04 retains structure system-security choices. **Exact next task: B07 — Cargo
 management.** No decision or access is needed.
+
+## Selected B07 — Cargo management
+
+Selected on `codex/b07-1-cargo-stacks` from delivered master `8388f236`; no open PR.
+Audit the pinned desktop cargo stack/quantity, ammunition preset, fill-capacity,
+fitted-module transfer and variation commands (F04.01–F04.05). Split the broad
+milestone into coherent reviewable children after mapping their command and
+storage boundaries. The outcome is touch-accessible cargo editing with original
+EOS quantities/volume/legality and durable offline copy/restart; preserve
+serialized EOS, atomic saves, native package and inherited host/native gates.
+B09 owns undo/redo, including cargo actions. The desktop audit separates B07.1
+saved cargo stacks/quantity/volume, B07.2 ammunition presets/fill/variations,
+and B07.3 fitted module/charge transfers. B07.1 is active: add cargo to the
+declarative fit graph without changing existing graph replay, then deliver
+desktop-matched stack edits and touch/offline copy/restart evidence. No decision
+or access is needed.
+
+The pinned original cargo add/change/remove commands now repeat two hull cases
+and 17 raw-value states in fresh processes, fixture SHA `1e0de393`. Vexor
+stacks merge by item, partial/full removal updates EOS used volume, and the
+desktop accepts 500 m³ of cargo in a 480 m³ hull. Astrahus accepts charge cargo
+despite reporting zero cargo capacity. Three focused host tests pass all states,
+atomic rejection, legacy graph compatibility, failed-save recovery, copy and
+fresh-process restart without desktop/network imports. A typed cargo query and
+touch stack editor use the existing serialized EOS/store boundary. Local Kotlin
+and instrumented-test compilation, debug/test APKs, lint and package inspection
+pass with 160 sources and ARM64/x86_64 contents. PR #29 corrects equipment-to-charge
+navigation found by inherited native CI. Review then strengthened the cargo touch
+request and full-stack restart assertions; corrected native-test compilation
+passes. Native execution, screenshot review, final-head CI and PR merge remain.
+B07.2 explicitly retains multi-selected quantity/removal, including zero-to-remove;
+F04.01 remains partially covered until that child completes.
+Review head `47730b9e` passed Windows/reference CI (27m13s), but native restart
+found the test's JSON serialization changed an integral decimal's numeric kind.
+The test now retains explicit numeric kinds through the existing typed wrapper;
+no type gate is removed. Six failed-run screenshots were reviewed and quantity
+actions now dismiss the keyboard and use numeric input. Corrected final CI remains.
+Head `78e06c26` passes Windows/reference (25m18s) and all native instrumented
+phases; a validator-only failure then exposed native nulls being compared through
+the desktop absent-value mapping. Corrected exact native comparison passes both
+retained phases locally: 17 states, three new/47 restored fits, six protocol guards
+and twelve rejected report corruptions. A final CI round remains before merge.
 
 ## Resume, environment and architecture
 
