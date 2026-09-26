@@ -82,7 +82,7 @@ row or remove UI, persistence or matrix requirements. All 239 rows are preserved
 
 | ID | Observable behavior / acceptance target | Owner | Sources | Checks | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| F04.01 | Add/remove cargo stacks and change selected quantities; calculate used volume including container behavior. | B07 | [s051][s051], [s087][s087], [s146][s146] | NUP | D: —; A: — |
+| F04.01 | Add/remove cargo stacks and change selected quantities; calculate used volume including container behavior. | B07 | [s051][s051], [s087][s087], [s146][s146] | NUP | D: [two cases/17 states](../../tools/android_reference/fixtures/cargo-stacks.json); A: [B07.1 cargo touch/copy/restart](evidence/b07-1-native.json). Partial: selected quantity/removal remains B07.2; undo/redo B09. |
 | F04.02 | Add an item's ammunition to cargo with desktop quantity presets, including the crystal exception. | B07 | [s064][s064], [s063][s063] | NUP | D: —; A: — |
 | F04.03 | Fill remaining cargo capacity with a chosen item; handle insufficient capacity and partial stack boundaries. | B07 | [s065][s065] | NUP | D: —; A: — |
 | F04.04 | Move fitted modules to cargo and fit modules from cargo, preserving supported charge/state semantics and undo. | B07 | [s210][s210], [s209][s209] | NUP | D: —; A: — |

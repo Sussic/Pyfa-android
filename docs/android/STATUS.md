@@ -1,265 +1,79 @@
 # Android project status
 
-Updated: 2026-09-26. **B06 delivered. B07 cargo management selected.**
+Updated: 2026-09-27. **B07.1 delivered. Exact next task: B07.2.**
 
-## Authorized work and latest delivery
+## Authorized queue
 
-- Explicit chat confirmation authorizes sequential eligible approved roadmap
-  tasks, one outcome at a time through review/checks/PR merge, then automatic
-  continuation. No releases, phone installs, billing changes, unrelated work or
-  delegation. The goal remains active; no decision or access blocks the next task.
-- **B05.1 delivered** in [PR #22](https://github.com/Sussic/Pyfa-android/pull/22), merge
-  `18de3c72eea047aaa0f94ec4a809e34b79665b6d`, tested head `b031c985be5acfcf79e3b06c45079b0ea11564a0`.
-  Select modules/reference and change ammunition with explicit selection-only or
-  all-similar scopes. Exact target/skipped previews retain desktop asymmetric
-  compatibility and related-variant grouping. EOS, serialized work, atomic saves,
-  recipient updates and recent-item history remain unchanged.
-- [Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/35944859296)
-  passes **120 host tests**, independent references/repeats and migration in
-  **18m22s**. Local full validation passes **26 gates** in **29m47s**.
-  Nine independent desktop cases cover **41 states/four recipients**; six focused
-  host tests pass, including rejection, no-op history, failed saves and real restart.
-- [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/35944859268)
-  passes **30 offline native executions**, both APKs, lint, signature and
-  153-source/data/license/ABI inspection in **24m45s**. All **18 saved fits**
-  restore. All **56 screenshots** reviewed; artifact digest/CI tree, twelve raw
-  validators, thirteen native-summary and ten numeric-transport corruption probes
-  pass. Local APKs/lint/signature/package checks also pass.
-- [Task audit](tasks/B05-bulk-editing.md) and [retained receipt](evidence/b05-1-native.json)
-  record scope and limits. The initial CI round passed too; review then strengthened
-  the touch test to prove all-similar edits outside selection, requiring one more
-  full CI round. That native round then hit a transient ADB outage after the
-  existing equipment test passed, while collecting its report. The failed
-  artifact was retained and only the native job was rerun on a fresh runner.
-  No production failure or weakened assertion was involved.
-- B04 was delivered in [PR #21](https://github.com/Sussic/Pyfa-android/pull/21).
-  B05 is delivered through B05.4; B09 retains undo/redo work.
+The active goal authorizes sequential eligible approved roadmap work, one coherent
+outcome through review, required host/native checks and fork PR merge, then automatic
+continuation. No releases, phone installation, billing changes, unrelated work or
+delegation. No user decision or access blocker currently prevents B07.2.
 
-## B05.2 delivered — Bulk module states (F03.03)
+## Latest delivery — B07.1 cargo stacks and quantities
 
-[PR #23](https://github.com/Sussic/Pyfa-android/pull/23) merged as
-`eb7e3039bf612e4c6672bf8af10db32ad6ab90aa`, tested head
-`2e6bb7af1a9af6e552f0970561f83cf738fb328f`. Build 17 exposes
-selection-only/all-similar cycle, overheat and offline actions, EOS-supported
-fallbacks, explicit skipped/actual saved states and atomic fit/recipient saves.
-The original pinned desktop command passes six cases/27 states/four linked
-recipients and a fresh-process repeat; five focused host tests cover invalid
-requests, history, failed saves, copies and restart.
+[PR #29](https://github.com/Sussic/Pyfa-android/pull/29) merged as `fd80b2fc`,
+tested head `bc06de79`. CI checkout `5a5711f5` and the merge share tree `2437d335`.
+Build **23 (`0.1.0-b07.1`)** adds cargo through the offline equipment browser,
+edits/removes stack quantities, displays EOS used/capacity values and preserves
+exact stacks through atomic saves, copy and process restart. Older graphs without
+cargo still replay. Quantity actions use numeric input and dismiss the keyboard.
 
-[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36083151800)
-passes **125 host tests** and all independent reference/migration gates in
-**22m28s**. [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36083151805)
-attempt 2 passes **32 offline native executions**, both APKs, lint, signature,
-source/data/license/ABI checks and restart in **31m06s**. Artifact digest and
-CI merge tree match; all 13 raw validators, nine native protocol guards and ten
-deliberate report corruptions pass. All **61 screenshots** were visually
-reviewed. [Receipt and retained B05.2 raw evidence](evidence/b05-2-native.json)
-record provenance and limits. The initial native test found an omitted skipped
-preview row; the corrected final head passed. Final-head Android attempt 1 lost
-ADB during transfer of an earlier empty-hull report; a same-head native-only
-retry passed with no gate weakened. ARM64 execution, older APIs, phone usability
-and safe upgrades remain unverified.
+- Independent original desktop commands repeat **two cases/17 states** in fresh
+  processes. Includes stack merging, partial/full removal, container volume,
+  over-capacity Vexor (500/480 m³) and charge cargo on zero-capacity Astrahus.
+- Three focused host tests pass reference states, invalid edits, legacy graphs,
+  failed-save recovery, copy and fresh-process restart without desktop/network imports.
+- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36277865653)
+  passes every required host/reference/migration gate in **25m24s**.
+- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36277865678)
+  passes all inherited gates plus offline cargo touch/restart, both APKs, lint,
+  signature and 160-source/data/license/ABI inspection in **35m37s**. All **47 fits**
+  restore, including three new cargo fits; six protocol guards pass.
+- Artifact digest and tested tree match. All **six final cargo screenshots** were
+  reviewed, and **12 deliberate report corruptions** were rejected. The retained
+  [receipt](evidence/b07-1-native.json) and [raw report](evidence/b07-1-cargo-stacks-native.json)
+  record exact provenance, numeric kinds, state values and limits.
 
-## B05.3 delivered — Clone and fill modules (F03.04/F03.05)
+Earlier native rounds exposed equipment-to-charge navigation and two bugs in the
+new test/report assertions (JSON numeric-kind serialization, then native nulls
+compared using a desktop-only mapping). They are fixed and the final head passes;
+no gate was weakened. [B07 task evidence](tasks/B07-cargo-management.md) records the details.
 
-[PR #24](https://github.com/Sussic/Pyfa-android/pull/24) merged as
-`0bef5a67eaba0fa797973cef296b52b8f1588d0c`, tested head
-`bd122061e55045136c549d7fbb0cb276132a6109`. Build 18 adds market and
-fitted-source fill, chosen-vacancy clone and selected-group clone. EOS determines
-stopping, legality and override; state/charge and the market-history distinction
-survive atomic offline saves. The pinned original commands pass seven cases/17
-states and a fresh-process repeat; four focused host tests pass.
+## Exact next task — B07.2
 
-[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964569)
-passes all existing host/reference/migration gates in **19m02s**.
-[Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36098964629)
-passes **34 offline native executions**, both APKs, lint, signature,
-source/data/license/ABI and real restart in **26m23s**. All **69 screenshots**
-were reviewed. The retained [receipt](evidence/b05-3-native.json) and
-[raw report](evidence/b05-3-clone-fill-native.json) record artifact digest,
-matching CI/merge tree, 14 validators, seven new protocol guards, ten rejected
-report corruptions and 25 restored fits. The first native run exposed a Compose
-test assertion on a parent Card; a later attempt lost ADB while transferring a
-prior report, then revealed the new test phase used ephemeral diagnostic storage.
-The corrected final head passed without changing engine gates. ARM64 execution,
-older APIs, phone usability and safe upgrades remain unverified.
+Deliver original multi-selected cargo quantity/removal, including zero-to-remove,
+ammunition presets, fill-to-capacity boundaries and variation/quantity merges.
+Use original pinned commands for independent fixtures, preserve serialized EOS and
+atomic graph/history behavior, then verify native touch, copy and offline restart.
+F04.01 remains partial until selected-stack actions are delivered. B07.3 retains
+fitted equipment/charge transfers; B09 owns undo/redo. B07 remains active.
 
-## Forecast after B06.3 delivery
+## Delivered work to reuse
 
-| Next milestone | Remaining work | Elapsed estimate / confidence |
-| --- | --- | --- |
-| B07 cargo | Audit stack counts and equipment/ammunition transfer commands; implement values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
-| B08 fit notes | Audit desktop note editing; retain multiline/non-ASCII unsaved text across navigation and durable reopen. | **Unknown until the notes/navigation audit resolves scope**; low confidence. |
-| B09 undo/redo | Audit original command boundaries; reverse single/bulk fit actions and recalculate/restore selection through later mutations. | **Unknown until the undo/redo boundary audit resolves scope**; low confidence. |
+| Milestone | Delivery and retained evidence |
+| --- | --- |
+| B04 equipment/fitting | [PR #21](https://github.com/Sussic/Pyfa-android/pull/21), [task](tasks/B04-equipment-fitting.md). All B04 children remain closed. |
+| B05 bulk editing | PRs [#22](https://github.com/Sussic/Pyfa-android/pull/22), [#23](https://github.com/Sussic/Pyfa-android/pull/23), [#24](https://github.com/Sussic/Pyfa-android/pull/24), [#25](https://github.com/Sussic/Pyfa-android/pull/25); [task](tasks/B05-bulk-editing.md). |
+| B06 modes/subsystems/structures | PRs [#26](https://github.com/Sussic/Pyfa-android/pull/26), [#27](https://github.com/Sussic/Pyfa-android/pull/27), [#28](https://github.com/Sussic/Pyfa-android/pull/28); [task](tasks/B06-hull-configuration.md), [latest receipt](evidence/b06-3-native.json). |
 
-Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
-Windows/Android runs; B06.3 final-head runs took 25m10s/29m35s. Confidence is
-medium for one passing round and low for elapsed milestone delivery because
-later audits remain. B06.3 review found an Add label still inviting action at
-full capacity; its UI/test correction required a second CI round. Build **16 was
-the first meaningful development build**; build **22 (`0.1.0-b06.3`) is the
-latest emulator-tested build**. The local debug APK is
-`android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
-occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
-and phone/API compatibility are resolved**. No user decision or access is needed
-now; whole-queue elapsed time remains unknown until later audits and device/
-upgrade gates resolve. Refresh this forecast after each delivered milestone.
+Earlier A/B milestones remain done as recorded in ROADMAP and their task/evidence
+files. Do not reopen delivered work or rerun unchanged tested revisions.
 
-## B05.4 delivered — Bulk variation and removal
+## Forecast and installation limits
 
-Selected after B05.3 merge `0bef5a67`. Audit the pinned desktop selection,
-variation-family filtering, replacement reconciliation, removal order and
-recent-item rules. Deliver touch-accessible selection-only and all-similar
-variation/removal with exact affected/skipped previews, one atomic serialized
-save, independent desktop/host comparisons, native offline restart and final-head
-CI. B09 keeps undo/redo; B06 keeps subsystem and hull-mode controls.
+B07.2 selected actions/presets/fill/variations comes next, then B07.3 transfers,
+B08 notes and B09 undo/redo. Elapsed implementation estimates remain **unknown**
+until each focused command/state audit resolves its remaining scope; confidence
+is low. A full parallel CI round currently takes roughly **25–40 minutes**;
+B07.1's final Windows/Android runs took 25m24s/35m37s. Multiple correction rounds
+were needed for B07.1, so a one-round delivery estimate is not reliable.
 
-On `codex/b05-4-bulk-variation-removal`, the pinned original handlers and commands
-pass eight cases/17 states in a fresh repeat. All-similar can include a different
-variation family; the preview now uses pinned-family candidates from the bridge.
-Four focused host checks pass, including a forced later replacement rejection,
-failed-save recovery and process restart; the existing 17-case/5,226-family
-variation regression passes. Local debug/test APK assembly and lint pass.
-PR [#25](https://github.com/Sussic/Pyfa-android/pull/25) merged as
-`4da3b2a09b7a395c7633c0b809d54e00644b0a61`, tested head `e1d8d344`.
-[Windows CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925169)
-passed in 22m24s and [Android CI](https://github.com/Sussic/Pyfa-android/actions/runs/36108925181)
-passed in 33m02s on the final head: all retained host/reference/migration and
-native type/unit/GC/performance/restart/APK/lint/signature/data/license/ABI
-gates, four new fits, 29 restored fits and nine new protocol guards. All eight
-B05.4 and seven affected B04 variation screenshots were reviewed. The retained
-[receipt](evidence/b05-4-native.json) and [raw report](evidence/b05-4-variation-removal-native.json)
-record offline touch/restart and matching CI/merge tree. The first Android run
-found an existing variation Back action obscured by the keyboard after the new
-preview grew; the final head collapses bulk controls for single edits and keeps
-Back beside the filter. **Exact next task B06 — Hull-specific configuration**:
-audit and split modes, strategic-cruiser subsystems and structure controls.
-
-## B06.1 delivered — Hull modes
-
-B06 is split into [mode, subsystem and structure children](tasks/B06-hull-configuration.md)
-because the pinned desktop routes them through distinct EOS/command systems.
-B06.1 starts on `codex/b06-1-hull-modes` from delivered master `5991fe99`.
-The pinned mode menu changes `fit.mode`, recalculates/fills and commits; EOS
-offers mode items for tactical destroyers and Anhinga. The bridge currently
-starts with the EOS default but omits mode from its declarative graph, so the
-selected outcome is strict hull-specific choice/edit, independent stats,
-touch access and durable offline copy/restart. B06.2 retains subsystem changes;
-B06.3 retains structure-specific controls. No decision or access block.
-
-The pinned original mode command repeats four hull cases/16 raw-value states
-in fresh processes, including Confessor, Jackdaw, Anhinga and no-mode Vexor.
-Four focused host checks pass for all 16 states, cross-hull/stale rejection,
-failed-save recovery, selected-mode copy/restart and older default-mode graphs.
-The mode bridge preserves the legacy implicit default while storing explicit
-changes. Local Kotlin/main+instrumented compilation, both debug APKs, lint and
-APK source/data/license/ARM64/x86_64 inspection pass. PR
-[#26](https://github.com/Sussic/Pyfa-android/pull/26) merged as `7f08c3d8`,
-tested head `90688456`. [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275320)
-passed in 23m57s; [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36116275344)
-passed in 31m52s, including 16 independent states, five new/34 restored fits,
-four protocol guards, fresh offline restart and all inherited native gates.
-All four mode screenshots were reviewed. The [receipt](evidence/b06-1-native.json)
-and [raw report](evidence/b06-1-hull-modes-native.json) retain matching
-CI/merge tree, artifact provenance and limits. **Exact next task: B06.2 —
-Strategic-cruiser subsystems.**
-
-## B06.2 delivered — Strategic-cruiser subsystems
-
-Selected on `codex/b06-2-subsystems` from delivered master `c102ae09`.
-Deliver exact T3 cruiser subsystem choices, add/replace/remove, dynamic slot and
-bonus reconciliation, fitting legality and charge/state handling, durable
-offline copy/restart and touch controls. Compare original pinned desktop
-commands and independent raw values before Android implementation; keep B06.3
-structure behavior and B09 undo/redo separate. No access or product decision is
-needed; the desktop command audit determines the focused case matrix.
-
-The pinned original add/replace/remove sequence repeats 14 raw-value states
-in fresh processes and enumerates 48 choices across four strategic cruisers.
-The focused host suite passes three cases, including all states, strict choice
-rejection, failed-save recovery and illegal charged-launcher copy/restart.
-Local main/test Kotlin compilation, debug/test APKs, lint and package inspection
-pass (158 bundled engine sources and both ABIs). [PR #27](https://github.com/Sussic/Pyfa-android/pull/27)
-merged as `8e4b085e`, tested head `b1473e47`; the CI checkout and merge share
-tree `42b64f73`. [Windows/reference](https://github.com/Sussic/Pyfa-android/actions/runs/36127361579)
-passes in 25m49s and [Android/native](https://github.com/Sussic/Pyfa-android/actions/runs/36127361376)
-passes in 27m51s, including 14 matching native states, six protocol guards,
-three new/37 restored fits and offline copy/restart. All six new screenshots
-were reviewed; the invalid charged launcher and dynamic slot counts remain
-visible. [Receipt](evidence/b06-2-native.json) and [raw report](evidence/b06-2-subsystems-native.json)
-retain provenance and limits. **Exact next task: B06.3 — Structure-specific
-controls.**
-
-## B06.3 delivered — Structure-specific controls
-
-Selected on `codex/b06-3-structures` from delivered master `533e533f`.
-Complete structure service-slot, restriction and bonus interactions that B04
-only began, with touch controls and durable offline edit/copy/restart behavior.
-The original desktop command audit repeats five structure sequences and 27 raw
-states in fresh processes, and enumerates 118 hull-compatible service choices
-for 18 structures plus Vexor's empty result. Astrahus service fitting raises
-shield HP from 3.6m to 14.4m; Ansiblex's unique conduit generator raises it
-from 0.5m to 2m and removal restores baseline. B04 only covered Astrahus's
-generic module rack. A typed service-choice query and touch add/replace/remove
-screen now expose the varying capacities and bonuses, using the existing EOS
-module commands. Three focused host tests pass all original states/choices,
-rejected edits, failed-save recovery and copy/fresh-process restore; no desktop
-or network import was attempted. Local Kotlin/test compilation, both APKs,
-lint and package inspection pass with 159 engine sources and both ABIs. [PR
-#28](https://github.com/Sussic/Pyfa-android/pull/28) merged as `f1278860`,
-tested head `402567d6` with the same tree as CI checkout `c3d67e71`.
-[Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265261075)
-passed in 25m10s; [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265260819)
-passed in 29m35s with 27 matching raw states, six protocol guards, seven
-new/44 restored fits, offline restart and all inherited native/package gates.
-All seven structure screenshots were reviewed. The [receipt](evidence/b06-3-native.json)
-and [raw report](evidence/b06-3-structures-native.json) retain provenance and
-limits. Review corrected the full-slot Add label and asserted its disabled
-state in native CI, requiring a second CI round. B09 retains undo/redo and
-D04 retains structure system-security choices. **Exact next task: B07 — Cargo
-management.** No decision or access is needed.
-
-## Selected B07 — Cargo management
-
-Selected on `codex/b07-1-cargo-stacks` from delivered master `8388f236`; no open PR.
-Audit the pinned desktop cargo stack/quantity, ammunition preset, fill-capacity,
-fitted-module transfer and variation commands (F04.01–F04.05). Split the broad
-milestone into coherent reviewable children after mapping their command and
-storage boundaries. The outcome is touch-accessible cargo editing with original
-EOS quantities/volume/legality and durable offline copy/restart; preserve
-serialized EOS, atomic saves, native package and inherited host/native gates.
-B09 owns undo/redo, including cargo actions. The desktop audit separates B07.1
-saved cargo stacks/quantity/volume, B07.2 ammunition presets/fill/variations,
-and B07.3 fitted module/charge transfers. B07.1 is active: add cargo to the
-declarative fit graph without changing existing graph replay, then deliver
-desktop-matched stack edits and touch/offline copy/restart evidence. No decision
-or access is needed.
-
-The pinned original cargo add/change/remove commands now repeat two hull cases
-and 17 raw-value states in fresh processes, fixture SHA `1e0de393`. Vexor
-stacks merge by item, partial/full removal updates EOS used volume, and the
-desktop accepts 500 m³ of cargo in a 480 m³ hull. Astrahus accepts charge cargo
-despite reporting zero cargo capacity. Three focused host tests pass all states,
-atomic rejection, legacy graph compatibility, failed-save recovery, copy and
-fresh-process restart without desktop/network imports. A typed cargo query and
-touch stack editor use the existing serialized EOS/store boundary. Local Kotlin
-and instrumented-test compilation, debug/test APKs, lint and package inspection
-pass with 160 sources and ARM64/x86_64 contents. PR #29 corrects equipment-to-charge
-navigation found by inherited native CI. Review then strengthened the cargo touch
-request and full-stack restart assertions; corrected native-test compilation
-passes. Native execution, screenshot review, final-head CI and PR merge remain.
-B07.2 explicitly retains multi-selected quantity/removal, including zero-to-remove;
-F04.01 remains partially covered until that child completes.
-Review head `47730b9e` passed Windows/reference CI (27m13s), but native restart
-found the test's JSON serialization changed an integral decimal's numeric kind.
-The test now retains explicit numeric kinds through the existing typed wrapper;
-no type gate is removed. Six failed-run screenshots were reviewed and quantity
-actions now dismiss the keyboard and use numeric input. Corrected final CI remains.
-Head `78e06c26` passes Windows/reference (25m18s) and all native instrumented
-phases; a validator-only failure then exposed native nulls being compared through
-the desktop absent-value mapping. Corrected exact native comparison passes both
-retained phases locally: 17 states, three new/47 restored fits, six protocol guards
-and twelve rejected report corruptions. A final CI round remains before merge.
+Build 16 was the first meaningful development build; build 23 is the latest
+emulator-tested build. The local debug APK is
+`android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
+remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
+are resolved. Phone usability, older APIs and ARM64 execution remain unverified;
+no phone installation or release publication occurs.
 
 ## Resume, environment and architecture
 

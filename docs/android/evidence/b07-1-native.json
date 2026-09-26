@@ -1,0 +1,111 @@
+{
+  "delivery": {
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/29",
+    "base": "8388f2364c8eae2496a1b99ad6ec1708ec06050b",
+    "tested_head": "bc06de79cadf0c7ddcbbd3121fcdfe1b1a35b807",
+    "android_run": 36277865678,
+    "android_conclusion": "success",
+    "android_seconds": 2137,
+    "windows_run": 36277865653,
+    "windows_conclusion": "success",
+    "windows_seconds": 1524,
+    "ci_checkout": "5a5711f53f8f573395ee0996ee111e9df61a83c4",
+    "ci_checkout_parents": [
+      "8388f2364c8eae2496a1b99ad6ec1708ec06050b",
+      "bc06de79cadf0c7ddcbbd3121fcdfe1b1a35b807"
+    ],
+    "ci_tree": "2437d3351a6decbb5709681cc9262510d5ca201f",
+    "artifact_id": 10918381677,
+    "artifact_digest": "sha256:3bf5e9247cb46fde209b1662a1e469967a6f749ccb0a79ff751df9516eb34583",
+    "artifact_bytes": 17045926,
+    "cargo_report_corruptions_rejected": [
+      "quantity",
+      "volume",
+      "capacity",
+      "identity",
+      "boolean_count",
+      "operation",
+      "restart_stack",
+      "restart_numeric_kind",
+      "missing_restored_fit",
+      "same_process",
+      "protocol_guard",
+      "null_as_zero"
+    ],
+    "merge": "fd80b2fc75fe3f5b0901d7af0347c77111281dd4",
+    "ci_tree_matches_merge": true
+  },
+  "desktop_reference": {
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "fixture_sha256": "1e0de39388397df9ec890b31d44e376d05a4ff28c19981bc93933bf380247a99",
+    "cases": 2,
+    "states": 17,
+    "fresh_process_repeat": true,
+    "numeric_tolerance": {
+      "relative": 1e-10,
+      "absolute": 1e-09
+    },
+    "exact_fields": [
+      "item IDs",
+      "names",
+      "quantities",
+      "operations",
+      "accepted states",
+      "units"
+    ]
+  },
+  "host_focused_ci": {
+    "tests_passed": 3,
+    "all_reference_states": true,
+    "atomic_rejection_legacy_graph_and_failed_save_recovery": true,
+    "copy_and_fresh_process_restore": true
+  },
+  "native_raw": {
+    "path": "b07-1-cargo-stacks-native.json",
+    "sha256": "c967d02ab1bc151b4f3cd89a0fb6e7d78223c4155d3f9c2d09371b66b7aeb41c",
+    "cases": 2,
+    "states": 17,
+    "new_fits": 3,
+    "restored_fits": 47,
+    "screenshots": 6,
+    "protocol_rejections": 6,
+    "checks": {
+      "prepare": [
+        "two_original_cargo_sequences",
+        "touch_add_set_partial_remove_and_over_capacity",
+        "durable_cargo_copy",
+        "atomic_rejections",
+        "typed_cargo_protocol"
+      ],
+      "restored": [
+        "fresh_process_restore",
+        "reopen_each_fit"
+      ]
+    },
+    "screenshots_reviewed": 6,
+    "fresh_process_restart": true
+  },
+  "native_summary": {
+    "task": "B07.1",
+    "checkout_sha": "5a5711f53f8f573395ee0996ee111e9df61a83c4",
+    "workflow_run": "36277865678",
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "airplane_mode": true,
+    "fresh_install": true,
+    "app_internet_permission": false,
+    "apk_bytes": 70939411,
+    "apk_sha256": "0aef899494b5cc1a459c82d069e84cf95c3444c4da6a3e67c2b459ff6da94ad2",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; ARM64 and older API execution remain unverified.",
+    "Phone usability and safe signing/install upgrades remain R02/R03.",
+    "B07.2 retains selected-stack actions, presets, fill and variations; B07.3 transfers; B09 undo/redo."
+  ]
+}

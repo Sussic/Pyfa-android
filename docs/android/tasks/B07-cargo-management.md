@@ -5,8 +5,8 @@ Kotlin/Compose, Chaquopy and serialized EOS architecture. Selected 2026-09-26
 on `codex/b07-1-cargo-stacks` from delivered master `8388f236`. The audit found
 that original calculation commands merge stacks by item ID and alter amounts,
 while context commands separately calculate ammo presets/fill-to-capacity and
-module/charge transfers. The saved Android fit graph currently has no cargo
-field. B09 owns undo/redo, including cargo actions.
+module/charge transfers. At selection, the saved Android fit graph had no cargo
+field; B07.1 now persists it. B09 owns undo/redo, including cargo actions.
 
 | Child | Outcome | Acceptance boundary |
 | --- | --- | --- |
@@ -23,7 +23,7 @@ field. B09 owns undo/redo, including cargo actions.
 - [ ] Pass final-head Windows/reference and Android/native gates per child,
   review/merge focused PRs, retain evidence and update status/forecast.
 
-## B07.1 active evidence
+## B07.1 preparation and corrections
 
 The original pinned cargo commands repeat two hull cases/17 states in fresh
 processes, including same-item merging, partial and full removal, precise EOS
@@ -60,3 +60,16 @@ validation of both retained phases passes all 17 states, three new/47 restored
 fits and six protocol guards; twelve deliberate report corruptions are rejected,
 including null replaced by zero and changed restart numeric-kind metadata.
 Final-head CI and delivery remain required.
+
+## B07.1 delivered — 2026-09-27
+
+[PR #29](https://github.com/Sussic/Pyfa-android/pull/29) merged as `fd80b2fc`,
+tested head `bc06de79`, with the same tree `2437d335` as CI checkout `5a5711f5`.
+[Windows/reference](https://github.com/Sussic/Pyfa-android/actions/runs/36277865653)
+passes in 25m24s; [Android/native](https://github.com/Sussic/Pyfa-android/actions/runs/36277865678)
+passes in 35m37s. Both original cases/17 states, three focused host tests,
+all inherited gates, both APKs/lint/signature/data/licenses/ABIs, three new/47
+restored fits, six protocol guards and twelve corruption probes pass. All six
+final cargo screenshots were reviewed; artifact digest and tested tree match.
+[Receipt](../evidence/b07-1-native.json) and [raw report](../evidence/b07-1-cargo-stacks-native.json)
+retain evidence. B07.2 is the exact next task; the parent remains active.
