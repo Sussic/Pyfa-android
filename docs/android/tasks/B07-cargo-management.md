@@ -42,3 +42,11 @@ CI remains required. F04.01 is only partially covered by B07.1: the desktop
 `GuiChangeCargosAmountCommand` applies one quantity to multiple selected stacks
 and removes them at zero. B07.2 explicitly retains these selection capabilities
 alongside its selected variations; B07 cannot close without them.
+
+Head `47730b9e` passed Windows/reference CI (36273104083, 27m13s), while native
+run 36273104092 passed the inherited suites and cargo preparation, then failed
+the new restart assertion: JSONObject serializes integral doubles as integers.
+The correction uses the existing typed report wrapper, retaining exact numeric-kind
+metadata across serialization alongside the value comparison. Six cargo screens
+from the failed run were inspected; quantity actions now clear keyboard focus and
+use numeric input. A corrected final-head native run is still required.

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -116,6 +119,7 @@ private fun volume(value: Double): String = NumberFormat.getNumberInstance().app
 @Composable
 internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: () -> Unit) {
     val context = LocalContext.current
+    val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val fit = (engine as? EngineState.Ready)?.fit
     BackHandler { onBack() }
@@ -148,17 +152,19 @@ internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: 
                 OutlinedTextField(value = model.amounts[stack.id].orEmpty(),
                     onValueChange = { model.amounts[stack.id] = it },
                     label = { Text("Stack quantity") }, singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth().testTag("cargo-quantity-${stack.id}"))
-                Button(onClick = { model.set(context, stack) }, enabled = !model.editing && !model.loading,
+                Button(onClick = { focus.clearFocus(); model.set(context, stack) }, enabled = !model.editing && !model.loading,
                     modifier = Modifier.testTag("cargo-set-${stack.id}")) { Text("Save quantity") }
                 OutlinedTextField(value = model.removals[stack.id].orEmpty(),
                     onValueChange = { model.removals[stack.id] = it },
                     label = { Text("Remove quantity") }, singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth().testTag("cargo-remove-quantity-${stack.id}"))
-                TextButton(onClick = { model.remove(context, stack, false) },
+                TextButton(onClick = { focus.clearFocus(); model.remove(context, stack, false) },
                     enabled = !model.editing && !model.loading,
                     modifier = Modifier.testTag("cargo-remove-part-${stack.id}")) { Text("Remove quantity") }
-                TextButton(onClick = { model.remove(context, stack, true) },
+                TextButton(onClick = { focus.clearFocus(); model.remove(context, stack, true) },
                     enabled = !model.editing && !model.loading,
                     modifier = Modifier.testTag("cargo-remove-all-${stack.id}")) { Text("Remove stack") }
             }

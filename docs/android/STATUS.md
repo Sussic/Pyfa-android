@@ -250,6 +250,11 @@ request and full-stack restart assertions; corrected native-test compilation
 passes. Native execution, screenshot review, final-head CI and PR merge remain.
 B07.2 explicitly retains multi-selected quantity/removal, including zero-to-remove;
 F04.01 remains partially covered until that child completes.
+Review head `47730b9e` passed Windows/reference CI (27m13s), but native restart
+found the test's JSON serialization changed an integral decimal's numeric kind.
+The test now retains explicit numeric kinds through the existing typed wrapper;
+no type gate is removed. Six failed-run screenshots were reviewed and quantity
+actions now dismiss the keyboard and use numeric input. Corrected final CI remains.
 
 ## Resume, environment and architecture
 

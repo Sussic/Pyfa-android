@@ -225,7 +225,7 @@ class CargoStackTest {
                     ids = array(listOf(vexor, astrahus, copy))
                     saved.writeText(obj("fits" to library(), "new_ids" to ids, "copy_id" to copy,
                         "active_id" to copy, "prior" to before,
-                        "cargo_states" to obj(*listOf(vexor, astrahus, copy).map { it to state(it) }.toTypedArray())
+                        "cargo_states" to obj(*listOf(vexor, astrahus, copy).map { it to typed(state(it)) }.toTypedArray())
                     ).toString(), Charsets.UTF_8)
                 }
                 "restored" -> {
@@ -242,8 +242,11 @@ class CargoStackTest {
                     for (index in 0 until ids.length()) {
                         val id = ids.getString(index)
                         open(id); assertEquals(id, model.details?.fitId)
-                        compare(expected.getJSONObject("cargo_states").getJSONObject(id), state(id))
-                        restoredCargo.put(id, state(id))
+                        // JSONObject writes integral decimals without a decimal point.
+                        // The typed wrapper retains numeric kinds across that serialization.
+                        val restoredState = typed(state(id))
+                        compare(expected.getJSONObject("cargo_states").getJSONObject(id), restoredState, strict = false)
+                        restoredCargo.put(id, restoredState)
                         click("cargo-back")
                     }
                     checks.put("fresh_process_restore"); checks.put("reopen_each_fit")

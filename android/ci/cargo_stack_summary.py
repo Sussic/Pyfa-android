@@ -77,9 +77,17 @@ def summarize(reports, engine):
     assert prepare['saved']['copy_id'] == ids[2]
     assert set(prepare['saved']['cargo_states']) == set(ids)
     exact(prepare['saved']['cargo_states'], restored['restored_cargo'])
-    state(prepare['cases'][0]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[0]])
-    state(prepare['cases'][1]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[1]])
-    state(prepare['saved']['cargo_states'][ids[0]], prepare['saved']['cargo_states'][ids[2]])
+    for observed in prepare['saved']['cargo_states'].values():
+        assert observed.keys() == {'data', 'numeric_types'}
+        kinds = observed['numeric_types']
+        assert kinds['root.used_m3'] == kinds['root.capacity_m3'] == 'decimal'
+        for index, cargo in enumerate(observed['data']['cargo']):
+            assert kinds[f'root.cargo[{index}].id'] == 'integer'
+            assert kinds[f'root.cargo[{index}].amount'] == 'integer'
+            assert kinds[f'root.cargo[{index}].unit_volume_m3'] == 'decimal'
+    state(prepare['cases'][0]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[0]]['data'])
+    state(prepare['cases'][1]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[1]]['data'])
+    state(prepare['saved']['cargo_states'][ids[0]]['data'], prepare['saved']['cargo_states'][ids[2]]['data'])
     fixture = json.loads((Path(__file__).resolve().parents[2] /
                           'tools/android_reference/fixtures/cargo-stacks.json').read_text())
     assert len(fixture['cases']) == len(prepare['cases']) == 2
