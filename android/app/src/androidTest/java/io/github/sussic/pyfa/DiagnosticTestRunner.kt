@@ -13,7 +13,7 @@ class DiagnosticTestRunner : AndroidJUnitRunner() {
             !arguments.containsKey("b04233_phase") && !arguments.containsKey("b051_phase") &&
             !arguments.containsKey("b052_phase") && !arguments.containsKey("b053_phase") &&
             !arguments.containsKey("b054_phase") && !arguments.containsKey("b061_phase") &&
-            !arguments.containsKey("b062_phase"))
+            !arguments.containsKey("b062_phase") && !arguments.containsKey("b063_phase"))
             EngineRuntime.useEphemeralStorageForDiagnostics()
         super.onCreate(arguments)
     }

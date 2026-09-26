@@ -59,7 +59,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B06 | active | B04 | [Hull-specific configuration (parent)](tasks/B06-hull-configuration.md) | Supported ship/structure modes and subsystem changes update legal slots and bonuses correctly; test a mode hull and strategic cruiser. |
 | B06.1 | done | B04 | Hull modes | Expose exact available tactical/other ship modes, recalculate EOS bonuses and persist/reopen the chosen mode with native touch and independent desktop evidence. |
 | B06.2 | done | B06.1 | Strategic-cruiser subsystems | Add/replace/remove subsystem choices; reconcile changed slots, fitting legality and hull bonuses with desktop/native restart evidence. |
-| B06.3 | ready | B06.2 | Structure-specific controls | Complete service-slot/restriction/bonus interactions and compare independent structure fixtures with native restart evidence. |
+| B06.3 | active | B06.2 | Structure-specific controls | Complete service-slot/restriction/bonus interactions and compare independent structure fixtures with native restart evidence. |
 | B07 | ready | B04 | Cargo management | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
 | B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | queued | B05 | Undo/redo for fit edits | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |

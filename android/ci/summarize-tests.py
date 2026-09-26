@@ -91,8 +91,10 @@ from clone_fill_summary import summarize as summarize_clone_fill
 from bulk_variation_removal_summary import summarize as summarize_bulk_variation_removal
 from hull_mode_summary import summarize as summarize_hull_modes
 from subsystem_summary import summarize as summarize_subsystems
+from structure_summary import summarize as summarize_structures
 summary = {
-    "task": "B06.2",
+    "task": "B06.3",
+    "structures": summarize_structures(json.loads((evidence / "structures-native.json").read_text(encoding="utf-8")), engine),
     "subsystems": summarize_subsystems(json.loads((evidence / "subsystems-native.json").read_text(encoding="utf-8")), engine),
     "hull_modes": summarize_hull_modes(json.loads((evidence / "hull-modes-native.json").read_text(encoding="utf-8")), engine),
     "bulk_variation_removal": summarize_bulk_variation_removal(json.loads((evidence / "bulk-variation-removal-native.json").read_text(encoding="utf-8")), engine),

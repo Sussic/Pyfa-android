@@ -191,6 +191,26 @@ visible. [Receipt](evidence/b06-2-native.json) and [raw report](evidence/b06-2-s
 retain provenance and limits. **Exact next task: B06.3 — Structure-specific
 controls.**
 
+## Selected B06.3 — Structure-specific controls
+
+Selected on `codex/b06-3-structures` from delivered master `533e533f`.
+Complete structure service-slot, restriction and bonus interactions that B04
+only began, with touch controls and durable offline edit/copy/restart behavior.
+The original desktop command audit repeats five structure sequences and 27 raw
+states in fresh processes, and enumerates 118 hull-compatible service choices
+for 18 structures plus Vexor's empty result. Astrahus service fitting raises
+shield HP from 3.6m to 14.4m; Ansiblex's unique conduit generator raises it
+from 0.5m to 2m and removal restores baseline. B04 only covered Astrahus's
+generic module rack. A typed service-choice query and touch add/replace/remove
+screen now expose the varying capacities and bonuses, using the existing EOS
+module commands. Three focused host tests pass all original states/choices,
+rejected edits, failed-save recovery and copy/fresh-process restore; no desktop
+or network import was attempted. Local Kotlin/test compilation, both APKs,
+lint and package inspection pass with 159 engine sources and both ABIs. Native
+execution, screenshot review, final-head CI and PR merge remain. Preserve
+existing ship fitting and all required gates; B09 retains undo/redo and D04
+retains structure system-security choices. No decision or access is needed.
+
 ## Resume, environment and architecture
 
 Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
