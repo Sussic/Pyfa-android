@@ -122,6 +122,10 @@ def subsystem_options(fit_id):
     return encoded(_bridge.subsystem_options(fit_id))
 
 
+def structure_service_options(fit_id):
+    return encoded(_bridge.structure_service_options(fit_id))
+
+
 def rack_options(fit_id):
     return encoded(_bridge.rack_options(fit_id))
 

@@ -698,6 +698,28 @@ object BridgeCodec {
         return SubsystemOptions(nonempty(value.get("fit_id"), "fit_id"), revision, capacity, immutableList(groups))
     }
 
+    fun decodeStructureServiceOptions(json: String): StructureServiceOptions {
+        val value = objectValue(StrictJson(json).parse(), "structure services")
+        keys(value, setOf("version", "fit_id", "revision", "is_structure", "capacity", "choices"),
+            path = "structure services")
+        requireProtocol(long(value.get("version"), "version") == 1L,
+            "Unsupported structure-service version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid structure-service revision")
+        val isStructure = bool(value.get("is_structure"), "is_structure")
+        val capacity = integer(value.get("capacity"), "capacity", 0)
+        val choices = array(value.get("choices"), "choices").map { entry ->
+            val row = objectValue(entry, "service choice")
+            keys(row, setOf("id", "name"), path = "service choice")
+            StructureServiceChoice(integer(row.get("id"), "id", 1), nonempty(row.get("name"), "name"))
+        }
+        unique(choices.map { it.id }, "structure service choices")
+        requireProtocol(isStructure || capacity == 0 && choices.isEmpty(),
+            "Non-structure hull cannot have service choices")
+        return StructureServiceOptions(nonempty(value.get("fit_id"), "fit_id"), revision,
+            isStructure, capacity, immutableList(choices))
+    }
+
     fun decodeVariationOptions(json: String): VariationOptions {
         val value = objectValue(StrictJson(json).parse(), "variations")
         keys(value, setOf("version", "fit_id", "revision", "targets"), setOf("module_families"), "variations")

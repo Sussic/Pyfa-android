@@ -276,6 +276,14 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **options(self.engine, self._fits[fit_id])}
 
+    def structure_service_options(self, fit_id):
+        from .structures import options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **options(self.engine, self._fits[fit_id])}
+
     def charge_options(self, fit_id):
         from .charges import options
         self.engine._check_thread()

@@ -11,8 +11,9 @@ B05.1 adds explicit bulk-ammunition selection. B05.2 adds selected/similar modul
 state changes. B05.3 adds clone/fill; B05.4 adds selected/similar variation and
 removal with explicit target previews. B06.1 adds supported hull mode choices,
 EOS recalculation and offline persistence. B06.2 adds strategic-cruiser subsystem
-add/replace/remove, dynamic slot warnings and durable invalid-fit replay;
-structure-specific controls follow.
+add/replace/remove, dynamic slot warnings and durable invalid-fit replay.
+B06.3 adds hull-compatible structure service choices, fitting controls and
+offline service-bonus comparison across standard and specialized structures.
 A08/A09 add native projection
 and command checks against the unchanged A04/A05 references; they do not add
 projection or command editors to the sample UI.

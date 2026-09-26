@@ -79,3 +79,26 @@ three new/37 restored fits and real offline restart passed. All six new
 screenshots were reviewed. The [receipt](../evidence/b06-2-native.json) and
 [raw report](../evidence/b06-2-subsystems-native.json) retain artifact and
 matching CI/merge-tree provenance. Next child: B06.3 structure controls.
+
+## B06.3 selected scope
+
+Selected 2026-09-25 on `codex/b06-3-structures` from delivered master
+`533e533f`. B04's ordinary service-module rack covered Astrahus but not
+hull-aware structure choices and bonus visibility. The pinned original add,
+replace and remove commands repeat five structure sequences/27 raw states in
+fresh processes. EOS exposes 118 compatible service choices across 18
+structures, from Astrahus's three slots to special one-slot Ansiblex and
+Metenox choices. Fitting a service module raises Astrahus shield HP from 3.6m
+to 14.4m; removing Ansiblex's conduit generator restores its 0.5m baseline.
+The new typed query and touch editor expose the actual EOS capacities/choices
+and delegate all mutations to existing serialized module commands. B09 owns
+undo/redo; D04 owns system-security inputs.
+
+- [x] Audit original structure commands, service-slot capacity, item
+  restrictions and bonuses; export independent cases and exact raw values.
+- [x] Implement any missing structure-specific bridge and touch behavior with
+  atomic rejection and durable graph replay; compare host results to desktop.
+- [ ] Verify native service controls, warnings, package and offline restart;
+  inspect changed screenshots.
+- [ ] Pass final-head Windows/reference and Android/native checks; review and
+  merge focused PR, retain evidence and refresh status/forecast.

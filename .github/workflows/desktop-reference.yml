@@ -308,6 +308,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-subsystem-check"
+      - name: Verify original desktop structure service commands
+        run: >-
+          python -I tools/android_reference/structures.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-structure-reference"
+          --check tools/android_reference/fixtures/structures.json
+      - name: Verify structure service parity, atomic saves and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_structures.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-structure-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
