@@ -79,7 +79,7 @@ class HeadlessEngine:
         self._check_thread()
         _keys(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern",
                      "security", "modules", "drones", "target_profile", "implants",
-                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode"))
+                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode", "cargo"))
         if spec["target_profile"] is not None or any(spec[key] != [] for key in (
                 "implants", "boosters", "projections", "commands", "environments")):
             raise ValueError("This adapter does not implement those scenario inputs yet")
@@ -99,6 +99,7 @@ class HeadlessEngine:
 
         from eos.const import FittingModuleState, FitSystemSecurity, ImplantLocation
         from eos.saveddata.character import Character
+        from eos.saveddata.cargo import Cargo
         from eos.saveddata.citadel import Citadel
         from eos.saveddata.damagePattern import DamagePattern
         from eos.saveddata.drone import Drone
@@ -165,6 +166,16 @@ class HeadlessEngine:
             drone.amountActive = row["active"]
             drone.owner = fit
             fit.drones.append(drone)
+        seen_cargo = set()
+        for row in spec.get("cargo", []):
+            _keys(row, ("name", "amount"))
+            _integer(row["amount"], 1, 2**63 - 1)
+            cargo = Cargo(self._item(row["name"]))
+            if cargo.itemID in seen_cargo:
+                raise ValueError("Duplicate cargo stack")
+            seen_cargo.add(cargo.itemID)
+            cargo.amount = row["amount"]
+            fit.cargo.append(cargo)
         fit.calculateModifiedAttributes()
         # Desktop restriction re-enable deliberately retains over-hardpoint fits.
         # Saved/copy replay must preserve them; new fitting still checks them.

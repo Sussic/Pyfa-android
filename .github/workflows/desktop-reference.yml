@@ -323,6 +323,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-structure-check"
+      - name: Verify original desktop cargo stack commands
+        run: >-
+          python -I tools/android_reference/cargo_stacks.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-cargo-reference"
+          --check tools/android_reference/fixtures/cargo-stacks.json
+      - name: Verify cargo stack parity, atomic saves and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_cargo_stacks.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-cargo-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

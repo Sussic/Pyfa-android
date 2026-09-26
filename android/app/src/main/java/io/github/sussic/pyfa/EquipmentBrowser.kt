@@ -71,10 +71,13 @@ class EquipmentModel : ViewModel() {
 }
 
 @Composable
-internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorModel, onBack: () -> Unit, onViewFit: () -> Unit, onCharges: () -> Unit) {
+internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorModel,
+    cargoModel: CargoEditorModel, onBack: () -> Unit, onViewFit: () -> Unit,
+    onCharges: () -> Unit, onCargo: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val recent by EngineRuntime.recent.collectAsState(context = Dispatchers.Main)
+    val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
     val selectedCard = remember { BringIntoViewRequester() }
     LaunchedEffect(model.selectedId) { if (model.selectedId != null) selectedCard.bringIntoView() }
     LaunchedEffect(Unit) { model.load(context) }
@@ -130,6 +133,14 @@ internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorMo
                 Text(item.name, style = MaterialTheme.typography.titleMedium)
                 Text("${item.category} · ${item.meta}")
                 EquipmentFittingActions(moduleModel, item, onViewFit)
+                val fit = (engine as? EngineState.Ready)?.fit
+                if (fit != null) {
+                    Button(onClick = { focus.clearFocus(); cargoModel.add(context, item, onCargo) },
+                        enabled = !cargoModel.editing && !cargoModel.loading,
+                        modifier = Modifier.testTag("equipment-add-cargo")) { Text("Add one to cargo") }
+                }
+                cargoModel.error?.let { Text(it, color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.testTag("equipment-cargo-error")) }
                 catalog.itemById[item.parentId]?.takeIf { it.id != item.id }?.let { Text("Variation of ${it.name}") }
                 val group = catalog.groupById[item.marketGroupId]
                 if (group == null) Text("This item has no visible market group.") else TextButton(onClick = {
