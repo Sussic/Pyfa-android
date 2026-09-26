@@ -50,3 +50,13 @@ The correction uses the existing typed report wrapper, retaining exact numeric-k
 metadata across serialization alongside the value comparison. Six cargo screens
 from the failed run were inspected; quantity actions now clear keyboard focus and
 use numeric input. A corrected final-head native run is still required.
+
+Head `78e06c26` passed Windows/reference CI (36275744985, 25m18s). All native
+instrumented phases, including typed cargo restart, passed in run 36275744990;
+its report validator then failed by applying the desktop-only absent-gun mapping
+to two already-native null values. The validator now compares native records
+exactly, retaining the mapping only for independent desktop comparisons. Local
+validation of both retained phases passes all 17 states, three new/47 restored
+fits and six protocol guards; twelve deliberate report corruptions are rejected,
+including null replaced by zero and changed restart numeric-kind metadata.
+Final-head CI and delivery remain required.

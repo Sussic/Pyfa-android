@@ -85,9 +85,11 @@ def summarize(reports, engine):
             assert kinds[f'root.cargo[{index}].id'] == 'integer'
             assert kinds[f'root.cargo[{index}].amount'] == 'integer'
             assert kinds[f'root.cargo[{index}].unit_volume_m3'] == 'decimal'
-    state(prepare['cases'][0]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[0]]['data'])
-    state(prepare['cases'][1]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[1]]['data'])
-    state(prepare['saved']['cargo_states'][ids[0]]['data'], prepare['saved']['cargo_states'][ids[2]]['data'])
+    # These are all native reports: retain exact nulls and numeric kinds.
+    # Only the independent desktop comparison below maps its absent gun defaults.
+    exact(prepare['cases'][0]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[0]]['data'])
+    exact(prepare['cases'][1]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[1]]['data'])
+    exact(prepare['saved']['cargo_states'][ids[0]], prepare['saved']['cargo_states'][ids[2]])
     fixture = json.loads((Path(__file__).resolve().parents[2] /
                           'tools/android_reference/fixtures/cargo-stacks.json').read_text())
     assert len(fixture['cases']) == len(prepare['cases']) == 2

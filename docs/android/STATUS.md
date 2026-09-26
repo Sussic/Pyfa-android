@@ -255,6 +255,11 @@ found the test's JSON serialization changed an integral decimal's numeric kind.
 The test now retains explicit numeric kinds through the existing typed wrapper;
 no type gate is removed. Six failed-run screenshots were reviewed and quantity
 actions now dismiss the keyboard and use numeric input. Corrected final CI remains.
+Head `78e06c26` passes Windows/reference (25m18s) and all native instrumented
+phases; a validator-only failure then exposed native nulls being compared through
+the desktop absent-value mapping. Corrected exact native comparison passes both
+retained phases locally: 17 states, three new/47 restored fits, six protocol guards
+and twelve rejected report corruptions. A final CI round remains before merge.
 
 ## Resume, environment and architecture
 
