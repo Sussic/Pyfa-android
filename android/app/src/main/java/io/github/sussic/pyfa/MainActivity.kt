@@ -129,7 +129,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                         if (showEquipment) {
                             EquipmentBrowser(equipmentModel, moduleModel, cargoModel, onBack = { showEquipment = false },
                                 onViewFit = { showEquipment = false; showCargo = false; showModules = true },
-                                onCharges = { showCargo = false; charges(null) }, onCargo = {
+                                onCharges = { showEquipment = false; showCargo = false; charges(null) }, onCargo = {
                                     showEquipment = false; showCargo = true
                                 })
                         } else if (showCargo) {
