@@ -105,6 +105,7 @@ class CargoStackTest {
         val saved = File(context.noBackupFilesDir, "b071-test-expected.json")
         val checks = JSONArray(); val rejected = JSONArray(); val protocol = JSONArray()
         val cases = JSONArray(); var ids = JSONArray()
+        val restoredCargo = JSONObject()
         try {
             when (phase) {
                 "prepare" -> {
@@ -145,7 +146,9 @@ class CargoStackTest {
                     action(vexorSteps, vexor, "add", 2889, 2)
                     action(vexorSteps, vexor, "add", 3297, 1)
                     waitFor { !model.loading && model.details?.revision == fit(vexor).revision }
-                    click("cargo-remove-all-222")
+                    compose.onNodeWithTag("cargo-remove-quantity-222").performTextClearance()
+                    compose.onNodeWithTag("cargo-remove-quantity-222").performTextInput("10000")
+                    click("cargo-remove-part-222")
                     waitFor { !model.loading && !model.editing && model.details?.revision == fit(vexor).revision &&
                         model.details?.cargo?.none { it.id == 222 } == true }
                     step(vexorSteps, vexor, listOf("remove", "Antimatter Charge S", 10000))
@@ -172,7 +175,11 @@ class CargoStackTest {
                     compose.onNodeWithTag("cargo-volume").performScrollTo().assertIsDisplayed()
                     screenshot("structure-charge")
                     action(astrahusSteps, astrahus, "add", 222, 1)
-                    action(astrahusSteps, astrahus, "remove", 222, 1001)
+                    waitFor { !model.loading && model.details?.revision == fit(astrahus).revision }
+                    click("cargo-remove-all-222")
+                    waitFor { !model.loading && !model.editing && model.details?.revision == fit(astrahus).revision &&
+                        model.details?.cargo?.isEmpty() == true }
+                    step(astrahusSteps, astrahus, listOf("remove", "Antimatter Charge S", 1001))
                     cases.put(obj("ship" to "Astrahus", "steps" to astrahusSteps))
                     val copy = send(BridgeOperation.DuplicateFit(vexor, "B07.1 cargo copy – Δ"),
                         listOf(vexor)).fits.single { it.name == "B07.1 cargo copy – Δ" }.id
@@ -217,7 +224,9 @@ class CargoStackTest {
                     EngineRuntime.navigate(context) { it.copy(restore = true) }.get(30, TimeUnit.SECONDS)
                     ids = array(listOf(vexor, astrahus, copy))
                     saved.writeText(obj("fits" to library(), "new_ids" to ids, "copy_id" to copy,
-                        "active_id" to copy, "prior" to before).toString(), Charsets.UTF_8)
+                        "active_id" to copy, "prior" to before,
+                        "cargo_states" to obj(*listOf(vexor, astrahus, copy).map { it to state(it) }.toTypedArray())
+                    ).toString(), Charsets.UTF_8)
                 }
                 "restored" -> {
                     val expected = JSONObject(saved.readText(Charsets.UTF_8))
@@ -232,7 +241,10 @@ class CargoStackTest {
                     click("cargo-back")
                     for (index in 0 until ids.length()) {
                         val id = ids.getString(index)
-                        open(id); assertEquals(id, model.details?.fitId); click("cargo-back")
+                        open(id); assertEquals(id, model.details?.fitId)
+                        compare(expected.getJSONObject("cargo_states").getJSONObject(id), state(id))
+                        restoredCargo.put(id, state(id))
+                        click("cargo-back")
                     }
                     checks.put("fresh_process_restore"); checks.put("reopen_each_fit")
                 }
@@ -243,6 +255,7 @@ class CargoStackTest {
                 "before" to before, "after" to library(), "cases" to cases,
                 "new_ids" to ids, "checks" to checks, "rejections" to rejected,
                 "protocol_rejections" to protocol,
+                "restored_cargo" to restoredCargo,
                 "saved" to JSONObject(saved.readText(Charsets.UTF_8))), phase)
         } catch (error: Throwable) { screenshot("failure"); throw error }
     }

@@ -75,6 +75,11 @@ def summarize(reports, engine):
     exact(['B07.1 Vexor – 探索', 'B07.1 Astrahus – 探索', 'B07.1 cargo copy – Δ'],
           [new[key]['name'] for key in ids])
     assert prepare['saved']['copy_id'] == ids[2]
+    assert set(prepare['saved']['cargo_states']) == set(ids)
+    exact(prepare['saved']['cargo_states'], restored['restored_cargo'])
+    state(prepare['cases'][0]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[0]])
+    state(prepare['cases'][1]['steps'][-1]['result'], prepare['saved']['cargo_states'][ids[1]])
+    state(prepare['saved']['cargo_states'][ids[0]], prepare['saved']['cargo_states'][ids[2]])
     fixture = json.loads((Path(__file__).resolve().parents[2] /
                           'tools/android_reference/fixtures/cargo-stacks.json').read_text())
     assert len(fixture['cases']) == len(prepare['cases']) == 2

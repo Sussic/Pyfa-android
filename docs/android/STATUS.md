@@ -244,8 +244,12 @@ atomic rejection, legacy graph compatibility, failed-save recovery, copy and
 fresh-process restart without desktop/network imports. A typed cargo query and
 touch stack editor use the existing serialized EOS/store boundary. Local Kotlin
 and instrumented-test compilation, debug/test APKs, lint and package inspection
-pass with 160 sources and ARM64/x86_64 contents. Native execution, screenshot
-review, final-head CI and PR merge remain.
+pass with 160 sources and ARM64/x86_64 contents. PR #29 corrects equipment-to-charge
+navigation found by inherited native CI. Review then strengthened the cargo touch
+request and full-stack restart assertions; corrected native-test compilation
+passes. Native execution, screenshot review, final-head CI and PR merge remain.
+B07.2 explicitly retains multi-selected quantity/removal, including zero-to-remove;
+F04.01 remains partially covered until that child completes.
 
 ## Resume, environment and architecture
 
