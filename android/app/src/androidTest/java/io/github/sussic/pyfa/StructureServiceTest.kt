@@ -132,6 +132,9 @@ class StructureServiceTest {
                     step(astrahusSteps, astrahus, listOf("add", "Standup Manufacturing Plant I"))
                     add(astrahusSteps, astrahus, 35899, "Standup Reprocessing Facility I")
                     add(astrahusSteps, astrahus, 35891, "Standup Research Lab I")
+                    waitFor { !model.loading && model.options?.revision == fit(astrahus).revision }
+                    compose.onNodeWithTag("services-add-target").assertIsNotEnabled()
+                        .assertTextContains("Service slots full", substring = true)
                     add(astrahusSteps, astrahus, 35886, "Standup Invention Lab I", false)
                     waitFor { !model.loading && model.options?.revision == fit(astrahus).revision }
                     val replaceAt = position(astrahus, "Standup Manufacturing Plant I")

@@ -142,14 +142,16 @@ internal fun StructureServiceEditor(model: StructureServiceEditorModel, onBack: 
         return
     }
     val service = details.slots.single { it.slot == ModuleSlot.SERVICE }
+    val hasVacancy = service.used < options.capacity
     Text("Service slots: ${service.used}/${options.capacity}", modifier = Modifier.testTag("services-count"))
     for ((name, label) in listOf("shield_hp" to "Shield HP", "armor_hp" to "Armor HP")) {
         fit.stats[name]?.let { Text("$label: ${formatStat(it)}", modifier = Modifier.testTag("services-$name")) }
     }
     Text("Choices are compatible with this structure. Slot, resource and group limits are checked when fitting.")
-    TextButton(onClick = { model.chooseTarget(null) }, enabled = !model.loading && !model.editing,
+    TextButton(onClick = { model.chooseTarget(null) }, enabled = !model.loading && !model.editing && hasVacancy,
         modifier = Modifier.testTag("services-add-target")) {
-        Text(if (model.targetPosition == null) "Add a service ✓" else "Add a service")
+        Text(if (!hasVacancy) "Service slots full; replace or remove a service"
+            else if (model.targetPosition == null) "Add a service ✓" else "Add a service")
     }
     for (module in details.modules.filter { it.slot == ModuleSlot.SERVICE && it.id != null }) {
         Card(Modifier.fillMaxWidth()) {
@@ -169,7 +171,8 @@ internal fun StructureServiceEditor(model: StructureServiceEditorModel, onBack: 
             }
         }
     }
-    Text(if (model.targetPosition == null) "Add service" else "Replace service",
+    Text(if (model.targetPosition != null) "Replace service"
+        else if (hasVacancy) "Add service" else "Choose Replace or Remove above",
         style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("services-action"))
     if (options.choices.isEmpty()) Text("No service modules are compatible with this structure.",
         modifier = Modifier.testTag("services-empty"))
@@ -177,7 +180,7 @@ internal fun StructureServiceEditor(model: StructureServiceEditorModel, onBack: 
         val target = details.modules.firstOrNull { it.index == model.targetPosition }
         Button(onClick = { model.fit(context, choice) },
             enabled = !model.loading && !model.editing && target?.id != choice.id &&
-                (target != null || service.used < options.capacity),
+                (target != null || hasVacancy),
             modifier = Modifier.testTag("service-choice-${choice.id}")) {
             Text(choice.name)
         }
