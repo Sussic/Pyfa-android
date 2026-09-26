@@ -98,7 +98,17 @@ undo/redo; D04 owns system-security inputs.
   restrictions and bonuses; export independent cases and exact raw values.
 - [x] Implement any missing structure-specific bridge and touch behavior with
   atomic rejection and durable graph replay; compare host results to desktop.
-- [ ] Verify native service controls, warnings, package and offline restart;
+- [x] Verify native service controls, warnings, package and offline restart;
   inspect changed screenshots.
-- [ ] Pass final-head Windows/reference and Android/native checks; review and
+- [x] Pass final-head Windows/reference and Android/native checks; review and
   merge focused PR, retain evidence and refresh status/forecast.
+
+[PR #28](https://github.com/Sussic/Pyfa-android/pull/28) merged as `f1278860`,
+tested head `402567d6`. [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265261075)
+passed in 25m10s and [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265260819)
+passed in 29m35s on that head. Five original sequences/27 raw states, 19
+hulls/118 choices, six protocol guards, seven new/44 restored fits and a real
+offline restart passed. All seven structure screenshots were reviewed. The
+[receipt](../evidence/b06-3-native.json) and [raw report](../evidence/b06-3-structures-native.json)
+retain artifact and matching CI/merge-tree provenance. B06 is complete; exact
+next task: B07 cargo management.

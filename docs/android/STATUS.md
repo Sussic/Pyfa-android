@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-25. **B06.2 delivered. Next: B06.3 — Structure-specific controls.**
+Updated: 2026-09-26. **B06 delivered through B06.3. Next: B07 — Cargo management.**
 
 ## Authorized work and latest delivery
 
@@ -84,22 +84,21 @@ prior report, then revealed the new test phase used ephemeral diagnostic storage
 The corrected final head passed without changing engine gates. ARM64 execution,
 older APIs, phone usability and safe upgrades remain unverified.
 
-## Forecast after B06.2 delivery
+## Forecast after B06.3 delivery
 
 | Next milestone | Remaining work | Elapsed estimate / confidence |
 | --- | --- | --- |
-| B06 hull configuration | B06.1 modes and B06.2 subsystems delivered; audit/implement B06.3 structure service slots, restrictions and bonuses with independent desktop and native restart evidence. | **Unknown until the structure audit resolves scope**; low confidence. |
 | B07 cargo | Audit stack counts and equipment/ammunition transfer commands; implement values and restart. | **Unknown until the stack/transfer audit resolves command behavior**; low confidence. |
 | B08 fit notes | Audit desktop note editing; retain multiline/non-ASCII unsaved text across navigation and durable reopen. | **Unknown until the notes/navigation audit resolves scope**; low confidence. |
+| B09 undo/redo | Audit original command boundaries; reverse single/bulk fit actions and recalculate/restore selection through later mutations. | **Unknown until the undo/redo boundary audit resolves scope**; low confidence. |
 
 Allow roughly **25–40 minutes of CI waiting per full parallel round** from recent
-Windows/Android runs; B06.2 final-head runs took 25m49s/27m51s. Confidence is
-medium for one passing round and low for elapsed delivery because later audits
-remain. The initial B06.2 native run stopped after 7m38s when a new phase test
-entered the unphased smoke suite; its focused runner correction required a
-second CI round. Build **16 was the first meaningful development build**;
-build **21 (`0.1.0-b06.2`) is the latest
-emulator-tested build**. The local debug APK is
+Windows/Android runs; B06.3 final-head runs took 25m10s/29m35s. Confidence is
+medium for one passing round and low for elapsed milestone delivery because
+later audits remain. B06.3 review found an Add label still inviting action at
+full capacity; its UI/test correction required a second CI round. Build **16 was
+the first meaningful development build**; build **22 (`0.1.0-b06.3`) is the
+latest emulator-tested build**. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`; no phone installation
 occurs. Safe persistent phone use is **unknown until R02 signing/upgrade checks
 and phone/API compatibility are resolved**. No user decision or access is needed
@@ -191,7 +190,7 @@ visible. [Receipt](evidence/b06-2-native.json) and [raw report](evidence/b06-2-s
 retain provenance and limits. **Exact next task: B06.3 — Structure-specific
 controls.**
 
-## Selected B06.3 — Structure-specific controls
+## B06.3 delivered — Structure-specific controls
 
 Selected on `codex/b06-3-structures` from delivered master `533e533f`.
 Complete structure service-slot, restriction and bonus interactions that B04
@@ -206,10 +205,19 @@ screen now expose the varying capacities and bonuses, using the existing EOS
 module commands. Three focused host tests pass all original states/choices,
 rejected edits, failed-save recovery and copy/fresh-process restore; no desktop
 or network import was attempted. Local Kotlin/test compilation, both APKs,
-lint and package inspection pass with 159 engine sources and both ABIs. Native
-execution, screenshot review, final-head CI and PR merge remain. Preserve
-existing ship fitting and all required gates; B09 retains undo/redo and D04
-retains structure system-security choices. No decision or access is needed.
+lint and package inspection pass with 159 engine sources and both ABIs. [PR
+#28](https://github.com/Sussic/Pyfa-android/pull/28) merged as `f1278860`,
+tested head `402567d6` with the same tree as CI checkout `c3d67e71`.
+[Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265261075)
+passed in 25m10s; [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36265260819)
+passed in 29m35s with 27 matching raw states, six protocol guards, seven
+new/44 restored fits, offline restart and all inherited native/package gates.
+All seven structure screenshots were reviewed. The [receipt](evidence/b06-3-native.json)
+and [raw report](evidence/b06-3-structures-native.json) retain provenance and
+limits. Review corrected the full-slot Add label and asserted its disabled
+state in native CI, requiring a second CI round. B09 retains undo/redo and
+D04 retains structure system-security choices. **Exact next task: B07 — Cargo
+management.** No decision or access is needed.
 
 ## Resume, environment and architecture
 
