@@ -111,3 +111,13 @@ Reproduce with the installed reference/headless Python environments respectively
 and `python -I tools/android_headless/check_cargo_actions.py --source <pinned-checkout> --database <verified-eve.db> --output <new-external-directory>`.
 `android/ci/check-cargo-actions.py` runs the two native phases after the inherited
 cargo-stack gate. Counts and prepared checks are not evidence of native success.
+
+Head `7ef87f71` passes Windows/reference run 36284141825 in 25m26s, including
+the repeated five-case/37-state fixture and three focused tests. Native run
+36284141813 passes inherited phases through B07.1, then fails B07.2 preparation:
+the hidden non-ammunition preset case used one browser Back tap and remained in
+search results; a later cargo Back assertion found no node. The retained failure
+screen confirms that navigation state. The test now explicitly leaves selected
+item, search results and market root, and asserts cargo visibility after actions.
+The two reached cargo screens (selected quantity and 1000-crystal preset) were
+reviewed; remaining native states, restart and final screenshots are unverified.

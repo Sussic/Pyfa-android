@@ -81,8 +81,11 @@ class CargoActionTest {
         "200mm AutoCannon I" to 486, "200mm AutoCannon II" to 2889, "Multifrequency S" to 246,
         "Small Standard Container" to 3297)
     private fun item(name: String) = itemIds.getValue(name)
-    private fun ready(id: String) = waitFor { !model.loading && !model.editing &&
-        model.details?.fitId == id && model.details?.revision == fit(id).revision }
+    private fun ready(id: String) {
+        waitFor { !model.loading && !model.editing &&
+            model.details?.fitId == id && model.details?.revision == fit(id).revision }
+        compose.onNodeWithTag("cargo-back").assertExists()
+    }
     private fun selection(names: JSONArray) {
         click("cargo-clear-selection")
         for (index in 0 until names.length()) click("cargo-select-${item(names.getString(index))}")
@@ -103,6 +106,16 @@ class CargoActionTest {
         waitFor { !equipment.busy && equipment.searched == name }
         click("equipment-item-${item(name)}")
         return options(id, item(name), false)
+    }
+    private fun backFromSearch(id: String) {
+        val equipment = ViewModelProvider(compose.activity)[EquipmentModel::class.java]
+        assertNotNull(equipment.selectedId); assertNotNull(equipment.searched); assertNull(equipment.groupId)
+        click("equipment-back") // Selected item -> search results.
+        assertNull(equipment.selectedId)
+        click("equipment-back") // Search results -> market root.
+        assertNull(equipment.searched)
+        click("equipment-back") // Market root -> cargo.
+        ready(id)
     }
     private fun act(id: String, operation: JSONObject, outcome: JSONObject): JSONObject? {
         ready(id)
@@ -127,10 +140,10 @@ class CargoActionTest {
                 val tag = if (kind == "preset") "equipment-cargo-preset" else "equipment-cargo-fill"
                 if (!outcome.getBoolean("visible")) {
                     compose.onNodeWithTag(tag).assertDoesNotExist()
-                    click("equipment-back"); changesRevision = false
+                    backFromSearch(id); changesRevision = false
                 } else if (kind == "fill_market" && query.fillQuantity == 0L) {
                     compose.onNodeWithTag(tag).assertIsNotEnabled()
-                    click("equipment-back")
+                    backFromSearch(id)
                     send(BridgeOperation.FillCargo(id, item(name), false), listOf(id))
                 } else click(tag)
             }

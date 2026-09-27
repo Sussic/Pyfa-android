@@ -53,6 +53,11 @@ instrumentation compilation pass. Review added a positive existing-stack fill
 case; its refreshed export/repeat and three host checks pass. Both final local APKs,
 lint and 160-source/data/license/ARM64/x86_64 package inspection pass.
 Native offline execution, screenshots and final-head CI/merge remain required.
+Head `7ef87f71` passed Windows CI (36284141825, 25m26s). Native run
+36284141813 passed all inherited phases, then the new cargo test failed because
+it used one Back tap to leave the browser's selected/search/root hierarchy.
+The test now follows all three levels and asserts the cargo screen is visible;
+no product behavior or required gate changed. Corrected native CI is required.
 Use original pinned commands for independent fixtures, preserve serialized EOS and
 atomic graph/history behavior, then verify native touch, copy and offline restart.
 F04.01 remains partial until selected-stack actions are delivered. B07.3 retains
