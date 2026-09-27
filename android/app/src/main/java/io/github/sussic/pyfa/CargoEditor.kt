@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -37,6 +39,12 @@ class CargoEditorModel : ViewModel() {
     var editing by mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
     var message by mutableStateOf<String?>(null)
+    var selected by mutableStateOf<List<Int>>(emptyList())
+    var selectedAmount by mutableStateOf("1")
+    var actions by mutableStateOf<CargoActionOptions?>(null)
+    var actionsLoading by mutableStateOf(false)
+    var showVariations by mutableStateOf(false)
+    private var actionGeneration = 0
     val amounts = mutableStateMapOf<Int, String>()
     val removals = mutableStateMapOf<Int, String>()
     private var requested: Pair<String, Long>? = null
@@ -45,6 +53,7 @@ class CargoEditorModel : ViewModel() {
     fun open() {
         ++generation; requested = null; details = null; loading = false
         amounts.clear(); removals.clear(); error = null; message = null
+        selected = emptyList(); actions = null; ++actionGeneration; actionsLoading = false; showVariations = false
     }
 
     fun load(context: Context, fit: FitSnapshot, retry: Boolean = false) {
@@ -52,6 +61,7 @@ class CargoEditorModel : ViewModel() {
         if (!retry && requested == next) return
         if (requested?.first != fit.id) {
             details = null; amounts.clear(); removals.clear(); message = null; error = null
+            selected = emptyList(); actions = null; showVariations = false
         }
         requested = next
         val token = ++generation
@@ -65,6 +75,7 @@ class CargoEditorModel : ViewModel() {
                     details = value; error = null
                     amounts.clear(); removals.clear()
                     value.cargo.forEach { amounts[it.id] = it.amount.toString(); removals[it.id] = "1" }
+                    selected = selected.filter { id -> value.cargo.any { it.id == id } }
                 }
             }
         }, ContextCompat.getMainExecutor(context))
@@ -75,6 +86,51 @@ class CargoEditorModel : ViewModel() {
         if (editing) return
         submit(context, fit.id, fit.revision, BridgeOperation.AddCargo(fit.id, item.id, 1),
             "${item.name} added to cargo. Fit saved.", onAdded)
+    }
+
+    fun loadActions(context: Context, fit: FitSnapshot, itemId: Int, fromCargo: Boolean) {
+        val token = ++actionGeneration
+        actions = null; actionsLoading = true; showVariations = false
+        EngineRuntime.cargoActionOptions(context, fit.id, itemId, fromCargo).whenCompleteAsync({ value, failure ->
+            if (token == actionGeneration) {
+                actionsLoading = false
+                if (failure != null) error = "Cargo actions could not be loaded. Try again."
+                else { actions = value; error = null }
+            }
+        }, ContextCompat.getMainExecutor(context))
+    }
+
+    fun toggle(stack: CargoStack) {
+        selected = if (stack.id in selected) selected - stack.id else selected + stack.id
+        showVariations = false
+    }
+
+    fun setSelected(context: Context) {
+        val current = details ?: return
+        val amount = selectedAmount.trim().toLongOrNull()
+        if (amount == null || amount < 0) { error = "Enter a whole-number quantity, or zero to remove."; return }
+        submit(context, current.fitId, current.revision,
+            BridgeOperation.SetCargoQuantities(current.fitId, selected.toList(), amount), "Selected quantities saved.")
+    }
+
+    fun removeSelected(context: Context) {
+        val current = details ?: return
+        submit(context, current.fitId, current.revision,
+            BridgeOperation.RemoveCargos(current.fitId, selected.toList()), "Selected cargo removed. Fit saved.")
+    }
+
+    fun preset(context: Context, current: CargoActionOptions, onSaved: () -> Unit) =
+        submit(context, current.fitId, current.revision, BridgeOperation.AddCargoPreset(current.fitId, current.itemId),
+            "Ammunition added to cargo. Fit saved.", onSaved)
+
+    fun fill(context: Context, current: CargoActionOptions, onSaved: () -> Unit = {}) =
+        submit(context, current.fitId, current.revision,
+            BridgeOperation.FillCargo(current.fitId, current.itemId, current.fromCargo), "Cargo filled. Fit saved.", onSaved)
+
+    fun variation(context: Context, current: CargoActionOptions, target: VariationChoice) {
+        submit(context, current.fitId, current.revision,
+            BridgeOperation.ChangeCargoVariations(current.fitId, current.itemId, selected.toList(), target.id),
+            "Matching selected cargo changed to ${target.name}. Fit saved.")
     }
 
     fun set(context: Context, stack: CargoStack) {
@@ -143,11 +199,66 @@ internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: 
         modifier = Modifier.testTag("cargo-over-capacity"))
     if (details.isStructure) Text("Structures accept charges in cargo. Their listed cargo capacity may be zero.")
     TextButton(onClick = onBrowse, modifier = Modifier.testTag("cargo-browse")) { Text("Browse items to add") }
+    val main = details.cargo.find { it.id == model.selected.firstOrNull() }
+    LaunchedEffect(fit.id, fit.revision, main?.id) {
+        if (main != null) model.loadActions(context, fit, main.id, true)
+    }
+    val available = !model.editing && !model.loading
+    if (details.cargo.isNotEmpty()) {
+        Row {
+            TextButton(onClick = { model.selected = details.cargo.map { it.id } }, enabled = available,
+                modifier = Modifier.testTag("cargo-select-all")) { Text("Select all") }
+            TextButton(onClick = { model.selected = emptyList() }, enabled = available,
+                modifier = Modifier.testTag("cargo-clear-selection")) { Text("Clear selection") }
+        }
+    }
+    if (main != null) {
+        Text("${model.selected.size} stacks selected", modifier = Modifier.testTag("cargo-selected-count"))
+        OutlinedTextField(value = model.selectedAmount, onValueChange = { model.selectedAmount = it },
+            label = { Text("Quantity for each selected stack (0 removes)") }, singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth().testTag("cargo-selected-quantity"))
+        Button(onClick = { focus.clearFocus(); model.setSelected(context) }, enabled = available,
+            modifier = Modifier.testTag("cargo-set-selected")) { Text("Save selected quantities") }
+        TextButton(onClick = { focus.clearFocus(); model.removeSelected(context) }, enabled = available,
+            modifier = Modifier.testTag("cargo-remove-selected")) { Text("Remove selected stacks") }
+        val actions = model.actions?.takeIf { it.fitId == fit.id && it.revision == fit.revision &&
+            it.itemId == main.id && it.fromCargo }
+        if (actions != null) {
+            Text("First selected: ${main.name}")
+            Button(onClick = { focus.clearFocus(); model.fill(context, actions) },
+                enabled = available && (actions.fillQuantity ?: 0) > 0,
+                modifier = Modifier.testTag("cargo-fill-selected")) {
+                Text("Fill cargo with ${main.name} (+${actions.fillQuantity})")
+            }
+            if (actions.fillQuantity == 0L) Text("No room for another item.")
+            if (actions.variations.isNotEmpty()) {
+                TextButton(onClick = { model.showVariations = !model.showVariations }, enabled = available,
+                    modifier = Modifier.testTag("cargo-variations")) { Text("Change selected variations") }
+                if (model.showVariations) {
+                    Text("Changes selected stacks in the same variation family as ${main.name}; quantities merge.")
+                    actions.variations.forEach { choice ->
+                        TextButton(onClick = { focus.clearFocus(); model.variation(context, actions, choice) },
+                            enabled = available && choice.enabled,
+                            modifier = Modifier.testTag("cargo-variation-${choice.id}")) {
+                            Text("${choice.group} · ${choice.name}")
+                        }
+                    }
+                }
+            }
+        } else if (model.actionsLoading) Text("Loading cargo actions…")
+        else TextButton(onClick = { model.loadActions(context, fit, main.id, true) },
+            modifier = Modifier.testTag("cargo-actions-retry")) { Text("Retry cargo actions") }
+    }
     if (details.cargo.isEmpty()) Text("No cargo stacks.", modifier = Modifier.testTag("cargo-empty"))
     for (stack in details.cargo) {
         Card(Modifier.fillMaxWidth().testTag("cargo-stack-${stack.id}")) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stack.name, style = MaterialTheme.typography.titleMedium)
+                Row {
+                    Checkbox(checked = stack.id in model.selected, onCheckedChange = { model.toggle(stack) },
+                        enabled = available, modifier = Modifier.testTag("cargo-select-${stack.id}"))
+                    Text(stack.name, style = MaterialTheme.typography.titleMedium)
+                }
                 Text("${stack.amount} items · ${volume(stack.unitVolumeM3)} each")
                 OutlinedTextField(value = model.amounts[stack.id].orEmpty(),
                     onValueChange = { model.amounts[stack.id] = it },

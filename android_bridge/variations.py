@@ -13,7 +13,7 @@ CONTEXTS = ('module', 'drone', 'implant')
 def choices(engine, fit, item, context, policy=None):
     engine._check_fit(fit)
     from .market_policy import MarketPolicy
-    if context not in CONTEXTS:
+    if context not in (*CONTEXTS, 'cargo'):
         raise ValueError('Choose modules, drones or fit implants')
     policy = policy or MarketPolicy()
     family = policy.getVariationsByItems((item,))

@@ -75,6 +75,11 @@ ARGUMENTS = {
     "add_cargo": ("fit_id", "item_id", "quantity"),
     "set_cargo_quantity": ("fit_id", "item_id", "quantity"),
     "remove_cargo": ("fit_id", "item_id", "quantity"),
+    "set_cargo_quantities": ("fit_id", "item_ids", "quantity"),
+    "remove_cargos": ("fit_id", "item_ids"),
+    "add_cargo_preset": ("fit_id", "item_id"),
+    "fill_cargo": ("fit_id", "item_id", "from_cargo"),
+    "change_cargo_variations": ("fit_id", "main_item_id", "item_ids", "item_id"),
     "set_fit_restrictions": ("fit_id", "ignore"),
     "change_mode": ("fit_id", "item_id"),
     "set_subsystem": ("fit_id", "kind", "item_id"),
@@ -281,6 +286,14 @@ class BridgeSession:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
+
+    def cargo_action_options(self, fit_id, item_id, from_cargo):
+        from .cargo import action_options
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **action_options(self.engine, self._fits[fit_id], item_id, from_cargo)}
 
     def mode_options(self, fit_id):
         from .modes import options
@@ -508,7 +521,18 @@ class BridgeSession:
         if "item_id" in args and not (operation == "set_subsystem" and args["item_id"] is None):
             _integer(args["item_id"], 1, 2**31 - 1)
         if "quantity" in args:
-            _integer(args["quantity"], 1, 2**63 - 1)
+            _integer(args["quantity"], 0 if operation == "set_cargo_quantities" else 1, 2**63 - 1)
+        if "main_item_id" in args:
+            _integer(args["main_item_id"], 1, 2**31 - 1)
+        if "from_cargo" in args:
+            _boolean(args["from_cargo"])
+        if "item_ids" in args:
+            if type(args["item_ids"]) is not list or not args["item_ids"]:
+                _invalid()
+            for value in args["item_ids"]:
+                _integer(value, 1, 2**31 - 1)
+            if len(set(args["item_ids"])) != len(args["item_ids"]):
+                _invalid()
         if operation == "set_subsystem":
             _integer(args["kind"], 1, 2**31 - 1)
         if "charge_id" in args and args["charge_id"] is not None:
@@ -657,7 +681,7 @@ class BridgeSession:
                 specs.pop(deleted)
             else:
                 used = self._apply(operation, args, fits)
-                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem", "add_cargo", "remove_cargo"} and used:
+                if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem", "add_cargo", "remove_cargo", "remove_cargos", "add_cargo_preset", "fill_cargo"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
             records = self._capture(fits, specs)
@@ -763,6 +787,17 @@ class BridgeSession:
             action = {"add_cargo": "add", "set_cargo_quantity": "set",
                       "remove_cargo": "remove"}[operation]
             return change(self.engine, fit, action, args["item_id"], args["quantity"])
+        if operation in ("set_cargo_quantities", "remove_cargos", "add_cargo_preset", "fill_cargo", "change_cargo_variations"):
+            from . import cargo
+            if operation == "set_cargo_quantities":
+                return cargo.selected_quantity(self.engine, fit, args["item_ids"], args["quantity"])
+            if operation == "remove_cargos":
+                return cargo.remove_selected(self.engine, fit, args["item_ids"])
+            if operation == "add_cargo_preset":
+                return cargo.preset(self.engine, fit, args["item_id"])
+            if operation == "fill_cargo":
+                return cargo.fill(self.engine, fit, args["item_id"], args["from_cargo"])
+            return cargo.change_variations(self.engine, fit, args["main_item_id"], args["item_ids"], args["item_id"])
         if operation == "set_fit_restrictions":
             return fitting.restrictions(self.engine, fit, args["ignore"])
         if operation == "change_mode":

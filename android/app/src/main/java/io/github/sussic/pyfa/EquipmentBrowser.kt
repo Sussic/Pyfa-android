@@ -135,9 +135,29 @@ internal fun EquipmentBrowser(model: EquipmentModel, moduleModel: ModuleEditorMo
                 EquipmentFittingActions(moduleModel, item, onViewFit)
                 val fit = (engine as? EngineState.Ready)?.fit
                 if (fit != null) {
+                    LaunchedEffect(fit.id, fit.revision, item.id) {
+                        cargoModel.loadActions(context, fit, item.id, false)
+                    }
                     Button(onClick = { focus.clearFocus(); cargoModel.add(context, item, onCargo) },
                         enabled = !cargoModel.editing && !cargoModel.loading,
                         modifier = Modifier.testTag("equipment-add-cargo")) { Text("Add one to cargo") }
+                    val actions = cargoModel.actions?.takeIf { it.fitId == fit.id && it.revision == fit.revision &&
+                        it.itemId == item.id && !it.fromCargo }
+                    if (actions != null) {
+                        actions.presetQuantity?.let { quantity ->
+                            Button(onClick = { focus.clearFocus(); cargoModel.preset(context, actions, onCargo) },
+                                enabled = !cargoModel.editing && !cargoModel.loading,
+                                modifier = Modifier.testTag("equipment-cargo-preset")) { Text("Add $quantity to cargo") }
+                        }
+                        actions.fillQuantity?.let { quantity ->
+                            Button(onClick = { focus.clearFocus(); cargoModel.fill(context, actions, onCargo) },
+                                enabled = quantity > 0 && !cargoModel.editing && !cargoModel.loading,
+                                modifier = Modifier.testTag("equipment-cargo-fill")) { Text("Fill cargo (+$quantity)") }
+                            if (quantity == 0L) Text("No room for another item.")
+                        }
+                    } else if (cargoModel.actionsLoading) Text("Loading cargo actions…")
+                    else TextButton(onClick = { cargoModel.loadActions(context, fit, item.id, false) },
+                        modifier = Modifier.testTag("equipment-cargo-retry")) { Text("Retry cargo actions") }
                 }
                 cargoModel.error?.let { Text(it, color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.testTag("equipment-cargo-error")) }

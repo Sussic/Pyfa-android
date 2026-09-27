@@ -85,7 +85,7 @@ def load(source):
     def choices(fit, item, context):
         owner = object.__new__(menu_type)
         owner.mainFrame = SimpleNamespace(getActiveFit=lambda: fit.ID)
-        context_name = {'module': 'fittingModule', 'drone': 'droneItem', 'implant': 'implantItem'}[context]
+        context_name = {'module': 'fittingModule', 'drone': 'droneItem', 'implant': 'implantItem', 'cargo': 'cargoItem'}[context]
         if not owner.display(None, context_name, SimpleNamespace(item=item), ()):
             return []
         menu = owner.getSubMenu(None, context_name, None, (), Menu(), 0, None)

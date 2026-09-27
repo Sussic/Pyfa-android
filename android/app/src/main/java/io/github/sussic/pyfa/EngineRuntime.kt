@@ -107,6 +107,20 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun cargoActionOptions(context: Context, fitId: String, itemId: Int,
+                           fromCargo: Boolean): CompletableFuture<CargoActionOptions> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeCargoActionOptions(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("cargo_action_options", fitId, itemId, fromCargo).toString()).also { result ->
+                check(result.fitId == fitId && result.itemId == itemId && result.fromCargo == fromCargo &&
+                    mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
     fun moduleDefaultsDiagnostics(context: Context): CompletableFuture<List<ModuleDefault>> {
         check(BuildConfig.DEBUG)
         val ready = start(context)

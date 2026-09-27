@@ -250,3 +250,17 @@ maps unique fitted sources in fit order to the first available vacancies in
 their racks and rejects the entire request if any copy is illegal. All edits
 use the existing serialized EOS worker and atomic graph save. B05.4 retains
 variation/removal and B09 retains undo/redo.
+
+### B07.2 cargo selection and context actions
+
+`cargo_action_options(fit_id, item_id, from_cargo)` returns revision-bound preset
+and fill quantities plus original cargo variation choices. A null quantity means
+the action is unavailable; zero fill means no item can be added. Kotlin displays
+these values and does not calculate capacity. `set_cargo_quantities` accepts
+distinct selected item IDs and a non-negative quantity; zero removes the stacks
+without promoting recent use. `remove_cargos` promotes removed IDs in selection
+order. `add_cargo_preset` and `fill_cargo` reuse original market/context policy;
+`change_cargo_variations` filters the selection to the main item's family and
+merges quantities without recent promotion. All edits use the existing revision
+check and atomic graph transaction, including recovery after partial failures.
+Fitted transfers remain B07.3 and undo/redo remains B09.

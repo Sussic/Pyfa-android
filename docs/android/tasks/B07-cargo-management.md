@@ -73,3 +73,41 @@ restored fits, six protocol guards and twelve corruption probes pass. All six
 final cargo screenshots were reviewed; artifact digest and tested tree match.
 [Receipt](../evidence/b07-1-native.json) and [raw report](../evidence/b07-1-cargo-stacks-native.json)
 retain evidence. B07.2 is the exact next task; the parent remains active.
+
+## B07.2 selected — 2026-09-27
+
+Branch `codex/b07-2-cargo-actions` starts from delivered master `062e8e09`.
+Deliver selected-stack quantity/removal (including zero-to-remove), original
+ammunition presets, fill boundaries and selected variation merging. Audit original
+GUI/context commands as well as EOS edits so target order, no-ops, history and
+quantity behavior are retained. Acceptance requires independent command/raw-value
+fixtures and repeat, atomic malformed/stale/write-failure behavior, durable copy
+and fresh restart, native touch and screenshot review, and final-head CI/PR merge.
+B07.3 retains fitted module/charge transfers; B09 retains undo/redo.
+
+## B07.2 implementation and review
+
+The new serialized cargo actions preserve selected order, zero-to-remove without
+recent promotion, explicit removal history, x8 scan probes/x1000 other ammunition,
+original base-volume fill truncation, variation family filtering and stack merges.
+Touch controls expose multi-selection, a shared quantity, presets, fill and choices.
+Independent original commands repeat five cases/37 states. Three focused host
+tests pass exact cargo/history/menu choices, synthetic null/zero/negative volume
+guards, stale/malformed rejection, overflow/partial-edit rollback, failed saves,
+copy and 11-fit fresh restart. Kotlin/main and instrumentation compilation pass.
+Positive existing-stack fill was added during review; the refreshed fixture/repeat
+and affected host checks pass. Both final local APKs, lint and package inspection
+pass (160 sources, pinned dataset, licenses, ARM64/x86_64). Native
+execution/screenshots and final-head CI remain.
+
+The original market ammunition preset has no crystal exception: Multifrequency S
+adds 1000. F04.02's exception remains in scope for the fitted charge transfer audit
+in B07.3; it is not silently applied to this distinct market action. B07.2 retains
+all inherited native/host checks and adds actual touch sequences, typed options,
+raw histories/cargo values, ten new/copy fits and a separate process restart.
+
+Reproduce with the installed reference/headless Python environments respectively:
+`python -I tools/android_reference/cargo_actions.py --source <pinned-checkout> --database <verified-eve.db> --output <new-external-directory> --check tools/android_reference/fixtures/cargo-actions.json`
+and `python -I tools/android_headless/check_cargo_actions.py --source <pinned-checkout> --database <verified-eve.db> --output <new-external-directory>`.
+`android/ci/check-cargo-actions.py` runs the two native phases after the inherited
+cargo-stack gate. Counts and prepared checks are not evidence of native success.

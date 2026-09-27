@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-27. **B07.1 delivered. Exact next task: B07.2.**
+Updated: 2026-09-27. **B07.1 delivered. B07.2 selected and active.**
 
 ## Authorized queue
 
@@ -39,10 +39,20 @@ new test/report assertions (JSON numeric-kind serialization, then native nulls
 compared using a desktop-only mapping). They are fixed and the final head passes;
 no gate was weakened. [B07 task evidence](tasks/B07-cargo-management.md) records the details.
 
-## Exact next task — B07.2
+## Selected task — B07.2
 
 Deliver original multi-selected cargo quantity/removal, including zero-to-remove,
 ammunition presets, fill-to-capacity boundaries and variation/quantity merges.
+Selected on `codex/b07-2-cargo-actions` from delivered master `062e8e09`, with no
+open PR. The intended outcome is touch-accessible selected cargo actions with
+independent command/value comparisons, atomic saves and native offline copy/restart.
+The adapter and touch controls are implemented. Independent desktop export repeats
+five cases/37 states; three focused host checks pass selection/history, menu choices,
+volume guards, atomic rejection/save failure and 11-fit fresh restart. Kotlin and
+instrumentation compilation pass. Review added a positive existing-stack fill
+case; its refreshed export/repeat and three host checks pass. Both final local APKs,
+lint and 160-source/data/license/ARM64/x86_64 package inspection pass.
+Native offline execution, screenshots and final-head CI/merge remain required.
 Use original pinned commands for independent fixtures, preserve serialized EOS and
 atomic graph/history behavior, then verify native touch, copy and offline restart.
 F04.01 remains partial until selected-stack actions are delivered. B07.3 retains
