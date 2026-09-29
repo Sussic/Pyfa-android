@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-27. **B07.1 delivered. B07.2 selected and active.**
+Updated: 2026-09-30. **B07.1 delivered. B07.2 active in PR #30.**
 
 ## Authorized queue
 
@@ -58,6 +58,14 @@ Head `7ef87f71` passed Windows CI (36284141825, 25m26s). Native run
 it used one Back tap to leave the browser's selected/search/root hierarchy.
 The test now follows all three levels and asserts the cargo screen is visible;
 no product behavior or required gate changed. Corrected native CI is required.
+Head `afe469ef` passed Windows CI (36286236788, 26m35s). Native run
+36286236863 passed inherited phases and cargo preparation, then its restart check
+found only one fit instead of eleven: B07.2 was missing from the test runner's
+durable-phase flags and had used ephemeral diagnostic storage. The phase is now
+registered, with durable/opened-existing storage and 47/57 fit-count entry guards;
+instrumentation compilation passes. The one-day artifact expired during the
+interruption; CI logs remain.
+Native persistence and final screenshots still require a corrected run.
 Use original pinned commands for independent fixtures, preserve serialized EOS and
 atomic graph/history behavior, then verify native touch, copy and offline restart.
 F04.01 remains partial until selected-stack actions are delivered. B07.3 retains

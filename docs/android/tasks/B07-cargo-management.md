@@ -121,3 +121,15 @@ screen confirms that navigation state. The test now explicitly leaves selected
 item, search results and market root, and asserts cargo visibility after actions.
 The two reached cargo screens (selected quantity and 1000-crystal preset) were
 reviewed; remaining native states, restart and final screenshots are unverified.
+
+Head `afe469ef` passes Windows/reference run 36286236788 in 26m35s. Native run
+36286236863 passes inherited phases and the new preparation actions, then fails
+the restart library comparison (`root.data expected 11, actual 1`). B07.2's phase
+flag was omitted from `DiagnosticTestRunner`, which selected ephemeral diagnostic
+storage for both processes. The flag is now registered alongside existing durable
+phases, with enabled/opened-existing persistence and 47/57 fit-count entry guards.
+Corrected instrumentation Kotlin compilation passes in 1m10s.
+This strengthens the existing durable-restart gate; product storage is unchanged.
+The one-day artifact expired before the September 30 resume, so its screenshots
+and raw report cannot be reviewed. The failure is retained in CI logs; a corrected
+native run is required for durable results and final screenshot review.
