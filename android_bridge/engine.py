@@ -79,7 +79,10 @@ class HeadlessEngine:
         self._check_thread()
         _keys(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern",
                      "security", "modules", "drones", "target_profile", "implants",
-                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode", "cargo"))
+                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes"))
+        if 'notes' in spec:
+            from .notes import validate
+            validate(spec['notes'])
         if spec["target_profile"] is not None or any(spec[key] != [] for key in (
                 "implants", "boosters", "projections", "commands", "environments")):
             raise ValueError("This adapter does not implement those scenario inputs yet")
@@ -114,6 +117,8 @@ class HeadlessEngine:
         item = self._item(spec["ship"])
         hull = Citadel(item) if item.category.name == "Structure" else Ship(item)
         fit = Fit(hull, name=spec["name"])
+        if 'notes' in spec:
+            fit.notes = spec['notes']
         if "mode" in spec:
             from eos.saveddata.mode import Mode
             mode_id = spec["mode"]

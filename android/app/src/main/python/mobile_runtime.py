@@ -98,6 +98,10 @@ def cargo_transfer_details(fit_id):
     return encoded(_bridge.cargo_transfer_details(fit_id))
 
 
+def note_details(fit_id):
+    return encoded(_bridge.note_details(fit_id))
+
+
 def cargo_action_options(fit_id, item_id, from_cargo):
     return encoded(_bridge.cargo_action_options(fit_id, item_id, from_cargo))
 

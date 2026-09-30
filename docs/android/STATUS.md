@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-30. **B07 delivered. B08 ready.**
+Updated: 2026-09-30. **B07 delivered. B08 active.**
 
 ## Authorized queue
 
@@ -37,6 +37,27 @@ crystal presets remain 1000; audited fitted crystal/script transfers use one.
 The initial native run exposed a phased-test registration omission, corrected
 without removing checks. The [B07 task](tasks/B07-cargo-management.md) retains it.
 B07 is complete within its boundary; **B09 owns undo/redo**. Next: **B08 fit notes**.
+
+## Selected task — B08 fit notes
+
+Selected on `codex/b08-fit-notes` from delivered master `93d020de`; live default
+branch and no open PRs verified. Deliver F01.06 multiline Unicode notes, exact
+whitespace/empty text, correct-fit saves, durable copy/restart and preserved drafts
+across navigation/recreation. The pinned pane saves after one second and flushes
+the previous fit on switching; structure editing is disabled. Preserve that UI
+boundary and existing structure note data. Acceptance requires independent original
+service/pane evidence, strict atomic edits, unchanged calculations/history, native
+typing/navigation/recreation/restart and screenshot review, then final-head CI and
+reviewed merge. [Task and checks](tasks/B08-fit-notes.md). B09 remains next.
+
+The original service/pane reference repeats three fits/13 states. Four focused
+host tests pass exact text, correct-fit/copy isolation, unchanged calculations,
+atomic rejection/write recovery, legacy graphs and five-fit restart. The typed
+note boundary and retained multiline editor are implemented. Both final local APKs,
+lint (1m34s) and package inspection pass: 162 sources, pinned data/licenses and
+ARM64/x86_64 dependencies. Required PR CI, native navigation/recreation/restart,
+seven screenshot reviews and delivery remain outstanding. Local build 26 is not
+yet emulator-verified.
 
 ## Delivered work to reuse
 

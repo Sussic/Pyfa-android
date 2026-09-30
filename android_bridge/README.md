@@ -278,3 +278,17 @@ recent-use history. Structure module transfers follow the original command rathe
 than the market's charge-only addition rule. Invalid edits and failed saves preserve
 the committed graph, including correction of the documented upstream double-undo
 quantity defect. Undo/redo remains B09.
+
+### B08 fit notes
+
+`note_details(fit_id)` returns revision-bound exact text, Unicode code-point count
+and original pane edit availability. `set_notes(fit_id, text)` accepts empty and
+multiline Unicode text without trimming or normalization. It uses the existing
+atomic graph transaction and never promotes market history. Optional `notes` in
+the declarative spec preserves old graphs without that key, independent copies,
+stored structure notes and fresh-process replay. The structure pane stays read-only
+as in the pinned desktop. Kotlin retains drafts per fit, delays autosave one second
+and flushes on Back, fit switching and activity stop; failed/stale saves retain the
+draft and conflicting saved text requires an explicit editor choice. Notes are
+plain text, never executed or rendered as HTML. Original note saves are direct
+service edits; general edit undo/redo remains B09.
