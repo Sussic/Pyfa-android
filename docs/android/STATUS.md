@@ -60,6 +60,12 @@ guards; its execution and screenshots remain unverified. Original failed-transfe
 quantity corruption is retained in the reference and corrected by Android's atomic
 rejection, as documented in the task. Native CI, review and merge remain required.
 
+[PR #31](https://github.com/Sussic/Pyfa-android/pull/31) is open. Native run
+36650835930 on `21099908` passed build/lint/package checks, then caught a test
+registration omission: the phased transfer test ran in the initial suite without
+its phase argument. Its initial-suite exclusion is corrected; the dedicated
+durable prepare/restart driver remains required. Corrected-head CI is pending.
+
 ## Delivered work to reuse
 
 | Milestone | Delivery and retained evidence |

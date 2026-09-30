@@ -197,3 +197,10 @@ Kotlin compilation, both APKs, lint and package inspection pass, including the l
 UI callback guard (1m08s build/lint). Native execution, six screenshot
 reviews, final-head full CI, review and merge remain required; prepared checks are
 not evidence of native success.
+
+Head `21099908` passed native APK build/lint and package inspection, then run
+36650835930 failed the initial diagnostic suite: `CargoTransferTest` was omitted
+from its phased-test exclusion list and reported `Missing phase`. The dedicated
+prepare/restart driver and durable runner flag were already present. The new test
+is now excluded from the initial suite and remains required through that driver;
+no acceptance assertion is removed. Corrected-head native execution is required.
