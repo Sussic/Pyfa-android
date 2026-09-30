@@ -1,75 +1,41 @@
 # Android project status
 
-Updated: 2026-09-30. **B07.1 delivered. B07.2 active in PR #30.**
+Updated: 2026-09-30. **B07.2 delivered. B07.3 ready.**
 
 ## Authorized queue
 
 The active goal authorizes sequential eligible approved roadmap work, one coherent
 outcome through review, required host/native checks and fork PR merge, then automatic
 continuation. No releases, phone installation, billing changes, unrelated work or
-delegation. No user decision or access blocker currently prevents B07.2.
+delegation. No user decision or access blocker currently prevents B07.3.
 
-## Latest delivery — B07.1 cargo stacks and quantities
+## Latest delivery — B07.2 selected cargo actions
 
-[PR #29](https://github.com/Sussic/Pyfa-android/pull/29) merged as `fd80b2fc`,
-tested head `bc06de79`. CI checkout `5a5711f5` and the merge share tree `2437d335`.
-Build **23 (`0.1.0-b07.1`)** adds cargo through the offline equipment browser,
-edits/removes stack quantities, displays EOS used/capacity values and preserves
-exact stacks through atomic saves, copy and process restart. Older graphs without
-cargo still replay. Quantity actions use numeric input and dismiss the keyboard.
+[PR #30](https://github.com/Sussic/Pyfa-android/pull/30) merged as `83f1df74`,
+tested head `c3e14b29`. CI checkout `de7e98ac` and the merge share tree `3aa6a705`.
+Build **24 (`0.1.0-b07.2`)** adds selected quantity/removal (zero removes),
+ammunition presets, fill-to-capacity and variation stack merging. Original menu,
+selection and recent-use rules are retained with atomic saves and offline copies.
 
-- Independent original desktop commands repeat **two cases/17 states** in fresh
-  processes. Includes stack merging, partial/full removal, container volume,
-  over-capacity Vexor (500/480 m³) and charge cargo on zero-capacity Astrahus.
-- Three focused host tests pass reference states, invalid edits, legacy graphs,
-  failed-save recovery, copy and fresh-process restart without desktop/network imports.
-- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36277865653)
-  passes every required host/reference/migration gate in **25m24s**.
-- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36277865678)
-  passes all inherited gates plus offline cargo touch/restart, both APKs, lint,
-  signature and 160-source/data/license/ABI inspection in **35m37s**. All **47 fits**
-  restore, including three new cargo fits; six protocol guards pass.
-- Artifact digest and tested tree match. All **six final cargo screenshots** were
-  reviewed, and **12 deliberate report corruptions** were rejected. The retained
-  [receipt](evidence/b07-1-native.json) and [raw report](evidence/b07-1-cargo-stacks-native.json)
-  record exact provenance, numeric kinds, state values and limits.
+- Independent original desktop commands repeat **five cases/37 states**. Three
+  focused host tests pass values/options/history, malformed/stale edits, overflow,
+  partial-edit/failed-save recovery, copies and 11-fit fresh-process restart.
+- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36645030741)
+  passes all required gates in **27m24s**.
+- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36645030743)
+  passes inherited and new offline touch/restart gates, both APKs, lint, signature,
+  pinned data/licenses and ABI inspection in **40m23s**. All **57 fits** restore,
+  including ten new/copy fits; eight protocol guards pass.
+- Artifact digest and tested tree match; all **six final cargo screenshots** and
+  affected market/charge/stack screens were reviewed. **17 deliberate report
+  corruptions** are rejected. Retained [receipt](evidence/b07-2-native.json) and
+  [raw report](evidence/b07-2-cargo-actions-native.json) record exact provenance.
 
-Earlier native rounds exposed equipment-to-charge navigation and two bugs in the
-new test/report assertions (JSON numeric-kind serialization, then native nulls
-compared using a desktop-only mapping). They are fixed and the final head passes;
-no gate was weakened. [B07 task evidence](tasks/B07-cargo-management.md) records the details.
-
-## Selected task — B07.2
-
-Deliver original multi-selected cargo quantity/removal, including zero-to-remove,
-ammunition presets, fill-to-capacity boundaries and variation/quantity merges.
-Selected on `codex/b07-2-cargo-actions` from delivered master `062e8e09`, with no
-open PR. The intended outcome is touch-accessible selected cargo actions with
-independent command/value comparisons, atomic saves and native offline copy/restart.
-The adapter and touch controls are implemented. Independent desktop export repeats
-five cases/37 states; three focused host checks pass selection/history, menu choices,
-volume guards, atomic rejection/save failure and 11-fit fresh restart. Kotlin and
-instrumentation compilation pass. Review added a positive existing-stack fill
-case; its refreshed export/repeat and three host checks pass. Both final local APKs,
-lint and 160-source/data/license/ARM64/x86_64 package inspection pass.
-Native offline execution, screenshots and final-head CI/merge remain required.
-Head `7ef87f71` passed Windows CI (36284141825, 25m26s). Native run
-36284141813 passed all inherited phases, then the new cargo test failed because
-it used one Back tap to leave the browser's selected/search/root hierarchy.
-The test now follows all three levels and asserts the cargo screen is visible;
-no product behavior or required gate changed. Corrected native CI is required.
-Head `afe469ef` passed Windows CI (36286236788, 26m35s). Native run
-36286236863 passed inherited phases and cargo preparation, then its restart check
-found only one fit instead of eleven: B07.2 was missing from the test runner's
-durable-phase flags and had used ephemeral diagnostic storage. The phase is now
-registered, with durable/opened-existing storage and 47/57 fit-count entry guards;
-instrumentation compilation passes. The one-day artifact expired during the
-interruption; CI logs remain.
-Native persistence and final screenshots still require a corrected run.
-Use original pinned commands for independent fixtures, preserve serialized EOS and
-atomic graph/history behavior, then verify native touch, copy and offline restart.
-F04.01 remains partial until selected-stack actions are delivered. B07.3 retains
-fitted equipment/charge transfers; B09 owns undo/redo. B07 remains active.
+Earlier native rounds exposed test navigation and an omitted durable-phase flag.
+Both are corrected and final-head CI passes without weakened gates; the
+[B07 task](tasks/B07-cargo-management.md) retains the failure history.
+Market presets have no crystal exception (1000); fitted-charge behavior remains
+B07.3. Undo/redo remains B09. B07 remains active; next task is **B07.3**.
 
 ## Delivered work to reuse
 
@@ -77,6 +43,7 @@ fitted equipment/charge transfers; B09 owns undo/redo. B07 remains active.
 | --- | --- |
 | B04 equipment/fitting | [PR #21](https://github.com/Sussic/Pyfa-android/pull/21), [task](tasks/B04-equipment-fitting.md). All B04 children remain closed. |
 | B05 bulk editing | PRs [#22](https://github.com/Sussic/Pyfa-android/pull/22), [#23](https://github.com/Sussic/Pyfa-android/pull/23), [#24](https://github.com/Sussic/Pyfa-android/pull/24), [#25](https://github.com/Sussic/Pyfa-android/pull/25); [task](tasks/B05-bulk-editing.md). |
+| B07.1 cargo stacks | [PR #29](https://github.com/Sussic/Pyfa-android/pull/29), [receipt](evidence/b07-1-native.json), [task](tasks/B07-cargo-management.md). |
 | B06 modes/subsystems/structures | PRs [#26](https://github.com/Sussic/Pyfa-android/pull/26), [#27](https://github.com/Sussic/Pyfa-android/pull/27), [#28](https://github.com/Sussic/Pyfa-android/pull/28); [task](tasks/B06-hull-configuration.md), [latest receipt](evidence/b06-3-native.json). |
 
 Earlier A/B milestones remain done as recorded in ROADMAP and their task/evidence
@@ -84,14 +51,13 @@ files. Do not reopen delivered work or rerun unchanged tested revisions.
 
 ## Forecast and installation limits
 
-B07.2 selected actions/presets/fill/variations comes next, then B07.3 transfers,
-B08 notes and B09 undo/redo. Elapsed implementation estimates remain **unknown**
+B07.3 fitted transfers comes next, then B08 notes and B09 undo/redo. Elapsed implementation estimates remain **unknown**
 until each focused command/state audit resolves its remaining scope; confidence
-is low. A full parallel CI round currently takes roughly **25–40 minutes**;
-B07.1's final Windows/Android runs took 25m24s/35m37s. Multiple correction rounds
-were needed for B07.1, so a one-round delivery estimate is not reliable.
+is low. A full parallel CI round currently takes roughly **25–41 minutes**;
+B07.2's final Windows/Android runs took 27m24s/40m23s. Multiple correction rounds
+were needed for B07.2, so a one-round delivery estimate is not reliable.
 
-Build 16 was the first meaningful development build; build 23 is the latest
+Build 16 was the first meaningful development build; build 24 is the latest
 emulator-tested build. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
 remains **unknown** until R02 signing/upgrade checks and phone/API compatibility

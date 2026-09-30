@@ -1,0 +1,166 @@
+{
+  "delivery": {
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/30",
+    "base": "062e8e0953abe3b01d87c60592d99869fcd2d5ec",
+    "tested_head": "c3e14b2937ff86b31fc867cbd6d35431971c8a89",
+    "android_run": 36645030743,
+    "android_conclusion": "success",
+    "android_seconds": 2423,
+    "windows_run": 36645030741,
+    "windows_conclusion": "success",
+    "windows_seconds": 1644,
+    "ci_checkout": "de7e98acb37b80456bd63ad25bb004192adfd500",
+    "ci_checkout_parents": [
+      "062e8e0953abe3b01d87c60592d99869fcd2d5ec",
+      "c3e14b2937ff86b31fc867cbd6d35431971c8a89"
+    ],
+    "ci_tree": "3aa6a705948006a7fcb0f4bb31739a9d7045ce19",
+    "artifact_id": 11068943593,
+    "artifact_digest": "sha256:d58619df3b963b18442715ff7cbd007ae5baaa6fb52d8b51471b9cb5afef33a9",
+    "artifact_bytes": 18094515,
+    "cargo_report_corruptions_rejected": [
+      "preset",
+      "fill_quantity",
+      "variation_choices",
+      "variation_source",
+      "recent_order",
+      "quantity",
+      "volume",
+      "capacity",
+      "identity",
+      "boolean_count",
+      "operation",
+      "restart_stack",
+      "restart_numeric_kind",
+      "missing_restored_fit",
+      "same_process",
+      "protocol_guard",
+      "null_as_zero"
+    ],
+    "merge": "83f1df74c15d506b37c4da97778a55a942a84864",
+    "ci_tree_matches_merge": true
+  },
+  "desktop_reference": {
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "fixture_sha256": "0f0bd367ad99522648410fc018a8ff567902fbbfc6bd1f5deb7edc6eae142e9f",
+    "cases": 5,
+    "states": 37,
+    "fresh_process_repeat": true,
+    "synthetic_volume_boundaries": [
+      {
+        "volume": null,
+        "visible": true,
+        "submitted_count": 0
+      },
+      {
+        "volume": 0.0,
+        "visible": true,
+        "submitted_count": 0
+      },
+      {
+        "volume": -1.0,
+        "visible": true,
+        "submitted_count": 0
+      }
+    ],
+    "numeric_tolerance": {
+      "relative": 1e-10,
+      "absolute": 1e-09
+    },
+    "exact_fields": [
+      "item IDs",
+      "names",
+      "quantities",
+      "operations",
+      "menu choices",
+      "recent history",
+      "units"
+    ]
+  },
+  "host_focused_ci": {
+    "tests_passed": 3,
+    "all_reference_states": true,
+    "atomic_rejection_overflow_partial_edit_and_failed_save_recovery": true,
+    "copy_and_fresh_process_restore": true,
+    "restored_fits": 11
+  },
+  "native_raw": {
+    "path": "b07-2-cargo-actions-native.json",
+    "sha256": "ad1a5b9193442f74ffd457e5da87797f863e33d15f3bed4ed4f170e1892585ff",
+    "cases": 5,
+    "states": 37,
+    "new_fits": 10,
+    "restored_fits": 57,
+    "screenshots": 6,
+    "protocol_rejections": 8,
+    "checks": {
+      "prepare": [
+        "five_original_cargo_action_sequences",
+        "touch_selected_quantity_remove_presets_fill_and_variations",
+        "durable_cargo_copies",
+        "atomic_rejections",
+        "typed_cargo_actions_protocol"
+      ],
+      "restored": [
+        "fresh_process_restore",
+        "reopen_each_fit"
+      ]
+    },
+    "screenshots_reviewed": [
+      {
+        "reviewed": true,
+        "sha256": "62d51550ad80b85352d9aaa31218a21d586db5f9a7400a0767640944fdc8ce51",
+        "name": "cargo-actions-selected-quantity.png"
+      },
+      {
+        "reviewed": true,
+        "sha256": "e45a095f62ad89562a96820a8ddc77b2b43b06d76ba32deefd98336199523cfb",
+        "name": "cargo-actions-crystal-preset.png"
+      },
+      {
+        "reviewed": true,
+        "sha256": "60d1c580feb8839ce86683b954cee8dbe46f963f125c43066469419b5cf97611",
+        "name": "cargo-actions-filled-cargo.png"
+      },
+      {
+        "reviewed": true,
+        "sha256": "d8ef68ea685f43cf9d67895efb268beb5a95a50a1ee21fddb610c62b9a56672a",
+        "name": "cargo-actions-variation-merge.png"
+      },
+      {
+        "reviewed": true,
+        "sha256": "52b5b167de697ba3bb3bdbb9ec153f90e8d190861cb590406ab5efd09fa6f6cf",
+        "name": "cargo-actions-structure-preset.png"
+      },
+      {
+        "reviewed": true,
+        "sha256": "882014a1bc37ab99a0e94d181904d5e4c8db68f97cd931850ebdddfa912bbba6",
+        "name": "cargo-actions-restored-variation-copy.png"
+      }
+    ],
+    "fresh_process_restart": true
+  },
+  "native_summary": {
+    "task": "B07.2",
+    "checkout_sha": "de7e98acb37b80456bd63ad25bb004192adfd500",
+    "workflow_run": "36645030743",
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "airplane_mode": true,
+    "fresh_install": true,
+    "app_internet_permission": false,
+    "apk_bytes": 70956447,
+    "apk_sha256": "3c660c5c1bf5bf334d7655a2877cdf30466157454c6a4770228d4860d867da0c",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; ARM64 and older API execution remain unverified.",
+    "Phone usability and safe signing/install upgrades remain R02/R03.",
+    "B07.3 retains fitted module/charge transfers; B09 retains undo/redo."
+  ]
+}

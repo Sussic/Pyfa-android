@@ -133,3 +133,17 @@ This strengthens the existing durable-restart gate; product storage is unchanged
 The one-day artifact expired before the September 30 resume, so its screenshots
 and raw report cannot be reviewed. The failure is retained in CI logs; a corrected
 native run is required for durable results and final screenshot review.
+
+## B07.2 delivered — 2026-09-30
+
+[PR #30](https://github.com/Sussic/Pyfa-android/pull/30) merged as `83f1df74`,
+tested head `c3e14b29`, with the same tree `3aa6a705` as CI checkout `de7e98ac`.
+[Windows/reference](https://github.com/Sussic/Pyfa-android/actions/runs/36645030741)
+passes in 27m24s; [Android/native](https://github.com/Sussic/Pyfa-android/actions/runs/36645030743)
+passes in 40m23s. Five original cases/37 states, three focused host tests, all
+inherited gates, ten new/copy and 57 restored fits, eight protocol guards, both
+APKs/lint/signature/data/licenses/ABIs pass. All six final cargo screens plus
+affected existing market/charge/stack screens were reviewed; artifact digest and
+tested tree match. Seventeen deliberate report corruptions are rejected.
+[Receipt](../evidence/b07-2-native.json) and [raw report](../evidence/b07-2-cargo-actions-native.json)
+retain exact evidence and device limits. B07.3 is ready; B07 remains active.
