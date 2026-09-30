@@ -64,4 +64,5 @@ python3 ci/check-subsystems.py
 python3 ci/check-structures.py
 python3 ci/check-cargo-stacks.py
 python3 ci/check-cargo-actions.py
+python3 ci/check-cargo-transfers.py
 python3 ci/summarize-tests.py

@@ -94,9 +94,11 @@ from subsystem_summary import summarize as summarize_subsystems
 from structure_summary import summarize as summarize_structures
 from cargo_stack_summary import summarize as summarize_cargo_stacks
 from cargo_action_summary import summarize as summarize_cargo_actions
+from cargo_transfer_summary import summarize as summarize_cargo_transfers
 summary = {
-    "task": "B07.2",
+    "task": "B07.3",
     "cargo_actions": summarize_cargo_actions(json.loads((evidence / "cargo-actions-native.json").read_text(encoding="utf-8")), engine),
+    "cargo_transfers": summarize_cargo_transfers(json.loads((evidence / "cargo-transfers-native.json").read_text(encoding="utf-8")), engine),
     "cargo_stacks": summarize_cargo_stacks(json.loads((evidence / "cargo-stacks-native.json").read_text(encoding="utf-8")), engine),
     "structures": summarize_structures(json.loads((evidence / "structures-native.json").read_text(encoding="utf-8")), engine),
     "subsystems": summarize_subsystems(json.loads((evidence / "subsystems-native.json").read_text(encoding="utf-8")), engine),

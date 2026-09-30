@@ -93,6 +93,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showSubsystems by rememberSaveable { mutableStateOf(false) }
     var showServices by rememberSaveable { mutableStateOf(false) }
     var showCargo by rememberSaveable { mutableStateOf(false) }
+    var showTransfers by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showVariations = true
@@ -115,7 +116,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
@@ -132,8 +133,11 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                                 onCharges = { showEquipment = false; showCargo = false; charges(null) }, onCargo = {
                                     showEquipment = false; showCargo = true
                                 })
+                        } else if (showTransfers) {
+                            CargoTransferEditor(cargoModel.transfers, onBack = { showTransfers = false })
                         } else if (showCargo) {
-                            CargoEditor(cargoModel, onBrowse = { showEquipment = true }, onBack = { showCargo = false })
+                            CargoEditor(cargoModel, onBrowse = { showEquipment = true }, onBack = { showCargo = false },
+                                onTransfers = { cargoModel.transfers.open(); showTransfers = true })
                         } else if (showServices) {
                             StructureServiceEditor(structureModel, onBack = { showServices = false })
                         } else if (showSubsystems) {

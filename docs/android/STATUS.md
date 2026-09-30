@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-30. **B07.2 delivered. B07.3 ready.**
+Updated: 2026-09-30. **B07.2 delivered. B07.3 active.**
 
 ## Authorized queue
 
@@ -36,6 +36,29 @@ Both are corrected and final-head CI passes without weakened gates; the
 [B07 task](tasks/B07-cargo-management.md) retains the failure history.
 Market presets have no crystal exception (1000); fitted-charge behavior remains
 B07.3. Undo/redo remains B09. B07 remains active; next task is **B07.3**.
+
+## Selected task — B07.3
+
+Selected on `codex/b07-3-fitted-transfers` from delivered master `3ab2e3a3`;
+live master and no open PRs verified. Deliver fitted module/charge move/copy to
+cargo and fitting from cargo with original swap, quantity, legality, state and
+charge behavior. Include selected operations and the fitted-ammunition crystal
+exception. Acceptance requires independent pinned command cases, atomic rejection
+and failed-save checks, raw values/history, copies and fresh restart, native touch
+and screenshot review, final-head host/native CI and a reviewed fork PR merge.
+Audit only the relevant original transfer/context commands, then implement through
+the serialized EOS bridge. B09 retains undo/redo; later addition editors retain
+their own scope. The adapter and touch controls are implemented. Independent
+original commands repeat **14 cases/80 states**; four focused host tests pass
+successful values, atomic failures, selected transfers, overflow, failed saves,
+copies and **29-fit fresh-process restart**, including native fixture setup through
+real bridge operations. Main/instrumentation Kotlin compiles; both APKs, lint and
+161-source/pinned-data/license/ARM64/x86_64 package inspection pass, including the
+final callback guard (1m08s build/lint). Full PR CI remains required.
+The native workflow is prepared with an explicit durable phase and 57/85 fit-count
+guards; its execution and screenshots remain unverified. Original failed-transfer
+quantity corruption is retained in the reference and corrected by Android's atomic
+rejection, as documented in the task. Native CI, review and merge remain required.
 
 ## Delivered work to reuse
 
