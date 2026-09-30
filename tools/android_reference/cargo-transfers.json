@@ -1,0 +1,680 @@
+[
+  {
+    "name": "loaded-module-move-copy",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "OVERHEATED",
+        "charge": "Antimatter Charge M"
+      }
+    ],
+    "cargo": [],
+    "operations": [
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 10,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": true
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Antimatter Charge M",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "magazine-adjustments",
+    "ship": "Thorax",
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "OVERHEATED",
+        "charge": "Antimatter Charge M"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "250mm Railgun II",
+        "amount": 2
+      },
+      {
+        "name": "Antimatter Charge M",
+        "amount": 3
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "250mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "250mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "250mm Railgun II",
+        "copy": true
+      }
+    ]
+  },
+  {
+    "name": "incompatible-charge-and-swap-fallback",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "ACTIVE",
+        "charge": "Antimatter Charge M"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "200mm AutoCannon II",
+        "amount": 2
+      },
+      {
+        "name": "Damage Control II",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "200mm AutoCannon II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Damage Control II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "Damage Control II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "charge-copy-clamped-removal-and-rejection",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "ACTIVE",
+        "charge": "Antimatter Charge M"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Iron Charge M",
+        "amount": 1
+      },
+      {
+        "name": "Multifrequency S",
+        "amount": 2
+      },
+      {
+        "name": "Spike M",
+        "amount": 100
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Iron Charge M",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Antimatter Charge M",
+        "copy": true
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Antimatter Charge M",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Multifrequency S",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 1,
+        "cargo": "Spike M",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Spike M",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      }
+    ]
+  },
+  {
+    "name": "laser-crystal-counts",
+    "ship": "Punisher",
+    "modules": [
+      {
+        "name": "Gatling Pulse Laser II",
+        "state": "OVERHEATED",
+        "charge": "Multifrequency S"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Scorch S",
+        "amount": 2
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Scorch S",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Multifrequency S",
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Gatling Pulse Laser II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Multifrequency S",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "mining-crystal-counts",
+    "ship": "Hulk",
+    "modules": [
+      {
+        "name": "Modulated Strip Miner II",
+        "state": "ACTIVE",
+        "charge": "Simple Asteroid Mining Crystal Type A I"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Simple Asteroid Mining Crystal Type B II",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Simple Asteroid Mining Crystal Type B II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Modulated Strip Miner II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Simple Asteroid Mining Crystal Type A I",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "script-counts",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Sensor Booster II",
+        "state": "ACTIVE",
+        "charge": "Scan Resolution Script"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Targeting Range Script",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Targeting Range Script",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Sensor Booster II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Scan Resolution Script",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "structure-module-cargo",
+    "ship": "Astrahus",
+    "modules": [
+      {
+        "name": "Standup Manufacturing Plant I",
+        "state": "ACTIVE"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Standup Reprocessing Facility I",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Standup Reprocessing Facility I",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Standup Manufacturing Plant I",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "structure-charge-cargo",
+    "ship": "Astrahus",
+    "modules": [
+      {
+        "name": "Standup Multirole Missile Launcher I",
+        "state": "ACTIVE",
+        "charge": "Standup Heavy Missile"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Standup Light Missile",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Standup Light Missile",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Standup Multirole Missile Launcher I",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "insufficient-extra-magazine-ammunition",
+    "ship": "Thorax",
+    "modules": [
+      {
+        "name": "250mm Railgun II",
+        "state": "ACTIVE",
+        "charge": "Antimatter Charge M"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "amount": 2
+      },
+      {
+        "name": "Antimatter Charge M",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "250mm Railgun II",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Dual 150mm Railgun II",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "rig-transfer",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Medium Trimark Armor Pump I",
+        "state": "ONLINE"
+      }
+    ],
+    "cargo": [],
+    "operations": [
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Medium Trimark Armor Pump I",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "subsystem-transfer-boundary",
+    "ship": "Tengu",
+    "modules": [
+      {
+        "name": "Tengu Offensive - Accelerated Ejection Bay",
+        "state": "ONLINE"
+      }
+    ],
+    "cargo": [],
+    "operations": [
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Tengu Offensive - Accelerated Ejection Bay",
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "selected-loaded-modules",
+    "ship": "Vexor",
+    "modules": [
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "ACTIVE",
+        "charge": "Antimatter Charge M"
+      },
+      {
+        "name": "Dual 150mm Railgun II",
+        "state": "OVERHEATED",
+        "charge": "Iron Charge M"
+      }
+    ],
+    "cargo": [],
+    "operations": [
+      {
+        "kind": "to_cargo",
+        "positions": [
+          0,
+          1
+        ],
+        "cargo": null,
+        "copy": true
+      },
+      {
+        "kind": "to_cargo",
+        "positions": [
+          0,
+          1
+        ],
+        "cargo": null,
+        "copy": false
+      }
+    ]
+  },
+  {
+    "name": "illegal-hull-target-and-empty-noops",
+    "ship": "Rifter",
+    "modules": [
+      {
+        "name": "150mm Light AutoCannon II",
+        "state": "ACTIVE",
+        "charge": "EMP S"
+      }
+    ],
+    "cargo": [
+      {
+        "name": "Small Standard Container",
+        "amount": 1
+      },
+      {
+        "name": "Standup Multirole Missile Launcher I",
+        "amount": 1
+      },
+      {
+        "name": "Small Shield Extender I",
+        "amount": 1
+      }
+    ],
+    "operations": [
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Standup Multirole Missile Launcher I",
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Small Standard Container",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": "Standup Multirole Missile Launcher I",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "150mm Light AutoCannon II",
+        "copy": false
+      },
+      {
+        "kind": "to_cargo",
+        "position": 0,
+        "cargo": null,
+        "copy": false
+      },
+      {
+        "kind": "from_cargo",
+        "position": 0,
+        "cargo": "Small Shield Extender I",
+        "copy": false
+      }
+    ]
+  }
+]

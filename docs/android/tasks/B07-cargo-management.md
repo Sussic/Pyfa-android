@@ -147,3 +147,60 @@ affected existing market/charge/stack screens were reviewed; artifact digest and
 tested tree match. Seventeen deliberate report corruptions are rejected.
 [Receipt](../evidence/b07-2-native.json) and [raw report](../evidence/b07-2-cargo-actions-native.json)
 retain exact evidence and device limits. B07.3 is ready; B07 remains active.
+
+## B07.3 selected — 2026-09-30
+
+Branch `codex/b07-3-fitted-transfers` starts from delivered master `3ab2e3a3`.
+Deliver selected fitted module/charge move/copy to cargo and fitting from cargo,
+preserving original swap, quantity, legality, state and charge semantics. Audit
+the fitted-ammunition crystal exception as well as module transfers. Independent
+original command fixtures/repeat, raw values/history, atomic invalid/write-failure
+handling, copies/fresh restart, native touch/screenshots and final-head CI/merge
+are required. Register the new durable test phase explicitly in the runner.
+B09 retains undo/redo; later addition editors retain their inventory rows.
+
+### B07.3 reference findings and atomic-rejection decision
+
+Original transfer commands copy/move full EOS magazine counts, even when cargo
+contains fewer charges; replacement returns unloaded or surplus charges and takes
+available additional charges. Laser/mining crystals and scripts transfer one in
+the audited cases. Market presets remain x1000 for crystals. Original transfer
+commands permit structure modules in cargo despite the market action restriction.
+
+The unchanged desktop oracle exposes a failure defect: moving a cargo module into
+an incompatible empty slot can remove it, undo the batch, then call `undoAll` again
+and double the stack while returning false. Rejected commands may also reorder
+stacks through removal/re-addition. Android must retain the required atomic graph
+rejection rather than reproduce failed-edit quantity corruption. Keep the raw
+desktop failure in the fixture; check Android rejection against the independently
+recorded preceding state, including unchanged quantities and history. Successful
+transfers compare desktop values; cargo display order is not transfer semantics
+(desktop sorts it in CargoView). This is a recorded correctness correction, not
+an omitted parity check or an altered independent expected quantity.
+
+### B07.3 implementation and focused verification
+
+Build 25 adds revision-bound transfer details and typed move/copy operations with
+selected-module batches, optional swaps, charge reconciliation and state fallback.
+The touch editor preserves selection through recreation and clears stale choices
+on fit/revision changes. The new native phase is explicitly registered for durable
+storage and starts with 57 inherited fits; 28 new/copy fits must restore as 85.
+
+Independent original commands repeat 14 cases/80 states: loaded move/copy, swaps,
+magazine adjustment and shortage, incompatible targets, full charge magazines,
+laser/mining crystals, scripts, structures, rigs, subsystems and selected modules.
+Four focused host tests pass these successful states, independently recorded
+pre-failure values, malformed/stale requests, overflow, partial-edit rollback,
+failed writes, copies and 29-fit process restart without desktop/network imports,
+plus native fixture setup through real bridge operations. Main and instrumentation
+Kotlin compilation, both APKs, lint and package inspection pass, including the last
+UI callback guard (1m08s build/lint). Native execution, six screenshot
+reviews, final-head full CI, review and merge remain required; prepared checks are
+not evidence of native success.
+
+Head `21099908` passed native APK build/lint and package inspection, then run
+36650835930 failed the initial diagnostic suite: `CargoTransferTest` was omitted
+from its phased-test exclusion list and reported `Missing phase`. The dedicated
+prepare/restart driver and durable runner flag were already present. The new test
+is now excluded from the initial suite and remains required through that driver;
+no acceptance assertion is removed. Corrected-head native execution is required.

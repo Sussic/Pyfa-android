@@ -63,7 +63,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B07 | active | B04 | [Cargo management (parent)](tasks/B07-cargo-management.md) | Add/remove/change stacks and move fitted equipment/ammo to/from cargo; quantities survive restart and agree with Pyfa behavior. |
 | B07.1 | done | B04 | Cargo stacks and quantities | Persist cargo in the fit graph; add, remove and change stack amounts, showing EOS volume/capacity and native offline copy/restart. |
 | B07.2 | done | B07.1 | Selected cargo actions, presets, fill and variations | Multi-select quantity/removal including zero-to-remove; match original ammunition presets, fill-to-capacity boundaries and variation/quantity merging. |
-| B07.3 | ready | B07.2 | Fitted equipment and charge transfers | Move/copy fitted modules and charges to/from cargo, preserving desktop fit/charge/state and atomic behavior. |
+| B07.3 | active | B07.2 | Fitted equipment and charge transfers | Move/copy fitted modules and charges to/from cargo, preserving desktop fit/charge/state and atomic behavior. |
 | B08 | ready | B03 | Fit notes | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | queued | B05 | Undo/redo for fit edits | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |
 

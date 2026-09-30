@@ -80,6 +80,7 @@ ARGUMENTS = {
     "add_cargo_preset": ("fit_id", "item_id"),
     "fill_cargo": ("fit_id", "item_id", "from_cargo"),
     "change_cargo_variations": ("fit_id", "main_item_id", "item_ids", "item_id"),
+    "transfer_cargo": ("fit_id", "direction", "positions", "item_id", "copy"),
     "set_fit_restrictions": ("fit_id", "ignore"),
     "change_mode": ("fit_id", "item_id"),
     "set_subsystem": ("fit_id", "kind", "item_id"),
@@ -281,6 +282,14 @@ class BridgeSession:
 
     def cargo_details(self, fit_id):
         from .cargo import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
+    def cargo_transfer_details(self, fit_id):
+        from .cargo_transfers import details
         self.engine._check_thread()
         if not self._available:
             raise RuntimeError("Restart the fitting engine")
@@ -518,7 +527,7 @@ class BridgeSession:
             _boolean(args["resolve_references"])
         if "ignore" in args:
             _boolean(args["ignore"])
-        if "item_id" in args and not (operation == "set_subsystem" and args["item_id"] is None):
+        if "item_id" in args and not (operation in ("set_subsystem", "transfer_cargo") and args["item_id"] is None):
             _integer(args["item_id"], 1, 2**31 - 1)
         if "quantity" in args:
             _integer(args["quantity"], 0 if operation == "set_cargo_quantities" else 1, 2**63 - 1)
@@ -526,6 +535,17 @@ class BridgeSession:
             _integer(args["main_item_id"], 1, 2**31 - 1)
         if "from_cargo" in args:
             _boolean(args["from_cargo"])
+        if operation == "transfer_cargo":
+            _boolean(args["copy"])
+            _text(args["direction"])
+            if args["direction"] not in ("TO_CARGO", "FROM_CARGO"):
+                _invalid("Choose a cargo transfer direction")
+            if type(args["positions"]) is not list or not args["positions"]:
+                _invalid("Choose fitting positions")
+            for position in args["positions"]:
+                _integer(position, 0, 2**31 - 1)
+            if len(set(args["positions"])) != len(args["positions"]):
+                _invalid("Duplicate fitting positions")
         if "item_ids" in args:
             if type(args["item_ids"]) is not list or not args["item_ids"]:
                 _invalid()
@@ -782,6 +802,9 @@ class BridgeSession:
             return fitting.replace(self.engine, fit, args["position"], args["item_id"])
         if operation == "remove_module":
             return fitting.remove(self.engine, fit, args["position"])
+        if operation == "transfer_cargo":
+            from .cargo_transfers import transfer
+            return transfer(self.engine, fit, args["direction"], args["positions"], args["item_id"], args["copy"])
         if operation in ("add_cargo", "set_cargo_quantity", "remove_cargo"):
             from .cargo import change
             action = {"add_cargo": "add", "set_cargo_quantity": "set",

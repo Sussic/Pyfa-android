@@ -34,6 +34,7 @@ import java.text.NumberFormat
 import kotlinx.coroutines.Dispatchers
 
 class CargoEditorModel : ViewModel() {
+    val transfers = CargoTransferModel()
     var details by mutableStateOf<CargoDetails?>(null)
     var loading by mutableStateOf(false)
     var editing by mutableStateOf(false)
@@ -173,7 +174,7 @@ private fun volume(value: Double): String = NumberFormat.getNumberInstance().app
 }.format(value) + " m³"
 
 @Composable
-internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: () -> Unit) {
+internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: () -> Unit, onTransfers: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -197,8 +198,9 @@ internal fun CargoEditor(model: CargoEditorModel, onBrowse: () -> Unit, onBack: 
         modifier = Modifier.testTag("cargo-volume"))
     if (details.overCapacity) Text("Over cargo capacity", color = MaterialTheme.colorScheme.error,
         modifier = Modifier.testTag("cargo-over-capacity"))
-    if (details.isStructure) Text("Structures accept charges in cargo. Their listed cargo capacity may be zero.")
+    if (details.isStructure) Text("Structure cargo can also hold transferred fitted modules. Its listed capacity may be zero.")
     TextButton(onClick = onBrowse, modifier = Modifier.testTag("cargo-browse")) { Text("Browse items to add") }
+    TextButton(onClick = onTransfers, modifier = Modifier.testTag("cargo-transfers")) { Text("Transfer fitted modules and charges") }
     val main = details.cargo.find { it.id == model.selected.firstOrNull() }
     LaunchedEffect(fit.id, fit.revision, main?.id) {
         if (main != null) model.loadActions(context, fit, main.id, true)

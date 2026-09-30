@@ -39,6 +39,8 @@ sealed interface BridgeOperation {
     data class ReplaceModule(val fitId: String, val position: Int, val itemId: Int) : BridgeOperation
     data class RemoveModule(val fitId: String, val position: Int) : BridgeOperation
     data class AddCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
+    data class TransferCargo(val fitId: String, val direction: CargoTransferDirection,
+        val positions: List<Int>, val itemId: Int?, val copy: Boolean) : BridgeOperation
     data class SetCargoQuantity(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
     data class RemoveCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
     data class SetCargoQuantities(val fitId: String, val itemIds: List<Int>, val quantity: Long) : BridgeOperation
@@ -87,6 +89,7 @@ sealed interface BridgeOperation {
 
 /** Copy caller-owned collections before enqueueing work on the engine thread. */
 fun BridgeOperation.snapshotArguments(): BridgeOperation = when (this) {
+    is BridgeOperation.TransferCargo -> copy(positions = immutableList(positions))
     is BridgeOperation.Snapshot -> copy(fitIds = immutableList(fitIds))
     is BridgeOperation.CreateFit -> copy(spec = spec.copy(
         modules = immutableList(spec.modules), drones = immutableList(spec.drones),
@@ -301,6 +304,14 @@ object BridgeCodec {
                 requireProtocol(it in operation.itemIds, "Select the main cargo stack") },
             "item_ids" to cargoIds(operation.itemIds),
             "item_id" to operation.itemId.also { requireProtocol(it > 0, "Invalid cargo variation") })
+        is BridgeOperation.TransferCargo -> "transfer_cargo" to obj("fit_id" to operation.fitId,
+            "direction" to operation.direction.name, "positions" to JSONArray(operation.positions.also {
+                requireProtocol(it.isNotEmpty() && it.all { index -> index >= 0 }, "Choose fitting positions")
+                unique(it, "transfer positions")
+                requireProtocol(operation.direction != CargoTransferDirection.FROM_CARGO ||
+                    it.size == 1 && operation.itemId != null, "Choose one cargo fitting destination")
+            }), "item_id" to operation.itemId?.also { requireProtocol(it > 0, "Invalid cargo item") },
+            "copy" to operation.copy)
         is BridgeOperation.AddCargo -> "add_cargo" to obj("fit_id" to operation.fitId,
             "item_id" to integer(operation.itemId, "item_id", 1),
             "quantity" to operation.quantity.also { requireProtocol(it > 0, "Cargo quantity must be positive") })
@@ -781,7 +792,11 @@ object BridgeCodec {
 
     fun decodeCargoDetails(json: String): CargoDetails {
         val value = objectValue(StrictJson(json).parse(), "cargo")
-        keys(value, setOf("version", "fit_id", "revision", "is_structure", "capacity_m3", "used_m3", "over_capacity", "cargo"),
+        return cargoDetails(value)
+    }
+
+    private fun cargoDetails(value: JSONObject, extra: Set<String> = emptySet()): CargoDetails {
+        keys(value, setOf("version", "fit_id", "revision", "is_structure", "capacity_m3", "used_m3", "over_capacity", "cargo") + extra,
             path = "cargo")
         requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported cargo version")
         val revision = long(value.get("revision"), "revision")
@@ -803,6 +818,32 @@ object BridgeCodec {
         unique(stacks.map { it.id }, "cargo stack IDs")
         return CargoDetails(identifier(value.get("fit_id"), "fit_id"), revision,
             bool(value.get("is_structure"), "is_structure"), capacity, used, over, immutableList(stacks))
+    }
+
+    fun decodeCargoTransferDetails(json: String): CargoTransferDetails {
+        val value = objectValue(StrictJson(json).parse(), "cargo transfers")
+        val cargo = cargoDetails(value, setOf("modules"))
+        val modules = array(value.get("modules"), "modules").mapIndexed { index, entry ->
+            val row = objectValue(entry, "transfer module")
+            keys(row, setOf("index", "id", "name", "slot", "state", "charge_id", "charge", "charge_amount", "legal"),
+                path = "transfer module")
+            val position = integer(row.get("index"), "index", 0)
+            requireProtocol(position == index, "Transfer positions must be contiguous")
+            val id = nullable(row.get("id"))?.let { integer(it, "id", 1) }
+            val name = nullable(row.get("name"))?.let { nonempty(it, "name") }
+            val chargeId = nullable(row.get("charge_id"))?.let { integer(it, "charge_id", 1) }
+            val charge = nullable(row.get("charge"))?.let { nonempty(it, "charge") }
+            val amount = long(row.get("charge_amount"), "charge_amount")
+            val legal = nullable(row.get("legal"))?.let { bool(it, "legal") }
+            val slot = nonempty(row.get("slot"), "slot")
+            requireProtocol(slot in setOf("LOW", "MED", "HIGH", "RIG", "SUBSYSTEM", "SERVICE"), "Invalid transfer slot")
+            val state = enumValue<ModuleState>(row.get("state"), "state")
+            requireProtocol((id == null) == (name == null) && (id == null) == (legal == null), "Incomplete transfer module")
+            requireProtocol((chargeId == null) == (charge == null) && amount >= 0 &&
+                (chargeId != null || amount == 0L) && (id != null || chargeId == null), "Invalid transfer charge")
+            CargoTransferModule(position, id, name, slot, state, chargeId, charge, amount, legal)
+        }
+        return CargoTransferDetails(cargo, immutableList(modules))
     }
 
     fun decodeVariationOptions(json: String): VariationOptions {

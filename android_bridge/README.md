@@ -264,3 +264,17 @@ order. `add_cargo_preset` and `fill_cargo` reuse original market/context policy;
 merges quantities without recent promotion. All edits use the existing revision
 check and atomic graph transaction, including recovery after partial failures.
 Fitted transfers remain B07.3 and undo/redo remains B09.
+
+### B07.3 fitted cargo transfers
+
+`cargo_transfer_details(fit_id)` returns revision-bound module positions, states,
+loaded charge counts and cargo values. `transfer_cargo` accepts `direction`
+(`TO_CARGO`/`FROM_CARGO`), distinct `positions`, nullable cargo `item_id` and
+`copy`. Cargo-to-fit requires one position and a stack. Selected fitted modules
+are processed in descending position order within one atomic graph transaction.
+The UI exposes move/copy and optional swap targets without calculating quantities.
+EOS supplies magazine counts, validity and state reconciliation. Transfers retain
+recent-use history. Structure module transfers follow the original command rather
+than the market's charge-only addition rule. Invalid edits and failed saves preserve
+the committed graph, including correction of the documented upstream double-undo
+quantity defect. Undo/redo remains B09.
