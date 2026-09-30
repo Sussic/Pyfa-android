@@ -21,13 +21,13 @@ uses the original non-command service path.
 - [x] Export independent original service/pane cases and repeat in fresh processes.
 - [x] Add strict note operation/query and optional durable graph input, preserving
   old graphs, copies, independent fits and unchanged fitting results/history.
-- [ ] Add multiline editor with one-second autosave, explicit save, navigation
+- [x] Add multiline editor with one-second autosave, explicit save, navigation
   flush and retained drafts on errors/recreation; never apply text to another fit.
 - [x] Verify exact empty/whitespace/non-ASCII text, stale/malformed and failed-save
   rejection, linked fit isolation, legacy graph replay and fresh-process restart.
-- [ ] Native offline touch checks cover typing, quick navigation, switching fits,
+- [x] Native offline touch checks cover typing, quick navigation, switching fits,
   recreation, copies/reopen, structure availability and errors; inspect screenshots.
-- [ ] Pass required final-head host/native CI, review and merge the focused fork PR,
+- [x] Pass required final-head host/native CI, review and merge the focused fork PR,
   retain exact evidence, update checkpoint and advance to B09.
 
 No release, phone installation, new editor framework or unrelated refactoring.
@@ -49,4 +49,32 @@ retained Compose drafts are implemented. Main/instrumentation Kotlin compilation
 both final APKs/lint (1m34s) and 162-source/pinned-data/license/ABI package inspection
 pass after review refinements. The native gate is prepared with an explicit durable flag and initial
 suite exclusion, 85/90 fit-count guards, ten protocol rejections and seven screens.
-Its execution and screenshot review remain required; no native success is claimed.
+This local checkpoint preceded the successful native delivery recorded below.
+
+## Delivered — 2026-09-30
+
+[PR #32](https://github.com/Sussic/Pyfa-android/pull/32) merged as `d6110359`,
+tested head `02171308`. CI checkout `15d4c7e4` and
+the merge share tree `14f3c7cc`. Build **26 (`0.1.0-b08`)** adds
+exact multiline Unicode notes, one-second autosave and navigation flush, retained
+drafts through activity recreation and failed saves, and explicit conflict choices.
+Stored structure notes remain read-only and survive copies/restart.
+
+- The independent original service/pane and EOS copy repeat **three fits/13 states**.
+  Four host tests pass exact text/counts, fit/copy isolation, unchanged calculations
+  and recent history, invalid/stale/write-failure recovery, legacy graphs and
+  **five-fit fresh-process restart**.
+- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36657441169)
+  passes all required gates in **28m44s**.
+- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36657441195)
+  passes inherited and new offline workflows, both APKs, lint, signature, pinned
+  data/licenses and ABI inspection in **34m24s**.
+  All **90 fits** restore; ten malformed notes protocol cases are rejected.
+- Artifact digest and tested tree match. **Seven notes screenshots** were reviewed;
+  **20 deliberate report corruptions** are rejected. Retained
+  [receipt](../evidence/b08-native.json) and [raw report](../evidence/b08-notes-native.json)
+  record provenance and observed results.
+
+Pending drafts remain in memory until a save is confirmed; unconfirmed process
+death is not a draft-persistence guarantee. B08 is complete within the pinned notes
+boundary. **B09 undo/redo** is the exact next eligible task; B05 is delivered.

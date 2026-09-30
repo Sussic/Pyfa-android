@@ -1,0 +1,175 @@
+{
+  "delivery": {
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/32",
+    "base": "93d020de616a1e830d9c846b5add7515fdbb81f3",
+    "tested_head": "021713084194164770c781d14b43554717940f9a",
+    "android_run": 36657441195,
+    "android_conclusion": "success",
+    "android_seconds": 2064,
+    "windows_run": 36657441169,
+    "windows_conclusion": "success",
+    "windows_seconds": 1724,
+    "ci_checkout": "15d4c7e4b5bd29d33f32a4ccb19da9fca3d211f0",
+    "ci_checkout_parents": [
+      "93d020de616a1e830d9c846b5add7515fdbb81f3",
+      "021713084194164770c781d14b43554717940f9a"
+    ],
+    "ci_tree": "14f3c7cc32e0c43d423d3e20faa9eb0136b9f1b1",
+    "artifact_id": 11073708114,
+    "artifact_digest": "sha256:55d44a74e6ed1317dae349adfced417db86d95287d08142a5c8b258f6058c5b6",
+    "artifact_bytes": 20945540,
+    "notes_report_corruptions_rejected": [
+      "exact_unicode",
+      "whitespace_preservation",
+      "correct_fit_switch",
+      "empty_text",
+      "character_count",
+      "boolean_count",
+      "structure_editability",
+      "recreation_text",
+      "stale_draft_preservation",
+      "conflict_stored_text",
+      "conflict_save_draft",
+      "restart_note",
+      "missing_restored_fit",
+      "same_process",
+      "protocol_guard",
+      "missing_navigation_check",
+      "changed_calculation",
+      "changed_recent_history",
+      "wrong_source_revision",
+      "restart_generation"
+    ],
+    "merge": "d61103590da2f83f2b6d8a867eeb7669a6118e58",
+    "ci_tree_matches_merge": true
+  },
+  "desktop_reference": {
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "fixture_sha256": "de9c1edc32d1ea41435c677d02b4d56c61035c51e33dd196f9aa88ab8612c688",
+    "fits": 3,
+    "states": 13,
+    "fresh_process_repeat": true,
+    "unchanged_calculation_tolerance": {
+      "relative": 1e-10,
+      "absolute": 1e-09
+    },
+    "exact_fields": [
+      "note text",
+      "Unicode code-point counts",
+      "editability",
+      "fit IDs",
+      "recent history",
+      "units"
+    ]
+  },
+  "host_focused_ci": {
+    "tests_passed": 4,
+    "all_reference_text_inputs": true,
+    "atomic_malformed_stale_rejection_and_failed_save_recovery": true,
+    "legacy_graphs_preserve_absent_notes": true,
+    "copy_and_fresh_process_restore": true,
+    "restored_fits": 5
+  },
+  "native_raw": {
+    "path": "b08-notes-native.json",
+    "sha256": "37b467ba077e26bdf8f36fff25a1cf9d1af975517506ab2feb89e8a6638d93dd",
+    "reference_states": 13,
+    "new_fits": 5,
+    "restored_fits": 90,
+    "screenshots": 7,
+    "protocol_rejections": 10,
+    "checks": {
+      "prepare": [
+        "exact_text_and_character_counts",
+        "autosave_and_immediate_navigation_flush",
+        "correct_fit_switch_and_recreation",
+        "stale_draft_retry_and_conflict_resolution",
+        "structure_readonly_and_durable_copies",
+        "unchanged_calculations_and_recent_use",
+        "typed_notes_protocol"
+      ],
+      "restored": [
+        "fresh_process_restore",
+        "reopen_each_fit"
+      ]
+    },
+    "screenshots_reviewed": [
+      {
+        "name": "notes-unicode-notes.png",
+        "sha256": "5cce90eecadb321aa15526d9ae6434f236384fbc95de87d5b5cb275341f21c54",
+        "reviewed": true,
+        "observation": "Greek, CJK, combining accents, emoji and multiline text render readably with the keyboard open; Back remains visible."
+      },
+      {
+        "name": "notes-navigation-return.png",
+        "sha256": "862c09250b9fa3ad55cc245402e4a959cd7ea9e6b5e09065a8886f8421154333",
+        "reviewed": true,
+        "observation": "Reopened whitespace note retains blank lines, 22-character count and saved status; controls are readable."
+      },
+      {
+        "name": "notes-retained-recreation.png",
+        "sha256": "6c4b48cd11c29b0cda09c3b5174c8140e91018e00772ad87c76bead716a04749",
+        "reviewed": true,
+        "observation": "Long Unicode note remains readable after activity recreation in the bounded scrolling field."
+      },
+      {
+        "name": "notes-stale-draft.png",
+        "sha256": "8376b9949db0566739491b82ac182927b8c3099be445102ac3073fc7842a2a3d",
+        "reviewed": true,
+        "observation": "Stale-save error, preserved Unicode draft, count and unsaved status are visible; native touch retry succeeds."
+      },
+      {
+        "name": "notes-conflict-draft.png",
+        "sha256": "4027efc72115621839686c1523801a72fcd5be591a70066492c12ff6ed128d5d",
+        "reviewed": true,
+        "observation": "Conflict explanation and the retained long draft are readable; native tests scroll to and use both resolution choices."
+      },
+      {
+        "name": "notes-structure-readonly.png",
+        "sha256": "24dfa6cc19b502c55ed798c591e4798c5bf27b5b8e7c6ca2952301efe2507094",
+        "reviewed": true,
+        "observation": "Structure identity, read-only explanation, existing multiline note and 24-character count are readable."
+      },
+      {
+        "name": "notes-restored-copy.png",
+        "sha256": "d47a3f2f858fa9aa98dc2fa763c52ecfa75077c6312c881c254e5461123ff10a",
+        "reviewed": true,
+        "observation": "The copied fit identity and long Unicode note remain readable after process restart."
+      }
+    ],
+    "affected_screens_reviewed": [
+      {
+        "name": "fit.png",
+        "sha256": "f756c10c33907d8f53bc3c295f6af94d340bf1ac874af0581cef839b0cea97c2",
+        "reviewed": true,
+        "observation": "Fit notes entry is readable among existing editing controls; sample statistics remain readable."
+      }
+    ],
+    "fresh_process_restart": true
+  },
+  "native_summary": {
+    "task": "B08",
+    "checkout_sha": "15d4c7e4b5bd29d33f32a4ccb19da9fca3d211f0",
+    "workflow_run": "36657441195",
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "airplane_mode": true,
+    "fresh_install": true,
+    "app_internet_permission": false,
+    "apk_bytes": 71003835,
+    "apk_sha256": "27eb713632d6df4a246a34a63fe5bd5a0a61e405ce84b3dd51254de3653a10da",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; ARM64 and older API execution remain unverified.",
+    "Phone usability and safe signing/install upgrades remain R02/R03.",
+    "B09 retains undo/redo; later mutation editors retain their inventory rows.",
+    "Structure editing remains unavailable as in the pinned pane; existing text survives copies/restart.",
+    "Pending editor drafts are retained in memory through recreation, not guaranteed across unconfirmed process death."
+  ]
+}

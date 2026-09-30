@@ -49,7 +49,7 @@ row or remove UI, persistence or matrix requirements. All 239 rows are preserved
 | F01.03 | Browse by hull group and race, hide/show empty groups, and navigate back to a hull from its fit. | B03 | [s225][s225], [s130][s130], [s131][s131] | UP | D: [complete Market catalogue export](evidence/b03-2-native.json); A: [offline groups/races/back workflow](evidence/b03-2-native.json) |
 | F01.04 | Search saved fit names and access recent fits; opening a result selects the intended fit. | B03 | [s233][s233], [s130][s130] | UP | D: —; A: [offline search identity and modification-order workflow](evidence/b03-2-native.json) |
 | F01.05 | Keep multiple fits open, switch between them, close one/all and optionally reopen the previous set after restart. | B03 | [s220][s220], [s221][s221] | UP | D: —; A: [four-process open/close/restore workflow](evidence/b03-2-native.json) |
-| F01.06 | Edit multiline Unicode notes, preserve text on navigation and save/reopen the correct fit's notes. | B08 | [s056][s056], [s233][s233] | UP | D: —; A: — |
+| F01.06 | Edit multiline Unicode notes, preserve text on navigation and save/reopen the correct fit's notes. | B08 | [s056][s056], [s233][s233] | UP | D: [original service/pane, three fits/13 states](../../tools/android_reference/fixtures/notes.json); A: [offline typing, navigation, recreation, conflicts, copies and restart](evidence/b08-native.json). Structure editing remains unavailable as in the pinned pane. |
 | F01.07 | Persist the entire fit and linked-fit identity across process death; edits to one copy do not mutate an independent duplicate. | B02 | [s017][s017], [s233][s233] | NUP | D: —; A: — |
 
 ## F02 — Hull and fitted equipment
