@@ -46,6 +46,14 @@ def _boolean(value):
         _invalid()
 
 
+def _notes(value):
+    from .notes import validate
+    try:
+        validate(value)
+    except (ValueError, UnicodeError):
+        _invalid('Notes must be valid Unicode text')
+
+
 def _pairs(pairs):
     result = {}
     for key, value in pairs:
@@ -68,6 +76,7 @@ def _module_state(module):
 ARGUMENTS = {
     "snapshot": ("fit_ids",), "create_fit": ("spec",),
     "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
+    "set_notes": ("fit_id", "text"),
     "delete_fit": ("fit_id", "resolve_references"),
     "add_module": ("fit_id", "item_id"),
     "replace_module": ("fit_id", "position", "item_id"),
@@ -114,7 +123,9 @@ STATES = {"OFFLINE", "ONLINE", "ACTIVE", "OVERHEATED"}
 def _spec(spec):
     _object(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
                    "modules", "drones", "target_profile", "implants", "boosters", "projections",
-                   "commands", "environments"), ("ignore_restrictions", "mode", "cargo"))
+                   "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes"))
+    if "notes" in spec:
+        _notes(spec["notes"])
     if "mode" in spec:
         _integer(spec["mode"], 1, 2**31 - 1)
     if "ignore_restrictions" in spec:
@@ -294,6 +305,14 @@ class BridgeSession:
         if not self._available:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
+    def note_details(self, fit_id):
+        from .notes import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError('Restart the fitting engine')
+        return {'version': 1, 'fit_id': fit_id, 'revision': self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
 
     def cargo_action_options(self, fit_id, item_id, from_cargo):
@@ -578,6 +597,8 @@ class BridgeSession:
                 _invalid()
         if "spec" in args:
             _spec(args["spec"])
+        if operation == "set_notes":
+            _notes(args['text'])
         for key in ("fit_id", "source_id", "target_id"):
             if key in args:
                 _text(args[key], True)
@@ -805,6 +826,9 @@ class BridgeSession:
         if operation == "transfer_cargo":
             from .cargo_transfers import transfer
             return transfer(self.engine, fit, args["direction"], args["positions"], args["item_id"], args["copy"])
+        if operation == "set_notes":
+            from .notes import change
+            return change(self.engine, fit, args['text'])
         if operation in ("add_cargo", "set_cargo_quantity", "remove_cargo"):
             from .cargo import change
             action = {"add_cargo": "add", "set_cargo_quantity": "set",
@@ -891,6 +915,8 @@ class BridgeSession:
         records = {}
         for key, fit in fits.items():
             spec = deepcopy(specs[key])
+            if 'notes' in spec or fit.notes is not None:
+                spec['notes'] = fit.notes or ''
             from eos.const import FittingSlot
             spec["modules"] = [({"empty_slot": FittingSlot(module.slot).name} if module.isEmpty else
                                 {"name": module.item.name, "charge": module.charge.name if module.charge else None,

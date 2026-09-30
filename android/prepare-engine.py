@@ -106,6 +106,7 @@ def main():
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/bulk-states.json", tests / "bulk-states-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/cargo-actions.json", tests / "cargo-actions-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/cargo-transfers.json", tests / "cargo-transfers-expected.json")
+    shutil.copyfile(ROOT / "tools/android_reference/fixtures/notes.json", tests / "notes-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

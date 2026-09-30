@@ -69,7 +69,8 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[ModeEditorModel::class.java],
                 ViewModelProvider(this)[SubsystemEditorModel::class.java],
                 ViewModelProvider(this)[StructureServiceEditorModel::class.java],
-                ViewModelProvider(this)[CargoEditorModel::class.java])
+                ViewModelProvider(this)[CargoEditorModel::class.java],
+                ViewModelProvider(this)[NotesModel::class.java])
         }
     }
 
@@ -77,10 +78,15 @@ class MainActivity : ComponentActivity() {
         super.reportFullyDrawn()
         EngineRuntime.recordStartupDraw(applicationContext)
     }
+
+    override fun onStop() {
+        ViewModelProvider(this)[NotesModel::class.java].flush(applicationContext)
+        super.onStop()
+    }
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -94,6 +100,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showServices by rememberSaveable { mutableStateOf(false) }
     var showCargo by rememberSaveable { mutableStateOf(false) }
     var showTransfers by rememberSaveable { mutableStateOf(false) }
+    var showNotes by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
         showVariations = true
@@ -116,7 +123,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers, showNotes) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
@@ -127,7 +134,9 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
-                        if (showEquipment) {
+                        if (showNotes) {
+                            NotesEditor(notesModel, onBack = { showNotes = false })
+                        } else if (showEquipment) {
                             EquipmentBrowser(equipmentModel, moduleModel, cargoModel, onBack = { showEquipment = false },
                                 onViewFit = { showEquipment = false; showCargo = false; showModules = true },
                                 onCharges = { showEquipment = false; showCargo = false; charges(null) }, onCargo = {
@@ -173,7 +182,8 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                                 onModes = { modeModel.open(); showModes = true },
                                 onSubsystems = { subsystemModel.open(); showSubsystems = true },
                                 onServices = { structureModel.open(); showServices = true },
-                                onCargo = { cargoModel.open(); showCargo = true })
+                                onCargo = { cargoModel.open(); showCargo = true },
+                                onNotes = { showNotes = true })
                         }
                     }
                 }
@@ -183,7 +193,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit, onNotes: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -243,6 +253,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             TextButton(onClick = onSubsystems, modifier = Modifier.testTag("subsystems-open")) { Text("Strategic cruiser subsystems") }
             TextButton(onClick = onServices, modifier = Modifier.testTag("services-open")) { Text("Structure services") }
             TextButton(onClick = onCargo, modifier = Modifier.testTag("cargo-open")) { Text("Cargo") }
+            TextButton(onClick = onNotes, modifier = Modifier.testTag("notes-open")) { Text("Fit notes") }
             if (sampleGuns) Button(onClick = {
                 EngineRuntime.setAmmunition(context, if (ammunition == "Iron Charge M") "Antimatter Charge M" else "Iron Charge M")
             }) { Text(stringResource(R.string.switch_ammunition)) }

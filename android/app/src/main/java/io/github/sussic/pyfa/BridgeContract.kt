@@ -27,12 +27,14 @@ data class FitSpec(
     val modules: List<ModuleSpec>,
     val drones: List<DroneSpec>,
     val modeId: Int? = null,
+    val notes: String? = null,
 )
 
 sealed interface BridgeOperation {
     data class Snapshot(val fitIds: List<String> = emptyList()) : BridgeOperation
     data class CreateFit(val spec: FitSpec) : BridgeOperation
     data class RenameFit(val fitId: String, val name: String) : BridgeOperation
+    data class SetNotes(val fitId: String, val text: String) : BridgeOperation
     data class DuplicateFit(val fitId: String, val name: String) : BridgeOperation
     data class DeleteFit(val fitId: String, val resolveReferences: Boolean) : BridgeOperation
     data class AddModule(val fitId: String, val itemId: Int) : BridgeOperation
@@ -219,7 +221,7 @@ object BridgeCodec {
     fun decodeFitSpec(value: JSONObject): FitSpec {
         keys(value, setOf("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
             "modules", "drones", "target_profile", "implants", "boosters", "projections", "commands", "environments"),
-            setOf("mode"), path = "spec")
+            setOf("mode", "notes"), path = "spec")
         requireProtocol(value.get("target_profile") === JSONObject.NULL, "target_profile is unsupported")
         for (key in listOf("implants", "boosters", "projections", "commands", "environments")) {
             requireProtocol(array(value.get(key), "spec.$key").isEmpty(), "Initial $key are unsupported")
@@ -252,6 +254,7 @@ object BridgeCodec {
                     integer(drone.get("active"), "drone.active", 0, amount))
             },
             if (value.has("mode")) integer(value.get("mode"), "spec.mode", 1) else null,
+            if (value.has("notes")) noteText(value.get("notes")) else null,
         )
     }
 
@@ -270,6 +273,7 @@ object BridgeCodec {
             "projections" to JSONArray(), "commands" to JSONArray(), "environments" to JSONArray(),
         )
         spec.modeId?.let { value.put("mode", integer(it, "spec.mode", 1)) }
+        spec.notes?.let { value.put("notes", noteText(it)) }
         decodeFitSpec(value) // Keep construction and fixture decoding subject to the same shape checks.
         return value
     }
@@ -281,6 +285,7 @@ object BridgeCodec {
             "snapshot" to obj("fit_ids" to jsonArray(operation.fitIds))
         }
         is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
+        is BridgeOperation.SetNotes -> "set_notes" to obj("fit_id" to operation.fitId, "text" to noteText(operation.text))
         is BridgeOperation.DuplicateFit -> "duplicate_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.DeleteFit -> "delete_fit" to obj("fit_id" to operation.fitId, "resolve_references" to operation.resolveReferences)
         is BridgeOperation.AddModule -> "add_module" to obj("fit_id" to operation.fitId,
@@ -788,6 +793,29 @@ object BridgeCodec {
             "Cargo actions do not match their context")
         return CargoActionOptions(identifier(value.get("fit_id"), "fit_id"), revision,
             integer(value.get("item_id"), "item_id", 1), fromCargo, preset, fill, variations)
+    }
+
+    fun decodeNoteDetails(json: String): NoteDetails {
+        val value = objectValue(StrictJson(json).parse(), "notes")
+        keys(value, setOf("version", "fit_id", "revision", "text", "characters", "editable"), path = "notes")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported notes version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid notes revision")
+        val text = noteText(value.get("text"))
+        val count = integer(value.get("characters"), "characters", 0)
+        requireProtocol(count == text.codePointCount(0, text.length), "Notes character count disagrees with text")
+        return NoteDetails(identifier(value.get("fit_id"), "fit_id"), revision, text, count,
+            bool(value.get("editable"), "editable"))
+    }
+
+    private fun noteText(value: Any): String = text(value, "notes").also { text ->
+        var index = 0
+        while (index < text.length) {
+            val char = text[index++]
+            if (char.isHighSurrogate()) {
+                requireProtocol(index < text.length && text[index++].isLowSurrogate(), "Invalid Unicode notes")
+            } else requireProtocol(!char.isLowSurrogate(), "Invalid Unicode notes")
+        }
     }
 
     fun decodeCargoDetails(json: String): CargoDetails {
