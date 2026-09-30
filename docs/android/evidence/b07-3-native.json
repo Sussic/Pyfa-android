@@ -1,0 +1,178 @@
+{
+  "delivery": {
+    "pr": "https://github.com/Sussic/Pyfa-android/pull/31",
+    "base": "3ab2e3a30d35009b478d50fc7a9463e5d86521e7",
+    "tested_head": "c43ba37a3e5d495bf45ee335f7912c7b2fe45303",
+    "android_run": 36651689487,
+    "android_conclusion": "success",
+    "android_seconds": 2835,
+    "windows_run": 36651689500,
+    "windows_conclusion": "success",
+    "windows_seconds": 1724,
+    "ci_checkout": "a9f20cb9d80180f3ef1f86161b86000d4d9c9518",
+    "ci_checkout_parents": [
+      "3ab2e3a30d35009b478d50fc7a9463e5d86521e7",
+      "c43ba37a3e5d495bf45ee335f7912c7b2fe45303"
+    ],
+    "ci_tree": "c4ae2ebcc772ccac5c0ab3b0949f14d15fae6dc7",
+    "artifact_id": 11072037616,
+    "artifact_digest": "sha256:4dca3e13ecd0b3a38fa74761f31198f246bc96476a52ced43563910c383a853f",
+    "artifact_bytes": 19463773,
+    "cargo_report_corruptions_rejected": [
+      "module_identity",
+      "module_state",
+      "module_legality",
+      "loaded_charge_count",
+      "loaded_charge_identity",
+      "recent_order",
+      "quantity",
+      "volume",
+      "capacity",
+      "identity",
+      "boolean_count",
+      "operation",
+      "rejected_quantity_corruption",
+      "rejection_accepted",
+      "restart_module",
+      "restart_numeric_kind",
+      "missing_restored_fit",
+      "same_process",
+      "protocol_guard",
+      "null_as_zero"
+    ],
+    "merge": "ef36463141549196239c904bb4b41c4f87566d23",
+    "ci_tree_matches_merge": true
+  },
+  "desktop_reference": {
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "fixture_sha256": "16a4c0657663e527186e1dbfdc9ab1fd40eafe34513983d906a15cf9624b9937",
+    "cases": 14,
+    "states": 80,
+    "fresh_process_repeat": true,
+    "numeric_tolerance": {
+      "relative": 1e-10,
+      "absolute": 1e-09
+    },
+    "exact_fields": [
+      "item IDs",
+      "names",
+      "quantities",
+      "operations",
+      "module states",
+      "loaded charge IDs/counts",
+      "legality",
+      "recent history",
+      "units"
+    ]
+  },
+  "host_focused_ci": {
+    "tests_passed": 4,
+    "all_reference_states": true,
+    "atomic_rejection_overflow_partial_edit_and_failed_save_recovery": true,
+    "native_initial_state_setup_matches_reference": true,
+    "copy_and_fresh_process_restore": true,
+    "restored_fits": 29
+  },
+  "native_raw": {
+    "path": "b07-3-cargo-transfers-native.json",
+    "sha256": "d1198bb4df86b3bc012e49d43fa15b34a1eb48bc378ae1feb726f2bcd860c689",
+    "cases": 14,
+    "states": 80,
+    "new_fits": 28,
+    "restored_fits": 85,
+    "screenshots": 6,
+    "protocol_rejections": 10,
+    "checks": {
+      "prepare": [
+        "fourteen_original_transfer_sequences",
+        "touch_move_copy_swap_selected_and_recreation",
+        "atomic_desktop_failure_correction",
+        "durable_transfer_copies",
+        "atomic_rejections",
+        "typed_transfer_protocol",
+        "captured_selection"
+      ],
+      "restored": [
+        "fresh_process_restore",
+        "reopen_each_fit"
+      ]
+    },
+    "screenshots_reviewed": [
+      {
+        "name": "cargo-transfers-selected-modules.png",
+        "sha256": "16c56deb4c1b825533f1d7076ff95052cd1183561b75820750ab70e7ea30b6a8",
+        "reviewed": true,
+        "observation": "Two selections survive recreation; move/copy controls and loaded ammunition are readable."
+      },
+      {
+        "name": "cargo-transfers-magazine-swap.png",
+        "sha256": "57a24e60f47138500871e64da2965c7b228bb2767fafa8b498c6115d9d3e7742",
+        "reviewed": true,
+        "observation": "Replaced railgun, overheated state and 40 loaded charges are readable."
+      },
+      {
+        "name": "cargo-transfers-single-crystal.png",
+        "sha256": "258fea1ee9885e55a8080ba05d4d16870bb6d1ed1514b3be697cbe56f90ba4f8",
+        "reviewed": true,
+        "observation": "Successful save, volume, transfer directions and guidance are readable; exact crystal count is verified in raw values."
+      },
+      {
+        "name": "cargo-transfers-structure-swap.png",
+        "sha256": "5eac844dd1cd520987307f1d12452884db5b84041a7806009519ef482be6a3bd",
+        "reviewed": true,
+        "observation": "Service module and online state wrap readably in its destination card."
+      },
+      {
+        "name": "cargo-transfers-atomic-rejection.png",
+        "sha256": "a3b7aece13e05f2b06808d97975ceb66e1d065dab5ee4a194c4e3dd14ebd58a0",
+        "reviewed": true,
+        "observation": "Error and over-capacity state remain visible; selected one-unit stack is preserved."
+      },
+      {
+        "name": "cargo-transfers-restored-transfer-copy.png",
+        "sha256": "11dbbbf8697e73d32ace5cadfdce9c6aa6325f20e95119103672d80558c37b29",
+        "reviewed": true,
+        "observation": "Restored cargo stack is selectable with correct identity and quantity."
+      }
+    ],
+    "affected_screens_reviewed": [
+      {
+        "name": "cargo-stacks-vexor-empty.png",
+        "sha256": "a19c58210a4a8adcde935c955a8a955c48dc8c0eeeb675273633714faa1fdda5",
+        "reviewed": true,
+        "observation": "Transfer entry is visible on empty cargo."
+      },
+      {
+        "name": "cargo-stacks-structure-charge.png",
+        "sha256": "cf2e2548db5ad5357c99559d017279f256bde3c11c340b31d7daa2273577e699",
+        "reviewed": true,
+        "observation": "Transfer entry and structure explanation are readable alongside existing cargo controls."
+      }
+    ],
+    "fresh_process_restart": true
+  },
+  "native_summary": {
+    "task": "B07.3",
+    "checkout_sha": "a9f20cb9d80180f3ef1f86161b86000d4d9c9518",
+    "workflow_run": "36651689487",
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "airplane_mode": true,
+    "fresh_install": true,
+    "app_internet_permission": false,
+    "apk_bytes": 70987087,
+    "apk_sha256": "88a63c37ee280efe13522d746dea92a91e8156bfd569ccee21288098e89eaee0",
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false
+  },
+  "limitations": [
+    "API36 x86_64 emulator execution; ARM64 and older API execution remain unverified.",
+    "Phone usability and safe signing/install upgrades remain R02/R03.",
+    "B09 retains undo/redo; later mutation editors retain their inventory rows.",
+    "Original failed-transfer cargo duplication is corrected by atomic rejection; raw desktop failure is retained."
+  ]
+}

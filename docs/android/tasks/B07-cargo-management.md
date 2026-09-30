@@ -16,11 +16,11 @@ field; B07.1 now persists it. B09 owns undo/redo, including cargo actions.
 
 - [x] Audit original stack, quantity, ammunition preset, fill-capacity,
   fitted-module transfer and variation command boundaries; split children.
-- [ ] For each child, export independent desktop cases/raw values and compare
+- [x] For each child, export independent desktop cases/raw values and compare
   focused host behavior, rejection, failed saves, copy and fresh restart.
-- [ ] Verify touch controls, volumes/quantities, package and offline restart in
+- [x] Verify touch controls, volumes/quantities, package and offline restart in
   native instrumentation; inspect changed screenshots.
-- [ ] Pass final-head Windows/reference and Android/native gates per child,
+- [x] Pass final-head Windows/reference and Android/native gates per child,
   review/merge focused PRs, retain evidence and update status/forecast.
 
 ## B07.1 preparation and corrections
@@ -204,3 +204,32 @@ from its phased-test exclusion list and reported `Missing phase`. The dedicated
 prepare/restart driver and durable runner flag were already present. The new test
 is now excluded from the initial suite and remains required through that driver;
 no acceptance assertion is removed. Corrected-head native execution is required.
+
+## B07.3 delivered — 2026-09-30
+
+[PR #31](https://github.com/Sussic/Pyfa-android/pull/31) merged as `ef364631`,
+tested head `c43ba37a`. CI checkout `a9f20cb9` and the
+merge share tree `c4ae2ebc`. Build **25 (`0.1.0-b07.3`)** adds selected
+module/loaded-charge move and copy, cargo-to-fit loading and optional module swaps,
+with EOS magazine quantities, legality and state/charge reconciliation.
+
+- Independent original commands repeat **14 cases/80 states**. Four focused host
+  tests pass values/history, native setup, invalid/stale/overflow/partial and
+  failed-save rollback, copies and **29-fit fresh-process restart**.
+- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36651689500)
+  passes all required gates in **28m44s**.
+- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36651689487)
+  passes inherited and new offline touch/restart gates, both APKs, lint, signature,
+  pinned data/licenses and ABI inspection in **47m15s**.
+  All **85 fits** restore, including 28 new/copy fits; ten protocol guards pass.
+- Artifact digest and tested tree match. All **six transfer screenshots** were
+  reviewed; **20 deliberate report corruptions** are rejected. Retained
+  [receipt](../evidence/b07-3-native.json) and
+  [raw report](../evidence/b07-3-cargo-transfers-native.json) record exact provenance.
+
+Original failed transfers can duplicate cargo; Android preserves the preceding
+state atomically, with the raw desktop failure retained in the reference. Market
+crystal presets remain 1000; audited fitted crystal/script transfers use one.
+The initial native run exposed a phased-test registration omission, corrected
+without removing checks. The [B07 task](B07-cargo-management.md) retains it.
+B07 is complete within its boundary; **B09 owns undo/redo**. Next: **B08 fit notes**.

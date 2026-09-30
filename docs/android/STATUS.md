@@ -1,70 +1,42 @@
 # Android project status
 
-Updated: 2026-09-30. **B07.2 delivered. B07.3 active.**
+Updated: 2026-09-30. **B07 delivered. B08 ready.**
 
 ## Authorized queue
 
 The active goal authorizes sequential eligible approved roadmap work, one coherent
 outcome through review, required host/native checks and fork PR merge, then automatic
 continuation. No releases, phone installation, billing changes, unrelated work or
-delegation. No user decision or access blocker currently prevents B07.3.
+delegation. No user decision or access blocker currently prevents B08.
 
-## Latest delivery — B07.2 selected cargo actions
+## Latest delivery — B07.3 fitted transfers
 
-[PR #30](https://github.com/Sussic/Pyfa-android/pull/30) merged as `83f1df74`,
-tested head `c3e14b29`. CI checkout `de7e98ac` and the merge share tree `3aa6a705`.
-Build **24 (`0.1.0-b07.2`)** adds selected quantity/removal (zero removes),
-ammunition presets, fill-to-capacity and variation stack merging. Original menu,
-selection and recent-use rules are retained with atomic saves and offline copies.
+[PR #31](https://github.com/Sussic/Pyfa-android/pull/31) merged as `ef364631`,
+tested head `c43ba37a`. CI checkout `a9f20cb9` and the
+merge share tree `c4ae2ebc`. Build **25 (`0.1.0-b07.3`)** adds selected
+module/loaded-charge move and copy, cargo-to-fit loading and optional module swaps,
+with EOS magazine quantities, legality and state/charge reconciliation.
 
-- Independent original desktop commands repeat **five cases/37 states**. Three
-  focused host tests pass values/options/history, malformed/stale edits, overflow,
-  partial-edit/failed-save recovery, copies and 11-fit fresh-process restart.
-- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36645030741)
-  passes all required gates in **27m24s**.
-- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36645030743)
+- Independent original commands repeat **14 cases/80 states**. Four focused host
+  tests pass values/history, native setup, invalid/stale/overflow/partial and
+  failed-save rollback, copies and **29-fit fresh-process restart**.
+- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36651689500)
+  passes all required gates in **28m44s**.
+- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36651689487)
   passes inherited and new offline touch/restart gates, both APKs, lint, signature,
-  pinned data/licenses and ABI inspection in **40m23s**. All **57 fits** restore,
-  including ten new/copy fits; eight protocol guards pass.
-- Artifact digest and tested tree match; all **six final cargo screenshots** and
-  affected market/charge/stack screens were reviewed. **17 deliberate report
-  corruptions** are rejected. Retained [receipt](evidence/b07-2-native.json) and
-  [raw report](evidence/b07-2-cargo-actions-native.json) record exact provenance.
+  pinned data/licenses and ABI inspection in **47m15s**.
+  All **85 fits** restore, including 28 new/copy fits; ten protocol guards pass.
+- Artifact digest and tested tree match. All **six transfer screenshots** were
+  reviewed; **20 deliberate report corruptions** are rejected. Retained
+  [receipt](evidence/b07-3-native.json) and
+  [raw report](evidence/b07-3-cargo-transfers-native.json) record exact provenance.
 
-Earlier native rounds exposed test navigation and an omitted durable-phase flag.
-Both are corrected and final-head CI passes without weakened gates; the
-[B07 task](tasks/B07-cargo-management.md) retains the failure history.
-Market presets have no crystal exception (1000); fitted-charge behavior remains
-B07.3. Undo/redo remains B09. B07 remains active; next task is **B07.3**.
-
-## Selected task — B07.3
-
-Selected on `codex/b07-3-fitted-transfers` from delivered master `3ab2e3a3`;
-live master and no open PRs verified. Deliver fitted module/charge move/copy to
-cargo and fitting from cargo with original swap, quantity, legality, state and
-charge behavior. Include selected operations and the fitted-ammunition crystal
-exception. Acceptance requires independent pinned command cases, atomic rejection
-and failed-save checks, raw values/history, copies and fresh restart, native touch
-and screenshot review, final-head host/native CI and a reviewed fork PR merge.
-Audit only the relevant original transfer/context commands, then implement through
-the serialized EOS bridge. B09 retains undo/redo; later addition editors retain
-their own scope. The adapter and touch controls are implemented. Independent
-original commands repeat **14 cases/80 states**; four focused host tests pass
-successful values, atomic failures, selected transfers, overflow, failed saves,
-copies and **29-fit fresh-process restart**, including native fixture setup through
-real bridge operations. Main/instrumentation Kotlin compiles; both APKs, lint and
-161-source/pinned-data/license/ARM64/x86_64 package inspection pass, including the
-final callback guard (1m08s build/lint). Full PR CI remains required.
-The native workflow is prepared with an explicit durable phase and 57/85 fit-count
-guards; its execution and screenshots remain unverified. Original failed-transfer
-quantity corruption is retained in the reference and corrected by Android's atomic
-rejection, as documented in the task. Native CI, review and merge remain required.
-
-[PR #31](https://github.com/Sussic/Pyfa-android/pull/31) is open. Native run
-36650835930 on `21099908` passed build/lint/package checks, then caught a test
-registration omission: the phased transfer test ran in the initial suite without
-its phase argument. Its initial-suite exclusion is corrected; the dedicated
-durable prepare/restart driver remains required. Corrected-head CI is pending.
+Original failed transfers can duplicate cargo; Android preserves the preceding
+state atomically, with the raw desktop failure retained in the reference. Market
+crystal presets remain 1000; audited fitted crystal/script transfers use one.
+The initial native run exposed a phased-test registration omission, corrected
+without removing checks. The [B07 task](tasks/B07-cargo-management.md) retains it.
+B07 is complete within its boundary; **B09 owns undo/redo**. Next: **B08 fit notes**.
 
 ## Delivered work to reuse
 
@@ -72,6 +44,7 @@ durable prepare/restart driver remains required. Corrected-head CI is pending.
 | --- | --- |
 | B04 equipment/fitting | [PR #21](https://github.com/Sussic/Pyfa-android/pull/21), [task](tasks/B04-equipment-fitting.md). All B04 children remain closed. |
 | B05 bulk editing | PRs [#22](https://github.com/Sussic/Pyfa-android/pull/22), [#23](https://github.com/Sussic/Pyfa-android/pull/23), [#24](https://github.com/Sussic/Pyfa-android/pull/24), [#25](https://github.com/Sussic/Pyfa-android/pull/25); [task](tasks/B05-bulk-editing.md). |
+| B07.2 selected cargo actions | [PR #30](https://github.com/Sussic/Pyfa-android/pull/30), [receipt](evidence/b07-2-native.json), [task](tasks/B07-cargo-management.md). |
 | B07.1 cargo stacks | [PR #29](https://github.com/Sussic/Pyfa-android/pull/29), [receipt](evidence/b07-1-native.json), [task](tasks/B07-cargo-management.md). |
 | B06 modes/subsystems/structures | PRs [#26](https://github.com/Sussic/Pyfa-android/pull/26), [#27](https://github.com/Sussic/Pyfa-android/pull/27), [#28](https://github.com/Sussic/Pyfa-android/pull/28); [task](tasks/B06-hull-configuration.md), [latest receipt](evidence/b06-3-native.json). |
 
@@ -80,13 +53,13 @@ files. Do not reopen delivered work or rerun unchanged tested revisions.
 
 ## Forecast and installation limits
 
-B07.3 fitted transfers comes next, then B08 notes and B09 undo/redo. Elapsed implementation estimates remain **unknown**
-until each focused command/state audit resolves its remaining scope; confidence
-is low. A full parallel CI round currently takes roughly **25–41 minutes**;
-B07.2's final Windows/Android runs took 27m24s/40m23s. Multiple correction rounds
-were needed for B07.2, so a one-round delivery estimate is not reliable.
+B08 notes comes next, then B09 undo/redo. Elapsed implementation estimates remain
+**unknown** until each focused audit resolves scope; confidence is low. B07.3's
+final Windows/Android runs took **28m44s/47m15s**.
+CI corrections may require another full round; one-round delivery estimates are
+not reliable.
 
-Build 16 was the first meaningful development build; build 24 is the latest
+Build 16 was the first meaningful development build; build 25 is the latest
 emulator-tested build. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
 remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
