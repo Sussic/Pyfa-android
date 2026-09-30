@@ -77,6 +77,7 @@ ARGUMENTS = {
     "snapshot": ("fit_ids",), "create_fit": ("spec",),
     "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
     "set_notes": ("fit_id", "text"),
+    "undo": ("fit_id",), "redo": ("fit_id",),
     "delete_fit": ("fit_id", "resolve_references"),
     "add_module": ("fit_id", "item_id"),
     "replace_module": ("fit_id", "position", "item_id"),
@@ -202,6 +203,8 @@ class BridgeSession:
         self._revisions = {key: 1 for key in self._fits}
         self._modified = {key: 1 for key in self._fits}
         self._recent = []
+        from .history import EditHistory
+        self._history = EditHistory()
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
         self._snapshots = self._snapshots_for(self._fits, self._revisions, self._fits)
         self._provenance = dict(engine.resolved_item_ids)
@@ -314,6 +317,13 @@ class BridgeSession:
             raise RuntimeError('Restart the fitting engine')
         return {'version': 1, 'fit_id': fit_id, 'revision': self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
+
+    def history_details(self, fit_id):
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError('Restart the fitting engine')
+        return {'version': 1, 'fit_id': fit_id, 'revision': self._revisions[fit_id],
+                **self._history.details(fit_id)}
 
     def cargo_action_options(self, fit_id, item_id, from_cargo):
         from .cargo import action_options
@@ -677,9 +687,17 @@ class BridgeSession:
                 return self._serialize_success(request_id, list(snapshots.values()))
             fits = dict(self._fits)
             recent = list(self._recent)
+            history = None
+            replayed_records = None
+            used = []
             specs = {key: value["spec"] for key, value in self._records.items()}
             editing = True
-            if operation == "create_fit":
+            if operation in ('undo', 'redo'):
+                replayed_records, history, used = self._history.replay(
+                    args['fit_id'], operation == 'redo', self._records)
+                if used:
+                    recent = promote(self.engine, recent, used)
+            elif operation == "create_fit":
                 logical_id = uuid.uuid4().hex
                 fits[logical_id] = self.engine.create_fit(args["spec"])
                 specs[logical_id] = deepcopy(args["spec"])
@@ -725,7 +743,14 @@ class BridgeSession:
                 if operation in {"add_module", "replace_module", "remove_module", "remove_bulk_modules", "fill_modules_item", "set_subsystem", "add_cargo", "remove_cargo", "remove_cargos", "add_cargo_preset", "fill_cargo"} and used:
                     recent = promote(self.engine, recent, used)
             editing = False
-            records = self._capture(fits, specs)
+            records = replayed_records if replayed_records is not None else self._capture(fits, specs)
+            if history is None:
+                promoted = used if recent != self._recent else []
+                # Record the original recent-use side effect even when its item
+                # is already first; redo may run after another fit promotes one.
+                if operation in {'add_module', 'replace_module', 'remove_module', 'remove_bulk_modules', 'fill_modules_item'}:
+                    promoted = used or []
+                history = self._history.after_edit(operation, args, self._records, records, promoted)
             modified = {key: self._modified.get(key, 0) for key in records}
             changed_inputs = [key for key in records if records[key] != self._records.get(key)]
             if changed_inputs:
@@ -744,7 +769,7 @@ class BridgeSession:
             for key in fits:
                 if key in affected:
                     fits[key].clear()
-            if operation in {"rename_fit", "duplicate_fit", "delete_fit"}:
+            if operation in {"rename_fit", "duplicate_fit", "delete_fit", "undo", "redo"}:
                 # Relationship refresh during copy/removal can invalidate sources
                 # outside the edited set. Replay the candidate graph exactly as
                 # restart does before publishing its complete library snapshot.
@@ -754,7 +779,7 @@ class BridgeSession:
             all_snapshots = {key: snapshots.get(key, self._snapshots.get(key)) for key in fits}
             # Lifecycle operations return the complete surviving library. Other
             # operations retain the B01 affected-snapshots response contract.
-            library_operation = operation in {"rename_fit", "duplicate_fit", "delete_fit"}
+            library_operation = operation in {"rename_fit", "duplicate_fit", "delete_fit", "undo", "redo"}
             result = self._serialize_success(request_id, list(all_snapshots.values() if library_operation else snapshots.values()))
             provenance = dict(self.engine.resolved_item_ids)
             attempt = self._store.prepare(self._graph(records, revisions, modified, recent)) if self._store else None
@@ -768,6 +793,7 @@ class BridgeSession:
             self._fits, self._records, self._revisions = fits, records, revisions
             self._modified = modified
             self._recent = recent
+            self._history = history
             self._snapshots = all_snapshots
             self.sample_id = self.sample_id if self.sample_id in fits else next(iter(fits), None)
             self._provenance = provenance

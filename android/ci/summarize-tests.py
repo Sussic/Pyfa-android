@@ -96,8 +96,10 @@ from cargo_stack_summary import summarize as summarize_cargo_stacks
 from cargo_action_summary import summarize as summarize_cargo_actions
 from cargo_transfer_summary import summarize as summarize_cargo_transfers
 from notes_summary import summarize as summarize_notes
+from history_summary import summarize as summarize_history
 summary = {
-    "task": "B08",
+    "history": summarize_history(json.loads((evidence / "history-native.json").read_text(encoding="utf-8")), engine),
+    "task": "B09.1",
     "cargo_actions": summarize_cargo_actions(json.loads((evidence / "cargo-actions-native.json").read_text(encoding="utf-8")), engine),
     "notes": summarize_notes(json.loads((evidence / "notes-native.json").read_text(encoding="utf-8")), engine),
     "cargo_transfers": summarize_cargo_transfers(json.loads((evidence / "cargo-transfers-native.json").read_text(encoding="utf-8")), engine),

@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[SubsystemEditorModel::class.java],
                 ViewModelProvider(this)[StructureServiceEditorModel::class.java],
                 ViewModelProvider(this)[CargoEditorModel::class.java],
-                ViewModelProvider(this)[NotesModel::class.java])
+                ViewModelProvider(this)[NotesModel::class.java], ViewModelProvider(this)[EditHistoryModel::class.java])
         }
     }
 
@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel, historyModel: EditHistoryModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -134,6 +134,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                         )
+                        if (!showAbout && !showNotes) EditHistoryControls(historyModel)
                         if (showNotes) {
                             NotesEditor(notesModel, onBack = { showNotes = false })
                         } else if (showEquipment) {

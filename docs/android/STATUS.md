@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-30. **B08 delivered. B09 ready.**
+Updated: 2026-09-30. **B08 delivered. B09.1 active.**
 
 ## Authorized queue
 
@@ -36,6 +36,23 @@ Stored structure notes remain read-only and survive copies/restart.
 Pending drafts remain in memory until a save is confirmed; unconfirmed process
 death is not a draft-persistence guarantee. B08 is complete within the pinned notes
 boundary. **B09 undo/redo** is the exact next eligible task; B05 is delivered.
+
+## Selected task — B09.1 edit history
+
+Selected `codex/b09-1-edit-history` from delivered master `72b01c4c`; live default
+master and no open PRs verified. B05 satisfies B09's dependency. B09 is split into
+single/bulk module undo/redo (B09.1), then remaining supported mutations and future
+extension requirements (B09.2); the parent remains open until both are verified.
+B09.1 will retain desktop per-fit 100-action grouping/branching, native undo/redo
+controls, safe selection state and atomic EOS replay with saved reversed values.
+Acceptance includes independent original-command/processor evidence, host failure
+and restart checks, offline native touch/recreation/restart, screenshot review and
+all required final-head CI. [Task and checks](tasks/B09-undo-redo.md). No new product
+inputs, schema migration, release or phone actions. Next child: **B09.2**.
+Independent original history now repeats 18 cases/108 states and verifies the
+100-action limit. Six focused host tests pass; final APKs/lint (1m43s) and 163-source
+package/ABI inspection pass. Required CI, native evidence/screenshots and delivery remain
+pending. B09.2 is not started.
 
 ## Delivered work to reuse
 

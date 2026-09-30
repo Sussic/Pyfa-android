@@ -107,6 +107,18 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun editHistory(context: Context, fitId: String): CompletableFuture<EditHistory> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeEditHistory(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("history_details", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
     fun noteDetails(context: Context, fitId: String): CompletableFuture<NoteDetails> {
         val ready = start(context)
         return CompletableFuture.supplyAsync({

@@ -292,3 +292,22 @@ and flushes on Back, fit switching and activity stop; failed/stale saves retain 
 draft and conflicting saved text requires an explicit editor choice. Notes are
 plain text, never executed or rendered as HTML. Original note saves are direct
 service edits; general edit undo/redo remains B09.
+
+## B09.1 history boundary
+
+Revision-bound history queries and undo/redo mutations use the same serialized
+worker and confirmed graph commit as ordinary edits. The per-fit session history
+retains at most 100 successful user actions, matching the pinned wx processor.
+Frames contain changed declarative input fields and the original recent-use side
+effect; they contain no EOS objects, cached results or formulas. Undo/redo replays
+through EOS, advances revisions and persists the resulting graph before publishing
+the new cursor. Failed writes and stale requests retain the previous cursor/data.
+No-op padding of spare slots does not create an action or invalidate redo.
+
+B09.1 registers single/bulk local module actions. Unregistered changes that overlap
+an existing frame invalidate that fit's history safely; B09.2 must complete current
+hull/cargo/addition/relationship coverage before the parent is done. Notes are
+outside command history and survive reversals. Recent-item history is not rewound;
+redo repeats the original promotion. Copies start without history. Process restart
+keeps the committed fitting result but starts a new history, as desktop does.
+Native revision changes invalidate stale selections through the existing editors.
