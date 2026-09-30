@@ -73,3 +73,63 @@ restored fits, six protocol guards and twelve corruption probes pass. All six
 final cargo screenshots were reviewed; artifact digest and tested tree match.
 [Receipt](../evidence/b07-1-native.json) and [raw report](../evidence/b07-1-cargo-stacks-native.json)
 retain evidence. B07.2 is the exact next task; the parent remains active.
+
+## B07.2 selected — 2026-09-27
+
+Branch `codex/b07-2-cargo-actions` starts from delivered master `062e8e09`.
+Deliver selected-stack quantity/removal (including zero-to-remove), original
+ammunition presets, fill boundaries and selected variation merging. Audit original
+GUI/context commands as well as EOS edits so target order, no-ops, history and
+quantity behavior are retained. Acceptance requires independent command/raw-value
+fixtures and repeat, atomic malformed/stale/write-failure behavior, durable copy
+and fresh restart, native touch and screenshot review, and final-head CI/PR merge.
+B07.3 retains fitted module/charge transfers; B09 retains undo/redo.
+
+## B07.2 implementation and review
+
+The new serialized cargo actions preserve selected order, zero-to-remove without
+recent promotion, explicit removal history, x8 scan probes/x1000 other ammunition,
+original base-volume fill truncation, variation family filtering and stack merges.
+Touch controls expose multi-selection, a shared quantity, presets, fill and choices.
+Independent original commands repeat five cases/37 states. Three focused host
+tests pass exact cargo/history/menu choices, synthetic null/zero/negative volume
+guards, stale/malformed rejection, overflow/partial-edit rollback, failed saves,
+copy and 11-fit fresh restart. Kotlin/main and instrumentation compilation pass.
+Positive existing-stack fill was added during review; the refreshed fixture/repeat
+and affected host checks pass. Both final local APKs, lint and package inspection
+pass (160 sources, pinned dataset, licenses, ARM64/x86_64). Native
+execution/screenshots and final-head CI remain.
+
+The original market ammunition preset has no crystal exception: Multifrequency S
+adds 1000. F04.02's exception remains in scope for the fitted charge transfer audit
+in B07.3; it is not silently applied to this distinct market action. B07.2 retains
+all inherited native/host checks and adds actual touch sequences, typed options,
+raw histories/cargo values, ten new/copy fits and a separate process restart.
+
+Reproduce with the installed reference/headless Python environments respectively:
+`python -I tools/android_reference/cargo_actions.py --source <pinned-checkout> --database <verified-eve.db> --output <new-external-directory> --check tools/android_reference/fixtures/cargo-actions.json`
+and `python -I tools/android_headless/check_cargo_actions.py --source <pinned-checkout> --database <verified-eve.db> --output <new-external-directory>`.
+`android/ci/check-cargo-actions.py` runs the two native phases after the inherited
+cargo-stack gate. Counts and prepared checks are not evidence of native success.
+
+Head `7ef87f71` passes Windows/reference run 36284141825 in 25m26s, including
+the repeated five-case/37-state fixture and three focused tests. Native run
+36284141813 passes inherited phases through B07.1, then fails B07.2 preparation:
+the hidden non-ammunition preset case used one browser Back tap and remained in
+search results; a later cargo Back assertion found no node. The retained failure
+screen confirms that navigation state. The test now explicitly leaves selected
+item, search results and market root, and asserts cargo visibility after actions.
+The two reached cargo screens (selected quantity and 1000-crystal preset) were
+reviewed; remaining native states, restart and final screenshots are unverified.
+
+Head `afe469ef` passes Windows/reference run 36286236788 in 26m35s. Native run
+36286236863 passes inherited phases and the new preparation actions, then fails
+the restart library comparison (`root.data expected 11, actual 1`). B07.2's phase
+flag was omitted from `DiagnosticTestRunner`, which selected ephemeral diagnostic
+storage for both processes. The flag is now registered alongside existing durable
+phases, with enabled/opened-existing persistence and 47/57 fit-count entry guards.
+Corrected instrumentation Kotlin compilation passes in 1m10s.
+This strengthens the existing durable-restart gate; product storage is unchanged.
+The one-day artifact expired before the September 30 resume, so its screenshots
+and raw report cannot be reviewed. The failure is retained in CI logs; a corrected
+native run is required for durable results and final screenshot review.

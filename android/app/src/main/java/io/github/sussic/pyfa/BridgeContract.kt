@@ -41,6 +41,12 @@ sealed interface BridgeOperation {
     data class AddCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
     data class SetCargoQuantity(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
     data class RemoveCargo(val fitId: String, val itemId: Int, val quantity: Long) : BridgeOperation
+    data class SetCargoQuantities(val fitId: String, val itemIds: List<Int>, val quantity: Long) : BridgeOperation
+    data class RemoveCargos(val fitId: String, val itemIds: List<Int>) : BridgeOperation
+    data class AddCargoPreset(val fitId: String, val itemId: Int) : BridgeOperation
+    data class FillCargo(val fitId: String, val itemId: Int, val fromCargo: Boolean) : BridgeOperation
+    data class ChangeCargoVariations(val fitId: String, val mainItemId: Int,
+        val itemIds: List<Int>, val itemId: Int) : BridgeOperation
     data class SetFitRestrictions(val fitId: String, val ignore: Boolean) : BridgeOperation
     data class ChangeMode(val fitId: String, val itemId: Int) : BridgeOperation
     data class SetSubsystem(val fitId: String, val kind: Int, val itemId: Int?) : BridgeOperation
@@ -280,6 +286,21 @@ object BridgeCodec {
             "position" to integer(operation.position, "position", 0), "item_id" to integer(operation.itemId, "item_id", 1))
         is BridgeOperation.RemoveModule -> "remove_module" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0))
+        is BridgeOperation.SetCargoQuantities -> "set_cargo_quantities" to obj("fit_id" to operation.fitId,
+            "item_ids" to cargoIds(operation.itemIds), "quantity" to operation.quantity.also {
+                requireProtocol(it >= 0, "Cargo quantity must not be negative") })
+        is BridgeOperation.RemoveCargos -> "remove_cargos" to obj("fit_id" to operation.fitId,
+            "item_ids" to cargoIds(operation.itemIds))
+        is BridgeOperation.AddCargoPreset -> "add_cargo_preset" to obj("fit_id" to operation.fitId,
+            "item_id" to operation.itemId.also { requireProtocol(it > 0, "Invalid cargo item") })
+        is BridgeOperation.FillCargo -> "fill_cargo" to obj("fit_id" to operation.fitId,
+            "item_id" to operation.itemId.also { requireProtocol(it > 0, "Invalid cargo item") },
+            "from_cargo" to operation.fromCargo)
+        is BridgeOperation.ChangeCargoVariations -> "change_cargo_variations" to obj("fit_id" to operation.fitId,
+            "main_item_id" to operation.mainItemId.also {
+                requireProtocol(it in operation.itemIds, "Select the main cargo stack") },
+            "item_ids" to cargoIds(operation.itemIds),
+            "item_id" to operation.itemId.also { requireProtocol(it > 0, "Invalid cargo variation") })
         is BridgeOperation.AddCargo -> "add_cargo" to obj("fit_id" to operation.fitId,
             "item_id" to integer(operation.itemId, "item_id", 1),
             "quantity" to operation.quantity.also { requireProtocol(it > 0, "Cargo quantity must be positive") })
@@ -730,6 +751,32 @@ object BridgeCodec {
             "Non-structure hull cannot have service choices")
         return StructureServiceOptions(nonempty(value.get("fit_id"), "fit_id"), revision,
             isStructure, capacity, immutableList(choices))
+    }
+
+    private fun cargoIds(values: List<Int>): JSONArray {
+        requireProtocol(values.isNotEmpty() && values.all { it > 0 }, "Select cargo stacks")
+        unique(values, "selected cargo IDs")
+        return JSONArray(values)
+    }
+
+    fun decodeCargoActionOptions(json: String): CargoActionOptions {
+        val value = objectValue(StrictJson(json).parse(), "cargo actions")
+        keys(value, setOf("version", "fit_id", "revision", "item_id", "from_cargo",
+            "preset_quantity", "fill_quantity", "variations"), path = "cargo actions")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported cargo actions version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid cargo revision")
+        val fromCargo = bool(value.get("from_cargo"), "from_cargo")
+        val preset = nullable(value.get("preset_quantity"))?.let { long(it, "preset_quantity") }
+        requireProtocol(preset == null || preset in listOf(8L, 1000L), "Invalid cargo preset")
+        val fill = nullable(value.get("fill_quantity"))?.let { long(it, "fill_quantity") }
+        requireProtocol(fill == null || fill >= 0, "Invalid cargo fill quantity")
+        val variations = variationChoices(value.get("variations"))
+        requireProtocol(variations.all { it.group != null }, "Missing cargo variation group")
+        requireProtocol(if (fromCargo) preset == null && fill != null else variations.isEmpty(),
+            "Cargo actions do not match their context")
+        return CargoActionOptions(identifier(value.get("fit_id"), "fit_id"), revision,
+            integer(value.get("item_id"), "item_id", 1), fromCargo, preset, fill, variations)
     }
 
     fun decodeCargoDetails(json: String): CargoDetails {

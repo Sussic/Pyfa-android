@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-09-27. **B07.1 delivered. Exact next task: B07.2.**
+Updated: 2026-09-30. **B07.1 delivered. B07.2 active in PR #30.**
 
 ## Authorized queue
 
@@ -39,10 +39,33 @@ new test/report assertions (JSON numeric-kind serialization, then native nulls
 compared using a desktop-only mapping). They are fixed and the final head passes;
 no gate was weakened. [B07 task evidence](tasks/B07-cargo-management.md) records the details.
 
-## Exact next task — B07.2
+## Selected task — B07.2
 
 Deliver original multi-selected cargo quantity/removal, including zero-to-remove,
 ammunition presets, fill-to-capacity boundaries and variation/quantity merges.
+Selected on `codex/b07-2-cargo-actions` from delivered master `062e8e09`, with no
+open PR. The intended outcome is touch-accessible selected cargo actions with
+independent command/value comparisons, atomic saves and native offline copy/restart.
+The adapter and touch controls are implemented. Independent desktop export repeats
+five cases/37 states; three focused host checks pass selection/history, menu choices,
+volume guards, atomic rejection/save failure and 11-fit fresh restart. Kotlin and
+instrumentation compilation pass. Review added a positive existing-stack fill
+case; its refreshed export/repeat and three host checks pass. Both final local APKs,
+lint and 160-source/data/license/ARM64/x86_64 package inspection pass.
+Native offline execution, screenshots and final-head CI/merge remain required.
+Head `7ef87f71` passed Windows CI (36284141825, 25m26s). Native run
+36284141813 passed all inherited phases, then the new cargo test failed because
+it used one Back tap to leave the browser's selected/search/root hierarchy.
+The test now follows all three levels and asserts the cargo screen is visible;
+no product behavior or required gate changed. Corrected native CI is required.
+Head `afe469ef` passed Windows CI (36286236788, 26m35s). Native run
+36286236863 passed inherited phases and cargo preparation, then its restart check
+found only one fit instead of eleven: B07.2 was missing from the test runner's
+durable-phase flags and had used ephemeral diagnostic storage. The phase is now
+registered, with durable/opened-existing storage and 47/57 fit-count entry guards;
+instrumentation compilation passes. The one-day artifact expired during the
+interruption; CI logs remain.
+Native persistence and final screenshots still require a corrected run.
 Use original pinned commands for independent fixtures, preserve serialized EOS and
 atomic graph/history behavior, then verify native touch, copy and offline restart.
 F04.01 remains partial until selected-stack actions are delivered. B07.3 retains
