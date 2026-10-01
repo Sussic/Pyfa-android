@@ -67,6 +67,11 @@ The user confirms usability; agents are responsible for technical correctness.
   the Android implementation under test. Record units and justified tolerances.
 - Engine changes need meaningful regression cases. Android behavior needs native
   build/test evidence; host-only Python tests cannot establish Android support.
+- W02 is the currently authorised setup priority: demonstrate full Windows local
+  verification before retiring hosted checks, then resume PR #33/B09.1 and B09.2.
+  Use the explicit local launcher and retain exact-commit evidence as described in
+  docs/android/LOCAL-VERIFICATION.md. No unattended self-hosted runner is authorised.
+  A local result must be labelled local; unexecuted Actions checks are not passes.
 - For documentation-only changes, inspect scope, links and task dependencies and
   run `git diff --check`. Do not start emulator runs or create placeholder tests.
 - Never weaken a required check to get a green build. Record inherited failures

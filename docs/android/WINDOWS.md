@@ -163,6 +163,12 @@ failure checking and records the new evidence path in `build/windows-check-path.
 
 ## Required native evidence
 
+The historical counts below describe earlier milestones. The current complete
+plan is printed by `./android/verify-local.ps1 -Action plan -Mode full`; it retains
+all later checks through B09.1. Use [LOCAL-VERIFICATION](LOCAL-VERIFICATION.md)
+for the authoritative explicit Windows commands and local evidence location.
+
+
 A local APK, lint, signature, package inspection and host tests do not prove
 Android runtime behavior. Preserve every required gate in `.github/workflows/android.yml`
 and `android/ci/native-test.sh`. Their fresh offline API 36 x86_64 emulator
@@ -170,8 +176,10 @@ sequence requires all **18 native executions**: five functional tests, separate
 A10 performance and B01 contract, three B02 persistence phases, and three B03.1
 library phases, four B03.2 organization/navigation phases and B04.1 equipment discovery. Preserve raw-value validators, restart boundaries and screenshot
 review. Do not run an unfiltered connected suite or this fresh-install script on
-a personal phone. The supported full native harness uses Ubuntu/KVM and GNU
-`timeout`; this setup does not port it to Windows or claim to have run it locally.
+a personal phone. W02 adds an explicit Windows WHPX launcher retaining the complete native chain.
+See [local verification](LOCAL-VERIFICATION.md) for start, focused checks and
+pause/resume. Its actual full-suite demonstration and screenshot review are
+pending; a launcher alone is not passing runtime evidence.
 
 Docs-only setup changes need link/scope review and `git diff --check`; do not
 manually dispatch an emulator run for them. Existing path filters also match

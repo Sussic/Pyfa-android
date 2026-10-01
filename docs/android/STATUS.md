@@ -1,6 +1,28 @@
 # Android project status
 
-Updated: 2026-09-30. **B08 delivered. B09.1 active.**
+Updated: 2026-10-01. **W02 local verification active; B09.1 preserved in PR #33.**
+
+## Selected setup — W02 Windows local verification
+
+The user prioritised complete local build/test execution on 2026-10-01, then
+resumption of the existing roadmap goal. Branch `codex/windows-local-verification`
+starts from PR #33 head `e916e054`; all B09.1 feature work is preserved. This setup
+will use a focused PR into the B09.1 branch before PR #33 returns to delivery.
+[Acceptance and scope](tasks/W02-windows-local-verification.md): reuse installed
+SDK/JDK/Python/Gradle, disposable WHPX API36 x86_64 emulator, full desktop and
+native coverage, offline install/restart/raw validation and screenshot review,
+commit-bound local logs/APKs/evidence, repeatable start/pause/resume commands and
+truthful required result reporting. Demonstrate local replacement before retiring
+hosted checks. No unattended runner, CPU/RAM caps, paid service, release or phone
+installation. W02 delivery is followed by B09.1 completion, then B09.2.
+
+Desktop run `36661924082` passes the unchanged PR head in 29m34s. Android run
+`36661923971` attempt 1 was cancelled at 50m06 during emulator testing; attempt 2
+also exceeded the 50-minute job ceiling (50m09s). No hosted retry is pending. Neither cancelled/unexecuted native check is passing evidence.
+Windows WHPX reports usable. Installed emulator is 36.2.12; installed images are
+API35 Google APIs and API36.1 Play Store. API36 Google APIs x86_64 revision7 is now installed. The portable launcher and
+run-specific evidence routing are implemented; all existing script coverage
+matches the hosted plan. Full local execution and screenshot review remain pending.
 
 ## Authorized queue
 
