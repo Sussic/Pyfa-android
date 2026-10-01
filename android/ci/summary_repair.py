@@ -37,12 +37,17 @@ def equivalent(root, tested, head):
         'android/ci/test_summary_repair.py', 'android/ci/report_local.py',
         'android/ci/test_report_local.py', 'android/ci/history_progress.py',
         'android/ci/contract_summary.py', 'android/ci/test_contract_fixtures.py',
+        'android/ci/persistence_summary.py', 'android/ci/test_persistence_fixtures.py',
         '.github/workflows/android.yml', '.github/workflows/desktop-reference.yml'}
     assert all(p in allowed or p.startswith('docs/android/') for p in changed), changed
     if 'android/ci/contract_summary.py' in changed:
         before = git('show', tested + ':android/ci/contract_summary.py')
         after = git('show', head + ':android/ci/contract_summary.py')
         assert after == corrected_contract_source(before), 'Unexpected contract verifier change'
+    if 'android/ci/persistence_summary.py' in changed:
+        before = git('show', tested + ':android/ci/persistence_summary.py')
+        after = git('show', head + ':android/ci/persistence_summary.py')
+        assert after == corrected_persistence_source(before), 'Unexpected persistence verifier change'
     if 'android/ci/local_verification.py' in changed:
         def executed(source):
             return {n.name: ast.dump(n, include_attributes=False) for n in ast.walk(ast.parse(source))
@@ -70,6 +75,20 @@ def corrected_contract_source(source):
 '''
     assert source.count(old) == 1 and source.count('import json\n') == 1
     return source.replace('import json\n', 'import json\nimport os\nfrom zipfile import ZipFile\n', 1).replace(old, new, 1)
+
+
+def corrected_persistence_source(source):
+    """Only bind the existing fixture hash comparisons to exact APK bytes."""
+    old = '        fixture_hashes[kind] = hashlib.sha256(data).hexdigest()\n'
+    new = '''        test_apk = Path(os.environ.get("PYFA_INSTRUMENTATION_APK",
+            str(root / "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk")))
+        with ZipFile(test_apk) as apk:
+            packaged = apk.read(f"assets/{filename}-expected.json")
+        assert packaged.replace(b"\\r\\n", b"\\n") == data
+        fixture_hashes[kind] = hashlib.sha256(packaged).hexdigest()
+'''
+    assert source.count(old) == 1 and source.count('import re\n') == 1
+    return source.replace('import re\n', 'import re\nimport os\nfrom zipfile import ZipFile\n', 1).replace(old, new, 1)
 
 
 def clear_native_results(directory):

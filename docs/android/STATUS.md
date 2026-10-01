@@ -2,6 +2,13 @@
 
 Updated: 2026-10-02. **W02 approved fixture guard correction in progress.**
 
+Current authorized correction: inspect the final-summary validators for the same
+CRLF/LF fixture hash assumption, correct confirmed occurrences with exact APK
+hashes plus CRLF-to-LF-only reference equality, preserve manifest/report checks,
+run focused checks and only the outstanding summary. Retry at `96c09200` failed
+in 0.422 seconds at `persistence_summary.py:189` (log 111); all 77 completed records
+and original attempts were confirmed unchanged. No full native rerun is authorized.
+
 ## Selected setup — W02 Windows local verification
 
 The active goal is complete local build/test setup and delivery, then stop.
