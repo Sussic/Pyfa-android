@@ -12,7 +12,7 @@ same history contract and their independent reference/native cases.
 | B09.1 | active | Per-fit transactional undo/redo for single and bulk local module edits, including charges, states, add/replace/remove, clone/fill, variations, restrictions and ordering. Original command processor evidence verifies action grouping, 100-action retention, redo invalidation and fit isolation. Native controls reverse/reapply values, keep selections valid, survive recreation and save the resulting fit across process restart. |
 | B09.2 | queued | Extend and verify the remaining already supported rename, hull, cargo, addition and linked-effect edits. Enumerate original non-command gaps, preserve unrelated fit data and recent-use semantics, and establish the mandatory extension checks for later mutation tasks. Parent completion requires every existing mutation to have an explicit tested disposition. |
 
-Each child requires focused host tests, the full required Windows/native CI,
+Each child requires focused host tests, the full required local reference/build/native verification,
 reviewed screenshots/evidence, fork PR merge and checkpoint. No additional approval
 gate is introduced between children. No new fitting features, storage migration,
 release or phone action is included.
@@ -41,14 +41,14 @@ appropriate redo branch; copying or restarting does not inherit command objects.
   per-fit isolation and history limit; repeat in fresh processes.
 - [x] Strict typed history query and undo/redo operations on the serialized worker;
   exact input replay recalculates affected recipients and commits atomically.
-- [ ] Cover all B04/B05 local-module operations, preserve notes and unrelated fits,
+- [x] Cover all B04/B05 local-module operations, preserve notes and unrelated fits,
   reconcile valid selection state and expose available action labels/counts.
 - [x] Host regression cases cover repeated cycles, stale/malformed requests,
   no-op/failed edits, durable write recovery, recreation-independent history and
   fresh-process reopening of the reversed fit with empty session history.
-- [ ] Offline native touch single/bulk reversal, branching, fit switching,
+- [x] Offline native touch single/bulk reversal, branching, fit switching,
   selection safety, recreation/restart, typed protocol guards and screenshots.
-- [ ] Required final-revision CI, review, evidence receipt and authorized merge;
+- [ ] Required final-revision local verification, review, evidence receipt and authorized merge;
   update this task and STATUS, then advance automatically to B09.2.
 
 ## B09.1 implementation checkpoint
@@ -66,3 +66,17 @@ B08 Windows CI took 28m44s under a 30-minute ceiling. The additional independent
 history export and host reversal suite require more time; its job ceiling becomes
 35 minutes while all existing checks and their individual limits remain intact.
 No schedule, artifact-retention, upload, billing or release policy changes.
+
+## B09.1 final review — 2026-10-02
+
+W02 full local proof is valid for unchanged B09.1 product/test inputs: 78 gates,
+52 instrumentation executions and all required screenshot review. Actual host/build
+commit f7d2ad31, native execution 6792b03e and aggregate 5952c1bf are retained rather
+than relabelled. History passes 18 cases/108 states, two linked recipients, 111-fit
+fresh-process restore and ten protocol rejections; six history screens reviewed.
+Twenty-one deliberate native report corruptions are rejected in focused review.
+The [feature receipt](../evidence/b09-1-native.json) and
+[raw report](../evidence/b09-1-history-native.json) preserve observations and limits.
+No product/test/fixture or tolerance change was needed during final review.
+PR #33 merge is pending the receipt/docs push and exact-head local reporting.
+B09.2 is next after delivery; setup-only stop has been explicitly superseded.

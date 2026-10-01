@@ -4,7 +4,7 @@ W02 demonstrated the complete Windows WHPX replacement: 78 gates (48 independent
 reference/host, five build/package, 25 native), all inherited offline assertions,
 raw validators and reviewed screenshots. [Receipt](evidence/w02-local.json) records
 actual commits, earlier failed launcher attempts and retained evidence. B09.1
-feature delivery remains pending in PR #33; setup completion does not close it.
+feature delivery is resumed under explicit user authorization; setup proof remains valid.
 
 ## Start and focused checks
 
