@@ -3,7 +3,7 @@
   "delivery": {
     "pr": "https://github.com/Sussic/Pyfa-android/pull/33",
     "reviewed_head": "5b07bc50a23946266f9eb5e8e8b09e7b0cd2836f",
-    "merge": null,
+    "merge": "3143d771e96382a31355cd04592f1b93f66dbd7a",
     "verification_kind": "local_windows",
     "local_status": "local/full-verification",
     "setup_receipt": "w02-local.json",
@@ -112,7 +112,9 @@
       "protocol_guard",
       "wrong_source_revision",
       "restart_generation"
-    ]
+    ],
+    "delivered_head": "9b586d8994fb6e69c56096848eb32716c735344d",
+    "merge_tree_matches_delivery_head": true
   },
   "desktop_reference": {
     "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",

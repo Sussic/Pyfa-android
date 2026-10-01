@@ -11,7 +11,8 @@ change the feature-task counts or reduce any host/native acceptance check.
 
 The 2026-10-01 [W02 local verification setup](tasks/W02-windows-local-verification.md)
 preserves every feature acceptance check and PR #33. Its goal ends at setup
-verification/delivery; B09.1 completion and B09.2 await explicit resumption.
+verification/delivery. Explicit resumption on 2026-10-02 authorizes B09.1 delivery,
+then sequential eligible roadmap work using local verification.
 
 Each row is a bounded outcome with a minimum acceptance check, not a license to
 omit related Pyfa behavior. Before implementing a row, expand it with the
@@ -70,8 +71,8 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B07.3 | done | B07.2 | Fitted equipment and charge transfers | Move/copy fitted modules and charges to/from cargo, preserving desktop fit/charge/state and atomic behavior. |
 | B08 | done | B03 | [Fit notes](tasks/B08-fit-notes.md) | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | active | B05 | [Undo/redo for fit edits (parent)](tasks/B09-undo-redo.md) | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |
-| B09.1 | active | B05 | Single and bulk module undo/redo | Per-fit 100-action history, atomic reversal/reapply, branch invalidation, safe selections and native offline recreation/restart match independent desktop evidence. |
-| B09.2 | queued | B09.1 | Remaining supported mutation history | Verify hull/cargo/addition/linked-effect and rename reversals, enumerate original gaps, and require later mutation tasks to extend the tested contract. |
+| B09.1 | done | B05 | Single and bulk module undo/redo | Per-fit 100-action history, atomic reversal/reapply, branch invalidation, safe selections and native offline recreation/restart match independent desktop evidence. |
+| B09.2 | ready | B09.1 | Remaining supported mutation history | Verify hull/cargo/addition/linked-effect and rename reversals, enumerate original gaps, and require later mutation tasks to extend the tested contract. |
 
 ## C — expose the full fit inputs and statistics
 

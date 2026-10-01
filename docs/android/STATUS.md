@@ -1,23 +1,15 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.1 verified; PR #33 delivery in progress.**
+Updated: 2026-10-02. **B09.1 delivered; B09.2 next.**
 
-## Selected outcome — B09.1 module edit history
+## Latest delivery — B09.1 module edit history
 
-The user explicitly resumed development and superseded the setup-only stop.
-Review and deliver PR #33, then automatically select B09.2 and subsequent eligible
-approved work, one coherent outcome at a time. Reuse installed local verification
-and retained valid evidence. No hosted dispatch without asking the user; no setup
-repeat, new infrastructure, unrelated refactoring, release, phone installation or
-billing change. No delegation or access blocker currently exists.
-
-PR #33 branch `codex/b09-1-edit-history` retains W02 setup delivered in PR #34.
-Live master is `72b01c4c`; current product inputs match the tested native revision
-`6792b03e` exactly. [Local setup receipt](evidence/w02-local.json) proves all 78
-required gates; host/build ran at `f7d2ad31`, native execution at `6792b03e`, final
-aggregate at `5952c1bf`. Actual commits and earlier failures remain unchanged.
-Explicit `local/full-verification` passes at `5b07bc50`; no hosted native pass is
-claimed. The cancelled Actions attempts remain recorded.
+[PR #33](https://github.com/Sussic/Pyfa-android/pull/33) merged as `3143d771`
+from reviewed head `9b586d89`; merge/head trees match. Its exact head passed
+`local/full-verification`. [Feature receipt](evidence/b09-1-native.json) records
+actual tested commits and [raw history](evidence/b09-1-history-native.json).
+The 78-gate W02 proof remains valid: host/build `f7d2ad31`, native execution
+`6792b03e`, aggregate `5952c1bf`. All prior failures are preserved.
 
 B09.1 matches independent original GUI/calc commands and wx processors in 18
 cases/108 states, grouping/branching, per-fit isolation and the 100-action limit.
@@ -29,15 +21,24 @@ raw validator rejects 21 deliberate report corruptions. Review found no blocking
 issue. [Feature receipt](evidence/b09-1-native.json) and
 [raw history](evidence/b09-1-history-native.json) preserve evidence and limits.
 
-Next action: push the delivery receipt/docs, publish the validated local result
-for the exact PR head and merge PR #33 after checks pass. Then select **B09.2**:
-remaining supported rename/hull/cargo/addition/linked-effect history and mandatory
-extension checks for future mutations. B09 remains active until B09.2 is verified.
+## Authorized next outcome — B09.2 remaining mutation history
 
-W02 is delivered; [commands and evidence](LOCAL-VERIFICATION.md) apply. Master will
-receive the demonstrated manual hosted fallback policy with PR #33. No owner
-configuration step remains. ARM64, older APIs, phone usability and signing/upgrades
-remain unverified; session history is not persisted, confirmed fit inputs are.
+The user explicitly resumed development and superseded the setup-only stop.
+Automatically continue eligible approved roadmap work, one coherent outcome through
+review, full local verification and delivery. No hosted dispatch without asking,
+setup repeat, new infrastructure, unrelated refactoring, release, phone installation,
+billing change or delegation. No decision/access blocker currently exists.
+
+Exact next action: select B09.2 from live master and inventory every supported
+mutation against the pinned original command/non-command boundary, then implement
+rename/hull/cargo/addition/linked-effect history with independent desktop, host and
+native restart/selection/atomicity coverage. B09 remains active until every existing
+mutation has an explicit tested disposition. Later mutation tasks must extend it.
+
+W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
+now has manual hosted fallback workflows. No owner configuration step remains.
+ARM64/older APIs/phone usability/signing upgrades remain unverified. History is
+session-local; confirmed fit inputs persist. No full-parity claim is made.
 
 ## Delivered work to reuse
 

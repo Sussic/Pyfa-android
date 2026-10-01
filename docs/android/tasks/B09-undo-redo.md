@@ -9,8 +9,8 @@ same history contract and their independent reference/native cases.
 
 | Child | State | Outcome and acceptance |
 | --- | --- | --- |
-| B09.1 | active | Per-fit transactional undo/redo for single and bulk local module edits, including charges, states, add/replace/remove, clone/fill, variations, restrictions and ordering. Original command processor evidence verifies action grouping, 100-action retention, redo invalidation and fit isolation. Native controls reverse/reapply values, keep selections valid, survive recreation and save the resulting fit across process restart. |
-| B09.2 | queued | Extend and verify the remaining already supported rename, hull, cargo, addition and linked-effect edits. Enumerate original non-command gaps, preserve unrelated fit data and recent-use semantics, and establish the mandatory extension checks for later mutation tasks. Parent completion requires every existing mutation to have an explicit tested disposition. |
+| B09.1 | done | Per-fit transactional undo/redo for single and bulk local module edits, including charges, states, add/replace/remove, clone/fill, variations, restrictions and ordering. Original command processor evidence verifies action grouping, 100-action retention, redo invalidation and fit isolation. Native controls reverse/reapply values, keep selections valid, survive recreation and save the resulting fit across process restart. |
+| B09.2 | ready | Extend and verify the remaining already supported rename, hull, cargo, addition and linked-effect edits. Enumerate original non-command gaps, preserve unrelated fit data and recent-use semantics, and establish the mandatory extension checks for later mutation tasks. Parent completion requires every existing mutation to have an explicit tested disposition. |
 
 Each child requires focused host tests, the full required local reference/build/native verification,
 reviewed screenshots/evidence, fork PR merge and checkpoint. No additional approval
@@ -48,7 +48,7 @@ appropriate redo branch; copying or restarting does not inherit command objects.
   fresh-process reopening of the reversed fit with empty session history.
 - [x] Offline native touch single/bulk reversal, branching, fit switching,
   selection safety, recreation/restart, typed protocol guards and screenshots.
-- [ ] Required final-revision local verification, review, evidence receipt and authorized merge;
+- [x] Required final-revision local verification, review, evidence receipt and authorized merge;
   update this task and STATUS, then advance automatically to B09.2.
 
 ## B09.1 implementation checkpoint
@@ -80,3 +80,11 @@ The [feature receipt](../evidence/b09-1-native.json) and
 No product/test/fixture or tolerance change was needed during final review.
 PR #33 merge is pending the receipt/docs push and exact-head local reporting.
 B09.2 is next after delivery; setup-only stop has been explicitly superseded.
+
+## B09.1 delivered — 2026-10-02
+
+PR #33 merged as `3143d771` from reviewed head `9b586d89`; merge/delivery trees
+match. Exact-head `local/full-verification` passed, reusing the preserved valid
+W02 execution proof and reviewed images. Feature receipt records all actual tested
+commits, 21 rejected corrupt reports and raw history. No hosted job was dispatched.
+B09.1 is complete; B09 remains active. B09.2 is ready and automatically selected next.

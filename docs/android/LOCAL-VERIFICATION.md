@@ -128,8 +128,8 @@ receipt/docs and manual workflow policy. Product/test changes require new proof.
 Both workflow files retain `workflow_dispatch` as deliberate hosted fallbacks,
 read-only permission, pinned tools/actions, concurrency, existing time limits,
 one-day diagnostics and opt-in APK upload. Automatic PR triggers are retired only
-after the local demonstration. Setup is stacked into the B09.1 branch; default
-master retains the earlier workflows until PR #33 is separately delivered.
+after the local demonstration. PR #33 delivered B09.1 and setup to master on 2026-10-02; both hosted workflows
+are now deliberate manual fallbacks on the default branch.
 No release or scheduled job is added. No branch protection/rulesets were found;
 no owner access step is currently required. If future rules require Actions names,
 replace those names with `local/full-verification` after owner review, rather than
