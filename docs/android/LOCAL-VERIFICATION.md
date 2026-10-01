@@ -1,124 +1,143 @@
 # Explicit Windows verification
 
-W02 ports the complete native launcher to Windows WHPX while retaining the same
-independent desktop/host scripts and native validators. The current run passes
-77 of 78 gates: all 48 desktop/reference/host gates, five build/package gates,
-and every native execution gate including history. The approved single history
-retry passed prepare/restored in 1903.248/181.903 seconds. Final summary failed
-because native-restart cleanup archived `apk-contents.json` without restoring
-it to the active evidence directory. The authorised routing repair at `0987ecda`
-validated/restored the original report and reran only summary without an emulator.
-Summary now fails the contract fixture hash: retained APK/reported hashes match
-repository CRLF bytes, while the guard compares LF-normalized hashes. A further
-assertion/verifier correction awaits a decision. All 77 completed records, both
-summary failures and the original 900-second history failure are preserved.
-Complete demonstration is pending;
-hosted workflows remain in place until actual full local results and screenshot
-review establish their replacement. See [task](tasks/W02-windows-local-verification.md).
-
-Run from this repository root in PowerShell with a clean, committed checkout.
-The prepared launcher reuses `.venv/headless`, `.venv/reference`, the clean pinned
-`build/reference-upstream`, JDK17, the existing SDK, readelf and the Gradle wrapper.
-Optional `-SdkPath`, `-JdkPath` and `-SdkManager` select existing installations.
-The default SDK manager is the checksum-verified Windows command tools 22 in
-`%LOCALAPPDATA%/Android/Sdk/cmdline-tools/22.0/bin/sdkmanager.bat`.
-
-The emulator requires `system-images;android-36;google_apis;x86_64`, the same API,
-tag and ABI as the hosted suite. Installed shared images are reused; each native
-run creates its own Pixel2 AVD under its run directory. WHPX must report usable.
-No CPU/RAM limit is supplied. A specific `ANDROID_SERIAL` and the AVD identity
-bind every command to this disposable emulator; attached phones are untouched.
+W02 demonstrated the complete Windows WHPX replacement: 78 gates (48 independent
+reference/host, five build/package, 25 native), all inherited offline assertions,
+raw validators and reviewed screenshots. [Receipt](evidence/w02-local.json) records
+actual commits, earlier failed launcher attempts and retained evidence. B09.1
+feature delivery remains pending in PR #33; setup completion does not close it.
 
 ## Start and focused checks
+
+Run from the repository root in PowerShell, with a clean committed checkout:
 
 ```powershell
 ./android/verify-local.ps1 -Action plan -Mode full
 ./android/verify-local.ps1 -Action start -Mode full
-```
-
-Full verification runs all independent reference and host gates first, then APKs,
-lint/signature/package inspection, then every offline native gate and the existing
-raw-result summary. Timed host suites never overlap Gradle or emulator work.
-All native process-restart boundaries and assertions remain in their existing
-scripts. The user approved a Windows-only history phase-budget increase from 900
-to 2400 seconds and one diagnostic retry; Linux retains 900 seconds. The final
-summary still rejects missing, failed and skipped assertions.
-
-```powershell
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
 
-The focused desktop pair compares the original command exporter and headless
-history regression against the pinned bundled dataset. It is explicitly a focused
-result, not a full-suite pass. Native mode rebuilds/inspects and runs the complete
-native chain, since later phases require earlier synthetic saved fits. It does not
-run an invalid isolated late phase against arbitrary device data.
+Full mode runs every required desktop/reference/host gate before Gradle and the
+emulator. Build mode runs both APKs, lint, signature and full data/license/ABI
+inspection. The focused history pair is development evidence, not a full pass.
+Native mode rebuilds/inspects and runs the entire native chain: later phases need
+previous synthetic saved fits and cannot run against arbitrary device data.
+
+The launcher reuses `.venv/headless`, `.venv/reference`, clean pinned
+`build/reference-upstream`, JDK17, installed SDK, readelf and the Gradle wrapper.
+Optional `-SdkPath`, `-JdkPath`, `-SdkManager` select existing installations.
+Default SDK manager: `%LOCALAPPDATA%/Android/Sdk/cmdline-tools/22.0/bin/sdkmanager.bat`.
+Installed command tools22 were verified against the official archive SHA256
+`90ae805d20434428bffcb699c290860f19bb5f66a67e6b330067e3de801fb04a`.
+The shared image is `system-images;android-36;google_apis;x86_64` revision7.
+Existing emulator36.2.12 and usable WHPX were reused. No CPU/RAM override is added.
+
+Each native run owns a disposable Pixel2 AVD. Its verified name, emulator serial,
+API36/x86_64 and offline settings bind all commands; attached phones are untouched.
+Windows uses direct `am instrument` for the initial five assertions, rejecting
+missing, duplicated, failed, skipped or incomplete runner events before producing
+JUnit. This replaces the failed Windows UTP gRPC result channel; every actual
+assertion and fresh-install/uninstall boundary remains. Linux retains Gradle UTP.
+The later phase scripts preserve process restart and raw-value checks. The user
+approved a Windows-only outer history deadline of 2400 seconds per prepare/restored
+phase; Linux retains 900 seconds. All assertions, numerical tolerances, per-operation
+limits and A10 requirements are unchanged. The original 900-second failure remains
+recorded. The single diagnostic retry captures screenshots, process activity and
+CPU observations every 30 seconds. Valid supplemental database timestamps
+showed continued writes; the diagnostic stat format was corrected for future runs.
 
 ## Pause and resume
 
-The start command prints the absolute evidence path. Request pause from a second
-PowerShell window, wait for the running command to return with `paused`, then
-resume using that exact path:
+Start prints the absolute run directory. In a second PowerShell window, request
+a pause using that exact path. Wait for the first command to return paused, then
+resume from the repository root:
 
 ```powershell
 ./android/verify-local.ps1 -Action pause -Run 'C:/absolute/evidence/run-directory'
 ./android/verify-local.ps1 -Action resume -Run 'C:/absolute/evidence/run-directory'
 ```
 
-Pause requests stop after the current gate completes; they do not interrupt a
-save or drop a required phase. The disposable emulator stops, with its writable
-app data retained for explicit resume. Resume requires the same clean commit and
-tree, skips confirmed completed gates and retries only the failed/unfinished gate.
-Interrupted work is never marked passed. Do not use Ctrl+C as a successful pause;
-it records an interrupted failure. A file lock prevents two processes sharing a run.
-Do not resume a failed mutation phase against partially changed synthetic data.
-The current failed history phase requires a fresh native chain. The approved
-`-RestartNative` recovery preserves the failed evidence, verifies retained APK
-hashes, reuses unchanged host/build results and reconstructs the native prerequisites.
-The history retry captures read-only progress every 30 seconds. If it fails, stop
-and report the evidence; do not increase the timeout or retry again.
+Pause stops after the current gate, without interrupting an assertion or save.
+The owned emulator stops and its writable test data is retained. Resume requires
+the same clean commit/tree, skips completed gates and retries unfinished work.
+A file lock rejects a concurrent resume. Both desktop and native boundary
+pause/resume were executed; the native run resumed after performance without
+replaying it. Ctrl+C is an interrupted failure, not a verified pause.
 
-## Evidence and delivery
+For a committed launcher repair **before any native gate passed**, explicit
+`-AdoptLauncherFix` can reuse completed host/build results. It requires only the
+three launcher files to differ, identical executed host/build function ASTs and
+an identical plan. Every retained gate keeps its actual tested commit. Once
+native work passed, changed test inputs need fresh applicable verification.
+For a failed native mutation chain without a valid prerequisite snapshot,
+`-RestartNative` archives prior raw evidence/JUnit/reviews, verifies the retained
+APK hashes and rebuilds the entire native prerequisite chain. It permits only
+reviewed launcher/reporting/diagnostic changes and the exact approved history
+import/timeout expression while retaining host/build inputs and tested commits.
+Do not use ordinary resume against a partially mutated test library.
 
-The default root is `%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/evidence/`, outside
-OneDrive and git. Each unique run contains `run.json` (exact commit/tree, commands,
-exit codes and timings), full per-gate logs, APK copies, native raw reports, PNGs,
-JUnit/lint results, emulator/image identity and `files.json` digests. It does not
-upload them automatically. Successful native runs remove their disposable AVD;
-failed/paused runs retain it for explicit recovery. Keep the reviewed evidence
-receipt in the repository, without credentials or personal fitting data.
-In the Codex Windows app the printed absolute path may resolve through its MSIX
-`Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Local` directory. Retain and use that
-printed path; it is still outside the synced checkout.
+## Summary-only recovery and fixture identity
 
-Passing commands do not replace screenshot review. Review every required screen
-and record filenames/digests, observations and the exact tested commit before
-publishing a local result or merging. Local result reporting must use an explicit
-local context; no hosted Actions name or run can be relabelled passed.
-
-The local reporter and its 20 regression tests are prepared; no success status
-has been published. The reporting checks can run independently:
+A failed aggregate summary can be repaired without rerunning completed gates:
 
 ```powershell
-./.venv/headless/Scripts/python.exe -m unittest discover -s android/ci -p test_report_local.py -v
+./.venv/headless/Scripts/python.exe -I android/ci/summary_repair.py --run 'C:/absolute/evidence/run-directory'
 ```
 
-After a genuinely complete run, record `screenshots-reviewed.json` with the tested
-commit and every native PNG's SHA-256, review flag and observation. The reporter
-rejects incomplete runs, changed evidence, unreviewed images and unsupported
-revision reuse. Preview its result before deliberately adding `--publish`:
+Use only after diagnosing and authorizing the concrete correction. The helper
+validates archived package evidence against original build logs, retained APKs,
+source/database/library bytes and native reports, and preserves every failed run
+snapshot. An unchanged summary commit cannot be retried. The fixture guard requires
+reported hashes to match exact retained verified test-APK fixture bytes, and those
+bytes to match the correct independent reference after CRLF-to-LF normalization
+only. Content, other whitespace, missing fixtures and wrong hashes fail. Native
+assertions, tolerances and A10 requirements remain unchanged. W02 retained its
+original UTP/readiness/history failures and all three aggregate failures (missing
+package report, contract normalized hash, then persistence normalized hash).
+The final aggregate summary records its actual new tested commit separately
+from the 77 reused results. No completed stage was replayed for these repairs.
+
+## Evidence and required local result
+
+Default evidence: `%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/evidence/`, outside
+OneDrive/git. Codex MSIX may resolve this through its Package LocalCache; use the
+printed canonical path. Each run retains exact commit/tree, commands, exit codes,
+timings, full logs, both APKs, lint/JUnit, raw reports, PNGs, source/data/tool and
+emulator identities, plus file digests. It performs no automatic upload.
+Successful runs remove their disposable AVD; paused/failed runs retain it.
+
+Review every required screenshot; retain `screenshots-reviewed.json` with names,
+hashes, observations and the tested commit. Then validate/publish the explicitly
+local result, using the repository receipt URL for the delivery commit:
 
 ```powershell
-./.venv/headless/Scripts/python.exe android/ci/report_local.py --run 'C:/absolute/evidence/run-directory' --receipt-url 'https://github.com/Sussic/Pyfa-android/blob/COMMIT/docs/android/evidence/w02-local.json'
+./.venv/headless/Scripts/python.exe -I android/ci/report_local.py --run 'C:/absolute/evidence/run-directory' --receipt-url 'https://github.com/Sussic/Pyfa-android/blob/DELIVERY_COMMIT/docs/android/evidence/w02-local.json'
+# Add --publish only after review and the commit has been pushed.
 ```
 
-Replace `COMMIT` with the real committed receipt revision. The reporter currently
-cannot accept the failed W02 run, and the final receipt does not yet exist.
+The reporter checks full completion, manifest/log hashes, successful latest
+attempts, actual tested commits, source equivalence and screenshot review.
+It publishes `local/full-verification`; it never creates an Actions success.
+Delivery may reuse proof only when execution/product inputs remain identical;
+permitted post-proof changes are the named reporting tests/code, instructions,
+receipt/docs and manual workflow policy. Product/test changes require new proof.
 
-Hosted retirement and any owner-only required-check configuration change remain
-pending the demonstrated replacement. No runner service, paid service, release or
-phone installation is part of this setup. Billing/spending settings remain unchanged.
-After verified setup delivery, stop. PR #33/B09.1 delivery and B09.2 remain the
-next roadmap work for a later explicit instruction.
+## Hosted fallback and costs
+
+Both workflow files retain `workflow_dispatch` as deliberate hosted fallbacks,
+read-only permission, pinned tools/actions, concurrency, existing time limits,
+one-day diagnostics and opt-in APK upload. Automatic PR triggers are retired only
+after the local demonstration. Setup is stacked into the B09.1 branch; default
+master retains the earlier workflows until PR #33 is separately delivered.
+No release or scheduled job is added. No branch protection/rulesets were found;
+no owner access step is currently required. If future rules require Actions names,
+replace those names with `local/full-verification` after owner review, rather than
+fabricating a hosted pass.
+
+No runner service, paid platform or billing setting changed. Standard hosted
+runners for public repositories are free; larger runners and storage over the
+account allowance may incur charges ([GitHub billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions)).
+Manual fallback still uses hosted execution/storage. Local work uses ordinary
+hardware, electricity/network and disk space; keep evidence only as needed.
+Feature/ARM64/older-API/upgrade/phone usability acceptance remains separate.

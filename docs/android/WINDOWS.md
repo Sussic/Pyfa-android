@@ -163,30 +163,16 @@ failure checking and records the new evidence path in `build/windows-check-path.
 
 ## Required native evidence
 
-The historical counts below describe earlier milestones. The current complete
-plan is printed by `./android/verify-local.ps1 -Action plan -Mode full`; it retains
-all later checks through B09.1. Use [LOCAL-VERIFICATION](LOCAL-VERIFICATION.md)
-for the authoritative explicit Windows commands and local evidence location.
+Use [LOCAL-VERIFICATION](LOCAL-VERIFICATION.md) for the complete Windows plan,
+focused checks, exact start/pause/resume commands, evidence and local reporting.
+W02 demonstrated full offline API36 x86_64 WHPX execution and screenshot review;
+[receipt](evidence/w02-local.json) records tested commits and retained raw results.
+A build alone does not prove Android behavior. All assertions, raw-value validators
+and process boundaries remain required. Never run the fresh-install suite on a phone.
 
-
-A local APK, lint, signature, package inspection and host tests do not prove
-Android runtime behavior. Preserve every required gate in `.github/workflows/android.yml`
-and `android/ci/native-test.sh`. Their fresh offline API 36 x86_64 emulator
-sequence requires all **18 native executions**: five functional tests, separate
-A10 performance and B01 contract, three B02 persistence phases, and three B03.1
-library phases, four B03.2 organization/navigation phases and B04.1 equipment discovery. Preserve raw-value validators, restart boundaries and screenshot
-review. Do not run an unfiltered connected suite or this fresh-install script on
-a personal phone. W02 adds an explicit Windows WHPX launcher retaining the complete native chain.
-See [local verification](LOCAL-VERIFICATION.md) for start, focused checks and
-pause/resume. Its actual full-suite demonstration and screenshot review are
-pending; a launcher alone is not passing runtime evidence.
-
-Docs-only setup changes need link/scope review and `git diff --check`; do not
-manually dispatch an emulator run for them. Existing path filters also match
-`tools/android_reference/README.md`, so editing that guide starts both PR
-workflows automatically. Let any triggered required checks finish before merging;
-do not weaken path filters or duplicate the run. Subsequent runtime changes
-retain both native and host CI gates. Existing one-day retention, opt-in APK delivery, read-only
-permissions, concurrency and billing settings remain unchanged. Physical ARM64,
-older APIs and install-over-existing-data behavior remain separate unverified
-work. See [STATUS](STATUS.md) for the actual checkpoint and next authorized action.
+Hosted workflows are deliberate manual fallbacks on the setup/B09.1 branch; default
+master retains earlier policy until that branch is separately delivered. Existing
+one-day retention, opt-in APK upload, read-only permissions and billing settings
+remain. Docs-only changes need link/scope review and `git diff --check`; do not
+start another emulator. ARM64, older APIs and safe upgrades remain unverified.
+See STATUS for the setup stop boundary and exact next task after explicit resume.

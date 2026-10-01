@@ -1,95 +1,45 @@
 # Android project status
 
-Updated: 2026-10-02. **W02 approved fixture guard correction in progress.**
+Updated: 2026-10-02. **W02 full local verification passed; setup delivery pending.**
 
-Current authorized correction: inspect the final-summary validators for the same
-CRLF/LF fixture hash assumption, correct confirmed occurrences with exact APK
-hashes plus CRLF-to-LF-only reference equality, preserve manifest/report checks,
-run focused checks and only the outstanding summary. Retry at `96c09200` failed
-in 0.422 seconds at `persistence_summary.py:189` (log 111); all 77 completed records
-and original attempts were confirmed unchanged. No full native rerun is authorized.
+## W02 — Windows local verification; setup delivery pending
 
-## Selected setup — W02 Windows local verification
+Branch `codex/windows-local-verification` preserves PR #33 head `e916e054`.
+The full local run passed **78 gates**: 48 desktop/reference/host, five APK/lint/
+signature/package gates and 25 native gates, with every required screenshot
+reviewed. [Receipt](evidence/w02-local.json) retains actual gate commits, failures,
+tool/source/data identity and full local evidence location. Host/build ran at
+`f7d2ad31`; native execution ran at `6792b03e`; the final summary ran at
+`5952c1bf` in 2.156 seconds. All 77 reused completed records and original attempts
+remain unchanged. The 52 instrumentation executions passed; 125 required screenshots
+and one explicitly labelled failure diagnostic were reviewed. Product and
+executed host/build inputs are unchanged. Five-test Windows direct instrumentation
+replaces the failed UTP gRPC result channel while preserving all assertions,
+fresh offline install/uninstall and strict result validation. Desktop and native
+pause/resume and rejection of concurrent resume were demonstrated. The original
+900-second history timeout and all three failed summaries remain recorded.
+Contract/persistence hashes now match verified retained test-APK fixture bytes;
+packaged/reference equality permits CRLF-to-LF only. Manifest/report consistency,
+all functional assertions, tolerances and A10 requirements remain. Fourteen focused
+fixture regressions and strict whole-source comparison pass.
 
-The active goal is complete local build/test setup and delivery, then stop.
-Branch `codex/windows-local-verification`
-starts from PR #33 head `e916e054`; all B09.1 feature work is preserved. This setup
-will use a focused PR into the B09.1 branch before PR #33 returns to delivery.
-[Acceptance and scope](tasks/W02-windows-local-verification.md): reuse installed
-SDK/JDK/Python/Gradle, disposable WHPX API36 x86_64 emulator, full desktop and
-native coverage, offline install/restart/raw validation and screenshot review,
-commit-bound local logs/APKs/evidence, repeatable start/pause/resume commands and
-truthful required result reporting. Demonstrate local replacement before retiring
-hosted checks. No unattended runner, CPU/RAM caps, paid service, release or phone
-installation. B09.1 delivery and then B09.2 await later explicit authorisation.
+[Commands, evidence and reporting](LOCAL-VERIFICATION.md): reuse installed
+Python/JDK/SDK/wrapper and disposable WHPX API36 Google APIs x86_64. No CPU/RAM
+caps, unattended runner, service, release, phone installation or billing change.
+The local result is `local/full-verification`; no unexecuted Actions check passes.
+Workflow PR triggers are retired only after this local proof; hosted manual
+fallback remains. Stacked setup delivery updates the B09.1 branch; default master
+retains prior policy until PR #33 is delivered separately. No repository protection/
+ruleset owner step was found. Review/push/merge of the focused setup PR remains.
 
-Desktop run `36661924082` passes the unchanged PR head in 29m34s. Android run
-`36661923971` attempt 1 was cancelled at 50m06 during emulator testing; attempt 2
-also exceeded the 50-minute job ceiling (50m09s). No hosted retry is pending. Neither cancelled/unexecuted native check is passing evidence.
-The single approved diagnostic retry at `6792b03e` passed history: prepare
-1903.248 seconds, restored 181.903 seconds, total gate 2146.218 seconds. Its raw
-validator confirms 18 original cases/108 states, two recipients, 111 restored
-fits and ten protocol rejections. The Windows outer deadline is 2400 seconds per
-phase; Linux remains 900. Assertions, tolerances, operation limits, restart checks,
-screenshots and A10 requirements are unchanged. Exact native-source comparison
-and 20 reporting/parser regression tests passed before this run.
+**The active goal ends at W02 setup delivery. Stop afterward.** Preserve PR #33;
+feature completion and roadmap work await an explicit later resume instruction.
+Exact next task then: complete **B09.1/PR #33** delivery using applicable valid
+local evidence, before selecting B09.2. No feature task is marked complete here.
 
-Diagnostics show case 14 (`fill-clone`) at 988.875 seconds and case 15
-(`clone-selected`) at 1080.828 seconds. The same process's CPU time increased
-from 17:19 to 18:56; successful supplemental database observations advanced its
-modification timestamp by 80 seconds. This establishes progress beyond case 14
-in this retry. The original 900-second failure remains in the archive and log 083.
-
-**Full verification failed at 77/78 gates:** `native:summary` raised
-`FileNotFoundError` for `native/apk-contents.json` (log 109). Native restart archived
-that build/package report and cleared the active evidence directory while retaining
-the 53 valid host/build results; the report was not restored. Its original copy
-is retained under `failed-native-386b97f5/native/apk-contents.json`. This original
-failure remains recorded. No full-pass receipt/status has been published. The owned emulator stopped;
-`adb devices` is empty. All fresh native execution gates passed, but the final
-aggregate validation remains unsuccessful.
-
-Local evidence is retained at
-`%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/evidence/20261001-143805-f7d2ad31-99b296`
-(Codex resolves it through Package LocalCache). The 53 host/build gates retain
-their actual `f7d2ad31` commit; fresh native gates retain `6792b03e`. Both APKs,
-full logs, raw reports, diagnostic images and original failed results remain local.
-All 125 fresh required screenshots and the separately labelled summary-failure
-diagnostic are now reviewed (126 records). API36 Google APIs
-x86_64 revision7 and emulator36.2.12 reuse the installed WHPX environment.
-
-At repair commit `0987ecda`, the archived package report was validated against
-original build logs, retained/build APK identity, database/source/ABI/library
-bytes and dependencies, and original/fresh native engine reports. Its exact
-bytes were restored; all 77 completed records remain unchanged. Twelve routing,
-preservation and equivalence tests plus 20 reporting/parser tests pass. Native
-restart now preserves package evidence; completed runs reject resume before
-mutating evidence. The diagnostic stat format uses the already tested colon form.
-
-Only summary was rerun, without an emulator (log 110, 0.36 seconds). It now fails
-`contract_summary.py:38`: reported fixture SHA256 hashes match the actual retained
-test APK and repository CRLF bytes, while the assertion hashes LF-normalized
-bytes. For Vexor, actual/reported SHA256 is `4e706995…`; normalized SHA256 is
-`6fb3c16b…`. Projection and command have the same exact CRLF/LF discrepancy.
-No fixture or native response was altered and no completed stage was replayed.
-The user approved the exact fixture guard correction and narrowly scoped source
-exception: reported SHA256 must equal retained verified test-APK bytes, and those
-bytes must equal the correct reference after CRLF-to-LF normalization only.
-Focused corruption checks and only the outstanding summary are authorized; all
-77 valid completed results and earlier failures remain retained. Any new blocker
-requires stopping. Full verification remains failed 77/78 until execution passes.
-No timeout increase or history retry is authorised. Start/pause/resume commands remain in
-[LOCAL-VERIFICATION](LOCAL-VERIFICATION.md). No setup PR was opened or merged;
-hosted workflows remain unchanged. PR #33 is still open at `e916e054`; feature
-delivery and subsequent B09.2 work require later explicit authorisation.
-
-## Authorized queue
-
-The active goal authorises W02 implementation, required verification, review and
-setup PR delivery, followed by stopping. Preserve PR #33 without merging its feature
-work. B09.1 completion and then B09.2 are recorded next tasks for later explicit
-resumption. No releases, phone installation, billing changes, unrelated work or
-delegation.
+Desktop Actions `36661924082` passed PR #33's original exact head in 29m34s.
+Android `36661923971` attempts 1/2 were cancelled at the 50-minute ceiling;
+neither is passing native evidence. No hosted retry is pending.
 
 ## Latest delivery — B08 fit notes
 
@@ -133,8 +83,8 @@ all required final-head CI. [Task and checks](tasks/B09-undo-redo.md). No new pr
 inputs, schema migration, release or phone actions. Next child: **B09.2**.
 Independent original history now repeats 18 cases/108 states and verifies the
 100-action limit. Six focused host tests pass; final APKs/lint (1m43s) and 163-source
-package/ABI inspection pass. Required CI, native evidence/screenshots and delivery remain
-pending. B09.2 is not started.
+package/ABI inspection pass. Full W02 local native proof and screenshots are verified; PR #33 feature
+delivery remains held for explicit resumption. B09.2 is not started.
 
 ## Delivered work to reuse
 
@@ -158,8 +108,8 @@ Android runs took **28m44s/34m24s**.
 CI corrections may require another full round; one-round delivery estimates are
 not reliable.
 
-Build 16 was the first meaningful development build; build 26 is the latest
-emulator-tested build. The local debug APK is
+Build 16 was the first meaningful development build; build 27 is the latest
+locally emulator-tested development build. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
 remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
 are resolved. Phone usability, older APIs and ARM64 execution remain unverified;
@@ -171,8 +121,8 @@ Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
 `build/WINDOWS-CHECKPOINT.md`; verify local changes, live master and open PRs.
 Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
 Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
-No timed host suites alongside local Gradle. Native CI uses Ubuntu/KVM; local
-Windows builds alone do not establish Android execution. Preserve all inherited
+No timed host suites alongside local Gradle. Windows WHPX full native execution
+and screenshot review now provide required local evidence; APK builds alone do not. Preserve all inherited
 host/native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
 deliberate APK uploads only and no scheduled/release jobs.
 

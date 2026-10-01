@@ -1,14 +1,6 @@
 name: Desktop reference
 
 on:
-  pull_request:
-    paths:
-      - 'android_bridge/**'
-      - 'eos/**'
-      - 'utils/**'
-      - 'tools/android_headless/**'
-      - 'tools/android_reference/**'
-      - '.github/workflows/desktop-reference.yml'
   workflow_dispatch:
 
 permissions:
