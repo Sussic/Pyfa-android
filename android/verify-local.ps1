@@ -3,7 +3,7 @@ param(
     [ValidateSet('full','desktop','build','native')][string]$Mode = 'full',
     [string]$Run, [string]$Gate,
     [string]$SdkPath = "$env:LOCALAPPDATA/Android/Sdk",
-    [string]$JdkPath, [string]$SdkManager, [switch]$AdoptLauncherFix
+    [string]$JdkPath, [string]$SdkManager, [switch]$AdoptLauncherFix, [switch]$RestartNative
 )
 $ErrorActionPreference = 'Stop'
 $localRoot = Split-Path -Parent $PSScriptRoot
@@ -22,5 +22,6 @@ $localArguments = @('-I', (Join-Path $PSScriptRoot 'ci/local_verification.py'), 
 if ($Run) { $localArguments += @('--run', $Run) }
 if ($Gate) { $localArguments += @('--gate', $Gate) }
 if ($AdoptLauncherFix) { $localArguments += '--adopt-launcher-fix' }
+if ($RestartNative) { $localArguments += '--restart-native' }
 & $localPython @localArguments
 if ($LASTEXITCODE -ne 0) { throw "Local verification exited $LASTEXITCODE" }

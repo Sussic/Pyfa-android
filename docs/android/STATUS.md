@@ -4,8 +4,8 @@ Updated: 2026-10-01. **W02 local verification active; B09.1 preserved in PR #33.
 
 ## Selected setup — W02 Windows local verification
 
-The user prioritised complete local build/test execution on 2026-10-01, then
-resumption of the existing roadmap goal. Branch `codex/windows-local-verification`
+The active goal is complete local build/test setup and delivery, then stop.
+Branch `codex/windows-local-verification`
 starts from PR #33 head `e916e054`; all B09.1 feature work is preserved. This setup
 will use a focused PR into the B09.1 branch before PR #33 returns to delivery.
 [Acceptance and scope](tasks/W02-windows-local-verification.md): reuse installed
@@ -14,22 +14,52 @@ native coverage, offline install/restart/raw validation and screenshot review,
 commit-bound local logs/APKs/evidence, repeatable start/pause/resume commands and
 truthful required result reporting. Demonstrate local replacement before retiring
 hosted checks. No unattended runner, CPU/RAM caps, paid service, release or phone
-installation. W02 delivery is followed by B09.1 completion, then B09.2.
+installation. B09.1 delivery and then B09.2 await later explicit authorisation.
 
 Desktop run `36661924082` passes the unchanged PR head in 29m34s. Android run
 `36661923971` attempt 1 was cancelled at 50m06 during emulator testing; attempt 2
 also exceeded the 50-minute job ceiling (50m09s). No hosted retry is pending. Neither cancelled/unexecuted native check is passing evidence.
+Local proof currently passes 48 desktop/reference/host gates, five build/package
+gates and native initial through notes (76 of 78 total). History prepare timed out
+after 900 seconds at case 14/18; summary is unexecuted. Undo/redo rebuilds the full
+saved graph on each replay. This explains possible cumulative cost but does not
+rule out a hang within case 14; there are no per-case timing logs. The proposed Windows phase budget is 2400
+seconds without changing assertions or per-operation limits. Preserve failed raw
+evidence and restart the native chain on a fresh disposable AVD; retain unchanged
+host/build results with their original tested commit. No hosted gate is retired.
+The latest goal instruction confirms setup-only delivery and then stopping.
+Automatic approval review rejected modifying the native-coverage verifier to
+account for the proposed timeout and recording roadmap continuation beyond the
+saved setup-only goal. The scope wording is corrected. The user has now explicitly
+approved the exact Windows-only 900-to-2400-second timeout and verifier exception,
+with one diagnostic retry and no further timeout increase. The change remains
+uncommitted and unexecuted at this checkpoint. Python syntax, host-plan coverage and
+`git diff --check` pass. PR #33 remains open at `e916e054`; all application,
+engine and feature-test sources are preserved. Hosted checks remain unchanged.
+
 Windows WHPX reports usable. Installed emulator is 36.2.12; installed images are
 API35 Google APIs and API36.1 Play Store. API36 Google APIs x86_64 revision7 is now installed. The portable launcher and
 run-specific evidence routing are implemented; all existing script coverage
-matches the hosted plan. Full local execution and screenshot review remain pending.
+matches the hosted plan. Full local execution remains pending. All 120 currently
+retained PNGs have visual-review records: 119 from completed gates and one explicit
+history-timeout diagnostic. History's required six screens are not yet produced.
+The local result reporter's 20 regression tests pass, including rejection of
+source changes outside the exact timeout exception. No local success status is published.
+The [approved timeout proposal](tasks/W02-windows-local-verification.md#pending-timeout-decision)
+explicitly relaxes only the outer deadline. The single retry will record timestamped
+screenshots, process CPU time and database modification times around case 14.
+All 53 completed host/build results retain their original commit. Native prerequisites
+must be rebuilt because the failed phase mutated its disposable library and no
+pre-history snapshot exists. If the retry fails, report evidence and stop. If it
+passes, complete setup delivery and stop; do not resume feature work.
 
 ## Authorized queue
 
-The active goal authorizes sequential eligible approved roadmap work, one coherent
-outcome through review, required host/native checks and fork PR merge, then automatic
-continuation. No releases, phone installation, billing changes, unrelated work or
-delegation. No user decision or access blocker currently prevents B09.
+The active goal authorises W02 implementation, required verification, review and
+setup PR delivery, followed by stopping. Preserve PR #33 without merging its feature
+work. B09.1 completion and then B09.2 are recorded next tasks for later explicit
+resumption. No releases, phone installation, billing changes, unrelated work or
+delegation.
 
 ## Latest delivery — B08 fit notes
 

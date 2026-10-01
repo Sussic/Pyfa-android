@@ -11,6 +11,7 @@ import subprocess
 import sys
 import time
 import uuid
+from contextlib import nullcontext
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from native_suite import STEPS as NATIVE_STEPS
@@ -72,14 +73,24 @@ class Run:
                 'started_utc':datetime.now(timezone.utc).isoformat(),'hosted_actions_pass':False}
             save(self.file,self.state)
         else:
+            self.original_run_bytes=self.file.read_bytes()
             self.state=json.loads(self.file.read_text(encoding='utf-8'))
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
             if self.state['commit']!=current:
-                assert args.adopt_launcher_fix, 'Resume the same commit, or explicitly adopt a verified launcher-only fix'
-                assert not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
+                assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
+                assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
                 changed=git('diff','--name-only',self.state['commit'],current).splitlines()
                 allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1'}
+                if args.restart_native:
+                    allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
+                        'android/ci/report_local.py','android/ci/test_report_local.py'})
+                    changed=[p for p in changed if p!='AGENTS.md' and not p.startswith('docs/android/')]
+                    if 'android/ci/check-history.py' in changed:
+                        old_history=git('show',self.state['commit']+':android/ci/check-history.py')
+                        new_history=(ROOT/'android/ci/check-history.py').read_text(encoding='utf-8').strip()
+                        expected_history=old_history.replace('import json\n','import json\nimport os\n',1).replace('timeout=900)',"timeout=2400 if os.name == 'nt' else 900)",1)
+                        assert new_history==expected_history, 'Only the approved import and exact Windows history timeout expression may change'
                 assert changed and set(changed)<=allowed, 'Completed host/build inputs changed; results cannot be reused'
                 import ast
                 previous=ast.parse(git('show',self.state['commit']+':android/ci/local_verification.py'))
@@ -96,7 +107,6 @@ class Run:
                 self.state.setdefault('launcher_fix_reuse',[]).append({'from_commit':self.state['commit'],
                     'to_commit':current,'changed_files':changed,'unchanged_completed_host_build_inputs':True})
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
-                save(self.file,self.state)
             assert self.state['tree']==git('rev-parse','HEAD^{tree}')
         self.native=self.directory/'native';self.native.mkdir(exist_ok=True)
         os.environ['PYFA_EVIDENCE_DIR']=str(self.native)
@@ -217,9 +227,37 @@ class Run:
         import msvcrt
         lock=(self.directory/'run.lock').open('a+b');lock.seek(0);lock.write(b'0');lock.flush();lock.seek(0)
         msvcrt.locking(lock.fileno(),msvcrt.LK_NBLCK,1)
-        self.state['status']='running';save(self.file,self.state)
         print('Evidence: '+str(self.directory),flush=True)
         try:
+            if self.args.restart_native:
+                assert self.state['status']=='failed' and any(s.startswith('native:') for s in self.state['plan']), 'Restart only a failed native chain'
+                # Preserve failed evidence before removing only this run's disposable AVD.
+                # Replaying a failed mutation phase against its partially modified store
+                # would violate its original-library precondition.
+                archive=self.directory/('failed-native-'+uuid.uuid4().hex[:8])
+                archive.mkdir()
+                (archive/'run.json').write_bytes(self.original_run_bytes)
+                shutil.copytree(self.native,archive/'native')
+                reports=ROOT/'android/app/build/outputs/androidTest-results/connected'
+                if reports.exists():shutil.copytree(reports,archive/'junit')
+                for name in ('screenshots-reviewed-partial.json','screenshots-reviewed.json'):
+                    if (self.directory/name).exists():shutil.copyfile(self.directory/name,archive/name)
+                retained=list((self.directory/'apks').glob('*.apk'))
+                assert len(retained)==2, 'Both previously tested APKs are required'
+                for apk in retained:
+                    current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))
+                    assert len(current)==1 and sha(apk)==sha(current[0]), 'Reused APK differs from the tested copy'
+                if (self.directory/'avd').exists():
+                    assert (self.directory/'avd').resolve().parent==self.directory
+                    shutil.rmtree(self.directory/'avd')
+                lint=self.native/'lint-results-debug.html'
+                for p in self.native.iterdir():
+                    if p==lint:continue
+                    if p.is_dir():shutil.rmtree(p)
+                    else:p.unlink()
+                self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
+                self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
+            self.state['status']='running';save(self.file,self.state)
             for step in self.state['plan']:
                 if step in self.state['completed']:continue
                 if (self.directory/'PAUSE').exists():
@@ -229,7 +267,10 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
-                    self.execute(step,[sys.executable,ROOT/'android/ci/native_suite.py','--step',step.split(':',1)[1]],cwd=ROOT/'android')
+                    from history_progress import HistoryProgress
+                    diagnostics=HistoryProgress(self.directory/'diagnostics'/f'history-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' else nullcontext()
+                    with diagnostics:
+                        self.execute(step,[sys.executable,ROOT/'android/ci/native_suite.py','--step',step.split(':',1)[1]],cwd=ROOT/'android')
                 self.state['completed'].append(step);save(self.file,self.state)
             self.state['status']='passed'
             self.state['completed_utc']=datetime.now(timezone.utc).isoformat()
@@ -260,6 +301,7 @@ def main():
     parser.add_argument('--gate',choices=FAMILIES)
     parser.add_argument('--run');parser.add_argument('--source');parser.add_argument('--reference-python')
     parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
+    parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

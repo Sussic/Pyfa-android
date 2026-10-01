@@ -1,6 +1,7 @@
 from evidence_paths import evidence_dir
 """Run B09.1 module undo/redo and a real process restart."""
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -24,7 +25,7 @@ for phase in ('prepare', 'restored'):
     adb('shell', 'rm', '-f', path)
     output = adb('shell', 'am', 'instrument', '-w', '-r', '-e', 'class',
         'io.github.sussic.pyfa.EditHistoryTest', '-e', 'b091_phase', phase,
-        f'{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner', timeout=900)
+        f'{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner', timeout=2400 if os.name == 'nt' else 900)
     (evidence / f'history-{phase}-instrumentation.txt').write_text(output, encoding='utf-8')
     names = ('bulk-undone','bulk-redone','fit-isolation','retained-history','stale-action') if phase == 'prepare' else ('restored-empty-history',)
     for name in (*names, 'failure'):
