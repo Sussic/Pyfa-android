@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Reject empty/skipped native suites and print concise, retainable evidence."""
 import hashlib
 import json
@@ -32,7 +33,7 @@ required = {
 if not required.issubset(tests):
     raise SystemExit(f"Required native assertions missing: {sorted(required - set(tests))}")
 apk = root / "app/build/outputs/apk/debug/app-debug.apk"
-evidence = root / "build/evidence"
+evidence = evidence_dir()
 screenshots = {}
 for name in ("home", "about", "about-landscape", "fit"):
     data = (evidence / f"{name}.png").read_bytes()
@@ -125,6 +126,8 @@ summary = {
     "contract": contract,
     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
     "workflow_run": os.environ.get("GITHUB_RUN_ID"),
+    "execution": {"kind": os.environ.get("PYFA_EXECUTION_KIND", "github_actions" if os.environ.get("GITHUB_RUN_ID") else "manual"),
+                  "local_run_id": os.environ.get("PYFA_LOCAL_RUN_ID")},
     "tests": tests,
     "performance_test": "io.github.sussic.pyfa.PerformanceTest.repeatedEditsMatchDesktopWithStableFitCountOffline",
     "performance": performance,

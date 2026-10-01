@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Run B06.1 offline mode touch actions and verify a real process restart."""
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import re
 import subprocess
 from hull_mode_summary import summarize
 
-evidence = Path(__file__).resolve().parents[1] / 'build/evidence'
+evidence = evidence_dir()
 package = 'io.github.sussic.pyfa.dev'
 
 

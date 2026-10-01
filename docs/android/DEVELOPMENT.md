@@ -111,25 +111,23 @@ mock engine, skipped scenario or early-return test is insufficient for parity.
 Record native runtime evidence for each ABI actually tested; building an arm64 APK
 does not mean it was executed on arm64 hardware.
 
-## Native CI policy (A06)
+## Verification policy (W02; preserves A06 coverage)
 
-- Pin a compatible JDK, Gradle wrapper (including distribution checksum), Android
-  plugin/SDK, Kotlin, embedded Python and dependencies after the compatibility
-  investigation. Record working commands here when they actually exist.
-- Use least-required workflow permissions and pin third-party actions to reviewed
-  commits. Builds/tests should not require personal access tokens or EVE login.
-- Run focused host tests and native build/tests for relevant changes. Avoid
-  duplicate push+PR runs for the same task branch. Use concurrency to cancel
-  superseded runs on that branch, a timeout, and an explicit manual APK build.
-- Do not schedule routine emulator builds. Documentation-only edits should not
-  start native builds unless a genuine required gate demands them.
-- Start without large persistent emulator caches. Upload concise reports/failure
-  screenshots with one-day retention; upload an installable APK only on deliberate
-  build runs. Preserve required evidence and checks; surface storage blockers.
-- Use a suitable hosted runner and verify acceleration before retrying an emulator
-  failure. No paid runner, spending-limit change or quota workaround by default.
-- Inspect one useful error excerpt, batch fixes and rerun only after a relevant
-  change. Never poll by dumping full logs or repeatedly retry a quota failure.
+Use [explicit local verification](LOCAL-VERIFICATION.md) for required Windows
+reference/host, APK/lint/package and offline native checks, exact-commit evidence,
+screenshot review and truthful `local/full-verification` reporting. The full plan
+contains every later gate through B09.1; historical counts above are not subsets
+to use for delivery. Run focused checks while developing, then all applicable
+checks for final execution inputs. Reuse unchanged valid proof without relabelling
+its actual tested commit. Product/test changes invalidate affected proof.
+
+Both hosted workflows remain deliberate manual fallbacks with read-only permission,
+reviewed pinned actions/tools, concurrency, existing time limits, one-day evidence
+and opt-in APK uploads. PR triggers are retired after the demonstrated local
+replacement, on the setup/B09.1 branch; default master follows only after that
+branch is separately delivered. No scheduled builds, runner service, release,
+paid runner or billing/spending change. Investigate one concrete failure before
+retrying; preserve failures separately and never fabricate an Actions pass.
 
 ## Delivery
 

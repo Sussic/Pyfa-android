@@ -9,6 +9,10 @@ The 2026-09-21 local Windows setup and workflow maintenance is tracked in
 [STATUS](STATUS.md) and [Windows setup](WINDOWS.md). It does not advance B03.2,
 change the feature-task counts or reduce any host/native acceptance check.
 
+The 2026-10-01 [W02 local verification setup](tasks/W02-windows-local-verification.md)
+preserves every feature acceptance check and PR #33. Its goal ends at setup
+verification/delivery; B09.1 completion and B09.2 await explicit resumption.
+
 Each row is a bounded outcome with a minimum acceptance check, not a license to
 omit related Pyfa behavior. Before implementing a row, expand it with the
 [task template](../../.github/ISSUE_TEMPLATE/android-task.md) in the PR, issue or a

@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Inspect real APK bytes, including Chaquopy's nested Python/ABI archives."""
 import hashlib
 import io
@@ -79,7 +80,7 @@ def main():
             for name, info in libraries.items():
                 assert set(info["needed"]) <= shipped | SYSTEM, (name, set(info["needed"]) - shipped - SYSTEM)
             receipt["abis"][abi] = {"elf_machine": machine, "libraries": libraries, "runtime_tested": False}
-    evidence = ROOT / "build/evidence"
+    evidence = evidence_dir()
     (evidence / "apk-contents.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(f"Verified bundled database, {receipt['engine_source_files']} source files, ARM64/x86_64 ELF architectures and dependencies")
 

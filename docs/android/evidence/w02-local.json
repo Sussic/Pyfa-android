@@ -1,0 +1,2681 @@
+{
+  "task": "W02",
+  "kind": "local_windows",
+  "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd",
+  "tested_tree": "f10f43c829381b601369c550611cfccfa1632927",
+  "full_plan": [
+    "desktop:utilities",
+    "desktop:reference",
+    "desktop:migration",
+    "reference:projection",
+    "reference:command",
+    "reference:catalog",
+    "reference:equipment",
+    "reference:empty_hulls",
+    "reference:module_edits",
+    "reference:charge_edits",
+    "reference:variation_edits",
+    "reference:rack_ordering",
+    "reference:bulk_charges",
+    "reference:bulk_states",
+    "reference:clone_fill",
+    "reference:bulk_variation_removal",
+    "reference:hull_modes",
+    "reference:subsystems",
+    "reference:structures",
+    "reference:cargo_stacks",
+    "reference:cargo_actions",
+    "reference:cargo_transfers",
+    "reference:notes",
+    "reference:history",
+    "headless:base",
+    "headless:projection",
+    "headless:command",
+    "headless:bridge",
+    "headless:persistence",
+    "headless:library",
+    "headless:market",
+    "headless:empty_hulls",
+    "headless:module_edits",
+    "headless:charge_edits",
+    "headless:variation_edits",
+    "headless:rack_ordering",
+    "headless:bulk_charges",
+    "headless:bulk_states",
+    "headless:clone_fill",
+    "headless:bulk_variation_removal",
+    "headless:hull_modes",
+    "headless:subsystems",
+    "headless:structures",
+    "headless:cargo_stacks",
+    "headless:cargo_actions",
+    "headless:cargo_transfers",
+    "headless:notes",
+    "headless:history",
+    "build:dependencies",
+    "build:engine-assets",
+    "build:apks-lint",
+    "build:signature",
+    "build:package",
+    "native:initial",
+    "native:measure-performance.py",
+    "native:check-contract.py",
+    "native:check-persistence.py",
+    "native:check-library.py",
+    "native:check-navigation.py",
+    "native:check-market.py",
+    "native:check-empty-hulls.py",
+    "native:check-module-edits.py",
+    "native:check-charge-edits.py",
+    "native:check-variation-edits.py",
+    "native:check-rack-ordering.py",
+    "native:check-bulk-charges.py",
+    "native:check-bulk-states.py",
+    "native:check-clone-fill.py",
+    "native:check-bulk-variation-removal.py",
+    "native:check-hull-modes.py",
+    "native:check-subsystems.py",
+    "native:check-structures.py",
+    "native:check-cargo-stacks.py",
+    "native:check-cargo-actions.py",
+    "native:check-cargo-transfers.py",
+    "native:check-notes.py",
+    "native:check-history.py",
+    "native:summary"
+  ],
+  "successful_gates": 78,
+  "gate_timings": [
+    {
+      "gate": "desktop:utilities",
+      "seconds": 0.64,
+      "log_sha256": "19959f5d1bfe5ed8849f34da508db6652732d743874a31c7dcc888bc4bb5c4bd",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "desktop:reference",
+      "seconds": 58.89,
+      "log_sha256": "c3888c458e14dfad3799408aa0c2b49c7f2e8f33e8d955c17c231614dbe59616",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "desktop:migration",
+      "seconds": 1.64,
+      "log_sha256": "5df74f1408782979e723a11ba86d75c2889366d407803501bd53ad5de89ef4e8",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:projection",
+      "seconds": 12.89,
+      "log_sha256": "46c7b9bc5c173dba20dc3ef9c81f4e47cd5713ee75160c1897dbda28c9035461",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:command",
+      "seconds": 12.328,
+      "log_sha256": "7600f9a03e6659d117985b72c883cd489930ef3bcdcda4bea75672a470b49619",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:catalog",
+      "seconds": 8.0,
+      "log_sha256": "af57da4e9666bf6c91547789f5c867feba0a07e91a85a90560f82dd4236e67d9",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:equipment",
+      "seconds": 130.359,
+      "log_sha256": "6f4b6d0200f6025757d8d440fa6d6ff3229e96636b74ebdcba692b0582977a8a",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:empty_hulls",
+      "seconds": 40.359,
+      "log_sha256": "ec5392bb9d847eac35b6e3d2c8af1adc76cc9f81310e0c7216322aebf8c4ca8b",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:module_edits",
+      "seconds": 38.547,
+      "log_sha256": "b043c9c0f306e44f7eff50359ae38d134e35f91171c9dd227b6542087dcefa38",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:charge_edits",
+      "seconds": 177.609,
+      "log_sha256": "fcf6c3bd123d8cd28c133d3543d0eda84a641adf5c25709ac1bd191a1bae9b1c",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:variation_edits",
+      "seconds": 260.203,
+      "log_sha256": "378882316803b29b9b3546858352c854b5b01f4f9dc5dbba2ae72fda12da5459",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:rack_ordering",
+      "seconds": 15.687,
+      "log_sha256": "6f14b1d174a98661d32f936ce476225c0655461b31023b2ecd5d46daadb325a8",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:bulk_charges",
+      "seconds": 16.86,
+      "log_sha256": "906501d30996de7eb8cd752628f836cb4eaee31630c479c6de8b88a8c1d73704",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:bulk_states",
+      "seconds": 13.797,
+      "log_sha256": "91bdaa202c01b8eafd79b65ab4b607ad3e34912feca39a8bd1bd8c5ef865ae98",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:clone_fill",
+      "seconds": 12.219,
+      "log_sha256": "69a91a769887cb58a2e8e922b02770b245ff75fca8670ccdaf4750bfce5ec370",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:bulk_variation_removal",
+      "seconds": 12.141,
+      "log_sha256": "ab487172bb535528da0859a9b302cf741062424056ea4c70b7e7b718692f887b",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:hull_modes",
+      "seconds": 10.782,
+      "log_sha256": "c75ac23cf89d41feae8689f72c7824e6d8e2a00e0e459bf4ac81912add819525",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:subsystems",
+      "seconds": 14.046,
+      "log_sha256": "02bbbac728a5a11544745d8c9d46b3cfb046145deb5d52ef27faf12204b107cc",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:structures",
+      "seconds": 22.546,
+      "log_sha256": "47e3acc5a7354adc20241eb7348564e9e2fd1b144f40f31ab039ac845e4fe9b3",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:cargo_stacks",
+      "seconds": 19.782,
+      "log_sha256": "ea8a9ecb550d98c2bb135b58cf0c143922c7ffb2272dc4e970f6433ccf2af7fe",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:cargo_actions",
+      "seconds": 23.0,
+      "log_sha256": "c9d00f4cf65892bd2d4a9846ae7a628ed27fc3d9ff884a9a582caf7c842b3459",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:cargo_transfers",
+      "seconds": 39.735,
+      "log_sha256": "d2d9240351839cb457c20c3cd82ebd0660417f4597c8eff146b59c91a3a34bb9",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:notes",
+      "seconds": 33.469,
+      "log_sha256": "2c24f0f4b64c23628f5eb9e0e03cb40c7b40809c79cf418e0a76181151818d31",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "reference:history",
+      "seconds": 46.093,
+      "log_sha256": "a5bdf25aec695f2eb7bb57964f87d8a0636b96979ed1ab482ccde72ae444b1ee",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:base",
+      "seconds": 12.782,
+      "log_sha256": "ced64c3d10439e13679c367a2a4aa5ff32ace918a23e61b41a09b8e63102967b",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:projection",
+      "seconds": 17.547,
+      "log_sha256": "52039884c125a9f5d61cee9b837a7eee26804f864caa0c656a22a50b4681cfc6",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:command",
+      "seconds": 15.141,
+      "log_sha256": "9c178c7eb4fb3d24836aa19d77862a73af2303b66696dd8de839de061284de94",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:bridge",
+      "seconds": 14.313,
+      "log_sha256": "033edc1935508b3c4824878eb47056c28ac8d77840a9c4dc53124b97f1256e77",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:persistence",
+      "seconds": 162.36,
+      "log_sha256": "88aa3a4c2f06dbc0ade8faf0f4ca38a1e77dc9e3d1dd52bb2f9031a2a466b29c",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:library",
+      "seconds": 40.906,
+      "log_sha256": "dcd71c3b77d30a47a06aa90110236dfb9eae12b0209b3a748081f3f3abf44845",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:market",
+      "seconds": 81.078,
+      "log_sha256": "48cba6c6f840b8c88ab321ec3edc8d1318d8f4258ef2f0f3475ff9c26bf37121",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:empty_hulls",
+      "seconds": 54.719,
+      "log_sha256": "9a7f5ba19c874a6164c0c26d13c1a29da7b45a3db7787c8220fd560e534fb50b",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:module_edits",
+      "seconds": 38.109,
+      "log_sha256": "36feaa9c1f0dfc064d2298526149d6d263c056d8d70cf30772b672c2c31aef91",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:charge_edits",
+      "seconds": 304.734,
+      "log_sha256": "32218a83e95824b6da12f69df117bd1981425a2eb762c5ccf2eb60d222d68d6b",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:variation_edits",
+      "seconds": 228.5,
+      "log_sha256": "c4f9f81836b957d71cb5b9e7120746737cbf855cbdcd90d7585f6ac8fa655704",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:rack_ordering",
+      "seconds": 23.859,
+      "log_sha256": "215980e81255454b432978151b06f1a49c39c57f85aad9f980236ac595ee89ec",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:bulk_charges",
+      "seconds": 49.172,
+      "log_sha256": "9928b7260c5a924907cb1afec5547b21e81c40cd0409527623b733030518f60a",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:bulk_states",
+      "seconds": 22.203,
+      "log_sha256": "f1d61f5b457432ea73773959173bc6384c8a76711977e04386b215bded024579",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:clone_fill",
+      "seconds": 16.047,
+      "log_sha256": "7fc5156f917acbf133b93799e52b0b37bff998637bcc6efa8fdf1e1c0c02bcb4",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:bulk_variation_removal",
+      "seconds": 17.5,
+      "log_sha256": "cde227e056845343f1263b0f2c444b762a514636d77d9aaaafc72ab6df4943af",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:hull_modes",
+      "seconds": 12.75,
+      "log_sha256": "d986a0af364bec6cbc82aec06a8070b9830303b6e7ba97b961e7b93d3b885d22",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:subsystems",
+      "seconds": 16.672,
+      "log_sha256": "0128ea7f2ed9cf67f83c9def8ee9ad1c3f7a59384b9c934b4ba156f91a94caaa",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:structures",
+      "seconds": 31.578,
+      "log_sha256": "815c391df1de4aa93c8fd35370a4d4334c6df8965e2e9fa57582615d77c63191",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:cargo_stacks",
+      "seconds": 11.578,
+      "log_sha256": "9b3d5dd901aff4934150c27936099d6cc185191b3bb6ac58e514ddd19255eb9c",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:cargo_actions",
+      "seconds": 31.718,
+      "log_sha256": "ec1f5fa2e4d4531be781b601ac5a4208eb1e315435abbc0ed523fd4b3ca01ef2",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:cargo_transfers",
+      "seconds": 102.906,
+      "log_sha256": "e6e34e344141166dc85b266bb8dd9af09e7d513b6cc23731767798da82c3a945",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:notes",
+      "seconds": 14.907,
+      "log_sha256": "79fa600be612c6bb710e07e2137292504359defd97db86fe74a09ba18cc1f9c1",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "headless:history",
+      "seconds": 50.125,
+      "log_sha256": "a9cb01ca3ede84363a7d99696090bcb7cf6b66951c5a3364c79a3c00f5c744d1",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "build:dependencies",
+      "seconds": 22.219,
+      "log_sha256": "e8960718c92a9fb1643b4778e612d6dcdc70a14953a7d9b72bdd193459abf154",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "build:engine-assets",
+      "seconds": 15.25,
+      "log_sha256": "ee298376f2b89b22b80058c0000fef98288e78a359bd1063c23ff51b53f513da",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "build:apks-lint",
+      "seconds": 159.985,
+      "log_sha256": "d3e39ee19b18772ad32e4d24d44634235473d683deca2c0429917035f1f98680",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "build:signature",
+      "seconds": 0.954,
+      "log_sha256": "45b427e8592994b4fb9a44e6ed47d48f54caeb27c3bfa29056e3da1b2777dbc5",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "build:package",
+      "seconds": 16.312,
+      "log_sha256": "1e80039b5c741b8b3fbff828a8adb489f5af095039aab69f7889a9bceb07e8e0",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "native:initial",
+      "seconds": 100.907,
+      "log_sha256": "53e941506a7620a155528bb541fdbec2c1d5a12d8ecd4f123123ba029304e5d7",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:measure-performance.py",
+      "seconds": 57.578,
+      "log_sha256": "7d433544a711cdd11e119b9269f063cb6758d38ae18a8b04a682136a823c9132",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-contract.py",
+      "seconds": 17.297,
+      "log_sha256": "8868ec594d86cc581088bf32e98a7bd396681299d8ee1df519d428fdf256c583",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-persistence.py",
+      "seconds": 24.016,
+      "log_sha256": "c222bbf7b3988806c5dcc7ba8a50b95aeca51c1a2923e9f89826609814279afc",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-library.py",
+      "seconds": 106.078,
+      "log_sha256": "5f1db515330637eb64583ee99f699b26e6feeee6609488bf1ac83e56c6418fe5",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-navigation.py",
+      "seconds": 109.985,
+      "log_sha256": "697eb574c7e72f1daca4b842562215a022102081c4a61540a0db633c37dca760",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-market.py",
+      "seconds": 61.61,
+      "log_sha256": "8d93e281832147aaaacb01af600f6371797913ad8088b3ff79c2e2c0f15df4a5",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-empty-hulls.py",
+      "seconds": 271.703,
+      "log_sha256": "3472f09ec39bff89ede5a788ef96ea01df0f69d9c3549038800cda32a48daaf7",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-module-edits.py",
+      "seconds": 212.828,
+      "log_sha256": "ce100ec062b8f934a0e701355c983dca37debc8ac222a1a3d55b7843906229c8",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-charge-edits.py",
+      "seconds": 422.156,
+      "log_sha256": "3c1ed6862c5f3892e66bd434f494b3ee6226de539a9b14ec26278a2a77fb1169",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-variation-edits.py",
+      "seconds": 403.344,
+      "log_sha256": "89f5c5665a10e9c0f0c5458a79ba8c384d074b47c1085a44fa888b55bd911198",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-rack-ordering.py",
+      "seconds": 154.265,
+      "log_sha256": "7ad5acf9b7a247c7e0aa1956a62f9237ae265f2dfded7270cfe23ad55d39125d",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-bulk-charges.py",
+      "seconds": 197.938,
+      "log_sha256": "002bd7ced6e6e5f1ce1a562056d6a4a8eebcc09f2224cb8ad693e7300f9e0400",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-bulk-states.py",
+      "seconds": 134.781,
+      "log_sha256": "b3df352f249826f3c1822707c3dd32120575c61f6c0570c021f73dc4c7e220f8",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-clone-fill.py",
+      "seconds": 130.328,
+      "log_sha256": "b5026df0a470c406500c560782f315383b49154c59dbc01dbef61b5cf5bdfbc1",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-bulk-variation-removal.py",
+      "seconds": 109.891,
+      "log_sha256": "33a1a4636c7afc6efde114ec3bf1d29fc75c77a1f265337b61fed057276e3546",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-hull-modes.py",
+      "seconds": 100.016,
+      "log_sha256": "9927126b20ddb05438a3c28b0fdd97d6e34c963c6b41a7ceb81259a928a2f2ff",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-subsystems.py",
+      "seconds": 112.0,
+      "log_sha256": "47bbb386375206c70bf00423d27b7baede5454502707ea65cfaa35bdedf9280e",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-structures.py",
+      "seconds": 209.093,
+      "log_sha256": "80c0c0682e247830da0a2128ab42b8f53387bc222782897695797ad5968c8917",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-cargo-stacks.py",
+      "seconds": 157.125,
+      "log_sha256": "5571497dc19029ab7d7ab3b203ce8f0edfb5bcfccd57cdface20b4526d220ba8",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-cargo-actions.py",
+      "seconds": 349.579,
+      "log_sha256": "cc7a3b522d17b569e923b999275dcde64e52fbe7f6049291c9f7d445c64a7627",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-cargo-transfers.py",
+      "seconds": 967.437,
+      "log_sha256": "87c3ee77b57b904ad34b74842db1f1bfc9b7565ce2f94c888f9dc53b1fd4b536",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-notes.py",
+      "seconds": 166.406,
+      "log_sha256": "85af3341dbd3647e5806c7982aae2790332a7de9721a7f58ec401b4cfd182edb",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:check-history.py",
+      "seconds": 2146.218,
+      "log_sha256": "73695f434c85bd44c14205fc3a44c60b17bf8cf1331b02fe662ee8e7b88696a4",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:summary",
+      "seconds": 2.156,
+      "log_sha256": "ce9b9abff96ad6d5d3a05ed66c55782f721778cb92a64a52beacc88bc3826ba6",
+      "tested_commit": "5952c1bf38cb78201aff6762191b1ccf33da84fc"
+    }
+  ],
+  "launcher_fix_reuse": [
+    {
+      "from_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04",
+      "to_commit": "2011ac5e58f884ae59391d9bc5a362223cb43ec7",
+      "changed_files": [
+        "android/ci/local_verification.py",
+        "android/ci/native_suite.py",
+        "android/verify-local.ps1"
+      ],
+      "unchanged_completed_host_build_inputs": true
+    },
+    {
+      "from_commit": "2011ac5e58f884ae59391d9bc5a362223cb43ec7",
+      "to_commit": "d7def95e6e5ce9e315c469d3b7fcb931682f8a2f",
+      "changed_files": [
+        "android/ci/native_suite.py"
+      ],
+      "unchanged_completed_host_build_inputs": true
+    },
+    {
+      "from_commit": "d7def95e6e5ce9e315c469d3b7fcb931682f8a2f",
+      "to_commit": "6792b03e91b181194afe42fc1752993df35e55dd",
+      "changed_files": [
+        "android/ci/check-history.py",
+        "android/ci/history_progress.py",
+        "android/ci/local_verification.py",
+        "android/ci/report_local.py",
+        "android/ci/test_report_local.py",
+        "android/verify-local.ps1"
+      ],
+      "unchanged_completed_host_build_inputs": true
+    }
+  ],
+  "native_restarts": [
+    {
+      "archive": "failed-native-386b97f5",
+      "reason": "Failed native chain; fresh disposable store required",
+      "commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    }
+  ],
+  "summary_repairs": [
+    {
+      "archive": "failed-native-386b97f5",
+      "report_sha256": "0af69f542a4e8af15d5ae5a487e8258cb5342622da338232c33722ef99d3efbe",
+      "apk_sha256": {
+        "app-debug-androidTest.apk": "48ae6c03aebd034184c8d246ed3075b3eabea98fe828e8e41be25564c28f5696",
+        "app-debug.apk": "f026bc400b5b0beed0d074fe17906ec1eff2ae259a737a9cf28a42e46d050d0f"
+      },
+      "package_gate_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04",
+      "package_log_sha256": "1e80039b5c741b8b3fbff828a8adb489f5af095039aab69f7889a9bceb07e8e0",
+      "native_tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd",
+      "summary_commit": "0987ecda2593154ad217b790bfca21ae81a5541d",
+      "changed_setup_files": [
+        "android/ci/history_progress.py",
+        "android/ci/local_verification.py",
+        "android/ci/report_local.py",
+        "android/ci/summary_repair.py",
+        "android/ci/test_summary_repair.py",
+        "docs/android/LOCAL-VERIFICATION.md",
+        "docs/android/STATUS.md",
+        "docs/android/tasks/W02-windows-local-verification.md"
+      ]
+    },
+    {
+      "archive": "failed-native-386b97f5",
+      "report_sha256": "0af69f542a4e8af15d5ae5a487e8258cb5342622da338232c33722ef99d3efbe",
+      "apk_sha256": {
+        "app-debug-androidTest.apk": "48ae6c03aebd034184c8d246ed3075b3eabea98fe828e8e41be25564c28f5696",
+        "app-debug.apk": "f026bc400b5b0beed0d074fe17906ec1eff2ae259a737a9cf28a42e46d050d0f"
+      },
+      "package_gate_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04",
+      "package_log_sha256": "1e80039b5c741b8b3fbff828a8adb489f5af095039aab69f7889a9bceb07e8e0",
+      "native_tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd",
+      "summary_commit": "96c092003031a9d3a61ea03ba99ae37308e3250b",
+      "changed_setup_files": [
+        "android/ci/contract_summary.py",
+        "android/ci/history_progress.py",
+        "android/ci/local_verification.py",
+        "android/ci/report_local.py",
+        "android/ci/summary_repair.py",
+        "android/ci/test_contract_fixtures.py",
+        "android/ci/test_summary_repair.py",
+        "docs/android/LOCAL-VERIFICATION.md",
+        "docs/android/STATUS.md",
+        "docs/android/tasks/W02-windows-local-verification.md"
+      ]
+    },
+    {
+      "archive": "failed-native-386b97f5",
+      "report_sha256": "0af69f542a4e8af15d5ae5a487e8258cb5342622da338232c33722ef99d3efbe",
+      "apk_sha256": {
+        "app-debug-androidTest.apk": "48ae6c03aebd034184c8d246ed3075b3eabea98fe828e8e41be25564c28f5696",
+        "app-debug.apk": "f026bc400b5b0beed0d074fe17906ec1eff2ae259a737a9cf28a42e46d050d0f"
+      },
+      "package_gate_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04",
+      "package_log_sha256": "1e80039b5c741b8b3fbff828a8adb489f5af095039aab69f7889a9bceb07e8e0",
+      "native_tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd",
+      "summary_commit": "5952c1bf38cb78201aff6762191b1ccf33da84fc",
+      "changed_setup_files": [
+        "android/ci/contract_summary.py",
+        "android/ci/history_progress.py",
+        "android/ci/local_verification.py",
+        "android/ci/persistence_summary.py",
+        "android/ci/report_local.py",
+        "android/ci/summary_repair.py",
+        "android/ci/test_contract_fixtures.py",
+        "android/ci/test_persistence_fixtures.py",
+        "android/ci/test_summary_repair.py",
+        "docs/android/LOCAL-VERIFICATION.md",
+        "docs/android/STATUS.md",
+        "docs/android/tasks/W02-windows-local-verification.md"
+      ]
+    }
+  ],
+  "summary_tested_commit": "5952c1bf38cb78201aff6762191b1ccf33da84fc",
+  "fixture_guard": {
+    "reported_hash": "exact retained verified test APK bytes",
+    "reference_identity": "CRLF-to-LF only; all other bytes exact",
+    "focused_tests": 14
+  },
+  "focused_checks": {
+    "fixture": 14,
+    "routing": 12,
+    "reporting": 20,
+    "exact_native_source": "passed"
+  },
+  "history_outer_deadline_seconds": {
+    "Windows_prepare": 2400,
+    "Windows_restored": 2400,
+    "Linux": 900
+  },
+  "history_diagnostics": [
+    "diagnostics\\history-108\\progress.jsonl"
+  ],
+  "failed_attempts": [
+    {
+      "gate": "native:initial",
+      "exit_code": 1,
+      "log": "logs\\055-native-initial.log",
+      "log_sha256": "1551e52ff473f913c5c8e4a7f6e41df3c1c2c41fc8774bcc1bf051a8870c14e0",
+      "tested_commit": "f7d2ad3100ea9c476949bf42151de60604da1e04"
+    },
+    {
+      "gate": "native:initial",
+      "exit_code": 1,
+      "log": "logs\\057-native-initial.log",
+      "log_sha256": "d9207a753460f9056fc1b2f6a713782caa21574527386d9580cdaf0cfa0f9e52",
+      "tested_commit": "2011ac5e58f884ae59391d9bc5a362223cb43ec7"
+    },
+    {
+      "gate": "native:check-history.py",
+      "exit_code": 1,
+      "log": "logs\\083-native-check-history.py.log",
+      "log_sha256": "f9d9a09a6af3a81a6ad3da98b3468114904f80dabf80b6898b94c2fd83d5e518",
+      "tested_commit": "d7def95e6e5ce9e315c469d3b7fcb931682f8a2f"
+    },
+    {
+      "gate": "native:summary",
+      "exit_code": 1,
+      "log": "logs\\109-native-summary.log",
+      "log_sha256": "73265624cf9eec38d07e1e0f38132fb3b91fe687a8b293ce43ecabca8358e246",
+      "tested_commit": "6792b03e91b181194afe42fc1752993df35e55dd"
+    },
+    {
+      "gate": "native:summary",
+      "exit_code": 1,
+      "log": "logs\\110-native-summary.log",
+      "log_sha256": "95abf8d8c855aab5ac89d9155b05ff40bc9c3512aa2c19da7f79a50c643f75d0",
+      "tested_commit": "0987ecda2593154ad217b790bfca21ae81a5541d"
+    },
+    {
+      "gate": "native:summary",
+      "exit_code": 1,
+      "log": "logs\\111-native-summary.log",
+      "log_sha256": "22addf872cf13a81c7233d68afc288f42d298aa3e6a8ac6caae1463405ddee50",
+      "tested_commit": "96c092003031a9d3a61ea03ba99ae37308e3250b"
+    }
+  ],
+  "instrumentation_executions": 52,
+  "instrumentation_receipts": [
+    {
+      "file": "bulk-charges-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "fa69f1af63b8624a7cf7d21b0a606d7c09e0a0c0c59c4929db02b1b9b82170f3"
+    },
+    {
+      "file": "bulk-charges-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "4e15e946d0bc5828c8e01a447765bad8d99b1bc14fd9456bcd5cbc036f43c32e"
+    },
+    {
+      "file": "bulk-states-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "109ccf232770b3120ae994a2a436a25fe4b63c5a9c78805e1ecefbed18680ae9"
+    },
+    {
+      "file": "bulk-states-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "1206f621aa0329396b77ee94f5ca975ab39ed155612a0d5a553e2fb1f77ccb39"
+    },
+    {
+      "file": "bulk-variation-removal-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "fe6ce2c8afa355133c9767676589782488e82c2a404936920b9ccd5c7375b504"
+    },
+    {
+      "file": "bulk-variation-removal-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "d86fdb893fe41852774d368d7622dcc302e19f3a311a211659174065f62e9588"
+    },
+    {
+      "file": "cargo-actions-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "85650fcf22e56487ee18064e4b807a67f090f8adb133948de3ceb12ab36bfc49"
+    },
+    {
+      "file": "cargo-actions-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "3e3457f8d4f9d0e98777ab64ce786a6795865eb1f99fc291029a5c5a70c3d905"
+    },
+    {
+      "file": "cargo-stacks-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "44a08b43a8bb34edf605e8c13d58b377df4c21f7ef4e8fb7aec5d6e9fec8eb2e"
+    },
+    {
+      "file": "cargo-stacks-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "b976445cfd997678a0ce3c76d89ee25e183aee62573eaa24050207bc7ec5a2e4"
+    },
+    {
+      "file": "cargo-transfers-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "292b2cb0179bbac6cfdb2b58724f98fc1329b343ce55f1b55fe4b6a2836a302a"
+    },
+    {
+      "file": "cargo-transfers-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "d1b14b1b13209f8684f58b5468452742f1d95eb83e23c3ecbb115ff28cb6c40a"
+    },
+    {
+      "file": "charge-edits-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "224ac7ab7431119821d0579fd2d2c8b0ecde32635f2de37b6f63859b35662fa8"
+    },
+    {
+      "file": "charge-edits-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "57f63a55ffd9f29c1d68dbb5d47c5b7bb43c05ffdddc281e8929dff1a7b88895"
+    },
+    {
+      "file": "clone-fill-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "c563ae02362de73861987b018fac78693724bbfd5da56256e02499c96f13a222"
+    },
+    {
+      "file": "clone-fill-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "ca35225903d32199dab74fc28ee9efdc483f7b48b898db297e6cf528a92aa672"
+    },
+    {
+      "file": "contract-instrumentation.txt",
+      "tests": 1,
+      "sha256": "b10e2c39810a386f9dfa8ce499d1c16b5d14f4030b8c3c86660fbffa096f61e7"
+    },
+    {
+      "file": "empty-hulls-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "9aa8a8ccdaa57654347b38476a4ce2eef340b7f74be65ddd7334c081761d3056"
+    },
+    {
+      "file": "empty-hulls-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "c8d2e5e98fed28d78bd898c1b9119d283f79845d40e520a0730a59a747c92970"
+    },
+    {
+      "file": "history-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "e55082a0e9acdd645e2140dab435e92149769c2056253c5f18f288789cad5e97"
+    },
+    {
+      "file": "history-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "3bacc3f90c4153d77cedde0ad166867d5423d96569b7deeb274c8e3bb97d5552"
+    },
+    {
+      "file": "hull-modes-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "66e9380108199df46437f24af0a107f81fed5e4578886c2a65babdd0c4e88045"
+    },
+    {
+      "file": "hull-modes-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "5645d51dae6c55190f6ea4a01ad24153e29501793ae5a49267cc82c7a9b89647"
+    },
+    {
+      "file": "initial-instrumentation.txt",
+      "tests": 5,
+      "sha256": "15abbdbf04a5db4d8d85b0b73ecc2f1d52598f7a026e83e43d29d101bfac6bc7"
+    },
+    {
+      "file": "library-empty_reopen-instrumentation.txt",
+      "tests": 1,
+      "sha256": "95c3faad46264b103b8598edca15238e2e7ae0fbfd75932f4cf3a3eb2bedd859"
+    },
+    {
+      "file": "library-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "749e5db7fbe09d5692a6e01c9f18a8b54148092c787944879cc3fbdf45239aa2"
+    },
+    {
+      "file": "library-reopen_delete-instrumentation.txt",
+      "tests": 1,
+      "sha256": "662c5eea2b441426fed82a99c901c4e41e3e23304062e66798b31f75b426e0f7"
+    },
+    {
+      "file": "market-instrumentation.txt",
+      "tests": 1,
+      "sha256": "5207ec7750abf40ae9fbb04d5d56c8d8a784b9dcc219f400e1ada50f8bda2e1b"
+    },
+    {
+      "file": "module-edits-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "2b7803b3f3ef068a9a7f83856f9d070ad95ab4caef290416f0a42f8cf387b920"
+    },
+    {
+      "file": "module-edits-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "d7dd798d17fb30b09beafb10657431761ac426e4ff9387739a494788ee759b38"
+    },
+    {
+      "file": "navigation-closed-instrumentation.txt",
+      "tests": 1,
+      "sha256": "df4a18158484aa6d44821e32a4fad20fd9cd0a0e088b70f7dbcfb671426b34a6"
+    },
+    {
+      "file": "navigation-disabled-instrumentation.txt",
+      "tests": 1,
+      "sha256": "fea775458eaa9d0038e83a111f7034403b84eabc9ca2df733add7ae42bc2a91d"
+    },
+    {
+      "file": "navigation-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "fa0dec790fbc230368e43a45be9da66a029c16c7ff8a30402bb714a481833a58"
+    },
+    {
+      "file": "navigation-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "8d5027ad077fdc93d5fe34fc162b8658480d2885d8b9fcf098382ec9ab9f2f0c"
+    },
+    {
+      "file": "notes-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "97c91926a99eef1be061a0946de3cb65f33af6b30a3c2977529ee4dc8c52c464"
+    },
+    {
+      "file": "notes-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "41671302d75dcb854e5aa074a0d87e413063f415011d4b7b5d65a19e92d64037"
+    },
+    {
+      "file": "performance-instrumentation.txt",
+      "tests": 1,
+      "sha256": "0e6c5f6081d2acf0dca610f30e2c5168c35bed9fa6eaf9a61f8a5fcd231541a9"
+    },
+    {
+      "file": "persistence-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "668c6bbdf838cec7292291159e9933fe9de93c850e4e2fd3f316a8d425d8cb1c"
+    },
+    {
+      "file": "persistence-reopen_edit-instrumentation.txt",
+      "tests": 1,
+      "sha256": "4670112e337e7a4d91db5f7251fbbd6b6df68332296584dd500320206e8168bb"
+    },
+    {
+      "file": "persistence-verify-instrumentation.txt",
+      "tests": 1,
+      "sha256": "0fabc661ae89ce29702f51245e6100b137062574438b6181f0f8a495028535d6"
+    },
+    {
+      "file": "rack-ordering-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "c4caa6e41b45131153d28fb23bca6085d755bb79dbd456365902bc71424064a2"
+    },
+    {
+      "file": "rack-ordering-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "4d4834e9baaa9c67b7f92086f55570faabc4a73de6519c58efdb5e4b5a4f08e5"
+    },
+    {
+      "file": "structures-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "5c8af6e911a9621681fea15953da436c5e301954c6d28619f9f75a122e74fcf4"
+    },
+    {
+      "file": "structures-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "7b2f9855c14a84b6b10dcf1c6d27229d1cc47ca8015bb67b782efbe59a771a0d"
+    },
+    {
+      "file": "subsystems-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "5098e10522ff314c147bca269b67a49ca6505330599f0d14f60b660caba4178c"
+    },
+    {
+      "file": "subsystems-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "85081a8af047fd6847cb16e37ac1e2d115fd0411ab0503352fb2f2f322beb2b0"
+    },
+    {
+      "file": "variation-edits-prepare-instrumentation.txt",
+      "tests": 1,
+      "sha256": "758a92e48d39661be11f923c672382560131bc8900c836ed97473c0fb36d3743"
+    },
+    {
+      "file": "variation-edits-restored-instrumentation.txt",
+      "tests": 1,
+      "sha256": "bec8ce70765c738dc729e7379f6fd6eb0931c898b8f103112ef987cfcd8e1519"
+    }
+  ],
+  "source_pin": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "emulator_version": "Pkg.UserSrc=false\nPkg.Revision=36.2.12\nPkg.Path=emulator\nPkg.Desc=Android Emulator\nPkg.BuildId=14214601",
+  "system_image": "Pkg.Desc=System Image x86_64 with Google APIs.\nPkg.Revision=7\nPkg.Dependencies=emulator#35.4.9\nAndroidVersion.ApiLevel=36\nAndroidVersion.ExtensionLevel=17\nAndroidVersion.IsBaseSdk=true\nSystemImage.Abi=x86_64\nSystemImage.TagId=google_apis\nSystemImage.TagDisplay=Google APIs\nSystemImage.GpuSupport=true\nAddon.VendorId=google\nAddon.VendorDisplay=Google Inc.\n\n",
+  "native_summary": {
+    "history": {
+      "reference_cases": 18,
+      "reference_states": 108,
+      "recipients": 2,
+      "new_fits": 21,
+      "restored_fits": 111,
+      "screenshots": 6,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_original_matrix",
+          "touch_repeated_undo_redo",
+          "linked_recipients",
+          "selection_safety",
+          "notes_preserved",
+          "fit_isolation",
+          "redo_branch_invalidated",
+          "history_recreation",
+          "stale_rejected",
+          "copy_has_no_history",
+          "typed_history_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit",
+          "session_history_empty",
+          "notes_retained"
+        ]
+      }
+    },
+    "task": "B09.1",
+    "cargo_actions": {
+      "cases": 5,
+      "states": 37,
+      "new_fits": 10,
+      "restored_fits": 57,
+      "screenshots": 6,
+      "protocol_rejections": 8,
+      "checks": {
+        "prepare": [
+          "five_original_cargo_action_sequences",
+          "touch_selected_quantity_remove_presets_fill_and_variations",
+          "durable_cargo_copies",
+          "atomic_rejections",
+          "typed_cargo_actions_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "notes": {
+      "reference_states": 13,
+      "new_fits": 5,
+      "restored_fits": 90,
+      "screenshots": 7,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "exact_text_and_character_counts",
+          "autosave_and_immediate_navigation_flush",
+          "correct_fit_switch_and_recreation",
+          "stale_draft_retry_and_conflict_resolution",
+          "structure_readonly_and_durable_copies",
+          "unchanged_calculations_and_recent_use",
+          "typed_notes_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "cargo_transfers": {
+      "cases": 14,
+      "states": 80,
+      "new_fits": 28,
+      "restored_fits": 85,
+      "screenshots": 6,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "fourteen_original_transfer_sequences",
+          "touch_move_copy_swap_selected_and_recreation",
+          "atomic_desktop_failure_correction",
+          "durable_transfer_copies",
+          "atomic_rejections",
+          "typed_transfer_protocol",
+          "captured_selection"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "cargo_stacks": {
+      "cases": 2,
+      "states": 17,
+      "new_fits": 3,
+      "restored_fits": 47,
+      "screenshots": 6,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "two_original_cargo_sequences",
+          "touch_add_set_partial_remove_and_over_capacity",
+          "durable_cargo_copy",
+          "atomic_rejections",
+          "typed_cargo_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "structures": {
+      "cases": 5,
+      "states": 27,
+      "desktop_hulls": 19,
+      "desktop_service_choices": 118,
+      "new_fits": 7,
+      "restored_fits": 44,
+      "screenshots": 7,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "five_original_structure_sequences",
+          "service_bonus_copy",
+          "atomic_rejections",
+          "typed_structure_service_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "subsystems": {
+      "cases": 1,
+      "states": 14,
+      "hull_choices": 48,
+      "new_fits": 3,
+      "restored_fits": 37,
+      "screenshots": 6,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "charged_launcher_retained_and_marked_illegal",
+          "invalid_fit_copies_without_erasure",
+          "all_original_subsystem_states_and_choices",
+          "atomic_rejections",
+          "typed_subsystem_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "hull_modes": {
+      "cases": 4,
+      "states": 16,
+      "new_fits": 5,
+      "restored_fits": 34,
+      "screenshots": 4,
+      "protocol_rejections": 4,
+      "checks": {
+        "prepare": [
+          "all_original_mode_states_and_choices",
+          "copy_keeps_selected_mode",
+          "atomic_rejections",
+          "typed_mode_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_variation_removal": {
+      "new_fits": 4,
+      "restored_fits": 29,
+      "screenshots": 8,
+      "protocol_rejections": 9,
+      "checks": {
+        "prepare": [
+          "selected_family_skip_recreation_charge",
+          "similar_cross_family_outside_selection",
+          "selected_removal_reverse_history",
+          "empty_and_fit_switch",
+          "atomic_rejections",
+          "typed_bulk_requests"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "clone_fill": {
+      "new_fits": 5,
+      "restored_fits": 25,
+      "screenshots": 8,
+      "protocol_rejections": 7,
+      "checks": {
+        "prepare": [
+          "selection_recreation",
+          "selected_positions_states_charges",
+          "targeted_vacancy",
+          "fitted_source_fill",
+          "market_touch_preview_stop_history",
+          "linked_recipient",
+          "atomic_rejections",
+          "typed_fill_preview"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_states": {
+      "cases": 6,
+      "states": 27,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 20,
+      "protocol_rejections": 9,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "similar_outside_selection",
+          "selected_only",
+          "supported_fallbacks",
+          "empty_fit",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "state_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_charges": {
+      "cases": 9,
+      "states": 41,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 18,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "selected_ammo",
+          "asymmetric_skip",
+          "similar_variants",
+          "script_controls",
+          "empty_fit",
+          "clear_selection",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "bulk_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "rack_ordering": {
+      "cases": 9,
+      "states": 48,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 16,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "occupied_swap",
+          "vacant_move",
+          "states_charges_retained",
+          "positional_heat",
+          "medium_and_service_controls",
+          "cancel_selection",
+          "empty_rack",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "heat_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "variation_edits": {
+      "cases": 17,
+      "states": 55,
+      "variation_families": 5226,
+      "new_fits": 2,
+      "restored_fits": 14,
+      "protocol_rejections": 13,
+      "pagination": {
+        "item_id": 33681,
+        "choices": 94,
+        "recreated_page": 1,
+        "previous_page": 0
+      },
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_5226_families",
+          "all_six_recipients",
+          "prior_fits_unchanged",
+          "picker_recreation",
+          "charge_reconciliation",
+          "neighbour_retained",
+          "drone_pagination_search",
+          "distinct_stacks_quantities_order",
+          "implant_activation_location",
+          "disabled_choices",
+          "empty_fit_refresh",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "charge_edits": {
+      "cases": 14,
+      "states": 74,
+      "module_compatibility_sets": 4242,
+      "new_fits": 4,
+      "restored_fits": 12,
+      "protocol_rejections": 11,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_4242_charge_sets",
+          "projection_and_command_recipients",
+          "prior_fits_unchanged",
+          "picker_pagination_search",
+          "picker_recreation",
+          "load_replace_unload",
+          "neighbour_state_charge_retained",
+          "script",
+          "laser_crystal",
+          "mining_crystal",
+          "active_fit_discovery",
+          "empty_fit_refresh",
+          "independent_copy",
+          "rejections_atomic",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_states_charges_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "module_edits": {
+      "cases": 11,
+      "states": 91,
+      "default_module_states": 4242,
+      "history_attempts": 25,
+      "recent_items": 20,
+      "retained_fits": 8,
+      "new_fits": 3,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_default_states",
+          "two_recipients",
+          "prior_fits_unchanged",
+          "ui_add_replace_remove",
+          "vacant_position_reused",
+          "picker_recreation",
+          "resource_warning",
+          "skill_warning",
+          "restriction_confirmation_recreation",
+          "override_reenable",
+          "independent_copy",
+          "structure_service_replacement",
+          "twenty_recent_items",
+          "recent_order_visible",
+          "views_do_not_record_use",
+          "stale_unknown_atomic",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_positions_states_values_retained",
+          "recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "empty_hulls": {
+      "hulls": 437,
+      "ships": 419,
+      "structures": 18,
+      "statistics_per_hull": 39,
+      "restart_fits": 5,
+      "new_empty_fits": 3,
+      "rejected_edits": 5,
+      "checks": {
+        "prepare": [
+          "complete_hulls",
+          "prior_fits_unchanged",
+          "picker_pagination",
+          "picker_search_and_empty",
+          "picker_recreation",
+          "blank_name_rejected",
+          "ship_creation",
+          "independent_copy",
+          "hull_browser_structure_creation",
+          "cancel_unchanged",
+          "failed_edits_unchanged",
+          "explicit_absence"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "reopen_each_fit",
+          "explicit_absence"
+        ]
+      }
+    },
+    "market": {
+      "groups": 718,
+      "items": 6822,
+      "searches": 22,
+      "checks": [
+        "complete_desktop_catalogue",
+        "all_desktop_searches",
+        "tree_and_item_jump",
+        "meta_filters_and_empty",
+        "pagination",
+        "activity_recreation",
+        "saved_fits_unchanged"
+      ]
+    },
+    "navigation": {
+      "processes": 4,
+      "checks": [
+        "activity_recreation_and_restore_enabled",
+        "back_to_correct_hull",
+        "close_active_inactive_and_delete_open",
+        "close_all_preserves_saved_fits_and_disable_restore",
+        "corrupt_preferences_preserved",
+        "disabled_restart_keeps_library_and_enabled_close_all",
+        "empty_open_set_stays_empty_after_restart",
+        "groups_races_empty_visibility_and_back",
+        "independent_desktop_catalog",
+        "opening_does_not_modify_recents",
+        "previous_set_and_active_restored",
+        "rename_updates_recents",
+        "search_opens_intended_id"
+      ],
+      "desktop_statistics_checked": 546,
+      "desktop_catalog_groups": 55,
+      "desktop_catalog_hulls": 437,
+      "restart_boundaries": 3
+    },
+    "library": {
+      "phases": 3,
+      "distinct_processes": 3,
+      "distinct_sessions": 3,
+      "restart_graphs_matched": true,
+      "empty_store_reopened": true,
+      "two_recipient_projection_and_command_deletion": true,
+      "desktop_stat_comparisons": 390,
+      "native_ui_assertions_passed": true
+    },
+    "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
+    "persistence": {
+      "desktop_snapshots": 45,
+      "statistics_per_snapshot": 39,
+      "fit_count": 9,
+      "process_restarts": 2,
+      "phases": [
+        {
+          "phase": "prepare",
+          "pid": 5628,
+          "session_id": "661d2fab12914bf194790cff4238386f",
+          "generation_start": 1,
+          "generation_end": 15,
+          "desktop_snapshots": 9,
+          "successful_mutations": 14,
+          "structured_errors": []
+        },
+        {
+          "phase": "reopen_edit",
+          "pid": 5702,
+          "session_id": "c120883bdc494f6f8d742b40eefbc66e",
+          "generation_start": 15,
+          "generation_end": 25,
+          "desktop_snapshots": 27,
+          "successful_mutations": 10,
+          "structured_errors": [
+            "INVALID_EDIT"
+          ]
+        },
+        {
+          "phase": "verify",
+          "pid": 5793,
+          "session_id": "8eb6ff92ba3b4cbfa3902ca8747208d7",
+          "generation_start": 25,
+          "generation_end": 25,
+          "desktop_snapshots": 9,
+          "successful_mutations": 0,
+          "structured_errors": []
+        }
+      ],
+      "responses_retained": 25,
+      "successful_mutations": 24,
+      "structured_errors": [
+        "INVALID_EDIT"
+      ],
+      "android_worker_thread": "pyfa-engine",
+      "stable_ids_and_revisions": true,
+      "whole_graph_reopened": true,
+      "two_recipient_source_edits": true,
+      "limits": [
+        "API 36 x86_64 emulator; no physical, ARM64 or older-API execution claim.",
+        "Same installed APK across process restarts; no upgrade, migration or backup/restore claim."
+      ]
+    },
+    "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",
+    "contract": {
+      "desktop_snapshots": 63,
+      "statistics_per_snapshot": 39,
+      "responses_retained": 44,
+      "structured_errors": [
+        "INVALID_EDIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT",
+        "INVALID_REQUEST",
+        "UNKNOWN_FIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT"
+      ],
+      "codec_rejections": [
+        "unknown_response_field",
+        "missing_session",
+        "unknown_status",
+        "boolean_version",
+        "unsupported_version",
+        "negative_revision",
+        "boolean_revision",
+        "unknown_module_state",
+        "missing_raw_unit",
+        "unknown_error_code",
+        "duplicate_keys",
+        "decimal_version",
+        "decimal_revision",
+        "nonfinite_number",
+        "trailing_document"
+      ],
+      "assertions": {
+        "desktop_snapshots_checked": 63,
+        "statistics_per_snapshot": 39,
+        "all_snapshots_matched_desktop": true,
+        "raw_scalar_types_checked": true,
+        "units_checked": true,
+        "bulk_rejection_unchanged": true,
+        "stale_revision_unchanged": true,
+        "missing_revision_rejected_before_dispatch": true,
+        "invalid_create_unchanged": true,
+        "queued_arguments_copied": true,
+        "ui_preserved_after_errors": true,
+        "queries_unchanged": true,
+        "unrelated_revisions_unchanged": true,
+        "queued_same_revision_one_success_one_conflict": true,
+        "retained_fit_count": 5
+      },
+      "android_worker_thread": "pyfa-engine",
+      "fresh_process_pid": 5497,
+      "fit_count": 5
+    },
+    "checkout_sha": "5952c1bf38cb78201aff6762191b1ccf33da84fc",
+    "workflow_run": null,
+    "execution": {
+      "kind": "local_windows",
+      "local_run_id": "20261001-143805-f7d2ad31-99b296"
+    },
+    "tests": [
+      "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
+      "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack",
+      "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline",
+      "io.github.sussic.pyfa.EngineParityTest.commandBurstsMatchDesktopAndClearRecipientBonusesOffline",
+      "io.github.sussic.pyfa.EngineParityTest.projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline"
+    ],
+    "performance_test": "io.github.sussic.pyfa.PerformanceTest.repeatedEditsMatchDesktopWithStableFitCountOffline",
+    "performance": {
+      "normal_startup": {
+        "first_install_ms": 8236.658213999995,
+        "cold_process_reusing_database": {
+          "samples": 4,
+          "min_ms": 4705.773419000005,
+          "median_ms": 4951.767138499999,
+          "max_ms": 5650.537731999997
+        }
+      },
+      "setup_ms": {
+        "ammunition": 29.177792,
+        "projection": 466.645594,
+        "command": 651.433574
+      },
+      "edits": {
+        "ammunition": {
+          "samples": 20,
+          "min_ms": 18.723957,
+          "median_ms": 21.716737000000002,
+          "observed_p95_ms": 28.24727,
+          "max_ms": 29.160984,
+          "retained_fit_count": 1,
+          "directions": {
+            "iron_ammunition": {
+              "samples": 10,
+              "min_ms": 18.723957,
+              "median_ms": 21.716737000000002,
+              "observed_p95_ms": 28.24727,
+              "max_ms": 28.24727
+            },
+            "restored": {
+              "samples": 10,
+              "min_ms": 19.082871,
+              "median_ms": 22.2924465,
+              "observed_p95_ms": 29.160984,
+              "max_ms": 29.160984
+            }
+          }
+        },
+        "projection_range": {
+          "samples": 20,
+          "min_ms": 33.731024,
+          "median_ms": 39.3214725,
+          "observed_p95_ms": 46.152973,
+          "max_ms": 48.187261,
+          "retained_fit_count": 5,
+          "directions": {
+            "falloff": {
+              "samples": 10,
+              "min_ms": 34.801829,
+              "median_ms": 39.206518,
+              "observed_p95_ms": 48.187261,
+              "max_ms": 48.187261
+            },
+            "applied_zero": {
+              "samples": 10,
+              "min_ms": 33.731024,
+              "median_ms": 40.3120355,
+              "observed_p95_ms": 46.152973,
+              "max_ms": 46.152973
+            }
+          }
+        },
+        "projection_link": {
+          "samples": 20,
+          "min_ms": 84.806845,
+          "median_ms": 116.08605850000001,
+          "observed_p95_ms": 140.777919,
+          "max_ms": 143.451873,
+          "retained_fit_count": 5,
+          "directions": {
+            "removed": {
+              "samples": 10,
+              "min_ms": 84.806845,
+              "median_ms": 101.37072,
+              "observed_p95_ms": 127.699465,
+              "max_ms": 127.699465
+            },
+            "applied_zero": {
+              "samples": 10,
+              "min_ms": 106.764766,
+              "median_ms": 123.1873855,
+              "observed_p95_ms": 143.451873,
+              "max_ms": 143.451873
+            }
+          }
+        },
+        "command_charge": {
+          "samples": 20,
+          "min_ms": 62.136996,
+          "median_ms": 74.71731750000001,
+          "observed_p95_ms": 95.785458,
+          "max_ms": 135.571886,
+          "retained_fit_count": 9,
+          "directions": {
+            "harmonizing": {
+              "samples": 10,
+              "min_ms": 64.479798,
+              "median_ms": 72.7940425,
+              "observed_p95_ms": 95.785458,
+              "max_ms": 95.785458
+            },
+            "extension_restored": {
+              "samples": 10,
+              "min_ms": 62.136996,
+              "median_ms": 75.78511449999999,
+              "observed_p95_ms": 135.571886,
+              "max_ms": 135.571886
+            }
+          }
+        },
+        "command_link": {
+          "samples": 20,
+          "min_ms": 85.221874,
+          "median_ms": 101.94296349999999,
+          "observed_p95_ms": 129.901906,
+          "max_ms": 148.780352,
+          "retained_fit_count": 9,
+          "directions": {
+            "link_inactive": {
+              "samples": 10,
+              "min_ms": 85.221874,
+              "median_ms": 90.8077305,
+              "observed_p95_ms": 102.059356,
+              "max_ms": 102.059356
+            },
+            "link_active": {
+              "samples": 10,
+              "min_ms": 101.826571,
+              "median_ms": 115.23378550000001,
+              "observed_p95_ms": 148.780352,
+              "max_ms": 148.780352
+            }
+          }
+        }
+      },
+      "memory_snapshots": {
+        "before_activity": {
+          "total_pss_kb": 91956,
+          "total_private_dirty_kb": 76656,
+          "native_heap_allocated_bytes": 5638768,
+          "java_heap_used_bytes": 3184560
+        },
+        "single_fit_ready": {
+          "total_pss_kb": 205797,
+          "total_private_dirty_kb": 162880,
+          "native_heap_allocated_bytes": 42118416,
+          "java_heap_used_bytes": 10455232
+        },
+        "after_ammunition_setup": {
+          "total_pss_kb": 208673,
+          "total_private_dirty_kb": 165872,
+          "native_heap_allocated_bytes": 42164048,
+          "java_heap_used_bytes": 13355200
+        },
+        "after_ammunition": {
+          "total_pss_kb": 211890,
+          "total_private_dirty_kb": 169136,
+          "native_heap_allocated_bytes": 42250128,
+          "java_heap_used_bytes": 16533792
+        },
+        "after_projection_setup": {
+          "total_pss_kb": 220029,
+          "total_private_dirty_kb": 177268,
+          "native_heap_allocated_bytes": 43208512,
+          "java_heap_used_bytes": 17549600
+        },
+        "after_projection_range": {
+          "total_pss_kb": 233905,
+          "total_private_dirty_kb": 191132,
+          "native_heap_allocated_bytes": 43489616,
+          "java_heap_used_bytes": 31426848
+        },
+        "after_projection_link": {
+          "total_pss_kb": 214291,
+          "total_private_dirty_kb": 171712,
+          "native_heap_allocated_bytes": 43036176,
+          "java_heap_used_bytes": 9236720
+        },
+        "after_command_setup": {
+          "total_pss_kb": 221670,
+          "total_private_dirty_kb": 178764,
+          "native_heap_allocated_bytes": 43699040,
+          "java_heap_used_bytes": 10383600
+        },
+        "after_command_charge": {
+          "total_pss_kb": 222142,
+          "total_private_dirty_kb": 179232,
+          "native_heap_allocated_bytes": 43706096,
+          "java_heap_used_bytes": 11317488
+        },
+        "after_command_link": {
+          "total_pss_kb": 221814,
+          "total_private_dirty_kb": 178904,
+          "native_heap_allocated_bytes": 43714368,
+          "java_heap_used_bytes": 11387120
+        }
+      },
+      "normal_startup_memory_snapshots": [
+        {
+          "total_pss_kb": 186300,
+          "total_private_dirty_kb": 137672,
+          "native_heap_allocated_bytes": 41844336,
+          "java_heap_used_bytes": 25446512
+        },
+        {
+          "total_pss_kb": 172794,
+          "total_private_dirty_kb": 132500,
+          "native_heap_allocated_bytes": 41613648,
+          "java_heap_used_bytes": 9062160
+        },
+        {
+          "total_pss_kb": 171061,
+          "total_private_dirty_kb": 131024,
+          "native_heap_allocated_bytes": 41621120,
+          "java_heap_used_bytes": 9062160
+        },
+        {
+          "total_pss_kb": 171364,
+          "total_private_dirty_kb": 130956,
+          "native_heap_allocated_bytes": 41590640,
+          "java_heap_used_bytes": 9037584
+        },
+        {
+          "total_pss_kb": 170839,
+          "total_private_dirty_kb": 130880,
+          "native_heap_allocated_bytes": 41625184,
+          "java_heap_used_bytes": 9058064
+        }
+      ],
+      "checked_edit_snapshots": 120,
+      "checked_setup_snapshots": 3,
+      "measurement_limits": [
+        "Debug APK, API36 x86_64 emulator; not a physical-phone or release-build benchmark.",
+        "Startup is process-start to ready Compose draw; excludes earlier system dispatch/zygote time. Raw ADB request-to-receipt also includes transport, report writing and polling.",
+        "One fresh installation and four force-stopped process launches reuse OS page/disk caches. No device reboot/cold disk, warm/hot Activity or startup percentile claim.",
+        "Edits include serialized queue, JNI, EOS mutation, refreshed role snapshots and both JSON directions; exclude golden assertions and UI interaction/rendering. No contention injected.",
+        "Projection/command operations update two recipients; four roles are read including unlinked control. Commands include the reference mindlink.",
+        "Four warmups, twenty alternating samples (ten per direction); p95 is descriptive of these samples, not a reliable device-tail estimate.",
+        "Memory is current process PSS/private dirty, not peak or a leak test; protected graphics may be omitted. Edit-test memory includes instrumentation, assertions and reports.",
+        "Fit counts stay1/5/9 by stage: earlier fit graphs remain alive. Graph setup and memory are cumulative; no per-fit or command-only memory claim."
+      ]
+    },
+    "screenshots": {
+      "home": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "24fe2ae80233b5ab91eacfc72b089b676a4acac417998ba52e9830a07fbe6a2f"
+      },
+      "about": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "f3eb1a393f2750a1e98166c9ecc6c6d7a53b0c70c582d6bbd931929c6cc98529"
+      },
+      "about-landscape": {
+        "width": 1920,
+        "height": 1080,
+        "sha256": "55c06195356e98cc30dcbcc9f82b6e2a5548eabae225a39c5701da052fe1604c"
+      },
+      "fit": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "5f097f74ebe29bed5652171aa79222c6bed885dbf2dbb3b2e74dba0e998e5ea9"
+      }
+    },
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "fresh_install": true,
+    "airplane_mode": true,
+    "app_internet_permission": false,
+    "apk_bytes": 71698766,
+    "apk_sha256": "f026bc400b5b0beed0d074fe17906ec1eff2ae259a737a9cf28a42e46d050d0f",
+    "engine_packaged": true,
+    "engine_parity_tested": "A01: 38 statistics across three ammunition states",
+    "projection_parity_tested": "A04: 39 statistics per fit, two fits, 11 states; two recipients, nine phases, five apply/remove cycles; same-worker repeat",
+    "projection_sequence_ms": 4850.981632000014,
+    "projection_repeat_sequence_ms": 2577.438594,
+    "command_parity_tested": "A05: 39 statistics per fit, two fits, 19 states; two recipients, 18 phases, five apply/remove cycles; 112 empty pending-bonus observations; same-worker repeat",
+    "command_sequence_ms": 3858.3968170000276,
+    "command_repeat_sequence_ms": 2612.7822079999987,
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false,
+    "python_dependencies": {
+      "greenlet": "3.0.1",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "engine_boot_ms": 27357.50697099999,
+    "edit_sequence_ms": 60.05394700000011
+  },
+  "files_manifest_sha256": "cf2d88e904b55e34d61618a218edc999aa259b8875ea18d540e05855ce4fd0d7",
+  "local_evidence_path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261001-143805-f7d2ad31-99b296",
+  "screenshots_reviewed": [
+    {
+      "name": "about-landscape.png",
+      "sha256": "55c06195356e98cc30dcbcc9f82b6e2a5548eabae225a39c5701da052fe1604c",
+      "reviewed": true,
+      "observation": "Landscape About page remains readable and scrollable with source/license links and Back control visible."
+    },
+    {
+      "name": "about.png",
+      "sha256": "f3eb1a393f2750a1e98166c9ecc6c6d7a53b0c70c582d6bbd931929c6cc98529",
+      "reviewed": true,
+      "observation": "About displays development build 0.1.0-b09.1, offline scope, development limitations, source link and GPL notice clearly."
+    },
+    {
+      "name": "fit.png",
+      "sha256": "5f097f74ebe29bed5652171aa79222c6bed885dbf2dbb3b2e74dba0e998e5ea9",
+      "reviewed": true,
+      "observation": "Scrolled fit page shows editing destinations, bulk ammunition action and explicit damage/range units; values are visible without overlap."
+    },
+    {
+      "name": "home.png",
+      "sha256": "24fe2ae80233b5ab91eacfc72b089b676a4acac417998ba52e9830a07fbe6a2f",
+      "reviewed": true,
+      "observation": "Home shows the active synthetic fit, disabled history controls with No undo action, and the early-development explanation."
+    },
+    {
+      "name": "library-dialog.png",
+      "sha256": "06e71c2b48a3c91db1b4aa09c68e26174d0c87c9e01b98c0a49e607820a67578",
+      "reviewed": true,
+      "observation": "Rename dialog retains the multilingual long fit name in its horizontally scrolling field; Cancel/Rename remain accessible above the keyboard."
+    },
+    {
+      "name": "library-empty.png",
+      "sha256": "29cccd5f0ef7c8b6ec30c696bedfcf2b068d06eafe9b849aa7c94549061bd288",
+      "reviewed": true,
+      "observation": "Empty library explicitly reports no open or saved fits and retains new/example/search controls."
+    },
+    {
+      "name": "library-library.png",
+      "sha256": "24f5f2e3586be4052af649a5e1fbaba6c35b465fd316f8ecde42141fa0c76d40",
+      "reviewed": true,
+      "observation": "Independent copied fit has its own name, Iron Charge M state and editing destinations in the scrollable fit page."
+    },
+    {
+      "name": "navigation-closed.png",
+      "sha256": "dd25e2f8902bf235fb6bbaa54a70f1e039e1ef984ff9dec099d69b0eb1c122a4",
+      "reviewed": true,
+      "observation": "After closing fits the page reports no open fits and retains the restore-on-start preference and new-fit controls."
+    },
+    {
+      "name": "navigation-hull.png",
+      "sha256": "ab8446a540a8ab375fac0f9d81287339d2d34e3f9c988e205c33c6bbf1f7e3a2",
+      "reviewed": true,
+      "observation": "Vexor hull navigation lists matching fits with distinct Open and Active labels plus lifecycle controls."
+    },
+    {
+      "name": "navigation-open.png",
+      "sha256": "8c72b87cd054db7f2b66e1bfea4b50e438dd69312a0083374f6a1334e1d3a7c9",
+      "reviewed": true,
+      "observation": "Open-fit strip, close controls, restore preference and wrapped multilingual active-fit title remain readable."
+    },
+    {
+      "name": "navigation-recent.png",
+      "sha256": "69be56eb0e08b18b8f2a96a47d9d8f4b45d8867d1c596507cf8ee801bd850b3f",
+      "reviewed": true,
+      "observation": "Recent view explains its ordering and shows distinct active/open fits with lifecycle actions."
+    },
+    {
+      "name": "empty-hulls-picker.png",
+      "sha256": "ee35a1cff679266f623ed979a29916e999c58f8c2484a952fcbcd140a89c9892",
+      "reviewed": true,
+      "observation": "New-fit dialog identifies the selected Rifter, empty/all-skills-V scope, multilingual fit name and Create/Cancel controls."
+    },
+    {
+      "name": "empty-hulls-restored.png",
+      "sha256": "236ac7c042e536970f43c5899bc1da3ee16c59fa79b0871ca657c13634c7a79a",
+      "reviewed": true,
+      "observation": "Restored Astrahus shows zero fitted modules, zero damage and explicitly unavailable gun range, with editing destinations retained."
+    },
+    {
+      "name": "empty-hulls-ship.png",
+      "sha256": "6c41d25804ad089e3548d1d271f2227996af29c0d0337239759a17d0a3dce08f",
+      "reviewed": true,
+      "observation": "Unarmed ship shows zero damage, explicit unavailable gun range and a unit-labelled drone range rather than a fabricated gun value."
+    },
+    {
+      "name": "empty-hulls-structure.png",
+      "sha256": "fcb499bd2df0a313d355741803319bf5ac82c1ae0ef5ba57802bbf79d2bb8f1d",
+      "reviewed": true,
+      "observation": "Empty Astrahus identity, zero module count and supported editing destinations remain readable in the scrollable page."
+    },
+    {
+      "name": "market-empty.png",
+      "sha256": "e1becfa8300d74d9e943784f7a938a8a04ba05296bfe9340d30c7aa35244dd14",
+      "reviewed": true,
+      "observation": "Unmatched search explicitly shows zero items and guidance to change the search or filters."
+    },
+    {
+      "name": "market-group.png",
+      "sha256": "edc59998fac66e9f7d5e8b8d9ec1bc560cefb43c16a5c0cd2a26d7e9a33872dd",
+      "reviewed": true,
+      "observation": "Selected railgun panel shows module/meta identity, active-fit context, add/fill/cargo actions and market-group breadcrumb."
+    },
+    {
+      "name": "market-meta.png",
+      "sha256": "e6423079590b0a4dd2249df7d6e7a8450a909831dc27c23342911fa9895f4f39",
+      "reviewed": true,
+      "observation": "Faction-only filter is visibly selected and returns a paginated set of matching railguns."
+    },
+    {
+      "name": "market-root.png",
+      "sha256": "bd7f43de092d64df50208ac5891356f3aaeec48d3d95c0bf3bf0be03a511b620",
+      "reviewed": true,
+      "observation": "Equipment root presents bundled offline search, group navigation, recent use, active-fit charges and meta filters."
+    },
+    {
+      "name": "market-search.png",
+      "sha256": "efbea434a6f293cdbe846a0324e58518e7f31dc2edb8e9a5621ba52dafb74f38",
+      "reviewed": true,
+      "observation": "Search-selected module retains readable add/fill/view-fitting/cargo actions and its variation source."
+    },
+    {
+      "name": "module-edits-override.png",
+      "sha256": "c0c2cc8e8c3b6a07e6573e3d02d01c9f1266ab7a7436621327f6a503372582b9",
+      "reviewed": true,
+      "observation": "Oversized low-slot repairer explicitly shows Fitting restriction overridden and retains replace/remove/charge controls."
+    },
+    {
+      "name": "module-edits-rack.png",
+      "sha256": "a88ec6a32e7d5b301a86524094824b7b5c50c27189f35b6083e8b09c9298bf98",
+      "reviewed": true,
+      "observation": "High rack identifies slot occupancy, active autocannon, clone/fill choices and module editing destinations."
+    },
+    {
+      "name": "module-edits-recent.png",
+      "sha256": "2f727f52c7c2c46cb5a55c2db084fa79a6f78593dd690e2d7bcc6647dab164dd",
+      "reviewed": true,
+      "observation": "Recent-use list explicitly shows newest-first ordering and 20 retained item results."
+    },
+    {
+      "name": "module-edits-resources.png",
+      "sha256": "607c2090d659fdae720d9d8b8be257430331ff17d5f5995538434f6d7ca39deb",
+      "reviewed": true,
+      "observation": "CPU, powergrid, calibration and hardpoint usage show units; the overloaded powergrid warning remains prominent and the fit is saved."
+    },
+    {
+      "name": "module-edits-restored.png",
+      "sha256": "7d618ff3778d756b73f61222deb9c9db0294e18a80a5e543d061a91171929d78",
+      "reviewed": true,
+      "observation": "Restored rack exposes empty high slots, enforced restrictions, missing-skill disclosure and disabled cloning when nothing is selected."
+    },
+    {
+      "name": "module-edits-service.png",
+      "sha256": "bd6ff54ec19faf30c571102009f298badcf781f9386d6d08e7ca6aa86e8a1e66",
+      "reviewed": true,
+      "observation": "Structure service rack shows Standup Research Lab I online in slot 1/3 with its editing and clone/fill controls."
+    },
+    {
+      "name": "module-edits-skills.png",
+      "sha256": "33937d61c2d3fe8390692530d5e858efbd259c81af91c3562718ac8e5fa62147",
+      "reviewed": true,
+      "observation": "The fit retains explicit overload and missing-skills disclosure alongside its saved state and restriction controls."
+    },
+    {
+      "name": "charge-edits-active.png",
+      "sha256": "d55526945f0d4a467f92ef6de2e689fb4bb9ec408de61d74cba75ca8660a1ce2",
+      "reviewed": true,
+      "observation": "Active-fit charge search keeps the focused Script filter visible above the keyboard on the scrolled page."
+    },
+    {
+      "name": "charge-edits-crystal.png",
+      "sha256": "a9d469b7490a03bccd3bbb47b5e940af1c86937208430630af6410b02bb59908",
+      "reviewed": true,
+      "observation": "Gatling Pulse Laser II shows saved Scorch S loading, unload control and the already-loaded item indicator."
+    },
+    {
+      "name": "charge-edits-empty.png",
+      "sha256": "d3d8654e8c25425cd78ee675ddab4d455a48d42c4e3dc6cc7451fcae3932cc28",
+      "reviewed": true,
+      "observation": "Empty Rifter charge view explicitly reports zero compatible charges without inventing a selection."
+    },
+    {
+      "name": "charge-edits-loaded.png",
+      "sha256": "d7c69eeb0852bbf734603c804bcb6c62cfd965975deb4287049cd0ca69330404",
+      "reviewed": true,
+      "observation": "Railgun displays saved Spike M loading, unload action and matching already-loaded charge entry."
+    },
+    {
+      "name": "charge-edits-mining.png",
+      "sha256": "4e2400b67b0d0a89b6e8430654a2c80d21a2188a85c8291d37a9adf22c3fb9bf",
+      "reviewed": true,
+      "observation": "Mining crystal and Modulated Strip Miner II names wrap readably; saved loading and unload controls are visible."
+    },
+    {
+      "name": "charge-edits-picker.png",
+      "sha256": "53f6651d3137c594726896a3512bc1b35ed6d3d958fffc210e8f1a4a31aeaae7",
+      "reviewed": true,
+      "observation": "Compatible-charge list shows distinct named ammunition entries and Previous/Next pagination controls."
+    },
+    {
+      "name": "charge-edits-restored.png",
+      "sha256": "f3a7ebb496e2765591d04e0a3516e9069552e702ca4f3b4b57ba794029902d78",
+      "reviewed": true,
+      "observation": "Fresh-process view retains Javelin M in the railgun, lists compatible charges and correctly shows empty session history."
+    },
+    {
+      "name": "charge-edits-script.png",
+      "sha256": "bf284a24131b10ba79c5950b2390543d22170b99c4b7988e825fb89026841e91",
+      "reviewed": true,
+      "observation": "Tracking Computer II displays its saved Tracking Speed Script and corresponding loaded-item state."
+    },
+    {
+      "name": "variation-edits-disabled.png",
+      "sha256": "da201cf76d945fb8ff40f6dc9b88772dea715278318d7e0db6389418b8094b3b",
+      "reviewed": true,
+      "observation": "Covert-ops cloaking variations are disabled with explicit Unavailable on this hull labels."
+    },
+    {
+      "name": "variation-edits-drone-picker.png",
+      "sha256": "e408091c3fef659e986b0fb3e97335ea6b7f4b542e7431244e5f29400a222ead",
+      "reviewed": true,
+      "observation": "Drone variation list shows distinct Tech II and faction alternatives in a scrollable picker."
+    },
+    {
+      "name": "variation-edits-drone.png",
+      "sha256": "1290cfce3778ea8839a16aa7c2ee02de49c2e9145831e01f13bf85ea7b08a7fa",
+      "reviewed": true,
+      "observation": "Saved Hobgoblin II changes retain separate stacks and their total/active quantities."
+    },
+    {
+      "name": "variation-edits-empty.png",
+      "sha256": "442a541c964721a8f10ce084859dcb34c3dc8bdb221dd4125b13d61dde71ab9e",
+      "reviewed": true,
+      "observation": "Empty fit explicitly reports no modules and no selected variation/removal targets."
+    },
+    {
+      "name": "variation-edits-implant.png",
+      "sha256": "47eda723c326dccedca515ce54d41a76835cd1c3b223007213bb650ffb28a491",
+      "reviewed": true,
+      "observation": "Implant tab shows the applied slot change and retains distinct implant slot/activity information."
+    },
+    {
+      "name": "variation-edits-module.png",
+      "sha256": "6bfc459ebe70f2bef81fec9537a58c8b9dbf837ecc3ab61d8861d2c5ddd39d4d",
+      "reviewed": true,
+      "observation": "Module variation page preserves the current loaded Spike M state and explains incompatible-charge unloading."
+    },
+    {
+      "name": "variation-edits-restored.png",
+      "sha256": "0f1d1a46d809af3809fb790525bd185352d1bdb95ebae54467ae387698ced9ca",
+      "reviewed": true,
+      "observation": "Restored drone variation preserves five total/three active and marks Hobgoblin II as the current choice."
+    },
+    {
+      "name": "variation-edits-unloaded.png",
+      "sha256": "486ca50d3fc62dde08d317cb28b6910c217aa90f269134438111951a1739eb20",
+      "reviewed": true,
+      "observation": "Changing to the lower-tier railgun shows saved state and explicitly empty charge after incompatible ammunition unload."
+    },
+    {
+      "name": "rack-ordering-empty.png",
+      "sha256": "ff1585968c0c8a93d3ab9688b3b09b1d31fa451d4f34a1c28fea4bff48802127",
+      "reviewed": true,
+      "observation": "Empty medium rack explicitly lists four vacant positions and no fitted modules."
+    },
+    {
+      "name": "rack-ordering-initial.png",
+      "sha256": "1f2c7db4ee67edb1e6890c40e242aba5db087cfff3ca745e02c8da963ea382ed",
+      "reviewed": true,
+      "observation": "High rack explains move/swap semantics and shows charged overheated module with seconds/cycles burnout estimate."
+    },
+    {
+      "name": "rack-ordering-medium.png",
+      "sha256": "cb4cb12f96892cf96a3522c0bf620cd99a3cc2aea69e64aad1f75216fb5acdad",
+      "reviewed": true,
+      "observation": "Medium rack retains an offline scripted sensor booster and a separate overheated shield booster with an explicit burnout estimate."
+    },
+    {
+      "name": "rack-ordering-restored.png",
+      "sha256": "0fe1f56440c248b60a3d2b3724da719b418869bf9ffb7015f1475b4a2182243f",
+      "reviewed": true,
+      "observation": "Restored rack retains module, charge and overheat information with a readable burnout estimate."
+    },
+    {
+      "name": "rack-ordering-service.png",
+      "sha256": "5e15cc706f901264823c089d8eeaa826b10372c7763d903b2a538b6648a34ed9",
+      "reviewed": true,
+      "observation": "Structure service positions preserve separate offline and online service states and move/swap controls."
+    },
+    {
+      "name": "rack-ordering-swapped.png",
+      "sha256": "a3272248040d4c26939bf1adcd75ff4f20f143292ed9f3db25c420918f1835dc",
+      "reviewed": true,
+      "observation": "Saved swapped rack keeps distinct module charges and states in their new positions."
+    },
+    {
+      "name": "rack-ordering-vacant.png",
+      "sha256": "2fec90920594b949161c185c0ec3262028b5de6d895d32f5b8889d1a6fb379cb",
+      "reviewed": true,
+      "observation": "Vacant high-slot position remains explicit between fitted modules; retained states, charges and heat estimates are readable."
+    },
+    {
+      "name": "bulk-charges-empty.png",
+      "sha256": "97d63677739538835e29e96c81272dff7e813d3877862e302c5f18151d76ad32",
+      "reviewed": true,
+      "observation": "Empty bulk-ammunition editor explicitly shows zero selection and no fitted modules, with the action disabled."
+    },
+    {
+      "name": "bulk-charges-mixed.png",
+      "sha256": "61078492850d5471476e0717a618610f81fc241b0b95f8f7ea31e63b7719b5ff",
+      "reviewed": true,
+      "observation": "Mixed ammunition preview lists two changes and individual incompatible/out-of-group skips before applying."
+    },
+    {
+      "name": "bulk-charges-restored.png",
+      "sha256": "4779fcdd6cc0fa9c29633599774d83a2f03860f09d1fe7ca769963727bff2791",
+      "reviewed": true,
+      "observation": "Restored fit retains four selected targets and loaded Spike M with an explicit reference module."
+    },
+    {
+      "name": "bulk-charges-scripts.png",
+      "sha256": "323e38fe37a0cb0489e8eaf98350c313497a9c54bb9b19690c0376d37a3044ea",
+      "reviewed": true,
+      "observation": "Script preview distinguishes already-set and skipped modules and disables a zero-change action."
+    },
+    {
+      "name": "bulk-charges-selection.png",
+      "sha256": "8873e133cb8c51c86ef410639dac4d3a8d4f9b2d5c049d6f3d87d1e2cfbb01a5",
+      "reviewed": true,
+      "observation": "Selected-module ammunition scope shows four selections and a labelled reference before choosing charge/scope."
+    },
+    {
+      "name": "bulk-charges-similar.png",
+      "sha256": "f6b473d946f99215f0bf7025978c1fc0e3be899d461cf82305d3ae357c79af4c",
+      "reviewed": true,
+      "observation": "All-similar scope previews changed and already-set modules, shows unload and filtered charge choices."
+    },
+    {
+      "name": "bulk-states-empty.png",
+      "sha256": "9cd95d5e948fadbb22fdde8c8f13dd7bcbe00d1f933ec9540ab18acf5ff55a9d",
+      "reviewed": true,
+      "observation": "Empty state editor explicitly reports no editable fitted modules and zero selected targets."
+    },
+    {
+      "name": "bulk-states-restored.png",
+      "sha256": "b0580a4237b2f1cb9cad8c7edaba6e1bca5975ad00ddb36c137c5d81bd2bcce8",
+      "reviewed": true,
+      "observation": "Restored state selection retains three targets, their state and the labelled reference module."
+    },
+    {
+      "name": "bulk-states-saved.png",
+      "sha256": "4c05383f318acc42964dccd4c1eb4d55fe516642e43bfe97f2a67b4328ce4a70",
+      "reviewed": true,
+      "observation": "Saved overheating result lists transitions and disables a subsequent zero-change action while identifying already-overheated modules."
+    },
+    {
+      "name": "bulk-states-selection.png",
+      "sha256": "2404c3b217738dd951f3d491c9be9654176f82ff6bb10ecb7d3cc87ec19714f2",
+      "reviewed": true,
+      "observation": "State selection shows a checked active reference module and a distinct unchecked target."
+    },
+    {
+      "name": "bulk-states-similar.png",
+      "sha256": "4ce5007e56d88e47bf73cc7a3c67f78ae588b2e108f93b0a3c282921c69fe06e",
+      "reviewed": true,
+      "observation": "All-similar overheat preview identifies two changes and one already-overheated module before confirmation."
+    },
+    {
+      "name": "bulk-variation-removal-empty.png",
+      "sha256": "88f55e0473ed82fe9d98c3bb0ae252ac60e199c7646782cee68348c3d6cfe5e2",
+      "reviewed": true,
+      "observation": "Empty variation/removal view explicitly shows zero targets and no modules."
+    },
+    {
+      "name": "bulk-variation-removal-removal-preview.png",
+      "sha256": "b023bfff026e831ae29f599f5f8152feef4c477db7b145d6f2dffb8bf5f89847",
+      "reviewed": true,
+      "observation": "Removal preview distinguishes two removal targets from the narrower variation target and out-of-scope module."
+    },
+    {
+      "name": "bulk-variation-removal-removal-saved.png",
+      "sha256": "bd54a640106a84e0465abf6c04bed8fa104bb29ea41386260e32924cdf2e4758",
+      "reviewed": true,
+      "observation": "Saved removal leaves the unrelated scripted sensor booster and clears selection."
+    },
+    {
+      "name": "bulk-variation-removal-restored.png",
+      "sha256": "89280d39105b85579b05fefc23bf6b422edee3fd733b0b500484224011098c27",
+      "reviewed": true,
+      "observation": "Restored mixed fit lists four retained items with cleared transient selection."
+    },
+    {
+      "name": "bulk-variation-removal-selected-preview.png",
+      "sha256": "088b52040e60c3b370ad792b54f3f3f4e8d4344a0d0accc4b40569a047712ee4",
+      "reviewed": true,
+      "observation": "Selected scope distinguishes variation targets, different-family skips and removal targets before confirmation."
+    },
+    {
+      "name": "bulk-variation-removal-selected-saved.png",
+      "sha256": "42d180b8cbad0c0750ba001f56851daca02df5b7423b964f9e78cfeecb1a5e85",
+      "reviewed": true,
+      "observation": "Saved selected replacements retain states, expose an unloaded incompatible charge and leave unrelated module families visible."
+    },
+    {
+      "name": "bulk-variation-removal-similar-preview.png",
+      "sha256": "7b3b47a95279a2ca4fa05d33790bcb078a86e3396e5d587ff28c672a2e183699",
+      "reviewed": true,
+      "observation": "All-similar preview explicitly warns that related items outside selection are included and lists three targets."
+    },
+    {
+      "name": "bulk-variation-removal-similar-saved.png",
+      "sha256": "57fa9c461f4dacca4b73df4f51eb6e746e5f93ce0a3f677ef47bc3c12d4be511",
+      "reviewed": true,
+      "observation": "Saved similar-family replacements preserve distinct active/overheated states and compatible charges."
+    },
+    {
+      "name": "clone-fill-empty.png",
+      "sha256": "182aef843f3359c2246130789fe7199e20cc4703525de313935fb7267ec7086b",
+      "reviewed": true,
+      "observation": "Empty fit shows legitimate zero resource use and disables cloning when nothing is selected."
+    },
+    {
+      "name": "clone-fill-fitted-fill.png",
+      "sha256": "a5a38e0a0a4b9cbdd087a29c677ce310526ef359e459d1d00629e797a0351f32",
+      "reviewed": true,
+      "observation": "Filled high rack shows four occupied slots retaining overheat and Antimatter ammunition, with zero-vacancy fill disabled."
+    },
+    {
+      "name": "clone-fill-market-preview.png",
+      "sha256": "b6f9bc1512c6345b79dfe3f4d940647c14bc67809706f43c65095473b4d5c412",
+      "reviewed": true,
+      "observation": "Market fill action identifies the destination fit and available low-slot capacity with EOS stopping behavior explained."
+    },
+    {
+      "name": "clone-fill-market-saved.png",
+      "sha256": "1867b62c2a9172c3e9e4ef7561a8cc8274b0318bbc111055e85b43d27265df64",
+      "reviewed": true,
+      "observation": "Saved market fill shows the updated remaining vacancy count and retains equipment/cargo actions."
+    },
+    {
+      "name": "clone-fill-restored.png",
+      "sha256": "5bf0efe82a372ff544c435a372cfc52d1b2c402af3b688a423eeeb80358f9e41",
+      "reviewed": true,
+      "observation": "Restored selected-clone fit shows saved resources and four occupied turret hardpoints with empty session history."
+    },
+    {
+      "name": "clone-fill-selected-saved.png",
+      "sha256": "5dc2b21acac8d2a3c06b57d8244e74a9580bbd5f442a94beffdf9b82c0cf83a2",
+      "reviewed": true,
+      "observation": "After selected cloning the selection is cleared, the rack is full and the cloned charge/state remain visible."
+    },
+    {
+      "name": "clone-fill-selection.png",
+      "sha256": "593bb1f9bb87fe9208cbcdd25af73324a4d24da9b655bf9ffa96e0ba1604ffd8",
+      "reviewed": true,
+      "observation": "Clone preview identifies both selected source modules and their target vacancies before the atomic action."
+    },
+    {
+      "name": "clone-fill-targeted.png",
+      "sha256": "e319f785221425fbfc2c55612badce82c72bd9adf464c0f5494765e906eefacf",
+      "reviewed": true,
+      "observation": "Targeted clone/fill view identifies the source module and remaining high-slot capacity while retaining charge and state."
+    },
+    {
+      "name": "hull-modes-confessor-changed.png",
+      "sha256": "9a152e40052623086f462b14dcc99d0633cadcc046ef74a11714576463ffc494",
+      "reviewed": true,
+      "observation": "Confessor shows the saved Sharpshooter mode, marks it current and leaves alternative mode actions available."
+    },
+    {
+      "name": "hull-modes-confessor-initial.png",
+      "sha256": "c100c02f5d7011881f946841aceaf33ef387e0aaac6ecfc5cecc7a8746f45607",
+      "reviewed": true,
+      "observation": "Confessor initially marks Defense mode current and explains recalculation of the fit and linked effects."
+    },
+    {
+      "name": "hull-modes-restored-copy.png",
+      "sha256": "80239b84bb5edc0b947314bc5aa0483393bf986969d6dc328cdfc2efabde1468",
+      "reviewed": true,
+      "observation": "Restored copied Confessor retains its Propulsion mode and distinct copy identity."
+    },
+    {
+      "name": "hull-modes-vexor-empty.png",
+      "sha256": "2c2c7dae4089c2fc827ce52134f963507acc5abb5a84c9b19a9d3067e4043812",
+      "reviewed": true,
+      "observation": "Vexor explicitly reports that this hull has no selectable modes."
+    },
+    {
+      "name": "subsystems-offensive-added.png",
+      "sha256": "34f85438d2fe6d703fab113d9f01800871b5c7bdc69459b2cac754d9f5cfe0ea",
+      "reviewed": true,
+      "observation": "Adding the offensive subsystem reports a saved fit and updates installed-subsystem and high-slot counts."
+    },
+    {
+      "name": "subsystems-offensive-removed-invalid.png",
+      "sha256": "7152f6683a8d2d1c21727042f740a0812c01ffb27bfff61cee44ee8800dd0e85",
+      "reviewed": true,
+      "observation": "Removing the offensive subsystem retains the launcher and charge with an explicit No longer fits warning and zero high-slot capacity."
+    },
+    {
+      "name": "subsystems-offensive-replaced.png",
+      "sha256": "fcd67a161e4e3e62250dd96b2c42ac15f8c80709b9ca66fb33fcb1f3e29105d9",
+      "reviewed": true,
+      "observation": "Replacement subsystem reports a saved fit with four installed subsystems and restored high-slot capacity."
+    },
+    {
+      "name": "subsystems-restored-invalid-copy.png",
+      "sha256": "3d3a79d65d023b7bf7c85e3bfbe19a3681b9820a212ff59cf168983255005f69",
+      "reviewed": true,
+      "observation": "Restored copied invalid fit preserves its missing subsystem and visible retained-launcher warning."
+    },
+    {
+      "name": "subsystems-tengu-empty.png",
+      "sha256": "93d2901310f9e575de5702a13c5533b9531cf55dc59fa0fa46bdbaa552355877",
+      "reviewed": true,
+      "observation": "Empty Tengu shows zero installed subsystems, zero derived slots and explicit core subsystem choices."
+    },
+    {
+      "name": "subsystems-vexor-empty.png",
+      "sha256": "2e5f6ce9e57f3da5d04be45c1be58878b6b9d6430d17e899a75d3eefc6986461",
+      "reviewed": true,
+      "observation": "Vexor explicitly reports no subsystem slots."
+    },
+    {
+      "name": "structures-ansiblex-choice.png",
+      "sha256": "eedf049a5c39bc61b7091c6b5e09a6f62a428d8e5a0a22543e62a686ca934105",
+      "reviewed": true,
+      "observation": "Ansiblex view identifies its single compatible conduit-generator service choice and vacant service capacity."
+    },
+    {
+      "name": "structures-ansiblex-fitted.png",
+      "sha256": "534d6d973c2eb77d5232bcc9fbf0c8640d6d62f936c5392274fbae240c57c006",
+      "reviewed": true,
+      "observation": "Saved conduit service fills the Ansiblex slot and updates shield/armor values with explicit HP units."
+    },
+    {
+      "name": "structures-astrahus-empty.png",
+      "sha256": "904b324e04ca464b37118fce8c461103d760e5312a5f32b2beac7c5a62abb3fd",
+      "reviewed": true,
+      "observation": "Empty Astrahus shows three vacant service slots and compatible service choices with explicit structure HP."
+    },
+    {
+      "name": "structures-astrahus-replaced.png",
+      "sha256": "132cf536c6efd729034f124ffaa363f1dd21d060b8741b5c97ddac2b1a8206a0",
+      "reviewed": true,
+      "observation": "Saved invention-lab replacement retains full service-slot count, HP and a visible Replace action."
+    },
+    {
+      "name": "structures-manufacturing-bonus.png",
+      "sha256": "b731f3561d3202a49c589e81c21afe9857d0d0e423eb12ff7b51b422931ff50d",
+      "reviewed": true,
+      "observation": "Saved manufacturing service shows one occupied slot and recalculated structure HP values."
+    },
+    {
+      "name": "structures-restored-structure-copy.png",
+      "sha256": "7a0ca6b9d3ae9350e2df4329574d93531a8ef251811cf964786c4c598b234d38",
+      "reviewed": true,
+      "observation": "Restored structure copy retains its three services, explicit HP, and replace/remove controls."
+    },
+    {
+      "name": "structures-vexor-no-services.png",
+      "sha256": "3ef498cbd55b847b7a3813637694cd83f52dd7ccb1ae0162ea0a2e6eb00b2dc6",
+      "reviewed": true,
+      "observation": "Vexor service page explicitly states that the hull is not a structure."
+    },
+    {
+      "name": "cargo-stacks-restored-cargo-copy.png",
+      "sha256": "eb9072c3eb270749d5c3e32333a67a7ec7ac6c3a1e06ff7c3df8e98d34eb6380",
+      "reviewed": true,
+      "observation": "Restored cargo copy retains its container stack, quantity and 100/480 cubic-metre usage."
+    },
+    {
+      "name": "cargo-stacks-structure-charge.png",
+      "sha256": "e64b01ce17ff88c8c41ea7345a1e5450e177cc8e3e70c6439ce9cdd554fa1fb4",
+      "reviewed": true,
+      "observation": "Structure cargo explicitly displays its zero listed capacity, over-capacity warning and explanation that cargo can still be retained."
+    },
+    {
+      "name": "cargo-stacks-vexor-empty.png",
+      "sha256": "bd578bc198095884102fee70969ad225b2aad619e1863e5a71509aecc9035fb0",
+      "reviewed": true,
+      "observation": "Empty Vexor cargo shows zero usage, actual capacity and No cargo stacks with browse/transfer controls."
+    },
+    {
+      "name": "cargo-stacks-vexor-first-stack.png",
+      "sha256": "555430dc5c40457b83c2845b06061ea68c1dd502c99000d843de8ed1584cb9e2",
+      "reviewed": true,
+      "observation": "Adding the first ammunition stack reports a saved fit and its small per-item volume without rounding it to zero."
+    },
+    {
+      "name": "cargo-stacks-vexor-over-capacity.png",
+      "sha256": "132e33e07e69f59a022334e6a5c7c81d517e247c859f5a4f15d0e6abf5f8dd63",
+      "reviewed": true,
+      "observation": "Cargo beyond capacity remains visible with a 500/480 cubic-metre total and explicit warning."
+    },
+    {
+      "name": "cargo-stacks-vexor-quantity.png",
+      "sha256": "9c0664ceed90f046b3b253cfbfb4bbc255f11f31351ce087d11581744c5f3fd2",
+      "reviewed": true,
+      "observation": "Saved 1500-item ammunition quantity and 3.75 cubic-metre total are readable alongside the quantity editor."
+    },
+    {
+      "name": "cargo-actions-crystal-preset.png",
+      "sha256": "6759dd43d5a5d3602c17e2d59e82fbaf5a02d500bd40424c9130e49a52ba20b6",
+      "reviewed": true,
+      "observation": "Crystal preset retains an explicit 1000-item Multifrequency S stack with per-item volume and quantity/removal controls."
+    },
+    {
+      "name": "cargo-actions-filled-cargo.png",
+      "sha256": "0f93e33b8e7a837544c6ef6f451233b72c2698de78dcca757fdada15ae59949f",
+      "reviewed": true,
+      "observation": "Fill-to-capacity result reports a saved fit and exactly 480/480 cubic metres, retaining selected-stack controls."
+    },
+    {
+      "name": "cargo-actions-restored-variation-copy.png",
+      "sha256": "c8507e030e019b77f50aea836773e55883a3d4217fb8cc69a9c57e4395b41a54",
+      "reviewed": true,
+      "observation": "Restored variation copy preserves the merged five-item autocannon stack and quantity/removal controls."
+    },
+    {
+      "name": "cargo-actions-selected-quantity.png",
+      "sha256": "50ce9d2399dc7fc1a9f873af5e2819ed86900ba14cf8b53bd628c3dae089360e",
+      "reviewed": true,
+      "observation": "Bulk quantity view identifies two selected stacks, quantity seven and the selected ammunition reference for fill."
+    },
+    {
+      "name": "cargo-actions-structure-preset.png",
+      "sha256": "cf69cb0a369d2c213acd412fe476fa56fa2869874cb601a3cedd42d51f90aa0c",
+      "reviewed": true,
+      "observation": "Structure preset reports saved ammunition, zero listed capacity and an explicit over-capacity warning."
+    },
+    {
+      "name": "cargo-actions-variation-merge.png",
+      "sha256": "7036baf7ab2d12e2c14b7c6bd8469f752cc859a7e578c0ff242909dcc8b08c3f",
+      "reviewed": true,
+      "observation": "Variation merge retains the combined autocannon quantity and a separate selected ammunition stack, with visible fill/quantity controls."
+    },
+    {
+      "name": "cargo-transfers-atomic-rejection.png",
+      "sha256": "d09bde2ef29b87344c205da40346fabd67df26d233cabc133aa91b7c1be4bec9",
+      "reviewed": true,
+      "observation": "Unsupported transfer reports an explicit error without hiding the over-capacity warning; selected empty position and source stack remain visible."
+    },
+    {
+      "name": "cargo-transfers-magazine-swap.png",
+      "sha256": "59e65471a6e85df1f63b4ec966e30465868350cf147f33537fb6583ab7237cf5",
+      "reviewed": true,
+      "observation": "Magazine transfer reports completion and a saved fit; cargo usage and replacement railgun destination remain readable."
+    },
+    {
+      "name": "cargo-transfers-restored-transfer-copy.png",
+      "sha256": "4abab4c89f7b871845e2c09135f8fef02b2d15d615bca329c97a5213963c9b10",
+      "reviewed": true,
+      "observation": "Restored transfer copy retains a selected two-item 250mm Railgun II cargo stack beneath the destination list."
+    },
+    {
+      "name": "cargo-transfers-selected-modules.png",
+      "sha256": "29bc6a63292000f97d5f750bc5adeefab1b6bc48c9aad47e9583853bb3b3d0d0",
+      "reviewed": true,
+      "observation": "Two fitted positions are selected for transfer, with loaded Antimatter ammunition retained in the module presentation and move/copy controls visible."
+    },
+    {
+      "name": "cargo-transfers-single-crystal.png",
+      "sha256": "77b040a6df99b5866515bdb0698b655969cbb6993d2f1eab2fef9db5d635b661",
+      "reviewed": true,
+      "observation": "Destination laser retains overheated state and a single Scorch S crystal after transfer."
+    },
+    {
+      "name": "cargo-transfers-structure-swap.png",
+      "sha256": "9c87d6803e5ffcd37e6a07d4eb41cb960e3f1944d668a26ad94d22abcc6958fd",
+      "reviewed": true,
+      "observation": "Structure destination retains an online Standup Reprocessing Facility I in the service position after swap."
+    },
+    {
+      "name": "notes-conflict-draft.png",
+      "sha256": "915ddd780afa64a3bab53cc1d1eb9c425c75a4455925c9554e0f9977f27c1bea",
+      "reviewed": true,
+      "observation": "Conflict screen explicitly says saved notes changed and retains the long Unicode draft for resolution."
+    },
+    {
+      "name": "notes-navigation-return.png",
+      "sha256": "720b00a462ae0e4599575e811cf7ef998e39b261bc4df8e42211c63a3e0370d8",
+      "reviewed": true,
+      "observation": "Returning after navigation shows preserved leading/trailing whitespace and blank line, 22 characters, and Notes saved status."
+    },
+    {
+      "name": "notes-restored-copy.png",
+      "sha256": "48f6773f3f1184c72f0de67345d45c2ce12fc05a126409fdbff7e8fba2027fdd",
+      "reviewed": true,
+      "observation": "Restored copy displays its own copy name and multiline Unicode notes after the process boundary."
+    },
+    {
+      "name": "notes-retained-recreation.png",
+      "sha256": "2645a57b578ed834ea6d2b738cf693dc47048e01392c9e601cd0f04b0d40ab39",
+      "reviewed": true,
+      "observation": "Activity recreation retains the long multiline Unicode note for the original fit."
+    },
+    {
+      "name": "notes-stale-draft.png",
+      "sha256": "feeabab7b8135ce9d6b02773a96fef5c9335c0f15710f825435039f93adc1699",
+      "reviewed": true,
+      "observation": "Stale-fit warning retains the Unicode draft with Unsaved changes and instructs reload before editing."
+    },
+    {
+      "name": "notes-structure-readonly.png",
+      "sha256": "68f7743635e815d6a1b1395724bdb2f87ba72cebe29d4621f8286d201999d24a",
+      "reviewed": true,
+      "observation": "Structure note is visibly retained and read-only with an explicit explanation that editing is unavailable."
+    },
+    {
+      "name": "notes-unicode-notes.png",
+      "sha256": "fd45d8a4395544f7c9232d906e327b8648b3ef75197c66993e7a9ee2eac2c3f8",
+      "reviewed": true,
+      "observation": "Focused editor displays Greek, Chinese, emoji, multiline text and accented forms without visible replacement characters."
+    },
+    {
+      "name": "failure.png",
+      "sha256": "279ff368f3eb750e11ba043455c3a7110647b26f0fade3bc2db879bccc3281e4",
+      "reviewed": true,
+      "observation": "Preserved diagnostic from the failed aggregate summary shows the Android home screen after the app stopped; this is explicitly failure evidence, not a passing application assertion."
+    },
+    {
+      "name": "history-bulk-redone.png",
+      "sha256": "2e0040d582c733df24a84cf2256ae2541715477e799ae0a08cb0d9d5b20efcd1",
+      "reviewed": true,
+      "observation": "Redo displays Change ammunition with Undo available, zero selected modules, and Iron Charge M on the overheated railgun; selection invalidation is explicit."
+    },
+    {
+      "name": "history-bulk-undone.png",
+      "sha256": "92bf871570fd7c332c441ece561b72a0ffc4112430eec1f564c4851b4c60891d",
+      "reviewed": true,
+      "observation": "Undo displays Undid Change ammunition with Redo available, zero selected modules, and restored Spike M on the overheated railgun."
+    },
+    {
+      "name": "history-fit-isolation.png",
+      "sha256": "4a3c38d253a546cdfa58cc8c7418aa54ee43728cd6b0fadf50b3315da47c8ac9",
+      "reviewed": true,
+      "observation": "Switching to the bulk-charge fit displays its separate Change selected ammunition history and available Undo control."
+    },
+    {
+      "name": "history-restored-empty-history.png",
+      "sha256": "cde7202cdb96bbc7d2c1d7d311f2103b1d9247d0bde3668398446179bc54a288",
+      "reviewed": true,
+      "observation": "After the fresh process boundary both Undo and Redo are disabled and No undo action is shown for the restored fit."
+    },
+    {
+      "name": "history-retained-history.png",
+      "sha256": "3965a16e3d49c7c1aff860f1f3c836b92d07c7ec33366022d8c053d92f76fbab",
+      "reviewed": true,
+      "observation": "Activity recreation retains available Undo and the Change ammunition history label for the original fit."
+    },
+    {
+      "name": "history-stale-action.png",
+      "sha256": "c783b9cebe5b295c87654c8cb77f22432cb1c534ed7ccb4307ba22affbe17364",
+      "reviewed": true,
+      "observation": "Stale action displays The fit changed; reload it before editing and an explicit Reload history control."
+    }
+  ],
+  "hosted_actions_pass": false,
+  "pause_resume": {
+    "desktop": "Paused after utilities/reference; resumed migration without replay.",
+    "native": "Paused after initial/performance; owned emulator stopped and remaining gates resumed with retained data on d7def95e.",
+    "concurrent_resume": "Rejected by Windows msvcrt file lock; retained concurrency-lock.log."
+  },
+  "remaining_feature_work": "PR33/B09.1 remains preserved; setup delivery does not complete the feature milestone.",
+  "limits": [
+    "Windows WHPX API36 x86_64 only; ARM64/older APIs/phone usability/upgrades remain unverified.",
+    "Full raw reports, APKs and logs are stored locally; this receipt is not an Actions success."
+  ]
+}

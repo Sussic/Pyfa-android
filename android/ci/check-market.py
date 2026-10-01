@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Run B04.1 after all existing native phases, retaining the same offline saved fits."""
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import re
 import subprocess
 from market_summary import summarize
 
-evidence = Path(__file__).resolve().parents[1] / 'build/evidence'
+evidence = evidence_dir()
 package = 'io.github.sussic.pyfa.dev'
 def adb(*args, timeout=30):
     return subprocess.run(['adb', *args], capture_output=True, text=True, check=True, timeout=timeout).stdout

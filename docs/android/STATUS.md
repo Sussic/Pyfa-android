@@ -1,13 +1,45 @@
 # Android project status
 
-Updated: 2026-09-30. **B08 delivered. B09.1 active.**
+Updated: 2026-10-02. **W02 full local verification passed; setup delivery pending.**
 
-## Authorized queue
+## W02 — Windows local verification; setup delivery pending
 
-The active goal authorizes sequential eligible approved roadmap work, one coherent
-outcome through review, required host/native checks and fork PR merge, then automatic
-continuation. No releases, phone installation, billing changes, unrelated work or
-delegation. No user decision or access blocker currently prevents B09.
+Branch `codex/windows-local-verification` preserves PR #33 head `e916e054`.
+The full local run passed **78 gates**: 48 desktop/reference/host, five APK/lint/
+signature/package gates and 25 native gates, with every required screenshot
+reviewed. [Receipt](evidence/w02-local.json) retains actual gate commits, failures,
+tool/source/data identity and full local evidence location. Host/build ran at
+`f7d2ad31`; native execution ran at `6792b03e`; the final summary ran at
+`5952c1bf` in 2.156 seconds. All 77 reused completed records and original attempts
+remain unchanged. The 52 instrumentation executions passed; 125 required screenshots
+and one explicitly labelled failure diagnostic were reviewed. Product and
+executed host/build inputs are unchanged. Five-test Windows direct instrumentation
+replaces the failed UTP gRPC result channel while preserving all assertions,
+fresh offline install/uninstall and strict result validation. Desktop and native
+pause/resume and rejection of concurrent resume were demonstrated. The original
+900-second history timeout and all three failed summaries remain recorded.
+Contract/persistence hashes now match verified retained test-APK fixture bytes;
+packaged/reference equality permits CRLF-to-LF only. Manifest/report consistency,
+all functional assertions, tolerances and A10 requirements remain. Fourteen focused
+fixture regressions and strict whole-source comparison pass.
+
+[Commands, evidence and reporting](LOCAL-VERIFICATION.md): reuse installed
+Python/JDK/SDK/wrapper and disposable WHPX API36 Google APIs x86_64. No CPU/RAM
+caps, unattended runner, service, release, phone installation or billing change.
+The local result is `local/full-verification`; no unexecuted Actions check passes.
+Workflow PR triggers are retired only after this local proof; hosted manual
+fallback remains. Stacked setup delivery updates the B09.1 branch; default master
+retains prior policy until PR #33 is delivered separately. No repository protection/
+ruleset owner step was found. Review/push/merge of the focused setup PR remains.
+
+**The active goal ends at W02 setup delivery. Stop afterward.** Preserve PR #33;
+feature completion and roadmap work await an explicit later resume instruction.
+Exact next task then: complete **B09.1/PR #33** delivery using applicable valid
+local evidence, before selecting B09.2. No feature task is marked complete here.
+
+Desktop Actions `36661924082` passed PR #33's original exact head in 29m34s.
+Android `36661923971` attempts 1/2 were cancelled at the 50-minute ceiling;
+neither is passing native evidence. No hosted retry is pending.
 
 ## Latest delivery — B08 fit notes
 
@@ -51,8 +83,8 @@ all required final-head CI. [Task and checks](tasks/B09-undo-redo.md). No new pr
 inputs, schema migration, release or phone actions. Next child: **B09.2**.
 Independent original history now repeats 18 cases/108 states and verifies the
 100-action limit. Six focused host tests pass; final APKs/lint (1m43s) and 163-source
-package/ABI inspection pass. Required CI, native evidence/screenshots and delivery remain
-pending. B09.2 is not started.
+package/ABI inspection pass. Full W02 local native proof and screenshots are verified; PR #33 feature
+delivery remains held for explicit resumption. B09.2 is not started.
 
 ## Delivered work to reuse
 
@@ -76,8 +108,8 @@ Android runs took **28m44s/34m24s**.
 CI corrections may require another full round; one-round delivery estimates are
 not reliable.
 
-Build 16 was the first meaningful development build; build 26 is the latest
-emulator-tested build. The local debug APK is
+Build 16 was the first meaningful development build; build 27 is the latest
+locally emulator-tested development build. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
 remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
 are resolved. Phone usability, older APIs and ARM64 execution remain unverified;
@@ -89,8 +121,8 @@ Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
 `build/WINDOWS-CHECKPOINT.md`; verify local changes, live master and open PRs.
 Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
 Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
-No timed host suites alongside local Gradle. Native CI uses Ubuntu/KVM; local
-Windows builds alone do not establish Android execution. Preserve all inherited
+No timed host suites alongside local Gradle. Windows WHPX full native execution
+and screenshot review now provide required local evidence; APK builds alone do not. Preserve all inherited
 host/native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
 deliberate APK uploads only and no scheduled/release jobs.
 

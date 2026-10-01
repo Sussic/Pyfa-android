@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Bounded debug measurements on the already-offline CI emulator.
 
 Normal startup runs have no instrumentation in the app process. Edit/PSS work
@@ -11,7 +12,7 @@ import subprocess
 import time
 
 root = Path(__file__).resolve().parents[1]
-evidence = root / "build/evidence"
+evidence = evidence_dir()
 package = "io.github.sussic.pyfa.dev"
 component = f"{package}/io.github.sussic.pyfa.MainActivity"
 

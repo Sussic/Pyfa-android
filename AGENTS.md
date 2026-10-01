@@ -67,6 +67,15 @@ The user confirms usability; agents are responsible for technical correctness.
   the Android implementation under test. Record units and justified tolerances.
 - Engine changes need meaningful regression cases. Android behavior needs native
   build/test evidence; host-only Python tests cannot establish Android support.
+- Use the explicit Windows local verification launcher and exact-commit evidence
+  in [LOCAL-VERIFICATION](docs/android/LOCAL-VERIFICATION.md). Full delivery keeps
+  every desktop/reference, build/package and offline native gate, plus screenshot
+  review. Focused development checks do not replace the complete required suite.
+  Publish only the truthful `local/full-verification` result after full proof and
+  review; an unexecuted Actions check is never a pass. Hosted workflows are manual
+  fallbacks on the setup/B09.1 branch until that branch reaches the default branch.
+  No unattended self-hosted runner is authorised. W02 setup delivery does not
+  authorise feature delivery or continuation; resume PR #33 only when requested.
 - For documentation-only changes, inspect scope, links and task dependencies and
   run `git diff --check`. Do not start emulator runs or create placeholder tests.
 - Never weaken a required check to get a green build. Record inherited failures
