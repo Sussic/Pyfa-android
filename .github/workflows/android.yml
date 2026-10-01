@@ -1,20 +1,6 @@
 name: Android native
 
 on:
-  pull_request:
-    paths:
-      - 'android/**'
-      - '!android/**/*.md'
-      - 'android_bridge/**'
-      - 'eos/**'
-      - 'utils/**'
-      - 'staticdata/**'
-      - 'db_update.py'
-      - 'tools/android_reference/**'
-      - 'tools/android_headless/**'
-      - '.github/workflows/android.yml'
-      - '.gitattributes'
-      - 'LICENSE'
   workflow_dispatch:
     inputs:
       upload_apk:

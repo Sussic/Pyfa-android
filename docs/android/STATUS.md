@@ -1,41 +1,43 @@
 # Android project status
 
-Updated: 2026-09-30. **B08 delivered. B09 ready.**
+Updated: 2026-10-02. **B09.1 verified; PR #33 delivery in progress.**
 
-## Authorized queue
+## Selected outcome — B09.1 module edit history
 
-The active goal authorizes sequential eligible approved roadmap work, one coherent
-outcome through review, required host/native checks and fork PR merge, then automatic
-continuation. No releases, phone installation, billing changes, unrelated work or
-delegation. No user decision or access blocker currently prevents B09.
+The user explicitly resumed development and superseded the setup-only stop.
+Review and deliver PR #33, then automatically select B09.2 and subsequent eligible
+approved work, one coherent outcome at a time. Reuse installed local verification
+and retained valid evidence. No hosted dispatch without asking the user; no setup
+repeat, new infrastructure, unrelated refactoring, release, phone installation or
+billing change. No delegation or access blocker currently exists.
 
-## Latest delivery — B08 fit notes
+PR #33 branch `codex/b09-1-edit-history` retains W02 setup delivered in PR #34.
+Live master is `72b01c4c`; current product inputs match the tested native revision
+`6792b03e` exactly. [Local setup receipt](evidence/w02-local.json) proves all 78
+required gates; host/build ran at `f7d2ad31`, native execution at `6792b03e`, final
+aggregate at `5952c1bf`. Actual commits and earlier failures remain unchanged.
+Explicit `local/full-verification` passes at `5b07bc50`; no hosted native pass is
+claimed. The cancelled Actions attempts remain recorded.
 
-[PR #32](https://github.com/Sussic/Pyfa-android/pull/32) merged as `d6110359`,
-tested head `02171308`. CI checkout `15d4c7e4` and
-the merge share tree `14f3c7cc`. Build **26 (`0.1.0-b08`)** adds
-exact multiline Unicode notes, one-second autosave and navigation flush, retained
-drafts through activity recreation and failed saves, and explicit conflict choices.
-Stored structure notes remain read-only and survive copies/restart.
+B09.1 matches independent original GUI/calc commands and wx processors in 18
+cases/108 states, grouping/branching, per-fit isolation and the 100-action limit.
+Six retained host tests cover linked recipients, monotonic revisions, notes,
+stale/malformed requests, failed-save recovery, copy and fresh-process reopening.
+Native touch/recreation/restart confirms all 111 fits and ten protocol rejections.
+Six history screens (and all inherited screens) are reviewed. The focused final
+raw validator rejects 21 deliberate report corruptions. Review found no blocking
+issue. [Feature receipt](evidence/b09-1-native.json) and
+[raw history](evidence/b09-1-history-native.json) preserve evidence and limits.
 
-- The independent original service/pane and EOS copy repeat **three fits/13 states**.
-  Four host tests pass exact text/counts, fit/copy isolation, unchanged calculations
-  and recent history, invalid/stale/write-failure recovery, legacy graphs and
-  **five-fit fresh-process restart**.
-- [Windows/reference CI](https://github.com/Sussic/Pyfa-android/actions/runs/36657441169)
-  passes all required gates in **28m44s**.
-- [Android/native CI](https://github.com/Sussic/Pyfa-android/actions/runs/36657441195)
-  passes inherited and new offline workflows, both APKs, lint, signature, pinned
-  data/licenses and ABI inspection in **34m24s**.
-  All **90 fits** restore; ten malformed notes protocol cases are rejected.
-- Artifact digest and tested tree match. **Seven notes screenshots** were reviewed;
-  **20 deliberate report corruptions** are rejected. Retained
-  [receipt](evidence/b08-native.json) and [raw report](evidence/b08-notes-native.json)
-  record provenance and observed results.
+Next action: push the delivery receipt/docs, publish the validated local result
+for the exact PR head and merge PR #33 after checks pass. Then select **B09.2**:
+remaining supported rename/hull/cargo/addition/linked-effect history and mandatory
+extension checks for future mutations. B09 remains active until B09.2 is verified.
 
-Pending drafts remain in memory until a save is confirmed; unconfirmed process
-death is not a draft-persistence guarantee. B08 is complete within the pinned notes
-boundary. **B09 undo/redo** is the exact next eligible task; B05 is delivered.
+W02 is delivered; [commands and evidence](LOCAL-VERIFICATION.md) apply. Master will
+receive the demonstrated manual hosted fallback policy with PR #33. No owner
+configuration step remains. ARM64, older APIs, phone usability and signing/upgrades
+remain unverified; session history is not persisted, confirmed fit inputs are.
 
 ## Delivered work to reuse
 
@@ -59,8 +61,8 @@ Android runs took **28m44s/34m24s**.
 CI corrections may require another full round; one-round delivery estimates are
 not reliable.
 
-Build 16 was the first meaningful development build; build 26 is the latest
-emulator-tested build. The local debug APK is
+Build 16 was the first meaningful development build; build 27 is the latest
+locally emulator-tested development build. The local debug APK is
 `android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
 remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
 are resolved. Phone usability, older APIs and ARM64 execution remain unverified;
@@ -72,8 +74,8 @@ Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
 `build/WINDOWS-CHECKPOINT.md`; verify local changes, live master and open PRs.
 Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
 Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
-No timed host suites alongside local Gradle. Native CI uses Ubuntu/KVM; local
-Windows builds alone do not establish Android execution. Preserve all inherited
+No timed host suites alongside local Gradle. Windows WHPX full native execution
+and screenshot review now provide required local evidence; APK builds alone do not. Preserve all inherited
 host/native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
 deliberate APK uploads only and no scheduled/release jobs.
 

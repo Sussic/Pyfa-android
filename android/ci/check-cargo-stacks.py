@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Run B07.1 offline cargo touch actions and a real process restart."""
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import re
 import subprocess
 from cargo_stack_summary import summarize
 
-evidence = Path(__file__).resolve().parents[1] / 'build/evidence'
+evidence = evidence_dir()
 package = 'io.github.sussic.pyfa.dev'
 
 

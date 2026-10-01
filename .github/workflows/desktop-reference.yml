@@ -1,14 +1,6 @@
 name: Desktop reference
 
 on:
-  pull_request:
-    paths:
-      - 'android_bridge/**'
-      - 'eos/**'
-      - 'utils/**'
-      - 'tools/android_headless/**'
-      - 'tools/android_reference/**'
-      - '.github/workflows/desktop-reference.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,7 +14,9 @@ jobs:
   reference:
     runs-on: windows-latest
     # B04.2.3.2 adds measured 4.6 min reference + 2.8 min host coverage.
-    timeout-minutes: 30
+    # B08 required 28m44s. B09.1 adds repeated original history and host reversal
+    # gates; retain every check with bounded headroom for the additional work.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -383,6 +377,21 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-notes-check"
+      - name: Verify original desktop user-action undo and redo
+        run: >-
+          python -I tools/android_reference/history.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-history-reference"
+          --check tools/android_reference/fixtures/history.json
+      - name: Verify undo history, atomic reversal and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_history.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-history-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
@@ -405,7 +414,7 @@ jobs:
               Get-Content $_.FullName -Tail 40
             }
           }
-          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check', 'pyfa-variation-edits-reference', 'pyfa-variation-edits-check', 'pyfa-rack-ordering-reference', 'pyfa-rack-ordering-check', 'pyfa-bulk-charges-reference', 'pyfa-bulk-charges-check', 'pyfa-bulk-states-reference', 'pyfa-bulk-states-check', 'pyfa-clone-fill-reference', 'pyfa-clone-fill-check', 'pyfa-bulk-variation-removal-reference', 'pyfa-bulk-variation-removal-check', 'pyfa-cargo-actions-reference', 'pyfa-cargo-actions-check', 'pyfa-cargo-transfers-reference', 'pyfa-cargo-transfers-check', 'pyfa-notes-reference', 'pyfa-notes-check')) {
+          foreach ($name in @('pyfa-projection-reference', 'pyfa-projection-check', 'pyfa-command-reference', 'pyfa-command-check', 'pyfa-bridge-check', 'pyfa-persistence-check', 'pyfa-library-check', 'pyfa-equipment-reference', 'pyfa-equipment-check', 'pyfa-empty-hulls-reference', 'pyfa-empty-hulls-check', 'pyfa-module-edits-reference', 'pyfa-module-edits-check', 'pyfa-charge-edits-reference', 'pyfa-charge-edits-check', 'pyfa-variation-edits-reference', 'pyfa-variation-edits-check', 'pyfa-rack-ordering-reference', 'pyfa-rack-ordering-check', 'pyfa-bulk-charges-reference', 'pyfa-bulk-charges-check', 'pyfa-bulk-states-reference', 'pyfa-bulk-states-check', 'pyfa-clone-fill-reference', 'pyfa-clone-fill-check', 'pyfa-bulk-variation-removal-reference', 'pyfa-bulk-variation-removal-check', 'pyfa-cargo-actions-reference', 'pyfa-cargo-actions-check', 'pyfa-cargo-transfers-reference', 'pyfa-cargo-transfers-check', 'pyfa-notes-reference', 'pyfa-notes-check', 'pyfa-history-reference', 'pyfa-history-check')) {
             $projectionDir = Join-Path $env:RUNNER_TEMP $name
             $projectionEvidence = Join-Path $projectionDir 'evidence.json'
             if (Test-Path $projectionEvidence) {

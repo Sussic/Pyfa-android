@@ -5,6 +5,8 @@ import json
 import math
 from pathlib import Path
 import re
+import os
+from zipfile import ZipFile
 
 
 ROLES = ("sample", "projection_source", "projection_first", "projection_second", "projection_unlinked",
@@ -163,7 +165,12 @@ def summarize(reports, engine):
     for kind, filename in (("ammunition", "vexor"), ("projection", "projection"), ("command", "command")):
         data = (root / f"tools/android_reference/fixtures/{filename}.json").read_bytes().replace(b"\r\n", b"\n")
         oracles[kind] = json.loads(data)
-        fixture_hashes[kind] = hashlib.sha256(data).hexdigest()
+        test_apk = Path(os.environ.get("PYFA_INSTRUMENTATION_APK",
+            str(root / "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk")))
+        with ZipFile(test_apk) as apk:
+            packaged = apk.read(f"assets/{filename}-expected.json")
+        assert packaged.replace(b"\r\n", b"\n") == data
+        fixture_hashes[kind] = hashlib.sha256(packaged).hexdigest()
         for name, item_id in oracles[kind]["resolved_item_ids"].items():
             assert name not in item_ids or item_ids[name] == item_id
             item_ids[name] = item_id

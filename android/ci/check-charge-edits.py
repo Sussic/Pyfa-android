@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Run native charge editing and real process restart after all prior gates."""
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import re
 import subprocess
 from charge_edit_summary import summarize
 
-evidence = Path(__file__).resolve().parents[1] / 'build/evidence'
+evidence = evidence_dir()
 package = 'io.github.sussic.pyfa.dev'
 
 

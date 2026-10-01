@@ -196,26 +196,28 @@ actual checkout, APK, device and measured initialization/edit timings.
 `projection-native.json` and `command-native.json` retain every linked-fit
 observation and its fixture/data/source provenance. A10 adds [separate startup/edit/process-memory measurements](../docs/android/tasks/A10-embedding-feasibility.md).
 
-## CI and deliberate APK delivery
+## Local verification and deliberate hosted fallback
 
-[Android native](../.github/workflows/android.yml) runs for relevant PR code changes
-and manual dispatches, with one Ubuntu job, read-only contents permission, pinned
-actions, KVM verification, a 25-minute timeout and cancellation of superseded runs.
-There are no push duplicates, schedules or persistent caches. The separate host
-reference workflow also runs B01 contract recovery and B02 subprocess persistence,
-interrupted-save and invalid-store checks for
-its existing engine paths.
+[W02 local verification](../docs/android/LOCAL-VERIFICATION.md) supplies the complete
+Windows reference/host/build/native plan, exact start/pause/resume commands,
+commit-bound full logs/APKs/raw results, screenshots and required local reporting.
+It demonstrated API36 Google APIs x86_64 on existing emulator36.2.12 with WHPX,
+using command tools22 and the installed JDK/SDK/Python environments. Linux hosted
+tool pins in the table above remain fallback pins, not local execution identities.
 
-To obtain an APK after this workflow is merged: open GitHub **Actions → Android
-native → Run workflow**, choose the intended branch and enable **Deliver the
-tested development APK**. The workflow builds, checks lint/signing, installs and
-tests it before upload. Download `pyfa-android-dev-<commit>` from that run's
-Artifacts section and unzip it. APK and concise native evidence expire after one
-day. Routine PR runs retain evidence only, never APKs. No release is published.
+Both workflows retain manual dispatch after local replacement is demonstrated.
+They keep read-only permissions, reviewed pinned actions, concurrency, existing
+35-minute reference/50-minute native limits, one-day diagnostics and opt-in APK
+upload. No scheduled run or release. The stacked setup updates B09.1; default
+master retains earlier triggers until that branch is separately delivered.
+A local pass is `local/full-verification`, never an unexecuted Actions success.
 
-This development APK includes persistent fit storage. Stable signing, versioned
-upgrades and preserving personal fits belong to R02; do not use ephemeral debug
-signing for successive persistent-use releases.
+To deliberately use hosted APK delivery, open **Actions → Android native → Run
+workflow**, choose the intended branch and enable **Deliver the tested development
+APK**. The workflow executes checks before uploading; artifacts expire after one
+day. Local verification keeps both APKs in its run directory without uploading.
+Stable signing, safe upgrades and personal fit preservation remain R02 acceptance;
+no phone installation is part of W02.
 
 ## Evidence
 

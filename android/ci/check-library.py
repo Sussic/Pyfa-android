@@ -1,3 +1,4 @@
+from evidence_paths import evidence_dir
 """Run the production fit store through three library processes without clearing data."""
 import json
 from pathlib import Path
@@ -5,7 +6,7 @@ import re
 import subprocess
 
 root = Path(__file__).resolve().parents[1]
-evidence = root / "build/evidence"
+evidence = evidence_dir()
 package = "io.github.sussic.pyfa.dev"
 
 

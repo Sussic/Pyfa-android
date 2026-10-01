@@ -3,6 +3,8 @@ import hashlib
 import math
 from pathlib import Path
 import json
+import os
+from zipfile import ZipFile
 
 
 def summarize(report, engine):
@@ -34,8 +36,12 @@ def summarize(report, engine):
         data = (root / f"tools/android_reference/fixtures/{filename}.json").read_bytes()
         oracle = oracles[kind] = json.loads(data)
         proof = report["fixtures"][kind]
-        # The build stages LF-normalized fixtures, including on Windows hosts.
-        assert proof["sha256"] == hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
+        test_apk = Path(os.environ.get("PYFA_INSTRUMENTATION_APK",
+            str(root / "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk")))
+        with ZipFile(test_apk) as apk:
+            packaged = apk.read(f"assets/{filename}-expected.json")
+        assert proof["sha256"] == hashlib.sha256(packaged).hexdigest()
+        assert packaged.replace(b"\r\n", b"\n") == data.replace(b"\r\n", b"\n")
         assert proof["source_commit"] == oracle["source_commit"] == manifest["desktop_source_commit"]
         assert proof["inputs"] == oracle["inputs"]
         assert proof["eos_settings"] == oracle["eos_settings"] == runtime["eos_settings"]

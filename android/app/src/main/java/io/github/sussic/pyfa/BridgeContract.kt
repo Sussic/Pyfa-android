@@ -35,6 +35,8 @@ sealed interface BridgeOperation {
     data class CreateFit(val spec: FitSpec) : BridgeOperation
     data class RenameFit(val fitId: String, val name: String) : BridgeOperation
     data class SetNotes(val fitId: String, val text: String) : BridgeOperation
+    data class Undo(val fitId: String) : BridgeOperation
+    data class Redo(val fitId: String) : BridgeOperation
     data class DuplicateFit(val fitId: String, val name: String) : BridgeOperation
     data class DeleteFit(val fitId: String, val resolveReferences: Boolean) : BridgeOperation
     data class AddModule(val fitId: String, val itemId: Int) : BridgeOperation
@@ -286,6 +288,8 @@ object BridgeCodec {
         }
         is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.SetNotes -> "set_notes" to obj("fit_id" to operation.fitId, "text" to noteText(operation.text))
+        is BridgeOperation.Undo -> "undo" to obj("fit_id" to operation.fitId)
+        is BridgeOperation.Redo -> "redo" to obj("fit_id" to operation.fitId)
         is BridgeOperation.DuplicateFit -> "duplicate_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.DeleteFit -> "delete_fit" to obj("fit_id" to operation.fitId, "resolve_references" to operation.resolveReferences)
         is BridgeOperation.AddModule -> "add_module" to obj("fit_id" to operation.fitId,
@@ -793,6 +797,25 @@ object BridgeCodec {
             "Cargo actions do not match their context")
         return CargoActionOptions(identifier(value.get("fit_id"), "fit_id"), revision,
             integer(value.get("item_id"), "item_id", 1), fromCargo, preset, fill, variations)
+    }
+
+    fun decodeEditHistory(json: String): EditHistory {
+        val value = objectValue(StrictJson(json).parse(), "history")
+        keys(value, setOf("version", "fit_id", "revision", "undo_count", "redo_count", "limit", "undo_label", "redo_label"), path = "history")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported history version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid history revision")
+        val limit = integer(value.get("limit"), "limit", 100, 100)
+        val undo = integer(value.get("undo_count"), "undo_count", 0, limit)
+        val redo = integer(value.get("redo_count"), "redo_count", 0, limit)
+        requireProtocol(undo + redo <= limit, "History exceeds its limit")
+        fun label(key: String, count: Int): String? {
+            val raw = value.get(key)
+            if (count == 0) { requireProtocol(raw === JSONObject.NULL, "Empty history must not name an action"); return null }
+            return text(raw, key).also { requireProtocol(it.isNotBlank(), "History action needs a label") }
+        }
+        return EditHistory(identifier(value.get("fit_id"), "fit_id"), revision, undo, redo, limit,
+            label("undo_label", undo), label("redo_label", redo))
     }
 
     fun decodeNoteDetails(json: String): NoteDetails {
