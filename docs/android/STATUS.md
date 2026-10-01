@@ -1,10 +1,12 @@
 # Android project status
 
-Updated: 2026-10-02. **W02 full local verification passed; setup delivery pending.**
+Updated: 2026-10-02. **W02 setup delivered; stopped as requested.**
 
-## W02 — Windows local verification; setup delivery pending
+## W02 — Windows local verification delivered
 
-Branch `codex/windows-local-verification` preserves PR #33 head `e916e054`.
+[Setup PR #34](https://github.com/Sussic/Pyfa-android/pull/34) merged into
+`codex/b09-1-edit-history` as `3a33bfbe`, from reviewed head `7cc25ba2`.
+It preserves the feature implementation originally at `e916e054`; PR #33 remains open.
 The full local run passed **78 gates**: 48 desktop/reference/host, five APK/lint/
 signature/package gates and 25 native gates, with every required screenshot
 reviewed. [Receipt](evidence/w02-local.json) retains actual gate commits, failures,
@@ -30,9 +32,10 @@ The local result is `local/full-verification`; no unexecuted Actions check passe
 Workflow PR triggers are retired only after this local proof; hosted manual
 fallback remains. Stacked setup delivery updates the B09.1 branch; default master
 retains prior policy until PR #33 is delivered separately. No repository protection/
-ruleset owner step was found. Review/push/merge of the focused setup PR remains.
+ruleset owner step was found. `local/full-verification` passed for the setup
+PR head before merge. STATUS/checkpoint updates complete setup delivery.
 
-**The active goal ends at W02 setup delivery. Stop afterward.** Preserve PR #33;
+**W02 is complete. Work is stopped.** Preserve PR #33;
 feature completion and roadmap work await an explicit later resume instruction.
 Exact next task then: complete **B09.1/PR #33** delivery using applicable valid
 local evidence, before selecting B09.2. No feature task is marked complete here.

@@ -22,7 +22,7 @@ delivery or roadmap continuation. No feature task is removed.
   unexecuted Actions check as passed; preserve coverage when changing gates.
 - [x] Demonstrate the local replacement before retiring hosted checks; prepare
   any access-dependent repository change and its exact remaining owner action.
-- [ ] Update existing instructions, review, commit/push/merge the setup PR after
+- [x] Update existing instructions, review, commit/push/merge the setup PR after
   applicable checks, record B09.1 delivery and B09.2 as subsequent work, then stop.
 
 No unattended self-hosted runner on the public repository, CPU/RAM caps, paid
@@ -78,5 +78,8 @@ pins, permissions, timeouts, concurrency, one-day diagnostics and deliberate APK
 uploads. Default master retains prior policy until PR #33 is separately delivered.
 No protection/ruleset access blocker was found. Instructions and repeatable
 [start/pause/resume/report commands](../LOCAL-VERIFICATION.md) are updated.
-The focused setup PR remains to be pushed/reviewed/merged; then stop.
+[Setup PR #34](https://github.com/Sussic/Pyfa-android/pull/34) merged into
+`codex/b09-1-edit-history` as `3a33bfbe`, from reviewed head `7cc25ba2`.
+Its exact head had a passing `local/full-verification` result. Setup is delivered;
+STATUS and the Windows checkpoint are updated. Stop here.
 PR #33 feature delivery and B09.2 require a later explicit instruction.

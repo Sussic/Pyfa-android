@@ -2677,5 +2677,14 @@
   "limits": [
     "Windows WHPX API36 x86_64 only; ARM64/older APIs/phone usability/upgrades remain unverified.",
     "Full raw reports, APKs and logs are stored locally; this receipt is not an Actions success."
-  ]
+  ],
+  "setup_delivery": {
+    "pull_request": "https://github.com/Sussic/Pyfa-android/pull/34",
+    "reviewed_head": "7cc25ba2339a2eb9a9edd999f6deddc061386b3d",
+    "merge_commit": "3a33bfbebf1110287308dea7f216b63bd632d25e",
+    "base_branch": "codex/b09-1-edit-history",
+    "local_result": "local/full-verification success before merge",
+    "feature_pr_33": "open; delivery not authorized by setup completion",
+    "owner_access_step": null
+  }
 }
