@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 from evidence_paths import evidence_dir
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +37,12 @@ def initial(evidence):
     assert adb('shell', 'getprop', 'ro.kernel.qemu').strip() == '1'
     assert adb('shell', 'getprop', 'ro.build.version.sdk').strip() == '36'
     assert adb('shell', 'getprop', 'ro.product.cpu.abi').strip() == 'x86_64'
+    # A first boot can publish sys.boot_completed before the phone binder.
+    # Require it instead of skipping the mobile-data offline command.
+    deadline=time.monotonic()+120
+    while 'Service phone: found' not in adb('shell','service','check','phone'):
+        if time.monotonic()>=deadline: raise RuntimeError('Phone service did not become ready; mobile-data disable remains required')
+        time.sleep(1)
     adb('shell', 'cmd', 'connectivity', 'airplane-mode', 'enable')
     adb('shell', 'svc', 'wifi', 'disable'); adb('shell', 'svc', 'data', 'disable')
     assert adb('shell', 'settings', 'get', 'global', 'airplane_mode_on').strip() == '1'
@@ -47,7 +54,7 @@ def initial(evidence):
     sdk = Path(os.environ['ANDROID_HOME'])
     shutil.copyfile(sdk / 'emulator/source.properties', evidence / 'emulator-version.txt')
     manager = os.environ.get('PYFA_SDKMANAGER', 'sdkmanager')
-    (evidence / 'sdk-packages.txt').write_bytes(subprocess.check_output([manager, '--list_installed'], timeout=120))
+    (evidence / 'sdk-packages.txt').write_bytes(subprocess.check_output([manager, '--sdk_root='+str(sdk), '--list_installed'], timeout=120))
     reports = ROOT / 'app/build/outputs/androidTest-results/connected'
     if reports.exists(): shutil.rmtree(reports)
     wrapper = str(ROOT / ('gradlew.bat' if os.name == 'nt' else 'gradlew'))

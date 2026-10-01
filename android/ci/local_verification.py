@@ -73,8 +73,31 @@ class Run:
             save(self.file,self.state)
         else:
             self.state=json.loads(self.file.read_text(encoding='utf-8'))
-            assert self.state['commit']==git('rev-parse','HEAD') and self.state['tree']==git('rev-parse','HEAD^{tree}')
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
+            current=git('rev-parse','HEAD')
+            if self.state['commit']!=current:
+                assert args.adopt_launcher_fix, 'Resume the same commit, or explicitly adopt a verified launcher-only fix'
+                assert not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
+                changed=git('diff','--name-only',self.state['commit'],current).splitlines()
+                allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1'}
+                assert changed and set(changed)<=allowed, 'Completed host/build inputs changed; results cannot be reused'
+                import ast
+                previous=ast.parse(git('show',self.state['commit']+':android/ci/local_verification.py'))
+                present=ast.parse(Path(__file__).read_text(encoding='utf-8'))
+                def executed(tree):
+                    result={}
+                    for node in ast.walk(tree):
+                        if isinstance(node,ast.FunctionDef) and node.name in ('plan','host','build','execute'):
+                            result[node.name]=ast.dump(node,include_attributes=False)
+                    return result
+                assert executed(previous)==executed(present), 'Executed host/build behavior changed'
+                assert self.state['plan']==plan(self.state['mode'],self.state['gate'])
+                for row in self.state['attempts']: row.setdefault('tested_commit',self.state['commit'])
+                self.state.setdefault('launcher_fix_reuse',[]).append({'from_commit':self.state['commit'],
+                    'to_commit':current,'changed_files':changed,'unchanged_completed_host_build_inputs':True})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+                save(self.file,self.state)
+            assert self.state['tree']==git('rev-parse','HEAD^{tree}')
         self.native=self.directory/'native';self.native.mkdir(exist_ok=True)
         os.environ['PYFA_EVIDENCE_DIR']=str(self.native)
         os.environ['PYFA_EXECUTION_KIND']='local_windows'
@@ -156,7 +179,7 @@ class Run:
         name='pyfa-local-'+self.directory.name.replace('.','-')
         self.state['avd_name']=name
         if not (avds/f'{name}.ini').exists():
-            with (self.directory/'avd-create.log').open('wb') as log:
+            with (self.directory/f'avd-create-{len(self.state["attempts"]):03}.log').open('wb') as log:
                 subprocess.run([str(tools/'avdmanager.bat'),'create','avd','--name',name,'--package',
                     'system-images;android-36;google_apis;x86_64','--device','pixel_2'],input=b'no\n',stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
         # Bind only this disposable emulator. Other emulators and phones stay untouched.
@@ -213,6 +236,7 @@ class Run:
             reports=ROOT/'android/app/build/outputs/androidTest-results/connected'
             if any(s.startswith('native:') for s in self.state['plan']) and reports.exists():shutil.copytree(reports,self.native/'junit',dirs_exist_ok=True)
             self.stop_emulator()
+            for row in self.state['attempts']: row.setdefault('tested_commit',self.state['commit'])
             save(self.file,self.state)
             files={str(p.relative_to(self.directory)):{'sha256':sha(p),'bytes':p.stat().st_size}
                 for p in self.directory.rglob('*') if p.is_file() and not p.is_relative_to(self.directory/'avd') and p.name not in ('run.lock','files.json')}
@@ -221,6 +245,9 @@ class Run:
         except BaseException:
             self.state['status']='failed';save(self.file,self.state);raise
         finally:
+            if self.state['status']!='passed':
+                for row in self.state['attempts']: row.setdefault('tested_commit',self.state['commit'])
+                save(self.file,self.state)
             self.stop_emulator();lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1);lock.close()
             # Successful full verification no longer needs writable emulator data.
             if self.state['status']=='passed' and (self.directory/'avd').exists():shutil.rmtree(self.directory/'avd')
@@ -232,6 +259,7 @@ def main():
     parser.add_argument('--mode',choices=['full','desktop','build','native'],default='full')
     parser.add_argument('--gate',choices=FAMILIES)
     parser.add_argument('--run');parser.add_argument('--source');parser.add_argument('--reference-python')
+    parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
