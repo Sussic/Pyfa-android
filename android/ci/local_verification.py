@@ -75,6 +75,7 @@ class Run:
         else:
             self.original_run_bytes=self.file.read_bytes()
             self.state=json.loads(self.file.read_text(encoding='utf-8'))
+            assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
             if self.state['commit']!=current:
@@ -250,11 +251,8 @@ class Run:
                 if (self.directory/'avd').exists():
                     assert (self.directory/'avd').resolve().parent==self.directory
                     shutil.rmtree(self.directory/'avd')
-                lint=self.native/'lint-results-debug.html'
-                for p in self.native.iterdir():
-                    if p==lint:continue
-                    if p.is_dir():shutil.rmtree(p)
-                    else:p.unlink()
+                from summary_repair import clear_native_results
+                clear_native_results(self.native)
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)

@@ -37,7 +37,7 @@ class HistoryProgress:
             try:
                 row['processes'] = self.command('shell', 'ps', '-A', '-o', 'PID,NAME,TIME')
                 row['graph_stat'] = self.command('shell', 'run-as',
-                    'io.github.sussic.pyfa.dev', 'stat', '-c', '%s %Y',
+                    'io.github.sussic.pyfa.dev', 'stat', '-c', '%s:%Y',
                     'no_backup/fits/graph.sqlite3')
                 picture = self.command('exec-out', 'screencap', '-p', binary=True)
                 if not picture.startswith(b'\x89PNG\r\n\x1a\n'):

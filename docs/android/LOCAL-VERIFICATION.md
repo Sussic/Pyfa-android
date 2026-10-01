@@ -2,9 +2,13 @@
 
 W02 ports the complete native launcher to Windows WHPX while retaining the same
 independent desktop/host scripts and native validators. The current run passes
-76 of 78 gates: all 48 desktop/reference/host gates, five build/package gates,
-and native initial through notes. History hit its 900-second phase timeout;
-the final summary has not run. Complete demonstration is pending;
+77 of 78 gates: all 48 desktop/reference/host gates, five build/package gates,
+and every native execution gate including history. The approved single history
+retry passed prepare/restored in 1903.248/181.903 seconds. Final summary failed
+because native-restart cleanup archived `apk-contents.json` without restoring
+it to the active evidence directory. The original report and 900-second failed
+history attempt are preserved. The user required stopping after a failed retry;
+no repair or rerun has been made. Complete demonstration is pending;
 hosted workflows remain in place until actual full local results and screenshot
 review establish their replacement. See [task](tasks/W02-windows-local-verification.md).
 

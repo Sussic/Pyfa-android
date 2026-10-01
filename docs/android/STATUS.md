@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-01. **W02 local verification active; B09.1 preserved in PR #33.**
+Updated: 2026-10-02. **W02 summary-routing repair authorised; B09.1 preserved in PR #33.**
 
 ## Selected setup — W02 Windows local verification
 
@@ -19,39 +19,48 @@ installation. B09.1 delivery and then B09.2 await later explicit authorisation.
 Desktop run `36661924082` passes the unchanged PR head in 29m34s. Android run
 `36661923971` attempt 1 was cancelled at 50m06 during emulator testing; attempt 2
 also exceeded the 50-minute job ceiling (50m09s). No hosted retry is pending. Neither cancelled/unexecuted native check is passing evidence.
-Local proof currently passes 48 desktop/reference/host gates, five build/package
-gates and native initial through notes (76 of 78 total). History prepare timed out
-after 900 seconds at case 14/18; summary is unexecuted. Undo/redo rebuilds the full
-saved graph on each replay. This explains possible cumulative cost but does not
-rule out a hang within case 14; there are no per-case timing logs. The proposed Windows phase budget is 2400
-seconds without changing assertions or per-operation limits. Preserve failed raw
-evidence and restart the native chain on a fresh disposable AVD; retain unchanged
-host/build results with their original tested commit. No hosted gate is retired.
-The latest goal instruction confirms setup-only delivery and then stopping.
-Automatic approval review rejected modifying the native-coverage verifier to
-account for the proposed timeout and recording roadmap continuation beyond the
-saved setup-only goal. The scope wording is corrected. The user has now explicitly
-approved the exact Windows-only 900-to-2400-second timeout and verifier exception,
-with one diagnostic retry and no further timeout increase. The change remains
-uncommitted and unexecuted at this checkpoint. Python syntax, host-plan coverage and
-`git diff --check` pass. PR #33 remains open at `e916e054`; all application,
-engine and feature-test sources are preserved. Hosted checks remain unchanged.
+The single approved diagnostic retry at `6792b03e` passed history: prepare
+1903.248 seconds, restored 181.903 seconds, total gate 2146.218 seconds. Its raw
+validator confirms 18 original cases/108 states, two recipients, 111 restored
+fits and ten protocol rejections. The Windows outer deadline is 2400 seconds per
+phase; Linux remains 900. Assertions, tolerances, operation limits, restart checks,
+screenshots and A10 requirements are unchanged. Exact native-source comparison
+and 20 reporting/parser regression tests passed before this run.
 
-Windows WHPX reports usable. Installed emulator is 36.2.12; installed images are
-API35 Google APIs and API36.1 Play Store. API36 Google APIs x86_64 revision7 is now installed. The portable launcher and
-run-specific evidence routing are implemented; all existing script coverage
-matches the hosted plan. Full local execution remains pending. All 120 currently
-retained PNGs have visual-review records: 119 from completed gates and one explicit
-history-timeout diagnostic. History's required six screens are not yet produced.
-The local result reporter's 20 regression tests pass, including rejection of
-source changes outside the exact timeout exception. No local success status is published.
-The [approved timeout proposal](tasks/W02-windows-local-verification.md#pending-timeout-decision)
-explicitly relaxes only the outer deadline. The single retry will record timestamped
-screenshots, process CPU time and database modification times around case 14.
-All 53 completed host/build results retain their original commit. Native prerequisites
-must be rebuilt because the failed phase mutated its disposable library and no
-pre-history snapshot exists. If the retry fails, report evidence and stop. If it
-passes, complete setup delivery and stop; do not resume feature work.
+Diagnostics show case 14 (`fill-clone`) at 988.875 seconds and case 15
+(`clone-selected`) at 1080.828 seconds. The same process's CPU time increased
+from 17:19 to 18:56; successful supplemental database observations advanced its
+modification timestamp by 80 seconds. This establishes progress beyond case 14
+in this retry. The original 900-second failure remains in the archive and log 083.
+
+**Full verification failed at 77/78 gates:** `native:summary` raised
+`FileNotFoundError` for `native/apk-contents.json` (log 109). Native restart archived
+that build/package report and cleared the active evidence directory while retaining
+the 53 valid host/build results; the report was not restored. Its original copy
+is retained under `failed-native-386b97f5/native/apk-contents.json`. No report has
+been copied back, no summary rerun or further emulator run has been launched,
+and no full-pass receipt/status has been published. The owned emulator stopped;
+`adb devices` is empty. All fresh native execution gates passed, but the final
+aggregate validation remains unsuccessful.
+
+Local evidence is retained at
+`%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/evidence/20261001-143805-f7d2ad31-99b296`
+(Codex resolves it through Package LocalCache). The 53 host/build gates retain
+their actual `f7d2ad31` commit; fresh native gates retain `6792b03e`. Both APKs,
+full logs, raw reports, diagnostic images and original failed results remain local.
+There are 119 fresh required screenshot reviews; six history screenshots and the
+summary-failure diagnostic are retained but not yet reviewed. API36 Google APIs
+x86_64 revision7 and emulator36.2.12 reuse the installed WHPX environment.
+
+The user now authorises only the evidence-routing repair, focused checks and
+outstanding aggregate summary. First validate the archived report against this
+run and retained APKs; preserve all 77 completed results and their actual commits.
+If evidence cannot be validated or completed stages need rerunning, stop and
+explain. On success, finish screenshot review and setup delivery, then stop.
+No timeout increase or history retry is authorised. Start/pause/resume commands remain in
+[LOCAL-VERIFICATION](LOCAL-VERIFICATION.md). No setup PR was opened or merged;
+hosted workflows remain unchanged. PR #33 is still open at `e916e054`; feature
+delivery and subsequent B09.2 work require later explicit authorisation.
 
 ## Authorized queue
 

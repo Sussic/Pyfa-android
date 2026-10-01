@@ -35,6 +35,10 @@ def validate(run,root):
         assert row['exit_code']==0 and row['tested_commit'],gate
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
+            if gate == 'native:summary':
+                from summary_repair import equivalent
+                equivalent(root, state['commit'], row['tested_commit'])
+                continue
             assert gate.startswith(('desktop:','reference:','headless:','build:')),gate
             if row['tested_commit'] in checked_reuse: continue
             checked_reuse.add(row['tested_commit'])
@@ -56,7 +60,7 @@ def validate(run,root):
             tested=subprocess.check_output(['git','show',state['commit']+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
             assert executed(earlier)==executed(tested),'Reused host/build commands changed'
     summary=json.loads((run/'native/native-summary.json').read_text(encoding='utf-8'))
-    assert summary['checkout_sha']==state['commit'] and summary['workflow_run'] is None
+    assert summary['checkout_sha']==latest['native:summary']['tested_commit'] and summary['workflow_run'] is None
     assert summary['execution']=={'kind':'local_windows','local_run_id':run.name}
     review=json.loads((run/'screenshots-reviewed.json').read_text(encoding='utf-8'))
     assert review['tested_commit']==state['commit']
@@ -68,8 +72,14 @@ def validate(run,root):
     assert not subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip()
     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
     changes=subprocess.check_output(['git','diff','--name-only',state['commit'],head],cwd=root,text=True).splitlines()
-    allowed=['AGENTS.md','.github/workflows/android.yml','.github/workflows/desktop-reference.yml','android/ci/report_local.py']
-    assert all(name in allowed or name.startswith('docs/android/') or name in ('android/README.md','android/ci/test_report_local.py') for name in changes),changes
+    from summary_repair import equivalent
+    equivalent(root, state['commit'], head)
+    if state.get('summary_repairs'):
+        provenance=state['summary_repairs'][-1]
+        assert sha(run/'native/apk-contents.json')==provenance['report_sha256']
+        assert sha(run/provenance['archive']/'native/apk-contents.json')==provenance['report_sha256']
+        for name,digest in provenance['apk_sha256'].items():
+            assert sha(run/'apks'/name)==digest
     return state,head
 
 def main():
