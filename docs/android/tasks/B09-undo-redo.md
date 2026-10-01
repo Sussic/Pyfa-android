@@ -10,7 +10,7 @@ same history contract and their independent reference/native cases.
 | Child | State | Outcome and acceptance |
 | --- | --- | --- |
 | B09.1 | done | Per-fit transactional undo/redo for single and bulk local module edits, including charges, states, add/replace/remove, clone/fill, variations, restrictions and ordering. Original command processor evidence verifies action grouping, 100-action retention, redo invalidation and fit isolation. Native controls reverse/reapply values, keep selections valid, survive recreation and save the resulting fit across process restart. |
-| B09.2 | ready | Extend and verify the remaining already supported rename, hull, cargo, addition and linked-effect edits. Enumerate original non-command gaps, preserve unrelated fit data and recent-use semantics, and establish the mandatory extension checks for later mutation tasks. Parent completion requires every existing mutation to have an explicit tested disposition. |
+| B09.2 | active | Extend and verify the remaining already supported rename, hull, cargo, addition and linked-effect edits. Enumerate original non-command gaps, preserve unrelated fit data and recent-use semantics, and establish the mandatory extension checks for later mutation tasks. Parent completion requires every existing mutation to have an explicit tested disposition. |
 
 Each child requires focused host tests, the full required local reference/build/native verification,
 reviewed screenshots/evidence, fork PR merge and checkpoint. No additional approval
@@ -88,3 +88,14 @@ match. Exact-head `local/full-verification` passed, reusing the preserved valid
 W02 execution proof and reviewed images. Feature receipt records all actual tested
 commits, 21 rejected corrupt reports and raw history. No hosted job was dispatched.
 B09.1 is complete; B09 remains active. B09.2 is ready and automatically selected next.
+
+## B09.2 selected — 2026-10-02
+
+Branch codex/b09-2-mutation-history from delivered master 0685bb32.
+[Operation dispositions](B09-mutation-dispositions.md) retain every supported
+mutation. Recipient-owned linked effects, rename, mode/subsystem, cargo/transfers,
+addition variations/implants and skill overrides now enter session history.
+Library/query/cursor and direct notes writes have explicit lifecycle dispositions.
+Eight focused registration/ownership/preservation/deletion tests pass. Real EOS
+regression is running; independent remaining command reversals, native UI/raw
+restart/screenshots and complete final local verification remain required.

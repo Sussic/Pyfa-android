@@ -203,7 +203,8 @@ class BridgeSession:
         self._revisions = {key: 1 for key in self._fits}
         self._modified = {key: 1 for key in self._fits}
         self._recent = []
-        from .history import EditHistory
+        from .history import EditHistory, validate_operations
+        validate_operations(ARGUMENTS)
         self._history = EditHistory()
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
         self._snapshots = self._snapshots_for(self._fits, self._revisions, self._fits)

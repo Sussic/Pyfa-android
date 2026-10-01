@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.1 delivered; B09.2 next.**
+Updated: 2026-10-02. **B09.1 delivered; B09.2 selected.**
 
 ## Latest delivery — B09.1 module edit history
 
@@ -29,7 +29,13 @@ review, full local verification and delivery. No hosted dispatch without asking,
 setup repeat, new infrastructure, unrelated refactoring, release, phone installation,
 billing change or delegation. No decision/access blocker currently exists.
 
-Exact next action: select B09.2 from live master and inventory every supported
+Selected `codex/b09-2-mutation-history` from live master `0685bb32`.
+Scope: remaining supported rename/hull/cargo/addition/linked-effect history,
+explicit dispositions for every operation and mandatory future extension checks.
+Original rename, mode, cargo and implant commands have real Undo bodies. Linked
+projection/command history belongs to the recipient fit, as in original GUI/calc
+commands; Android graph edges are also stored in the recipient's record.
+Exact next action: inventory every supported
 mutation against the pinned original command/non-command boundary, then implement
 rename/hull/cargo/addition/linked-effect history with independent desktop, host and
 native restart/selection/atomicity coverage. B09 remains active until every existing
