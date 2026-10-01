@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **W02 summary-routing repair authorised; B09.1 preserved in PR #33.**
+Updated: 2026-10-02. **W02 approved fixture guard correction in progress.**
 
 ## Selected setup — W02 Windows local verification
 
@@ -37,9 +37,8 @@ in this retry. The original 900-second failure remains in the archive and log 08
 `FileNotFoundError` for `native/apk-contents.json` (log 109). Native restart archived
 that build/package report and cleared the active evidence directory while retaining
 the 53 valid host/build results; the report was not restored. Its original copy
-is retained under `failed-native-386b97f5/native/apk-contents.json`. No report has
-been copied back, no summary rerun or further emulator run has been launched,
-and no full-pass receipt/status has been published. The owned emulator stopped;
+is retained under `failed-native-386b97f5/native/apk-contents.json`. This original
+failure remains recorded. No full-pass receipt/status has been published. The owned emulator stopped;
 `adb devices` is empty. All fresh native execution gates passed, but the final
 aggregate validation remains unsuccessful.
 
@@ -48,15 +47,30 @@ Local evidence is retained at
 (Codex resolves it through Package LocalCache). The 53 host/build gates retain
 their actual `f7d2ad31` commit; fresh native gates retain `6792b03e`. Both APKs,
 full logs, raw reports, diagnostic images and original failed results remain local.
-There are 119 fresh required screenshot reviews; six history screenshots and the
-summary-failure diagnostic are retained but not yet reviewed. API36 Google APIs
+All 125 fresh required screenshots and the separately labelled summary-failure
+diagnostic are now reviewed (126 records). API36 Google APIs
 x86_64 revision7 and emulator36.2.12 reuse the installed WHPX environment.
 
-The user now authorises only the evidence-routing repair, focused checks and
-outstanding aggregate summary. First validate the archived report against this
-run and retained APKs; preserve all 77 completed results and their actual commits.
-If evidence cannot be validated or completed stages need rerunning, stop and
-explain. On success, finish screenshot review and setup delivery, then stop.
+At repair commit `0987ecda`, the archived package report was validated against
+original build logs, retained/build APK identity, database/source/ABI/library
+bytes and dependencies, and original/fresh native engine reports. Its exact
+bytes were restored; all 77 completed records remain unchanged. Twelve routing,
+preservation and equivalence tests plus 20 reporting/parser tests pass. Native
+restart now preserves package evidence; completed runs reject resume before
+mutating evidence. The diagnostic stat format uses the already tested colon form.
+
+Only summary was rerun, without an emulator (log 110, 0.36 seconds). It now fails
+`contract_summary.py:38`: reported fixture SHA256 hashes match the actual retained
+test APK and repository CRLF bytes, while the assertion hashes LF-normalized
+bytes. For Vexor, actual/reported SHA256 is `4e706995…`; normalized SHA256 is
+`6fb3c16b…`. Projection and command have the same exact CRLF/LF discrepancy.
+No fixture or native response was altered and no completed stage was replayed.
+The user approved the exact fixture guard correction and narrowly scoped source
+exception: reported SHA256 must equal retained verified test-APK bytes, and those
+bytes must equal the correct reference after CRLF-to-LF normalization only.
+Focused corruption checks and only the outstanding summary are authorized; all
+77 valid completed results and earlier failures remain retained. Any new blocker
+requires stopping. Full verification remains failed 77/78 until execution passes.
 No timeout increase or history retry is authorised. Start/pause/resume commands remain in
 [LOCAL-VERIFICATION](LOCAL-VERIFICATION.md). No setup PR was opened or merged;
 hosted workflows remain unchanged. PR #33 is still open at `e916e054`; feature

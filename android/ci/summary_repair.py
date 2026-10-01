@@ -36,8 +36,13 @@ def equivalent(root, tested, head):
         'android/ci/local_verification.py', 'android/ci/summary_repair.py',
         'android/ci/test_summary_repair.py', 'android/ci/report_local.py',
         'android/ci/test_report_local.py', 'android/ci/history_progress.py',
+        'android/ci/contract_summary.py', 'android/ci/test_contract_fixtures.py',
         '.github/workflows/android.yml', '.github/workflows/desktop-reference.yml'}
     assert all(p in allowed or p.startswith('docs/android/') for p in changed), changed
+    if 'android/ci/contract_summary.py' in changed:
+        before = git('show', tested + ':android/ci/contract_summary.py')
+        after = git('show', head + ':android/ci/contract_summary.py')
+        assert after == corrected_contract_source(before), 'Unexpected contract verifier change'
     if 'android/ci/local_verification.py' in changed:
         def executed(source):
             return {n.name: ast.dump(n, include_attributes=False) for n in ast.walk(ast.parse(source))
@@ -49,6 +54,22 @@ def equivalent(root, tested, head):
         after = git('show', head + ':android/ci/history_progress.py')
         assert before.count("'%s %Y'") == 1 and after == before.replace("'%s %Y'", "'%s:%Y'"), 'Unexpected diagnostic change'
     return changed
+
+
+def corrected_contract_source(source):
+    """The sole approved fixture verifier delta; every other byte stays exact."""
+    old = '''        # The build stages LF-normalized fixtures, including on Windows hosts.
+        assert proof["sha256"] == hashlib.sha256(data.replace(b"\\r\\n", b"\\n")).hexdigest()
+'''
+    new = '''        test_apk = Path(os.environ.get("PYFA_INSTRUMENTATION_APK",
+            str(root / "android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk")))
+        with ZipFile(test_apk) as apk:
+            packaged = apk.read(f"assets/{filename}-expected.json")
+        assert proof["sha256"] == hashlib.sha256(packaged).hexdigest()
+        assert packaged.replace(b"\\r\\n", b"\\n") == data.replace(b"\\r\\n", b"\\n")
+'''
+    assert source.count(old) == 1 and source.count('import json\n') == 1
+    return source.replace('import json\n', 'import json\nimport os\nfrom zipfile import ZipFile\n', 1).replace(old, new, 1)
 
 
 def clear_native_results(directory):
@@ -156,7 +177,11 @@ def finish(run, root):
         destination = run / 'native/apk-contents.json'
         assert not destination.exists() or sha(destination) == sha(source), 'Conflicting active package evidence'
         original = run / 'failed-summary-run.json'
-        assert not original.exists(), 'A summary repair has already been attempted'
+        assert not any(r['gate'] == 'native:summary' and r.get('tested_commit') == head
+            for r in state['attempts']), 'Unchanged summary retry is forbidden'
+        if original.exists():
+            original = run / f'failed-summary-run-{len(state["attempts"]):03}.json'
+        assert not original.exists(), 'Failed-attempt snapshot already exists'
         shutil.copyfile(run / 'run.json', original)
         if not destination.exists():
             shutil.copyfile(source, destination)
@@ -172,7 +197,8 @@ def finish(run, root):
         save(run / 'run.json', state)
         env = os.environ.copy()
         env.update(PYFA_EVIDENCE_DIR=str(run / 'native'), PYFA_EXECUTION_KIND='local_windows',
-            PYFA_LOCAL_RUN_ID=run.name, PYTHONUTF8='1')
+            PYFA_LOCAL_RUN_ID=run.name, PYTHONUTF8='1',
+            PYFA_INSTRUMENTATION_APK=str(run / 'apks/app-debug-androidTest.apk'))
         env.pop('GITHUB_RUN_ID', None)
         env.pop('GITHUB_STEP_SUMMARY', None)
         started = time.monotonic()

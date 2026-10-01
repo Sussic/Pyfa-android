@@ -90,3 +90,34 @@ then complete review and setup delivery. No timeout increase or history replay i
 needed or proposed. No hosted gate has been retired, no full-pass result published,
 and no setup PR merged. PR #33 remains open at `e916e054`; B09.1 delivery followed
 by B09.2 remain future roadmap work requiring explicit authorisation.
+
+## Authorised routing repair — aggregate fixture identity blocked
+
+On 2026-10-02, commit `0987ecda2593154ad217b790bfca21ae81a5541d` implemented
+the narrow recovery. The archived package report's exact hash, original package
+gate/log provenance, both retained/build APK hashes, database/mobile/engine source
+identity, complete ABI-library hashes and actual ELF dependency lists were validated.
+The original report was restored byte-for-byte; the pre-repair failed run was
+preserved in `failed-summary-run.json`. All 77 completed attempts stayed unchanged.
+Twelve focused routing/control/source-equivalence and 20 reporting/parser tests
+pass. All native validators retain their existing assertions and exact source
+comparison boundary. The remaining six history screens and failure diagnostic
+were reviewed; 125 required screens plus one labelled failure screen have records.
+
+Only the aggregate summary was run (attempt 110, exit 1, 0.36 seconds), with no
+emulator or completed stage replay. `contract_summary.py:38` compares reported
+fixture hashes to LF-normalized repository bytes. The three reported hashes
+instead exactly match the retained test APK assets and repository CRLF bytes.
+For Vexor those hashes are respectively
+`4e70699577310605c46a497d6d7f37b25b19b1b883821daef796d4175fc68324`
+and normalized
+`6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba`.
+This is a hash-convention discrepancy; fixture contents and completed native
+inputs are unchanged. No completed stage currently requires rerunning.
+
+A proposed correction requires exact reported-to-packaged-byte SHA256 equality
+and packaged-to-repository byte equality after CRLF normalization. It would change
+the fixture hash assertion and need an exact source-verifier exception beyond
+the already approved import/timeout exception. It has not been applied or tested.
+W02 stops pending that scope decision; no full-pass receipt, hosted retirement,
+setup PR delivery or feature continuation has occurred.

@@ -6,9 +6,13 @@ independent desktop/host scripts and native validators. The current run passes
 and every native execution gate including history. The approved single history
 retry passed prepare/restored in 1903.248/181.903 seconds. Final summary failed
 because native-restart cleanup archived `apk-contents.json` without restoring
-it to the active evidence directory. The original report and 900-second failed
-history attempt are preserved. The user required stopping after a failed retry;
-no repair or rerun has been made. Complete demonstration is pending;
+it to the active evidence directory. The authorised routing repair at `0987ecda`
+validated/restored the original report and reran only summary without an emulator.
+Summary now fails the contract fixture hash: retained APK/reported hashes match
+repository CRLF bytes, while the guard compares LF-normalized hashes. A further
+assertion/verifier correction awaits a decision. All 77 completed records, both
+summary failures and the original 900-second history failure are preserved.
+Complete demonstration is pending;
 hosted workflows remain in place until actual full local results and screenshot
 review establish their replacement. See [task](tasks/W02-windows-local-verification.md).
 
