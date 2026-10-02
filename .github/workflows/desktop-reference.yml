@@ -407,6 +407,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-history-mutations-check"
+      - name: Verify original fitting resource values and presentation
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/resources.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-resources-reference"
+          --check tools/android_reference/fixtures/resources.json
+      - name: Verify read-only resources, reversal and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_resources.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-resources-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

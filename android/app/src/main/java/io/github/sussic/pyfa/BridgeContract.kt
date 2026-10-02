@@ -169,6 +169,48 @@ class BridgeProtocolException(message: String) : IllegalArgumentException(messag
 object BridgeCodec {
     const val VERSION = 1
 
+    fun decodeResources(json: String): FitResources {
+        val value = objectValue(StrictJson(json).parse(), "resources")
+        keys(value, setOf("version", "fit_id", "revision", "resources"), path = "resources")
+        requireProtocol(long(value.get("version"), "version") == 1L, "Unsupported resources version")
+        val revision = long(value.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid resource revision")
+        val rows = objectValue(value.get("resources"), "resource pairs")
+        keys(rows, RESOURCE_LABELS.keys, path = "resource pairs")
+        val units = mapOf("calibration" to "points", "cpu" to "tf", "powergrid" to "MW",
+            "drone_bay" to "m³", "fighter_bay" to "m³", "cargo_bay" to "m³", "drone_bandwidth" to "Mbit/s")
+        val result = RESOURCE_LABELS.keys.associateWith { name ->
+            val row = objectValue(rows.get(name), name)
+            keys(row, setOf("used", "total", "used_type", "total_type", "unit", "overloaded",
+                "used_display", "total_display", "used_detail", "total_detail"), path = name)
+            fun number(key: String): StatValue {
+                val raw = row.get(key)
+                val kind = text(row.get("${key}_type"), "${key}_type")
+                return when (kind) {
+                    "unavailable" -> { requireProtocol(raw == JSONObject.NULL, "Unavailable resource has a value"); StatValue.Unavailable }
+                    "integer" -> StatValue.Integer(long(raw, key))
+                    "decimal" -> { requireProtocol(raw is Double, "Decimal resource lost its scalar type"); StatValue.Decimal(finite(raw as Double, key)) }
+                    else -> fail("Invalid resource scalar type")
+                }
+            }
+            val used = number("used"); val total = number("total")
+            val unit = text(row.get("unit"), "unit")
+            requireProtocol(unit == (units[name] ?: "count"), "Incorrect resource unit")
+            fun label(key: String, scalar: StatValue): String? {
+                val result = nullable(row.get(key))?.let { nonempty(it, key) }
+                requireProtocol((result == null) == (scalar == StatValue.Unavailable), "Resource display availability differs")
+                return result
+            }
+            val overloaded = nullable(row.get("overloaded"))?.let { bool(it, "overloaded") }
+            val left = used.numberOrNull(); val right = total.numberOrNull()
+            requireProtocol(overloaded == if (left == null || right == null) null else left > right,
+                "Resource overload differs from raw values")
+            ResourceDetails(used, total, unit, overloaded, label("used_display", used), label("total_display", total),
+                label("used_detail", used), label("total_detail", total))
+        }
+        return FitResources(identifier(value.get("fit_id"), "fit_id"), revision, Collections.unmodifiableMap(result))
+    }
+
     fun encodeRequest(request: BridgeRequest): String {
         identifier(request.requestId, "request_id")
         identifier(request.sessionId, "session_id")

@@ -38,8 +38,25 @@ in an isolated adapter if needed, with exact source equivalence checks, rather
 than calculating fitting formulas in Kotlin.
 
 Required verification: independent unmodified desktop raw/compact/detail values
-across empty/fitted/over-capacity/absent-attribute/drone/cargo/fighter cases; exact
+across empty/fitted/over-capacity/drone/cargo/fighter cases; exact
 counts/types/units and justified existing numeric tolerances; meaningful host
 read-only, mutation/reversal and restart checks; APK/lint/package inspection;
 real offline native UI/engine cases and screenshot review; full local plan with
 all prior gates. Tests and evidence are pending, not passing claims.
+
+Known game-data attribute defaults are genuine EOS values, including zero bays
+on hulls without that capacity. Do not fabricate missing-capacity fixture inputs.
+True null values remain explicit unavailable scalars; focused protocol checks
+verify their representation. Fourteen independent cases include a real overload
+for every resource pair. Ten accepted saved-fit cases require native restart;
+four provisional fighter/over-hardpoint cases use an isolated diagnostic engine
+without expanding the durable input contract or claiming C05 editor support.
+
+Progress: two fresh original-desktop exports agree. Seven focused host tests pass
+all fourteen cases and ten saved fits reopened in a fresh process, with no desktop
+imports/network access or game-database writes. Eight focused raw-validator tests
+pass LF/CRLF equivalence and reject incorrect hashes, missing fixtures, changed
+content even with updated hashes, other whitespace, wrong scalar kinds/values,
+units, overload and labels. APK/native-test compilation and lint pass at their
+recorded development revisions. Earlier host/compile failures remain retained.
+Native execution, visual review and final-commit full verification are pending.

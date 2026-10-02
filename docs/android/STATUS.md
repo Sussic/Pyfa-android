@@ -60,8 +60,14 @@ and tank. Selected `codex/c01-1-fitting-resources` from delivered master `b48f40
 C01.1 covers F05.01–F05.11: all eleven resource pairs, overload, units and compact/
 detail precision. Reuse serialized EOS through a read-only resources query and
 native screen, preserving the earlier 39 calculation fields. Required independent,
-host, native/restart and visual evidence remains pending. Exact next action: build
-the independent resource/display exporter, then implement and verify C01.1.
+host, native/restart and visual evidence is required. Two fresh original-desktop
+exports agree across fourteen cases, including overloads for all eleven pairs.
+Seven host checks pass, including ten fits reopened in a fresh process; eight
+focused raw-validator regressions pass. Resource query/screen and native tests are
+implemented; APK/test compilation and lint pass at development revisions. Earlier
+failed host and compile attempts remain retained. Native execution, visual review
+and full final-commit verification are pending. Exact next action: execute the
+native resource diagnostic, then the saved-fit UI/restart chain and full plan.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.

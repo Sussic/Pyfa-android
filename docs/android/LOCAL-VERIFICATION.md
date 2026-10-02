@@ -15,9 +15,15 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action start -Mode full
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history_mutations
+./android/verify-local.ps1 -Action start -Mode desktop -Gate resources
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
+
+C01.1 extends the full plan to 93 gates: 52 reference/host, five build
+and 36 native gates. Resource checks include fourteen original-desktop cases,
+seven host tests, eight validator regressions and three native resource processes.
+Native mode continues to run every inherited prerequisite.
 
 Full mode runs every required desktop/reference/host gate before Gradle and the
 emulator. Build mode runs both APKs, lint, signature and full data/license/ABI

@@ -99,11 +99,15 @@ from cargo_transfer_summary import summarize as summarize_cargo_transfers
 from notes_summary import summarize as summarize_notes
 from history_summary import summarize as summarize_history
 from mutation_history_summary import summarize as summarize_mutation_history
+from resource_summary import summarize as summarize_resources
 summary = {
+    "resources": summarize_resources(json.loads((evidence / "resources-probe-native.json").read_text(encoding="utf-8")),
+        [json.loads((evidence / f"resources-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
+        engine, {row['pid'] for row in json.loads((evidence / "mutation-history-native.json").read_text(encoding="utf-8"))}),
     "mutation_history": summarize_mutation_history(json.loads((evidence / "mutation-history-native.json").read_text(encoding="utf-8")),
         engine, json.loads((evidence / "history-native.json").read_text(encoding="utf-8"))),
     "history": summarize_history(json.loads((evidence / "history-native.json").read_text(encoding="utf-8")), engine),
-    "task": "B09.1",
+    "task": "C01.1",
     "cargo_actions": summarize_cargo_actions(json.loads((evidence / "cargo-actions-native.json").read_text(encoding="utf-8")), engine),
     "notes": summarize_notes(json.loads((evidence / "notes-native.json").read_text(encoding="utf-8")), engine),
     "cargo_transfers": summarize_cargo_transfers(json.loads((evidence / "cargo-transfers-native.json").read_text(encoding="utf-8")), engine),

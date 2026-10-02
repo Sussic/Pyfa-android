@@ -106,6 +106,10 @@ def history_details(fit_id):
     return encoded(_bridge.history_details(fit_id))
 
 
+def resource_details(fit_id):
+    return encoded(_bridge.resource_details(fit_id))
+
+
 def cargo_action_options(fit_id, item_id, from_cargo):
     return encoded(_bridge.cargo_action_options(fit_id, item_id, from_cargo))
 
@@ -394,6 +398,23 @@ def verify_command(case_json):
         "command_sequence_ms": (time.monotonic() - start) * 1000,
     })
     return encoded(actual)
+
+
+def verify_resources(cases_json):
+    """Return actual EOS values only; invalid initial states stay ephemeral."""
+    _require_ephemeral()
+    from android_bridge.resource_probe import run
+    cases = json.loads(cases_json)
+    if type(cases) is not list:
+        raise ValueError('Resource cases must be a list')
+    values = [run(_engine, case['spec'], case['fighters']) for case in cases]
+    if _forbidden:
+        raise RuntimeError('An unsupported desktop import was attempted')
+    return encoded({'resources': values, 'inputs': cases,
+        'eos_settings': _engine.settings,
+        'database_logical_sha256': _manifest['database_logical_sha256'],
+        'desktop_source_commit': _manifest['desktop_source_commit'],
+        'desktop_import_attempts': list(_forbidden)})
 
 
 def verify_ammunition():

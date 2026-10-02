@@ -109,6 +109,7 @@ def main():
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/notes.json", tests / "notes-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/history.json", tests / "history-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/history-mutations.json", tests / "history-mutations-expected.json")
+    shutil.copyfile(ROOT / "tools/android_reference/fixtures/resources.json", tests / "resources-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

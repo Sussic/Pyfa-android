@@ -1,0 +1,2281 @@
+{
+  "task": "C01.1",
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "desktop_resource_view_sha256": "4a12855099a02503626108894320fb2b2009039653d4dba25823e3244185f4ee",
+  "cases": [
+    {
+      "spec": {
+        "name": "Empty cruiser",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Fitted cruiser",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Dual 150mm Railgun II",
+            "state": "ACTIVE",
+            "charge": "Antimatter Charge M"
+          },
+          {
+            "name": "Dual 150mm Railgun II",
+            "state": "ACTIVE",
+            "charge": "Antimatter Charge M"
+          }
+        ],
+        "drones": [
+          {
+            "name": "Hammerhead II",
+            "amount": 5,
+            "active": 3
+          }
+        ],
+        "ignore_restrictions": false,
+        "cargo": [
+          {
+            "name": "Antimatter Charge M",
+            "amount": 400
+          }
+        ]
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 2,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "2",
+          "desktop_total": "4",
+          "desktop_used_detail": "2.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 3,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "3",
+          "desktop_total": "5",
+          "desktop_used_detail": "3.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0.0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 49.5,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "49.5",
+          "desktop_total": "375",
+          "desktop_used_detail": "49.5",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 133.2,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "133.2",
+          "desktop_total": "875",
+          "desktop_used_detail": "133.2",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 50.0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "50",
+          "desktop_total": "125",
+          "desktop_used_detail": "50.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 30.0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "30",
+          "desktop_total": "75",
+          "desktop_used_detail": "30.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 5.0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "5",
+          "desktop_total": "480",
+          "desktop_used_detail": "5.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Offline guns",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Dual 150mm Railgun II",
+            "state": "OFFLINE",
+            "charge": null
+          },
+          {
+            "name": "Dual 150mm Railgun II",
+            "state": "OFFLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 2,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "2",
+          "desktop_total": "4",
+          "desktop_used_detail": "2.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Turret and fitting overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Tachyon Beam Laser II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": true,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "ephemeral",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 10,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": true,
+          "desktop_used": "10",
+          "desktop_total": "4",
+          "desktop_used_detail": "10.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0.0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 472.5,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": true,
+          "desktop_used": "472.5",
+          "desktop_total": "375",
+          "desktop_used_detail": "472.5",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 33408.0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": true,
+          "desktop_used": "33.41k",
+          "desktop_total": "875",
+          "desktop_used_detail": "33408.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Launcher overload",
+        "ship": "Caracal",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "Heavy Missile Launcher II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": true,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "ephemeral",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "launcher_hardpoints": {
+          "used": 6,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": true,
+          "desktop_used": "6",
+          "desktop_total": "5",
+          "desktop_used_detail": "6.0",
+          "desktop_total_detail": "5.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0.0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 247.5,
+          "total": 537.5,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "247.5",
+          "desktop_total": "537.5",
+          "desktop_used_detail": "247.5",
+          "desktop_total_detail": "537.5"
+        },
+        "powergrid": {
+          "used": 567.0,
+          "total": 787.5,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "567",
+          "desktop_total": "787.5",
+          "desktop_used_detail": "567.0",
+          "desktop_total_detail": "787.5"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 10.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "10",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "10.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 10.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "10",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "10.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 450.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "450",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "450.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "CPU overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "X-Large Shield Booster II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "X-Large Shield Booster II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "X-Large Shield Booster II",
+            "state": "ACTIVE",
+            "charge": null
+          },
+          {
+            "name": "X-Large Shield Booster II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": true,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0.0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 920.0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": true,
+          "desktop_used": "920",
+          "desktop_total": "375",
+          "desktop_used_detail": "920.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 2200.0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": true,
+          "desktop_used": "2.2k",
+          "desktop_total": "875",
+          "desktop_used_detail": "2200.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Calibration overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Medium Cargohold Optimization II",
+            "state": "ONLINE",
+            "charge": null
+          },
+          {
+            "name": "Medium Cargohold Optimization II",
+            "state": "ONLINE",
+            "charge": null
+          },
+          {
+            "name": "Medium Cargohold Optimization II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": true,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 450.0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": true,
+          "desktop_used": "450",
+          "desktop_total": "400",
+          "desktop_used_detail": "450.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0.0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0.0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 829.4399999999999,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "829",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "829.4"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Drone count overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [
+          {
+            "name": "Hobgoblin II",
+            "amount": 6,
+            "active": 6
+          }
+        ],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 6,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": true,
+          "desktop_used": "6",
+          "desktop_total": "5",
+          "desktop_used_detail": "6.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 30.0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "30",
+          "desktop_total": "125",
+          "desktop_used_detail": "30.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 30.0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "30",
+          "desktop_total": "75",
+          "desktop_used_detail": "30.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Drone bay and bandwidth overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [
+          {
+            "name": "Ogre II",
+            "amount": 20,
+            "active": 5
+          }
+        ],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 5,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "5",
+          "desktop_total": "5",
+          "desktop_used_detail": "5.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 500.0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": true,
+          "desktop_used": "500",
+          "desktop_total": "125",
+          "desktop_used_detail": "500.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 125.0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": true,
+          "desktop_used": "125",
+          "desktop_total": "75",
+          "desktop_used_detail": "125.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "480",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Cargo overload",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": [
+          {
+            "name": "Antimatter Charge M",
+            "amount": 100000
+          }
+        ]
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 375.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "375",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "375.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 125.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "125",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "125.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 75.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "75",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "75.0"
+        },
+        "cargo_bay": {
+          "used": 1250.0,
+          "total": 480.0,
+          "unit": "m\u00b3",
+          "overloaded": true,
+          "desktop_used": "1.25k",
+          "desktop_total": "480",
+          "desktop_used_detail": "1250.0",
+          "desktop_total_detail": "480.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Empty carrier",
+        "ship": "Thanatos",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "4",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "4.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 906.25,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "906.2",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "906.2"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875000.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875000.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 93750.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "93.8k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "93750.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 2800.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "2.8k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "2800.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Carrier squadrons",
+        "ship": "Thanatos",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [
+        {
+          "name": "Firbolg I",
+          "amount": 9,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 4,
+          "active": false
+        }
+      ],
+      "execution": "ephemeral",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 1,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "1",
+          "desktop_total": "4",
+          "desktop_used_detail": "1.0",
+          "desktop_total_detail": "4.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 906.25,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "906.2",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "906.2"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875000.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875000.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "fighter_bay": {
+          "used": 10000.0,
+          "total": 93750.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "10k",
+          "desktop_total": "93.8k",
+          "desktop_used_detail": "10000.0",
+          "desktop_total_detail": "93750.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 2800.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "2.8k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "2800.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Fighter tube and bay overload",
+        "ship": "Thanatos",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        },
+        {
+          "name": "Firbolg I",
+          "amount": 6,
+          "active": true
+        }
+      ],
+      "execution": "ephemeral",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 5.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "5",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "5.0"
+        },
+        "fighter_tubes": {
+          "used": 20,
+          "total": 4.0,
+          "unit": "count",
+          "overloaded": true,
+          "desktop_used": "20",
+          "desktop_total": "4",
+          "desktop_used_detail": "20.0",
+          "desktop_total_detail": "4.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 906.25,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "906.2",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "906.2"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 875000.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "875k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "875000.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "fighter_bay": {
+          "used": 120000.0,
+          "total": 93750.0,
+          "unit": "m\u00b3",
+          "overloaded": true,
+          "desktop_used": "120k",
+          "desktop_total": "93.8k",
+          "desktop_used_detail": "120000.0",
+          "desktop_total_detail": "93750.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 2800.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "2.8k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "2800.0"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Empty structure",
+        "ship": "Astrahus",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "fighters": [],
+      "execution": "durable",
+      "resources": {
+        "turret_hardpoints": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "launcher_hardpoints": {
+          "used": 0,
+          "total": 2.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "2",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "2.0"
+        },
+        "active_drones": {
+          "used": 0,
+          "total": 0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "fighter_tubes": {
+          "used": 0,
+          "total": 3.0,
+          "unit": "count",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "3",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "3.0"
+        },
+        "calibration": {
+          "used": 0,
+          "total": 400.0,
+          "unit": "points",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "400",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "400.0"
+        },
+        "cpu": {
+          "used": 0,
+          "total": 24000.0,
+          "unit": "tf",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "24k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "24000.0"
+        },
+        "powergrid": {
+          "used": 0,
+          "total": 1500000.0,
+          "unit": "MW",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "1.5M",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "1500000.0"
+        },
+        "drone_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "fighter_bay": {
+          "used": 0,
+          "total": 200000.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "200k",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "200000.0"
+        },
+        "drone_bandwidth": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "Mbit/s",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        },
+        "cargo_bay": {
+          "used": 0,
+          "total": 0.0,
+          "unit": "m\u00b3",
+          "overloaded": false,
+          "desktop_used": "0",
+          "desktop_total": "0",
+          "desktop_used_detail": "0.0",
+          "desktop_total_detail": "0.0"
+        }
+      }
+    }
+  ]
+}
