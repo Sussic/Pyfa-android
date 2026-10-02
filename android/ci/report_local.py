@@ -29,6 +29,13 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    capacitor_proof=state.get('capacitor_runner_reuse')
+    if capacitor_proof:
+        from capacitor_runner_retry import exact_source,validate_retained
+        exact_source(root,capacitor_proof['from_commit'],capacitor_proof['to_commit'])
+        assert capacitor_proof['to_commit']==state['commit'] and capacitor_proof['prepared'] and capacitor_proof['installed']
+        validate_retained(run,capacitor_proof)
+        assert latest['build:capacitor-test-runner']['exit_code']==0 and latest['headless:capacitor-runner-guard']['exit_code']==0
     resource_reuse=state.get('resource_test_reuse',[])
     resource_proof=resource_reuse[-1] if resource_reuse else None
     if resource_proof:
@@ -139,6 +146,9 @@ def validate(run,root):
         assert row['exit_code']==0 and row['tested_commit'],gate
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
+            if capacitor_proof and gate in capacitor_proof['retained_gates']:
+                assert row['tested_commit']==capacitor_proof['from_commit']
+                continue
             comparison_commit=state['commit']
             if resource_proof and gate in resource_proof['retained_gates']:
                 assert any(gate in proof['retained_gates'] and row['tested_commit']==proof['from_commit'] for proof in resource_reuse)
