@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.1 verified; PR delivery pending.**
+Updated: 2026-10-02. **C01.1 delivered; C01.2 is next.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
@@ -9,7 +9,8 @@ installation, unrelated setup/refactoring or billing changes are authorized here
 
 ## Current outcome — C01.1 fitting resources
 
-Branch `codex/c01-1-fitting-resources`; reviewed/tested correction `e310303f`.
+[PR #36](https://github.com/Sussic/Pyfa-android/pull/36) merged as `7e457c97` from
+reviewed head `c5b187c0`; merge/head trees match. Reviewed/tested code is `e310303f`.
 [Task](tasks/C01-fit-statistics.md), [receipt](evidence/c01-1-native.json).
 F05.01–F05.11 expose all eleven used/capacity pairs, original compact formatting,
 units, detail/raw precision, explicit unavailable scalars and textual overload.
@@ -40,10 +41,11 @@ archived by hash. Required passing screenshots are intact. Four provisional
 fighter/over-hardpoint cases use isolated real EOS diagnostics; C05 editor and
 fighter persistence are not claimed.
 
-Exact next: commit/push the reviewed receipt/docs, create the focused C01.1 PR,
-validate/publish its exact-head `local/full-verification`, then merge. After merge,
-checkpoint and select **C01.2 capacitor** (F05.12–F05.15). Do not start it before
-C01.1 delivery. Parent C01 stays active through capacitor and defenses/tank.
+Exact next: select **C01.2 capacitor** (F05.12–F05.15) on a focused branch from
+this delivered default branch. Capacity/effective capacity, stable percentage/range
+versus depletion seconds, recharge/use/signed delta/effective excess and neutralizer
+resistance must match original desktop evidence, offline native details and restart.
+Parent C01 remains active through capacitor and defenses/tank.
 
 ## Previous deliveries
 

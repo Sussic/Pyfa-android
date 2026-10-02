@@ -14,7 +14,7 @@ units, formatting, detail precision and the meaning of available capacity.
 | C01.2 | F05.12–F05.15: capacitor | Capacity/effective capacity, correctly distinguished stable percentage/range versus depletion seconds, recharge/use/signed delta/effective excess gain and neutralizer resistance; independent battery/projected-neut and stable/unstable cases, native details and restart. |
 | C01.3 | F05.16–F05.27: defenses and tank | Every damage resistance and multiplier, raw/effective HP and selected pattern contributions, raw/effective reinforced/sustained passive and active tank, applicable projected repair and spool details; independent assumption changes, typed persistence/history extension where needed, native controls/restart and screenshots. |
 
-C01.1 is verified for delivery; C01.2 and C01.3 follow sequentially after its merge. These children retain the
+C01.1 is delivered in PR #36; C01.2 and C01.3 follow sequentially. These children retain the
 parent's full acceptance rather than dropping fields. C01.3 may be subdivided
 before implementation if the native outcome needs another bounded review.
 Named damage-pattern management remains D05; audited C01 assumption inputs must
@@ -74,5 +74,5 @@ revisions, metadata and EOS statistics before removing only known partial synthe
 test records. Full original failure logs/stores/APKs remain retained. The first
 optional shared failure PNG/logcat were overwritten by the second failure and are
 explicitly recorded as unavailable, never passing evidence. Later diagnostics are
-archived by hash; required passing screenshots are intact. C01.2 starts after the
-exact-head local result, PR review and C01.1 merge.
+archived by hash; required passing screenshots are intact. PR #36 merged as `7e457c97` from reviewed head `c5b187c0` with matching trees and
+its successful exact-head `local/full-verification`. C01.2 is the next outcome.

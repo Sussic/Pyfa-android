@@ -1790,5 +1790,9 @@
     "ARM64, older APIs, phone usability and signing/upgrade acceptance remain unverified. No release or phone installation."
   ],
   "review": "No blocking issue after source review, all required checks and exact-hash screenshot review.",
-  "next_task": "C01.2 capacitor after C01.1 exact-head local result and merge"
+  "next_task": "C01.2 capacitor after C01.1 exact-head local result and merge",
+  "pull_request": "https://github.com/Sussic/Pyfa-android/pull/36",
+  "delivery_head": "c5b187c01dca644a22e577c1f9b5fe7f5ec95b3a",
+  "merged_commit": "7e457c97bb43c2e788abd92e6990dd1f7bb09c7b",
+  "merge_tree_matches_reviewed_head": true
 }
