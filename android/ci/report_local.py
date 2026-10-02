@@ -29,12 +29,24 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    settings_reuse=state.get('settings_fix_reuse',[])
+    settings_proof=settings_reuse[-1] if settings_reuse else None
+    if settings_proof:
+        from local_verification import pending_settings_fix
+        pending_settings_fix(root,settings_proof['from_commit'],settings_proof['to_commit'])
+        assert settings_proof['to_commit']==state['commit'] and settings_proof['validated']
+        archive=run/settings_proof['archive']
+        assert archive.resolve().is_relative_to(run.resolve())
+        for name,digest in settings_proof['retained_hashes'].items():
+            assert sha(archive/name)==sha(run/'native'/name)==digest
+        for name,digest in settings_proof['apk_hashes'].items():assert sha(run/'apks'/name)==digest
+        assert latest['native:mutation-history-0-restored']['retained_native_execution_commit']==settings_proof['from_commit']
     runner_reuse=state.get('runner_fix_reuse',[])
     proof=runner_reuse[-1] if runner_reuse else None
     if proof:
         from local_verification import pending_runner_fix
         pending_runner_fix(root,proof['from_commit'],proof['to_commit'],proof['completed_before_adoption'])
-        assert proof['to_commit']==state['commit'] and proof['prepared'] and proof['installed']
+        assert proof['to_commit']==(settings_proof['from_commit'] if settings_proof else state['commit']) and proof['prepared'] and proof['installed']
         archive=run/proof['archive']
         assert archive.resolve().is_relative_to(run.resolve())
         assert sha(archive/'apks/app-debug.apk')==sha(run/'apks/app-debug.apk')==proof['app_sha256']
@@ -52,6 +64,9 @@ def validate(run,root):
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
             comparison_commit=state['commit']
+            if settings_proof and gate in settings_proof['completed_before_adoption']:
+                if row['tested_commit']==settings_proof['from_commit']:continue
+                comparison_commit=settings_proof['from_commit']
             if proof and gate in proof['completed_before_adoption']:
                 assert not gate.startswith('native:mutation-history-')
                 if row['tested_commit']==proof['from_commit']:continue

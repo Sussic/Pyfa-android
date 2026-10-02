@@ -94,6 +94,26 @@ class MutationStateTest(unittest.TestCase):
             with self.assertRaises(AssertionError): summary.recent_case(expected, corrupted)
 
 
+class SettingsRepresentationTest(unittest.TestCase):
+    def test_only_spoolup_whole_double_representation_is_accepted(self):
+        expected = FIXTURE['eos_settings']
+        for number in (1, 1.0):
+            actual = deepcopy(expected); actual['globalDefaultSpoolupPercentage'] = number
+            summary.settings(expected, actual)
+    def test_wrong_value_boolean_string_nonfinite_and_missing_setting_fail(self):
+        expected = FIXTURE['eos_settings']
+        for number in (0, 1.0000000001, True, '1', float('nan'), float('inf')):
+            actual = deepcopy(expected); actual['globalDefaultSpoolupPercentage'] = number
+            with self.assertRaises(AssertionError): summary.settings(expected, actual)
+        actual = deepcopy(expected); actual.pop('globalDefaultSpoolupPercentage')
+        with self.assertRaises(AssertionError): summary.settings(expected, actual)
+    def test_other_settings_still_require_exact_boolean_types(self):
+        expected = FIXTURE['eos_settings']
+        for name in ('strictSkillLevels', 'useStaticAdaptiveArmorHardener'):
+            actual = deepcopy(expected); actual[name] = int(actual[name])
+            with self.assertRaises(AssertionError): summary.settings(expected, actual)
+
+
 class FixtureBytesTest(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(); self.addCleanup(self.temporary.cleanup)

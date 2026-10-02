@@ -13,6 +13,18 @@ RESTORED = ['fresh_process_restore', 'all_session_history_empty', 'all_new_input
 ZERO = dict(undo_count=0, redo_count=0, can_undo=False, can_redo=False)
 
 
+def settings(expected, actual):
+    # JSONObject writes the whole-valued double 1.0 as 1. Only this setting's
+    # representation may differ; its numeric value must still match exactly.
+    exact(set(expected), set(actual))
+    for key, value in expected.items():
+        other = actual[key]
+        if key == 'globalDefaultSpoolupPercentage':
+            assert type(value) is float and type(other) in (int, float)
+            assert isfinite(value) and isfinite(other) and value == other
+        else: exact(value, other)
+
+
 def _typed_shape(value):
     # B09.1's shape is intentionally limited to modules/statistics. Remaining
     # mutations also contain decimal projection ranges and linked statistics.
@@ -112,7 +124,7 @@ def summarize(reports, engine, prior, complete=True):
     if complete: exact(8, len(reports))
     groups = len(reports) // 2
     assert all(type(r['pid']) is int and r['pid'] > 0 for r in reports)
-    exact(fixture['eos_settings'], engine['eos_settings'])
+    settings(fixture['eos_settings'], engine['eos_settings'])
     assert len({r['pid'] for r in reports}) == len(reports)
     assert not {r['pid'] for r in reports} & {r['pid'] for r in prior}
     previous = prior[-1]['after']; previous_recent = prior[-1]['recent_after']

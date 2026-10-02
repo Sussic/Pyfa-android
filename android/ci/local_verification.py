@@ -62,6 +62,39 @@ def pending_runner_fix(root, before, after, completed):
             if isinstance(n, ast.FunctionDef) and n.name in ('plan', 'host', 'build', 'execute')}
     assert executed(source(before, 'android/ci/local_verification.py')) == executed(source(after, 'android/ci/local_verification.py'))
 
+def pending_settings_fix(root, before, after):
+    """Only the named whole-double settings comparison may change in raw validation."""
+    def source(commit, name):
+        return subprocess.check_output(['git','show',commit+':'+name],cwd=root,text=True,encoding='utf-8')
+    path='android/ci/mutation_history_summary.py'
+    addition='''def settings(expected, actual):
+    # JSONObject writes the whole-valued double 1.0 as 1. Only this setting's
+    # representation may differ; its numeric value must still match exactly.
+    exact(set(expected), set(actual))
+    for key, value in expected.items():
+        other = actual[key]
+        if key == 'globalDefaultSpoolupPercentage':
+            assert type(value) is float and type(other) in (int, float)
+            assert isfinite(value) and isfinite(other) and value == other
+        else: exact(value, other)
+
+
+'''
+    old=source(before,path)
+    line="    exact(fixture['eos_settings'], engine['eos_settings'])"
+    assert old.count(line)==1 and old.count('def _typed_shape(value):')==1
+    expected=old.replace('def _typed_shape(value):',addition+'def _typed_shape(value):',1).replace(line,"    settings(fixture['eos_settings'], engine['eos_settings'])",1)
+    assert source(after,path)==expected, 'Unrelated raw validator change'
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/test_mutation_history_summary.py','android/ci/local_verification.py',
+        'android/ci/report_local.py','android/ci/revalidate-mutation-history.py','android/ci/test_pending_settings_fix.py'}
+    assert path in changes and set(changes)<=allowed,changes
+    import ast
+    def executed(text):
+        return {n.name:ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(text))
+            if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
+    assert executed(source(before,'android/ci/local_verification.py'))==executed(source(after,'android/ci/local_verification.py'))
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -110,6 +143,14 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_pending_settings_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-0-restored'
+                assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-0-prepare' in self.state['completed']
+                assert not any(g.startswith('native:mutation-history-1-') for g in self.state['completed'])
+                pending_settings_fix(ROOT,self.state['commit'],current)
+                self.state.setdefault('settings_fix_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'validated':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_pending_runner_fix:
                 assert self.state['status']=='failed'
                 assert self.state['attempts'][-1]['gate']=='native:mutation-history-0-prepare'
@@ -303,6 +344,21 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            settings_fixes=self.state.get('settings_fix_reuse',[])
+            if settings_fixes and not settings_fixes[-1]['validated']:
+                proof=settings_fixes[-1]
+                archive=self.directory/'settings-fix-original';archive.mkdir(exist_ok=False)
+                (archive/'run.json').write_bytes(self.original_run_bytes)
+                names=[f'mutation-history-0-{phase}-{suffix}' for phase in ('prepare','restored') for suffix in ('native.json','instrumentation.txt')]
+                proof['retained_hashes']={name:sha(self.native/name) for name in names}
+                proof['apk_hashes']={p.name:sha(p) for p in (self.directory/'apks').glob('*.apk')}
+                assert len(proof['apk_hashes'])==2
+                for name in names:shutil.copyfile(self.native/name,archive/name)
+                self.execute('native:mutation-history-0-restored',[sys.executable,ROOT/'android/ci/revalidate-mutation-history.py'])
+                self.state['attempts'][-1]['retained_native_execution_commit']=proof['from_commit']
+                assert all(sha(self.native/name)==value for name,value in proof['retained_hashes'].items())
+                self.state['completed'].append('native:mutation-history-0-restored')
+                proof['archive']=archive.name;proof['validated']=True;save(self.file,self.state)
             fixes=self.state.get('runner_fix_reuse',[])
             if fixes and not fixes[-1]['prepared']:
                 proof=fixes[-1]
@@ -380,6 +436,7 @@ def main():
     parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
     parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
     parser.add_argument('--adopt-pending-runner-fix',action='store_true',help='Adopt only the exact missing B09.2 storage flag after its first phase failed; preserve earlier proof and rebuild the test APK')
+    parser.add_argument('--adopt-pending-settings-fix',action='store_true',help='Revalidate retained successful group 0 instrumentation after the exact whole-double settings-report correction')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
