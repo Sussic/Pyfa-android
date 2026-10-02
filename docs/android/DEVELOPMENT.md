@@ -116,7 +116,7 @@ does not mean it was executed on arm64 hardware.
 Use [explicit local verification](LOCAL-VERIFICATION.md) for required Windows
 reference/host, APK/lint/package and offline native checks, exact-commit evidence,
 screenshot review and truthful `local/full-verification` reporting. The full plan
-contains every later gate through B09.1; historical counts above are not subsets
+contains every later gate through B09.2; historical counts above are not subsets
 to use for delivery. Run focused checks while developing, then all applicable
 checks for final execution inputs. Reuse unchanged valid proof without relabelling
 its actual tested commit. Product/test changes invalidate affected proof.

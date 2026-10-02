@@ -1,8 +1,8 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.1 delivered; B09.2 verified, delivery pending.**
+Updated: 2026-10-02. **B09.2 delivered; C01 is next.**
 
-## Latest delivery — B09.1 module edit history
+## Previous delivery — B09.1 module edit history
 
 [PR #33](https://github.com/Sussic/Pyfa-android/pull/33) merged as `3143d771`
 from reviewed head `9b586d89`; merge/head trees match. Its exact head passed
@@ -21,7 +21,7 @@ raw validator rejects 21 deliberate report corruptions. Review found no blocking
 issue. [Feature receipt](evidence/b09-1-native.json) and
 [raw history](evidence/b09-1-history-native.json) preserve evidence and limits.
 
-## Authorized next outcome — B09.2 remaining mutation history
+## Latest delivery — B09.2 remaining mutation history
 
 The user explicitly resumed development and superseded the setup-only stop.
 Automatically continue eligible approved roadmap work, one coherent outcome through
@@ -29,7 +29,9 @@ review, full local verification and delivery. No hosted dispatch without asking,
 setup repeat, new infrastructure, unrelated refactoring, release, phone installation,
 billing change or delegation. No decision/access blocker currently exists.
 
-B09.2 is verified on `codex/b09-2-mutation-history`; reviewed code `98ab296d`,
+[PR #35](https://github.com/Sussic/Pyfa-android/pull/35) merged as `7b780c51`
+from reviewed head `c7cbb8af`; merge/head trees match. Its exact head passed
+`local/full-verification`. Reviewed code is `98ab296d`,
 APK build `ac90c37d`. [Receipt](evidence/b09-2-native.json) records all 88 passing
 local gates, their actual tested commits, APK hashes and retained failures.
 Independent original GUI/calc commands and wx processors cover 28 cases/168
@@ -52,9 +54,9 @@ verified every saved input/statistic and the unchanged database checksum before
 recovering its private test checkpoint and original selection precondition;
 only restored instrumentation reran. No required assertion, numerical tolerance,
 phase timeout, restart or A10 requirement changed. No Actions success is claimed.
-Exact next action: review receipt/docs, publish the exact-head local result,
-merge the focused B09.2 PR, then select approved C01. No feature beyond B09.2 has
-started.
+B09 is complete for current supported mutations; future mutation tasks must
+extend its checks. Exact next task: approved C01 resources, capacitor and defenses.
+Expand its audited acceptance rows into bounded children before implementation.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.

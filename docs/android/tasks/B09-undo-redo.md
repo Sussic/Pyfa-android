@@ -201,3 +201,10 @@ was relaxed. Complete local validation is passed; focused PR delivery is pending
 History remains session-local, confirmed inputs persist, and direct profile/recent
 policy gaps remain explicit. ARM64 execution, older APIs, signing upgrades and
 phone usability remain unverified. No hosted job, release or phone install ran.
+
+## B09.2 delivered — 2026-10-02
+
+PR #35 merged as `7b780c51` from reviewed head `c7cbb8af`; their trees match.
+The exact PR head passed `local/full-verification`; no Actions pass is claimed.
+B09.1/B09.2 and the parent are complete for all current supported operations.
+Later mutation tasks retain the mandatory extension checks. Approved C01 is next.
