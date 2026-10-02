@@ -110,6 +110,10 @@ def resource_details(fit_id):
     return encoded(_bridge.resource_details(fit_id))
 
 
+def capacitor_details(fit_id):
+    return encoded(_bridge.capacitor_details(fit_id))
+
+
 def cargo_action_options(fit_id, item_id, from_cargo):
     return encoded(_bridge.cargo_action_options(fit_id, item_id, from_cargo))
 

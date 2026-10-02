@@ -7,7 +7,21 @@ one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Current outcome — C01.1 fitting resources
+## Current outcome — C01.2 capacitor
+
+Selected from `2cb602f3` on `codex/c01-2-capacitor-details` in `7594e7ec`.
+Read-only capacitor query, strict typed DTO and current-fit screen are implemented;
+capacity/effective capacity, recharge/use/delta/effective excess, resistance and
+stable percent versus depletion seconds use EOS and pinned desktop presentation.
+Two fresh original wx/EOS exports agree for twelve independent cases. Focused
+host matrix/read-only/history/copy/thread/restart checks and ten fixture/raw
+validator tests pass. Development APK compilation/lint pass; final revision still
+requires its full 97-gate verification, native screenshots, review and delivery.
+Initial host seed and isolated validator-import failures are retained locally.
+No native execution or merge is yet claimed. Exact next is the C01.2 full local
+verification and delivery; C01.3 follows only after this outcome is closed.
+
+## Latest delivery — C01.1 fitting resources
 
 [PR #36](https://github.com/Sussic/Pyfa-android/pull/36) merged as `7e457c97` from
 reviewed head `c5b187c0`; merge/head trees match. Reviewed/tested code is `e310303f`.

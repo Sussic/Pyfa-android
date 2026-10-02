@@ -100,7 +100,10 @@ from notes_summary import summarize as summarize_notes
 from history_summary import summarize as summarize_history
 from mutation_history_summary import summarize as summarize_mutation_history
 from resource_summary import summarize as summarize_resources
+from capacitor_summary import summarize as summarize_capacitor
 summary = {
+    "capacitor": summarize_capacitor([json.loads((evidence / f"capacitor-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
+        engine, {json.loads((evidence / f"resources-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("probe", "prepare", "restored")}),
     "resources": summarize_resources(json.loads((evidence / "resources-probe-native.json").read_text(encoding="utf-8")),
         [json.loads((evidence / f"resources-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
         engine, {row['pid'] for row in json.loads((evidence / "mutation-history-native.json").read_text(encoding="utf-8"))}),
