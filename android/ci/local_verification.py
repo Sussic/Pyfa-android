@@ -143,6 +143,15 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_stale_history_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                assert [g for g in self.state['completed'] if g.startswith('native:mutation-history-')]==[f'native:mutation-history-{group}-{phase}' for group in range(3) for phase in ('prepare','restored')]
+                from stale_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                self.state.setdefault('stale_history_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'retained_gates':list(self.state['completed']),'prepared':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_cargo_observer_fix:
                 assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-1-prepare'
                 assert self.state['attempts'][-1]['exit_code']!=0
@@ -356,6 +365,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            stale_fixes=self.state.get('stale_history_reuse',[])
+            if stale_fixes and not stale_fixes[-1]['prepared']:
+                from stale_history_retry import prepare
+                prepare(self,stale_fixes[-1]);save(self.file,self.state)
             cargo_fixes=self.state.get('cargo_observer_reuse',[])
             if cargo_fixes and not cargo_fixes[-1]['prepared']:
                 from cargo_history_retry import prepare
@@ -407,6 +420,9 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if stale_fixes and not stale_fixes[-1].get('installed'):
+                        from stale_history_retry import install
+                        install(self,stale_fixes[-1]);save(self.file,self.state)
                     if cargo_fixes and not cargo_fixes[-1].get('installed'):
                         from cargo_history_retry import install
                         install(self,cargo_fixes[-1]);save(self.file,self.state)
@@ -458,6 +474,8 @@ def main():
     parser.add_argument('--adopt-pending-settings-fix',action='store_true',help='Revalidate retained successful group 0 instrumentation after the exact whole-double settings-report correction')
     parser.add_argument('--adopt-cargo-observer-fix',action='store_true',help='Rebuild the exact cargo-sort observer correction, recover the proven synthetic baseline and rerun all B09.2 phases')
     parser.add_argument('--cargo-recovery',help='Validated partial/restored store and receipt directory for the exact B09.2 failure')
+    parser.add_argument('--adopt-stale-history-fix',action='store_true',help='Rebuild the exact final-group enum comparison repair; retain groups 0–2 and retry only group 3')
+    parser.add_argument('--stale-recovery',help='Validated partial/restored group 3 store and receipt directory')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

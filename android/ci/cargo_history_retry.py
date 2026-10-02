@@ -98,10 +98,10 @@ def assets_equal(old,new):
         assert names=={n for n in b.namelist() if n.startswith('assets/')}
         assert all(a.read(n)==b.read(n) for n in names),'Packaged fixture changed'
 
-def install(runner,proof):
+def install(runner,proof,validation=validate_recovery):
     archive=runner.directory/proof['archive']
     root=Path(__file__).resolve().parents[2]
-    receipt=validate_recovery(root,runner.directory,archive/'recovery')
+    receipt=validation(root,runner.directory,archive/'recovery')
     def adb(*args):return subprocess.check_output(['adb','-s',runner.serial,*map(str,args)],timeout=30)
     assert adb('shell','getprop','ro.kernel.qemu').strip()==b'1'
     assert adb('emu','avd','name').decode().splitlines()[0]==runner.state['avd_name']

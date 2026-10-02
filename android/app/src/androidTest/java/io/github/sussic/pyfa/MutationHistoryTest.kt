@@ -314,9 +314,9 @@ class MutationHistoryTest {
                     ready(active)
                     val beforeStale = library(); val cursor = counts(active)
                     val rejected = EngineRuntime.request(context, BridgeOperation.Undo(active), mapOf(active to 0L)).get(180, TimeUnit.SECONDS)
-                    assertFalse(rejected.isSuccess); assertEquals("REVISION_CONFLICT", rejected.error?.code)
+                    assertFalse(rejected.isSuccess); assertEquals(BridgeErrorCode.REVISION_CONFLICT, rejected.error?.code)
                     compare(beforeStale, library()); compare(cursor, counts(active))
-                    observations.put("stale_error_code", rejected.error!!.code)
+                    observations.put("stale_error_code", rejected.error!!.code.name)
                     compose.runOnUiThread { model.options = model.options!!.copy(revision = 0); model.apply(context, false) }
                     waitFor { !model.editing && model.error != null }
                     compare(beforeStale, library()); compare(cursor, counts(active)); screenshot("3-stale", "history-error")

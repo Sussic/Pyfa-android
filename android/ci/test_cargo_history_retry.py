@@ -17,7 +17,7 @@ BEFORE='287c0c336c0191c78129a017b363dbc3d030adad'
 class SourceTest(unittest.TestCase):
     def setUp(self):
         self.old=subprocess.check_output(['git','show',BEFORE+':'+retry.PATH],cwd=ROOT)
-        self.new=(ROOT/retry.PATH).read_text().encode()
+        self.new=subprocess.check_output(['git','show','66e89f31864ff12396f02dd420f5b3b5a1a5fd00:'+retry.PATH],cwd=ROOT)
         self.launcher=(ROOT/'android/ci/local_verification.py').read_bytes()
         self.changed=[retry.PATH,'android/ci/local_verification.py','android/ci/report_local.py',
             'android/ci/cargo_history_retry.py','android/ci/test_cargo_history_retry.py']
