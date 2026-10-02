@@ -12,7 +12,7 @@ PATH='android/ci/mutation_history_summary.py'
 class PendingSettingsFixTest(unittest.TestCase):
     def setUp(self):
         self.old=subprocess.check_output(['git','show',BEFORE+':'+PATH],cwd=ROOT,text=True,encoding='utf-8')
-        self.new=(ROOT/PATH).read_text(encoding='utf-8')
+        self.new=subprocess.check_output(['git','show','287c0c336c0191c78129a017b363dbc3d030adad:'+PATH],cwd=ROOT,text=True,encoding='utf-8')
         self.launcher=(ROOT/'android/ci/local_verification.py').read_text(encoding='utf-8')
         self.changes=[PATH,'android/ci/local_verification.py','android/ci/report_local.py',
             'android/ci/test_mutation_history_summary.py','android/ci/revalidate-mutation-history.py','android/ci/test_pending_settings_fix.py']

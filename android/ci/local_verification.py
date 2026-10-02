@@ -143,6 +143,15 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_projection_report_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-3-prepare' not in self.state['completed']
+                assert 'native:mutation-history-2-restored' in self.state['completed']
+                from projection_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                self.state.setdefault('projection_report_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'retained_gates':list(self.state['completed']),'validated':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_stale_history_fix:
                 assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
                 assert self.state['attempts'][-1]['exit_code']!=0
@@ -365,6 +374,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            projection_fixes=self.state.get('projection_report_reuse',[])
+            if projection_fixes and not projection_fixes[-1]['validated']:
+                from projection_history_retry import revalidate
+                revalidate(self,projection_fixes[-1]);save(self.file,self.state)
             stale_fixes=self.state.get('stale_history_reuse',[])
             if stale_fixes and not stale_fixes[-1]['prepared']:
                 from stale_history_retry import prepare
@@ -476,6 +489,7 @@ def main():
     parser.add_argument('--cargo-recovery',help='Validated partial/restored store and receipt directory for the exact B09.2 failure')
     parser.add_argument('--adopt-stale-history-fix',action='store_true',help='Rebuild the exact final-group enum comparison repair; retain groups 0–2 and retry only group 3')
     parser.add_argument('--stale-recovery',help='Validated partial/restored group 3 store and receipt directory')
+    parser.add_argument('--adopt-projection-report-fix',action='store_true',help='Revalidate retained successful group 3 preparation after exact decimal projection-range comparison repair; no instrumentation rerun')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

@@ -29,6 +29,20 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    projection_reuse=state.get('projection_report_reuse',[])
+    projection_proof=projection_reuse[-1] if projection_reuse else None
+    if projection_proof:
+        from projection_history_retry import exact_source
+        exact_source(root,projection_proof['from_commit'],projection_proof['to_commit'])
+        assert projection_proof['to_commit']==state['commit'] and projection_proof['validated']
+        archive=run/projection_proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
+        assert set(projection_proof['retained_hashes'])=={'mutation-history-3-prepare-native.json','mutation-history-3-prepare-instrumentation.txt'}
+        for name,digest in projection_proof['retained_hashes'].items():assert sha(archive/name)==sha(run/'native'/name)==digest
+        assert set(projection_proof['apk_hashes'])=={'app-debug.apk','app-debug-androidTest.apk'}
+        for name,digest in projection_proof['apk_hashes'].items():assert sha(run/'apks'/name)==digest
+        retained=[g for g in state['plan'] if g not in ('native:mutation-history-3-prepare','native:mutation-history-3-restored','native:summary')]
+        assert projection_proof['retained_gates']==retained
+        assert latest['native:mutation-history-3-prepare']['retained_native_execution_commit']==projection_proof['from_commit']
     stale_reuse=state.get('stale_history_reuse',[])
     stale_proof=stale_reuse[-1] if stale_reuse else None
     middle_apks=run/'apks'
@@ -36,7 +50,7 @@ def validate(run,root):
         from stale_history_retry import exact_source,validate_recovery
         from cargo_history_retry import assets_equal
         exact_source(root,stale_proof['from_commit'],stale_proof['to_commit'])
-        assert stale_proof['to_commit']==state['commit'] and stale_proof['prepared'] and stale_proof['installed']
+        assert stale_proof['to_commit']==(projection_proof['from_commit'] if projection_proof else state['commit']) and stale_proof['prepared'] and stale_proof['installed']
         archive=run/stale_proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
         validate_recovery(root,run,archive/'recovery')
         assert sha(archive/'recovery/recovery.json')==stale_proof['recovery_receipt_sha256']
@@ -103,6 +117,9 @@ def validate(run,root):
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
             comparison_commit=state['commit']
+            if projection_proof and gate in projection_proof['retained_gates']:
+                if row['tested_commit']==projection_proof['from_commit']:continue
+                comparison_commit=projection_proof['from_commit']
             if stale_proof and gate in stale_proof['retained_gates']:
                 if row['tested_commit']==stale_proof['from_commit']:continue
                 comparison_commit=stale_proof['from_commit']

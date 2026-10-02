@@ -57,6 +57,22 @@ def stats(expected, actual):
         else: exact(a, b)
 
 
+def projection_inputs(expected, actual, kinds):
+    # JSONObject renders integral Double metres as JSON integers. Require the
+    # retained decimal kind and lossless exact value; all other fields stay typed.
+    exact(len(expected), len(actual))
+    for index, (left, right) in enumerate(zip(expected, actual)):
+        exact(set(left), set(right))
+        for key, value in left.items():
+            other = right[key]
+            if key == 'range_m':
+                exact('decimal', kinds[f'root.projections[{index}].range_m'])
+                assert type(value) is float and type(other) in (int, float)
+                assert isfinite(value) and isfinite(other) and float(other) == other
+                exact(value, float(other))
+            else: exact(value, other)
+
+
 def state(case, step, observed, recent):
     _typed_shape(observed)
     actual = observed['data']; wanted = deepcopy(step['result'])
@@ -77,6 +93,7 @@ def state(case, step, observed, recent):
     input_kinds(wanted, 'root')
     for field in wanted:
         if field in ('stats', 'linked_stats') and wanted[field] is not None: stats(wanted[field], actual[field])
+        elif field == 'projections': projection_inputs(wanted[field], actual[field], observed['numeric_types'])
         else: exact(wanted[field], actual[field])
 
 
