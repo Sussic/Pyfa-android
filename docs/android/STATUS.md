@@ -45,8 +45,15 @@ lint/signature/package and 12 focused raw-validator tests pass; actual native
 execution is still required. A review fix retains cargo/subsystem recent-use promotions when already first,
 so Redo restores ordering after another fit edits cargo. Independent desktop and
 focused bridge checks pass its five-step two-fit case. Exact next action:
-review/commit the complete native candidate, run its 88-gate local plan, inspect raw reports/screenshots and deliver
-the focused PR. B09 remains active until every existing
+complete final verification of the linked-copy range normalization repair, inspect
+raw reports/screenshots and deliver the focused PR. The first run retains 86/88
+valid completed gates and successful final restore instrumentation, but aggregate
+history validation exposed a real linked-copy bug: integer JSON metres became
+float metres on EOS refresh and invalidated unchanged recipient history. A focused
+host reproduction confirms it; normalizing to EOS Float before history capture
+preserves the cursor. Native assertions now explicitly check copy preserves it.
+This packaged product correction requires new affected verification, with all
+earlier results/failures retained and no weakened summary assertion. B09 remains active until every existing
 mutation has an explicit tested disposition. Later mutation tasks must extend it.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master

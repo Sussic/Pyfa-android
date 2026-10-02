@@ -306,10 +306,12 @@ class MutationHistoryTest {
                     checks.put("transfer_selection_safety")
                 }
                 if (group == 3) {
+                    val originalCursor = counts(active)
                     val original = cases.getJSONObject(0); val source = original.getString("source_id")
                     val copy = send(BridgeOperation.DuplicateFit(active, "B09.2 independent link copy — Δ"), listOf(active)).fits
                         .single { it.name == "B09.2 independent link copy — Δ" }.id
                     created.put(copy); assertEquals(0, history(copy).undoCount)
+                    compare(originalCursor, counts(active))
                     observations.put("copy_id", copy); observations.put("copy_history", counts(copy))
                     ready(active)
                     val beforeStale = library(); val cursor = counts(active)

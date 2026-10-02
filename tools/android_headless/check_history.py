@@ -148,6 +148,22 @@ def main():
             compare(before,saved(self.bridge));compare(cursor,history(self.bridge,key))
             self.send('redo',dict(fit_id=key));self.assertEqual('Iron Charge M',self.bridge._fits[key].modules[0].charge.name)
         def test_copy_delete_and_registered_transfer(self):
+            # JSONObject emits integral Double ranges as JSON integers. A copy's
+            # EOS refresh must preserve the original recipient's history and inputs.
+            for metres in (0, 1000, 1000.5):
+                target,source=self.create(),self.create()
+                self.send('add_projection',dict(source_id=source,target_id=target,range_m=metres,active=True,amount=1))
+                self.send('undo',dict(fit_id=target));self.send('redo',dict(fit_id=target))
+                record=deepcopy(self.bridge._records[target]);cursor=history(self.bridge,target)
+                response=self.send('duplicate_fit',dict(fit_id=target,name='Linked history copy'))
+                copy=next(row['id'] for row in response['fits'] if row['name']=='Linked history copy')
+                compare(record,self.bridge._records[target]);compare(cursor,history(self.bridge,target))
+                self.assertEqual(0,history(self.bridge,copy)['undo_count'])
+                self.send('undo',dict(fit_id=target))
+                self.assertEqual([],self.bridge._records[target]['projections'])
+                self.assertEqual(metres,self.bridge._records[copy]['projections'][0]['range_m'])
+                self.send('redo',dict(fit_id=target));compare(record,self.bridge._records[target])
+                for id_ in (copy,target,source):self.send('delete_fit',dict(fit_id=id_,resolve_references=True))
             key=self.create();self.send('remove_module',dict(fit_id=key,position=0))
             response=self.send('duplicate_fit',dict(fit_id=key,name='History copy'))
             copy=next(row['id'] for row in response['fits'] if row['name']=='History copy')

@@ -247,7 +247,11 @@ class HeadlessEngine:
         """Set all link options together after validation; range units are metres."""
         info = self._projection(source, target)
         self._projection_values(range_m, active, amount)
-        info.projectionRange, info.active, info.amount = range_m, active, amount
+        # EOS persists metres as Float and Kotlin exposes Double. Canonicalize
+        # integral JSON inputs before history records them, so ORM refresh after
+        # copying a linked fit cannot turn an unchanged range into a typed edit.
+        info.projectionRange = None if range_m is None else float(range_m)
+        info.active, info.amount = active, amount
         self._recalculate(target)
 
     def remove_projection(self, source, target):
