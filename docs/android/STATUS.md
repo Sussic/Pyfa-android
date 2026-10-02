@@ -1,11 +1,26 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.2 delivered; C01.3 defenses/tank is next.**
+Updated: 2026-10-02. **C01.3.1 defenses and incoming damage selected.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Current outcome — C01.3.1 defenses and incoming damage
+
+Selected from delivered master dafcadc on codex/c01-3-1-defense-details.
+F05.16–F05.22: all twelve shield/armor/hull resistances, each resistance
+multiplier, raw and selected-pattern effective HP per layer and total, HP/EHP
+toggle, and all four independently editable incoming damage contributions.
+Preserve precise typed EOS results, current-fit/revision refresh, offline durable
+inputs and global Undo/Redo. Named pattern management remains D05.
+Required: independent original wx/EOS states for single/mixed patterns, fitted
+resistance/HP modifiers, active/offline changes; rejection/read-only/history/copy
+and fresh-process persistence checks; APK/lint/package and the full inherited
+local/native suite, screenshot review and actual-report corruption rejection.
+C01.3.2 follows only after this outcome's review, checks, push and merge; it owns
+F05.23–F05.27 passive/active reinforced/sustained tank and spool details.
 
 ## Latest delivery — C01.2 capacitor
 

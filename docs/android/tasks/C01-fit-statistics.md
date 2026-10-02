@@ -110,3 +110,19 @@ intact. No assertion, tolerance, timeout or A10 requirement was weakened.
 
 PR #37 merged as 1c3beef9 from ca052755; merge/head trees match and its
 exact-head local/full-verification passed. C01.2 is closed; C01.3 is next.
+
+## C01.3 bounded outcomes
+
+C01.3.1 selected2026-10-02 from dafcadc, branch
+codex/c01-3-1-defense-details: F05.16–F05.22 defenses/HP and usable incoming
+damage contributions. Display all twelve resistances and three multipliers;
+raw/effective HP per layer and total, toggle with retained units/precision;
+edit each EM/thermal/kinetic/explosive contribution independently, reject invalid
+or all-zero patterns, persist accepted values and include their history disposition.
+Use actual EOS and unmodified original resistance refresh/pattern command evidence.
+Verify single/mixed patterns, active/offline resistance and HP modules, read-only
+queries, rejection/no-op, Undo/Redo, copy, recreation and separate-process restart.
+Final delivery requires APK/lint/package, every inherited gate, native screen/raw
+assertions, screenshot review and report-corruption checks. Named pattern libraries
+remain D05. C01.3.2 follows delivery and retains F05.23–F05.27 tank/spool acceptance.
+The parent remains active until both children are verified and delivered.

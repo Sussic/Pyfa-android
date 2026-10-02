@@ -95,7 +95,14 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | C01.1 | done | B09.2 | All fitting resources | F05.01–F05.11 raw values, units, compact/detail precision, overload and native read-only/restart behavior match independent reference evidence. |
 | C01.2 | done | C01.1 | Capacitor details | F05.12–F05.15 stable/range/depletion units, capacity, rates, neutralizer resistance and effective details match independent/native cases. |
-| C01.3 | ready | C01.2 | Defenses and tank | F05.16–F05.27 all resistances, raw/effective HP, damage inputs, reinforced/sustained repairs and spool details pass independent/native checks. |
+| C01.3 | active | C01.2 | Defenses and tank | F05.16–F05.27 all resistances, raw/effective HP, damage inputs, reinforced/sustained repairs and spool details pass independent/native checks. |
+
+### C01.3 bounded children
+
+| ID | State | Depends on | One outcome | Done when |
+| --- | --- | --- | --- | --- |
+| C01.3.1 | active | C01.2 | Defenses and incoming damage | F05.16–F05.22 all resistances/multipliers, raw/effective layer/total HP, HP/EHP toggle and four independently editable damage contributions pass original desktop/native/history/restart checks. |
+| C01.3.2 | queued | C01.3.1 | Repair and tank details | F05.23–F05.27 passive/active raw/effective reinforced/sustained tank, capacitor/projected repairs and pre/full/current spool details pass independent/native checks. |
 
 ## D — expose interacting fits and scenarios
 
