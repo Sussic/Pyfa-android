@@ -90,6 +90,26 @@ def windows_initial(evidence, reports):
 
 
 def adb(*args, binary=False):
+    if os.name == 'nt' and args[:2] == ('exec-out', 'cat'):
+        command = ['adb', *args]
+        result = subprocess.run(command, capture_output=True, text=not binary, timeout=120)
+        error = result.stderr.decode(errors='replace') if binary else result.stderr
+        if result.returncode and error.strip() == 'error: device offline':
+            print('Retained failed artifact read: '+error.strip(), flush=True)
+            serial = os.environ['ANDROID_SERIAL']
+            assert re.fullmatch(r'emulator-\d+', serial)
+            subprocess.run(['adb', '-s', serial, 'reconnect'], check=True, timeout=30)
+            subprocess.run(['adb', '-s', serial, 'wait-for-device'], check=True, timeout=120)
+            def identity(*parts):
+                return subprocess.check_output(['adb', '-s', serial, *parts], text=True, timeout=30).strip()
+            assert identity('emu', 'avd', 'name').splitlines()[0] == 'pyfa-local-'+os.environ['PYFA_LOCAL_RUN_ID']
+            assert identity('shell', 'getprop', 'ro.kernel.qemu') == '1'
+            assert identity('shell', 'getprop', 'ro.build.version.sdk') == '36'
+            assert identity('shell', 'settings', 'get', 'global', 'airplane_mode_on') == '1'
+            print('Verified owned offline emulator; retrying artifact read once', flush=True)
+            result = subprocess.run(command, capture_output=True, text=not binary, timeout=120)
+        result.check_returncode()
+        return result.stdout
     return subprocess.check_output(['adb', *args], timeout=120, text=not binary)
 
 

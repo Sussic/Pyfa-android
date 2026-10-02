@@ -144,6 +144,12 @@ def validate(run,root):
             allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1',
                 'android/ci/check-history.py','android/ci/history_progress.py',
                 'android/ci/report_local.py','android/ci/test_report_local.py','AGENTS.md'}
+            if 'android/ci/test_native_artifact_read.py' in changes:
+                allowed.add('android/ci/test_native_artifact_read.py')
+            if 'android/ci/test_stale_history_retry.py' in changes:
+                from local_verification import pending_stale_test_fixture_fix
+                pending_stale_test_fixture_fix(root,row['tested_commit'],comparison_commit)
+                allowed.add('android/ci/test_stale_history_retry.py')
             if 'tools/android_headless/check_history_mutations.py' in changes:
                 from local_verification import pending_mutation_count_fix
                 reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']

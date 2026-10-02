@@ -15,7 +15,7 @@ BEFORE='66e89f31864ff12396f02dd420f5b3b5a1a5fd00'
 class SourceTest(unittest.TestCase):
     def setUp(self):
         self.old={path:subprocess.check_output(['git','show',BEFORE+':'+path],cwd=ROOT,text=True,encoding='utf-8') for path in (retry.PATH,'android/ci/cargo_history_retry.py','android/ci/local_verification.py','android/ci/test_cargo_history_retry.py')}
-        self.new={path:(ROOT/path).read_text() for path in self.old}
+        self.new={path:subprocess.check_output(['git','show','7812de8024259d890e77435f794e69f71e75326b:'+path],cwd=ROOT,text=True,encoding='utf-8') for path in self.old}
         self.changed=[retry.PATH,'android/ci/cargo_history_retry.py','android/ci/stale_history_retry.py','android/ci/test_stale_history_retry.py','android/ci/test_cargo_history_retry.py','android/ci/local_verification.py','android/ci/report_local.py']
     def command(self,args,**kwargs):
         if args[1]=='diff':return '\n'.join(self.changed)

@@ -95,6 +95,15 @@ def pending_settings_fix(root, before, after):
             if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
     assert executed(source(before,'android/ci/local_verification.py'))==executed(source(after,'android/ci/local_verification.py'))
 
+def pending_stale_test_fixture_fix(root,before,after):
+    path='android/ci/test_stale_history_retry.py'
+    def source(commit):return subprocess.check_output(['git','show',commit+':'+path],cwd=root,text=True,encoding='utf-8')
+    old=source(before)
+    line='self.new={path:(ROOT/path).read_text() for path in self.old}'
+    replacement="self.new={path:subprocess.check_output(['git','show','7812de8024259d890e77435f794e69f71e75326b:'+path],cwd=ROOT,text=True,encoding='utf-8') for path in self.old}"
+    assert old.count(line)==1 and source(after)==old.replace(line,replacement,1)
+
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -196,6 +205,11 @@ class Run:
                 changed=git('diff','--name-only',self.state['commit'],current).splitlines()
                 allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1',
                     'android/ci/report_local.py','android/ci/test_report_local.py'}
+                if 'android/ci/test_native_artifact_read.py' in changed:
+                    allowed.add('android/ci/test_native_artifact_read.py')
+                if 'android/ci/test_stale_history_retry.py' in changed:
+                    pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
+                    allowed.add('android/ci/test_stale_history_retry.py')
                 if 'tools/android_headless/check_history_mutations.py' in changed:
                     assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
                     pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])

@@ -53,7 +53,14 @@ float metres on EOS refresh and invalidated unchanged recipient history. A focus
 host reproduction confirms it; normalizing to EOS Float before history capture
 preserves the cursor. Native assertions now explicitly check copy preserves it.
 This packaged product correction requires new affected verification, with all
-earlier results/failures retained and no weakened summary assertion. B09 remains active until every existing
+earlier results/failures retained and no weakened summary assertion. All 50 host/
+reference and five build/package gates pass at `ac90c37d`. Two initial native
+attempts passed all five instrumentation tests but failed on ADB offline during
+required raw-report collection. Both remain failed. A Windows-only, one-retry
+artifact read verifies the owned AVD, API/qemu and airplane mode after targeted
+reconnect; other errors and a repeated disconnect still fail. Its 124 focused
+regressions pass. Retry reuses the 55 unchanged gates and APKs; full native evidence,
+review and delivery remain outstanding. B09 remains active until every existing
 mutation has an explicit tested disposition. Later mutation tasks must extend it.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
