@@ -143,6 +143,18 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_cargo_observer_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-1-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                assert 'native:check-history.py' in self.state['completed']
+                assert [g for g in self.state['completed'] if g.startswith('native:mutation-history-')]==['native:mutation-history-0-prepare','native:mutation-history-0-restored']
+                from cargo_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                retained=[g for g in self.state['completed'] if not g.startswith('native:mutation-history-')]
+                self.state.setdefault('cargo_observer_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'retained_gates':retained,'prepared':False})
+                self.state['completed']=retained
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_pending_settings_fix:
                 assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-0-restored'
                 assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-0-prepare' in self.state['completed']
@@ -344,6 +356,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            cargo_fixes=self.state.get('cargo_observer_reuse',[])
+            if cargo_fixes and not cargo_fixes[-1]['prepared']:
+                from cargo_history_retry import prepare
+                prepare(self,cargo_fixes[-1]);save(self.file,self.state)
             settings_fixes=self.state.get('settings_fix_reuse',[])
             if settings_fixes and not settings_fixes[-1]['validated']:
                 proof=settings_fixes[-1]
@@ -391,6 +407,9 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if cargo_fixes and not cargo_fixes[-1].get('installed'):
+                        from cargo_history_retry import install
+                        install(self,cargo_fixes[-1]);save(self.file,self.state)
                     if fixes and not fixes[-1].get('installed'):
                         proof=fixes[-1]
                         def graph_hash():
@@ -437,6 +456,8 @@ def main():
     parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
     parser.add_argument('--adopt-pending-runner-fix',action='store_true',help='Adopt only the exact missing B09.2 storage flag after its first phase failed; preserve earlier proof and rebuild the test APK')
     parser.add_argument('--adopt-pending-settings-fix',action='store_true',help='Revalidate retained successful group 0 instrumentation after the exact whole-double settings-report correction')
+    parser.add_argument('--adopt-cargo-observer-fix',action='store_true',help='Rebuild the exact cargo-sort observer correction, recover the proven synthetic baseline and rerun all B09.2 phases')
+    parser.add_argument('--cargo-recovery',help='Validated partial/restored store and receipt directory for the exact B09.2 failure')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

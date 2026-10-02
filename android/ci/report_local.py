@@ -29,31 +29,49 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    cargo_reuse=state.get('cargo_observer_reuse',[])
+    cargo_proof=cargo_reuse[-1] if cargo_reuse else None
+    prior_apks=run/'apks';prior_native=run/'native'
+    if cargo_proof:
+        from cargo_history_retry import exact_source,validate_recovery,assets_equal
+        exact_source(root,cargo_proof['from_commit'],cargo_proof['to_commit'])
+        assert cargo_proof['to_commit']==state['commit'] and cargo_proof['prepared'] and cargo_proof['installed']
+        archive=run/cargo_proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
+        validate_recovery(root,run,archive/'recovery')
+        assert sha(archive/'recovery/recovery.json')==cargo_proof['recovery_receipt_sha256']
+        assert sha(archive/'apks/app-debug.apk')==sha(run/'apks/app-debug.apk')==cargo_proof['app_sha256']
+        assert sha(archive/'apks/app-debug-androidTest.apk')==cargo_proof['old_test_apk_sha256']
+        assert sha(run/'apks/app-debug-androidTest.apk')==cargo_proof['new_test_apk_sha256']
+        assets_equal(archive/'apks/app-debug-androidTest.apk',run/'apks/app-debug-androidTest.apk')
+        assert cargo_proof['retained_gates']==[g for g in cargo_proof['completed_before_adoption'] if not g.startswith('native:mutation-history-')]
+        assert all(latest[g]['tested_commit']==state['commit'] for g in state['plan'] if g.startswith('native:mutation-history-'))
+        prior_apks=archive/'apks';prior_native=archive/'native'
     settings_reuse=state.get('settings_fix_reuse',[])
     settings_proof=settings_reuse[-1] if settings_reuse else None
     if settings_proof:
         from local_verification import pending_settings_fix
         pending_settings_fix(root,settings_proof['from_commit'],settings_proof['to_commit'])
-        assert settings_proof['to_commit']==state['commit'] and settings_proof['validated']
+        assert settings_proof['to_commit']==(cargo_proof['from_commit'] if cargo_proof else state['commit']) and settings_proof['validated']
         archive=run/settings_proof['archive']
         assert archive.resolve().is_relative_to(run.resolve())
         for name,digest in settings_proof['retained_hashes'].items():
-            assert sha(archive/name)==sha(run/'native'/name)==digest
-        for name,digest in settings_proof['apk_hashes'].items():assert sha(run/'apks'/name)==digest
-        assert latest['native:mutation-history-0-restored']['retained_native_execution_commit']==settings_proof['from_commit']
+            assert sha(archive/name)==sha(prior_native/name)==digest
+        for name,digest in settings_proof['apk_hashes'].items():assert sha(prior_apks/name)==digest
+        old_attempts=json.loads((run/cargo_proof['archive']/'run.json').read_text())['attempts'] if cargo_proof else state['attempts']
+        assert next(r for r in reversed(old_attempts) if r['gate']=='native:mutation-history-0-restored')['retained_native_execution_commit']==settings_proof['from_commit']
     runner_reuse=state.get('runner_fix_reuse',[])
     proof=runner_reuse[-1] if runner_reuse else None
     if proof:
         from local_verification import pending_runner_fix
         pending_runner_fix(root,proof['from_commit'],proof['to_commit'],proof['completed_before_adoption'])
-        assert proof['to_commit']==(settings_proof['from_commit'] if settings_proof else state['commit']) and proof['prepared'] and proof['installed']
+        assert proof['to_commit']==(settings_proof['from_commit'] if settings_proof else cargo_proof['from_commit'] if cargo_proof else state['commit']) and proof['prepared'] and proof['installed']
         archive=run/proof['archive']
         assert archive.resolve().is_relative_to(run.resolve())
         assert sha(archive/'apks/app-debug.apk')==sha(run/'apks/app-debug.apk')==proof['app_sha256']
         assert sha(archive/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']
-        assert sha(run/'apks/app-debug-androidTest.apk')==proof['new_test_apk_sha256']
+        assert sha(prior_apks/'app-debug-androidTest.apk')==proof['new_test_apk_sha256']
         from zipfile import ZipFile
-        with ZipFile(archive/'apks/app-debug-androidTest.apk') as old, ZipFile(run/'apks/app-debug-androidTest.apk') as new:
+        with ZipFile(archive/'apks/app-debug-androidTest.apk') as old, ZipFile(prior_apks/'app-debug-androidTest.apk') as new:
             assets={name for name in old.namelist() if name.startswith('assets/')}
             assert assets=={name for name in new.namelist() if name.startswith('assets/')}
             assert all(old.read(name)==new.read(name) for name in assets)
@@ -64,6 +82,9 @@ def validate(run,root):
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
             comparison_commit=state['commit']
+            if cargo_proof and gate in cargo_proof['retained_gates']:
+                if row['tested_commit']==cargo_proof['from_commit']:continue
+                comparison_commit=cargo_proof['from_commit']
             if settings_proof and gate in settings_proof['completed_before_adoption']:
                 if row['tested_commit']==settings_proof['from_commit']:continue
                 comparison_commit=settings_proof['from_commit']

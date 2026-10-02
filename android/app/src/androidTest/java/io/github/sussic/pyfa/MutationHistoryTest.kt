@@ -2,6 +2,7 @@ package io.github.sussic.pyfa
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.database.sqlite.SQLiteDatabase
 import android.os.ParcelFileDescriptor
 import android.os.Process
 import android.provider.Settings
@@ -35,7 +36,7 @@ class MutationHistoryTest {
     private lateinit var fixture: JSONObject
     private lateinit var fixtureHash: String
     private lateinit var itemNames: Map<Int, String>
-    private lateinit var itemCategories: Map<Int, String>
+    private lateinit var itemSortKeys: Map<Int, Pair<String, String>>
     private fun fits() = EngineRuntime.library.value
     private fun fit(id: String) = fits().single { it.id == id }
     private fun sync() { compose.mainClock.advanceTimeByFrame(); compose.waitForIdle() }
@@ -149,10 +150,11 @@ class MutationHistoryTest {
                 }
             }),
             "implants" to array(current.implants.map { obj("name" to it.name, "slot" to it.slot, "active" to it.active) }),
-            // These fixtures have one item group per category. This is the
-            // original cargo pane's categorical/name order, not EOS list order.
+            // Match the original cargo pane's category/group/name order using
+            // actual bundled inventory metadata, not the expected fixture order.
             "cargo" to array(EngineRuntime.cargoDetails(context, id).get(120, TimeUnit.SECONDS).cargo
-                .sortedWith(compareBy<CargoStack> { itemCategories.getValue(it.id) }.thenBy { it.name })
+                .sortedWith(compareBy<CargoStack> { itemSortKeys.getValue(it.id).first }
+                    .thenBy { itemSortKeys.getValue(it.id).second }.thenBy { it.name })
                 .map { obj("name" to it.name, "amount" to it.amount) }),
             "skill_override" to (current.skills["Gunnery"] ?: 5), "recent" to array(EngineRuntime.recent.value),
             "projections" to array(current.projections.map { obj("source_name" to fit(it.sourceId).name, "range_m" to it.rangeM, "active" to it.active, "amount" to it.amount) }),
@@ -187,7 +189,13 @@ class MutationHistoryTest {
         EngineRuntime.start(context).get(180, TimeUnit.SECONDS)
         val catalog = EngineRuntime.equipmentCatalog(context).get(180, TimeUnit.SECONDS)
         itemNames = catalog.items.associate { it.id to it.name }
-        itemCategories = catalog.items.associate { it.id to it.category }
+        val manifest = JSONObject(context.assets.open("engine/manifest.json").bufferedReader().use { it.readText() })
+        val database = File(context.filesDir, "game/eve-${manifest.getString("database_sha256")}.db")
+        itemSortKeys = SQLiteDatabase.openDatabase(database.absolutePath, null, SQLiteDatabase.OPEN_READONLY).use { db ->
+            db.rawQuery("SELECT t.typeID,c.name,g.name FROM invtypes t JOIN invgroups g ON t.groupID=g.groupID JOIN invcategories c ON g.categoryID=c.categoryID", null).use { cursor ->
+                buildMap { while (cursor.moveToNext()) put(cursor.getInt(0), cursor.getString(1) to cursor.getString(2)) }
+            }
+        }
         val fixtureBytes = InstrumentationRegistry.getInstrumentation().context.assets.open("history-mutations-expected.json").use { it.readBytes() }
         fixtureHash = MessageDigest.getInstance("SHA-256").digest(fixtureBytes).joinToString("") { "%02x".format(it.toInt() and 255) }
         fixture = JSONObject(fixtureBytes.toString(Charsets.UTF_8))
