@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.2 delivered; C01 is next.**
+Updated: 2026-10-02. **B09.2 delivered; C01.1 selected.**
 
 ## Previous delivery — B09.1 module edit history
 
@@ -55,8 +55,13 @@ recovering its private test checkpoint and original selection precondition;
 only restored instrumentation reran. No required assertion, numerical tolerance,
 phase timeout, restart or A10 requirement changed. No Actions success is claimed.
 B09 is complete for current supported mutations; future mutation tasks must
-extend its checks. Exact next task: approved C01 resources, capacitor and defenses.
-Expand its audited acceptance rows into bounded children before implementation.
+extend its checks. [C01](tasks/C01-fit-statistics.md) is split into resources, capacitor, then defenses
+and tank. Selected `codex/c01-1-fitting-resources` from delivered master `b48f40d7`.
+C01.1 covers F05.01–F05.11: all eleven resource pairs, overload, units and compact/
+detail precision. Reuse serialized EOS through a read-only resources query and
+native screen, preserving the earlier 39 calculation fields. Required independent,
+host, native/restart and visual evidence remains pending. Exact next action: build
+the independent resource/display exporter, then implement and verify C01.1.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.
