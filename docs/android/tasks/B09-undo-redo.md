@@ -99,3 +99,40 @@ Library/query/cursor and direct notes writes have explicit lifecycle disposition
 Eight focused registration/ownership/preservation/deletion tests pass. Real EOS
 regression is running; independent remaining command reversals, native UI/raw
 restart/screenshots and complete final local verification remain required.
+
+## B09.2 independent remaining-command checkpoint
+
+The new original-command exporter passes **28 cases/168 states**, repeated in
+two fresh processes against the unchanged pinned source and dataset. It retains
+every original Do/Undo body and uses real wx processors, with explicit grouping
+for compound phone actions and the previously identified direct skill-input gap.
+The fixture is `tools/android_reference/fixtures/history-mutations.json`.
+Development export and both full logs are retained outside the checkout at
+`%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/development/b092-original-20261002-010825`.
+
+The remaining-mutation bridge comparison is in development. The durable
+failure/restart test passed for all 28 cases and restored all 35 fits with empty
+session history; the overall attempt remained failed on a subsystem comparison.
+That attempt and its full logs are preserved at
+`%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/development/b092-matrix-20261002-005939`.
+Fixture setup must use the
+supported bridge operations for implants and existing links. Phone recent-use
+continues its existing equipment policy: partial cargo removal promotes the item,
+while implant add/remove do not. These differ from
+the selected original calc/GUI command side effects and are asserted explicitly;
+the original raw recent-use values remain in the independent fixture. This does
+not establish exact desktop recent-use parity for those boundaries.
+
+Both new reference and host gates are registered in the local full plan. Native
+remaining-mutation cases, raw validation, screenshot review, final candidate
+verification and delivery are still required. The delivered module history cases
+and all earlier verification gates remain required.
+
+The corrected focused bridge matrix now passes all **28 cases/168 states** at
+`%LOCALAPPDATA%/PyfaAndroid/PyfaDevelopment/development/b092-matrix-20261002-010910`.
+Its receipt explicitly records `complete_verification=false` and no restart claim.
+The subsystem case now executes the original GUI wrapper, including fill and
+dummy restoration, rather than only its calculation command. No adapter change,
+numeric tolerance change or existing assertion removal was needed for this fix.
+The complete host gate also requires all eight history registration/disposition
+tests; native and final stable-candidate verification remain outstanding.

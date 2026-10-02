@@ -65,12 +65,12 @@ def load(source):
         assert value is not None, name
         return value
 
-    def run(fit, operation):
+    def run(fit, operation, command_sink=None):
         kind = operation['kind']
         submitted = []
 
         def submit(command):
-            changed = bool(command.Do())
+            changed = bool(command.Do() if command_sink is None else command_sink(command))
             submitted.append({'changed': changed,
                 'item_ids': list(command.itemIDs) if hasattr(command, 'itemIDs') else [command.itemID],
                 'quantity': getattr(command, 'amount', None)})
@@ -130,4 +130,5 @@ def load(source):
             results.append({'volume': volume, 'visible': visible, 'submitted_count': len(submitted)})
         return results
 
-    return {**oracle, 'run': run, 'source_files': files, 'volume_boundaries': volume_boundaries}
+    return {**oracle, 'run': run, 'source_files': files, 'volume_boundaries': volume_boundaries,
+            'cargo_commands': commands, 'cargo_namespace': common}

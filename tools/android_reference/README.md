@@ -240,6 +240,21 @@ processes; Android code is never imported.
 Run with the existing reference Python:
 `python -I tools/android_reference/bulk_charges.py --source <pinned-checkout> --database <verified-eve.db> --output <new-outside-checkout-directory> --check tools/android_reference/fixtures/bulk-charges.json`.
 
+### B09.2 remaining mutation history reference
+
+`history_mutations.py` executes original command Do/Undo/Redo bodies with real wx
+processors for 28 cases/168 states. It covers rename, hull changes, cargo actions
+and transfers, implants/addition variations and recipient-owned projection/command
+relationships. Grouped phone actions and the direct desktop skill-input gap are
+identified explicitly. Original raw values and recent-use side effects remain in
+the fixture; the bridge tests separately assert existing phone recent-use policy
+where the two boundaries differ. Every calculation remains original EOS.
+
+With the installed reference Python, run
+`python -I tools/android_reference/history_mutations.py --source build/reference-upstream --database android/build/engine/assets/engine/eve.db --output <new-outside-checkout-directory> --check tools/android_reference/fixtures/history-mutations.json`.
+The command verifies pinned source/dependencies, unchanged database bytes and
+logical identity, then repeats all states in a second fresh process.
+
 ### B05.2 bulk state reference
 
 `bulk_states.py` executes the pinned original

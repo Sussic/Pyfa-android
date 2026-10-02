@@ -255,3 +255,17 @@ six original cases/27 states and four recipients, EOS click proposals and
 supported fallbacks, strict/stale rejection, no-op history, failed durable writes,
 independent copies and real process restoration. Required Windows CI includes
 this suite alongside the original desktop export.
+
+### B09.2 remaining mutation history checks
+
+Use the installed headless Python with
+`python -I tools/android_headless/check_history_mutations.py --source build/reference-upstream --database android/build/engine/assets/engine/eve.db --output <new-outside-checkout-directory>`.
+The developing suite compares all 28 independent original-command cases/168
+states and checks one-action grouping, recipient ownership, monotonic revisions,
+failed new/undo/redo saves, stale/malformed requests, notes and fresh-process
+restoration. Original B09.1 coverage remains a separate required gate. Desktop
+imports and network access are forbidden; native execution is separately required.
+
+Once the candidate is committed, the installed local workflow runs both reference
+and headless checks with `./android/verify-local.ps1 -Action start -Mode desktop -Gate history_mutations`.
+This focused pair is development evidence, not a complete delivery pass.

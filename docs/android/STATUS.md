@@ -35,10 +35,13 @@ explicit dispositions for every operation and mandatory future extension checks.
 Original rename, mode, cargo and implant commands have real Undo bodies. Linked
 projection/command history belongs to the recipient fit, as in original GUI/calc
 commands; Android graph edges are also stored in the recipient's record.
-Exact next action: inventory every supported
-mutation against the pinned original command/non-command boundary, then implement
-rename/hull/cargo/addition/linked-effect history with independent desktop, host and
-native restart/selection/atomicity coverage. B09 remains active until every existing
+Independent original commands now pass 28 cases/168 states in two fresh processes;
+the focused bridge comparison passes all states. All 28 durable failure/reversal
+cases separately passed, restoring 35 fits with empty history. Their overall
+attempt remains failed; the corrected focused matrix is development evidence.
+Exact next action: add remaining-mutation native touch/recreation/selection,
+recipient ownership, process restart and raw validation/screenshots, then review
+and fully verify a stable candidate. B09 remains active until every existing
 mutation has an explicit tested disposition. Later mutation tasks must extend it.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
