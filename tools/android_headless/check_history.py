@@ -46,7 +46,7 @@ def main():
     sys.addaudithook(audit)
     from android_bridge.engine import HeadlessEngine
     from android_bridge.contract import BridgeSession
-    from android_bridge.history import LABELS
+    from android_bridge.history import MODULE_LABELS
     engine=HeadlessEngine(args.database)
     def saved(bridge):
         return {'fits':json.loads(bridge.bootstrap())['fits'],'records':deepcopy(bridge._records),
@@ -111,7 +111,7 @@ def main():
                         elif step['action']!='initial':self.send(step['action'],dict(fit_id=key))
                         if step['action']!='initial':self.assertGreater(self.bridge._revisions[key],prior)
                         self.equal_state(step['result'],self.state(key,targets))
-            compare(set(LABELS),covered)
+            compare(set(MODULE_LABELS),covered)
         def test_branch_noop_failure_and_fit_isolation(self):
             key,other=self.create(),self.create()
             for step in expected['branching']:
@@ -147,7 +147,23 @@ def main():
             self.send('undo',dict(fit_id=key,extra=True),'INVALID_REQUEST')
             compare(before,saved(self.bridge));compare(cursor,history(self.bridge,key))
             self.send('redo',dict(fit_id=key));self.assertEqual('Iron Charge M',self.bridge._fits[key].modules[0].charge.name)
-        def test_copy_delete_and_untracked_conflicts(self):
+        def test_copy_delete_and_registered_transfer(self):
+            # JSONObject emits integral Double ranges as JSON integers. A copy's
+            # EOS refresh must preserve the original recipient's history and inputs.
+            for metres in (0, 1000, 1000.5):
+                target,source=self.create(),self.create()
+                self.send('add_projection',dict(source_id=source,target_id=target,range_m=metres,active=True,amount=1))
+                self.send('undo',dict(fit_id=target));self.send('redo',dict(fit_id=target))
+                record=deepcopy(self.bridge._records[target]);cursor=history(self.bridge,target)
+                response=self.send('duplicate_fit',dict(fit_id=target,name='Linked history copy'))
+                copy=next(row['id'] for row in response['fits'] if row['name']=='Linked history copy')
+                compare(record,self.bridge._records[target]);compare(cursor,history(self.bridge,target))
+                self.assertEqual(0,history(self.bridge,copy)['undo_count'])
+                self.send('undo',dict(fit_id=target))
+                self.assertEqual([],self.bridge._records[target]['projections'])
+                self.assertEqual(metres,self.bridge._records[copy]['projections'][0]['range_m'])
+                self.send('redo',dict(fit_id=target));compare(record,self.bridge._records[target])
+                for id_ in (copy,target,source):self.send('delete_fit',dict(fit_id=id_,resolve_references=True))
             key=self.create();self.send('remove_module',dict(fit_id=key,position=0))
             response=self.send('duplicate_fit',dict(fit_id=key,name='History copy'))
             copy=next(row['id'] for row in response['fits'] if row['name']=='History copy')
@@ -155,11 +171,12 @@ def main():
             self.assertEqual(1,history(self.bridge,key)['undo_count'])
             self.send('delete_fit',dict(fit_id=copy,resolve_references=False))
             self.send('undo',dict(fit_id=key))
-            # A still-unregistered cargo transfer touches the same module input:
-            # B09.2 owns its history, so invalidate safely until registration.
+            # B09.2 registers the complete module/cargo transfer as one action.
             self.send('transfer_cargo',dict(fit_id=key,direction='TO_CARGO',positions=[0],item_id=None,copy=False))
             self.assertEqual(0,history(self.bridge,key)['redo_count'])
-            self.send('undo',dict(fit_id=key),'INVALID_EDIT')
+            self.assertEqual(1,history(self.bridge,key)['undo_count'])
+            self.send('undo',dict(fit_id=key))
+            self.assertEqual('Dual 150mm Railgun II',self.bridge._fits[key].modules[0].item.name)
         def test_durable_failure_and_restart_with_empty_session_history(self):
             self.bridge._reset_storage()
             self.bridge=BridgeSession.open(engine,args.output/'fits.db',identity,expected['cases'][0]['spec'])

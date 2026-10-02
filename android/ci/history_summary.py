@@ -116,7 +116,7 @@ def summarize(reports,engine):
     for report in reports:
         exact(set(ids),set(report['histories']))
         for key,value in report['histories'].items():
-            undo=1 if report is prepare and key in case_ids[1:] else 0
+            undo=1 if report is prepare and key in case_ids[1:]+recipient_ids else 0
             redo=1 if report is prepare and key==ids[0] else 0
             exact({'undo_count':undo,'redo_count':redo,'can_undo':undo>0,'can_redo':redo>0},value)
     observations=prepare['observations']

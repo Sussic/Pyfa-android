@@ -72,7 +72,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | B08 | done | B03 | [Fit notes](tasks/B08-fit-notes.md) | Edit and persist per-fit notes, including multiline/non-ASCII content, without losing unsaved text on navigation. |
 | B09 | active | B05 | [Undo/redo for fit edits (parent)](tasks/B09-undo-redo.md) | Single and bulk edits undo/redo as user actions; recalculated values and selection state stay consistent after reversal. Extend through later mutation tasks. |
 | B09.1 | done | B05 | Single and bulk module undo/redo | Per-fit 100-action history, atomic reversal/reapply, branch invalidation, safe selections and native offline recreation/restart match independent desktop evidence. |
-| B09.2 | ready | B09.1 | Remaining supported mutation history | Verify hull/cargo/addition/linked-effect and rename reversals, enumerate original gaps, and require later mutation tasks to extend the tested contract. |
+| B09.2 | active | B09.1 | Remaining supported mutation history | Verify hull/cargo/addition/linked-effect and rename reversals, enumerate original gaps, and require later mutation tasks to extend the tested contract. |
 
 ## C — expose the full fit inputs and statistics
 

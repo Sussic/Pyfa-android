@@ -25,8 +25,9 @@ EXCLUDED = ['PerformanceTest', 'BridgeContractTest', 'PersistenceTest', 'FitLibr
     'ChargeEditingTest', 'VariationEditingTest', 'RackOrderingTest', 'BulkChargesTest',
     'BulkStatesTest', 'CloneFillTest', 'BulkVariationRemovalTest', 'HullModeTest',
     'SubsystemTest', 'StructureServiceTest', 'CargoStackTest', 'CargoActionTest',
-    'CargoTransferTest', 'NotesTest', 'EditHistoryTest']
-STEPS = ['initial', *CHECKS, 'summary']
+    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest']
+MUTATION_STEPS = [f'mutation-history-{group}-{phase}' for group in range(4) for phase in ('prepare', 'restored')]
+STEPS = ['initial', *CHECKS, *MUTATION_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
     'io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack',
@@ -89,6 +90,26 @@ def windows_initial(evidence, reports):
 
 
 def adb(*args, binary=False):
+    if os.name == 'nt' and args[:2] == ('exec-out', 'cat'):
+        command = ['adb', *args]
+        result = subprocess.run(command, capture_output=True, text=not binary, timeout=120)
+        error = result.stderr.decode(errors='replace') if binary else result.stderr
+        if result.returncode and error.strip() == 'error: device offline':
+            print('Retained failed artifact read: '+error.strip(), flush=True)
+            serial = os.environ['ANDROID_SERIAL']
+            assert re.fullmatch(r'emulator-\d+', serial)
+            subprocess.run(['adb', '-s', serial, 'reconnect'], check=True, timeout=30)
+            subprocess.run(['adb', '-s', serial, 'wait-for-device'], check=True, timeout=120)
+            def identity(*parts):
+                return subprocess.check_output(['adb', '-s', serial, *parts], text=True, timeout=30).strip()
+            assert identity('emu', 'avd', 'name').splitlines()[0] == 'pyfa-local-'+os.environ['PYFA_LOCAL_RUN_ID']
+            assert identity('shell', 'getprop', 'ro.kernel.qemu') == '1'
+            assert identity('shell', 'getprop', 'ro.build.version.sdk') == '36'
+            assert identity('shell', 'settings', 'get', 'global', 'airplane_mode_on') == '1'
+            print('Verified owned offline emulator; retrying artifact read once', flush=True)
+            result = subprocess.run(command, capture_output=True, text=not binary, timeout=120)
+        result.check_returncode()
+        return result.stdout
     return subprocess.check_output(['adb', *args], timeout=120, text=not binary)
 
 
@@ -141,8 +162,13 @@ def main():
             else:
                 assert adb('shell','getprop','ro.kernel.qemu').strip()=='1'
                 assert adb('shell','settings','get','global','airplane_mode_on').strip()=='1'
-                script='summarize-tests.py' if step=='summary' else step
-                subprocess.run([sys.executable,str(ROOT/'ci'/script)],cwd=ROOT,check=True)
+                if step in MUTATION_STEPS:
+                    _, _, group, phase = step.split('-')
+                    command = [sys.executable, str(ROOT/'ci/check-mutation-history.py'), '--group', group, '--phase', phase]
+                else:
+                    script='summarize-tests.py' if step=='summary' else step
+                    command = [sys.executable, str(ROOT/'ci'/script)]
+                subprocess.run(command,cwd=ROOT,check=True)
     except BaseException:
         for name, command in [('failure.png',('exec-out','screencap','-p')),
                               ('failure-logcat.txt',('logcat','-d','-t','300','AndroidRuntime:E','PyfaEngine:E','TestRunner:I','python.stderr:W','*:S'))]:

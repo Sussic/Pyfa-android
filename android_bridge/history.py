@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 
 LIMIT = 100  # Pinned Fit.getCommandProcessor(maxCommands=100).
-LABELS = {
+MODULE_LABELS = {
     'add_module': 'Add module', 'replace_module': 'Replace module',
     'remove_module': 'Remove module', 'set_fit_restrictions': 'Change fitting restrictions',
     'set_charges': 'Change ammunition', 'set_module_charge': 'Change ammunition',
@@ -15,6 +15,31 @@ LABELS = {
     'change_bulk_variations': 'Change selected variations', 'remove_bulk_modules': 'Remove selected modules',
     'swap_modules': 'Reorder modules',
 }
+LABELS = {**MODULE_LABELS,
+    'rename_fit': 'Rename fit', 'change_mode': 'Change hull mode',
+    'set_subsystem': 'Change subsystem', 'add_cargo': 'Add cargo',
+    'set_cargo_quantity': 'Change cargo quantity', 'remove_cargo': 'Remove cargo',
+    'set_cargo_quantities': 'Change selected cargo quantities',
+    'remove_cargos': 'Remove selected cargo', 'add_cargo_preset': 'Add ammunition preset',
+    'fill_cargo': 'Fill cargo', 'change_cargo_variations': 'Change cargo variations',
+    'transfer_cargo': 'Transfer fitted equipment and cargo',
+    'set_skill_level': 'Change skill level', 'add_implant': 'Add implant',
+    'set_implant_active': 'Change implant state', 'remove_implant': 'Remove implant',
+    'add_projection': 'Add projected fit', 'configure_projection': 'Change projected fit',
+    'remove_projection': 'Remove projected fit', 'add_command': 'Add command fit',
+    'set_command_active': 'Change command fit state', 'remove_command': 'Remove command fit',
+}
+# Lifecycle changes are library operations, not fitting commands. Notes follow
+# the original direct notes service and must survive unrelated fitting reversals.
+NON_HISTORY = {'snapshot': 'query', 'create_fit': 'new fit has empty history',
+    'duplicate_fit': 'copy has empty history', 'delete_fit': 'prune fit and invalid references',
+    'set_notes': 'direct note write', 'undo': 'move cursor', 'redo': 'move cursor'}
+
+
+def validate_operations(operations):
+    """New bridge operations need an explicit history disposition before use."""
+    if set(operations) != set(LABELS) | set(NON_HISTORY):
+        raise ValueError('Every bridge operation must declare its history disposition')
 
 
 def _same(left, right):
@@ -74,19 +99,20 @@ class EditHistory:
 
     def after_edit(self, operation, arguments, before, after, recent):
         rows = {key:value for key,value in self.rows.items() if key in after}
-        owner = arguments.get('fit_id')
-        tracked = operation in LABELS and not (operation=='change_variation' and arguments['context']!='module')
+        owner = arguments.get('fit_id', arguments.get('target_id'))
+        tracked = operation in LABELS
         if tracked:
             changes = tuple(_changes(before[owner],after[owner]))
             if _same(_meaning(before[owner]),_meaning(after[owner])):
                 return EditHistory(rows)
             actions,cursor = rows.get(owner,((),0))
-            actions = (*actions[:cursor],Action(LABELS[operation],changes,tuple(recent)))[-LIMIT:]
+            label = ('Change addition variation' if operation == 'change_variation' and
+                arguments['context'] != 'module' else LABELS[operation])
+            actions = (*actions[:cursor],Action(label,changes,tuple(recent)))[-LIMIT:]
             rows[owner] = actions,len(actions)
         else:
-            # B09.2 extends registration to other fitting edits. Until then, an
-            # untracked write to a field touched by history clears that fit's
-            # history rather than overwriting newer input on a later reversal.
+            # Lifecycle writes which remove a referenced source invalidate that
+            # recipient's conflicting actions rather than reviving a deleted fit.
             for key in list(rows):
                 if key not in before: continue
                 changed = [value.path for value in _changes(before[key],after[key])]

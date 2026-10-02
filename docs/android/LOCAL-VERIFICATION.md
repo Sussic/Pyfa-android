@@ -14,6 +14,7 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action plan -Mode full
 ./android/verify-local.ps1 -Action start -Mode full
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history
+./android/verify-local.ps1 -Action start -Mode desktop -Gate history_mutations
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
@@ -23,6 +24,14 @@ emulator. Build mode runs both APKs, lint, signature and full data/license/ABI
 inspection. The focused history pair is development evidence, not a full pass.
 Native mode rebuilds/inspects and runs the entire native chain: later phases need
 previous synthetic saved fits and cannot run against arbitrary device data.
+
+B09.2 extends the required full plan to 88 gates: 50 reference/host, five build
+and 33 native gates. It adds four prepare/restore pairs (eight actual processes)
+for all 28 remaining-mutation cases/168 states, bringing the required native
+execution count to 60 and required screenshots to 146. Each new phase is a
+separate resumable gate; process restart, offline assertions and earlier gates
+remain required. History diagnostics also accompany those phases. Requirements
+are not passing results; follow STATUS for the actual tested revision.
 
 The launcher reuses `.venv/headless`, `.venv/reference`, clean pinned
 `build/reference-upstream`, JDK17, installed SDK, readelf and the Gradle wrapper.

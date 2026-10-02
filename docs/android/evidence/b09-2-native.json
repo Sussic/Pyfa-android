@@ -1,0 +1,2328 @@
+{
+  "task": "B09.2",
+  "reviewed_code_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+  "branch": "codex/b09-2-mutation-history",
+  "verification_kind": "local_windows",
+  "required_result": "local/full-verification",
+  "hosted_actions_pass": false,
+  "run_id": "20261002-053831-ac90c37d-917f26",
+  "canonical_evidence_path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-053831-ac90c37d-917f26",
+  "run_sha256": "9b9bc1e1b1b1cd639fb17e6d84e4ab7e81a0211e03be56322ba22246e2d9fe8a",
+  "files_manifest_sha256": "744f2c27b11861f0e671ad3a1ff481c9c9f745bf4cb52e653f9936a5270a6081",
+  "gate_count": 88,
+  "gate_commits": {
+    "desktop:utilities": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "desktop:reference": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "desktop:migration": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:projection": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:command": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:catalog": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:equipment": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:empty_hulls": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:module_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:charge_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:variation_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:rack_ordering": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:bulk_charges": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:bulk_states": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:clone_fill": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:bulk_variation_removal": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:hull_modes": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:subsystems": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:structures": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:cargo_stacks": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:cargo_actions": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:cargo_transfers": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:notes": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:history": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "reference:history_mutations": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:base": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:projection": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:command": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:bridge": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:persistence": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:library": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:market": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:empty_hulls": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:module_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:charge_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:variation_edits": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:rack_ordering": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:bulk_charges": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:bulk_states": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:clone_fill": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:bulk_variation_removal": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:hull_modes": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:subsystems": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:structures": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:cargo_stacks": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:cargo_actions": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:cargo_transfers": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:notes": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:history": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "headless:history_mutations": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "build:dependencies": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "build:engine-assets": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "build:apks-lint": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "build:signature": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "build:package": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+    "native:initial": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:measure-performance.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-contract.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-persistence.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-library.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-navigation.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-market.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-empty-hulls.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-module-edits.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-charge-edits.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-variation-edits.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-rack-ordering.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-bulk-charges.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-bulk-states.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-clone-fill.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-bulk-variation-removal.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-hull-modes.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-subsystems.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-structures.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-cargo-stacks.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-cargo-actions.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-cargo-transfers.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-notes.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:check-history.py": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-0-prepare": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-0-restored": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-1-prepare": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-1-restored": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-2-prepare": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-2-restored": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-3-prepare": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:mutation-history-3-restored": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "native:summary": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f"
+  },
+  "native_summary": {
+    "mutation_history": {
+      "reference_cases": 28,
+      "reference_states": 168,
+      "groups": 4,
+      "process_executions": 8,
+      "complete": true,
+      "new_retained_fits": 36,
+      "restored_fits": 147,
+      "screenshots": 21,
+      "interleaved_recent_steps": 5,
+      "fixture_sha256": "4e887b346d1261d1ff28cc1a782649f64d61915dac31dd3fbe66ba4545fe4dbc"
+    },
+    "history": {
+      "reference_cases": 18,
+      "reference_states": 108,
+      "recipients": 2,
+      "new_fits": 21,
+      "restored_fits": 111,
+      "screenshots": 6,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_original_matrix",
+          "touch_repeated_undo_redo",
+          "linked_recipients",
+          "selection_safety",
+          "notes_preserved",
+          "fit_isolation",
+          "redo_branch_invalidated",
+          "history_recreation",
+          "stale_rejected",
+          "copy_has_no_history",
+          "typed_history_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit",
+          "session_history_empty",
+          "notes_retained"
+        ]
+      }
+    },
+    "task": "B09.1",
+    "cargo_actions": {
+      "cases": 5,
+      "states": 37,
+      "new_fits": 10,
+      "restored_fits": 57,
+      "screenshots": 6,
+      "protocol_rejections": 8,
+      "checks": {
+        "prepare": [
+          "five_original_cargo_action_sequences",
+          "touch_selected_quantity_remove_presets_fill_and_variations",
+          "durable_cargo_copies",
+          "atomic_rejections",
+          "typed_cargo_actions_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "notes": {
+      "reference_states": 13,
+      "new_fits": 5,
+      "restored_fits": 90,
+      "screenshots": 7,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "exact_text_and_character_counts",
+          "autosave_and_immediate_navigation_flush",
+          "correct_fit_switch_and_recreation",
+          "stale_draft_retry_and_conflict_resolution",
+          "structure_readonly_and_durable_copies",
+          "unchanged_calculations_and_recent_use",
+          "typed_notes_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "cargo_transfers": {
+      "cases": 14,
+      "states": 80,
+      "new_fits": 28,
+      "restored_fits": 85,
+      "screenshots": 6,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "fourteen_original_transfer_sequences",
+          "touch_move_copy_swap_selected_and_recreation",
+          "atomic_desktop_failure_correction",
+          "durable_transfer_copies",
+          "atomic_rejections",
+          "typed_transfer_protocol",
+          "captured_selection"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "cargo_stacks": {
+      "cases": 2,
+      "states": 17,
+      "new_fits": 3,
+      "restored_fits": 47,
+      "screenshots": 6,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "two_original_cargo_sequences",
+          "touch_add_set_partial_remove_and_over_capacity",
+          "durable_cargo_copy",
+          "atomic_rejections",
+          "typed_cargo_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "structures": {
+      "cases": 5,
+      "states": 27,
+      "desktop_hulls": 19,
+      "desktop_service_choices": 118,
+      "new_fits": 7,
+      "restored_fits": 44,
+      "screenshots": 7,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "five_original_structure_sequences",
+          "service_bonus_copy",
+          "atomic_rejections",
+          "typed_structure_service_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "subsystems": {
+      "cases": 1,
+      "states": 14,
+      "hull_choices": 48,
+      "new_fits": 3,
+      "restored_fits": 37,
+      "screenshots": 6,
+      "protocol_rejections": 6,
+      "checks": {
+        "prepare": [
+          "charged_launcher_retained_and_marked_illegal",
+          "invalid_fit_copies_without_erasure",
+          "all_original_subsystem_states_and_choices",
+          "atomic_rejections",
+          "typed_subsystem_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "hull_modes": {
+      "cases": 4,
+      "states": 16,
+      "new_fits": 5,
+      "restored_fits": 34,
+      "screenshots": 4,
+      "protocol_rejections": 4,
+      "checks": {
+        "prepare": [
+          "all_original_mode_states_and_choices",
+          "copy_keeps_selected_mode",
+          "atomic_rejections",
+          "typed_mode_protocol"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_variation_removal": {
+      "new_fits": 4,
+      "restored_fits": 29,
+      "screenshots": 8,
+      "protocol_rejections": 9,
+      "checks": {
+        "prepare": [
+          "selected_family_skip_recreation_charge",
+          "similar_cross_family_outside_selection",
+          "selected_removal_reverse_history",
+          "empty_and_fit_switch",
+          "atomic_rejections",
+          "typed_bulk_requests"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "clone_fill": {
+      "new_fits": 5,
+      "restored_fits": 25,
+      "screenshots": 8,
+      "protocol_rejections": 7,
+      "checks": {
+        "prepare": [
+          "selection_recreation",
+          "selected_positions_states_charges",
+          "targeted_vacancy",
+          "fitted_source_fill",
+          "market_touch_preview_stop_history",
+          "linked_recipient",
+          "atomic_rejections",
+          "typed_fill_preview"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_states": {
+      "cases": 6,
+      "states": 27,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 20,
+      "protocol_rejections": 9,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "similar_outside_selection",
+          "selected_only",
+          "supported_fallbacks",
+          "empty_fit",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "state_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "bulk_charges": {
+      "cases": 9,
+      "states": 41,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 18,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "selected_ammo",
+          "asymmetric_skip",
+          "similar_variants",
+          "script_controls",
+          "empty_fit",
+          "clear_selection",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "bulk_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "rack_ordering": {
+      "cases": 9,
+      "states": 48,
+      "recipients": 4,
+      "new_fits": 2,
+      "restored_fits": 16,
+      "protocol_rejections": 10,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_four_recipients",
+          "prior_fits_unchanged",
+          "selection_recreation",
+          "occupied_swap",
+          "vacant_move",
+          "states_charges_retained",
+          "positional_heat",
+          "medium_and_service_controls",
+          "cancel_selection",
+          "empty_rack",
+          "stale_selection_discarded",
+          "fit_switch",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "heat_types_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "variation_edits": {
+      "cases": 17,
+      "states": 55,
+      "variation_families": 5226,
+      "new_fits": 2,
+      "restored_fits": 14,
+      "protocol_rejections": 13,
+      "pagination": {
+        "item_id": 33681,
+        "choices": 94,
+        "recreated_page": 1,
+        "previous_page": 0
+      },
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_5226_families",
+          "all_six_recipients",
+          "prior_fits_unchanged",
+          "picker_recreation",
+          "charge_reconciliation",
+          "neighbour_retained",
+          "drone_pagination_search",
+          "distinct_stacks_quantities_order",
+          "implant_activation_location",
+          "disabled_choices",
+          "empty_fit_refresh",
+          "independent_copy",
+          "atomic_rejections",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "charge_edits": {
+      "cases": 14,
+      "states": 74,
+      "module_compatibility_sets": 4242,
+      "new_fits": 4,
+      "restored_fits": 12,
+      "protocol_rejections": 11,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_4242_charge_sets",
+          "projection_and_command_recipients",
+          "prior_fits_unchanged",
+          "picker_pagination_search",
+          "picker_recreation",
+          "load_replace_unload",
+          "neighbour_state_charge_retained",
+          "script",
+          "laser_crystal",
+          "mining_crystal",
+          "active_fit_discovery",
+          "empty_fit_refresh",
+          "independent_copy",
+          "rejections_atomic",
+          "recent_unchanged",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_states_charges_values_retained",
+          "options_and_recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "module_edits": {
+      "cases": 11,
+      "states": 91,
+      "default_module_states": 4242,
+      "history_attempts": 25,
+      "recent_items": 20,
+      "retained_fits": 8,
+      "new_fits": 3,
+      "checks": {
+        "prepare": [
+          "complete_matrix",
+          "all_default_states",
+          "two_recipients",
+          "prior_fits_unchanged",
+          "ui_add_replace_remove",
+          "vacant_position_reused",
+          "picker_recreation",
+          "resource_warning",
+          "skill_warning",
+          "restriction_confirmation_recreation",
+          "override_reenable",
+          "independent_copy",
+          "structure_service_replacement",
+          "twenty_recent_items",
+          "recent_order_visible",
+          "views_do_not_record_use",
+          "stale_unknown_atomic",
+          "typed_protocol_guards"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_positions_states_values_retained",
+          "recent_retained",
+          "reopen_each_fit"
+        ]
+      }
+    },
+    "empty_hulls": {
+      "hulls": 437,
+      "ships": 419,
+      "structures": 18,
+      "statistics_per_hull": 39,
+      "restart_fits": 5,
+      "new_empty_fits": 3,
+      "rejected_edits": 5,
+      "checks": {
+        "prepare": [
+          "complete_hulls",
+          "prior_fits_unchanged",
+          "picker_pagination",
+          "picker_search_and_empty",
+          "picker_recreation",
+          "blank_name_rejected",
+          "ship_creation",
+          "independent_copy",
+          "hull_browser_structure_creation",
+          "cancel_unchanged",
+          "failed_edits_unchanged",
+          "explicit_absence"
+        ],
+        "restored": [
+          "fresh_process_restore",
+          "identities_inputs_values_retained",
+          "reopen_each_fit",
+          "explicit_absence"
+        ]
+      }
+    },
+    "market": {
+      "groups": 718,
+      "items": 6822,
+      "searches": 22,
+      "checks": [
+        "complete_desktop_catalogue",
+        "all_desktop_searches",
+        "tree_and_item_jump",
+        "meta_filters_and_empty",
+        "pagination",
+        "activity_recreation",
+        "saved_fits_unchanged"
+      ]
+    },
+    "navigation": {
+      "processes": 4,
+      "checks": [
+        "activity_recreation_and_restore_enabled",
+        "back_to_correct_hull",
+        "close_active_inactive_and_delete_open",
+        "close_all_preserves_saved_fits_and_disable_restore",
+        "corrupt_preferences_preserved",
+        "disabled_restart_keeps_library_and_enabled_close_all",
+        "empty_open_set_stays_empty_after_restart",
+        "groups_races_empty_visibility_and_back",
+        "independent_desktop_catalog",
+        "opening_does_not_modify_recents",
+        "previous_set_and_active_restored",
+        "rename_updates_recents",
+        "search_opens_intended_id"
+      ],
+      "desktop_statistics_checked": 546,
+      "desktop_catalog_groups": 55,
+      "desktop_catalog_hulls": 437,
+      "restart_boundaries": 3
+    },
+    "library": {
+      "phases": 3,
+      "distinct_processes": 3,
+      "distinct_sessions": 3,
+      "restart_graphs_matched": true,
+      "empty_store_reopened": true,
+      "two_recipient_projection_and_command_deletion": true,
+      "desktop_stat_comparisons": 390,
+      "native_ui_assertions_passed": true
+    },
+    "persistence_test": "io.github.sussic.pyfa.PersistenceTest",
+    "persistence": {
+      "desktop_snapshots": 45,
+      "statistics_per_snapshot": 39,
+      "fit_count": 9,
+      "process_restarts": 2,
+      "phases": [
+        {
+          "phase": "prepare",
+          "pid": 5299,
+          "session_id": "006b2b90ced04d20b3eaabbceea6b1aa",
+          "generation_start": 1,
+          "generation_end": 15,
+          "desktop_snapshots": 9,
+          "successful_mutations": 14,
+          "structured_errors": []
+        },
+        {
+          "phase": "reopen_edit",
+          "pid": 5374,
+          "session_id": "5db70cc0d58f4c03b5a6b19d9bc486be",
+          "generation_start": 15,
+          "generation_end": 25,
+          "desktop_snapshots": 27,
+          "successful_mutations": 10,
+          "structured_errors": [
+            "INVALID_EDIT"
+          ]
+        },
+        {
+          "phase": "verify",
+          "pid": 5462,
+          "session_id": "224fff9febc3410c9fece58a59bfacfa",
+          "generation_start": 25,
+          "generation_end": 25,
+          "desktop_snapshots": 9,
+          "successful_mutations": 0,
+          "structured_errors": []
+        }
+      ],
+      "responses_retained": 25,
+      "successful_mutations": 24,
+      "structured_errors": [
+        "INVALID_EDIT"
+      ],
+      "android_worker_thread": "pyfa-engine",
+      "stable_ids_and_revisions": true,
+      "whole_graph_reopened": true,
+      "two_recipient_source_edits": true,
+      "limits": [
+        "API 36 x86_64 emulator; no physical, ARM64 or older-API execution claim.",
+        "Same installed APK across process restarts; no upgrade, migration or backup/restore claim."
+      ]
+    },
+    "contract_test": "io.github.sussic.pyfa.BridgeContractTest.typedOperationsMatchDesktopAndPreserveCommittedRevisionsOffline",
+    "contract": {
+      "desktop_snapshots": 63,
+      "statistics_per_snapshot": 39,
+      "responses_retained": 44,
+      "structured_errors": [
+        "INVALID_EDIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT",
+        "INVALID_REQUEST",
+        "UNKNOWN_FIT",
+        "INVALID_EDIT",
+        "REVISION_CONFLICT"
+      ],
+      "codec_rejections": [
+        "unknown_response_field",
+        "missing_session",
+        "unknown_status",
+        "boolean_version",
+        "unsupported_version",
+        "negative_revision",
+        "boolean_revision",
+        "unknown_module_state",
+        "missing_raw_unit",
+        "unknown_error_code",
+        "duplicate_keys",
+        "decimal_version",
+        "decimal_revision",
+        "nonfinite_number",
+        "trailing_document"
+      ],
+      "assertions": {
+        "desktop_snapshots_checked": 63,
+        "statistics_per_snapshot": 39,
+        "all_snapshots_matched_desktop": true,
+        "raw_scalar_types_checked": true,
+        "units_checked": true,
+        "bulk_rejection_unchanged": true,
+        "stale_revision_unchanged": true,
+        "missing_revision_rejected_before_dispatch": true,
+        "invalid_create_unchanged": true,
+        "queued_arguments_copied": true,
+        "ui_preserved_after_errors": true,
+        "queries_unchanged": true,
+        "unrelated_revisions_unchanged": true,
+        "queued_same_revision_one_success_one_conflict": true,
+        "retained_fit_count": 5
+      },
+      "android_worker_thread": "pyfa-engine",
+      "fresh_process_pid": 5191,
+      "fit_count": 5
+    },
+    "checkout_sha": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+    "workflow_run": null,
+    "execution": {
+      "kind": "local_windows",
+      "local_run_id": "20261002-053831-ac90c37d-917f26"
+    },
+    "tests": [
+      "io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack",
+      "io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack",
+      "io.github.sussic.pyfa.EngineParityTest.bundledEngineMatchesIndependentDesktopAmmunitionStatesOffline",
+      "io.github.sussic.pyfa.EngineParityTest.commandBurstsMatchDesktopAndClearRecipientBonusesOffline",
+      "io.github.sussic.pyfa.EngineParityTest.projectedEffectsMatchDesktopAndRefreshAllRecipientsOffline"
+    ],
+    "performance_test": "io.github.sussic.pyfa.PerformanceTest.repeatedEditsMatchDesktopWithStableFitCountOffline",
+    "performance": {
+      "normal_startup": {
+        "first_install_ms": 5157.858938000005,
+        "cold_process_reusing_database": {
+          "samples": 4,
+          "min_ms": 3031.9646950000024,
+          "median_ms": 3442.907191499995,
+          "max_ms": 3668.304658000008
+        }
+      },
+      "setup_ms": {
+        "ammunition": 18.892162,
+        "projection": 308.126426,
+        "command": 325.518226
+      },
+      "edits": {
+        "ammunition": {
+          "samples": 20,
+          "min_ms": 12.690124,
+          "median_ms": 14.4855705,
+          "observed_p95_ms": 17.159836,
+          "max_ms": 19.848879,
+          "retained_fit_count": 1,
+          "directions": {
+            "iron_ammunition": {
+              "samples": 10,
+              "min_ms": 12.690124,
+              "median_ms": 14.345327000000001,
+              "observed_p95_ms": 14.877216,
+              "max_ms": 14.877216
+            },
+            "restored": {
+              "samples": 10,
+              "min_ms": 13.251649,
+              "median_ms": 14.717376,
+              "observed_p95_ms": 19.848879,
+              "max_ms": 19.848879
+            }
+          }
+        },
+        "projection_range": {
+          "samples": 20,
+          "min_ms": 22.572712,
+          "median_ms": 24.018663,
+          "observed_p95_ms": 25.525534,
+          "max_ms": 25.637725,
+          "retained_fit_count": 5,
+          "directions": {
+            "falloff": {
+              "samples": 10,
+              "min_ms": 22.572712,
+              "median_ms": 23.550012000000002,
+              "observed_p95_ms": 25.33661,
+              "max_ms": 25.33661
+            },
+            "applied_zero": {
+              "samples": 10,
+              "min_ms": 22.817097,
+              "median_ms": 24.4074985,
+              "observed_p95_ms": 25.637725,
+              "max_ms": 25.637725
+            }
+          }
+        },
+        "projection_link": {
+          "samples": 20,
+          "min_ms": 55.577346,
+          "median_ms": 68.6588425,
+          "observed_p95_ms": 83.559342,
+          "max_ms": 98.20513,
+          "retained_fit_count": 5,
+          "directions": {
+            "removed": {
+              "samples": 10,
+              "min_ms": 55.577346,
+              "median_ms": 59.665967499999994,
+              "observed_p95_ms": 83.559342,
+              "max_ms": 83.559342
+            },
+            "applied_zero": {
+              "samples": 10,
+              "min_ms": 68.211644,
+              "median_ms": 72.93679399999999,
+              "observed_p95_ms": 98.20513,
+              "max_ms": 98.20513
+            }
+          }
+        },
+        "command_charge": {
+          "samples": 20,
+          "min_ms": 39.158551,
+          "median_ms": 41.846526,
+          "observed_p95_ms": 48.903085,
+          "max_ms": 85.513601,
+          "retained_fit_count": 9,
+          "directions": {
+            "harmonizing": {
+              "samples": 10,
+              "min_ms": 39.158551,
+              "median_ms": 42.148491,
+              "observed_p95_ms": 46.574686,
+              "max_ms": 46.574686
+            },
+            "extension_restored": {
+              "samples": 10,
+              "min_ms": 40.013914,
+              "median_ms": 41.421281,
+              "observed_p95_ms": 85.513601,
+              "max_ms": 85.513601
+            }
+          }
+        },
+        "command_link": {
+          "samples": 20,
+          "min_ms": 55.103529,
+          "median_ms": 65.138272,
+          "observed_p95_ms": 73.426695,
+          "max_ms": 78.626598,
+          "retained_fit_count": 9,
+          "directions": {
+            "link_inactive": {
+              "samples": 10,
+              "min_ms": 55.103529,
+              "median_ms": 60.3111515,
+              "observed_p95_ms": 64.286093,
+              "max_ms": 64.286093
+            },
+            "link_active": {
+              "samples": 10,
+              "min_ms": 65.990451,
+              "median_ms": 70.0457165,
+              "observed_p95_ms": 78.626598,
+              "max_ms": 78.626598
+            }
+          }
+        }
+      },
+      "memory_snapshots": {
+        "before_activity": {
+          "total_pss_kb": 90994,
+          "total_private_dirty_kb": 76780,
+          "native_heap_allocated_bytes": 5651744,
+          "java_heap_used_bytes": 3184560
+        },
+        "single_fit_ready": {
+          "total_pss_kb": 205833,
+          "total_private_dirty_kb": 167372,
+          "native_heap_allocated_bytes": 42144848,
+          "java_heap_used_bytes": 10520864
+        },
+        "after_ammunition_setup": {
+          "total_pss_kb": 208929,
+          "total_private_dirty_kb": 170328,
+          "native_heap_allocated_bytes": 42189952,
+          "java_heap_used_bytes": 13420832
+        },
+        "after_ammunition": {
+          "total_pss_kb": 212125,
+          "total_private_dirty_kb": 173516,
+          "native_heap_allocated_bytes": 42274048,
+          "java_heap_used_bytes": 16566560
+        },
+        "after_projection_setup": {
+          "total_pss_kb": 218557,
+          "total_private_dirty_kb": 179948,
+          "native_heap_allocated_bytes": 43228336,
+          "java_heap_used_bytes": 17582368
+        },
+        "after_projection_range": {
+          "total_pss_kb": 232493,
+          "total_private_dirty_kb": 193860,
+          "native_heap_allocated_bytes": 43509440,
+          "java_heap_used_bytes": 31459616
+        },
+        "after_projection_link": {
+          "total_pss_kb": 246133,
+          "total_private_dirty_kb": 205812,
+          "native_heap_allocated_bytes": 43801568,
+          "java_heap_used_bytes": 45336864
+        },
+        "after_command_setup": {
+          "total_pss_kb": 255136,
+          "total_private_dirty_kb": 214796,
+          "native_heap_allocated_bytes": 44493840,
+          "java_heap_used_bytes": 7094512
+        },
+        "after_command_charge": {
+          "total_pss_kb": 216917,
+          "total_private_dirty_kb": 176436,
+          "native_heap_allocated_bytes": 43667248,
+          "java_heap_used_bytes": 7799024
+        },
+        "after_command_link": {
+          "total_pss_kb": 224185,
+          "total_private_dirty_kb": 183700,
+          "native_heap_allocated_bytes": 43807824,
+          "java_heap_used_bytes": 7319792
+        }
+      },
+      "normal_startup_memory_snapshots": [
+        {
+          "total_pss_kb": 186854,
+          "total_private_dirty_kb": 139292,
+          "native_heap_allocated_bytes": 41860384,
+          "java_heap_used_bytes": 25446416
+        },
+        {
+          "total_pss_kb": 172010,
+          "total_private_dirty_kb": 132768,
+          "native_heap_allocated_bytes": 41638288,
+          "java_heap_used_bytes": 9090832
+        },
+        {
+          "total_pss_kb": 170989,
+          "total_private_dirty_kb": 132012,
+          "native_heap_allocated_bytes": 41584432,
+          "java_heap_used_bytes": 9029392
+        },
+        {
+          "total_pss_kb": 171111,
+          "total_private_dirty_kb": 132084,
+          "native_heap_allocated_bytes": 41586192,
+          "java_heap_used_bytes": 8988432
+        },
+        {
+          "total_pss_kb": 170279,
+          "total_private_dirty_kb": 131368,
+          "native_heap_allocated_bytes": 41595760,
+          "java_heap_used_bytes": 9033488
+        }
+      ],
+      "checked_edit_snapshots": 120,
+      "checked_setup_snapshots": 3,
+      "measurement_limits": [
+        "Debug APK, API36 x86_64 emulator; not a physical-phone or release-build benchmark.",
+        "Startup is process-start to ready Compose draw; excludes earlier system dispatch/zygote time. Raw ADB request-to-receipt also includes transport, report writing and polling.",
+        "One fresh installation and four force-stopped process launches reuse OS page/disk caches. No device reboot/cold disk, warm/hot Activity or startup percentile claim.",
+        "Edits include serialized queue, JNI, EOS mutation, refreshed role snapshots and both JSON directions; exclude golden assertions and UI interaction/rendering. No contention injected.",
+        "Projection/command operations update two recipients; four roles are read including unlinked control. Commands include the reference mindlink.",
+        "Four warmups, twenty alternating samples (ten per direction); p95 is descriptive of these samples, not a reliable device-tail estimate.",
+        "Memory is current process PSS/private dirty, not peak or a leak test; protected graphics may be omitted. Edit-test memory includes instrumentation, assertions and reports.",
+        "Fit counts stay1/5/9 by stage: earlier fit graphs remain alive. Graph setup and memory are cumulative; no per-fit or command-only memory claim."
+      ]
+    },
+    "screenshots": {
+      "home": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "73b47541d894b0b3c983d1d5d3f271b9f8966672e3dd0f810efc679687e93810"
+      },
+      "about": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "dafcb1bc40dfd33993dd2215df5d5305f205395f5773e4a99c8e5d04c57bb226"
+      },
+      "about-landscape": {
+        "width": 1920,
+        "height": 1080,
+        "sha256": "b7acdcbf4a5f514029a3c2c0050cd282abe986dce121005d593d2f273fcd4e40"
+      },
+      "fit": {
+        "width": 1080,
+        "height": 1920,
+        "sha256": "aaa3ee1ff38fb840e483451576a70c3709f88b16174b0d7b1b979f693ed7b6d7"
+      }
+    },
+    "device": {
+      "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys",
+      "abi": "x86_64",
+      "api": "36"
+    },
+    "fresh_install": true,
+    "airplane_mode": true,
+    "app_internet_permission": false,
+    "apk_bytes": 71496902,
+    "apk_sha256": "156e1ec79865c9a1dc4f0c8490a03a5b04a91183b5132aae88602fca0f827cbd",
+    "engine_packaged": true,
+    "engine_parity_tested": "A01: 38 statistics across three ammunition states",
+    "projection_parity_tested": "A04: 39 statistics per fit, two fits, 11 states; two recipients, nine phases, five apply/remove cycles; same-worker repeat",
+    "projection_sequence_ms": 4584.317261999999,
+    "projection_repeat_sequence_ms": 2201.107823000001,
+    "command_parity_tested": "A05: 39 statistics per fit, two fits, 19 states; two recipients, 18 phases, five apply/remove cycles; 112 empty pending-bonus observations; same-worker repeat",
+    "command_sequence_ms": 2588.6513550000104,
+    "command_repeat_sequence_ms": 2326.6829459999913,
+    "arm64_contents_verified": true,
+    "arm64_runtime_tested": false,
+    "python_dependencies": {
+      "greenlet": "3.0.1",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "engine_boot_ms": 8405.921610000007,
+    "edit_sequence_ms": 37.272595999993996
+  },
+  "remaining_history_summary": {
+    "reference_cases": 28,
+    "reference_states": 168,
+    "groups": 4,
+    "process_executions": 8,
+    "complete": true,
+    "new_retained_fits": 36,
+    "restored_fits": 147,
+    "screenshots": 21,
+    "interleaved_recent_steps": 5,
+    "fixture_sha256": "4e887b346d1261d1ff28cc1a782649f64d61915dac31dd3fbe66ba4545fe4dbc"
+  },
+  "raw_remaining_history": {
+    "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-053831-ac90c37d-917f26\\native\\mutation-history-native.json",
+    "sha256": "ffe7cc78476c6928b853aafb73141ffd06e7c845cd1d2fb362a840a4c55fcf62"
+  },
+  "apks": {
+    "app-debug-androidTest.apk": "c6e0364950833a17a4a616b159ce967152a8813af0c07c9da48791eba9a2fa50",
+    "app-debug.apk": "156e1ec79865c9a1dc4f0c8490a03a5b04a91183b5132aae88602fca0f827cbd"
+  },
+  "operation_dispositions": {
+    "total": 46,
+    "actions": 39,
+    "boundaries": 7
+  },
+  "focused_repair_regressions": {
+    "tests": 124,
+    "log_path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\development\\b092-artifact-transport-regressions.log",
+    "log_sha256": "1ae9e82309a1a58f54814a674a7cac16b2a0e48ef61eea3ac22e4dda4a8c96d1",
+    "earlier_projection_tests": 113,
+    "earlier_projection_log_sha256": "5b016aa02ac6dda776c960e237599fefd70a304492ec50febb21f501415c8fd4",
+    "earlier_stale_tests": 80,
+    "earlier_stale_log_sha256": "96d29c67a01768ce0475216b7be8f946af020ce5965d1cb3c592da310e8dc5fd",
+    "earlier_cargo_tests": 60,
+    "earlier_cargo_log_sha256": "a9fe256528b0c158f21ca1c0afa80e25984c38354775e0b5602b6a10f13c528a"
+  },
+  "actual_report_corruptions_rejected": [
+    "reported_fixture_hash",
+    "duplicate_process",
+    "prior_process_reused",
+    "wrong_task",
+    "wrong_group",
+    "wrong_phase",
+    "missing_case",
+    "missing_reversal",
+    "wrong_cursor",
+    "revision_not_monotonic",
+    "manifest_database",
+    "wrong_worker",
+    "desktop_import",
+    "persistent_eos_store",
+    "restart_session_reused",
+    "wrong_statistic",
+    "wrong_statistic_unit",
+    "cargo_content",
+    "restored_inputs_missing",
+    "history_survives_restart",
+    "source_owns_action",
+    "stale_request_accepted",
+    "copy_inherits_history",
+    "deleted_source_cursor",
+    "recent_order",
+    "other_fit_cursor"
+  ],
+  "screenshots_reviewed": [
+    {
+      "name": "mutation-history-0-cargo-cleared.png",
+      "sha256": "4b87545fb0ed2a08d2e3fd587bf5f1f6f83d8f2196e4e8e74d54637f746e7289",
+      "reviewed": true,
+      "observation": "Redo of selected cargo quantities leaves zero cargo usage and no stacks, with Undo Change selected cargo quantities enabled and Redo disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-0-recreated.png",
+      "sha256": "686420147ac3ad4ad52229c62b27dc34971f897058cdac25973cd1d8cebe7a6a",
+      "reviewed": true,
+      "observation": "Recreated activity retains the Unicode-renamed fit and enabled Undo Rename fit with Redo disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-0-redone.png",
+      "sha256": "686420147ac3ad4ad52229c62b27dc34971f897058cdac25973cd1d8cebe7a6a",
+      "reviewed": true,
+      "observation": "Redo restores Renamed independent \u2014 \u0394 and exposes Undo Rename fit with Redo disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-0-restored.png",
+      "sha256": "bf213945a7cace8121ab19cf222cf97e26221de2b5b54a49980dd97fe9f4085e",
+      "reviewed": true,
+      "observation": "Fresh process retains the renamed fit while both history controls are disabled and No undo action is displayed.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-0-undone.png",
+      "sha256": "ac117f0f5b1f629ca08df50f1fcb25ca56d39380602c7740850a0b40c4b21521",
+      "reviewed": true,
+      "observation": "Undo restores Mutation history rename, disables Undo, and exposes enabled Redo Rename fit with the original fit name visible.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-1-recent-redone.png",
+      "sha256": "f14df1175d0a6bb7ead22946f75290af53f214d0af3f2aaffb8327d1f49764a1",
+      "reviewed": true,
+      "observation": "Independent recent owner shows restored Antimatter cargo, Undo Add cargo enabled and Redo disabled after redo.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-1-recreated.png",
+      "sha256": "57398cfad9252aa3c5cacf63c9116becd761df77073e4afe6ce9fa1d5a74a677",
+      "reviewed": true,
+      "observation": "Activity recreation retains selected cargo removal history with Undo enabled and Redo disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-1-redone.png",
+      "sha256": "57398cfad9252aa3c5cacf63c9116becd761df77073e4afe6ce9fa1d5a74a677",
+      "reviewed": true,
+      "observation": "Redone selected cargo removal displays the correct Undo label and disabled Redo.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-1-restored.png",
+      "sha256": "52f4537b493a6adb02588c93acf18ff3a62df7f61bd676f8c0d8f5eb42e3f977",
+      "reviewed": true,
+      "observation": "Fresh process retains the fit name and shows both history controls disabled with No undo action.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-1-undone.png",
+      "sha256": "899c3ee7af9b63d68fbdc3df329bea986027908cc62e5f1e2290b5d4128717ae",
+      "reviewed": true,
+      "observation": "Undo restores the prior Add cargo action; both Undo and Redo are enabled, and Redo correctly names Remove selected cargo.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-2-recreated.png",
+      "sha256": "70e1fb5781dced9dfba3f64f07d83802275cd162467e4ccec8df5ff519a70f08",
+      "reviewed": true,
+      "observation": "Activity recreation retains the compound fitted-equipment/cargo transfer as one enabled Undo action; Redo is disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-2-redone.png",
+      "sha256": "70e1fb5781dced9dfba3f64f07d83802275cd162467e4ccec8df5ff519a70f08",
+      "reviewed": true,
+      "observation": "Redone transfer exposes the correct single Undo action and disabled Redo.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-2-transfer-undone.png",
+      "sha256": "b5974a902b7cbd27846f75089d6fc178f5163e8f7f841c7116d3d2d36ed023d2",
+      "reviewed": true,
+      "observation": "Undo transfer clears bulk ammunition selection to zero, disables charge scope and explains that modules must be selected again; transfer remains redoable.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-2-undone.png",
+      "sha256": "a5d77b0678754bb3edf8d9e553562f2a497d504268c221ba61cf6f1f373212cd",
+      "reviewed": true,
+      "observation": "Undo transfer restores the previous Add cargo action and exposes Redo Transfer fitted equipment and cargo.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-2-restored.png",
+      "sha256": "b7e6d16878c44967c1c3368655caaccd80009d931d24bd29152743b9556ba52c",
+      "reviewed": true,
+      "observation": "Fresh-process restore retains the transfer fit identity and displays disabled Undo/Redo with No undo action.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-deleted-source.png",
+      "sha256": "5dc2f6f91fc4e6e8393af5f1ee88fa75b70e863d116387a55f73df0c3a7cb66e",
+      "reviewed": true,
+      "observation": "Deleting the projection source invalidates recipient history: both controls disabled and No undo action, with recipient fit identity retained.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-recreated.png",
+      "sha256": "e3808942287be37a4d81b08ef258065e96a6275bc15e21db5f63c9accce6b557",
+      "reviewed": true,
+      "observation": "Activity recreation retains the recipient-owned Add projected fit action, with Undo enabled and Redo disabled.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-redone.png",
+      "sha256": "e3808942287be37a4d81b08ef258065e96a6275bc15e21db5f63c9accce6b557",
+      "reviewed": true,
+      "observation": "Redo of Add projected fit exposes the correct Undo label and disabled Redo on the recipient fit.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-restored.png",
+      "sha256": "1156194184932e362eef39ca0ee8b4d7c894b42f85565bf5f0ff0608417917dd",
+      "reviewed": true,
+      "observation": "Fresh-process restore retains the recipient fit identity and starts with disabled Undo/Redo and No undo action.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-stale.png",
+      "sha256": "fd7a2fa0cb7fb06c80faadfc0e37eff99a3ee0b40af1069a69b23bb617f9348d",
+      "reviewed": true,
+      "observation": "Stale action displays The fit changed; reload it before editing with a visible Reload history control and retained recipient label.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "name": "mutation-history-3-undone.png",
+      "sha256": "1b63c08ba9777e04de585920652add036694db849d7a5e3fcc640c4343347547",
+      "reviewed": true,
+      "observation": "Undo Add projected fit leaves no Undo action, enables Redo Add projected fit and confirms the reversal on the recipient.",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+      "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    }
+  ],
+  "all_current_screenshots_reviewed": 146,
+  "provenance": {
+    "launcher_fix_reuse": [
+      {
+        "from_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+        "to_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f",
+        "changed_files": [
+          "android/ci/local_verification.py",
+          "android/ci/native_suite.py",
+          "android/ci/report_local.py",
+          "android/ci/test_native_artifact_read.py",
+          "android/ci/test_stale_history_retry.py"
+        ],
+        "completed_before_adoption": [
+          "desktop:utilities",
+          "desktop:reference",
+          "desktop:migration",
+          "reference:projection",
+          "reference:command",
+          "reference:catalog",
+          "reference:equipment",
+          "reference:empty_hulls",
+          "reference:module_edits",
+          "reference:charge_edits",
+          "reference:variation_edits",
+          "reference:rack_ordering",
+          "reference:bulk_charges",
+          "reference:bulk_states",
+          "reference:clone_fill",
+          "reference:bulk_variation_removal",
+          "reference:hull_modes",
+          "reference:subsystems",
+          "reference:structures",
+          "reference:cargo_stacks",
+          "reference:cargo_actions",
+          "reference:cargo_transfers",
+          "reference:notes",
+          "reference:history",
+          "reference:history_mutations",
+          "headless:base",
+          "headless:projection",
+          "headless:command",
+          "headless:bridge",
+          "headless:persistence",
+          "headless:library",
+          "headless:market",
+          "headless:empty_hulls",
+          "headless:module_edits",
+          "headless:charge_edits",
+          "headless:variation_edits",
+          "headless:rack_ordering",
+          "headless:bulk_charges",
+          "headless:bulk_states",
+          "headless:clone_fill",
+          "headless:bulk_variation_removal",
+          "headless:hull_modes",
+          "headless:subsystems",
+          "headless:structures",
+          "headless:cargo_stacks",
+          "headless:cargo_actions",
+          "headless:cargo_transfers",
+          "headless:notes",
+          "headless:history",
+          "headless:history_mutations",
+          "build:dependencies",
+          "build:engine-assets",
+          "build:apks-lint",
+          "build:signature",
+          "build:package"
+        ],
+        "unchanged_completed_host_build_inputs": true
+      }
+    ]
+  },
+  "preserved_failed_attempts": [
+    {
+      "gate": "native:initial",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "initial"
+      ],
+      "log": "logs\\056-native-initial.log",
+      "started_utc": "2026-10-02T05:17:49.040177+00:00",
+      "exit_code": 1,
+      "seconds": 95.625,
+      "log_sha256": "ed12d99788eb266c1fd6302d43843fdf596b62bf971ba0b6c4cd389068c47631",
+      "tested_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "gate": "native:initial",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "initial"
+      ],
+      "log": "logs\\058-native-initial.log",
+      "started_utc": "2026-10-02T05:21:10.955922+00:00",
+      "exit_code": 1,
+      "seconds": 62.656,
+      "log_sha256": "98d0adcad1a064850a681236d12013a9d958c325a8a04cf1e0e3ab975381442f",
+      "tested_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038"
+    },
+    {
+      "gate": "native:check-clone-fill.py",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-clone-fill.py"
+      ],
+      "log": "logs\\074-native-check-clone-fill.py.log",
+      "started_utc": "2026-10-02T05:48:36.513935+00:00",
+      "exit_code": 1,
+      "seconds": 68.015,
+      "log_sha256": "7558d573d282ad266cb7e38b3e3bf2e8b35e42bd9e900a5eda4d28272d90a217",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f"
+    },
+    {
+      "gate": "native:check-clone-fill.py",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\b092-recover-clone-report.py",
+        "--phase"
+      ],
+      "log": "logs\\080-native-check-clone-fill.py.log",
+      "started_utc": "2026-10-02T06:17:43.608174+00:00",
+      "exit_code": 1,
+      "seconds": 27.968,
+      "log_sha256": "8cf35aa3f3cc61938b86a4bb2f5018ecd3f826e3985d728401511a8bd109082f",
+      "tested_commit": "98ab296d3a3ce8ea7ee5c4b203c4d4f51d8f451f"
+    }
+  ],
+  "prior_verification_attempt": {
+    "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-014149-39143229-03c350",
+    "run_sha256": "755a4c9b5e79e553841faa2fce88aad6bd7bccedb27e11e75296d6f4e65af43c",
+    "status": "failed",
+    "completed_gates": 86,
+    "failures": [
+      {
+        "gate": "native:mutation-history-0-prepare",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-0-prepare"
+        ],
+        "log": "logs\\080-native-mutation-history-0-prepare.log",
+        "started_utc": "2026-10-02T02:36:18.677071+00:00",
+        "exit_code": 1,
+        "seconds": 28.594,
+        "log_sha256": "ac442825c98c2cb416d9e4dd81293aea039c3ed708b7e7e3ea01a97a23c2c405",
+        "tested_commit": "7dc60a00972d991037f51d875d39df7024d4998e"
+      },
+      {
+        "gate": "native:mutation-history-0-restored",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-0-restored"
+        ],
+        "log": "logs\\086-native-mutation-history-0-restored.log",
+        "started_utc": "2026-10-02T02:55:08.553554+00:00",
+        "exit_code": 1,
+        "seconds": 54.328,
+        "log_sha256": "12d3a6ed4c2dc44a932983a746518cbb8674ca9a72ece010829a490f20c589c4",
+        "tested_commit": "3ab65073103be0dd5fba2ac1d19a560a4a1334ae"
+      },
+      {
+        "gate": "native:mutation-history-1-prepare",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-1-prepare"
+        ],
+        "log": "logs\\089-native-mutation-history-1-prepare.log",
+        "started_utc": "2026-10-02T03:04:32.144839+00:00",
+        "exit_code": 1,
+        "seconds": 369.562,
+        "log_sha256": "c7c09c6ff8ee23fee62008c7219ebc8121329e4611ae7a1ef87647e60b8043e6",
+        "tested_commit": "287c0c336c0191c78129a017b363dbc3d030adad"
+      },
+      {
+        "gate": "native:mutation-history-3-prepare",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-3-prepare"
+        ],
+        "log": "logs\\100-native-mutation-history-3-prepare.log",
+        "started_utc": "2026-10-02T03:56:59.951177+00:00",
+        "exit_code": 1,
+        "seconds": 539.422,
+        "log_sha256": "84394f72ddf0d750182634e756659052950de5d6fb9bec85bf3adc1d8aa5487f",
+        "tested_commit": "66e89f31864ff12396f02dd420f5b3b5a1a5fd00"
+      },
+      {
+        "gate": "native:mutation-history-3-prepare",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-3-prepare"
+        ],
+        "log": "logs\\105-native-mutation-history-3-prepare.log",
+        "started_utc": "2026-10-02T04:15:33.525837+00:00",
+        "exit_code": 1,
+        "seconds": 578.266,
+        "log_sha256": "0514f42fa4937df021cb6941ed54cc311d75821fd1968fc78a3f3c0b8cb8a123",
+        "tested_commit": "7812de8024259d890e77435f794e69f71e75326b"
+      },
+      {
+        "gate": "native:mutation-history-3-restored",
+        "command": [
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+          "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+          "--step",
+          "mutation-history-3-restored"
+        ],
+        "log": "logs\\108-native-mutation-history-3-restored.log",
+        "started_utc": "2026-10-02T04:33:26.347262+00:00",
+        "exit_code": 1,
+        "seconds": 83.0,
+        "log_sha256": "d4acb49c3411f385b12b05471a89ab12a1c14076481afbd6021e817b1a636f8a",
+        "tested_commit": "0b39e40676c4c6592ff40b9990dee5eecfb19fa8"
+      }
+    ],
+    "provenance": {
+      "launcher_fix_reuse": [
+        {
+          "from_commit": "39143229055f5963a8b4baa104803dbdd3e2fece",
+          "to_commit": "7dc60a00972d991037f51d875d39df7024d4998e",
+          "changed_files": [
+            "android/ci/local_verification.py",
+            "android/ci/report_local.py",
+            "android/ci/test_report_local.py",
+            "tools/android_headless/check_history_mutations.py"
+          ],
+          "completed_before_adoption": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog"
+          ],
+          "unchanged_completed_host_build_inputs": true
+        }
+      ],
+      "runner_fix_reuse": [
+        {
+          "from_commit": "7dc60a00972d991037f51d875d39df7024d4998e",
+          "to_commit": "3ab65073103be0dd5fba2ac1d19a560a4a1334ae",
+          "completed_before_adoption": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py"
+          ],
+          "prepared": true,
+          "archive": "pending-runner-fix-original",
+          "app_sha256": "3e2e9e0a17ddbb7e9ff6ede97a3fc3b4b25967c8a1d3c522480f0b98422fc4e1",
+          "old_test_apk_sha256": "e206e044811fa3d2fd071fd236bbeb745b55562c5361ac2143b338b4f6fe8249",
+          "new_test_apk_sha256": "311fc373b7d225baffbd072be3a838e62753e3da8e873185c7097ac9bac98a3c",
+          "retained_graph_sha256": "ec4274616da583fa271dd8f9dc96682e9c03f1eec8ea20bbc07b0292fbcc343e",
+          "installed": true
+        }
+      ],
+      "settings_fix_reuse": [
+        {
+          "from_commit": "3ab65073103be0dd5fba2ac1d19a560a4a1334ae",
+          "to_commit": "287c0c336c0191c78129a017b363dbc3d030adad",
+          "completed_before_adoption": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py",
+            "native:mutation-history-0-prepare"
+          ],
+          "validated": true,
+          "retained_hashes": {
+            "mutation-history-0-prepare-native.json": "5673f3065e56f9d0bf3e8611180c90feeaa995c8a64cea6140a88e244e0d6cbd",
+            "mutation-history-0-prepare-instrumentation.txt": "e51fe1dc8912487a1f4f535758a134276f1e55e0ac92488a796efa7ed6db07c2",
+            "mutation-history-0-restored-native.json": "69074a135be42f6d0ead4073b1c94b69b9e41e998526d6bd68678d66884dace2",
+            "mutation-history-0-restored-instrumentation.txt": "410e11d76dc854f0398e2b86564cf05b01d6557cb71ca2b43432f571636c9ba6"
+          },
+          "apk_hashes": {
+            "app-debug-androidTest.apk": "311fc373b7d225baffbd072be3a838e62753e3da8e873185c7097ac9bac98a3c",
+            "app-debug.apk": "3e2e9e0a17ddbb7e9ff6ede97a3fc3b4b25967c8a1d3c522480f0b98422fc4e1"
+          },
+          "archive": "settings-fix-original"
+        }
+      ],
+      "cargo_observer_reuse": [
+        {
+          "from_commit": "287c0c336c0191c78129a017b363dbc3d030adad",
+          "to_commit": "66e89f31864ff12396f02dd420f5b3b5a1a5fd00",
+          "completed_before_adoption": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py",
+            "native:mutation-history-0-prepare",
+            "native:mutation-history-0-restored"
+          ],
+          "retained_gates": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py",
+            "native:mutation-history-0-prepare",
+            "native:mutation-history-0-restored",
+            "native:mutation-history-1-prepare",
+            "native:mutation-history-1-restored",
+            "native:mutation-history-2-prepare",
+            "native:mutation-history-2-restored"
+          ],
+          "prepared": true,
+          "archive": "cargo-sort-fix-original",
+          "app_sha256": "3e2e9e0a17ddbb7e9ff6ede97a3fc3b4b25967c8a1d3c522480f0b98422fc4e1",
+          "old_test_apk_sha256": "311fc373b7d225baffbd072be3a838e62753e3da8e873185c7097ac9bac98a3c",
+          "new_test_apk_sha256": "a50f951743cdac290dd0c4e103fe626a85183e35198d37b102a2594d3be20053",
+          "installed": true,
+          "recovery_receipt_sha256": "d2db93178c27ae40672f334700fee2c4ad615f4d872411cdf901f7a9ed5a345d"
+        }
+      ],
+      "stale_history_reuse": [
+        {
+          "from_commit": "66e89f31864ff12396f02dd420f5b3b5a1a5fd00",
+          "to_commit": "7812de8024259d890e77435f794e69f71e75326b",
+          "retained_gates": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py",
+            "native:mutation-history-0-prepare",
+            "native:mutation-history-0-restored",
+            "native:mutation-history-1-prepare",
+            "native:mutation-history-1-restored",
+            "native:mutation-history-2-prepare",
+            "native:mutation-history-2-restored"
+          ],
+          "prepared": true,
+          "archive": "stale-error-fix-original",
+          "retained_report_hashes": {
+            "mutation-history-0-prepare-native.json": "fe5187ac6c982e7a6c7f44598fd50806d818ef2651412da34b997902d497807b",
+            "mutation-history-0-restored-native.json": "7888ec158fc7e067fa9f239b511e45ff12d80f122382fcfb5415f7481bebe23e",
+            "mutation-history-1-prepare-native.json": "9220e989988d048d7b5ee60100f901469494af235d4ecfb06c02d2b692c3d4bd",
+            "mutation-history-1-restored-native.json": "1bab4741e9d067958c35d5875965724189a153c3f42a0accdfdaf63ad0eba771",
+            "mutation-history-2-prepare-native.json": "dd302bcf017b2a9fc3380da12673e9d56e0b4ce6627f2bcca62eba3db4a037a2",
+            "mutation-history-2-restored-native.json": "955ec87d06ced2822323d81c4eedd5a638c779e7b5e14de31345ab38d2bf44f3"
+          },
+          "app_sha256": "3e2e9e0a17ddbb7e9ff6ede97a3fc3b4b25967c8a1d3c522480f0b98422fc4e1",
+          "old_test_apk_sha256": "a50f951743cdac290dd0c4e103fe626a85183e35198d37b102a2594d3be20053",
+          "new_test_apk_sha256": "bf846beeb94d8b538d8f6eff32f342abc160a5663769b85e7d05d1aaef78449c",
+          "installed": true,
+          "recovery_receipt_sha256": "8a5815bf1efe972399d8e00af55a4c50ffaffb17be8fc025e42fcaed4f12e5fe"
+        }
+      ],
+      "projection_report_reuse": [
+        {
+          "from_commit": "7812de8024259d890e77435f794e69f71e75326b",
+          "to_commit": "0b39e40676c4c6592ff40b9990dee5eecfb19fa8",
+          "retained_gates": [
+            "desktop:utilities",
+            "desktop:reference",
+            "desktop:migration",
+            "reference:projection",
+            "reference:command",
+            "reference:catalog",
+            "reference:equipment",
+            "reference:empty_hulls",
+            "reference:module_edits",
+            "reference:charge_edits",
+            "reference:variation_edits",
+            "reference:rack_ordering",
+            "reference:bulk_charges",
+            "reference:bulk_states",
+            "reference:clone_fill",
+            "reference:bulk_variation_removal",
+            "reference:hull_modes",
+            "reference:subsystems",
+            "reference:structures",
+            "reference:cargo_stacks",
+            "reference:cargo_actions",
+            "reference:cargo_transfers",
+            "reference:notes",
+            "reference:history",
+            "reference:history_mutations",
+            "headless:base",
+            "headless:projection",
+            "headless:command",
+            "headless:bridge",
+            "headless:persistence",
+            "headless:library",
+            "headless:market",
+            "headless:empty_hulls",
+            "headless:module_edits",
+            "headless:charge_edits",
+            "headless:variation_edits",
+            "headless:rack_ordering",
+            "headless:bulk_charges",
+            "headless:bulk_states",
+            "headless:clone_fill",
+            "headless:bulk_variation_removal",
+            "headless:hull_modes",
+            "headless:subsystems",
+            "headless:structures",
+            "headless:cargo_stacks",
+            "headless:cargo_actions",
+            "headless:cargo_transfers",
+            "headless:notes",
+            "headless:history",
+            "headless:history_mutations",
+            "build:dependencies",
+            "build:engine-assets",
+            "build:apks-lint",
+            "build:signature",
+            "build:package",
+            "native:initial",
+            "native:measure-performance.py",
+            "native:check-contract.py",
+            "native:check-persistence.py",
+            "native:check-library.py",
+            "native:check-navigation.py",
+            "native:check-market.py",
+            "native:check-empty-hulls.py",
+            "native:check-module-edits.py",
+            "native:check-charge-edits.py",
+            "native:check-variation-edits.py",
+            "native:check-rack-ordering.py",
+            "native:check-bulk-charges.py",
+            "native:check-bulk-states.py",
+            "native:check-clone-fill.py",
+            "native:check-bulk-variation-removal.py",
+            "native:check-hull-modes.py",
+            "native:check-subsystems.py",
+            "native:check-structures.py",
+            "native:check-cargo-stacks.py",
+            "native:check-cargo-actions.py",
+            "native:check-cargo-transfers.py",
+            "native:check-notes.py",
+            "native:check-history.py",
+            "native:mutation-history-0-prepare",
+            "native:mutation-history-0-restored",
+            "native:mutation-history-1-prepare",
+            "native:mutation-history-1-restored",
+            "native:mutation-history-2-prepare",
+            "native:mutation-history-2-restored"
+          ],
+          "validated": true,
+          "retained_hashes": {
+            "mutation-history-3-prepare-native.json": "b4051f12a12aadcace49d1dcbee36e8e78e63a83b8b04c9994cb5f075de7ad3e",
+            "mutation-history-3-prepare-instrumentation.txt": "979ef95bdfe4c7271742ff7eacf4b2caea00fa759d237efaa9b2c7afe9351f23"
+          },
+          "apk_hashes": {
+            "app-debug-androidTest.apk": "bf846beeb94d8b538d8f6eff32f342abc160a5663769b85e7d05d1aaef78449c",
+            "app-debug.apk": "3e2e9e0a17ddbb7e9ff6ede97a3fc3b4b25967c8a1d3c522480f0b98422fc4e1"
+          },
+          "archive": "projection-range-fix-original"
+        }
+      ]
+    },
+    "product_fix": "Canonical EOS Float metres prevent linked-copy ORM refresh from invalidating unchanged recipient history; final product verification uses repaired inputs."
+  },
+  "clone_report_recovery": {
+    "diagnostics": {
+      "b092-native-artifact-diagnostic": {
+        "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\development\\b092-native-artifact-diagnostic",
+        "files": {
+          "clone-fill-prepare-native.json": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "prepare-pull.log": {
+            "sha256": "55450b2a36364505160ffbfbb9a2eb44536dde646622989ce901420621e6bb92",
+            "bytes": 68
+          }
+        }
+      },
+      "b092-restored-artifact-diagnostic": {
+        "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\development\\b092-restored-artifact-diagnostic",
+        "files": {
+          "clone-fill-restored-native.json": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "expected-file-size.txt": {
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+            "bytes": 3
+          },
+          "restored-pull.log": {
+            "sha256": "967534b1767d516637284b07a5a29d76af569975e785f30851f48206db2c22af",
+            "bytes": 69
+          }
+        }
+      },
+      "b092-clone-store-diagnostic": {
+        "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\development\\b092-clone-store-diagnostic",
+        "files": {
+          "dd-help.txt": {
+            "sha256": "5cbb931421924ee29dadb2f71b2144046e238e991cb3a291aa44f4dd9aeaa894",
+            "bytes": 1199
+          }
+        }
+      },
+      "b092-clone-store-diagnostic-binary": {
+        "path": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\development\\b092-clone-store-diagnostic-binary",
+        "files": {
+          "dd-help.txt": {
+            "sha256": "5cbb931421924ee29dadb2f71b2144046e238e991cb3a291aa44f4dd9aeaa894",
+            "bytes": 1199
+          },
+          "full-inputs-receipt.json": {
+            "sha256": "1dbfdcc48c5dc7f93665c03d00f87b6d52684e87fbdec4248168bccfeda0e960",
+            "bytes": 588
+          },
+          "graph.sqlite3": {
+            "sha256": "26eeb418b40a523b1b43092882994b0497dba8ac44d5cd461aeba7113cca4503",
+            "bytes": 57344
+          },
+          "read-stderr.txt": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "receipt.json": {
+            "sha256": "692a25a9978df709e5d7f8be3f4ebf9433995b535196d940fdb9357fd0fc4c6e",
+            "bytes": 464
+          }
+        }
+      }
+    },
+    "state_proof": {
+      "archive": "clone-report-recovery",
+      "receipt_sha256": "f4eeaceced2d270dc9dd84c96236a71f4d447d20c2cf8b3cfad0b034f90a85be",
+      "retained_gates": [
+        "desktop:utilities",
+        "desktop:reference",
+        "desktop:migration",
+        "reference:projection",
+        "reference:command",
+        "reference:catalog",
+        "reference:equipment",
+        "reference:empty_hulls",
+        "reference:module_edits",
+        "reference:charge_edits",
+        "reference:variation_edits",
+        "reference:rack_ordering",
+        "reference:bulk_charges",
+        "reference:bulk_states",
+        "reference:clone_fill",
+        "reference:bulk_variation_removal",
+        "reference:hull_modes",
+        "reference:subsystems",
+        "reference:structures",
+        "reference:cargo_stacks",
+        "reference:cargo_actions",
+        "reference:cargo_transfers",
+        "reference:notes",
+        "reference:history",
+        "reference:history_mutations",
+        "headless:base",
+        "headless:projection",
+        "headless:command",
+        "headless:bridge",
+        "headless:persistence",
+        "headless:library",
+        "headless:market",
+        "headless:empty_hulls",
+        "headless:module_edits",
+        "headless:charge_edits",
+        "headless:variation_edits",
+        "headless:rack_ordering",
+        "headless:bulk_charges",
+        "headless:bulk_states",
+        "headless:clone_fill",
+        "headless:bulk_variation_removal",
+        "headless:hull_modes",
+        "headless:subsystems",
+        "headless:structures",
+        "headless:cargo_stacks",
+        "headless:cargo_actions",
+        "headless:cargo_transfers",
+        "headless:notes",
+        "headless:history",
+        "headless:history_mutations",
+        "build:dependencies",
+        "build:engine-assets",
+        "build:apks-lint",
+        "build:signature",
+        "build:package",
+        "native:initial",
+        "native:measure-performance.py",
+        "native:check-contract.py",
+        "native:check-persistence.py",
+        "native:check-library.py",
+        "native:check-navigation.py",
+        "native:check-market.py",
+        "native:check-empty-hulls.py",
+        "native:check-module-edits.py",
+        "native:check-charge-edits.py",
+        "native:check-variation-edits.py",
+        "native:check-rack-ordering.py",
+        "native:check-bulk-charges.py",
+        "native:check-bulk-states.py"
+      ]
+    },
+    "validation": {
+      "generation": 1602,
+      "retained_fits": 25,
+      "graph_sha256": "26eeb418b40a523b1b43092882994b0497dba8ac44d5cd461aeba7113cca4503",
+      "payload_sha256": "74a7d35aff15c83d02a5e3e3bf8d6f4c90ce21e077c32a9d2cbf0563768a8db4",
+      "report_sha256": "3b59388d66f72188d42ed8f7eff37faf72c9321f439bffb0d5a07e04330375bf",
+      "integrity_check": "ok",
+      "record_ids_revisions_names_recent_exact": true,
+      "test_checkpoint_lost": true,
+      "instrumentation_rerun": false,
+      "full_inputs_exact": true,
+      "all_calculated_stats_within_existing_tolerances": true,
+      "host_reopen_read_only": true,
+      "restored_report_device_local_sha256": "bb2be6061c72f68a19dab2b6962663d97f7006d61a434d3286d0a40912a89873",
+      "restored_png_device_local_sha256": "272ab5ae5cb2cf6a660f76703f7de620ee6d33df742d1d66990a88c2c7f85399",
+      "summary": {
+        "new_fits": 5,
+        "restored_fits": 25,
+        "screenshots": 8,
+        "protocol_rejections": 7,
+        "checks": {
+          "prepare": [
+            "selection_recreation",
+            "selected_positions_states_charges",
+            "targeted_vacancy",
+            "fitted_source_fill",
+            "market_touch_preview_stop_history",
+            "linked_recipient",
+            "atomic_rejections",
+            "typed_fill_preview"
+          ],
+          "restored": [
+            "fresh_process_restore",
+            "reopen_each_fit"
+          ]
+        }
+      },
+      "prepare_rerun": false,
+      "restored_instrumentation_rerun": true,
+      "app_database_unchanged": true
+    },
+    "selection_precondition": {
+      "original_navigation_sha256": "99722c00eb2d928a45acda277edaf5a32b0dca16f1ddd730dbe21a61695b446a",
+      "prepare_precondition_navigation_sha256": "f5a80a1fdf626e216a246dc651e8a4498093cf08cef51e872325fc5c08ea7ba8",
+      "only_active_id_changed": true,
+      "original_active_id": "7259001c2e9b477596b60fc293dbd4cf",
+      "restored_active_id": "fcd0379e4bb0428e9f35c94f8e76590f",
+      "reason": "Original successful restored instrumentation opens all five fits and leaves the receiver selected",
+      "fit_database_unchanged": true
+    },
+    "command_sha256": "c51e8c145566bf629fed495d445f28cab443a696d6433335c483fb79d21c0b61",
+    "original_command_sha256": "505d996b20da9415f263a988ccbb4c0d34ad6bd210467a4f1e6ed11a6220244b",
+    "failed_selection_retry_log_sha256": "639418e35c51a6b867e0e28e91d2ddf08a4f726eece1fe544ba11d883b58946a"
+  },
+  "apk_build_commit": "ac90c37d4dedbdddf1324c99635ce76574c20038",
+  "earlier_setup_failures_receipt": "w02-local.json",
+  "limits": [
+    "x86_64 API 36 emulator execution; ARM64 package inspection only.",
+    "History is session-local; confirmed fit inputs persist.",
+    "Phone usability, older APIs and signing upgrades remain unverified.",
+    "Desktop cargo/implant recent-use policy differences and direct skill-profile gap are explicit in the independent fixture."
+  ],
+  "required_native_executions": 60
+}

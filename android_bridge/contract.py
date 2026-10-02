@@ -203,7 +203,8 @@ class BridgeSession:
         self._revisions = {key: 1 for key in self._fits}
         self._modified = {key: 1 for key in self._fits}
         self._recent = []
-        from .history import EditHistory
+        from .history import EditHistory, validate_operations
+        validate_operations(ARGUMENTS)
         self._history = EditHistory()
         self._records = self._capture(self._fits, {self.sample_id: sample_spec} if sample_fit is not None else {})
         self._snapshots = self._snapshots_for(self._fits, self._revisions, self._fits)
@@ -748,7 +749,8 @@ class BridgeSession:
                 promoted = used if recent != self._recent else []
                 # Record the original recent-use side effect even when its item
                 # is already first; redo may run after another fit promotes one.
-                if operation in {'add_module', 'replace_module', 'remove_module', 'remove_bulk_modules', 'fill_modules_item'}:
+                if operation in {'add_module', 'replace_module', 'remove_module', 'remove_bulk_modules', 'fill_modules_item',
+                    'set_subsystem', 'add_cargo', 'remove_cargo', 'remove_cargos', 'add_cargo_preset', 'fill_cargo'}:
                     promoted = used or []
                 history = self._history.after_edit(operation, args, self._records, records, promoted)
             modified = {key: self._modified.get(key, 0) for key in records}

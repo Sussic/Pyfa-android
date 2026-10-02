@@ -21,15 +21,89 @@ PIN='8b04f3b271e614b3e103853b44a7851a63d79d0e'
 FAMILIES=['projection','command','catalog','equipment','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations']
 HEADLESS=['bridge','persistence','library','market','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations']
 BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
 def git(*args): return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
+
+def pending_mutation_count_fix(root, before, after, completed):
+    """Reuse earlier gates only for the exact unexecuted suite-count correction."""
+    assert 'headless:history_mutations' not in completed
+    path = 'tools/android_headless/check_history_mutations.py'
+    def source(commit):
+        return subprocess.check_output(['git', 'show', commit + ':' + path], cwd=root, text=True, encoding='utf-8')
+    old = source(before); new = source(after)
+    assert old.count('(2 if args.matrix_only else 22)') == 1
+    assert new == old.replace('(2 if args.matrix_only else 22)', '(2 if args.matrix_only else 23)', 1)
+
+def pending_runner_fix(root, before, after, completed):
+    """Only the missing storage flag may change before any B09.2 phase passes."""
+    assert 'native:check-history.py' in completed
+    assert not any(g.startswith('native:mutation-history-') for g in completed)
+    path = 'android/app/src/androidTest/java/io/github/sussic/pyfa/DiagnosticTestRunner.kt'
+    def source(commit, name):
+        return subprocess.check_output(['git', 'show', commit + ':' + name], cwd=root, text=True, encoding='utf-8')
+    old = source(before, path)
+    ending = '!arguments.containsKey("b091_phase"))'
+    assert old.count(ending) == 1
+    assert source(after, path) == old.replace(ending,
+        '!arguments.containsKey("b091_phase") &&\n            !arguments.containsKey("b092_phase"))', 1)
+    changes = subprocess.check_output(['git', 'diff', '--name-only', before, after], cwd=root, text=True).splitlines()
+    allowed = {path, 'android/ci/local_verification.py', 'android/ci/report_local.py', 'android/ci/test_pending_runner_fix.py'}
+    assert path in changes and set(changes) <= allowed, changes
+    import ast
+    def executed(text):
+        return {n.name: ast.dump(n, include_attributes=False) for n in ast.walk(ast.parse(text))
+            if isinstance(n, ast.FunctionDef) and n.name in ('plan', 'host', 'build', 'execute')}
+    assert executed(source(before, 'android/ci/local_verification.py')) == executed(source(after, 'android/ci/local_verification.py'))
+
+def pending_settings_fix(root, before, after):
+    """Only the named whole-double settings comparison may change in raw validation."""
+    def source(commit, name):
+        return subprocess.check_output(['git','show',commit+':'+name],cwd=root,text=True,encoding='utf-8')
+    path='android/ci/mutation_history_summary.py'
+    addition='''def settings(expected, actual):
+    # JSONObject writes the whole-valued double 1.0 as 1. Only this setting's
+    # representation may differ; its numeric value must still match exactly.
+    exact(set(expected), set(actual))
+    for key, value in expected.items():
+        other = actual[key]
+        if key == 'globalDefaultSpoolupPercentage':
+            assert type(value) is float and type(other) in (int, float)
+            assert isfinite(value) and isfinite(other) and value == other
+        else: exact(value, other)
+
+
+'''
+    old=source(before,path)
+    line="    exact(fixture['eos_settings'], engine['eos_settings'])"
+    assert old.count(line)==1 and old.count('def _typed_shape(value):')==1
+    expected=old.replace('def _typed_shape(value):',addition+'def _typed_shape(value):',1).replace(line,"    settings(fixture['eos_settings'], engine['eos_settings'])",1)
+    assert source(after,path)==expected, 'Unrelated raw validator change'
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/test_mutation_history_summary.py','android/ci/local_verification.py',
+        'android/ci/report_local.py','android/ci/revalidate-mutation-history.py','android/ci/test_pending_settings_fix.py'}
+    assert path in changes and set(changes)<=allowed,changes
+    import ast
+    def executed(text):
+        return {n.name:ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(text))
+            if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
+    assert executed(source(before,'android/ci/local_verification.py'))==executed(source(after,'android/ci/local_verification.py'))
+
+def pending_stale_test_fixture_fix(root,before,after):
+    path='android/ci/test_stale_history_retry.py'
+    def source(commit):return subprocess.check_output(['git','show',commit+':'+path],cwd=root,text=True,encoding='utf-8')
+    old=source(before)
+    line='self.new={path:(ROOT/path).read_text() for path in self.old}'
+    replacement="self.new={path:subprocess.check_output(['git','show','7812de8024259d890e77435f794e69f71e75326b:'+path],cwd=ROOT,text=True,encoding='utf-8') for path in self.old}"
+    assert old.count(line)==1 and source(after)==old.replace(line,replacement,1)
+
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -78,11 +152,68 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_projection_report_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-3-prepare' not in self.state['completed']
+                assert 'native:mutation-history-2-restored' in self.state['completed']
+                from projection_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                self.state.setdefault('projection_report_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'retained_gates':list(self.state['completed']),'validated':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_stale_history_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                assert [g for g in self.state['completed'] if g.startswith('native:mutation-history-')]==[f'native:mutation-history-{group}-{phase}' for group in range(3) for phase in ('prepare','restored')]
+                from stale_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                self.state.setdefault('stale_history_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'retained_gates':list(self.state['completed']),'prepared':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_cargo_observer_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-1-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                assert 'native:check-history.py' in self.state['completed']
+                assert [g for g in self.state['completed'] if g.startswith('native:mutation-history-')]==['native:mutation-history-0-prepare','native:mutation-history-0-restored']
+                from cargo_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                retained=[g for g in self.state['completed'] if not g.startswith('native:mutation-history-')]
+                self.state.setdefault('cargo_observer_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'retained_gates':retained,'prepared':False})
+                self.state['completed']=retained
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_pending_settings_fix:
+                assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-0-restored'
+                assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-0-prepare' in self.state['completed']
+                assert not any(g.startswith('native:mutation-history-1-') for g in self.state['completed'])
+                pending_settings_fix(ROOT,self.state['commit'],current)
+                self.state.setdefault('settings_fix_reuse',[]).append({'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'validated':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_pending_runner_fix:
+                assert self.state['status']=='failed'
+                assert self.state['attempts'][-1]['gate']=='native:mutation-history-0-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                pending_runner_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                proof={'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'prepared':False}
+                self.state.setdefault('runner_fix_reuse',[]).append(proof)
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
                 changed=git('diff','--name-only',self.state['commit'],current).splitlines()
-                allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1'}
+                allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1',
+                    'android/ci/report_local.py','android/ci/test_report_local.py'}
+                if 'android/ci/test_native_artifact_read.py' in changed:
+                    allowed.add('android/ci/test_native_artifact_read.py')
+                if 'android/ci/test_stale_history_retry.py' in changed:
+                    pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
+                    allowed.add('android/ci/test_stale_history_retry.py')
+                if 'tools/android_headless/check_history_mutations.py' in changed:
+                    assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
+                    pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    allowed.add('tools/android_headless/check_history_mutations.py')
                 if args.restart_native:
                     allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
                         'android/ci/report_local.py','android/ci/test_report_local.py'})
@@ -106,7 +237,8 @@ class Run:
                 assert self.state['plan']==plan(self.state['mode'],self.state['gate'])
                 for row in self.state['attempts']: row.setdefault('tested_commit',self.state['commit'])
                 self.state.setdefault('launcher_fix_reuse',[]).append({'from_commit':self.state['commit'],
-                    'to_commit':current,'changed_files':changed,'unchanged_completed_host_build_inputs':True})
+                    'to_commit':current,'changed_files':changed,'completed_before_adoption':list(self.state['completed']),
+                    'unchanged_completed_host_build_inputs':True})
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             assert self.state['tree']==git('rev-parse','HEAD^{tree}')
         self.native=self.directory/'native';self.native.mkdir(exist_ok=True)
@@ -256,6 +388,56 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            projection_fixes=self.state.get('projection_report_reuse',[])
+            if projection_fixes and not projection_fixes[-1]['validated']:
+                from projection_history_retry import revalidate
+                revalidate(self,projection_fixes[-1]);save(self.file,self.state)
+            stale_fixes=self.state.get('stale_history_reuse',[])
+            if stale_fixes and not stale_fixes[-1]['prepared']:
+                from stale_history_retry import prepare
+                prepare(self,stale_fixes[-1]);save(self.file,self.state)
+            cargo_fixes=self.state.get('cargo_observer_reuse',[])
+            if cargo_fixes and not cargo_fixes[-1]['prepared']:
+                from cargo_history_retry import prepare
+                prepare(self,cargo_fixes[-1]);save(self.file,self.state)
+            settings_fixes=self.state.get('settings_fix_reuse',[])
+            if settings_fixes and not settings_fixes[-1]['validated']:
+                proof=settings_fixes[-1]
+                archive=self.directory/'settings-fix-original';archive.mkdir(exist_ok=False)
+                (archive/'run.json').write_bytes(self.original_run_bytes)
+                names=[f'mutation-history-0-{phase}-{suffix}' for phase in ('prepare','restored') for suffix in ('native.json','instrumentation.txt')]
+                proof['retained_hashes']={name:sha(self.native/name) for name in names}
+                proof['apk_hashes']={p.name:sha(p) for p in (self.directory/'apks').glob('*.apk')}
+                assert len(proof['apk_hashes'])==2
+                for name in names:shutil.copyfile(self.native/name,archive/name)
+                self.execute('native:mutation-history-0-restored',[sys.executable,ROOT/'android/ci/revalidate-mutation-history.py'])
+                self.state['attempts'][-1]['retained_native_execution_commit']=proof['from_commit']
+                assert all(sha(self.native/name)==value for name,value in proof['retained_hashes'].items())
+                self.state['completed'].append('native:mutation-history-0-restored')
+                proof['archive']=archive.name;proof['validated']=True;save(self.file,self.state)
+            fixes=self.state.get('runner_fix_reuse',[])
+            if fixes and not fixes[-1]['prepared']:
+                proof=fixes[-1]
+                archive=self.directory/'pending-runner-fix-original'
+                archive.mkdir(exist_ok=False)
+                (archive/'run.json').write_bytes(self.original_run_bytes)
+                shutil.copytree(self.directory/'apks',archive/'apks')
+                shutil.copyfile(self.native/'apk-contents.json',archive/'apk-contents.json')
+                proof['archive']=archive.name
+                proof['app_sha256']=sha(archive/'apks/app-debug.apk')
+                proof['old_test_apk_sha256']=sha(archive/'apks/app-debug-androidTest.apk')
+                self.build('apks-lint')
+                assert sha(ROOT/'android/app/build/outputs/apk/debug/app-debug.apk')==proof['app_sha256'], 'Target APK changed; earlier native proof is invalid'
+                self.build('package')
+                from zipfile import ZipFile
+                old_test=archive/'apks/app-debug-androidTest.apk'
+                new_test=self.directory/'apks/app-debug-androidTest.apk'
+                with ZipFile(old_test) as old, ZipFile(new_test) as new:
+                    assets={name for name in old.namelist() if name.startswith('assets/')}
+                    assert assets=={name for name in new.namelist() if name.startswith('assets/')}
+                    assert all(old.read(name)==new.read(name) for name in assets), 'Packaged fixtures changed'
+                proof['new_test_apk_sha256']=sha(new_test);proof['prepared']=True
+                save(self.file,self.state)
             for step in self.state['plan']:
                 if step in self.state['completed']:continue
                 if (self.directory/'PAUSE').exists():
@@ -265,8 +447,23 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if stale_fixes and not stale_fixes[-1].get('installed'):
+                        from stale_history_retry import install
+                        install(self,stale_fixes[-1]);save(self.file,self.state)
+                    if cargo_fixes and not cargo_fixes[-1].get('installed'):
+                        from cargo_history_retry import install
+                        install(self,cargo_fixes[-1]);save(self.file,self.state)
+                    if fixes and not fixes[-1].get('installed'):
+                        proof=fixes[-1]
+                        def graph_hash():
+                            return subprocess.check_output(['adb','-s',self.serial,'shell','run-as','io.github.sussic.pyfa.dev',
+                                'sha256sum','no_backup/fits/graph.sqlite3'],text=True).split()[0]
+                        prior_graph=graph_hash()
+                        self.execute('environment:pending-test-runner-update',['adb','-s',self.serial,'install','-r','-t',self.directory/'apks/app-debug-androidTest.apk'])
+                        assert graph_hash()==prior_graph, 'Test runner installation changed the retained fit store'
+                        proof['retained_graph_sha256']=prior_graph;proof['installed']=True;save(self.file,self.state)
                     from history_progress import HistoryProgress
-                    diagnostics=HistoryProgress(self.directory/'diagnostics'/f'history-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' else nullcontext()
+                    diagnostics=HistoryProgress(self.directory/'diagnostics'/f'{step.replace(":", "-")}-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' or step.startswith('native:mutation-history-') else nullcontext()
                     with diagnostics:
                         self.execute(step,[sys.executable,ROOT/'android/ci/native_suite.py','--step',step.split(':',1)[1]],cwd=ROOT/'android')
                 self.state['completed'].append(step);save(self.file,self.state)
@@ -300,6 +497,13 @@ def main():
     parser.add_argument('--run');parser.add_argument('--source');parser.add_argument('--reference-python')
     parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
     parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
+    parser.add_argument('--adopt-pending-runner-fix',action='store_true',help='Adopt only the exact missing B09.2 storage flag after its first phase failed; preserve earlier proof and rebuild the test APK')
+    parser.add_argument('--adopt-pending-settings-fix',action='store_true',help='Revalidate retained successful group 0 instrumentation after the exact whole-double settings-report correction')
+    parser.add_argument('--adopt-cargo-observer-fix',action='store_true',help='Rebuild the exact cargo-sort observer correction, recover the proven synthetic baseline and rerun all B09.2 phases')
+    parser.add_argument('--cargo-recovery',help='Validated partial/restored store and receipt directory for the exact B09.2 failure')
+    parser.add_argument('--adopt-stale-history-fix',action='store_true',help='Rebuild the exact final-group enum comparison repair; retain groups 0–2 and retry only group 3')
+    parser.add_argument('--stale-recovery',help='Validated partial/restored group 3 store and receipt directory')
+    parser.add_argument('--adopt-projection-report-fix',action='store_true',help='Revalidate retained successful group 3 preparation after exact decimal projection-range comparison repair; no instrumentation rerun')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
