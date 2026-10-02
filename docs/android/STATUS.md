@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.2 capacitor details selected and in progress.**
+Updated: 2026-10-02. **C01.2 capacitor verification complete; delivery in progress.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
@@ -15,11 +15,21 @@ capacity/effective capacity, recharge/use/delta/effective excess, resistance and
 stable percent versus depletion seconds use EOS and pinned desktop presentation.
 Two fresh original wx/EOS exports agree for twelve independent cases. Focused
 host matrix/read-only/history/copy/thread/restart checks and ten fixture/raw
-validator tests pass. Development APK compilation/lint pass; final revision still
-requires its full 97-gate verification, native screenshots, review and delivery.
-Initial host seed and isolated validator-import failures are retained locally.
-No native execution or merge is yet claimed. Exact next is the C01.2 full local
-verification and delivery; C01.3 follows only after this outcome is closed.
+validator tests pass. All 97 required local gates pass: 54 reference/host, five
+build and 38 native gates, including 65 required native executions and all A10
+requirements. All 174 fits survive restart; 159 required screenshots plus the
+optional capacitor failure diagnostic are reviewed. Twenty-two actual-report
+corruptions and ten exact runner/source/package guards pass.
+[Receipt](evidence/c01-2-native.json) binds actual gate commits and APK hashes.
+Reviewed product code is `855c87c3`; exact persistent test-runner repair is
+`7775b40a`. Ninety-four prior gates are retained under strict source/package/store
+proof; only test APK/package and capacitor phases/summary reran. App APK unchanged.
+Initial host/import/shell failures, B05.4 transport failures/recovery and capacitor
+ephemeral-storage rejection remain recorded. The optional shared B05.4 failure
+logcat was overwritten by the capacitor failure before archival and is explicitly
+unavailable; required passing evidence and original failed command logs remain.
+No assertions, tolerances, timeouts or performance requirements changed.
+Exact next is C01.2 push/PR/local status/merge; C01.3 follows only after closure.
 
 ## Latest delivery — C01.1 fitting resources
 

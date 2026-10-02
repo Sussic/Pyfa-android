@@ -22,7 +22,7 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ```
 
 C01.2 extends the required plan to 97 gates: 54 reference/host, five build
-and 38 native gates. Capacitor checks add twelve original desktop cases, nine
+and 38 native gates. Capacitor checks add twelve original desktop cases, ten
 raw/fixture validator tests and two separate native prepare/restored processes.
 These are requirements; STATUS records actual completed verification.
 
