@@ -59,4 +59,13 @@ pass LF/CRLF equivalence and reject incorrect hashes, missing fixtures, changed
 content even with updated hashes, other whitespace, wrong scalar kinds/values,
 units, overload and labels. APK/native-test compilation and lint pass at their
 recorded development revisions. Earlier host/compile failures remain retained.
-Native execution, visual review and final-commit full verification are pending.
+Final candidate e0e01d9b passed 90/93 local gates, including every inherited native
+check and the fourteen-case resource probe. Saved-resource preparation exposed a
+test-only copy-selection error: DuplicateFit returns the whole library, so the
+test selected an older fit. The equality assertion remains; select the sole new
+ID and verify its name. Preserve the original failed attempt, APK and partial
+store. Eight focused repair regressions pass. Recovery independently verifies
+all 147 original inputs/statistics and removes only the two exact failed test
+fits. Rebuild the test APK, require unchanged application/fixture bytes and exact
+source equivalence outside this correction, then reuse the 90 valid results and
+retry only prepare/restored/summary. Final screenshot review/delivery are pending.

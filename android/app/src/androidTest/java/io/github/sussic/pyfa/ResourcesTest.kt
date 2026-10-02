@@ -169,7 +169,9 @@ class ResourcesTest {
                     click("history-undo"); ready(id); assertEquals(original.resources,query(id).resources)
                     click("history-redo"); ready(id); assertEquals(changed.resources,query(id).resources)
                     click("history-undo"); ready(id); assertEquals(original.resources,query(id).resources)
-                    val copy = send(BridgeOperation.DuplicateFit(id,"C01.1 copy"),id).fits.first { it.id != id }.id
+                    val beforeCopy = EngineRuntime.library.value.map { it.id }.toSet()
+                    val copy = send(BridgeOperation.DuplicateFit(id,"C01.1 copy"),id).fits.single { it.id !in beforeCopy }.id
+                    assertEquals("C01.1 copy",fit(copy).name)
                     assertEquals(original.resources,query(copy).resources)
                     assertEquals(0,EngineRuntime.editHistory(context,copy).get(120,TimeUnit.SECONDS).undoCount)
                     EngineRuntime.selectFit(context,id).get(30,TimeUnit.SECONDS); ready(id)

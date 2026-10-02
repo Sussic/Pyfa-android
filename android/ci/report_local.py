@@ -29,6 +29,23 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    resource_reuse=state.get('resource_test_reuse',[])
+    resource_proof=resource_reuse[-1] if resource_reuse else None
+    if resource_proof:
+        from resource_test_retry import exact_source,validate_recovery,assets_equal
+        exact_source(root,resource_proof['from_commit'],resource_proof['to_commit'])
+        assert resource_proof['to_commit']==state['commit'] and resource_proof['prepared'] and resource_proof['installed']
+        assert sha(run/resource_proof['regression_log'])==resource_proof['regression_log_sha256']
+        assert latest['headless:resource-harness-repair']['exit_code']==0 and latest['headless:resource-harness-repair']['tested_commit']==state['commit']
+        archive=run/resource_proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
+        validate_recovery(root,run,archive/'recovery')
+        assert sha(archive/'recovery/recovery.json')==resource_proof['recovery_receipt_sha256']
+        assert sha(run/'apks/app-debug.apk')==resource_proof['app_sha256']
+        assert sha(archive/'apks/app-debug-androidTest.apk')==resource_proof['old_test_apk_sha256']
+        assert sha(run/'apks/app-debug-androidTest.apk')==resource_proof['new_test_apk_sha256']
+        assets_equal(archive/'apks/app-debug-androidTest.apk',run/'apks/app-debug-androidTest.apk')
+        for name,digest in resource_proof['retained_hashes'].items():assert sha(run/name)==digest
+        assert resource_proof['retained_gates']==[gate for gate in resource_proof['completed_before_adoption'] if gate not in ('build:apks-lint','build:package')]
     projection_reuse=state.get('projection_report_reuse',[])
     projection_proof=projection_reuse[-1] if projection_reuse else None
     if projection_proof:
@@ -117,6 +134,9 @@ def validate(run,root):
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
             comparison_commit=state['commit']
+            if resource_proof and gate in resource_proof['retained_gates']:
+                assert row['tested_commit']==resource_proof['from_commit']
+                continue
             if projection_proof and gate in projection_proof['retained_gates']:
                 if row['tested_commit']==projection_proof['from_commit']:continue
                 comparison_commit=projection_proof['from_commit']

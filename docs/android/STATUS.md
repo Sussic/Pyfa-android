@@ -69,8 +69,20 @@ failed host and compile attempts remain retained. Candidate `f68503dd` passed al
 five build/package gates and the native fourteen-case diagnostic. Three diagnostic
 screens were reviewed; its wrapper now respects system-bar insets after a bottom
 detail line was partly covered. Production screen uses the existing Scaffold.
-Final saved-fit UI/restart, corrected screenshots and full verification remain
-pending. Exact next action: run the final 93-gate plan, then review and deliver C01.1.
+Candidate `e0e01d9b` passed 90 of 93 final local gates: all reference/host/build,
+all inherited native checks and the fourteen-case resource probe. All 146 inherited
+screens are reviewed. Resource preparation failed because its copy test selected
+the first older library fit instead of the new copy; the full failure remains
+archived. The correction identifies the one new ID and retains the resource
+equality assertion. Eight focused source/recovery rejection tests pass. A bounded
+recovery copy removes only the two exact partial C01.1 fits and compares all 147
+original inputs, revisions and EOS statistics with the retained native report;
+the original store and checkpoint remain preserved. Exact source checks reject
+every unrelated test, launcher, reporter or product difference. No product code,
+fixture, tolerance, timeout, restart or A10 requirement changes. Exact next:
+rebuild/inspect the corrected test APK, require the app APK and fixture bytes to
+remain identical, retain the 90 valid results, then retry resource prepare,
+restored and summary. Final visual review and delivery remain pending.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.
