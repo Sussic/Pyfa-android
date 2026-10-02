@@ -126,3 +126,14 @@ Final delivery requires APK/lint/package, every inherited gate, native screen/ra
 assertions, screenshot review and report-corruption checks. Named pattern libraries
 remain D05. C01.3.2 follows delivery and retains F05.23–F05.27 tank/spool acceptance.
 The parent remains active until both children are verified and delivered.
+
+C01.3.1 verification: [receipt](../evidence/c01-3-1-native.json) records all
+101 required local gates on `e0778290`, 67 native executions, 189 restored fits
+(174 inherited), 165 reviewed screenshots and 23 rejected actual-report
+corruptions. Fourteen independent original wx/EOS cases and four single-field
+damage-contribution witnesses agree in two fresh reference processes. Twenty-two
+fixture/schema/transport regressions and ten historical capacitor source guards
+pass. The full run needed no native retry; completed results remain retained.
+The earlier development compile failure is recorded separately. All inherited
+assertions, tolerances, timeouts, restart boundaries and A10 criteria are intact.
+Delivery PR, successful exact-head local status and merge remain pending.

@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.3.1 defenses and incoming damage selected.**
+Updated: 2026-10-03. **C01.3.1 verified; delivery pending.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
@@ -27,10 +27,17 @@ for fourteen cases and four individual contribution witnesses. Host matrix,
 read-only/GC, input/history/rejection/no-op/failed-save/copy and fresh-process
 restart pass; twenty-two fixture/schema/transport regressions and the extended
 original history matrix pass. Ten historical capacitor source/package guards pass.
-Development app/test compilation and lint pass after a retained diagnostics
-accessor compile failure; final build will include the last UI/test assertions.
-The final 101-gate plan retains every inherited gate. Native execution, 165 required
-screenshots, actual-report corruption review and delivery remain outstanding.
+All 101 required local gates pass on `e0778290`: 56 reference/host, five build
+and 40 native gates, with 67 native executions and all A10 requirements retained.
+All 189 fits, including 174 inherited fits, survive process restart. All 165
+required screenshots are reviewed; 23 actual-report corruptions are rejected.
+[Receipt](evidence/c01-3-1-native.json) binds gate commits, logs, APK hashes and QA.
+The existing full run completed without native retries; its passing results were
+preserved across continuations. The earlier development diagnostics-accessor
+compile failure and repaired app/test/lint run remain recorded. No assertion,
+tolerance, timeout or performance criterion changed. Hosted checks were not run.
+Push, focused PR, exact-head local status and merge remain pending. Exact next is
+C01.3.2 repair/tank/spool after this delivery closes, as one coherent outcome.
 
 ## Latest delivery — C01.2 capacitor
 
