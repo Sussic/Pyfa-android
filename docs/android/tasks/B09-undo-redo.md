@@ -176,3 +176,28 @@ Native controls repeat the same case; the two extra fits persist across restart.
 Focused original export is retained at `b092-original-20261002-013617`; the new
 validator log and recent-use bridge receipt remain in the development root.
 The earlier build precedes this fix and is not proof for the final candidate.
+
+## B09.2 verified candidate — 2026-10-02
+
+The [receipt](../evidence/b09-2-native.json) records 88 passing local gates,
+60 required native executions, 147 retained fits and all 146 screenshots reviewed.
+Four prepare/restore pairs pass 28 cases/168 independent states and eight distinct
+new processes. All 46 operations have tested dispositions; future mutations must
+extend the contract. B09.1 remains verified, including linked recipient assertions.
+Actual native raw reports pass the unchanged validator, which rejects 26 deliberate
+corruptions. APKs were built at ac90c37d; native/launcher execution uses 98ab296d
+with exact source and gate provenance recorded. All prior failures stay retained.
+
+Review fixed canonical EOS Float metres before history capture so a linked copy
+cannot clear unchanged recipient history. Host cases cover 0/1000/1000.5 metres;
+native copy assertions pass. The Windows-only bounded initial artifact read retry
+and exact historical verifier fixture have 124 focused regression checks. Clone
+restored report recovery retained every prior gate and verified the unchanged
+fit database against all saved inputs and calculated statistics before repeating
+only restored assertions with the original test checkpoint/selection precondition.
+No functional assertion, tolerance, timeout, performance or restart requirement
+was relaxed. Complete local validation is passed; focused PR delivery is pending.
+
+History remains session-local, confirmed inputs persist, and direct profile/recent
+policy gaps remain explicit. ARM64 execution, older APIs, signing upgrades and
+phone usability remain unverified. No hosted job, release or phone install ran.

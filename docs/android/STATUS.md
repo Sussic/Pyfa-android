@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.1 delivered; B09.2 selected.**
+Updated: 2026-10-02. **B09.1 delivered; B09.2 verified, delivery pending.**
 
 ## Latest delivery — B09.1 module edit history
 
@@ -29,39 +29,32 @@ review, full local verification and delivery. No hosted dispatch without asking,
 setup repeat, new infrastructure, unrelated refactoring, release, phone installation,
 billing change or delegation. No decision/access blocker currently exists.
 
-Selected `codex/b09-2-mutation-history` from live master `0685bb32`.
-Scope: remaining supported rename/hull/cargo/addition/linked-effect history,
-explicit dispositions for every operation and mandatory future extension checks.
-Original rename, mode, cargo and implant commands have real Undo bodies. Linked
-projection/command history belongs to the recipient fit, as in original GUI/calc
-commands; Android graph edges are also stored in the recipient's record.
-Independent original commands now pass 28 cases/168 states in two fresh processes;
-the focused bridge comparison passes all states. All 28 durable failure/reversal
-cases separately passed, restoring 35 fits with empty history. Their overall
-attempt remains failed; the corrected focused matrix is development evidence.
-Native touch/recreation/selection, recipient ownership, process restart and raw
-validation are now implemented as four prepare/restore pairs. Development APKs,
-lint/signature/package and 12 focused raw-validator tests pass; actual native
-execution is still required. A review fix retains cargo/subsystem recent-use promotions when already first,
-so Redo restores ordering after another fit edits cargo. Independent desktop and
-focused bridge checks pass its five-step two-fit case. Exact next action:
-complete final verification of the linked-copy range normalization repair, inspect
-raw reports/screenshots and deliver the focused PR. The first run retains 86/88
-valid completed gates and successful final restore instrumentation, but aggregate
-history validation exposed a real linked-copy bug: integer JSON metres became
-float metres on EOS refresh and invalidated unchanged recipient history. A focused
-host reproduction confirms it; normalizing to EOS Float before history capture
-preserves the cursor. Native assertions now explicitly check copy preserves it.
-This packaged product correction requires new affected verification, with all
-earlier results/failures retained and no weakened summary assertion. All 50 host/
-reference and five build/package gates pass at `ac90c37d`. Two initial native
-attempts passed all five instrumentation tests but failed on ADB offline during
-required raw-report collection. Both remain failed. A Windows-only, one-retry
-artifact read verifies the owned AVD, API/qemu and airplane mode after targeted
-reconnect; other errors and a repeated disconnect still fail. Its 124 focused
-regressions pass. Retry reuses the 55 unchanged gates and APKs; full native evidence,
-review and delivery remain outstanding. B09 remains active until every existing
-mutation has an explicit tested disposition. Later mutation tasks must extend it.
+B09.2 is verified on `codex/b09-2-mutation-history`; reviewed code `98ab296d`,
+APK build `ac90c37d`. [Receipt](evidence/b09-2-native.json) records all 88 passing
+local gates, their actual tested commits, APK hashes and retained failures.
+Independent original GUI/calc commands and wx processors cover 28 cases/168
+states and a five-step interleaved recent-use case. All 60 required native
+executions, 147 retained fits, eight new history processes and 146 reviewed
+screenshots pass. The actual-report validator rejects 26 deliberate corruptions;
+124 focused repair regressions pass. Every current bridge operation has an
+explicit disposition (39 actions, seven boundaries); later mutations must extend
+its independent, host and native coverage.
+
+Review fixed projection-range scalar normalization: a linked copy could refresh
+integer metres to EOS floats and clear unchanged recipient history. Host checks
+at 0/1000/1000.5 metres and native original-cursor assertions pass. EOS remains
+the calculation authority. Cargo/subsystem Redo retains recent-use promotions
+when another fit changes the order. Desktop cargo/implant recent-use differences
+and the direct skill-profile input gap remain explicit.
+
+Earlier runs and failures remain recorded. Clone/fill restored report recovery
+verified every saved input/statistic and the unchanged database checksum before
+recovering its private test checkpoint and original selection precondition;
+only restored instrumentation reran. No required assertion, numerical tolerance,
+phase timeout, restart or A10 requirement changed. No Actions success is claimed.
+Exact next action: review receipt/docs, publish the exact-head local result,
+merge the focused B09.2 PR, then select approved C01. No feature beyond B09.2 has
+started.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.
