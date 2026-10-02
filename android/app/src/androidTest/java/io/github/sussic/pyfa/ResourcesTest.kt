@@ -126,6 +126,10 @@ class ResourcesTest {
         val bytes = instrumentation.context.assets.open("resources-expected.json").use { it.readBytes() }
         val fixture = JSONObject(bytes.toString(Charsets.UTF_8))
         val cases = fixture.getJSONArray("cases")
+        val editedBytes = instrumentation.context.assets.open("resources-edited-expected.json").use { it.readBytes() }
+        val edited = JSONObject(editedBytes.toString(Charsets.UTF_8))
+        assertEquals(2,edited.getInt("case"))
+        compare(cases.getJSONObject(2).getJSONObject("spec"),edited.getJSONObject("input"),strict=false)
         val file = File(context.noBackupFilesDir, "c011-test-expected.json")
         val observations = JSONArray(); val ids = JSONArray(); var guards = JSONArray()
         val inherited = ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit)))
@@ -158,10 +162,28 @@ class ResourcesTest {
                 for (position in 0 until cargo.length()) cargo.getJSONObject(position).let {
                     send(BridgeOperation.AddCargo(id,item(it.getString("name")),it.getLong("amount")),id)
                 }
-                open(id); screen(id,case.getJSONObject("resources"))
+                val reference = if (index == edited.getInt("case")) edited.getJSONObject("resources") else case.getJSONObject("resources")
+                if (index == edited.getInt("case")) {
+                    val slots = edited.getJSONObject("edited_input").getJSONArray("modules")
+                    assertEquals(slots.length(),fit(id).modules.size)
+                    for (slotIndex in 0 until slots.length()) {
+                        val expectedSlot = slots.getJSONObject(slotIndex)
+                        val actualSlot = fit(id).modules[slotIndex]
+                        assertEquals(slotIndex,actualSlot.index)
+                        if (expectedSlot.has("empty_slot")) {
+                            assertNull(actualSlot.name)
+                            assertEquals(expectedSlot.getString("empty_slot"),actualSlot.emptySlot!!.name)
+                        } else {
+                            assertEquals(expectedSlot.getString("name"),actualSlot.name)
+                            assertEquals(expectedSlot.getString("state"),actualSlot.state!!.name)
+                            assertEquals(if (expectedSlot.isNull("charge")) null else expectedSlot.getString("charge"),actualSlot.charge)
+                        }
+                    }
+                }
+                open(id); screen(id,reference)
                 val before = JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120, TimeUnit.SECONDS))
                 val recent = EngineRuntime.recent.value.toList(); val history = EngineRuntime.editHistory(context,id).get(120,TimeUnit.SECONDS)
-                repeat(3) { System.gc(); assertReference(case.getJSONObject("resources"),query(id)) }
+                repeat(3) { System.gc(); assertReference(reference,query(id)) }
                 compare(before, JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120,TimeUnit.SECONDS)), strict=false)
                 assertEquals(recent,EngineRuntime.recent.value)
                 assertEquals(history,EngineRuntime.editHistory(context,id).get(120,TimeUnit.SECONDS))
@@ -215,6 +237,7 @@ class ResourcesTest {
         ParcelFileDescriptor.AutoCloseInputStream(descriptors[0]).use { completion ->
             ParcelFileDescriptor.AutoCloseOutputStream(descriptors[1]).use { it.write(obj("task" to "C01.1","phase" to phase,
                 "pid" to Process.myPid(),"runtime_start" to start,"ids" to ids,"observations" to observations,"protocol_rejections" to guards,
+                "edited_fixture_sha256" to MessageDigest.getInstance("SHA-256").digest(editedBytes).joinToString("") { "%02x".format(it) },
                 "saved" to JSONObject(file.readText(Charsets.UTF_8)),"fixture_sha256" to MessageDigest.getInstance("SHA-256")
                     .digest(bytes).joinToString("") { "%02x".format(it) }).toString(2).toByteArray(Charsets.UTF_8)) }
             completion.readBytes()

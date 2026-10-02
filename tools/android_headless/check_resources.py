@@ -56,7 +56,7 @@ def main():
                            stdout=log,stderr=subprocess.STDOUT,check=True,timeout=60)
         receipt=json.loads((args.output/'evidence.json').read_text())
         receipt.update(task='C01.1',host_only=True,database_sha256=before,database_logical_sha256=identity,
-                       fixture_sha256=digest_file(fixture),game_database_unchanged=True,validator_tests_passed=8)
+                       fixture_sha256=digest_file(fixture),game_database_unchanged=True,validator_tests_passed=11)
         (args.output/'evidence.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt));return
     guard,network=NoDesktop(),[];sys.meta_path.insert(0,guard)
     def audit(event,_):

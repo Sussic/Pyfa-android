@@ -80,3 +80,20 @@ partial records and sole railgun recent-use promotion, then restores the origina
 baseline in a separate copy. Production code, fixtures, tolerances, timeouts and
 performance requirements remain unchanged. Only corrected test build/package,
 prepare, restored and summary remain; keep the 90 valid earlier gates.
+
+C01.1 latest: module-slot correction ebe1d810 passed build/lint/package/signature,
+then preparation reached Offline guns and rejected a strict calibration scalar
+kind mismatch. Original pinned desktop vacancy filling reproduces the native
+0.0 kind; the earlier direct-fit fixture omitted those slots. Preserve that fixture
+and add a separate edited-fit witness. Two independent fresh exports agree, and
+its canonical slots/all eleven values/types/units/displays match the actual archived
+native fit with read-only state unchanged. Eleven fixture-validator tests pass.
+The exact third source/asset guard and all 18 recovery regressions pass. A separate
+recovery verifies all 147 original fit inputs, revisions, metadata and EOS statistics
+and removes only four exact partial test fits after checking recent-use promotions.
+The witness is wired with every strict assertion retained; native retry/delivery remain pending.
+All 90 earlier gates remain retained. Three full failure logs/stores remain archived;
+the first optional shared failure PNG/logcat were overwritten by the second attempt
+and are explicitly unavailable. Required passing screenshots remain intact. Next:
+commit the reviewed correction, require unchanged app/original asset bytes plus only
+the independently verified witness addition, and retry prepare/restored/summary.

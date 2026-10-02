@@ -9,9 +9,9 @@ from evidence_paths import evidence_dir
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def fixture_bytes(apk, reference, reported):
+def fixture_bytes(apk, reference, reported, asset="resources-expected.json"):
     with ZipFile(apk) as archive:
-        packaged = archive.read('assets/resources-expected.json')
+        packaged = archive.read('assets/'+asset)
     assert hashlib.sha256(packaged).hexdigest() == reported, 'Reported fixture hash differs from retained APK bytes'
     assert packaged.replace(b'\r\n', b'\n') == reference.replace(b'\r\n', b'\n'), 'Packaged fixture content changed'
     return json.loads(packaged)
@@ -67,6 +67,11 @@ def summarize(probe, reports, engine, prior_pids=()):
     for phase, report in zip(('prepare','restored'),reports):
         assert report['task'] == 'C01.1' and report['phase'] == phase
         fixture_bytes(apk,reference,report['fixture_sha256'])
+        edited = fixture_bytes(apk,(ROOT/'tools/android_reference/fixtures/resources-edited.json').read_bytes(),
+            report['edited_fixture_sha256'],'resources-edited-expected.json')
+        assert edited['task'] == 'C01.1' and edited['source_commit'] == fixture['source_commit']
+        assert edited['case'] == 2 and edited['input'] == cases[2]['spec']
+        settings(fixture['eos_settings'],edited['eos_settings'])
         assert type(report['pid']) is int and report['pid'] > 0 and report['pid'] not in pids
         pids.add(report['pid'])
         start = report['runtime_start']['persistence']
@@ -85,17 +90,17 @@ def summarize(probe, reports, engine, prior_pids=()):
                 assert row['actual']['fit_id'] == identifier == retained['fit_id']
                 assert row['actual'] == retained
                 assert type(retained['revision']) is int and retained['revision'] >= 1
-                resources(cases[index]['resources'],row['actual']['resources'])
+                resources(edited['resources'] if index == edited['case'] else cases[index]['resources'],row['actual']['resources'])
             assert report['protocol_rejections'] == ['version','extra','missing_pair','unit','scalar_kind','boolean_value','overload','missing_display','revision']
             prepared = saved
         else:
             assert saved == prepared and saved['pid'] != report['pid']
             assert report['protocol_rejections'] == []
-            durable = [case for case in cases if case['execution']=='durable']
-            for case, row, retained in zip(durable,report['observations'],saved['resources']):
+            durable = [index for index,case in enumerate(cases) if case['execution']=='durable']
+            for index, row, retained in zip(durable,report['observations'],saved['resources']):
                 actual = row['actual']
                 assert actual['fit_id'] == retained['fit_id'] and actual['resources'] == retained['resources']
                 assert type(actual['revision']) is int and actual['revision'] >= 1
-                resources(case['resources'],actual['resources'])
+                resources(edited['resources'] if index == edited['case'] else cases[index]['resources'],actual['resources'])
     return {'task':'C01.1','complete':True,'cases':14,'resource_pairs':11,
             'durable_fits':10,'copy_checked':True,'process_restart':True,'protocol_rejections':9}

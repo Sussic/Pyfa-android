@@ -66,4 +66,38 @@ class ResourceSummaryTests(unittest.TestCase):
         with self.assertRaises(AssertionError): resources(self.expected,bad)
 
 
+
+    def edited_archive(self, data, reported=None, missing=False):
+        reference=(ROOT/'tools/android_reference/fixtures/resources-edited.json').read_bytes()
+        with tempfile.TemporaryDirectory() as directory:
+            apk=Path(directory)/'test.apk'
+            with ZipFile(apk,'w') as archive:
+                archive.writestr('assets/other.json' if missing else 'assets/resources-edited-expected.json',data)
+            return fixture_bytes(apk,reference,reported or hashlib.sha256(data).hexdigest(),'resources-edited-expected.json')
+
+    def test_edited_fixture_line_endings_and_exact_hash(self):
+        reference=(ROOT/'tools/android_reference/fixtures/resources-edited.json').read_bytes().replace(b'\r\n',b'\n')
+        self.assertEqual(self.edited_archive(reference),self.edited_archive(reference.replace(b'\n',b'\r\n')))
+        with self.assertRaises(AssertionError):self.edited_archive(reference,'0'*64)
+
+    def test_edited_fixture_missing_content_and_whitespace_fail(self):
+        reference=(ROOT/'tools/android_reference/fixtures/resources-edited.json').read_bytes()
+        with self.assertRaises(KeyError):self.edited_archive(reference,missing=True)
+        for changed in (reference.replace(b'Offline guns',b'Changed guns',1),reference.replace(b'  "task"',b'   "task"',1)):
+            self.assertNotEqual(reference,changed)
+            with self.assertRaises(AssertionError):self.edited_archive(changed)
+
+    def test_edited_scalar_kind_and_value_remain_strict(self):
+        expected=json.loads((ROOT/'tools/android_reference/fixtures/resources-edited.json').read_text(encoding='utf-8'))['resources']
+        actual={name:dict(used=row['used'],total=row['total'],
+            used_type='integer' if type(row['used']) is int else 'decimal',
+            total_type='integer' if type(row['total']) is int else 'decimal',unit=row['unit'],overloaded=row['overloaded'],
+            used_display=row['desktop_used'],total_display=row['desktop_total'],
+            used_detail=row['desktop_used_detail'],total_detail=row['desktop_total_detail']) for name,row in expected.items()}
+        resources(expected,actual)
+        self.assertEqual(actual['calibration']['used_type'],'decimal')
+        for key,value in (('used_type','integer'),('used',True),('used',0.5),('unit','wrong')):
+            bad=deepcopy(actual);bad['calibration'][key]=value
+            with self.assertRaises(AssertionError):resources(expected,bad)
+
 if __name__=='__main__': unittest.main()

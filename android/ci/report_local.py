@@ -32,7 +32,7 @@ def validate(run,root):
     resource_reuse=state.get('resource_test_reuse',[])
     resource_proof=resource_reuse[-1] if resource_reuse else None
     if resource_proof:
-        from resource_test_retry import exact_source,validate_recovery,assets_equal
+        from resource_test_retry import exact_source,validate_recovery,validate_assets,validate_retained,validate_witness,KIND_ARCHIVE
         for index,proof in enumerate(resource_reuse):
             exact_source(root,proof['from_commit'],proof['to_commit'])
             following=resource_reuse[index+1] if index+1<len(resource_reuse) else None
@@ -48,8 +48,9 @@ def validate(run,root):
             assert sha(archive/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']
             new_apk=run/following['archive']/'apks/app-debug-androidTest.apk' if following else run/'apks/app-debug-androidTest.apk'
             assert sha(new_apk)==proof['new_test_apk_sha256']
-            assets_equal(archive/'apks/app-debug-androidTest.apk',new_apk)
-            for name,digest in proof['retained_hashes'].items():assert sha(run/name)==digest
+            validate_assets(archive/'apks/app-debug-androidTest.apk',new_apk,root,proof['archive']==KIND_ARCHIVE)
+            validate_retained(run,proof)
+            validate_witness(run,proof,root)
             assert proof['retained_gates']==[gate for gate in proof['completed_before_adoption'] if gate not in ('build:apks-lint','build:package')]
     projection_reuse=state.get('projection_report_reuse',[])
     projection_proof=projection_reuse[-1] if projection_reuse else None
