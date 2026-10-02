@@ -1,13 +1,37 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.1 delivered; C01.2 is next.**
+Updated: 2026-10-02. **C01.2 capacitor verification complete; delivery in progress.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Current outcome — C01.1 fitting resources
+## Current outcome — C01.2 capacitor
+
+Selected from `2cb602f3` on `codex/c01-2-capacitor-details` in `7594e7ec`.
+Read-only capacitor query, strict typed DTO and current-fit screen are implemented;
+capacity/effective capacity, recharge/use/delta/effective excess, resistance and
+stable percent versus depletion seconds use EOS and pinned desktop presentation.
+Two fresh original wx/EOS exports agree for twelve independent cases. Focused
+host matrix/read-only/history/copy/thread/restart checks and ten fixture/raw
+validator tests pass. All 97 required local gates pass: 54 reference/host, five
+build and 38 native gates, including 65 required native executions and all A10
+requirements. All 174 fits survive restart; 159 required screenshots plus the
+optional capacitor failure diagnostic are reviewed. Twenty-two actual-report
+corruptions and ten exact runner/source/package guards pass.
+[Receipt](evidence/c01-2-native.json) binds actual gate commits and APK hashes.
+Reviewed product code is `855c87c3`; exact persistent test-runner repair is
+`7775b40a`. Ninety-four prior gates are retained under strict source/package/store
+proof; only test APK/package and capacitor phases/summary reran. App APK unchanged.
+Initial host/import/shell failures, B05.4 transport failures/recovery and capacitor
+ephemeral-storage rejection remain recorded. The optional shared B05.4 failure
+logcat was overwritten by the capacitor failure before archival and is explicitly
+unavailable; required passing evidence and original failed command logs remain.
+No assertions, tolerances, timeouts or performance requirements changed.
+Exact next is C01.2 push/PR/local status/merge; C01.3 follows only after closure.
+
+## Latest delivery — C01.1 fitting resources
 
 [PR #36](https://github.com/Sussic/Pyfa-android/pull/36) merged as `7e457c97` from
 reviewed head `c5b187c0`; merge/head trees match. Reviewed/tested code is `e310303f`.
@@ -41,7 +65,9 @@ archived by hash. Required passing screenshots are intact. Four provisional
 fighter/over-hardpoint cases use isolated real EOS diagnostics; C05 editor and
 fighter persistence are not claimed.
 
-Exact next: select **C01.2 capacitor** (F05.12–F05.15) on a focused branch from
+Current selected outcome: **C01.2 capacitor** (F05.12–F05.15), branch
+`codex/c01-2-capacitor-details` from `2cb602f3`. Implement the read-only
+capacitor screen and independent desktop/native verification from
 this delivered default branch. Capacity/effective capacity, stable percentage/range
 versus depletion seconds, recharge/use/signed delta/effective excess and neutralizer
 resistance must match original desktop evidence, offline native details and restart.

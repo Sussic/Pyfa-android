@@ -16,11 +16,17 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history_mutations
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate resources
+./android/verify-local.ps1 -Action start -Mode desktop -Gate capacitor
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
 
-C01.1 extends the full plan to 93 gates: 52 reference/host, five build
+C01.2 extends the required plan to 97 gates: 54 reference/host, five build
+and 38 native gates. Capacitor checks add twelve original desktop cases, ten
+raw/fixture validator tests and two separate native prepare/restored processes.
+These are requirements; STATUS records actual completed verification.
+
+C01.1 extended the full plan to 93 gates: 52 reference/host, five build
 and 36 native gates. Resource checks include fourteen original-desktop cases,
 seven host tests, eleven validator regressions and three native resource processes.
 Native mode continues to run every inherited prerequisite.

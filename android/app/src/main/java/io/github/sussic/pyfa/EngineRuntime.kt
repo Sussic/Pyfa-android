@@ -95,6 +95,18 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun capacitorDetails(context: Context, fitId: String): CompletableFuture<FitCapacitor> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            BridgeCodec.decodeCapacitor(Python.getInstance().getModule("mobile_runtime")
+                .callAttr("capacitor_details", fitId).toString()).also { result ->
+                check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+            }
+        }, executor)
+    }
+
     fun resourceDetails(context: Context, fitId: String): CompletableFuture<FitResources> {
         val ready = start(context)
         return CompletableFuture.supplyAsync({

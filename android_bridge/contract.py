@@ -295,6 +295,15 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
 
+    def capacitor_details(self, fit_id):
+        """Read capacitor simulation/details without changing durable inputs."""
+        from .capacitor import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
     def resource_details(self, fit_id):
         """Read the current calculated resources without writing fit/history state."""
         from .resources import details

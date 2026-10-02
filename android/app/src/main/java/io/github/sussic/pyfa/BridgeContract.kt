@@ -169,6 +169,53 @@ class BridgeProtocolException(message: String) : IllegalArgumentException(messag
 object BridgeCodec {
     const val VERSION = 1
 
+    fun decodeCapacitor(json: String): FitCapacitor {
+        val root = objectValue(StrictJson(json).parse(), "capacitor")
+        keys(root, setOf("version", "fit_id", "revision", "capacitor", "stability"), path = "capacitor")
+        requireProtocol(long(root.get("version"), "version") == 1L, "Unsupported capacitor version")
+        val revision = long(root.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid capacitor revision")
+        fun scalar(raw: Any, kind: String): StatValue = when (kind) {
+            "unavailable" -> { requireProtocol(raw == JSONObject.NULL, "Unavailable capacitor has a value"); StatValue.Unavailable }
+            "integer" -> StatValue.Integer(long(raw, "value"))
+            "decimal" -> { requireProtocol(raw is Double, "Decimal capacitor lost its scalar type"); StatValue.Decimal(finite(raw as Double, "value")) }
+            else -> fail("Invalid capacitor scalar type")
+        }
+        fun label(raw: Any, unavailable: Boolean): String? {
+            val result = nullable(raw)?.let { nonempty(it, "display") }
+            requireProtocol((result == null) == unavailable, "Capacitor display availability differs")
+            return result
+        }
+        val rows = objectValue(root.get("capacitor"), "capacitor values")
+        keys(rows, CAPACITOR_LABELS.keys, path = "capacitor values")
+        val values = CAPACITOR_LABELS.keys.associateWith { name ->
+            val row = objectValue(rows.get(name), name)
+            keys(row, setOf("value", "value_type", "unit", "display", "detail"), path = name)
+            val value = scalar(row.get("value"), text(row.get("value_type"), "value_type"))
+            val unit = text(row.get("unit"), "unit")
+            requireProtocol(unit == when(name) { "capacity", "effective_capacity" -> "GJ"; "neutralizer_resistance" -> "%"; else -> "GJ/s" }, "Incorrect capacitor unit")
+            requireProtocol(value.numberOrNull()?.let { name == "delta" || it >= 0 } != false, "Negative capacitor value")
+            if (name == "neutralizer_resistance") requireProtocol(value.numberOrNull()?.let { it <= 100 } != false, "Invalid resistance")
+            CapacitorScalar(value, unit, label(row.get("display"), value == StatValue.Unavailable), label(row.get("detail"), value == StatValue.Unavailable))
+        }
+        val state = objectValue(root.get("stability"), "stability")
+        keys(state, setOf("kind", "unit", "values", "value_types", "display"), path = "stability")
+        val kind = text(state.get("kind"), "kind")
+        requireProtocol(kind in setOf("stable", "stable_range", "depletion", "unavailable"), "Invalid capacitor state")
+        val unit = text(state.get("unit"), "unit")
+        requireProtocol(unit in setOf("%", "s") && (kind == "unavailable" || unit == if (kind == "depletion") "s" else "%"), "Incorrect stability unit")
+        val raw = array(state.get("values"), "values"); val types = array(state.get("value_types"), "value_types")
+        requireProtocol(raw.size == if (kind == "stable_range") 2 else 1, "Incorrect stability bounds")
+        requireProtocol(types.size == raw.size, "Incorrect stability types")
+        val bounds = raw.indices.map { scalar(raw[it], text(types[it], "value_types")) }
+        requireProtocol(bounds.all { (it == StatValue.Unavailable) == (kind == "unavailable") }, "Incorrect stability availability")
+        val numbers = bounds.mapNotNull { it.numberOrNull() }
+        requireProtocol(numbers.all { it >= 0 && (kind == "depletion" || it <= 100) }, "Invalid stability bounds")
+        requireProtocol(numbers.size != 2 || numbers[0] <= numbers[1], "Reversed stability range")
+        return FitCapacitor(identifier(root.get("fit_id"), "fit_id"), revision, Collections.unmodifiableMap(values),
+            CapacitorStability(kind, unit, Collections.unmodifiableList(bounds), label(state.get("display"), kind == "unavailable")))
+    }
+
     fun decodeResources(json: String): FitResources {
         val value = objectValue(StrictJson(json).parse(), "resources")
         keys(value, setOf("version", "fit_id", "revision", "resources"), path = "resources")

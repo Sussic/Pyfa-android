@@ -14,7 +14,7 @@ units, formatting, detail precision and the meaning of available capacity.
 | C01.2 | F05.12–F05.15: capacitor | Capacity/effective capacity, correctly distinguished stable percentage/range versus depletion seconds, recharge/use/signed delta/effective excess gain and neutralizer resistance; independent battery/projected-neut and stable/unstable cases, native details and restart. |
 | C01.3 | F05.16–F05.27: defenses and tank | Every damage resistance and multiplier, raw/effective HP and selected pattern contributions, raw/effective reinforced/sustained passive and active tank, applicable projected repair and spool details; independent assumption changes, typed persistence/history extension where needed, native controls/restart and screenshots. |
 
-C01.1 is delivered in PR #36; C01.2 and C01.3 follow sequentially. These children retain the
+C01.1 is delivered in PR #36; C01.2 is verified and awaiting delivery, then C01.3 follows. These children retain the
 parent's full acceptance rather than dropping fields. C01.3 may be subdivided
 before implementation if the native outcome needs another bounded review.
 Named damage-pattern management remains D05; audited C01 assumption inputs must
@@ -76,3 +76,34 @@ optional shared failure PNG/logcat were overwritten by the second failure and ar
 explicitly recorded as unavailable, never passing evidence. Later diagnostics are
 archived by hash; required passing screenshots are intact. PR #36 merged as `7e457c97` from reviewed head `c5b187c0` with matching trees and
 its successful exact-head `local/full-verification`. C01.2 is the next outcome.
+
+## C01.2 selected outcome
+
+Selected 2026-10-02 from delivered master `2cb602f3` on
+`codex/c01-2-capacitor-details`. Expose read-only capacitor details for the current
+fit/revision: capacity and applicable effective capacity in GJ, recharge/use and
+signed delta in GJ/s, applicable effective excess gain, neutralizer resistance
+in percent, and a typed stable percentage versus depletion time in seconds.
+Preserve original desktop compact/detail presentation and raw precision. EOS at
+the pinned revision returns a scalar stable state (the mean of simulation bounds);
+verify this source contract rather than claiming an unproduced range as tested.
+Any range representation must retain percent units and both bounds.
+
+Acceptance: independent original wx/EOS empty, active/online/offline, battery and
+projected-neutralizer cases; read-only, refresh, Undo/Redo, recreation and process
+restart; strict protocol and incorrect-report rejection; APK/lint/package checks,
+all inherited local gates and screenshots. No additional mutation, fitting formula
+in Kotlin, reload setting, character-profile editor or projection editor is added.
+
+C01.2 verification: [receipt](../evidence/c01-2-native.json) records all 97 required
+local gates, 65 required native executions, 174 restored fits, 159 required
+screenshots plus one reviewed failure diagnostic, twelve independent original
+wx/EOS cases, ten raw fixture tests and 22 rejected actual-report corruptions.
+Product code `855c87c3` is unchanged by exact test-runner repair `7775b40a`.
+Ten source/package guards prove the sole missing persistent phase flag; all158
+prior fits and the app APK remain unchanged. Only affected test build/package,
+capacitor prepare/restored and summary reran, retaining94 valid earlier gates.
+The scalar EOS stability contract and typed range protocol remain distinguished.
+Failures remain recorded; the optional B05.4 shared failure logcat overwritten by
+capacitor diagnostics is explicitly unavailable. Required passing evidence remains
+intact. No assertion, tolerance, timeout or A10 requirement was weakened.

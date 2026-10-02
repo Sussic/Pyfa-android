@@ -1,0 +1,3265 @@
+{
+  "task": "C01.2",
+  "reviewed_code_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+  "tested_tree": "5d9048a2da0c05d83a78ac7625620661c98e918a",
+  "branch": "codex/c01-2-capacitor-details",
+  "execution": {
+    "kind": "local_windows",
+    "run_id": "20261002-134439-855c87c3-a8c41a",
+    "evidence": "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a",
+    "hosted_actions_pass": false
+  },
+  "checks": {
+    "required_gates": 97,
+    "reference_host_gates": 54,
+    "build_gates": 5,
+    "native_gates": 38,
+    "native_successful_executions": 65,
+    "saved_fits": 174,
+    "inherited_fits": 158,
+    "required_screenshots": 159,
+    "all_screenshots": 160,
+    "actual_report_corruptions": 22,
+    "fixture_validator_tests": 10,
+    "artifact_transport_guard_tests": 6,
+    "extra_prepare_instrumentation_success_without_valid_raw_report": 1
+  },
+  "capacitor": {
+    "independent_cases": 12,
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "fixture_sha256": "c8a6d1a35f11d8e5a0be9e241d0ecc733a98fd6870590b1963816935f8e11504",
+    "fields": [
+      "capacity",
+      "effective_capacity",
+      "recharge",
+      "use",
+      "delta",
+      "effective_excess",
+      "neutralizer_resistance"
+    ],
+    "eos_stability": "scalar stable percent (mean of simulation bounds) or depletion seconds",
+    "range_contract": "typed two-bound percentage protocol and renderer; current EOS produces scalar only",
+    "durable_target_fits": 12,
+    "projection_source_fits": 3,
+    "copy_fits": 1,
+    "summary": {
+      "task": "C01.2",
+      "complete": true,
+      "cases": 12,
+      "capacitor_values": 7,
+      "durable_fits": 12,
+      "copy_checked": true,
+      "process_restart": true,
+      "protocol_rejections": 13
+    }
+  },
+  "apk_sha256": {
+    "app-debug-androidTest.apk": "5fd5f80d3cdf84cd73e00a298a5df22a687dd8e5d1fadf344d53bab80cb2c4ec",
+    "app-debug.apk": "c1ba3e66eb19b6e1153e187adcc50888b38591c4229862a75bfe3fc8fa35f7f4"
+  },
+  "gates": [
+    {
+      "gate": "desktop:utilities",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/android_reference/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "logs\\000-desktop-utilities.log",
+      "log_sha256": "1689d126f945f864f5acc02861fadd16f323ea745d651209c839d7d020b9d3ac"
+    },
+    {
+      "gate": "desktop:reference",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/reference.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference",
+        "--check",
+        "tools/android_reference/fixtures/vexor.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\001-desktop-reference.log",
+      "log_sha256": "c3888c458e14dfad3799408aa0c2b49c7f2e8f33e8d955c17c231614dbe59616"
+    },
+    {
+      "gate": "desktop:migration",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_desktop_migration.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db"
+      ],
+      "exit_code": 0,
+      "log": "logs\\002-desktop-migration.log",
+      "log_sha256": "5df74f1408782979e723a11ba86d75c2889366d407803501bd53ad5de89ef4e8"
+    },
+    {
+      "gate": "reference:projection",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/projection.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\003-reference-projection",
+        "--check",
+        "tools/android_reference/fixtures/projection.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\003-reference-projection.log",
+      "log_sha256": "46c7b9bc5c173dba20dc3ef9c81f4e47cd5713ee75160c1897dbda28c9035461"
+    },
+    {
+      "gate": "reference:command",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/command.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\004-reference-command",
+        "--check",
+        "tools/android_reference/fixtures/command.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\004-reference-command.log",
+      "log_sha256": "7600f9a03e6659d117985b72c883cd489930ef3bcdcda4bea75672a470b49619"
+    },
+    {
+      "gate": "reference:catalog",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/catalog.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\005-reference-catalog",
+        "--check",
+        "tools/android_reference/fixtures/catalog.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\005-reference-catalog.log",
+      "log_sha256": "af57da4e9666bf6c91547789f5c867feba0a07e91a85a90560f82dd4236e67d9"
+    },
+    {
+      "gate": "reference:equipment",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/equipment.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\006-reference-equipment",
+        "--check",
+        "tools/android_reference/fixtures/equipment.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\006-reference-equipment.log",
+      "log_sha256": "6f4b6d0200f6025757d8d440fa6d6ff3229e96636b74ebdcba692b0582977a8a"
+    },
+    {
+      "gate": "reference:empty_hulls",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/empty_hulls.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\007-reference-empty_hulls",
+        "--check",
+        "tools/android_reference/fixtures/empty-hulls.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\007-reference-empty_hulls.log",
+      "log_sha256": "42037512aa8b07af653a39a8f9bee848b1ba6d98302a79e8b5fc36b4e085949d"
+    },
+    {
+      "gate": "reference:module_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/module_edits.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\008-reference-module_edits",
+        "--check",
+        "tools/android_reference/fixtures/module-edits.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\008-reference-module_edits.log",
+      "log_sha256": "8ee26dc252681cb8b849fbbafe72dfb1504dbd1c70bb13f8cf6c2065a4bb846c"
+    },
+    {
+      "gate": "reference:charge_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/charge_edits.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\009-reference-charge_edits",
+        "--check",
+        "tools/android_reference/fixtures/charge-edits.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\009-reference-charge_edits.log",
+      "log_sha256": "4a6a147459591f3733c3857b3fc16d858091bf0771b3e47a4ef938203332d8e6"
+    },
+    {
+      "gate": "reference:variation_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/variation_edits.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\010-reference-variation_edits",
+        "--check",
+        "tools/android_reference/fixtures/variation-edits.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\010-reference-variation_edits.log",
+      "log_sha256": "f3c2a3b9b7e3310c6319a1c5df6f8a3c84b7f2f0a34fa8e80cf15f170ffeac55"
+    },
+    {
+      "gate": "reference:rack_ordering",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/rack_ordering.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\011-reference-rack_ordering",
+        "--check",
+        "tools/android_reference/fixtures/rack-ordering.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\011-reference-rack_ordering.log",
+      "log_sha256": "757428d3794bf2bc2a5cfc1ec71fd264b4e72960cce283ddf2fbb685c3c21b41"
+    },
+    {
+      "gate": "reference:bulk_charges",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/bulk_charges.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\012-reference-bulk_charges",
+        "--check",
+        "tools/android_reference/fixtures/bulk-charges.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\012-reference-bulk_charges.log",
+      "log_sha256": "5bfc3cedadd4bb2e558cf48b7f4357f13d7544f4eb3621085ede5f50b97cac39"
+    },
+    {
+      "gate": "reference:bulk_states",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/bulk_states.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\013-reference-bulk_states",
+        "--check",
+        "tools/android_reference/fixtures/bulk-states.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\013-reference-bulk_states.log",
+      "log_sha256": "91bdaa202c01b8eafd79b65ab4b607ad3e34912feca39a8bd1bd8c5ef865ae98"
+    },
+    {
+      "gate": "reference:clone_fill",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/clone_fill.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\014-reference-clone_fill",
+        "--check",
+        "tools/android_reference/fixtures/clone-fill.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\014-reference-clone_fill.log",
+      "log_sha256": "69a91a769887cb58a2e8e922b02770b245ff75fca8670ccdaf4750bfce5ec370"
+    },
+    {
+      "gate": "reference:bulk_variation_removal",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/bulk_variation_removal.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\015-reference-bulk_variation_removal",
+        "--check",
+        "tools/android_reference/fixtures/bulk-variation-removal.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\015-reference-bulk_variation_removal.log",
+      "log_sha256": "ab487172bb535528da0859a9b302cf741062424056ea4c70b7e7b718692f887b"
+    },
+    {
+      "gate": "reference:hull_modes",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/hull_modes.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\016-reference-hull_modes",
+        "--check",
+        "tools/android_reference/fixtures/hull-modes.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\016-reference-hull_modes.log",
+      "log_sha256": "c75ac23cf89d41feae8689f72c7824e6d8e2a00e0e459bf4ac81912add819525"
+    },
+    {
+      "gate": "reference:subsystems",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/subsystems.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\017-reference-subsystems",
+        "--check",
+        "tools/android_reference/fixtures/subsystems.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\017-reference-subsystems.log",
+      "log_sha256": "02bbbac728a5a11544745d8c9d46b3cfb046145deb5d52ef27faf12204b107cc"
+    },
+    {
+      "gate": "reference:structures",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/structures.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\018-reference-structures",
+        "--check",
+        "tools/android_reference/fixtures/structures.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\018-reference-structures.log",
+      "log_sha256": "47e3acc5a7354adc20241eb7348564e9e2fd1b144f40f31ab039ac845e4fe9b3"
+    },
+    {
+      "gate": "reference:cargo_stacks",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/cargo_stacks.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\019-reference-cargo_stacks",
+        "--check",
+        "tools/android_reference/fixtures/cargo-stacks.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\019-reference-cargo_stacks.log",
+      "log_sha256": "ea8a9ecb550d98c2bb135b58cf0c143922c7ffb2272dc4e970f6433ccf2af7fe"
+    },
+    {
+      "gate": "reference:cargo_actions",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/cargo_actions.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\020-reference-cargo_actions",
+        "--check",
+        "tools/android_reference/fixtures/cargo-actions.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\020-reference-cargo_actions.log",
+      "log_sha256": "c9d00f4cf65892bd2d4a9846ae7a628ed27fc3d9ff884a9a582caf7c842b3459"
+    },
+    {
+      "gate": "reference:cargo_transfers",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/cargo_transfers.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\021-reference-cargo_transfers",
+        "--check",
+        "tools/android_reference/fixtures/cargo-transfers.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\021-reference-cargo_transfers.log",
+      "log_sha256": "d2d9240351839cb457c20c3cd82ebd0660417f4597c8eff146b59c91a3a34bb9"
+    },
+    {
+      "gate": "reference:notes",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/notes.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\022-reference-notes",
+        "--check",
+        "tools/android_reference/fixtures/notes.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\022-reference-notes.log",
+      "log_sha256": "2c24f0f4b64c23628f5eb9e0e03cb40c7b40809c79cf418e0a76181151818d31"
+    },
+    {
+      "gate": "reference:history",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/history.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\023-reference-history",
+        "--check",
+        "tools/android_reference/fixtures/history.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\023-reference-history.log",
+      "log_sha256": "1cc434cccb329d2ff66efa99e63bd5d92d13963e01eb7be873ce12b093e12503"
+    },
+    {
+      "gate": "reference:history_mutations",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/history_mutations.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\024-reference-history_mutations",
+        "--check",
+        "tools/android_reference/fixtures/history-mutations.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\024-reference-history_mutations.log",
+      "log_sha256": "9e170a725659d59611f29a6ebd95cd901635f3eb2d1baf31aa25bccad0f37de5"
+    },
+    {
+      "gate": "reference:resources",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/resources.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\025-reference-resources",
+        "--check",
+        "tools/android_reference/fixtures/resources.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\025-reference-resources.log",
+      "log_sha256": "de61b138e642cfd1a7bbd3ea038970836905fc1553095e9d2d666bbf954e90b1"
+    },
+    {
+      "gate": "reference:capacitor",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+        "-I",
+        "tools/android_reference/capacitor.py",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\026-reference-capacitor",
+        "--check",
+        "tools/android_reference/fixtures/capacitor.json"
+      ],
+      "exit_code": 0,
+      "log": "logs\\026-reference-capacitor.log",
+      "log_sha256": "4e038393e47e6373f15cb0489712e8d664495f255e4899068c8ed2c0f4be4599"
+    },
+    {
+      "gate": "headless:base",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\027-headless-base"
+      ],
+      "exit_code": 0,
+      "log": "logs\\027-headless-base.log",
+      "log_sha256": "ced64c3d10439e13679c367a2a4aa5ff32ace918a23e61b41a09b8e63102967b"
+    },
+    {
+      "gate": "headless:projection",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\028-headless-projection",
+        "--scenario",
+        "projection"
+      ],
+      "exit_code": 0,
+      "log": "logs\\028-headless-projection.log",
+      "log_sha256": "52039884c125a9f5d61cee9b837a7eee26804f864caa0c656a22a50b4681cfc6"
+    },
+    {
+      "gate": "headless:command",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\029-headless-command",
+        "--scenario",
+        "command"
+      ],
+      "exit_code": 0,
+      "log": "logs\\029-headless-command.log",
+      "log_sha256": "9c178c7eb4fb3d24836aa19d77862a73af2303b66696dd8de839de061284de94"
+    },
+    {
+      "gate": "headless:bridge",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_bridge.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\030-headless-bridge"
+      ],
+      "exit_code": 0,
+      "log": "logs\\030-headless-bridge.log",
+      "log_sha256": "033edc1935508b3c4824878eb47056c28ac8d77840a9c4dc53124b97f1256e77"
+    },
+    {
+      "gate": "headless:persistence",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_persistence.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\031-headless-persistence"
+      ],
+      "exit_code": 0,
+      "log": "logs\\031-headless-persistence.log",
+      "log_sha256": "88aa3a4c2f06dbc0ade8faf0f4ca38a1e77dc9e3d1dd52bb2f9031a2a466b29c"
+    },
+    {
+      "gate": "headless:library",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_library.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\032-headless-library"
+      ],
+      "exit_code": 0,
+      "log": "logs\\032-headless-library.log",
+      "log_sha256": "dcd71c3b77d30a47a06aa90110236dfb9eae12b0209b3a748081f3f3abf44845"
+    },
+    {
+      "gate": "headless:market",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_market.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\033-headless-market"
+      ],
+      "exit_code": 0,
+      "log": "logs\\033-headless-market.log",
+      "log_sha256": "e1157bd1c5d8bca436cd2e5e164b31b278c49fccefe20321401f0f80ffde85ae"
+    },
+    {
+      "gate": "headless:empty_hulls",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_empty_hulls.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\034-headless-empty_hulls"
+      ],
+      "exit_code": 0,
+      "log": "logs\\034-headless-empty_hulls.log",
+      "log_sha256": "7e4a559578dd5db72f1c207a28096c80ed7723c2c68b3baf0f74f33d2bf70f0b"
+    },
+    {
+      "gate": "headless:module_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_module_edits.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\035-headless-module_edits"
+      ],
+      "exit_code": 0,
+      "log": "logs\\035-headless-module_edits.log",
+      "log_sha256": "7143cb7db0e67eb058d739025e22baf456e9d2bdd9d22ff3b747337d2d3a7cc3"
+    },
+    {
+      "gate": "headless:charge_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_charge_edits.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\036-headless-charge_edits"
+      ],
+      "exit_code": 0,
+      "log": "logs\\036-headless-charge_edits.log",
+      "log_sha256": "c162bf4b694d32be37142e056fa9bbeb8a9441979b85347e2a2fcd67675cc98b"
+    },
+    {
+      "gate": "headless:variation_edits",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_variation_edits.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\037-headless-variation_edits"
+      ],
+      "exit_code": 0,
+      "log": "logs\\037-headless-variation_edits.log",
+      "log_sha256": "762be722b823926545a9e6c3f3b7d200e23707030f4ec348d1b82332ff017e4b"
+    },
+    {
+      "gate": "headless:rack_ordering",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_rack_ordering.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\038-headless-rack_ordering",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\038-headless-rack_ordering.log",
+      "log_sha256": "793764ab9296ff889c8a6974d9425ddbd4396a9e88939588085a1063fcc7b5cd"
+    },
+    {
+      "gate": "headless:bulk_charges",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_bulk_charges.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\039-headless-bulk_charges",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\039-headless-bulk_charges.log",
+      "log_sha256": "d1be4d1e898082badf761790d0e40549c2806c3b92060c8cfc4902bbea458c4d"
+    },
+    {
+      "gate": "headless:bulk_states",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_bulk_states.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\040-headless-bulk_states",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\040-headless-bulk_states.log",
+      "log_sha256": "ce32b246c3b90a7ebb97981b726432c0b285516595f1c915be494b9bdd65f9f4"
+    },
+    {
+      "gate": "headless:clone_fill",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_clone_fill.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\041-headless-clone_fill",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\041-headless-clone_fill.log",
+      "log_sha256": "3920030a4e7f86bbe0d5ced26e9794765bbf16ebbb45867b56d83b32077013dd"
+    },
+    {
+      "gate": "headless:bulk_variation_removal",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_bulk_variation_removal.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\042-headless-bulk_variation_removal",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\042-headless-bulk_variation_removal.log",
+      "log_sha256": "58d60ba12c65e9d6f316572e60a82563c79429a7cbd26fb170a3dddc9f268f0e"
+    },
+    {
+      "gate": "headless:hull_modes",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_hull_modes.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\043-headless-hull_modes",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\043-headless-hull_modes.log",
+      "log_sha256": "4e7856cfeb96404e364810e98cb3476dee48ef03834708acbe4c359f67763b39"
+    },
+    {
+      "gate": "headless:subsystems",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_subsystems.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\044-headless-subsystems",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\044-headless-subsystems.log",
+      "log_sha256": "e732f1a89b82b884f2bbfc1a6c03dda05dd6e2f170370fc0c9b92020d1c69092"
+    },
+    {
+      "gate": "headless:structures",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_structures.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\045-headless-structures",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\045-headless-structures.log",
+      "log_sha256": "5e21eeca13d766a0319911750c3ba3e20fdbb8bb75a9195f5ac2d62a579a23a6"
+    },
+    {
+      "gate": "headless:cargo_stacks",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_cargo_stacks.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\046-headless-cargo_stacks",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\046-headless-cargo_stacks.log",
+      "log_sha256": "15d7ceab57f5dc5f0e03b14b84af8d24d3399fa6f4f42051b9d71cf3cc955df2"
+    },
+    {
+      "gate": "headless:cargo_actions",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_cargo_actions.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\047-headless-cargo_actions",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\047-headless-cargo_actions.log",
+      "log_sha256": "5a7423f1b4d329835b35c613a06bae4e4dd28b08c24ec39b2ee878ca1061cf4c"
+    },
+    {
+      "gate": "headless:cargo_transfers",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_cargo_transfers.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\048-headless-cargo_transfers",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\048-headless-cargo_transfers.log",
+      "log_sha256": "0bfb8bfc605d3d777f2e4765e03c3be72274c84fb8711fd3bf4bd35e9722ca56"
+    },
+    {
+      "gate": "headless:notes",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_notes.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\049-headless-notes",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\049-headless-notes.log",
+      "log_sha256": "2830175cb414252c26dc88699d6868b461fb1c5a5249cb463791cccc2f26c935"
+    },
+    {
+      "gate": "headless:history",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_history.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\050-headless-history",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\050-headless-history.log",
+      "log_sha256": "9792431ddcbc815a62b52c62b5c8dd61e373515ff2fa74aae0cd10a3532bc07e"
+    },
+    {
+      "gate": "headless:history_mutations",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_history_mutations.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\051-headless-history_mutations",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\051-headless-history_mutations.log",
+      "log_sha256": "777429538e2eb83b78d5f77c424882fb1547e0cce66243b646b0b6e95dd10cbe"
+    },
+    {
+      "gate": "headless:resources",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_resources.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\052-headless-resources",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\052-headless-resources.log",
+      "log_sha256": "1a9ef8af4a24bfee5f9e93b286da4840b432b11897bb12c54cced9a16ab6d6eb"
+    },
+    {
+      "gate": "headless:capacitor",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "tools/android_headless/check_capacitor.py",
+        "--database",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\001-desktop-reference\\eve.db",
+        "--output",
+        "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\host\\053-headless-capacitor",
+        "--source",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\build\\reference-upstream"
+      ],
+      "exit_code": 0,
+      "log": "logs\\053-headless-capacitor.log",
+      "log_sha256": "2ad6e5765b0464571e3d3cb59483e454356d4f0065568169e50f3914a9dd9acc"
+    },
+    {
+      "gate": "build:dependencies",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "prepare-dependencies.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\054-build-dependencies.log",
+      "log_sha256": "c49c79419c0ccfbb6cfb49978d34573a6e5d644f83bee91cf8ce33f45a9534fd"
+    },
+    {
+      "gate": "build:engine-assets",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "-I",
+        "prepare-engine.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\055-build-engine-assets.log",
+      "log_sha256": "f8b3a414ab8313cf7e582049f875ff29884ef3d69e19de328a44a96afcd69f9a"
+    },
+    {
+      "gate": "build:apks-lint",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\gradlew.bat",
+        "--no-daemon",
+        "--console=plain",
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:lintDebug"
+      ],
+      "exit_code": 0,
+      "log": "logs\\056-build-apks-lint.log",
+      "log_sha256": "2f7d9cfe584209d3e6c8c655ccdaab3b57c2b0dea86ba2e26773b192e4643296"
+    },
+    {
+      "gate": "build:signature",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\AppData\\Local\\Android\\Sdk\\build-tools\\35.0.0\\apksigner.bat",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "app/build/outputs/apk/debug/app-debug.apk"
+      ],
+      "exit_code": 0,
+      "log": "logs\\057-build-signature.log",
+      "log_sha256": "45b427e8592994b4fb9a44e6ed47d48f54caeb27c3bfa29056e3da1b2777dbc5"
+    },
+    {
+      "gate": "build:package",
+      "tested_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "ci/verify-apk.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\104-build-package.log",
+      "log_sha256": "e9063f124b30a60e3987e0ed2c96f18b027eacb35c0f27506d5ab6b2d0a5f743"
+    },
+    {
+      "gate": "native:initial",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "initial"
+      ],
+      "exit_code": 0,
+      "log": "logs\\060-native-initial.log",
+      "log_sha256": "53e941506a7620a155528bb541fdbec2c1d5a12d8ecd4f123123ba029304e5d7"
+    },
+    {
+      "gate": "native:measure-performance.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "measure-performance.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\061-native-measure-performance.py.log",
+      "log_sha256": "358cb4b45f1681eeb7ac568e3c1e391d247af1ab80457dec45052e57b9295f81"
+    },
+    {
+      "gate": "native:check-contract.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-contract.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\062-native-check-contract.py.log",
+      "log_sha256": "8868ec594d86cc581088bf32e98a7bd396681299d8ee1df519d428fdf256c583"
+    },
+    {
+      "gate": "native:check-persistence.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-persistence.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\063-native-check-persistence.py.log",
+      "log_sha256": "c222bbf7b3988806c5dcc7ba8a50b95aeca51c1a2923e9f89826609814279afc"
+    },
+    {
+      "gate": "native:check-library.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-library.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\064-native-check-library.py.log",
+      "log_sha256": "5f1db515330637eb64583ee99f699b26e6feeee6609488bf1ac83e56c6418fe5"
+    },
+    {
+      "gate": "native:check-navigation.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-navigation.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\065-native-check-navigation.py.log",
+      "log_sha256": "697eb574c7e72f1daca4b842562215a022102081c4a61540a0db633c37dca760"
+    },
+    {
+      "gate": "native:check-market.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-market.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\066-native-check-market.py.log",
+      "log_sha256": "8d93e281832147aaaacb01af600f6371797913ad8088b3ff79c2e2c0f15df4a5"
+    },
+    {
+      "gate": "native:check-empty-hulls.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-empty-hulls.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\067-native-check-empty-hulls.py.log",
+      "log_sha256": "3472f09ec39bff89ede5a788ef96ea01df0f69d9c3549038800cda32a48daaf7"
+    },
+    {
+      "gate": "native:check-module-edits.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-module-edits.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\068-native-check-module-edits.py.log",
+      "log_sha256": "ce100ec062b8f934a0e701355c983dca37debc8ac222a1a3d55b7843906229c8"
+    },
+    {
+      "gate": "native:check-charge-edits.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-charge-edits.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\069-native-check-charge-edits.py.log",
+      "log_sha256": "3c1ed6862c5f3892e66bd434f494b3ee6226de539a9b14ec26278a2a77fb1169"
+    },
+    {
+      "gate": "native:check-variation-edits.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-variation-edits.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\070-native-check-variation-edits.py.log",
+      "log_sha256": "89f5c5665a10e9c0f0c5458a79ba8c384d074b47c1085a44fa888b55bd911198"
+    },
+    {
+      "gate": "native:check-rack-ordering.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-rack-ordering.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\071-native-check-rack-ordering.py.log",
+      "log_sha256": "7ad5acf9b7a247c7e0aa1956a62f9237ae265f2dfded7270cfe23ad55d39125d"
+    },
+    {
+      "gate": "native:check-bulk-charges.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-bulk-charges.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\072-native-check-bulk-charges.py.log",
+      "log_sha256": "002bd7ced6e6e5f1ce1a562056d6a4a8eebcc09f2224cb8ad693e7300f9e0400"
+    },
+    {
+      "gate": "native:check-bulk-states.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-bulk-states.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\073-native-check-bulk-states.py.log",
+      "log_sha256": "b3df352f249826f3c1822707c3dd32120575c61f6c0570c021f73dc4c7e220f8"
+    },
+    {
+      "gate": "native:check-clone-fill.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-clone-fill.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\074-native-check-clone-fill.py.log",
+      "log_sha256": "b5026df0a470c406500c560782f315383b49154c59dbc01dbef61b5cf5bdfbc1"
+    },
+    {
+      "gate": "native:check-bulk-variation-removal.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a\\b054-store-recovery\\retry-original-phases.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\081-native-check-bulk-variation-removal.py.log",
+      "log_sha256": "c6ec60c55cba5f6eb51593a066273a1fa5d4e0043947996de63543c298a5bf8b"
+    },
+    {
+      "gate": "native:check-hull-modes.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-hull-modes.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\082-native-check-hull-modes.py.log",
+      "log_sha256": "9927126b20ddb05438a3c28b0fdd97d6e34c963c6b41a7ceb81259a928a2f2ff"
+    },
+    {
+      "gate": "native:check-subsystems.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-subsystems.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\083-native-check-subsystems.py.log",
+      "log_sha256": "47bbb386375206c70bf00423d27b7baede5454502707ea65cfaa35bdedf9280e"
+    },
+    {
+      "gate": "native:check-structures.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-structures.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\084-native-check-structures.py.log",
+      "log_sha256": "80c0c0682e247830da0a2128ab42b8f53387bc222782897695797ad5968c8917"
+    },
+    {
+      "gate": "native:check-cargo-stacks.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-cargo-stacks.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\085-native-check-cargo-stacks.py.log",
+      "log_sha256": "5571497dc19029ab7d7ab3b203ce8f0edfb5bcfccd57cdface20b4526d220ba8"
+    },
+    {
+      "gate": "native:check-cargo-actions.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-cargo-actions.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\086-native-check-cargo-actions.py.log",
+      "log_sha256": "cc7a3b522d17b569e923b999275dcde64e52fbe7f6049291c9f7d445c64a7627"
+    },
+    {
+      "gate": "native:check-cargo-transfers.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-cargo-transfers.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\087-native-check-cargo-transfers.py.log",
+      "log_sha256": "87c3ee77b57b904ad34b74842db1f1bfc9b7565ce2f94c888f9dc53b1fd4b536"
+    },
+    {
+      "gate": "native:check-notes.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-notes.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\088-native-check-notes.py.log",
+      "log_sha256": "85af3341dbd3647e5806c7982aae2790332a7de9721a7f58ec401b4cfd182edb"
+    },
+    {
+      "gate": "native:check-history.py",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "check-history.py"
+      ],
+      "exit_code": 0,
+      "log": "logs\\089-native-check-history.py.log",
+      "log_sha256": "73695f434c85bd44c14205fc3a44c60b17bf8cf1331b02fe662ee8e7b88696a4"
+    },
+    {
+      "gate": "native:mutation-history-0-prepare",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-0-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\090-native-mutation-history-0-prepare.log",
+      "log_sha256": "90122dc53796b361e7cc8f28184428528ca1c82f1f726acb4f43863b4fd4aafe"
+    },
+    {
+      "gate": "native:mutation-history-0-restored",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-0-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\091-native-mutation-history-0-restored.log",
+      "log_sha256": "269e6b813185022614191a1a0adbdad46d5654f489afbd39eaeb3937c8dbcbe7"
+    },
+    {
+      "gate": "native:mutation-history-1-prepare",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-1-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\092-native-mutation-history-1-prepare.log",
+      "log_sha256": "3751e74f323b290d42310a728405c59f778b618379b4e80affc4753ffe3292ca"
+    },
+    {
+      "gate": "native:mutation-history-1-restored",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-1-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\093-native-mutation-history-1-restored.log",
+      "log_sha256": "e85896bfc79d06161493dc7cccbd8fe28607b190f7009561f255174749fd6a05"
+    },
+    {
+      "gate": "native:mutation-history-2-prepare",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-2-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\094-native-mutation-history-2-prepare.log",
+      "log_sha256": "e6fa6a69738896cb9168a8edd4d99159b11a09953e811135ba7a769389b6122b"
+    },
+    {
+      "gate": "native:mutation-history-2-restored",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-2-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\095-native-mutation-history-2-restored.log",
+      "log_sha256": "156baa4aea5e85a850c85b11729258849ac98629bafbab096735a999a6708f62"
+    },
+    {
+      "gate": "native:mutation-history-3-prepare",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-3-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\096-native-mutation-history-3-prepare.log",
+      "log_sha256": "764e8950879280c4ede76de284204b410b8a1ce9739ec9af001ad6c7c6898410"
+    },
+    {
+      "gate": "native:mutation-history-3-restored",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "mutation-history-3-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\097-native-mutation-history-3-restored.log",
+      "log_sha256": "458e02e5eaa503507d71469ea9a5191bffe78eab918607d3af62423116458e45"
+    },
+    {
+      "gate": "native:resources-probe",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "resources-probe"
+      ],
+      "exit_code": 0,
+      "log": "logs\\098-native-resources-probe.log",
+      "log_sha256": "577e3a16b56ad76bd1b39b5ec61fca6ded517860bc672693218fb42c9ddd1c54"
+    },
+    {
+      "gate": "native:resources-prepare",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "resources-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\099-native-resources-prepare.log",
+      "log_sha256": "821319c496db7bcd999805034e29da727a9d2224d4892b76117cbd1a0b5285ab"
+    },
+    {
+      "gate": "native:resources-restored",
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "resources-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\100-native-resources-restored.log",
+      "log_sha256": "ac9a46430e71446da784e08e332f8def3c3ad935d6e6e217f324294d7d7b8380"
+    },
+    {
+      "gate": "native:capacitor-prepare",
+      "tested_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "capacitor-prepare"
+      ],
+      "exit_code": 0,
+      "log": "logs\\107-native-capacitor-prepare.log",
+      "log_sha256": "ce01dde4e4025f83b57c7147eb310a8fa71070adc641fc6c53e1d59c8f5a397e"
+    },
+    {
+      "gate": "native:capacitor-restored",
+      "tested_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "capacitor-restored"
+      ],
+      "exit_code": 0,
+      "log": "logs\\108-native-capacitor-restored.log",
+      "log_sha256": "53175a782bb777d29dfd0d11c5fd8addd7035a6d36fd84c471dfde0fd621e5ee"
+    },
+    {
+      "gate": "native:summary",
+      "tested_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+      "command": [
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\headless\\Scripts\\python.exe",
+        "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\android\\ci\\native_suite.py",
+        "--step",
+        "summary"
+      ],
+      "exit_code": 0,
+      "log": "logs\\109-native-summary.log",
+      "log_sha256": "7f40977212718c331f0eb92d63344092d4f1f57bc17d58eab43c41dc98150bb3"
+    }
+  ],
+  "screenshot_review": {
+    "screenshots": [
+      {
+        "name": "about-landscape.png",
+        "sha256": "f2eaacc809b01e3b5a0958eafdfe3f5d379b83c35e6399f792c9b942d3018fa4",
+        "reviewed": true,
+        "observation": "Reviewed landscape About text, license, repository link and Back; readable without overlap."
+      },
+      {
+        "name": "about.png",
+        "sha256": "dc02010dc6187888ac4f9688527080cefe06e4cf199ef675b4716831800aa82e",
+        "reviewed": true,
+        "observation": "Reviewed build 0.1.0-c01.2, offline scope, license/link and Back; readable layout."
+      },
+      {
+        "name": "fit.png",
+        "sha256": "ccc663c0e5ca4ef8a53adbfd15c4b685a584fa67057505f1ad88ba2193047fc7",
+        "reviewed": true,
+        "observation": "Reviewed intentionally scrolled fit viewport: ammunition action, 321.422 HP/s damage, 80000 m drone range, 25920 m optimal and all-39-attributes action are readable."
+      },
+      {
+        "name": "home.png",
+        "sha256": "0eaf77437e8ac32f99d59bd1c0213af5883c0f0d00a5146535242444efaba21e",
+        "reviewed": true,
+        "observation": "Reviewed selected synthetic fit, disabled empty Undo/Redo and development scope text; lower content is intentionally scrollable."
+      },
+      {
+        "name": "library-dialog.png",
+        "sha256": "1db49c70db6efdb12a3939a2d4c8097e15e20a6c59e1b38a091229336893d0f9",
+        "reviewed": true,
+        "observation": "Reviewed Unicode long-name edit dialog with caret, keyboard, Cancel and Rename; horizontal text viewport is intentional."
+      },
+      {
+        "name": "library-empty.png",
+        "sha256": "47b6801ca846e35f805ea70b4313b54b8134645e627d64081c3da05f56fe6508",
+        "reviewed": true,
+        "observation": "Reviewed no-open/no-saved-fit state, startup preference, New fit, Example fit, search and filter controls; no overlapping content."
+      },
+      {
+        "name": "library-library.png",
+        "sha256": "9cdd2aabecc8524df9ca1266fa2fa802ee48c690a9651bcf2aa828d37ee84ba1",
+        "reviewed": true,
+        "observation": "Reviewed independent copy, ammunition, Resources/Capacitor/Edit modules buttons and remaining navigation; readable spacing."
+      },
+      {
+        "name": "navigation-closed.png",
+        "sha256": "0b4b7f024565d36f9333fbf7b93c954ea2ef4939f1560c1f51a09f6de64c37b0",
+        "reviewed": true,
+        "observation": "Reviewed closed-fit state, enabled startup preference and creation controls; top/bottom cropping follows the scrolled viewport."
+      },
+      {
+        "name": "navigation-hull.png",
+        "sha256": "142580b8521efb2f733ff57eabfd3310d480c0a972ce99e2f307eb93905ba008",
+        "reviewed": true,
+        "observation": "Reviewed hull search/filter, Vexor drilldown/new fit and saved Unicode cards/actions; readable and distinct."
+      },
+      {
+        "name": "navigation-open.png",
+        "sha256": "3e8889bad494033b5a6e150a2df5efce523a12a67a66642d26a7d788c6811b72",
+        "reviewed": true,
+        "observation": "Reviewed open-fit carousel, startup preference, selected Unicode fit and Resources/Capacitor/Edit modules; carousel and scrolled header cropping are intentional."
+      },
+      {
+        "name": "navigation-recent.png",
+        "sha256": "3d7f45383336e79dde5fd217d5b9f1ac2c22984d82103ec93250d6cb3fb1e8bc",
+        "reviewed": true,
+        "observation": "Reviewed Recent filter, modification-order explanation and saved-fit action cards; lower card continues below viewport."
+      },
+      {
+        "name": "market-empty.png",
+        "sha256": "ce175296407ec799ed773088554878d60308e3765b2b769bce6d301304bb31a6",
+        "reviewed": true,
+        "observation": "Reviewed no-match equipment search, filter state and clear no-results guidance; scrolled header cropping is intentional."
+      },
+      {
+        "name": "market-group.png",
+        "sha256": "ef9e9b0a4c89f5b9edd3f95357ad32be5d07fd88d72a62d5888d6f65243c8d4b",
+        "reviewed": true,
+        "observation": "Reviewed railgun item, meta label, fit/slot-fill/cargo actions and group breadcrumb; readable and separated."
+      },
+      {
+        "name": "market-meta.png",
+        "sha256": "eb4317e49de31dbf4a5504764ea82d46530f1d64904a9d33d8009fa25b96f3a4",
+        "reviewed": true,
+        "observation": "Reviewed faction-only search, checked/unchecked meta filters, 41-item pagination and item result; readable."
+      },
+      {
+        "name": "market-root.png",
+        "sha256": "215162405ed836751dbf8cafa1fa40d187f842e767d5f27bf2849b6da23f1595",
+        "reviewed": true,
+        "observation": "Reviewed offline equipment search, wildcard/regex help, filters and root group list; lower items continue below viewport."
+      },
+      {
+        "name": "market-search.png",
+        "sha256": "a481cdcaa252c5ef1eb3c0ebde0fcf3729ce03c44c8396766dd6c6308ca9c3bd",
+        "reviewed": true,
+        "observation": "Reviewed selected railgun search result, long Unicode fit name, slot-fill warning and fit/cargo/navigation actions; no overlap."
+      },
+      {
+        "name": "empty-hulls-picker.png",
+        "sha256": "9d434f7744a1df024abfad5535fd5b457d986a0bbc41def06458f3b8192660a7",
+        "reviewed": true,
+        "observation": "Reviewed Rifter creation dialog, Unicode name, hull search/selection and Cancel/Create; readable controls without overlap."
+      },
+      {
+        "name": "empty-hulls-restored.png",
+        "sha256": "ef43077d77038f7768acf7b00e3d4e315a26464f2c33af25e9848123ace7a1e7",
+        "reviewed": true,
+        "observation": "Reviewed restored empty-fit navigation and attributes: real zero damage, 20000 m drone range and explicit unavailable gun optimal; scrolled header is outside viewport."
+      },
+      {
+        "name": "empty-hulls-ship.png",
+        "sha256": "1d75bd04e0cc719ad8f5cbe495a20a12880f4dc564e59e13fc1f8e99613c5c81",
+        "reviewed": true,
+        "observation": "Reviewed empty-ship attributes with real zero damage, 60000 m drone range, unavailable gun optimal and saved-fit creation/search actions."
+      },
+      {
+        "name": "empty-hulls-structure.png",
+        "sha256": "2aa2c622d158399c0e718a578834d48474f8dd1c00a0f60bb4963591673e6e36",
+        "reviewed": true,
+        "observation": "Reviewed Astrahus with zero modules and Resources/Capacitor/Edit modules, structure/cargo/navigation actions; readable separation."
+      },
+      {
+        "name": "module-edits-override.png",
+        "sha256": "47dfc496dbd7f24fecb72c4a58fa22c19783e1bf34e1f90625a82439d1f1ffe2",
+        "reviewed": true,
+        "observation": "Reviewed active capital repairer with explicit fitting restriction override, clone/fill/replace/remove and charge/variation controls; readable."
+      },
+      {
+        "name": "module-edits-rack.png",
+        "sha256": "b7016783c1c47c2ef7f7bce8c59fa13452a6934c53e3a9941f7353b435a6c268",
+        "reviewed": true,
+        "observation": "Reviewed selected High rack, active autocannon, slot count and clone/fill/remove controls; no overlapping text."
+      },
+      {
+        "name": "module-edits-recent.png",
+        "sha256": "082a598c18c1badf691e105abc9d4e243c3b468660529dfa44690f9af274a956",
+        "reviewed": true,
+        "observation": "Reviewed recent-use count/order, filters and item list; readable and scrollable."
+      },
+      {
+        "name": "module-edits-resources.png",
+        "sha256": "969ea3fc8f1c3c52ee996a774275fb2dde572659fa00eae5f9b9dd16e2e26471",
+        "reviewed": true,
+        "observation": "Reviewed saved-fit resources, Undo action, CPU 54/130 tf, textual powergrid overload 164.4/41 MW, calibration and hardpoints."
+      },
+      {
+        "name": "module-edits-restored.png",
+        "sha256": "63b1fbae72ce7eaeebd1578fdf26aad9517c004b5d7eb66276be10ff111f3a09",
+        "reviewed": true,
+        "observation": "Reviewed restored enforced restrictions, missing-skill notice, disabled empty clone selection and explicit empty high slot."
+      },
+      {
+        "name": "module-edits-service.png",
+        "sha256": "a2ed5db99cced27f77b49388af76264198834d7e3aca7b70448cf1a2358a27fc",
+        "reviewed": true,
+        "observation": "Reviewed Service rack, online research lab, service count and fill/replace/remove controls; readable."
+      },
+      {
+        "name": "module-edits-skills.png",
+        "sha256": "b7cf6711ae8005f41758cd209bb98a499bec3c3d58b74cec487bf6d03a7f82b3",
+        "reviewed": true,
+        "observation": "Reviewed saved resources and explicit powergrid overload, enforced restrictions and expanded missing-skills count/toggle; requirement rows continue below the current viewport."
+      },
+      {
+        "name": "charge-edits-active.png",
+        "sha256": "84de0ff038bd80fb6a1cca18127568396b084bc99d1c7bc63d8f21ef04e7e235",
+        "reviewed": true,
+        "observation": "Reviewed active-fit charge filter with Script text and keyboard; scrolled header is partly cropped, filter and controls remain readable."
+      },
+      {
+        "name": "charge-edits-crystal.png",
+        "sha256": "87656ce5b5588674d030507fec64d0c6598c33c23eac4564fb36aa46f9696019",
+        "reviewed": true,
+        "observation": "Reviewed loaded Scorch S crystal, saved state, Unload and disabled loaded-in-module result."
+      },
+      {
+        "name": "charge-edits-empty.png",
+        "sha256": "ec826caed4a3c1991ca4f971d43f038e191e998e1faa2a2ea1b38def179caabf",
+        "reviewed": true,
+        "observation": "Reviewed empty fit with zero compatible charges and explicit no-compatible-charges message."
+      },
+      {
+        "name": "charge-edits-loaded.png",
+        "sha256": "ffe4e08a743ae8f8ddb91f6146d9b24631f9f929861d2b9a9df3b73ad4471a2f",
+        "reviewed": true,
+        "observation": "Reviewed saved Spike M load, module identity, Unload and loaded-in-module card; readable."
+      },
+      {
+        "name": "charge-edits-mining.png",
+        "sha256": "70d730c12f6b268f69993bf3ab7a989e4a1d5acaa9e47d3f0e61fae30a9bc3b8",
+        "reviewed": true,
+        "observation": "Reviewed mining crystal long name wrapping, saved load, module identity and Unload; no lost characters."
+      },
+      {
+        "name": "charge-edits-picker.png",
+        "sha256": "55496f25439642c8a81948344a71abb7522c857ac517a95af2f7deb6986a4ad0",
+        "reviewed": true,
+        "observation": "Reviewed scrolled faction-ammunition result list with readable names and Previous/Next pagination."
+      },
+      {
+        "name": "charge-edits-restored.png",
+        "sha256": "759a22df784f05f9c7a8d1ae9af4bf664e0fc10f1f34f40d54562b9d9e84395f",
+        "reviewed": true,
+        "observation": "Reviewed restored Javelin M load, Unload, cleared session history and compatible-charge filter/count/pagination; readable."
+      },
+      {
+        "name": "charge-edits-script.png",
+        "sha256": "7913cef5a941d61309c6db9159c94c6706a39c0e508e8a8423abceff2d866055",
+        "reviewed": true,
+        "observation": "Reviewed saved Tracking Speed Script load, module identity, Unload and disabled loaded-in-module result; clear distinction from ammunition."
+      },
+      {
+        "name": "rack-ordering-empty.png",
+        "sha256": "2808b212d8bab97c3a9a68f14b6754bd6f9d25bc04a5b2588a5c9d2d327db61f",
+        "reviewed": true,
+        "observation": "Reviewed Medium rack no-fitted-module message and four explicit empty slots; clear saved state."
+      },
+      {
+        "name": "rack-ordering-initial.png",
+        "sha256": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+        "reviewed": true,
+        "observation": "Reviewed High rack, move/swap guidance and overheated railgun with Spike M and 813.804 s / 373-cycle burnout; lower rows continue below viewport."
+      },
+      {
+        "name": "rack-ordering-medium.png",
+        "sha256": "476cdb50dbf241607dba791f677d9855386c501fc0391fff00eab561d86a59fa",
+        "reviewed": true,
+        "observation": "Reviewed offline scripted sensor booster and overheated shield booster with 775.2 s / 228-cycle burnout; distinct states and actions."
+      },
+      {
+        "name": "rack-ordering-service.png",
+        "sha256": "53aebc6299fd26953ae0cb0617ff88a1b76fa39f61786b2ac7460ec93d6d3f17",
+        "reviewed": true,
+        "observation": "Reviewed Service rack with offline manufacturing and online research labs, empty charges and move/swap actions."
+      },
+      {
+        "name": "rack-ordering-swapped.png",
+        "sha256": "78eba281d8631eecb860716edbd2eec117fd5d05583d9947900fb90fdc94be32",
+        "reviewed": true,
+        "observation": "Reviewed swapped active and overheated railguns with retained charges, visible move/swap actions and 715.624 s / 328-cycle burnout."
+      },
+      {
+        "name": "rack-ordering-vacant.png",
+        "sha256": "4a2dac331ce0f9bbf025603ec00f473c182bfa3a1ba8ec95dbe5dd7c0f37b89c",
+        "reviewed": true,
+        "observation": "Reviewed explicit empty high slot between fitted modules, retained charge/state labels and positional burnout values; readable."
+      },
+      {
+        "name": "rack-ordering-restored.png",
+        "sha256": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+        "reviewed": true,
+        "observation": "Reviewed restored overheated railgun with Spike M and 813.804 s / 373-cycle burnout; session history is empty and rack guidance readable."
+      },
+      {
+        "name": "variation-edits-disabled.png",
+        "sha256": "1de3de077aa23a0af7c59ddcdfa0ccbd55647cc7427718a0af2be3afbbafa1d1",
+        "reviewed": true,
+        "observation": "Reviewed online prototype cloak and focused Covert Ops variation filter with keyboard; candidate disabled state is below this viewport and not inferred from this image."
+      },
+      {
+        "name": "variation-edits-drone-picker.png",
+        "sha256": "011dd6bcd233ff37e0fc7158e7c8de8bbc58fd176618637ee31cc32f416b702d",
+        "reviewed": true,
+        "observation": "Reviewed drone variation names/meta labels and pagination in scrolled result list."
+      },
+      {
+        "name": "variation-edits-drone.png",
+        "sha256": "4b1ecb205b32cc3e0641dacfc8bd2c72ebe4022f525f8e8129c98fc8d315d4d1",
+        "reviewed": true,
+        "observation": "Reviewed saved drone variation, selected Drones tab and retained total/active counts (4/0 and 5/3); readable cards/actions."
+      },
+      {
+        "name": "variation-edits-empty.png",
+        "sha256": "4e06ddc05db0b4764176da3dfd4ea66f6aaa2138ef44b3f962663f01d1110e34",
+        "reviewed": true,
+        "observation": "Reviewed empty module selection, zero-item count and explicit no-modules guidance; no fabricated results."
+      },
+      {
+        "name": "variation-edits-implant.png",
+        "sha256": "7c51d3a0b3795d80e6e8126ac6566e1540c6d00e597076f255b0ca9585a254dc",
+        "reviewed": true,
+        "observation": "Reviewed saved implant application, selected Fit implants tab and inactive in-fit slot-6 implant entry; readable filter and actions."
+      },
+      {
+        "name": "variation-edits-module.png",
+        "sha256": "4a63c64bddc5e858934d228298a28f3a37f7cee77dd2dd5e82ad9ac80ecabcf6",
+        "reviewed": true,
+        "observation": "Reviewed active railgun with Spike M, retention/unload explanation and readable variation/filter/meta entries; lower list is scrollable."
+      },
+      {
+        "name": "variation-edits-restored.png",
+        "sha256": "f6e3ecadd660281b631cfceccfe3eb5f128174327e45dd32612654ff7dcfda91",
+        "reviewed": true,
+        "observation": "Reviewed restored Hobgoblin II with 5 total/3 active, empty session history and Current variation marker."
+      },
+      {
+        "name": "variation-edits-unloaded.png",
+        "sha256": "ab2c6ab7a17b973013eaec7b0dd3df3b62bfd9368865e91004d411d41f287487",
+        "reviewed": true,
+        "observation": "Reviewed saved change to Tech I railgun and explicit empty charge, bulk-selection controls and fitted-item count; lower card continues below viewport."
+      },
+      {
+        "name": "bulk-charges-empty.png",
+        "sha256": "1b249e6ac8a791b28b5f6ddf30f1ae092b91a083251742e310faac36881a25a4",
+        "reviewed": true,
+        "observation": "Reviewed empty bulk editor with zero selection, disabled charge/scope action and explicit no-fitted-modules guidance."
+      },
+      {
+        "name": "bulk-charges-mixed.png",
+        "sha256": "69b6142cff93a4ba172f3645e4d71dc720055a0c68b8f67095d2e9abf96d3631",
+        "reviewed": true,
+        "observation": "Reviewed selection-only Spike M preview: two changes, incompatible and outside-reference-group skips, and Load into 2 modules."
+      },
+      {
+        "name": "bulk-charges-restored.png",
+        "sha256": "a372d7de65ef0b6da97fd48025fbd5cd26f3fd62f2f93a6fbb89439907d84132",
+        "reviewed": true,
+        "observation": "Reviewed restored four-module selection, empty session history, loaded Spike M and reference marker."
+      },
+      {
+        "name": "bulk-charges-scripts.png",
+        "sha256": "2de13501f28e0f67d1c71bda1ada5d1adc6cbd7ef3de1029f17d5912cecbed9a",
+        "reviewed": true,
+        "observation": "Reviewed saved script preview with already-set and skipped reasons, zero changes and disabled load action."
+      },
+      {
+        "name": "bulk-charges-selection.png",
+        "sha256": "9bed47b79091d11da8614806ea5a8410e5ba73de8e21d0474c6c6b407a0f10eb",
+        "reviewed": true,
+        "observation": "Reviewed four selected modules, Select all/Clear, charge/scope action and checked reference module with Antimatter M."
+      },
+      {
+        "name": "bulk-charges-similar.png",
+        "sha256": "5c0c7e73a72e2e7e121eda7a4ad92c98decab4852efacadabb61afea67578f53",
+        "reviewed": true,
+        "observation": "Reviewed all-similar scope, inclusion explanation, two-load preview, already-set entry, Unload, search and results."
+      },
+      {
+        "name": "bulk-states-empty.png",
+        "sha256": "4b84477f1e939db0d0cefc62edcb47b955801d589ca1e492f66965687159194b",
+        "reviewed": true,
+        "observation": "Reviewed empty bulk-state editor, fallback explanation, Select all/Clear and explicit no-editable-modules message; headline is partly cropped by the viewport."
+      },
+      {
+        "name": "bulk-states-restored.png",
+        "sha256": "56b709abc7e9b0f30964f1db07f7fa12adbdfa98e9905c0baa5ee44f4b3324c5",
+        "reviewed": true,
+        "observation": "Reviewed restored three-module selection, online reference marker and empty session history; lower cards are scrollable."
+      },
+      {
+        "name": "bulk-states-saved.png",
+        "sha256": "1af8c7c6615e05368be9e1767dfb208627f773d92bd572097d1b85ebdd01a013",
+        "reviewed": true,
+        "observation": "Reviewed all-similar overheat scope, already-overheated entries, zero-change disabled action and saved transition summary."
+      },
+      {
+        "name": "bulk-states-selection.png",
+        "sha256": "5d7f314b969893ecfbfc7892be33f3142cd26278d3c7a76ad53f0b0d42504f85",
+        "reviewed": true,
+        "observation": "Reviewed single selected active autocannon, reference marker and unchecked additional module; readable controls."
+      },
+      {
+        "name": "bulk-states-similar.png",
+        "sha256": "59354c33af6707d8dfdff80e466d98223c027358aec60df1f943f140cae2dc45",
+        "reviewed": true,
+        "observation": "Reviewed similar scope and overheat mode, two requested changes with already-set entry, restriction caveat and Change 2 modules action."
+      },
+      {
+        "name": "clone-fill-empty.png",
+        "sha256": "1bf6dabe43dc4074522f21bad6054f4eb269352b218f3f5973fb82adf05d91d3",
+        "reviewed": true,
+        "observation": "Empty Rifter has zero resource usage and 13 vacant slots; zero selected clone action visibly disabled with all-or-nothing guidance. Top heading is scrolled."
+      },
+      {
+        "name": "clone-fill-fitted-fill.png",
+        "sha256": "0e4727efc3ce8bb36ea12faaa0a76767175bfc8922b0cd7bf88a42be1826d1c4",
+        "reviewed": true,
+        "observation": "Full high rack 4/4 shows overheated charged guns and disabled fill to zero vacant high slots, with state/charge retention guidance."
+      },
+      {
+        "name": "clone-fill-market-preview.png",
+        "sha256": "8b0dc01cae8a9112a0c8ba6fd68977332ec8819dca1189ff49812fb2e5bb336b",
+        "reviewed": true,
+        "observation": "Damage Control II market preview offers fill of up to four vacant low slots, with EOS stopping guidance and ordinary add-to-fit/cargo controls."
+      },
+      {
+        "name": "clone-fill-market-saved.png",
+        "sha256": "5eed23a389a44034203c83d0dfa3738d51dd3aa90d953a266c037f057f242c30",
+        "reviewed": true,
+        "observation": "Saved Damage Control II market action reports Fit saved and three remaining vacant low slots; fill and viewing controls readable."
+      },
+      {
+        "name": "clone-fill-restored.png",
+        "sha256": "0b6f1cc38113d968adf2234c7b0bef509c2217df4215a933d188e6568fad0253",
+        "reviewed": true,
+        "observation": "Restored selected-clone Vexor has Undo disabled, no undo action, and resource panel showing four turrets and preserved fitting restrictions; lower content scrolls."
+      },
+      {
+        "name": "bulk-variation-removal-empty.png",
+        "sha256": "539dc9aeae3b166f3c06da157d9ca487bd4833efbcf5f9d9698bd26b4112b8a2",
+        "reviewed": true,
+        "observation": "Empty fit shows zero selection/items and No modules in this fit; Undo disabled; readable variations navigation."
+      },
+      {
+        "name": "bulk-variation-removal-removal-preview.png",
+        "sha256": "0780d9de4b74c42f0b041ee2b3133fe7fe59f04d351736de2475450873e6f739",
+        "reviewed": true,
+        "observation": "Two selected removal targets and one variation target; Sensor Booster outside scope and Damage Control skipped for variation; Remove 2 modules control readable."
+      },
+      {
+        "name": "bulk-variation-removal-removal-saved.png",
+        "sha256": "efcadf37a6b27048d3d24606c2dd9fa0e4fd3751b40d44ad7f3041fca59dbfcc",
+        "reviewed": true,
+        "observation": "Modules removed and fit saved; only Sensor Booster remains with Active state and Scan Resolution Script."
+      },
+      {
+        "name": "bulk-variation-removal-restored.png",
+        "sha256": "6e0182e1b47bb5f9bcfee33dce3921632c3e98476502c2397469d31c6596ac2a",
+        "reviewed": true,
+        "observation": "Restored Unicode mixed-selected fit has no Undo action and four items; variation tabs and bulk selection are readable; lower rows scroll."
+      },
+      {
+        "name": "bulk-variation-removal-selected-preview.png",
+        "sha256": "fd1a430b30caa46eff871c7019ba05f1af884e5f5595ba6483ef46185ca241c8",
+        "reviewed": true,
+        "observation": "Four selected rows show two variation targets and four removal targets with explicit family skips and charge compatibility guidance."
+      },
+      {
+        "name": "bulk-variation-removal-selected-saved.png",
+        "sha256": "ab64760deb0d1cc09a78495b1abf354c6da0149a34f482fb5760f142fc28df6b",
+        "reviewed": true,
+        "observation": "Saved rows show replacement Dual 150mm Railgun I with Overheated/empty and Active/Antimatter states; unchanged 200mm gun begins below. Top selection header is partially scrolled."
+      },
+      {
+        "name": "bulk-variation-removal-similar-preview.png",
+        "sha256": "e1d18e6dbbf4783888b76d102338cc752ea420c42e35bfb79b6739b98bf0e127",
+        "reviewed": true,
+        "observation": "All similar modules scope shows three variation/removal targets, including the 200mm gun outside original selection; scope warning readable."
+      },
+      {
+        "name": "bulk-variation-removal-similar-saved.png",
+        "sha256": "f5b05acd883e9b8b9f59dda636db07e2ec9faebc21003b082c069947dbb4eaa7",
+        "reviewed": true,
+        "observation": "All three rows are Dual 150mm Railgun II with distinct Active/Overheated and Antimatter/Spike/Iron preserved; top selection text partly scrolled."
+      },
+      {
+        "name": "clone-fill-selected-saved.png",
+        "sha256": "b74c6391267a5a6c361824171d3c716bbbc24c4b6ebab1e6760b660fab8adf3d",
+        "reviewed": true,
+        "observation": "Cloning has cleared selection and full high rack 4/4; disabled zero-selection clone and zero-vacancy fill with retained overheated charged gun visible."
+      },
+      {
+        "name": "clone-fill-selection.png",
+        "sha256": "3f9971efc199bd82cc023b1f4d7f37efd01e7aabf8921ad3c12775dd3b2370bb",
+        "reviewed": true,
+        "observation": "Two selected guns map to vacancies 12 and 13, clone action enabled, current high rack 2/4 and selected checkbox readable."
+      },
+      {
+        "name": "clone-fill-targeted.png",
+        "sha256": "60767c7a45024262ee571b47af38789af4974790db60e0b2bf9272b9bd28f027",
+        "reviewed": true,
+        "observation": "Overheated Antimatter gun can be clone source or fill up to two vacant high slots; state/charge guidance readable."
+      },
+      {
+        "name": "hull-modes-confessor-changed.png",
+        "sha256": "bcb1ba49cec4497a0aa6eb0124d6b6bddac29bbeb4eafe8be395c114e95dc97f",
+        "reviewed": true,
+        "observation": "Confessor Sharpshooter mode saved/current; Undo Change hull mode enabled and defense mode remains selectable."
+      },
+      {
+        "name": "hull-modes-confessor-initial.png",
+        "sha256": "217d531e3f111f0bcf8ab663c8455b20289cf0b98a54f7f236d1319992d740c7",
+        "reviewed": true,
+        "observation": "Confessor Defense mode current/disabled with Sharpshooter selectable; no Undo action; readable mode guidance."
+      },
+      {
+        "name": "hull-modes-restored-copy.png",
+        "sha256": "2274eebfb41fd811cb8e06af4aa496c7316466a63224ac63158aabe043813147",
+        "reviewed": true,
+        "observation": "Copied Unicode Confessor restores Propulsion mode; Defense and Sharpshooter alternatives selectable; no Undo action."
+      },
+      {
+        "name": "hull-modes-vexor-empty.png",
+        "sha256": "2f85fcd3a0c982871965f090752d49bbefdb273fa4073352fe87e8c2cbcb1c01",
+        "reviewed": true,
+        "observation": "Vexor clearly reports no selectable modes and provides Back; no fabricated mode controls."
+      },
+      {
+        "name": "subsystems-offensive-added.png",
+        "sha256": "60c2d99bd83f1fa61bad05d4f4da196869292d33bba0cb99661cae99438062c6",
+        "reviewed": true,
+        "observation": "Tengu Accelerated Ejection Bay saved, one of four subsystems installed, high capacity seven; Core empty and alternatives readable."
+      },
+      {
+        "name": "subsystems-offensive-removed-invalid.png",
+        "sha256": "a489fa6bd114b90845f8b92ac40723b82151bbf9699faa1891faab99d988694b",
+        "reviewed": true,
+        "observation": "Offensive subsystem removed and saved; high 1/0 and explicit red No longer fits Heavy Missile Launcher II with Scourge charge; module retained."
+      },
+      {
+        "name": "subsystems-offensive-replaced.png",
+        "sha256": "961db4dea50491f2937b1970aa5e41ebaa0e366d2a075ebd87c2e18021d066f2",
+        "reviewed": true,
+        "observation": "Support Processor saved; four subsystems installed and high 1/7; Core current reactor and alternatives readable."
+      },
+      {
+        "name": "subsystems-restored-invalid-copy.png",
+        "sha256": "a4e420ae5c2aca7ecfbd6e6ca4553e770f32b456feb391eb7a6062d16ba6ae93",
+        "reviewed": true,
+        "observation": "Restored Unicode invalid copy retains three subsystems and the explicit over-slot missile warning; Undo disabled."
+      },
+      {
+        "name": "subsystems-tengu-empty.png",
+        "sha256": "6a29d4c61881fff9a601ab9480d1219b7a436e05c1b499352cad67fdee6594ff",
+        "reviewed": true,
+        "observation": "Empty Tengu shows zero of four subsystems and zero slot capacities, Core empty with two available options; no Undo."
+      },
+      {
+        "name": "subsystems-vexor-empty.png",
+        "sha256": "ffa0a926fab64aab940c78352d2e2f456e6c840db62ba00323891b52b3498118",
+        "reviewed": true,
+        "observation": "Vexor clearly reports no subsystem slots, with Back and no fabricated subsystem actions."
+      },
+      {
+        "name": "structures-ansiblex-choice.png",
+        "sha256": "27c32c3d7327c3c66e2c6d9b0049d196dcc0e3cef56400e371f213d8bf46b688",
+        "reviewed": true,
+        "observation": "Ansiblex has one empty service slot, 500000 shield/armor HP and compatible Conduit Generator choice."
+      },
+      {
+        "name": "structures-ansiblex-fitted.png",
+        "sha256": "064f75a322952ed6e06b5c8f37629923271050f5d381bc519ff8ba560313f6e3",
+        "reviewed": true,
+        "observation": "Conduit Generator saved, service 1/1 and shield/armor each 2000000 HP; full-slot guidance visible."
+      },
+      {
+        "name": "structures-astrahus-empty.png",
+        "sha256": "f82ecaafd6bd4ac2aee948a90ab47fa17efe5b516e7132d11f8b0075e11c19e6",
+        "reviewed": true,
+        "observation": "Astrahus has 0/3 services and initial shield/armor HP; Manufacturing and Invention choices readable."
+      },
+      {
+        "name": "structures-astrahus-replaced.png",
+        "sha256": "2a309e8ccabf580c02f46f4757a658e672c0c553ee1026b7e356dd673d961db7",
+        "reviewed": true,
+        "observation": "Invention Lab replacement saved, service rack 3/3, shield/armor increased and full-slot guidance present."
+      },
+      {
+        "name": "structures-manufacturing-bonus.png",
+        "sha256": "ea79c21c6e26f82e56303f356ba903becab6101cee54a80a977e7501271f62a1",
+        "reviewed": true,
+        "observation": "Manufacturing Plant saved, 1/3 service slots and increased structure HP; replacement action visible."
+      },
+      {
+        "name": "structures-restored-structure-copy.png",
+        "sha256": "695b7ccc760bde9ed9970709234aa35446ad4060eed31f90aaa8257855f28840",
+        "reviewed": true,
+        "observation": "Restored structure copy retains three services and HP; Undo disabled; fitted Invention Lab supports Replace/Remove."
+      },
+      {
+        "name": "structures-vexor-no-services.png",
+        "sha256": "36bd5aa0f8a51ee73a0cde995f2ca5b3067df1e1fe0aea80b2a375feacaa0996",
+        "reviewed": true,
+        "observation": "Vexor clearly reports This hull is not a structure, with Back and no service choices; no Undo action."
+      },
+      {
+        "name": "cargo-stacks-restored-cargo-copy.png",
+        "sha256": "7adddd7724411c8a9ccca291f4f71ca67e04c6fd11ed5e98a5e5426f01e6d943",
+        "reviewed": true,
+        "observation": "Restored copy has one Small Standard Container, quantity one, 100/480 cubic metres; no Undo action."
+      },
+      {
+        "name": "cargo-stacks-structure-charge.png",
+        "sha256": "584f17764c7422299e6cdc52eb1558207c7cb03ce75abcce4b18a320c1b92e9a",
+        "reviewed": true,
+        "observation": "Astrahus charge occupies 2.5 cubic metres despite zero listed capacity; explicit over-capacity and structure cargo guidance visible."
+      },
+      {
+        "name": "cargo-stacks-vexor-empty.png",
+        "sha256": "f9427d7bb310f597ed47152ef0c9e7f5a1777346fc8861ae9cd9c4b0cdfbb123",
+        "reviewed": true,
+        "observation": "Empty Vexor shows 0/480 cubic metres, no cargo stacks and browsing/transfer actions."
+      },
+      {
+        "name": "cargo-stacks-vexor-first-stack.png",
+        "sha256": "638033e7d5ca5b12bb07b822c138b7ae0cb3d7909fab814edfa881a7fbe39251",
+        "reviewed": true,
+        "observation": "Antimatter Charge S added and saved, one item at 0.0025 cubic metres, Undo Add cargo available."
+      },
+      {
+        "name": "cargo-stacks-vexor-over-capacity.png",
+        "sha256": "65cd3bd2cc1e1964b6225e58ec39734789ac1160c7b2140873f02b6a1e766dbb",
+        "reviewed": true,
+        "observation": "500/480 cubic metres has explicit red over-capacity warning and retained container; previous charge removal saved."
+      },
+      {
+        "name": "cargo-stacks-vexor-quantity.png",
+        "sha256": "2241db8accde2bae0833243b01b238f91982472556b8a87c2d69316217ad9a13",
+        "reviewed": true,
+        "observation": "1500 charges saved with 3.75/480 cubic metres; Undo Change cargo quantity available; stack quantity continues below viewport."
+      },
+      {
+        "name": "cargo-actions-crystal-preset.png",
+        "sha256": "23df848c697a84a872edf0455c7b507878279f9295c8bb198cef6de5c4497eb9",
+        "reviewed": true,
+        "observation": "Multifrequency S preset stack shows 1000 crystals at one cubic metre each and quantity/removal controls; screen intentionally scrolled."
+      },
+      {
+        "name": "cargo-actions-filled-cargo.png",
+        "sha256": "db9897e9ce748ce1195472dae0893fa0fb0e6f9a058fd0779339addf0ab75653",
+        "reviewed": true,
+        "observation": "Cargo filled and saved at exactly 480/480 cubic metres; Undo Fill cargo and selected-stack controls visible."
+      },
+      {
+        "name": "cargo-actions-selected-quantity.png",
+        "sha256": "af09f0a3cbb61ee3d6ecd125d2a16cbee33c72108f7bef3e3dc3ee6ea630bfe2",
+        "reviewed": true,
+        "observation": "Two stacks selected, quantity seven, save/remove selected actions and fill preview +183713 visible; first selected charge stack is seven."
+      },
+      {
+        "name": "cargo-actions-structure-preset.png",
+        "sha256": "c586d35ff41e2987bffafbec657a96ea55db90eb8fee3df66fa3fcc7eaf0f859",
+        "reviewed": true,
+        "observation": "Structure ammunition preset saved at 0.8/0 cubic metres with explicit over-capacity and structure guidance; Undo preset available."
+      },
+      {
+        "name": "cargo-actions-variation-merge.png",
+        "sha256": "f62dd42c2a6eeff05f3ae4f063e6b858e85281abdae8ef237b128c80bf6a8650",
+        "reviewed": true,
+        "observation": "Selected merged 200mm AutoCannon II stack has quantity five and fill preview +90; unrelated Antimatter Charge S remains quantity four."
+      },
+      {
+        "name": "cargo-actions-restored-variation-copy.png",
+        "sha256": "92f38cdb7a0659a045b45c1892027720741fd6764441d1da5aafe016720f6785",
+        "reviewed": true,
+        "observation": "Restored variation-copy viewport shows quantity-five 200mm AutoCannon I stack with individual save/remove controls; header and other stacks are above the scrolled viewport."
+      },
+      {
+        "name": "cargo-transfers-atomic-rejection.png",
+        "sha256": "9ec0b4e07bbd7fe1e596fff038e1bcc204b6d4d3621d941614d226d496d8a1d7",
+        "reviewed": true,
+        "observation": "Unsupported edit is explicit in red; 4110.4/140 cargo over-capacity shown; selected high empty slot and Small Shield Extender cargo target retained."
+      },
+      {
+        "name": "cargo-transfers-magazine-swap.png",
+        "sha256": "0adb240c5ed7a87b4a79c41555de97a19b75c69d314f2204e56ae62db691498e",
+        "reviewed": true,
+        "observation": "Destination overheated 250mm Railgun II retains Antimatter magazine count 40; empty destination rows and disabled no-cargo actions readable."
+      },
+      {
+        "name": "cargo-transfers-restored-transfer-copy.png",
+        "sha256": "6e33d3c10570581734cf89c7605459dd6a1f3d8898f3a7a71cc22ce1fbebe106",
+        "reviewed": true,
+        "observation": "Restored scrolled viewport shows destination empty slots and selected cargo 250mm Railgun II stack quantity two; header is above viewport."
+      },
+      {
+        "name": "cargo-transfers-selected-modules.png",
+        "sha256": "53973fd5c9e65cc8f0d46d7cf4dd1aa0d73373e1d1a7e0be048a03565d1f4c0e",
+        "reviewed": true,
+        "observation": "Two fitting positions selected for move/copy to cargo; loaded Dual 150mm gun and Antimatter count160 visible with optional swap guidance."
+      },
+      {
+        "name": "cargo-transfers-single-crystal.png",
+        "sha256": "694e3a2d76dafc0f111410aa433a6fe6024537cf719d0531ae2d8cf9ca84f866",
+        "reviewed": true,
+        "observation": "Punisher transfer complete and saved, cargo two cubic metres; no selection leaves actions disabled; magazine/replacement guidance readable."
+      },
+      {
+        "name": "cargo-transfers-structure-swap.png",
+        "sha256": "7dd1b61e7ebc4bcb4a0b0ed45658f459c161be6ee01ecb96223da5f6843fc194",
+        "reviewed": true,
+        "observation": "Structure service destination retains online Standup Reprocessing Facility with empty other slots; no cargo selected means disabled transfer action."
+      },
+      {
+        "name": "notes-conflict-draft.png",
+        "sha256": "0b9c9ef5fa59960cbe68eb7d75493526fcba93798fbcf94606472b189210aa8a",
+        "reviewed": true,
+        "observation": "Saved-notes conflict warning preserves the Unicode/emoji draft and explains replacement/use-saved choices; lower controls scroll."
+      },
+      {
+        "name": "notes-navigation-return.png",
+        "sha256": "988229f0bd8d0acb3c810c339da2dc3e1d85926f4fd0723247a8ee402b352868",
+        "reviewed": true,
+        "observation": "Leading/trailing lines retained after navigation, 22-character count and Notes saved; Save disabled."
+      },
+      {
+        "name": "notes-restored-copy.png",
+        "sha256": "b757ea897e429a199a988f89af30f6352674f0f7f7d5a93e76ae162ce8bff7ac",
+        "reviewed": true,
+        "observation": "Restored Unicode copy retains multiline Offline note with Chinese characters and emoji; readable notes field."
+      },
+      {
+        "name": "notes-retained-recreation.png",
+        "sha256": "1e7e09974e58415c1442049ac2b3337fcd7bc7d60838eb85e66776353ed95edb",
+        "reviewed": true,
+        "observation": "Activity recreation retains the multiline Unicode/emoji note draft and autosave guidance."
+      },
+      {
+        "name": "notes-stale-draft.png",
+        "sha256": "45af4ad5f9aa0b3372b5304d36656c2706f8fca958dd065ec07db11fa671b6e2",
+        "reviewed": true,
+        "observation": "Stale-fit warning requires reload while retaining 44-character Unicode/accented draft and Unsaved changes."
+      },
+      {
+        "name": "notes-structure-readonly.png",
+        "sha256": "c53e2efa480614f3f94098272b05e8f8b1b40f2ce47cd45101bba5966acbe72b",
+        "reviewed": true,
+        "observation": "Structure notes explicitly read-only; stored Chinese text retained and 24-character count visible."
+      },
+      {
+        "name": "history-bulk-redone.png",
+        "sha256": "4549cf49c68ae48acca7517f94c9217a94b2f7f07a5d46be8705d93f9ee7f05e",
+        "reviewed": true,
+        "observation": "Redo Change ammunition leaves Iron Charge M on overheated gun; selection cleared and Undo enabled."
+      },
+      {
+        "name": "history-bulk-undone.png",
+        "sha256": "39a1715930dec23963a22964e224d51a19712417887f1f04f5a1ab7b90d00769",
+        "reviewed": true,
+        "observation": "Undo restores Spike M and exposes Redo Change ammunition; bulk selection reset with guidance."
+      },
+      {
+        "name": "history-fit-isolation.png",
+        "sha256": "ed67879e2a0da54bfe4f61ea619e92f494100a73a99655473fb882c41443a019",
+        "reviewed": true,
+        "observation": "Different bulk-charge fit has its own Undo Change selected ammunition label."
+      },
+      {
+        "name": "history-restored-empty-history.png",
+        "sha256": "eebcfcbd484d8ae8a9c3647f785a8eea8724ee8e86dd5aa8c4367f49aa8766dc",
+        "reviewed": true,
+        "observation": "Fresh process retains selected single-charge fit but has disabled Undo/Redo and No undo action."
+      },
+      {
+        "name": "history-retained-history.png",
+        "sha256": "dbb3f4875b7e09516308737ea6a746b1dde7cd5bfa8f03b1aa126d35ac3adc95",
+        "reviewed": true,
+        "observation": "Retained single-charge history shows Undo Change ammunition enabled after recreation."
+      },
+      {
+        "name": "history-stale-action.png",
+        "sha256": "6abb82715665d9110e22d4431cc7d17f6ec8fea1a56222a9b6509d683010d9cb",
+        "reviewed": true,
+        "observation": "Stale action preserves Undo and explicitly requests Reload history before editing."
+      },
+      {
+        "name": "notes-unicode-notes.png",
+        "sha256": "d1e47baa2eb37a0d60c141f91031ad316d8a7a8565f3280bdce3e9426fcafd46",
+        "reviewed": true,
+        "observation": "Focused multiline note field retains Greek, Chinese, emoji and accented/decomposed text with native keyboard visible; top heading is scrolled."
+      },
+      {
+        "name": "mutation-history-0-cargo-cleared.png",
+        "sha256": "628b937e53bcddc7aa8a590d98a68b8812f1dddea4f8707245d9ab6d87f71f7a",
+        "reviewed": true,
+        "observation": "Redo selected cargo quantities clears all stacks to 0/480 cubic metres, with Undo enabled and saved action label."
+      },
+      {
+        "name": "mutation-history-0-recreated.png",
+        "sha256": "988a328c81a2ba91b6aaa1e603e5d5e2ac3bd06f0799980a91b96b1401510319",
+        "reviewed": true,
+        "observation": "Recreation retains renamed Unicode independent fit and Undo Rename fit."
+      },
+      {
+        "name": "mutation-history-0-redone.png",
+        "sha256": "988a328c81a2ba91b6aaa1e603e5d5e2ac3bd06f0799980a91b96b1401510319",
+        "reviewed": true,
+        "observation": "Redo restores Renamed independent Unicode name and Undo Rename fit."
+      },
+      {
+        "name": "mutation-history-0-restored.png",
+        "sha256": "ba90a8c59cf5b7c901d617afa58013e6c614a71a415f3f3f2fbcef5f52c967d6",
+        "reviewed": true,
+        "observation": "Fresh process retains renamed independent fit, with disabled history and No undo action."
+      },
+      {
+        "name": "mutation-history-0-undone.png",
+        "sha256": "24c9b3da8cb07de80cb45089248e811db9a857ff607c2ce04776f79e8647164a",
+        "reviewed": true,
+        "observation": "Undo restores Mutation history rename name and exposes Redo Rename fit."
+      },
+      {
+        "name": "mutation-history-1-recent-redone.png",
+        "sha256": "743a31e522216d07531665ba27421b63f8c3539d22bd03db649ce2cde4d492f5",
+        "reviewed": true,
+        "observation": "Independent recent owner retains 150 Antimatter Charge M and 1.875/480 cargo, Undo Add cargo after Redo."
+      },
+      {
+        "name": "mutation-history-1-recreated.png",
+        "sha256": "7af066b7461df1bea25f2fba22d3e2a77a24ac3fb15b9b4f2b6eaa7daf3c1184",
+        "reviewed": true,
+        "observation": "Recreation preserves Remove selected cargo Undo and Redid status for cargo-selected-remove fit."
+      },
+      {
+        "name": "mutation-history-1-redone.png",
+        "sha256": "7af066b7461df1bea25f2fba22d3e2a77a24ac3fb15b9b4f2b6eaa7daf3c1184",
+        "reviewed": true,
+        "observation": "Redo selected cargo removal leaves correct Undo Remove selected cargo label and selection-reset guidance."
+      },
+      {
+        "name": "mutation-history-1-undone.png",
+        "sha256": "f0b25e15bf4fe7a20a91ac4e318f665d10946727fdac1676547636cfe3d9ee44",
+        "reviewed": true,
+        "observation": "Undo removal exposes Redo Remove selected cargo while earlier Add cargo Undo remains available."
+      },
+      {
+        "name": "mutation-history-1-restored.png",
+        "sha256": "c3aa38e35df75550240f337e25ae5bf8360c0978c39b961df40bacb53c794d5a",
+        "reviewed": true,
+        "observation": "Fresh process retains cargo-selected-remove fit with disabled Undo/Redo and No undo action; header is intentionally scrolled above viewport."
+      },
+      {
+        "name": "mutation-history-2-recreated.png",
+        "sha256": "dff954ab4aeb5507fe6b46b2253be5d97113fc6e8078d07bd3fe60f8279f6fc9",
+        "reviewed": true,
+        "observation": "Recreation retains transfer-to-True fit and Undo Transfer fitted equipment and cargo."
+      },
+      {
+        "name": "mutation-history-2-redone.png",
+        "sha256": "dff954ab4aeb5507fe6b46b2253be5d97113fc6e8078d07bd3fe60f8279f6fc9",
+        "reviewed": true,
+        "observation": "Redo transfer exposes correct Undo transfer label and selection-reset guidance."
+      },
+      {
+        "name": "mutation-history-2-restored.png",
+        "sha256": "75dcc7a870575c711df14e6989f7c1cf9c4c31473038599bf2036730aeeda3a1",
+        "reviewed": true,
+        "observation": "Fresh process retains transfer fit with disabled history and No undo action."
+      },
+      {
+        "name": "mutation-history-2-transfer-undone.png",
+        "sha256": "c75707e736251ccde18ac33650cb24938b687c373a750fc416b94f4060ab1346",
+        "reviewed": true,
+        "observation": "Undo transfer restores bulk-ammunition context with zero selection, reload-selection guidance and Redo transfer enabled."
+      },
+      {
+        "name": "mutation-history-2-undone.png",
+        "sha256": "928286de54cb934823a5abe9b34010577cce0bf9c639c47ff22b2395a029d40e",
+        "reviewed": true,
+        "observation": "Undo transfer leaves prior Add cargo Undo and Transfer Redo available on the same fit."
+      },
+      {
+        "name": "mutation-history-3-deleted-source.png",
+        "sha256": "a3da7bacc2911a4b003da34586803545d7fdfb76bab0554d812b2eb2fd640b05",
+        "reviewed": true,
+        "observation": "Deleting projected source clears history for projection-add fit; Undo/Redo disabled and No undo action."
+      },
+      {
+        "name": "mutation-history-3-recreated.png",
+        "sha256": "41e2b342cc8fe05cfee9f39bbe13f33c7238e79aca11c73fe106846a6e8534a1",
+        "reviewed": true,
+        "observation": "Recreation retains Undo Add projected fit and Redid status for projection-add fit."
+      },
+      {
+        "name": "mutation-history-3-redone.png",
+        "sha256": "41e2b342cc8fe05cfee9f39bbe13f33c7238e79aca11c73fe106846a6e8534a1",
+        "reviewed": true,
+        "observation": "Redo projection exposes Undo Add projected fit and selection-reset guidance."
+      },
+      {
+        "name": "mutation-history-3-stale.png",
+        "sha256": "a2ed0981fd451aac0160cde08b04ffc65c8bbc889353e81c8cfebd3eb5da0e08",
+        "reviewed": true,
+        "observation": "Stale projection action requests Reload history before editing while preserving Undo label."
+      },
+      {
+        "name": "mutation-history-3-undone.png",
+        "sha256": "d4473b37b24dd0d45833aa1603c6b42827c19cab043fecede759608c14b45870",
+        "reviewed": true,
+        "observation": "Undo projection exposes Redo Add projected fit, with no remaining Undo action."
+      },
+      {
+        "name": "mutation-history-3-restored.png",
+        "sha256": "6b2fe08cc32f7a0d7632dcd650aaec1046a71ddb8a534d363b55fcffd3a2040f",
+        "reviewed": true,
+        "observation": "Fresh process retains projection-add fit with disabled Undo/Redo and No undo action."
+      },
+      {
+        "name": "resources-probe-12-fighter_bay.png",
+        "sha256": "301d9d9495b4a1d787095c34384c355d19aa9f20a58b58512d0aaac09981e2b6",
+        "reviewed": true,
+        "observation": "Isolated light-theme diagnostic shows fighter bay 120k/93.8k cubic metres and explicit red Over capacity; expanded raw used120000/capacity93750 visible, lower detail scrolls."
+      },
+      {
+        "name": "resources-probe-3-cpu.png",
+        "sha256": "baa5ac5051fcfa0e6a30713eedc848daff17ea605d59cef8060d159f4ea8d81e",
+        "reviewed": true,
+        "observation": "Isolated diagnostic shows CPU472.5/375 tf and explicit red Over capacity with expanded used/capacity precision; upper rows are scrolled."
+      },
+      {
+        "name": "resources-probe-9-cargo_bay.png",
+        "sha256": "99110cc8a7f803109b581d7b908d432b415aa6178c7262491a350d2012a2349f",
+        "reviewed": true,
+        "observation": "Isolated diagnostic shows cargo1.25k/480 cubic metres with explicit red Over capacity and expanded used1250/capacity480; other resource rows readable."
+      },
+      {
+        "name": "resources-prepare-5.png",
+        "sha256": "93ff95dea7f2b9f18b94e17fdd491a2c509e68070f25c83a1b01b4d41b6400e7",
+        "reviewed": true,
+        "observation": "Durable resource viewport shows CPU920/375 tf and powergrid2.2k/875 MW, both explicit Over capacity; empty bays remain visible."
+      },
+      {
+        "name": "resources-prepare-8.png",
+        "sha256": "6a8adbab0b862e99093e518e5b249a332c9644f6dee1e120a42a9dbec31ca499",
+        "reviewed": true,
+        "observation": "Durable drone overload shows bay500/125 cubic metres and bandwidth125/75 Mbit/s, both Over capacity; empty fighter/cargo remain visible."
+      },
+      {
+        "name": "resources-prepare-9.png",
+        "sha256": "e21a309e2d1f5b26224aee5ae46eff5ccdb3614fadbefed9ea386d8f8c197c3e",
+        "reviewed": true,
+        "observation": "Durable cargo overload shows1.25k/480 cubic metres and explicit Over capacity; other bays/bandwidth stay readable."
+      },
+      {
+        "name": "resources-prepare-empty-detail.png",
+        "sha256": "89a3b0049cb30158d33923f584e16b302493795f2cbc54e414a85ee58775d537",
+        "reviewed": true,
+        "observation": "Empty-fit resource screen expands CPU used0.0 tf; count and calibration rows show genuine zero usage and capacity, with lower detail scrolling."
+      },
+      {
+        "name": "resources-restored.png",
+        "sha256": "c811e5f95a4df73f5aac573ba94956ca259f8022910933f41ee3faa4cb0bd4e8",
+        "reviewed": true,
+        "observation": "Restored empty fit shows preserved active-drone/fighter/calibration/CPU capacities and zero usage, with detail controls readable."
+      },
+      {
+        "name": "failure.png",
+        "sha256": "eaba0a920a46660c6800cb27c3534bd8273381ea9ebdf93ee8230d14f83428ad",
+        "reviewed": true,
+        "observation": "Initial capacitor assertion failure leaves the emulator launcher visible; airplane mode shown. This is failure diagnostics only, with no capacitor UI evidence."
+      },
+      {
+        "name": "capacitor-prepare-0.png",
+        "sha256": "ac2bfe2bbdbfabe7b2117c039ea651080fe0ee7eae509cd62b99314a65fcd45c",
+        "reviewed": true,
+        "observation": "Empty capacitor viewport shows stable100.0%, raw100%, capacity1.81kGJ, effective capacity Not applicable, recharge12.5GJ/s and use0GJ/s with Details controls; lower rates are below viewport."
+      },
+      {
+        "name": "capacitor-prepare-10.png",
+        "sha256": "30db7f0286779d7fcfed2956b4d1c14053139d69a993e054ff3021b8fc89ce31",
+        "reviewed": true,
+        "observation": "Battery/projected-neutralizer viewport shows stable77.3%, full precision77.3288181937984%, capacity3.84kGJ, effective capacity5.12kGJ, recharge26.6GJ/s and use11.2GJ/s; no clipping in visible cards."
+      },
+      {
+        "name": "capacitor-prepare-4.png",
+        "sha256": "f3de99582b5e9dee4a13db48477afa0517207e71796416e5e24aa3fec8a9a1fe",
+        "reviewed": true,
+        "observation": "Propulsion/repair viewport distinguishes Lasts2m33s from full precision153.0s; capacity1.81kGJ, effective Not applicable, recharge12.5GJ/s and use20.8GJ/s remain readable."
+      },
+      {
+        "name": "capacitor-prepare-battery-detail.png",
+        "sha256": "5532338d2539841b0682417fcd8059e2962ee186f9fa4e5db26b9ff58977b420",
+        "reviewed": true,
+        "observation": "Battery idle screen shows fit name, Back, stable100%, capacity3.84kGJ and expanded effective capacity5.12kGJ with raw5125.0GJ; bottom details continue below viewport and Undo/Redo controls are visible above."
+      },
+      {
+        "name": "capacitor-restored.png",
+        "sha256": "91e92263121447d610a912cf21cf2684efce282b20634ab85db4abad5dda7f5a",
+        "reviewed": true,
+        "observation": "Fresh-process Battery idle screen shows restored fit identity, stable100.0%, full precision100%, capacity3.84kGJ and Details control; Undo/Redo disabled with No undo action confirms the visible restart boundary. Lower cards continue below viewport."
+      }
+    ],
+    "full_review_complete": true,
+    "tested_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959"
+  },
+  "preserved_attempts": [
+    {
+      "kind": "host_initial_sample_missing",
+      "path": "c012-host-20261002-132952/prepare.log"
+    },
+    {
+      "kind": "isolated_validator_import_missing",
+      "path": "build/c012-validator.log"
+    },
+    {
+      "kind": "pre_native_shell_variable_collision",
+      "run": "20261002-134159-a7e4721e-6f1007",
+      "status": "paused after two desktop gates"
+    },
+    {
+      "kind": "b054_report_truncated_device_offline",
+      "log": "logs/075-native-check-bulk-variation-removal.py.log",
+      "prepare_instrumentation_passed": true,
+      "raw_stdout_not_retained": true
+    },
+    {
+      "kind": "b054_retained_report_empty",
+      "log": "logs/077-native-check-bulk-variation-removal.py.log",
+      "verified_pull_bytes": 0,
+      "native_reexecuted": false
+    }
+  ],
+  "artifact_transport_recovery": [
+    {
+      "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+      "original_store_sha256": "8c89b14c84be71db31d72f9a9294fccbfd46cdda769690827bb3429fd77126d1",
+      "restored_store_sha256": "34364e8b2b49ce2440524140c98836c0f7e95863666310a600ccc7048b845385",
+      "prior_report_sha256": "cd2775c23c86f91c133d44c3452a7003e0a7161e838f28c0716c2d62969f669b",
+      "preserved_fits": 25,
+      "removed_ids": [
+        "27def716430e4f26b9a968a4214ff1e5",
+        "9d8e0de73ed94873b71e7704f07153b9",
+        "307144d602f14d438d85a394621de6b0",
+        "7bd083bf20044a1eac540bee2581905a"
+      ],
+      "all_original_inputs_metadata_order_exact": true,
+      "all_eos_stats_within_original_tolerances": true,
+      "generation_before": 1609,
+      "generation_after": 1610,
+      "original_recent_restored_from_verified_prior_report": true,
+      "validated": true,
+      "original_evidence_archive": "b054-store-recovery\\original-evidence",
+      "helper_sha256": "d40d9d18f5d89570708a6d87616304f6dd5065935be35645441ca799803caa62",
+      "original_script_sha256": "8194c718c624b132014715b027db549e3f77d6c631b64c3888c7434d860be7ab",
+      "only_affected_phases_reexecuted": [
+        "prepare",
+        "restored"
+      ],
+      "assertions_unchanged": true,
+      "timeouts_unchanged": true,
+      "navigation_before_sha256": "07d6acc98e5e33d49df2a701f6b20801c6f5b08974bf4cde70cee3097e10fd5b",
+      "navigation_after_sha256": "7fa0d881830a8e2ab74f65fcebfb0a6db929c7929ed7b09f0112c919ad6479dd",
+      "retained_hashes": {
+        "native\\about-landscape.png": "f2eaacc809b01e3b5a0958eafdfe3f5d379b83c35e6399f792c9b942d3018fa4",
+        "native\\about.png": "dc02010dc6187888ac4f9688527080cefe06e4cf199ef675b4716831800aa82e",
+        "native\\apk-contents.json": "da1a03cc44f473e9e4b5abe0142a87a3fb4fee143fb8cf1fdfe26132d8246bd8",
+        "native\\bulk-charges-empty.png": "1b249e6ac8a791b28b5f6ddf30f1ae092b91a083251742e310faac36881a25a4",
+        "native\\bulk-charges-mixed.png": "69b6142cff93a4ba172f3645e4d71dc720055a0c68b8f67095d2e9abf96d3631",
+        "native\\bulk-charges-native.json": "c25f781bdb527fcf1737aae061c74fcd5c444b80d439c02c6d97c832d04f2897",
+        "native\\bulk-charges-prepare-instrumentation.txt": "5fc23bfed079a5b101bb9a67619c5bf04762bee8ddf2172de7f3542d860bdae0",
+        "native\\bulk-charges-prepare-native.json": "863f5b87cc9116d3bffad361fc2b3d7a4a088a34d98ea46cae9faa41e174c5bc",
+        "native\\bulk-charges-restored-instrumentation.txt": "d79571dbebec8d694903ced75f19433b02633039631c6423048038af8c2fcaaa",
+        "native\\bulk-charges-restored-native.json": "5ad1c6952fae1082b56e0fec0c3110fba0e8690d9d83712817a0034b6dde610f",
+        "native\\bulk-charges-restored.png": "a372d7de65ef0b6da97fd48025fbd5cd26f3fd62f2f93a6fbb89439907d84132",
+        "native\\bulk-charges-scripts.png": "2de13501f28e0f67d1c71bda1ada5d1adc6cbd7ef3de1029f17d5912cecbed9a",
+        "native\\bulk-charges-selection.png": "9bed47b79091d11da8614806ea5a8410e5ba73de8e21d0474c6c6b407a0f10eb",
+        "native\\bulk-charges-similar.png": "5c0c7e73a72e2e7e121eda7a4ad92c98decab4852efacadabb61afea67578f53",
+        "native\\bulk-states-empty.png": "4b84477f1e939db0d0cefc62edcb47b955801d589ca1e492f66965687159194b",
+        "native\\bulk-states-native.json": "c0e0f8f3466fd4385aa1137965ddcc30f6ca7da5cbc9153c101d061fef1aea48",
+        "native\\bulk-states-prepare-instrumentation.txt": "52e1cd3b8a4fa7bf703f6b263b680f292d9ee2b5f2e602d546d58615c7c895b6",
+        "native\\bulk-states-prepare-native.json": "53000132945f68917533dbcae0d5d85be53cc3ee48c01189790d5367d8bc1fad",
+        "native\\bulk-states-restored-instrumentation.txt": "ad34fd22fb821b47cbbc25e3f70841b59958e6d43d32dc33005bb30891814a85",
+        "native\\bulk-states-restored-native.json": "3750c050d0e937105956c00cc1da286b24a2118a1c120c5209950aa6e925b117",
+        "native\\bulk-states-restored.png": "56b709abc7e9b0f30964f1db07f7fa12adbdfa98e9905c0baa5ee44f4b3324c5",
+        "native\\bulk-states-saved.png": "1af8c7c6615e05368be9e1767dfb208627f773d92bd572097d1b85ebdd01a013",
+        "native\\bulk-states-selection.png": "5d7f314b969893ecfbfc7892be33f3142cd26278d3c7a76ad53f0b0d42504f85",
+        "native\\bulk-states-similar.png": "59354c33af6707d8dfdff80e466d98223c027358aec60df1f943f140cae2dc45",
+        "native\\charge-edits-active.png": "84de0ff038bd80fb6a1cca18127568396b084bc99d1c7bc63d8f21ef04e7e235",
+        "native\\charge-edits-crystal.png": "87656ce5b5588674d030507fec64d0c6598c33c23eac4564fb36aa46f9696019",
+        "native\\charge-edits-empty.png": "ec826caed4a3c1991ca4f971d43f038e191e998e1faa2a2ea1b38def179caabf",
+        "native\\charge-edits-loaded.png": "ffe4e08a743ae8f8ddb91f6146d9b24631f9f929861d2b9a9df3b73ad4471a2f",
+        "native\\charge-edits-mining.png": "70d730c12f6b268f69993bf3ab7a989e4a1d5acaa9e47d3f0e61fae30a9bc3b8",
+        "native\\charge-edits-native.json": "8ea710eb3a0bbebe5e432602d15c35c661a493d5ad9fed4b865c598289a8ca5c",
+        "native\\charge-edits-picker.png": "55496f25439642c8a81948344a71abb7522c857ac517a95af2f7deb6986a4ad0",
+        "native\\charge-edits-prepare-instrumentation.txt": "3f341f094c037b6a3778aa0985ac05ee644c832541bc94f877ba93da4ecad832",
+        "native\\charge-edits-prepare-native.json": "aa193825f121773feaccac47f522b1d5ef3fa3681e019237b1ba7561e5849d23",
+        "native\\charge-edits-restored-instrumentation.txt": "aa9b6f547ef72f4d207dcfeb2daf9deea234e622b3eac3b83048e16f9202d4cf",
+        "native\\charge-edits-restored-native.json": "cfb0010a224cbf12438de2b2e4937485b5d4f9217ae0cabceb7ac57224117bcb",
+        "native\\charge-edits-restored.png": "759a22df784f05f9c7a8d1ae9af4bf664e0fc10f1f34f40d54562b9d9e84395f",
+        "native\\charge-edits-script.png": "7913cef5a941d61309c6db9159c94c6706a39c0e508e8a8423abceff2d866055",
+        "native\\clone-fill-empty.png": "1bf6dabe43dc4074522f21bad6054f4eb269352b218f3f5973fb82adf05d91d3",
+        "native\\clone-fill-fitted-fill.png": "0e4727efc3ce8bb36ea12faaa0a76767175bfc8922b0cd7bf88a42be1826d1c4",
+        "native\\clone-fill-market-preview.png": "8b0dc01cae8a9112a0c8ba6fd68977332ec8819dca1189ff49812fb2e5bb336b",
+        "native\\clone-fill-market-saved.png": "5eed23a389a44034203c83d0dfa3738d51dd3aa90d953a266c037f057f242c30",
+        "native\\clone-fill-native.json": "cd2775c23c86f91c133d44c3452a7003e0a7161e838f28c0716c2d62969f669b",
+        "native\\clone-fill-prepare-instrumentation.txt": "825a70166feaa39f6be2608ef98ae2fbc3b8608ca9d7381a8d8ab8dc32b35f90",
+        "native\\clone-fill-prepare-native.json": "9bd2ce870dae8b1dad010dc5df3f84f97be17e9133cd88434140f3381747710b",
+        "native\\clone-fill-restored-instrumentation.txt": "b08af37799ecfd1d6aea61f72c79a0a331ea6adeb2c27351e229b470a060e49d",
+        "native\\clone-fill-restored-native.json": "3060a972670a3590bda08e9ca86cafe36b3d68836691f15d0f88f19ee9256242",
+        "native\\clone-fill-restored.png": "0b6f1cc38113d968adf2234c7b0bef509c2217df4215a933d188e6568fad0253",
+        "native\\clone-fill-selected-saved.png": "b74c6391267a5a6c361824171d3c716bbbc24c4b6ebab1e6760b660fab8adf3d",
+        "native\\clone-fill-selection.png": "3f9971efc199bd82cc023b1f4d7f37efd01e7aabf8921ad3c12775dd3b2370bb",
+        "native\\clone-fill-targeted.png": "60767c7a45024262ee571b47af38789af4974790db60e0b2bf9272b9bd28f027",
+        "native\\command-native.json": "2db8c4f240d37ee537d612fc22612b28769a55b2db8272ff9d695b080561ccd4",
+        "native\\contract-instrumentation.txt": "f0bef7094ec603573bf44d8085f2acbc76d6c62d6c9b833d19aefa27940da409",
+        "native\\contract-native.json": "9dcf5c2c5b3943c77c53ebabdb64c994c80166d69f83ad8d09e749d747349667",
+        "native\\device-abi.txt": "73639484b8886a56b085ee97e76ead4218da03db9c2e5c88dd656c06bca60243",
+        "native\\device-api.txt": "0a6b5e02cbe592ef9285db1440db99874166326dff103608c6dfd5068ec714f5",
+        "native\\device-fingerprint.txt": "3cc14abef81057108efffdb2ec203aa12b53568a1e16d73df96baa9bdea8afcf",
+        "native\\empty-hulls-native.json": "c3faf25cc8d6cb718dac960865d626c866deb899fcc37b081f06aa108258c468",
+        "native\\empty-hulls-picker.png": "9d434f7744a1df024abfad5535fd5b457d986a0bbc41def06458f3b8192660a7",
+        "native\\empty-hulls-prepare-instrumentation.txt": "6525e676ec5d70deb79c763559ca2c4b629c86d88c2248ef17b2f2a2c91ef2f6",
+        "native\\empty-hulls-prepare-native.json": "9fa6ae7beb1f78ee4f8bc57120af3376fe09cbf6e2cf5d5f9ff15988e765da9a",
+        "native\\empty-hulls-restored-instrumentation.txt": "9917a44c729e2554b6bca837b51e91c2aad3293c6720e5e292c1bcbe1c1645be",
+        "native\\empty-hulls-restored-native.json": "07cb4447b995f77dd2cf0c2cd2f2609cd1639ba4d3d61d619354a4cf2e5a5f0d",
+        "native\\empty-hulls-restored.png": "ef43077d77038f7768acf7b00e3d4e315a26464f2c33af25e9848123ace7a1e7",
+        "native\\empty-hulls-ship.png": "1d75bd04e0cc719ad8f5cbe495a20a12880f4dc564e59e13fc1f8e99613c5c81",
+        "native\\empty-hulls-structure.png": "2aa2c622d158399c0e718a578834d48474f8dd1c00a0f60bb4963591673e6e36",
+        "native\\emulator-version.txt": "2909718b3f4f759ef08a95c8d129207deb925402f5245e3a7dae9354506827e7",
+        "native\\engine-native.json": "f537ce061559b0f267c88a3ff49d1f59c66b2f0e8bade2791fa3229e21addacb",
+        "native\\failure-logcat.txt": "e68d0dd1ce62a56a5d1ef90f25ebd75b29131465c7494b1b4ccedf527d9f663a",
+        "native\\fit.png": "ccc663c0e5ca4ef8a53adbfd15c4b685a584fa67057505f1ad88ba2193047fc7",
+        "native\\home.png": "0eaf77437e8ac32f99d59bd1c0213af5883c0f0d00a5146535242444efaba21e",
+        "native\\initial-instrumentation.txt": "f7d4e0ae1c1a3dbe768685c53701262b6f59c267b3c09cb44ddb6825d00c48b1",
+        "native\\library-dialog.png": "1db49c70db6efdb12a3939a2d4c8097e15e20a6c59e1b38a091229336893d0f9",
+        "native\\library-empty.png": "47b6801ca846e35f805ea70b4313b54b8134645e627d64081c3da05f56fe6508",
+        "native\\library-empty_reopen-instrumentation.txt": "fe5406656b147cc584a4c24aad3aeb14fb3e2dae542bdf5dda6ec29297f3e134",
+        "native\\library-empty_reopen-native.json": "4d15dccd3161e18d5ab680f892b813894ff9819862ed3d4baaa9a51736bff044",
+        "native\\library-library.png": "9cdd2aabecc8524df9ca1266fa2fa802ee48c690a9651bcf2aa828d37ee84ba1",
+        "native\\library-native.json": "f7c80ef2084aa815c0446571b1b47bfa8057922ad82e2b31cc14c0a1ea1011ad",
+        "native\\library-prepare-instrumentation.txt": "9f8170b783371f7861cd7c29a73f41a9a7a0d2f24fe90de0a5e6d3bb8a898d74",
+        "native\\library-prepare-native.json": "fa0e1cdb75ef7f17fc3b866f42b75442c2bb323cd711e2920a77fb0868bc9914",
+        "native\\library-reopen_delete-instrumentation.txt": "81a1df0b55883c4ce1de8be4fa15dbc2cec80d119a564fe51ffcd82cd37e4f65",
+        "native\\library-reopen_delete-native.json": "2044af724b5ab2ee77ba069aac763e195cd1545b210074dbe8a5b1fa704d4aa8",
+        "native\\lint-results-debug.html": "520513edc7a3e038101b63cb6bacdbdd26f0b7d54fbe7b5ed4a701d7ba7b0537",
+        "native\\market-empty.png": "ce175296407ec799ed773088554878d60308e3765b2b769bce6d301304bb31a6",
+        "native\\market-group.png": "ef9e9b0a4c89f5b9edd3f95357ad32be5d07fd88d72a62d5888d6f65243c8d4b",
+        "native\\market-instrumentation.txt": "72f0ebd054544cb7fef8b01483282b84bf2812bed8a59f32f3516373e19efc5a",
+        "native\\market-meta.png": "eb4317e49de31dbf4a5504764ea82d46530f1d64904a9d33d8009fa25b96f3a4",
+        "native\\market-native.json": "bd3d1c8751386b33b9ddd81cea76439563218117091f2eea1f1d1e1a6d0720de",
+        "native\\market-root.png": "215162405ed836751dbf8cafa1fa40d187f842e767d5f27bf2849b6da23f1595",
+        "native\\market-search.png": "a481cdcaa252c5ef1eb3c0ebde0fcf3729ce03c44c8396766dd6c6308ca9c3bd",
+        "native\\module-edits-native.json": "d40ea0e911f626f9b6030da7a7c8ac75c75bd0afa7d6062129726c031f985ba3",
+        "native\\module-edits-override.png": "47dfc496dbd7f24fecb72c4a58fa22c19783e1bf34e1f90625a82439d1f1ffe2",
+        "native\\module-edits-prepare-instrumentation.txt": "d0073d9c353df8eacdece1c455910f6335feacd6338ba1bb96d3e260307dedbd",
+        "native\\module-edits-prepare-native.json": "20cd5fe8bc83f41226b6eebe0fb42eaea15086b4a01fad96174c30fb7e224dee",
+        "native\\module-edits-rack.png": "b7016783c1c47c2ef7f7bce8c59fa13452a6934c53e3a9941f7353b435a6c268",
+        "native\\module-edits-recent.png": "082a598c18c1badf691e105abc9d4e243c3b468660529dfa44690f9af274a956",
+        "native\\module-edits-resources.png": "969ea3fc8f1c3c52ee996a774275fb2dde572659fa00eae5f9b9dd16e2e26471",
+        "native\\module-edits-restored-instrumentation.txt": "200f3fe024b7581b89562e178cd4bb5a57ead9f9d4c3fe17220da2ea403ec7a1",
+        "native\\module-edits-restored-native.json": "656d257f86c895a7b2c8b242844663fdd69963f9ca4ef02facf2b65ad4ed41b4",
+        "native\\module-edits-restored.png": "63b1fbae72ce7eaeebd1578fdf26aad9517c004b5d7eb66276be10ff111f3a09",
+        "native\\module-edits-service.png": "a2ed5db99cced27f77b49388af76264198834d7e3aca7b70448cf1a2358a27fc",
+        "native\\module-edits-skills.png": "b7cf6711ae8005f41758cd209bb98a499bec3c3d58b74cec487bf6d03a7f82b3",
+        "native\\navigation-closed-instrumentation.txt": "877076f1e14590f63d192e4a933d4d4bcfd64fcf7611d7bf0ad0e33e19db766a",
+        "native\\navigation-closed-native.json": "d7640c4744760ae011b59eb31acf160765bd5b69858e878b48c8fe9d5128c904",
+        "native\\navigation-closed.png": "0b4b7f024565d36f9333fbf7b93c954ea2ef4939f1560c1f51a09f6de64c37b0",
+        "native\\navigation-disabled-instrumentation.txt": "ebeffee0baa7c6baf803fdfc6f78c0285fc121865fd6b91db74552c6c40f6e65",
+        "native\\navigation-disabled-native.json": "7fb0e7f9e57a3dff59f91809210666b29026f4572f10555349b506bf466da467",
+        "native\\navigation-hull.png": "142580b8521efb2f733ff57eabfd3310d480c0a972ce99e2f307eb93905ba008",
+        "native\\navigation-native.json": "ba36c1e97e758958ab204af3766314bc23df659a06240c0a1b0fa02536eedc8d",
+        "native\\navigation-open.png": "3e8889bad494033b5a6e150a2df5efce523a12a67a66642d26a7d788c6811b72",
+        "native\\navigation-prepare-instrumentation.txt": "1d7f963c381004bda76b51939bd85756667cf890c1434da351ae95d86becc8a6",
+        "native\\navigation-prepare-native.json": "b62ead3b841b297c6defd7901639311eec13bdb4c36b0b386ef62cb9058ef795",
+        "native\\navigation-recent.png": "3d7f45383336e79dde5fd217d5b9f1ac2c22984d82103ec93250d6cb3fb1e8bc",
+        "native\\navigation-restored-instrumentation.txt": "82714392c1974bf90d44b7eec545604e7978e2fb15bdb15bcb39a629873dca31",
+        "native\\navigation-restored-native.json": "2303fecdd44a3e9159f092d078b8c3a6ef9890e05565bfbc51c1c118439c4c5c",
+        "native\\performance-instrumentation.txt": "4656b3f958a9fa5dddb605a223fc5e48a50ce162e2d10e57a8032789efb95177",
+        "native\\performance-native.json": "2050eecd69d903d322cbba8b3bdc826ea3135ca4852d21e176d7b7994845cb27",
+        "native\\persistence-native.json": "21cc2824ab5dea83897a9783f6033a82e7a6e836fa4222460d09a02c2ddd174e",
+        "native\\persistence-prepare-instrumentation.txt": "293c401406229fa41e736d458416e164205da067474d046e22807d3c8ff3fb2e",
+        "native\\persistence-prepare-native.json": "5384e96f2658e31e15c3f7d2ead0e03b4818e3c910290b3cfd787883c4d18b22",
+        "native\\persistence-reopen_edit-instrumentation.txt": "6cdbf597d0900f58a4399be23c38df612a9d98e0ad5a184f69474e8377a6bd07",
+        "native\\persistence-reopen_edit-native.json": "5ff7bffedd949c630cb6a6cb817bc7bd94aa353fa92109c2f684be7de158e4eb",
+        "native\\persistence-verify-instrumentation.txt": "0d9319123d8e98424c04e7a1204e006978008d20be649750d92d23b4e973c841",
+        "native\\persistence-verify-native.json": "1f5d374d16dc9aa73f05e9f7b9e4a8daaaaaf1430db20332b5f1adb06a90e9d9",
+        "native\\prior-install.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native\\projection-native.json": "cbec0ef7cd9f97c6a56ea6ad846caabdc5b4d1e3235b42a33388eea09595437d",
+        "native\\rack-ordering-empty.png": "2808b212d8bab97c3a9a68f14b6754bd6f9d25bc04a5b2588a5c9d2d327db61f",
+        "native\\rack-ordering-initial.png": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+        "native\\rack-ordering-medium.png": "476cdb50dbf241607dba791f677d9855386c501fc0391fff00eab561d86a59fa",
+        "native\\rack-ordering-native.json": "0539c647c80a241af35c63f1588562e94dea9186982cb7a25496cbb91869a786",
+        "native\\rack-ordering-prepare-instrumentation.txt": "874fee72d799ef11c63cbd35d88387a807f91715e2bd0cc86ef9b8db2bfc0f33",
+        "native\\rack-ordering-prepare-native.json": "90b80a4de25dc8ef19d7c668b1c1776053c00ddbf73734fb8e4ad12512ce4bd4",
+        "native\\rack-ordering-restored-instrumentation.txt": "320ee64001a3306d79aa61a2c71aa8ffb334d3c4f03a9fcc0c73076fdcb1d1f7",
+        "native\\rack-ordering-restored-native.json": "f31568127815eda866248de9884b39f0cd5872c3d51e2bc4b2e6ddbc6db13191",
+        "native\\rack-ordering-restored.png": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+        "native\\rack-ordering-service.png": "53aebc6299fd26953ae0cb0617ff88a1b76fa39f61786b2ac7460ec93d6d3f17",
+        "native\\rack-ordering-swapped.png": "78eba281d8631eecb860716edbd2eec117fd5d05583d9947900fb90fdc94be32",
+        "native\\rack-ordering-vacant.png": "4a2dac331ce0f9bbf025603ec00f473c182bfa3a1ba8ec95dbe5dd7c0f37b89c",
+        "native\\sdk-packages.txt": "f776ef7ca493ab12c90f8b00b017897451a8f8521e03e8f43bade56d994c383f",
+        "native\\startup-0-am-start.txt": "73226288bf8a5adbc778ed949a58c07fb5ad88ebb1b25733b4b1c7f2eb1fcada",
+        "native\\startup-1-am-start.txt": "9c805d7191546d1b9943805b85f8c0076402985f0dcc4427e7446407fccb017e",
+        "native\\startup-2-am-start.txt": "2b42838b9b434d5a6ff86b473c77760d271f66461c5a2ad90c35984e6be65e94",
+        "native\\startup-3-am-start.txt": "3209a6efed04ce66a2670fd130acb2f55aaffa45b78824c83534e144ce7ae087",
+        "native\\startup-4-am-start.txt": "1c3ebc152f6a258f0a6cc1e28a63644ce02519d7d49a5ec17306016fca2d93b3",
+        "native\\startup-native.json": "de8d01353a7f0b90a44dfcd74b61b0d36c3a61a5655a5149acd8b8abdf1586f7",
+        "native\\variation-edits-disabled.png": "1de3de077aa23a0af7c59ddcdfa0ccbd55647cc7427718a0af2be3afbbafa1d1",
+        "native\\variation-edits-drone-picker.png": "011dd6bcd233ff37e0fc7158e7c8de8bbc58fd176618637ee31cc32f416b702d",
+        "native\\variation-edits-drone.png": "4b1ecb205b32cc3e0641dacfc8bd2c72ebe4022f525f8e8129c98fc8d315d4d1",
+        "native\\variation-edits-empty.png": "4e06ddc05db0b4764176da3dfd4ea66f6aaa2138ef44b3f962663f01d1110e34",
+        "native\\variation-edits-implant.png": "7c51d3a0b3795d80e6e8126ac6566e1540c6d00e597076f255b0ca9585a254dc",
+        "native\\variation-edits-module.png": "4a63c64bddc5e858934d228298a28f3a37f7cee77dd2dd5e82ad9ac80ecabcf6",
+        "native\\variation-edits-native.json": "79d80b3c3fb0448ea7a4d0375ce731ba5202002fcdf01def8441414c5a574f50",
+        "native\\variation-edits-prepare-instrumentation.txt": "c324d9800a5d1c0488d64f0cb4caa74a3c585e720f7654cbd1c49f5cfeb20dc7",
+        "native\\variation-edits-prepare-native.json": "1475614910a0a2078dbff1179a482c8728bb3e8751e04854ce01b8b4e007433c",
+        "native\\variation-edits-restored-instrumentation.txt": "565ca23854ea382632d2b5ee55b7dbc23d9bb1b0ea3f090c0450561d6cf9198c",
+        "native\\variation-edits-restored-native.json": "948252bb5107d5b5ed214b13e54c00546efc2ca6326923a579f21bad941bbf9b",
+        "native\\variation-edits-restored.png": "f6e3ecadd660281b631cfceccfe3eb5f128174327e45dd32612654ff7dcfda91",
+        "native\\variation-edits-unloaded.png": "ab2c6ab7a17b973013eaec7b0dd3df3b62bfd9368865e91004d411d41f287487"
+      }
+    }
+  ],
+  "artifact_transport_focused_checks": {
+    "tested_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+    "checks": 6,
+    "exit_code": 0,
+    "command": [
+      ".venv/headless/Scripts/python.exe",
+      "-I",
+      "build/c012-transport-regressions.py",
+      "C:\\Users\\HallT\\AppData\\Local\\PyfaAndroid\\PyfaDevelopment\\evidence\\20261002-134439-855c87c3-a8c41a"
+    ],
+    "hashes": {
+      "c012-transport-regressions.py": "112deb5ef51e5d52a823b1608f5708f0c1c030b06d824755842e989059c44d50",
+      "c012-transport-regressions.log": "27d1aca032458e05142e8430c7523a2e6ae59d25883b4af1694d993318eb0421"
+    }
+  },
+  "capacitor_runner_reuse": {
+    "from_commit": "855c87c304d9feca8e0c1fce1c8332f4c04072e6",
+    "to_commit": "7775b40a5832d263fdb0b16fdfa5961c7c4f1959",
+    "retained_gates": [
+      "desktop:utilities",
+      "desktop:reference",
+      "desktop:migration",
+      "reference:projection",
+      "reference:command",
+      "reference:catalog",
+      "reference:equipment",
+      "reference:empty_hulls",
+      "reference:module_edits",
+      "reference:charge_edits",
+      "reference:variation_edits",
+      "reference:rack_ordering",
+      "reference:bulk_charges",
+      "reference:bulk_states",
+      "reference:clone_fill",
+      "reference:bulk_variation_removal",
+      "reference:hull_modes",
+      "reference:subsystems",
+      "reference:structures",
+      "reference:cargo_stacks",
+      "reference:cargo_actions",
+      "reference:cargo_transfers",
+      "reference:notes",
+      "reference:history",
+      "reference:history_mutations",
+      "reference:resources",
+      "reference:capacitor",
+      "headless:base",
+      "headless:projection",
+      "headless:command",
+      "headless:bridge",
+      "headless:persistence",
+      "headless:library",
+      "headless:market",
+      "headless:empty_hulls",
+      "headless:module_edits",
+      "headless:charge_edits",
+      "headless:variation_edits",
+      "headless:rack_ordering",
+      "headless:bulk_charges",
+      "headless:bulk_states",
+      "headless:clone_fill",
+      "headless:bulk_variation_removal",
+      "headless:hull_modes",
+      "headless:subsystems",
+      "headless:structures",
+      "headless:cargo_stacks",
+      "headless:cargo_actions",
+      "headless:cargo_transfers",
+      "headless:notes",
+      "headless:history",
+      "headless:history_mutations",
+      "headless:resources",
+      "headless:capacitor",
+      "build:dependencies",
+      "build:engine-assets",
+      "build:apks-lint",
+      "build:signature",
+      "build:package",
+      "native:initial",
+      "native:measure-performance.py",
+      "native:check-contract.py",
+      "native:check-persistence.py",
+      "native:check-library.py",
+      "native:check-navigation.py",
+      "native:check-market.py",
+      "native:check-empty-hulls.py",
+      "native:check-module-edits.py",
+      "native:check-charge-edits.py",
+      "native:check-variation-edits.py",
+      "native:check-rack-ordering.py",
+      "native:check-bulk-charges.py",
+      "native:check-bulk-states.py",
+      "native:check-clone-fill.py",
+      "native:check-bulk-variation-removal.py",
+      "native:check-hull-modes.py",
+      "native:check-subsystems.py",
+      "native:check-structures.py",
+      "native:check-cargo-stacks.py",
+      "native:check-cargo-actions.py",
+      "native:check-cargo-transfers.py",
+      "native:check-notes.py",
+      "native:check-history.py",
+      "native:mutation-history-0-prepare",
+      "native:mutation-history-0-restored",
+      "native:mutation-history-1-prepare",
+      "native:mutation-history-1-restored",
+      "native:mutation-history-2-prepare",
+      "native:mutation-history-2-restored",
+      "native:mutation-history-3-prepare",
+      "native:mutation-history-3-restored",
+      "native:resources-probe",
+      "native:resources-prepare",
+      "native:resources-restored"
+    ],
+    "prepared": true,
+    "installed": true,
+    "archive": "capacitor-runner-fix-original",
+    "app_sha256": "c1ba3e66eb19b6e1153e187adcc50888b38591c4229862a75bfe3fc8fa35f7f4",
+    "old_test_apk_sha256": "7be63634220690e735a8a40fa1e2c47586e61ceb017ddb8da0c8f777ac2eae70",
+    "retained_hashes": {
+      "native\\about-landscape.png": "f2eaacc809b01e3b5a0958eafdfe3f5d379b83c35e6399f792c9b942d3018fa4",
+      "native\\about.png": "dc02010dc6187888ac4f9688527080cefe06e4cf199ef675b4716831800aa82e",
+      "native\\bulk-charges-empty.png": "1b249e6ac8a791b28b5f6ddf30f1ae092b91a083251742e310faac36881a25a4",
+      "native\\bulk-charges-mixed.png": "69b6142cff93a4ba172f3645e4d71dc720055a0c68b8f67095d2e9abf96d3631",
+      "native\\bulk-charges-native.json": "c25f781bdb527fcf1737aae061c74fcd5c444b80d439c02c6d97c832d04f2897",
+      "native\\bulk-charges-prepare-instrumentation.txt": "5fc23bfed079a5b101bb9a67619c5bf04762bee8ddf2172de7f3542d860bdae0",
+      "native\\bulk-charges-prepare-native.json": "863f5b87cc9116d3bffad361fc2b3d7a4a088a34d98ea46cae9faa41e174c5bc",
+      "native\\bulk-charges-restored-instrumentation.txt": "d79571dbebec8d694903ced75f19433b02633039631c6423048038af8c2fcaaa",
+      "native\\bulk-charges-restored-native.json": "5ad1c6952fae1082b56e0fec0c3110fba0e8690d9d83712817a0034b6dde610f",
+      "native\\bulk-charges-restored.png": "a372d7de65ef0b6da97fd48025fbd5cd26f3fd62f2f93a6fbb89439907d84132",
+      "native\\bulk-charges-scripts.png": "2de13501f28e0f67d1c71bda1ada5d1adc6cbd7ef3de1029f17d5912cecbed9a",
+      "native\\bulk-charges-selection.png": "9bed47b79091d11da8614806ea5a8410e5ba73de8e21d0474c6c6b407a0f10eb",
+      "native\\bulk-charges-similar.png": "5c0c7e73a72e2e7e121eda7a4ad92c98decab4852efacadabb61afea67578f53",
+      "native\\bulk-states-empty.png": "4b84477f1e939db0d0cefc62edcb47b955801d589ca1e492f66965687159194b",
+      "native\\bulk-states-native.json": "c0e0f8f3466fd4385aa1137965ddcc30f6ca7da5cbc9153c101d061fef1aea48",
+      "native\\bulk-states-prepare-instrumentation.txt": "52e1cd3b8a4fa7bf703f6b263b680f292d9ee2b5f2e602d546d58615c7c895b6",
+      "native\\bulk-states-prepare-native.json": "53000132945f68917533dbcae0d5d85be53cc3ee48c01189790d5367d8bc1fad",
+      "native\\bulk-states-restored-instrumentation.txt": "ad34fd22fb821b47cbbc25e3f70841b59958e6d43d32dc33005bb30891814a85",
+      "native\\bulk-states-restored-native.json": "3750c050d0e937105956c00cc1da286b24a2118a1c120c5209950aa6e925b117",
+      "native\\bulk-states-restored.png": "56b709abc7e9b0f30964f1db07f7fa12adbdfa98e9905c0baa5ee44f4b3324c5",
+      "native\\bulk-states-saved.png": "1af8c7c6615e05368be9e1767dfb208627f773d92bd572097d1b85ebdd01a013",
+      "native\\bulk-states-selection.png": "5d7f314b969893ecfbfc7892be33f3142cd26278d3c7a76ad53f0b0d42504f85",
+      "native\\bulk-states-similar.png": "59354c33af6707d8dfdff80e466d98223c027358aec60df1f943f140cae2dc45",
+      "native\\bulk-variation-removal-empty.png": "539dc9aeae3b166f3c06da157d9ca487bd4833efbcf5f9d9698bd26b4112b8a2",
+      "native\\bulk-variation-removal-native.json": "d14638a7ea5ab1a1b718ecf933af92bbb375fb02d722504fde6a1d977d569b05",
+      "native\\bulk-variation-removal-prepare-instrumentation.txt": "f31e08225acdf2caaddd936b87700abeb2b74eeb86cd1393154f16ee89fc6ee4",
+      "native\\bulk-variation-removal-prepare-native.json": "313066141a03f0cf61f6f029d0aeb0dc16b144085dd0d10431a1cbffaf45fefc",
+      "native\\bulk-variation-removal-removal-preview.png": "0780d9de4b74c42f0b041ee2b3133fe7fe59f04d351736de2475450873e6f739",
+      "native\\bulk-variation-removal-removal-saved.png": "efcadf37a6b27048d3d24606c2dd9fa0e4fd3751b40d44ad7f3041fca59dbfcc",
+      "native\\bulk-variation-removal-restored-instrumentation.txt": "071fd5889a5539b05cc0473177c3aaf02ad123a775cac1b5f1831da2a1ffd664",
+      "native\\bulk-variation-removal-restored-native.json": "1548e8b365c07977bc10722ad48479f1eef322b2123d88c4351959f2b09e82f7",
+      "native\\bulk-variation-removal-restored.png": "6e0182e1b47bb5f9bcfee33dce3921632c3e98476502c2397469d31c6596ac2a",
+      "native\\bulk-variation-removal-selected-preview.png": "fd1a430b30caa46eff871c7019ba05f1af884e5f5595ba6483ef46185ca241c8",
+      "native\\bulk-variation-removal-selected-saved.png": "ab64760deb0d1cc09a78495b1abf354c6da0149a34f482fb5760f142fc28df6b",
+      "native\\bulk-variation-removal-similar-preview.png": "e1d18e6dbbf4783888b76d102338cc752ea420c42e35bfb79b6739b98bf0e127",
+      "native\\bulk-variation-removal-similar-saved.png": "f5b05acd883e9b8b9f59dda636db07e2ec9faebc21003b082c069947dbb4eaa7",
+      "native\\cargo-actions-crystal-preset.png": "23df848c697a84a872edf0455c7b507878279f9295c8bb198cef6de5c4497eb9",
+      "native\\cargo-actions-filled-cargo.png": "db9897e9ce748ce1195472dae0893fa0fb0e6f9a058fd0779339addf0ab75653",
+      "native\\cargo-actions-native.json": "747bc24278604cd1bd31f80d60211e79f328207e43daea89a3ebd18cc6f0e0fd",
+      "native\\cargo-actions-prepare-instrumentation.txt": "f7b0a63b1be193e854b3ad2e428fc6d820d5a4d4a99235e9e7eb019bfe807929",
+      "native\\cargo-actions-prepare-native.json": "e2201d025af7f1042a802135f90383997f91bce13a3e1e287a5cfed51017cb44",
+      "native\\cargo-actions-restored-instrumentation.txt": "ff31e90abc6c938d1d48d76883f77cc96d9e721caa891602c6c106f9979397c5",
+      "native\\cargo-actions-restored-native.json": "92975e577c7297b33dd049dd71520e8d30dd086c455bfa9abbb9272d90d71635",
+      "native\\cargo-actions-restored-variation-copy.png": "92f38cdb7a0659a045b45c1892027720741fd6764441d1da5aafe016720f6785",
+      "native\\cargo-actions-selected-quantity.png": "af09f0a3cbb61ee3d6ecd125d2a16cbee33c72108f7bef3e3dc3ee6ea630bfe2",
+      "native\\cargo-actions-structure-preset.png": "c586d35ff41e2987bffafbec657a96ea55db90eb8fee3df66fa3fcc7eaf0f859",
+      "native\\cargo-actions-variation-merge.png": "f62dd42c2a6eeff05f3ae4f063e6b858e85281abdae8ef237b128c80bf6a8650",
+      "native\\cargo-stacks-native.json": "8b1f20c44b4d4872a83c3c3bc60f89366d033bf2f08e2baedda462dadfa35528",
+      "native\\cargo-stacks-prepare-instrumentation.txt": "c65c88282f1206f54eac49ab0eed69a29ab142bb8991d84d9975bf07d83a1f16",
+      "native\\cargo-stacks-prepare-native.json": "25fffb7a9b773bf9cedad183a2687daed8377848ee188d2aaea732cddf8a6521",
+      "native\\cargo-stacks-restored-cargo-copy.png": "7adddd7724411c8a9ccca291f4f71ca67e04c6fd11ed5e98a5e5426f01e6d943",
+      "native\\cargo-stacks-restored-instrumentation.txt": "0c7e9b6fedce568077b1ea7f94a702b2bbc5375e7612bf1271535b7d82ccb515",
+      "native\\cargo-stacks-restored-native.json": "10c4f468d05f3e8f62b7b75e364e3e7ffd0eb2160a5b0a8cf65ccd2dec708489",
+      "native\\cargo-stacks-structure-charge.png": "584f17764c7422299e6cdc52eb1558207c7cb03ce75abcce4b18a320c1b92e9a",
+      "native\\cargo-stacks-vexor-empty.png": "f9427d7bb310f597ed47152ef0c9e7f5a1777346fc8861ae9cd9c4b0cdfbb123",
+      "native\\cargo-stacks-vexor-first-stack.png": "638033e7d5ca5b12bb07b822c138b7ae0cb3d7909fab814edfa881a7fbe39251",
+      "native\\cargo-stacks-vexor-over-capacity.png": "65cd3bd2cc1e1964b6225e58ec39734789ac1160c7b2140873f02b6a1e766dbb",
+      "native\\cargo-stacks-vexor-quantity.png": "2241db8accde2bae0833243b01b238f91982472556b8a87c2d69316217ad9a13",
+      "native\\cargo-transfers-atomic-rejection.png": "9ec0b4e07bbd7fe1e596fff038e1bcc204b6d4d3621d941614d226d496d8a1d7",
+      "native\\cargo-transfers-magazine-swap.png": "0adb240c5ed7a87b4a79c41555de97a19b75c69d314f2204e56ae62db691498e",
+      "native\\cargo-transfers-native.json": "8b17947436cc9c407fd173de7833f4331c37eb0c2f4bf6e6b35d511f9b7e8acb",
+      "native\\cargo-transfers-prepare-instrumentation.txt": "63ee369862dfde3eead8409bfb408a0d5712f7d69790d2be0ede405edf04d212",
+      "native\\cargo-transfers-prepare-native.json": "4b24f83662ac1e4dad9f6a4768fee2d8c023410ce2d9b05723c1a4deaa7b24b5",
+      "native\\cargo-transfers-restored-instrumentation.txt": "71e0e52cb47cde3e41f714800f22c2cf33ea4331c1ed1f66c5437d71b6a206bc",
+      "native\\cargo-transfers-restored-native.json": "83731a3d3cf77693c57f9f74ffddd70da43950aef6f104caf8964868929facdc",
+      "native\\cargo-transfers-restored-transfer-copy.png": "6e33d3c10570581734cf89c7605459dd6a1f3d8898f3a7a71cc22ce1fbebe106",
+      "native\\cargo-transfers-selected-modules.png": "53973fd5c9e65cc8f0d46d7cf4dd1aa0d73373e1d1a7e0be048a03565d1f4c0e",
+      "native\\cargo-transfers-single-crystal.png": "694e3a2d76dafc0f111410aa433a6fe6024537cf719d0531ae2d8cf9ca84f866",
+      "native\\cargo-transfers-structure-swap.png": "7dd1b61e7ebc4bcb4a0b0ed45658f459c161be6ee01ecb96223da5f6843fc194",
+      "native\\charge-edits-active.png": "84de0ff038bd80fb6a1cca18127568396b084bc99d1c7bc63d8f21ef04e7e235",
+      "native\\charge-edits-crystal.png": "87656ce5b5588674d030507fec64d0c6598c33c23eac4564fb36aa46f9696019",
+      "native\\charge-edits-empty.png": "ec826caed4a3c1991ca4f971d43f038e191e998e1faa2a2ea1b38def179caabf",
+      "native\\charge-edits-loaded.png": "ffe4e08a743ae8f8ddb91f6146d9b24631f9f929861d2b9a9df3b73ad4471a2f",
+      "native\\charge-edits-mining.png": "70d730c12f6b268f69993bf3ab7a989e4a1d5acaa9e47d3f0e61fae30a9bc3b8",
+      "native\\charge-edits-native.json": "8ea710eb3a0bbebe5e432602d15c35c661a493d5ad9fed4b865c598289a8ca5c",
+      "native\\charge-edits-picker.png": "55496f25439642c8a81948344a71abb7522c857ac517a95af2f7deb6986a4ad0",
+      "native\\charge-edits-prepare-instrumentation.txt": "3f341f094c037b6a3778aa0985ac05ee644c832541bc94f877ba93da4ecad832",
+      "native\\charge-edits-prepare-native.json": "aa193825f121773feaccac47f522b1d5ef3fa3681e019237b1ba7561e5849d23",
+      "native\\charge-edits-restored-instrumentation.txt": "aa9b6f547ef72f4d207dcfeb2daf9deea234e622b3eac3b83048e16f9202d4cf",
+      "native\\charge-edits-restored-native.json": "cfb0010a224cbf12438de2b2e4937485b5d4f9217ae0cabceb7ac57224117bcb",
+      "native\\charge-edits-restored.png": "759a22df784f05f9c7a8d1ae9af4bf664e0fc10f1f34f40d54562b9d9e84395f",
+      "native\\charge-edits-script.png": "7913cef5a941d61309c6db9159c94c6706a39c0e508e8a8423abceff2d866055",
+      "native\\clone-fill-empty.png": "1bf6dabe43dc4074522f21bad6054f4eb269352b218f3f5973fb82adf05d91d3",
+      "native\\clone-fill-fitted-fill.png": "0e4727efc3ce8bb36ea12faaa0a76767175bfc8922b0cd7bf88a42be1826d1c4",
+      "native\\clone-fill-market-preview.png": "8b0dc01cae8a9112a0c8ba6fd68977332ec8819dca1189ff49812fb2e5bb336b",
+      "native\\clone-fill-market-saved.png": "5eed23a389a44034203c83d0dfa3738d51dd3aa90d953a266c037f057f242c30",
+      "native\\clone-fill-native.json": "cd2775c23c86f91c133d44c3452a7003e0a7161e838f28c0716c2d62969f669b",
+      "native\\clone-fill-prepare-instrumentation.txt": "825a70166feaa39f6be2608ef98ae2fbc3b8608ca9d7381a8d8ab8dc32b35f90",
+      "native\\clone-fill-prepare-native.json": "9bd2ce870dae8b1dad010dc5df3f84f97be17e9133cd88434140f3381747710b",
+      "native\\clone-fill-restored-instrumentation.txt": "b08af37799ecfd1d6aea61f72c79a0a331ea6adeb2c27351e229b470a060e49d",
+      "native\\clone-fill-restored-native.json": "3060a972670a3590bda08e9ca86cafe36b3d68836691f15d0f88f19ee9256242",
+      "native\\clone-fill-restored.png": "0b6f1cc38113d968adf2234c7b0bef509c2217df4215a933d188e6568fad0253",
+      "native\\clone-fill-selected-saved.png": "b74c6391267a5a6c361824171d3c716bbbc24c4b6ebab1e6760b660fab8adf3d",
+      "native\\clone-fill-selection.png": "3f9971efc199bd82cc023b1f4d7f37efd01e7aabf8921ad3c12775dd3b2370bb",
+      "native\\clone-fill-targeted.png": "60767c7a45024262ee571b47af38789af4974790db60e0b2bf9272b9bd28f027",
+      "native\\command-native.json": "2db8c4f240d37ee537d612fc22612b28769a55b2db8272ff9d695b080561ccd4",
+      "native\\contract-instrumentation.txt": "f0bef7094ec603573bf44d8085f2acbc76d6c62d6c9b833d19aefa27940da409",
+      "native\\contract-native.json": "9dcf5c2c5b3943c77c53ebabdb64c994c80166d69f83ad8d09e749d747349667",
+      "native\\device-abi.txt": "73639484b8886a56b085ee97e76ead4218da03db9c2e5c88dd656c06bca60243",
+      "native\\device-api.txt": "0a6b5e02cbe592ef9285db1440db99874166326dff103608c6dfd5068ec714f5",
+      "native\\device-fingerprint.txt": "3cc14abef81057108efffdb2ec203aa12b53568a1e16d73df96baa9bdea8afcf",
+      "native\\empty-hulls-native.json": "c3faf25cc8d6cb718dac960865d626c866deb899fcc37b081f06aa108258c468",
+      "native\\empty-hulls-picker.png": "9d434f7744a1df024abfad5535fd5b457d986a0bbc41def06458f3b8192660a7",
+      "native\\empty-hulls-prepare-instrumentation.txt": "6525e676ec5d70deb79c763559ca2c4b629c86d88c2248ef17b2f2a2c91ef2f6",
+      "native\\empty-hulls-prepare-native.json": "9fa6ae7beb1f78ee4f8bc57120af3376fe09cbf6e2cf5d5f9ff15988e765da9a",
+      "native\\empty-hulls-restored-instrumentation.txt": "9917a44c729e2554b6bca837b51e91c2aad3293c6720e5e292c1bcbe1c1645be",
+      "native\\empty-hulls-restored-native.json": "07cb4447b995f77dd2cf0c2cd2f2609cd1639ba4d3d61d619354a4cf2e5a5f0d",
+      "native\\empty-hulls-restored.png": "ef43077d77038f7768acf7b00e3d4e315a26464f2c33af25e9848123ace7a1e7",
+      "native\\empty-hulls-ship.png": "1d75bd04e0cc719ad8f5cbe495a20a12880f4dc564e59e13fc1f8e99613c5c81",
+      "native\\empty-hulls-structure.png": "2aa2c622d158399c0e718a578834d48474f8dd1c00a0f60bb4963591673e6e36",
+      "native\\emulator-version.txt": "2909718b3f4f759ef08a95c8d129207deb925402f5245e3a7dae9354506827e7",
+      "native\\engine-native.json": "f537ce061559b0f267c88a3ff49d1f59c66b2f0e8bade2791fa3229e21addacb",
+      "native\\fit.png": "ccc663c0e5ca4ef8a53adbfd15c4b685a584fa67057505f1ad88ba2193047fc7",
+      "native\\history-bulk-redone.png": "4549cf49c68ae48acca7517f94c9217a94b2f7f07a5d46be8705d93f9ee7f05e",
+      "native\\history-bulk-undone.png": "39a1715930dec23963a22964e224d51a19712417887f1f04f5a1ab7b90d00769",
+      "native\\history-fit-isolation.png": "ed67879e2a0da54bfe4f61ea619e92f494100a73a99655473fb882c41443a019",
+      "native\\history-native.json": "6a3e0184c1457b81c5fa1a0cef0c7844d084b0c56a0a4afa70c4d1d48d526ae1",
+      "native\\history-prepare-instrumentation.txt": "3e0d7ecdba9d121ff82b31409109087dd12d4425944d4aeb4b4c9094e2ca650b",
+      "native\\history-prepare-native.json": "ed7cd761e02081427fdcb60e0a806a2e0b72077d8f35e3a44362f51c167eca74",
+      "native\\history-restored-empty-history.png": "eebcfcbd484d8ae8a9c3647f785a8eea8724ee8e86dd5aa8c4367f49aa8766dc",
+      "native\\history-restored-instrumentation.txt": "b4ce7d99a9c1d035719e19780b93652e102c802b4ad83743ff91c635af40f42c",
+      "native\\history-restored-native.json": "50c508262329f071c850723345d33128fa0a05db08c50e4877883155495107cb",
+      "native\\history-retained-history.png": "dbb3f4875b7e09516308737ea6a746b1dde7cd5bfa8f03b1aa126d35ac3adc95",
+      "native\\history-stale-action.png": "6abb82715665d9110e22d4431cc7d17f6ec8fea1a56222a9b6509d683010d9cb",
+      "native\\home.png": "0eaf77437e8ac32f99d59bd1c0213af5883c0f0d00a5146535242444efaba21e",
+      "native\\hull-modes-confessor-changed.png": "bcb1ba49cec4497a0aa6eb0124d6b6bddac29bbeb4eafe8be395c114e95dc97f",
+      "native\\hull-modes-confessor-initial.png": "217d531e3f111f0bcf8ab663c8455b20289cf0b98a54f7f236d1319992d740c7",
+      "native\\hull-modes-native.json": "5bd9b8524f542b79984a3cc3517eb3025c5bf118b18415183911033b1f2f9ea5",
+      "native\\hull-modes-prepare-instrumentation.txt": "004971703c26a843feb68f2930e73c68f98185f6faf2323c6bc9628298640aca",
+      "native\\hull-modes-prepare-native.json": "b297be8d9e88329b7078b708c77581f8a35b15d7666da198c9c867301a6ebd4a",
+      "native\\hull-modes-restored-copy.png": "2274eebfb41fd811cb8e06af4aa496c7316466a63224ac63158aabe043813147",
+      "native\\hull-modes-restored-instrumentation.txt": "323c9ae3d6bc93a0274aa0c8440e21ae660c7406feeda35e51f63b02940fdb8f",
+      "native\\hull-modes-restored-native.json": "550fe6f6545d4700cc2318d2aae75ba1da6777775647799dbacd79c5cefdb779",
+      "native\\hull-modes-vexor-empty.png": "2f85fcd3a0c982871965f090752d49bbefdb273fa4073352fe87e8c2cbcb1c01",
+      "native\\initial-instrumentation.txt": "f7d4e0ae1c1a3dbe768685c53701262b6f59c267b3c09cb44ddb6825d00c48b1",
+      "native\\library-dialog.png": "1db49c70db6efdb12a3939a2d4c8097e15e20a6c59e1b38a091229336893d0f9",
+      "native\\library-empty.png": "47b6801ca846e35f805ea70b4313b54b8134645e627d64081c3da05f56fe6508",
+      "native\\library-empty_reopen-instrumentation.txt": "fe5406656b147cc584a4c24aad3aeb14fb3e2dae542bdf5dda6ec29297f3e134",
+      "native\\library-empty_reopen-native.json": "4d15dccd3161e18d5ab680f892b813894ff9819862ed3d4baaa9a51736bff044",
+      "native\\library-library.png": "9cdd2aabecc8524df9ca1266fa2fa802ee48c690a9651bcf2aa828d37ee84ba1",
+      "native\\library-native.json": "f7c80ef2084aa815c0446571b1b47bfa8057922ad82e2b31cc14c0a1ea1011ad",
+      "native\\library-prepare-instrumentation.txt": "9f8170b783371f7861cd7c29a73f41a9a7a0d2f24fe90de0a5e6d3bb8a898d74",
+      "native\\library-prepare-native.json": "fa0e1cdb75ef7f17fc3b866f42b75442c2bb323cd711e2920a77fb0868bc9914",
+      "native\\library-reopen_delete-instrumentation.txt": "81a1df0b55883c4ce1de8be4fa15dbc2cec80d119a564fe51ffcd82cd37e4f65",
+      "native\\library-reopen_delete-native.json": "2044af724b5ab2ee77ba069aac763e195cd1545b210074dbe8a5b1fa704d4aa8",
+      "native\\lint-results-debug.html": "520513edc7a3e038101b63cb6bacdbdd26f0b7d54fbe7b5ed4a701d7ba7b0537",
+      "native\\market-empty.png": "ce175296407ec799ed773088554878d60308e3765b2b769bce6d301304bb31a6",
+      "native\\market-group.png": "ef9e9b0a4c89f5b9edd3f95357ad32be5d07fd88d72a62d5888d6f65243c8d4b",
+      "native\\market-instrumentation.txt": "72f0ebd054544cb7fef8b01483282b84bf2812bed8a59f32f3516373e19efc5a",
+      "native\\market-meta.png": "eb4317e49de31dbf4a5504764ea82d46530f1d64904a9d33d8009fa25b96f3a4",
+      "native\\market-native.json": "bd3d1c8751386b33b9ddd81cea76439563218117091f2eea1f1d1e1a6d0720de",
+      "native\\market-root.png": "215162405ed836751dbf8cafa1fa40d187f842e767d5f27bf2849b6da23f1595",
+      "native\\market-search.png": "a481cdcaa252c5ef1eb3c0ebde0fcf3729ce03c44c8396766dd6c6308ca9c3bd",
+      "native\\module-edits-native.json": "d40ea0e911f626f9b6030da7a7c8ac75c75bd0afa7d6062129726c031f985ba3",
+      "native\\module-edits-override.png": "47dfc496dbd7f24fecb72c4a58fa22c19783e1bf34e1f90625a82439d1f1ffe2",
+      "native\\module-edits-prepare-instrumentation.txt": "d0073d9c353df8eacdece1c455910f6335feacd6338ba1bb96d3e260307dedbd",
+      "native\\module-edits-prepare-native.json": "20cd5fe8bc83f41226b6eebe0fb42eaea15086b4a01fad96174c30fb7e224dee",
+      "native\\module-edits-rack.png": "b7016783c1c47c2ef7f7bce8c59fa13452a6934c53e3a9941f7353b435a6c268",
+      "native\\module-edits-recent.png": "082a598c18c1badf691e105abc9d4e243c3b468660529dfa44690f9af274a956",
+      "native\\module-edits-resources.png": "969ea3fc8f1c3c52ee996a774275fb2dde572659fa00eae5f9b9dd16e2e26471",
+      "native\\module-edits-restored-instrumentation.txt": "200f3fe024b7581b89562e178cd4bb5a57ead9f9d4c3fe17220da2ea403ec7a1",
+      "native\\module-edits-restored-native.json": "656d257f86c895a7b2c8b242844663fdd69963f9ca4ef02facf2b65ad4ed41b4",
+      "native\\module-edits-restored.png": "63b1fbae72ce7eaeebd1578fdf26aad9517c004b5d7eb66276be10ff111f3a09",
+      "native\\module-edits-service.png": "a2ed5db99cced27f77b49388af76264198834d7e3aca7b70448cf1a2358a27fc",
+      "native\\module-edits-skills.png": "b7cf6711ae8005f41758cd209bb98a499bec3c3d58b74cec487bf6d03a7f82b3",
+      "native\\mutation-history-0-cargo-cleared.png": "628b937e53bcddc7aa8a590d98a68b8812f1dddea4f8707245d9ab6d87f71f7a",
+      "native\\mutation-history-0-prepare-instrumentation.txt": "c3e2ce33617ce3edeb46815202f83eb74a76a43aec92b3ff7788c8fd589078af",
+      "native\\mutation-history-0-prepare-logcat.txt": "f7d2d299b5164e314470c55b9dc323ef5c6a782287e8729b47f943cca62b9c52",
+      "native\\mutation-history-0-prepare-native.json": "25fc953ce63aeea5b7f3bcc10dab514d2dae376d63aee7e8fd08790a4aa3dc6e",
+      "native\\mutation-history-0-recreated.png": "988a328c81a2ba91b6aaa1e603e5d5e2ac3bd06f0799980a91b96b1401510319",
+      "native\\mutation-history-0-redone.png": "988a328c81a2ba91b6aaa1e603e5d5e2ac3bd06f0799980a91b96b1401510319",
+      "native\\mutation-history-0-restored-instrumentation.txt": "f19e45f7420fbf09a4c88754d3f8f2ddc6d11f696791f1388cc424c7e01eeb60",
+      "native\\mutation-history-0-restored-logcat.txt": "dbf488ebf3536cda0af9253cfb705cfc5c603a4231282a7abf3c90f28f364b69",
+      "native\\mutation-history-0-restored-native.json": "a00d232129b3b2f7707dba42f9f1917088f58c0d27dc67df37efd74371f957aa",
+      "native\\mutation-history-0-restored.png": "ba90a8c59cf5b7c901d617afa58013e6c614a71a415f3f3f2fbcef5f52c967d6",
+      "native\\mutation-history-0-summary.json": "f20b5a51e175e8a6f88fecd83a0d0f02ba52b97a9b0a00408ff326e1620e70e6",
+      "native\\mutation-history-0-undone.png": "24c9b3da8cb07de80cb45089248e811db9a857ff607c2ce04776f79e8647164a",
+      "native\\mutation-history-1-prepare-instrumentation.txt": "679843b8fd7d0957d39565383f17ea0c2d58bf921f9e3e9d447c394883692715",
+      "native\\mutation-history-1-prepare-logcat.txt": "a87efcf26d0bfb85a30be2b79f55f2ddf5017df70a19fa1d5e1f3efd7733fc74",
+      "native\\mutation-history-1-prepare-native.json": "69bba290eb424878f50242dd00c2474992e16c1a1ca9d97b614e62e15db56bea",
+      "native\\mutation-history-1-recent-redone.png": "743a31e522216d07531665ba27421b63f8c3539d22bd03db649ce2cde4d492f5",
+      "native\\mutation-history-1-recreated.png": "7af066b7461df1bea25f2fba22d3e2a77a24ac3fb15b9b4f2b6eaa7daf3c1184",
+      "native\\mutation-history-1-redone.png": "7af066b7461df1bea25f2fba22d3e2a77a24ac3fb15b9b4f2b6eaa7daf3c1184",
+      "native\\mutation-history-1-restored-instrumentation.txt": "cf5d95f8b688accfcde7e5c5fa0afa249d234d062432356d95f334206cb47d6d",
+      "native\\mutation-history-1-restored-logcat.txt": "2b40c97c691735d8fea77b20dec33e13a5f188f383a9663eb59cf07298db0db4",
+      "native\\mutation-history-1-restored-native.json": "04c4f27a7a2011cb0662747e56fc0b75b9a1c9a966257bee8d867c511015bde2",
+      "native\\mutation-history-1-restored.png": "c3aa38e35df75550240f337e25ae5bf8360c0978c39b961df40bacb53c794d5a",
+      "native\\mutation-history-1-summary.json": "d8b599df0628b04b4bc2ac0de1ce34184dcea5af85def1aa5b8478bb8b74676a",
+      "native\\mutation-history-1-undone.png": "f0b25e15bf4fe7a20a91ac4e318f665d10946727fdac1676547636cfe3d9ee44",
+      "native\\mutation-history-2-prepare-instrumentation.txt": "d151e0c3649bbfaed866c98ad1f470387e08e33040d9de709a79f023ba05441e",
+      "native\\mutation-history-2-prepare-logcat.txt": "6458d4b7e6d5d19ce787372c83fd8d8340a3470a94502e45de26d9af998147f4",
+      "native\\mutation-history-2-prepare-native.json": "b92971293611690d7f9003031a71ec1fbd2cd350ca5c5f388911b3929767d703",
+      "native\\mutation-history-2-recreated.png": "dff954ab4aeb5507fe6b46b2253be5d97113fc6e8078d07bd3fe60f8279f6fc9",
+      "native\\mutation-history-2-redone.png": "dff954ab4aeb5507fe6b46b2253be5d97113fc6e8078d07bd3fe60f8279f6fc9",
+      "native\\mutation-history-2-restored-instrumentation.txt": "4c4e98c864855b22b436a922850ea39d98ec0356ece5a97038a5923c60f517d8",
+      "native\\mutation-history-2-restored-logcat.txt": "2d0b9615212b4e95dfde22b64fa5b675c843ac148347d2e69a1a1ab00fa2b26c",
+      "native\\mutation-history-2-restored-native.json": "244e30456505fa1a24d0464ecc866b6db3a379685a9861285a7f0abe659ea5f4",
+      "native\\mutation-history-2-restored.png": "75dcc7a870575c711df14e6989f7c1cf9c4c31473038599bf2036730aeeda3a1",
+      "native\\mutation-history-2-summary.json": "b4d9267543a8e0fd3a4a72df5605a49fdf31c4d61ae0671db07b39389a15bae5",
+      "native\\mutation-history-2-transfer-undone.png": "c75707e736251ccde18ac33650cb24938b687c373a750fc416b94f4060ab1346",
+      "native\\mutation-history-2-undone.png": "928286de54cb934823a5abe9b34010577cce0bf9c639c47ff22b2395a029d40e",
+      "native\\mutation-history-3-deleted-source.png": "a3da7bacc2911a4b003da34586803545d7fdfb76bab0554d812b2eb2fd640b05",
+      "native\\mutation-history-3-prepare-instrumentation.txt": "e273beaad8c75ec4a73f31536d86db682d8dc266710867a4b40076c1be01e2c5",
+      "native\\mutation-history-3-prepare-logcat.txt": "bf75c910859d9045d79ccd8f8460ca2866320b20fd323981b3bb068dd0c27448",
+      "native\\mutation-history-3-prepare-native.json": "abacf8e6a2daeba04a05cb3dc6b5b794871ccb5dd9166a972e3c934ab3dbee8e",
+      "native\\mutation-history-3-recreated.png": "41e2b342cc8fe05cfee9f39bbe13f33c7238e79aca11c73fe106846a6e8534a1",
+      "native\\mutation-history-3-redone.png": "41e2b342cc8fe05cfee9f39bbe13f33c7238e79aca11c73fe106846a6e8534a1",
+      "native\\mutation-history-3-restored-instrumentation.txt": "dc20bab41efbbbdc0315c1b8cdb617608aa2a8538a5831947f95699a9dbb5f5e",
+      "native\\mutation-history-3-restored-logcat.txt": "82f233ade1416c755e7121356aba065c8a197a749c5b45ac5f035953f169d670",
+      "native\\mutation-history-3-restored-native.json": "36fe6123fd1685e229d5a390c9e20dba002335ef8c49ef081cf4bee4c2b508d7",
+      "native\\mutation-history-3-restored.png": "6b2fe08cc32f7a0d7632dcd650aaec1046a71ddb8a534d363b55fcffd3a2040f",
+      "native\\mutation-history-3-stale.png": "a2ed0981fd451aac0160cde08b04ffc65c8bbc889353e81c8cfebd3eb5da0e08",
+      "native\\mutation-history-3-summary.json": "65d32b03909cef727407541ae73a26d662fa5c2b3911d17bb50dd7dad83962ef",
+      "native\\mutation-history-3-undone.png": "d4473b37b24dd0d45833aa1603c6b42827c19cab043fecede759608c14b45870",
+      "native\\mutation-history-native.json": "ad3eaaf228189c084d59ea11796569982356e2cef7f7026a9bfdc1f46e1513d3",
+      "native\\navigation-closed-instrumentation.txt": "877076f1e14590f63d192e4a933d4d4bcfd64fcf7611d7bf0ad0e33e19db766a",
+      "native\\navigation-closed-native.json": "d7640c4744760ae011b59eb31acf160765bd5b69858e878b48c8fe9d5128c904",
+      "native\\navigation-closed.png": "0b4b7f024565d36f9333fbf7b93c954ea2ef4939f1560c1f51a09f6de64c37b0",
+      "native\\navigation-disabled-instrumentation.txt": "ebeffee0baa7c6baf803fdfc6f78c0285fc121865fd6b91db74552c6c40f6e65",
+      "native\\navigation-disabled-native.json": "7fb0e7f9e57a3dff59f91809210666b29026f4572f10555349b506bf466da467",
+      "native\\navigation-hull.png": "142580b8521efb2f733ff57eabfd3310d480c0a972ce99e2f307eb93905ba008",
+      "native\\navigation-native.json": "ba36c1e97e758958ab204af3766314bc23df659a06240c0a1b0fa02536eedc8d",
+      "native\\navigation-open.png": "3e8889bad494033b5a6e150a2df5efce523a12a67a66642d26a7d788c6811b72",
+      "native\\navigation-prepare-instrumentation.txt": "1d7f963c381004bda76b51939bd85756667cf890c1434da351ae95d86becc8a6",
+      "native\\navigation-prepare-native.json": "b62ead3b841b297c6defd7901639311eec13bdb4c36b0b386ef62cb9058ef795",
+      "native\\navigation-recent.png": "3d7f45383336e79dde5fd217d5b9f1ac2c22984d82103ec93250d6cb3fb1e8bc",
+      "native\\navigation-restored-instrumentation.txt": "82714392c1974bf90d44b7eec545604e7978e2fb15bdb15bcb39a629873dca31",
+      "native\\navigation-restored-native.json": "2303fecdd44a3e9159f092d078b8c3a6ef9890e05565bfbc51c1c118439c4c5c",
+      "native\\notes-conflict-draft.png": "0b9c9ef5fa59960cbe68eb7d75493526fcba93798fbcf94606472b189210aa8a",
+      "native\\notes-native.json": "27e131b14e24124d9d017bc955aa8e9dfc9ba77f806506a9a20f72702b47cddf",
+      "native\\notes-navigation-return.png": "988229f0bd8d0acb3c810c339da2dc3e1d85926f4fd0723247a8ee402b352868",
+      "native\\notes-prepare-instrumentation.txt": "449da0c2abba864fde1200144536ee27e2278b80f291b97f72293ddb2584a961",
+      "native\\notes-prepare-native.json": "3a55f60b7e397a21d19c70f12c31f2705f1b8142e8efc47a6761dbedd408c342",
+      "native\\notes-restored-copy.png": "b757ea897e429a199a988f89af30f6352674f0f7f7d5a93e76ae162ce8bff7ac",
+      "native\\notes-restored-instrumentation.txt": "357ad265721f93dce68b80c83bbaa54dcfda45846e2c3f2e055232e311657fd2",
+      "native\\notes-restored-native.json": "b061f74d89656358f669956b19ef236beb7edd60172472817d8d17c9ee0a1cb4",
+      "native\\notes-retained-recreation.png": "1e7e09974e58415c1442049ac2b3337fcd7bc7d60838eb85e66776353ed95edb",
+      "native\\notes-stale-draft.png": "45af4ad5f9aa0b3372b5304d36656c2706f8fca958dd065ec07db11fa671b6e2",
+      "native\\notes-structure-readonly.png": "c53e2efa480614f3f94098272b05e8f8b1b40f2ce47cd45101bba5966acbe72b",
+      "native\\notes-unicode-notes.png": "d1e47baa2eb37a0d60c141f91031ad316d8a7a8565f3280bdce3e9426fcafd46",
+      "native\\performance-instrumentation.txt": "4656b3f958a9fa5dddb605a223fc5e48a50ce162e2d10e57a8032789efb95177",
+      "native\\performance-native.json": "2050eecd69d903d322cbba8b3bdc826ea3135ca4852d21e176d7b7994845cb27",
+      "native\\persistence-native.json": "21cc2824ab5dea83897a9783f6033a82e7a6e836fa4222460d09a02c2ddd174e",
+      "native\\persistence-prepare-instrumentation.txt": "293c401406229fa41e736d458416e164205da067474d046e22807d3c8ff3fb2e",
+      "native\\persistence-prepare-native.json": "5384e96f2658e31e15c3f7d2ead0e03b4818e3c910290b3cfd787883c4d18b22",
+      "native\\persistence-reopen_edit-instrumentation.txt": "6cdbf597d0900f58a4399be23c38df612a9d98e0ad5a184f69474e8377a6bd07",
+      "native\\persistence-reopen_edit-native.json": "5ff7bffedd949c630cb6a6cb817bc7bd94aa353fa92109c2f684be7de158e4eb",
+      "native\\persistence-verify-instrumentation.txt": "0d9319123d8e98424c04e7a1204e006978008d20be649750d92d23b4e973c841",
+      "native\\persistence-verify-native.json": "1f5d374d16dc9aa73f05e9f7b9e4a8daaaaaf1430db20332b5f1adb06a90e9d9",
+      "native\\prior-install.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "native\\projection-native.json": "cbec0ef7cd9f97c6a56ea6ad846caabdc5b4d1e3235b42a33388eea09595437d",
+      "native\\rack-ordering-empty.png": "2808b212d8bab97c3a9a68f14b6754bd6f9d25bc04a5b2588a5c9d2d327db61f",
+      "native\\rack-ordering-initial.png": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+      "native\\rack-ordering-medium.png": "476cdb50dbf241607dba791f677d9855386c501fc0391fff00eab561d86a59fa",
+      "native\\rack-ordering-native.json": "0539c647c80a241af35c63f1588562e94dea9186982cb7a25496cbb91869a786",
+      "native\\rack-ordering-prepare-instrumentation.txt": "874fee72d799ef11c63cbd35d88387a807f91715e2bd0cc86ef9b8db2bfc0f33",
+      "native\\rack-ordering-prepare-native.json": "90b80a4de25dc8ef19d7c668b1c1776053c00ddbf73734fb8e4ad12512ce4bd4",
+      "native\\rack-ordering-restored-instrumentation.txt": "320ee64001a3306d79aa61a2c71aa8ffb334d3c4f03a9fcc0c73076fdcb1d1f7",
+      "native\\rack-ordering-restored-native.json": "f31568127815eda866248de9884b39f0cd5872c3d51e2bc4b2e6ddbc6db13191",
+      "native\\rack-ordering-restored.png": "541f31ecb5fcbd1424b044a54a78fd707672d35524031deaf81c93575134a351",
+      "native\\rack-ordering-service.png": "53aebc6299fd26953ae0cb0617ff88a1b76fa39f61786b2ac7460ec93d6d3f17",
+      "native\\rack-ordering-swapped.png": "78eba281d8631eecb860716edbd2eec117fd5d05583d9947900fb90fdc94be32",
+      "native\\rack-ordering-vacant.png": "4a2dac331ce0f9bbf025603ec00f473c182bfa3a1ba8ec95dbe5dd7c0f37b89c",
+      "native\\resources-prepare-5.png": "93ff95dea7f2b9f18b94e17fdd491a2c509e68070f25c83a1b01b4d41b6400e7",
+      "native\\resources-prepare-8.png": "6a8adbab0b862e99093e518e5b249a332c9644f6dee1e120a42a9dbec31ca499",
+      "native\\resources-prepare-9.png": "e21a309e2d1f5b26224aee5ae46eff5ccdb3614fadbefed9ea386d8f8c197c3e",
+      "native\\resources-prepare-empty-detail.png": "89a3b0049cb30158d33923f584e16b302493795f2cbc54e414a85ee58775d537",
+      "native\\resources-prepare-instrumentation.txt": "a38adb8b5047ce83b2b7f4e12ba9adfefcc65e22a5d51a164afc9ceeb10a2219",
+      "native\\resources-prepare-native.json": "6a7ab1a95ad9113cd25a1ce660798be1d605fdf9376d0a54328f3ef004f2df98",
+      "native\\resources-probe-12-fighter_bay.png": "301d9d9495b4a1d787095c34384c355d19aa9f20a58b58512d0aaac09981e2b6",
+      "native\\resources-probe-3-cpu.png": "baa5ac5051fcfa0e6a30713eedc848daff17ea605d59cef8060d159f4ea8d81e",
+      "native\\resources-probe-9-cargo_bay.png": "99110cc8a7f803109b581d7b908d432b415aa6178c7262491a350d2012a2349f",
+      "native\\resources-probe-instrumentation.txt": "edf126d6b795f618cf0c18657ab2b9260270b023e913ac2d84516b7a735d8899",
+      "native\\resources-probe-native.json": "5d40c483f478b652754e2e36e8ec73b336ab33a1698b1cb98022e3886939f96c",
+      "native\\resources-restored-instrumentation.txt": "2ad03afa855003b002fa92ca250bc50c399dfe3c94148dca0e116b246c71d9c8",
+      "native\\resources-restored-native.json": "1c174bf8edd71d2d44daf65ef3dfe1c3b9b32305a7c4f867da1e02013dcb0034",
+      "native\\resources-restored.png": "c811e5f95a4df73f5aac573ba94956ca259f8022910933f41ee3faa4cb0bd4e8",
+      "native\\sdk-packages.txt": "f776ef7ca493ab12c90f8b00b017897451a8f8521e03e8f43bade56d994c383f",
+      "native\\startup-0-am-start.txt": "73226288bf8a5adbc778ed949a58c07fb5ad88ebb1b25733b4b1c7f2eb1fcada",
+      "native\\startup-1-am-start.txt": "9c805d7191546d1b9943805b85f8c0076402985f0dcc4427e7446407fccb017e",
+      "native\\startup-2-am-start.txt": "2b42838b9b434d5a6ff86b473c77760d271f66461c5a2ad90c35984e6be65e94",
+      "native\\startup-3-am-start.txt": "3209a6efed04ce66a2670fd130acb2f55aaffa45b78824c83534e144ce7ae087",
+      "native\\startup-4-am-start.txt": "1c3ebc152f6a258f0a6cc1e28a63644ce02519d7d49a5ec17306016fca2d93b3",
+      "native\\startup-native.json": "de8d01353a7f0b90a44dfcd74b61b0d36c3a61a5655a5149acd8b8abdf1586f7",
+      "native\\structures-ansiblex-choice.png": "27c32c3d7327c3c66e2c6d9b0049d196dcc0e3cef56400e371f213d8bf46b688",
+      "native\\structures-ansiblex-fitted.png": "064f75a322952ed6e06b5c8f37629923271050f5d381bc519ff8ba560313f6e3",
+      "native\\structures-astrahus-empty.png": "f82ecaafd6bd4ac2aee948a90ab47fa17efe5b516e7132d11f8b0075e11c19e6",
+      "native\\structures-astrahus-replaced.png": "2a309e8ccabf580c02f46f4757a658e672c0c553ee1026b7e356dd673d961db7",
+      "native\\structures-manufacturing-bonus.png": "ea79c21c6e26f82e56303f356ba903becab6101cee54a80a977e7501271f62a1",
+      "native\\structures-native.json": "847a1e723b835ba3cdc649c390953eecf9f4153f4ade5eb53285103dfb1945c9",
+      "native\\structures-prepare-instrumentation.txt": "902e4a04b6a0622110c9d2052668b918bf3e21131ba31602fd1f0437c8aa9515",
+      "native\\structures-prepare-native.json": "bf6f3d611bdbe2002075a5e0d88ef277e1cae0c9f0a133cc14d19d3ce571374e",
+      "native\\structures-restored-instrumentation.txt": "639ba225cba80b1c0d10a0ca9fb54b057143c600499a0df61c3ccad31470588e",
+      "native\\structures-restored-native.json": "ea18e42e2f3d9207d367d044a4e0382c1d6110f130e9dc41d6e9356f2ef926dc",
+      "native\\structures-restored-structure-copy.png": "695b7ccc760bde9ed9970709234aa35446ad4060eed31f90aaa8257855f28840",
+      "native\\structures-vexor-no-services.png": "36bd5aa0f8a51ee73a0cde995f2ca5b3067df1e1fe0aea80b2a375feacaa0996",
+      "native\\subsystems-native.json": "2b6265edfe1f23b057c4acd21ea1a3f8f58eed939974bc310be591273936e779",
+      "native\\subsystems-offensive-added.png": "60c2d99bd83f1fa61bad05d4f4da196869292d33bba0cb99661cae99438062c6",
+      "native\\subsystems-offensive-removed-invalid.png": "a489fa6bd114b90845f8b92ac40723b82151bbf9699faa1891faab99d988694b",
+      "native\\subsystems-offensive-replaced.png": "961db4dea50491f2937b1970aa5e41ebaa0e366d2a075ebd87c2e18021d066f2",
+      "native\\subsystems-prepare-instrumentation.txt": "8571cc8a3b8ff94e415227ddc592e62dca1dc59639b0ca214fc11d6900cd076f",
+      "native\\subsystems-prepare-native.json": "542d5c324f5488241b96c3f79140a89d31bb383c467e3bb70f4463496249f9a6",
+      "native\\subsystems-restored-instrumentation.txt": "410c230230a41588acd707c1a61a6243bdaa0176bebddf77c0f1822bda5b5f02",
+      "native\\subsystems-restored-invalid-copy.png": "a4e420ae5c2aca7ecfbd6e6ca4553e770f32b456feb391eb7a6062d16ba6ae93",
+      "native\\subsystems-restored-native.json": "7fc99586fad7b03271f49699b577bf0360ae561db07d4742f5db7a61a64bf86d",
+      "native\\subsystems-tengu-empty.png": "6a29d4c61881fff9a601ab9480d1219b7a436e05c1b499352cad67fdee6594ff",
+      "native\\subsystems-vexor-empty.png": "ffa0a926fab64aab940c78352d2e2f456e6c840db62ba00323891b52b3498118",
+      "native\\variation-edits-disabled.png": "1de3de077aa23a0af7c59ddcdfa0ccbd55647cc7427718a0af2be3afbbafa1d1",
+      "native\\variation-edits-drone-picker.png": "011dd6bcd233ff37e0fc7158e7c8de8bbc58fd176618637ee31cc32f416b702d",
+      "native\\variation-edits-drone.png": "4b1ecb205b32cc3e0641dacfc8bd2c72ebe4022f525f8e8129c98fc8d315d4d1",
+      "native\\variation-edits-empty.png": "4e06ddc05db0b4764176da3dfd4ea66f6aaa2138ef44b3f962663f01d1110e34",
+      "native\\variation-edits-implant.png": "7c51d3a0b3795d80e6e8126ac6566e1540c6d00e597076f255b0ca9585a254dc",
+      "native\\variation-edits-module.png": "4a63c64bddc5e858934d228298a28f3a37f7cee77dd2dd5e82ad9ac80ecabcf6",
+      "native\\variation-edits-native.json": "79d80b3c3fb0448ea7a4d0375ce731ba5202002fcdf01def8441414c5a574f50",
+      "native\\variation-edits-prepare-instrumentation.txt": "c324d9800a5d1c0488d64f0cb4caa74a3c585e720f7654cbd1c49f5cfeb20dc7",
+      "native\\variation-edits-prepare-native.json": "1475614910a0a2078dbff1179a482c8728bb3e8751e04854ce01b8b4e007433c",
+      "native\\variation-edits-restored-instrumentation.txt": "565ca23854ea382632d2b5ee55b7dbc23d9bb1b0ea3f090c0450561d6cf9198c",
+      "native\\variation-edits-restored-native.json": "948252bb5107d5b5ed214b13e54c00546efc2ca6326923a579f21bad941bbf9b",
+      "native\\variation-edits-restored.png": "f6e3ecadd660281b631cfceccfe3eb5f128174327e45dd32612654ff7dcfda91",
+      "native\\variation-edits-unloaded.png": "ab2c6ab7a17b973013eaec7b0dd3df3b62bfd9368865e91004d411d41f287487"
+    },
+    "new_test_apk_sha256": "5fd5f80d3cdf84cd73e00a298a5df22a687dd8e5d1fadf344d53bab80cb2c4ec",
+    "retained_graph_sha256": "62d80a6368759f8969cf5a071607685fcdf6b8585397f1a935b6f381e1d8c8ea",
+    "retained_generation": 2311,
+    "retained_fits": 158,
+    "baseline_sha256": "1c174bf8edd71d2d44daf65ef3dfe1c3b9b32305a7c4f867da1e02013dcb0034",
+    "no_capacitor_fit_created_before_failure": true,
+    "graph_unchanged_by_install": true
+  },
+  "capacitor_runner_guard_tests": 10,
+  "unavailable_optional_diagnostic": {
+    "path": "native/failure-logcat.txt",
+    "original_sha256": "e68d0dd1ce62a56a5d1ef90f25ebd75b29131465c7494b1b4ccedf527d9f663a",
+    "reason": "Shared B05.4 optional logcat overwritten by capacitor failure capture before archival; original failed command logs and required passing reports/screenshots retained",
+    "required_passing_evidence_affected": false
+  },
+  "capacitor_failed_attempt": {
+    "log": "logs/101-native-capacitor-prepare.log",
+    "archive": "capacitor-runner-fix-original",
+    "cause": "Missing c012_phase persistent-storage runner flag; test rejected ephemeral storage before creating fits",
+    "prior_fits_preserved": 158,
+    "app_apk_unchanged": true
+  },
+  "limits": [
+    "No release or phone installation",
+    "ARM64 packaging verified; runtime untested",
+    "Older API/upgrade/signing/user usability unverified"
+  ]
+}

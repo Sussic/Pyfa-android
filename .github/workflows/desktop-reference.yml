@@ -423,6 +423,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-resources-check"
+      - name: Verify original capacitor values and presentation
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/capacitor.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-capacitor-reference"
+          --check tools/android_reference/fixtures/capacitor.json
+      - name: Verify capacitor read-only, history and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_capacitor.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-capacitor-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh
