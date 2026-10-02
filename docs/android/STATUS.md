@@ -1,13 +1,13 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.2 capacitor verification complete; delivery in progress.**
+Updated: 2026-10-02. **C01.2 delivered; C01.3 defenses/tank is next.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Current outcome — C01.2 capacitor
+## Latest delivery — C01.2 capacitor
 
 Selected from `2cb602f3` on `codex/c01-2-capacitor-details` in `7594e7ec`.
 Read-only capacitor query, strict typed DTO and current-fit screen are implemented;
@@ -29,9 +29,11 @@ ephemeral-storage rejection remain recorded. The optional shared B05.4 failure
 logcat was overwritten by the capacitor failure before archival and is explicitly
 unavailable; required passing evidence and original failed command logs remain.
 No assertions, tolerances, timeouts or performance requirements changed.
-Exact next is C01.2 push/PR/local status/merge; C01.3 follows only after closure.
+PR #37 merged as1c3beef9 from reviewed headca052755; merge/head trees match.
+The exact-head local/full-verification status passed. Hosted checks were not run.
+Exact next is C01.3 defenses/tank, beginning with its bounded defenses child.
 
-## Latest delivery — C01.1 fitting resources
+## Previous delivery — C01.1 fitting resources
 
 [PR #36](https://github.com/Sussic/Pyfa-android/pull/36) merged as `7e457c97` from
 reviewed head `c5b187c0`; merge/head trees match. Reviewed/tested code is `e310303f`.
@@ -65,13 +67,9 @@ archived by hash. Required passing screenshots are intact. Four provisional
 fighter/over-hardpoint cases use isolated real EOS diagnostics; C05 editor and
 fighter persistence are not claimed.
 
-Current selected outcome: **C01.2 capacitor** (F05.12–F05.15), branch
-`codex/c01-2-capacitor-details` from `2cb602f3`. Implement the read-only
-capacitor screen and independent desktop/native verification from
-this delivered default branch. Capacity/effective capacity, stable percentage/range
-versus depletion seconds, recharge/use/signed delta/effective excess and neutralizer
-resistance must match original desktop evidence, offline native details and restart.
-Parent C01 remains active through capacitor and defenses/tank.
+Next selected outcome: **C01.3 defenses and tank** (F05.16–F05.27).
+C01.2 is closed in [PR #37](https://github.com/Sussic/Pyfa-android/pull/37).
+Keep the parent active until defenses and tank acceptance both pass.
 
 ## Previous deliveries
 

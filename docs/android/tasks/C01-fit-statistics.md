@@ -14,7 +14,7 @@ units, formatting, detail precision and the meaning of available capacity.
 | C01.2 | F05.12–F05.15: capacitor | Capacity/effective capacity, correctly distinguished stable percentage/range versus depletion seconds, recharge/use/signed delta/effective excess gain and neutralizer resistance; independent battery/projected-neut and stable/unstable cases, native details and restart. |
 | C01.3 | F05.16–F05.27: defenses and tank | Every damage resistance and multiplier, raw/effective HP and selected pattern contributions, raw/effective reinforced/sustained passive and active tank, applicable projected repair and spool details; independent assumption changes, typed persistence/history extension where needed, native controls/restart and screenshots. |
 
-C01.1 is delivered in PR #36; C01.2 is verified and awaiting delivery, then C01.3 follows. These children retain the
+C01.1 is delivered in PR #36; C01.2 is delivered in PR #37, then C01.3 follows. These children retain the
 parent's full acceptance rather than dropping fields. C01.3 may be subdivided
 before implementation if the native outcome needs another bounded review.
 Named damage-pattern management remains D05; audited C01 assumption inputs must
@@ -107,3 +107,6 @@ The scalar EOS stability contract and typed range protocol remain distinguished.
 Failures remain recorded; the optional B05.4 shared failure logcat overwritten by
 capacitor diagnostics is explicitly unavailable. Required passing evidence remains
 intact. No assertion, tolerance, timeout or A10 requirement was weakened.
+
+PR #37 merged as 1c3beef9 from ca052755; merge/head trees match and its
+exact-head local/full-verification passed. C01.2 is closed; C01.3 is next.
