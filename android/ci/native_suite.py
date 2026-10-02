@@ -25,9 +25,10 @@ EXCLUDED = ['PerformanceTest', 'BridgeContractTest', 'PersistenceTest', 'FitLibr
     'ChargeEditingTest', 'VariationEditingTest', 'RackOrderingTest', 'BulkChargesTest',
     'BulkStatesTest', 'CloneFillTest', 'BulkVariationRemovalTest', 'HullModeTest',
     'SubsystemTest', 'StructureServiceTest', 'CargoStackTest', 'CargoActionTest',
-    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest']
+    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest', 'ResourceProbeTest', 'ResourcesTest']
 MUTATION_STEPS = [f'mutation-history-{group}-{phase}' for group in range(4) for phase in ('prepare', 'restored')]
-STEPS = ['initial', *CHECKS, *MUTATION_STEPS, 'summary']
+RESOURCE_STEPS = ['resources-'+phase for phase in ('probe','prepare','restored')]
+STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
     'io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack',
@@ -165,6 +166,8 @@ def main():
                 if step in MUTATION_STEPS:
                     _, _, group, phase = step.split('-')
                     command = [sys.executable, str(ROOT/'ci/check-mutation-history.py'), '--group', group, '--phase', phase]
+                elif step in RESOURCE_STEPS:
+                    command = [sys.executable, str(ROOT/'ci/check-resources.py'), '--phase', step.split('-')[1]]
                 else:
                     script='summarize-tests.py' if step=='summary' else step
                     command = [sys.executable, str(ROOT/'ci'/script)]

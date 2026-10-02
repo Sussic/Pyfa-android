@@ -1,67 +1,62 @@
 # Android project status
 
-Updated: 2026-10-02. **B09.2 delivered; C01 is next.**
+Updated: 2026-10-02. **C01.1 verified; PR delivery pending.**
 
-## Previous delivery — B09.1 module edit history
+The active user-authorized goal continues sequential ready, approved roadmap work,
+one reviewed outcome through required local checks, push and merge at a time.
+W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
+installation, unrelated setup/refactoring or billing changes are authorized here.
 
-[PR #33](https://github.com/Sussic/Pyfa-android/pull/33) merged as `3143d771`
-from reviewed head `9b586d89`; merge/head trees match. Its exact head passed
-`local/full-verification`. [Feature receipt](evidence/b09-1-native.json) records
-actual tested commits and [raw history](evidence/b09-1-history-native.json).
-The 78-gate W02 proof remains valid: host/build `f7d2ad31`, native execution
-`6792b03e`, aggregate `5952c1bf`. All prior failures are preserved.
+## Current outcome — C01.1 fitting resources
 
-B09.1 matches independent original GUI/calc commands and wx processors in 18
-cases/108 states, grouping/branching, per-fit isolation and the 100-action limit.
-Six retained host tests cover linked recipients, monotonic revisions, notes,
-stale/malformed requests, failed-save recovery, copy and fresh-process reopening.
-Native touch/recreation/restart confirms all 111 fits and ten protocol rejections.
-Six history screens (and all inherited screens) are reviewed. The focused final
-raw validator rejects 21 deliberate report corruptions. Review found no blocking
-issue. [Feature receipt](evidence/b09-1-native.json) and
-[raw history](evidence/b09-1-history-native.json) preserve evidence and limits.
+Branch `codex/c01-1-fitting-resources`; reviewed/tested correction `e310303f`.
+[Task](tasks/C01-fit-statistics.md), [receipt](evidence/c01-1-native.json).
+F05.01–F05.11 expose all eleven used/capacity pairs, original compact formatting,
+units, detail/raw precision, explicit unavailable scalars and textual overload.
+Current fit/revision refresh, Undo/Redo, read-only queries, recreation and restart
+pass through serialized EOS; no Kotlin fitting formula or mutation operation added.
+The earlier 39 calculation fields and all inherited acceptance gates remain intact.
 
-## Latest delivery — B09.2 remaining mutation history
+All **93 local gates**, **63 required native executions**, **158 saved fits** and
+**154 required screenshots** pass; the optional failed-run screenshot is also
+reviewed (155 total). Thirty-one actual-report corruptions are rejected. Fourteen
+independent original wx/EOS cases cover overload for every pair. A separate original
+desktop editing witness retains Offline guns' vacant slots and their exact zero
+scalar kinds. Two fresh exports of each reference agree. Seven original host tests,
+eleven fixture/type tests and eighteen source/asset/recovery regressions pass.
 
-The user explicitly resumed development and superseded the setup-only stop.
-Automatically continue eligible approved roadmap work, one coherent outcome through
-review, full local verification and delivery. No hosted dispatch without asking,
-setup repeat, new infrastructure, unrelated refactoring, release, phone installation,
-billing change or delegation. No decision/access blocker currently exists.
+Three native harness/input failures and a missing-witness staging failure remain
+recorded. Exact source guards and three separately validated recoveries preserve
+all 147 inherited inputs, revisions, metadata and EOS statistics. The original
+resource fixture and app APK remain byte-identical; the sole new test asset is the
+independently verified edited witness. Reported hashes match retained verified APK
+bytes; packaged/reference bytes match after CRLF-to-LF normalization only. No
+assertion, tolerance, timeout, restart or A10 requirement was weakened.
 
-[PR #35](https://github.com/Sussic/Pyfa-android/pull/35) merged as `7b780c51`
-from reviewed head `c7cbb8af`; merge/head trees match. Its exact head passed
-`local/full-verification`. Reviewed code is `98ab296d`,
-APK build `ac90c37d`. [Receipt](evidence/b09-2-native.json) records all 88 passing
-local gates, their actual tested commits, APK hashes and retained failures.
-Independent original GUI/calc commands and wx processors cover 28 cases/168
-states and a five-step interleaved recent-use case. All 60 required native
-executions, 147 retained fits, eight new history processes and 146 reviewed
-screenshots pass. The actual-report validator rejects 26 deliberate corruptions;
-124 focused repair regressions pass. Every current bridge operation has an
-explicit disposition (39 actions, seven boundaries); later mutations must extend
-its independent, host and native coverage.
+Complete failed instrumentation logs, partial stores and APKs are retained. The
+first optional shared failure PNG/logcat were overwritten by the second failure
+and are explicitly unavailable, never passing evidence. Later diagnostics are
+archived by hash. Required passing screenshots are intact. Four provisional
+fighter/over-hardpoint cases use isolated real EOS diagnostics; C05 editor and
+fighter persistence are not claimed.
 
-Review fixed projection-range scalar normalization: a linked copy could refresh
-integer metres to EOS floats and clear unchanged recipient history. Host checks
-at 0/1000/1000.5 metres and native original-cursor assertions pass. EOS remains
-the calculation authority. Cargo/subsystem Redo retains recent-use promotions
-when another fit changes the order. Desktop cargo/implant recent-use differences
-and the direct skill-profile input gap remain explicit.
+Exact next: commit/push the reviewed receipt/docs, create the focused C01.1 PR,
+validate/publish its exact-head `local/full-verification`, then merge. After merge,
+checkpoint and select **C01.2 capacitor** (F05.12–F05.15). Do not start it before
+C01.1 delivery. Parent C01 stays active through capacitor and defenses/tank.
 
-Earlier runs and failures remain recorded. Clone/fill restored report recovery
-verified every saved input/statistic and the unchanged database checksum before
-recovering its private test checkpoint and original selection precondition;
-only restored instrumentation reran. No required assertion, numerical tolerance,
-phase timeout, restart or A10 requirement changed. No Actions success is claimed.
-B09 is complete for current supported mutations; future mutation tasks must
-extend its checks. Exact next task: approved C01 resources, capacitor and defenses.
-Expand its audited acceptance rows into bounded children before implementation.
+## Previous deliveries
 
-W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
-now has manual hosted fallback workflows. No owner configuration step remains.
-ARM64/older APIs/phone usability/signing upgrades remain unverified. History is
-session-local; confirmed fit inputs persist. No full-parity claim is made.
+B09.2 [PR #35](https://github.com/Sussic/Pyfa-android/pull/35) merged as `7b780c51`
+from reviewed head `c7cbb8af`; trees match. [Receipt](evidence/b09-2-native.json)
+records 88 local gates, 60 native executions, 147 fits, 146 reviewed screenshots,
+28 cases/168 states and preserved failures. Its 39 supported history actions and
+seven boundaries remain covered; later mutations must extend their disposition.
+B09.1 [PR #33](https://github.com/Sussic/Pyfa-android/pull/33) merged as `3143d771`
+from `9b586d89`, with matching trees and [receipt](evidence/b09-1-native.json).
+W02 [setup](tasks/W02-windows-local-verification.md) remains delivered. Both hosted
+workflows are deliberate manual fallbacks; no Actions success is represented by
+these local results. No owner configuration step currently remains.
 
 ## Delivered work to reuse
 
@@ -77,46 +72,33 @@ session-local; confirmed fit inputs persist. No full-parity claim is made.
 Earlier A/B milestones remain done as recorded in ROADMAP and their task/evidence
 files. Do not reopen delivered work or rerun unchanged tested revisions.
 
-## Forecast and installation limits
+## Resume and limits
 
-B09 undo/redo comes next. Elapsed implementation estimates remain **unknown**
-until its focused audit resolves scope; confidence is low. B08's final Windows/
-Android runs took **28m44s/34m24s**.
-CI corrections may require another full round; one-round delivery estimates are
-not reliable.
+Read AGENTS, [ROADMAP](ROADMAP.md), the selected task and ignored
+`build/WINDOWS-CHECKPOINT.md`; verify live master/open PRs and preserve local work.
+Use only Sussic/Pyfa-android. [Local commands/evidence](LOCAL-VERIFICATION.md) apply.
+Reuse `build/windows-env.ps1`: Python3.11.9 reference/headless, JDK17.0.20.1+1,
+SDK36/build35, Gradle8.13 and installed WHPX. No timed host suite alongside Gradle.
+Keep every inherited functional/type/unit/GC/restart/performance/screenshot gate.
 
-Build 16 was the first meaningful development build; build 27 is the latest
-locally emulator-tested development build. The local debug APK is
-`android/app/build/outputs/apk/debug/app-debug.apk`. Safe persistent phone use
-remains **unknown** until R02 signing/upgrade checks and phone/API compatibility
-are resolved. Phone usability, older APIs and ARM64 execution remain unverified;
-no phone installation or release publication occurs.
+Build **28** is the latest locally emulator-tested development build; the debug
+APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Forecasts for remaining
+implementation are unknown. A working APK is not full Pyfa parity. User usability,
+ARM64 execution, older APIs, signing/upgrades and safe persistent phone use remain
+unverified. No release or phone installation occurs.
 
-## Resume, environment and architecture
-
-Read AGENTS, [ROADMAP](ROADMAP.md), the next task and ignored
-`build/WINDOWS-CHECKPOINT.md`; verify local changes, live master and open PRs.
-Work only in Sussic/Pyfa-android. Dot-source `build/windows-env.ps1` to reuse
-Python3.11.9 reference/headless, JDK17.0.20.1+1, SDK36/build35 and Gradle8.13.
-No timed host suites alongside local Gradle. Windows WHPX full native execution
-and screenshot review now provide required local evidence; APK builds alone do not. Preserve all inherited
-host/native type/unit/GC/restart/performance/screenshot gates, one-day diagnostics,
-deliberate APK uploads only and no scheduled/release jobs.
-
-Kotlin/Compose + Chaquopy + serialized EOS remain A10. Follow [scope](SCOPE.md),
-[architecture](ARCHITECTURE.md) and [evidence rules](DEVELOPMENT.md). No Kotlin
-formula approximations. Desktop pin `8b04f3b271e614b3e103853b44a7851a63d79d0e`,
-tree `8db82315f8312b124dd24ef103e43496cee50b4a`, logical dataset
+Retain Kotlin/Compose + Chaquopy + serialized EOS within A10; follow
+[scope](SCOPE.md), [architecture](ARCHITECTURE.md) and [evidence](DEVELOPMENT.md).
+Desktop pin `8b04f3b271e614b3e103853b44a7851a63d79d0e`, tree
+`8db82315f8312b124dd24ef103e43496cee50b4a`; logical dataset
 `5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607`.
 EOS owns an exclusive in-memory session; separate locked SQLite stores declarative
-graphs atomically. Navigation preferences stay separate. Preserve invalid files.
-Keep desktop `gamedataCache=False`. Host Logbook1.7.0.post0, SQLAlchemy1.4.50 and
-Greenlet3.0.3; Android Greenlet3.0.1 build1 and chaquopy-libcxx180000 build0 remain.
+graphs atomically. Navigation preferences remain separate; preserve invalid files.
+Desktop `gamedataCache=False`. Host Logbook1.7.0.post0/SQLAlchemy1.4.50/Greenlet3.0.3,
+Android Greenlet3.0.1 build1/chaquopy-libcxx180000 build0 remain pinned.
 
-ARM64 execution, older APIs, safe upgrades/downgrades and user usability remain
-unverified. Both ABIs are packaged. Phone model/API unconfirmed; native report
-transport requires API31+, app minSdk24. I05 backup/transfer, R02 signing/upgrades,
-R03 usability, C07 full implant profiles/locations and Q07 complete projection/
-command matrices retain scope. Older builds reject newer fields and preserve
-storage. Legacy tox remains unaudited; A10 measurements are debug emulator baselines.
-Full parity is not established. Restore-off opens the library while saved fits rebuild.
+Both ABIs are packaged; native report transport requires API31+, app minSdk24.
+I05 transfer, R02 upgrade/signing, R03 usability, C07 complete implant profiles and
+Q07 full linked-effect matrices retain scope. Older builds reject newer fields and
+preserve storage. Legacy tox remains unaudited; A10 is a debug-emulator baseline.
+History is session-local; saved inputs persist. Full parity remains unproven.

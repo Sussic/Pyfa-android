@@ -21,11 +21,11 @@ PIN='8b04f3b271e614b3e103853b44a7851a63d79d0e'
 FAMILIES=['projection','command','catalog','equipment','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources']
 HEADLESS=['bridge','persistence','library','market','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources']
 BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
@@ -152,6 +152,19 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_resource_test_fix:
+                assert self.state['status']=='failed' and self.state['completed']==plan('full',None)[:-3]
+                failure=next(row for row in reversed(self.state['attempts']) if row['gate'].startswith('native:'))
+                assert failure['gate']=='native:resources-prepare' and failure['exit_code']!=0
+                from resource_test_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                before=self.state['commit']
+                for row in self.state['attempts']:row.setdefault('tested_commit',before)
+                self.state.setdefault('resource_test_reuse',[]).append({'from_commit':before,'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),
+                    'retained_gates':[gate for gate in self.state['completed'] if gate not in ('build:apks-lint','build:package')],
+                    'prepared':False,'installed':False})
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_projection_report_fix:
                 assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='native:mutation-history-3-prepare'
                 assert self.state['attempts'][-1]['exit_code']!=0 and 'native:mutation-history-3-prepare' not in self.state['completed']
@@ -388,6 +401,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            resource_fixes=self.state.get('resource_test_reuse',[])
+            if resource_fixes and not resource_fixes[-1]['prepared']:
+                from resource_test_retry import prepare
+                prepare(self,resource_fixes[-1]);save(self.file,self.state)
             projection_fixes=self.state.get('projection_report_reuse',[])
             if projection_fixes and not projection_fixes[-1]['validated']:
                 from projection_history_retry import revalidate
@@ -447,6 +464,9 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if resource_fixes and not resource_fixes[-1]['installed']:
+                        from resource_test_retry import install
+                        install(self,resource_fixes[-1]);save(self.file,self.state)
                     if stale_fixes and not stale_fixes[-1].get('installed'):
                         from stale_history_retry import install
                         install(self,stale_fixes[-1]);save(self.file,self.state)
@@ -504,6 +524,7 @@ def main():
     parser.add_argument('--adopt-stale-history-fix',action='store_true',help='Rebuild the exact final-group enum comparison repair; retain groups 0–2 and retry only group 3')
     parser.add_argument('--stale-recovery',help='Validated partial/restored group 3 store and receipt directory')
     parser.add_argument('--adopt-projection-report-fix',action='store_true',help='Revalidate retained successful group 3 preparation after exact decimal projection-range comparison repair; no instrumentation rerun')
+    parser.add_argument('--adopt-resource-test-fix',action='store_true',help='Adopt the exact C01.1 copy-ID test repair and validated two-fit recovery; retain all unchanged proof')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
