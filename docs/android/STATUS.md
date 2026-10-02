@@ -1,13 +1,13 @@
 # Android project status
 
-Updated: 2026-10-03. **C01.3.1 verified; delivery pending.**
+Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 next.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Current outcome — C01.3.1 defenses and incoming damage
+## Latest outcome — C01.3.1 defenses and incoming damage
 
 Selected from delivered master `adafcadc` on codex/c01-3-1-defense-details.
 F05.16–F05.22: all twelve shield/armor/hull resistances, each resistance
@@ -36,8 +36,10 @@ The existing full run completed without native retries; its passing results were
 preserved across continuations. The earlier development diagnostics-accessor
 compile failure and repaired app/test/lint run remain recorded. No assertion,
 tolerance, timeout or performance criterion changed. Hosted checks were not run.
-Push, focused PR, exact-head local status and merge remain pending. Exact next is
-C01.3.2 repair/tank/spool after this delivery closes, as one coherent outcome.
+[PR #38](https://github.com/Sussic/Pyfa-android/pull/38) merged as `e937fef4`
+from reviewed head `b1795eb1`; merge/head trees match. Its exact-head
+`local/full-verification` passed. C01.3.1 is closed. Exact next is C01.3.2
+repair/tank/spool, keeping all F05.23–F05.27 checks in one coherent deliverable.
 
 ## Latest delivery — C01.2 capacitor
 

@@ -136,4 +136,9 @@ fixture/schema/transport regressions and ten historical capacitor source guards
 pass. The full run needed no native retry; completed results remain retained.
 The earlier development compile failure is recorded separately. All inherited
 assertions, tolerances, timeouts, restart boundaries and A10 criteria are intact.
-Delivery PR, successful exact-head local status and merge remain pending.
+[PR #38](https://github.com/Sussic/Pyfa-android/pull/38) merged as `e937fef4`
+from reviewed head `b1795eb1` with matching trees and successful exact-head
+`local/full-verification`. C01.3.1 is closed. Exact next is C01.3.2, covering
+all repair/tank/spool rows as one deliverable with focused checks during
+implementation and one full verification only after its fixtures/validators
+and complete implementation are ready. C01 remains active until it is delivered.
