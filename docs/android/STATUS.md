@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.1 delivered; C01.2 is next.**
+Updated: 2026-10-02. **C01.2 capacitor details selected and in progress.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
@@ -41,7 +41,9 @@ archived by hash. Required passing screenshots are intact. Four provisional
 fighter/over-hardpoint cases use isolated real EOS diagnostics; C05 editor and
 fighter persistence are not claimed.
 
-Exact next: select **C01.2 capacitor** (F05.12–F05.15) on a focused branch from
+Current selected outcome: **C01.2 capacitor** (F05.12–F05.15), branch
+`codex/c01-2-capacitor-details` from `2cb602f3`. Implement the read-only
+capacitor screen and independent desktop/native verification from
 this delivered default branch. Capacity/effective capacity, stable percentage/range
 versus depletion seconds, recharge/use/signed delta/effective excess and neutralizer
 resistance must match original desktop evidence, offline native details and restart.

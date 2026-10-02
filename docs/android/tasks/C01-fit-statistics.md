@@ -76,3 +76,21 @@ optional shared failure PNG/logcat were overwritten by the second failure and ar
 explicitly recorded as unavailable, never passing evidence. Later diagnostics are
 archived by hash; required passing screenshots are intact. PR #36 merged as `7e457c97` from reviewed head `c5b187c0` with matching trees and
 its successful exact-head `local/full-verification`. C01.2 is the next outcome.
+
+## C01.2 selected outcome
+
+Selected 2026-10-02 from delivered master `2cb602f3` on
+`codex/c01-2-capacitor-details`. Expose read-only capacitor details for the current
+fit/revision: capacity and applicable effective capacity in GJ, recharge/use and
+signed delta in GJ/s, applicable effective excess gain, neutralizer resistance
+in percent, and a typed stable percentage versus depletion time in seconds.
+Preserve original desktop compact/detail presentation and raw precision. EOS at
+the pinned revision returns a scalar stable state (the mean of simulation bounds);
+verify this source contract rather than claiming an unproduced range as tested.
+Any range representation must retain percent units and both bounds.
+
+Acceptance: independent original wx/EOS empty, active/online/offline, battery and
+projected-neutralizer cases; read-only, refresh, Undo/Redo, recreation and process
+restart; strict protocol and incorrect-report rejection; APK/lint/package checks,
+all inherited local gates and screenshots. No additional mutation, fitting formula
+in Kotlin, reload setting, character-profile editor or projection editor is added.
