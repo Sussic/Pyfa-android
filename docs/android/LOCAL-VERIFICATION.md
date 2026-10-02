@@ -22,7 +22,7 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 
 C01.1 extends the full plan to 93 gates: 52 reference/host, five build
 and 36 native gates. Resource checks include fourteen original-desktop cases,
-seven host tests, eight validator regressions and three native resource processes.
+seven host tests, eleven validator regressions and three native resource processes.
 Native mode continues to run every inherited prerequisite.
 
 Full mode runs every required desktop/reference/host gate before Gradle and the
@@ -156,3 +156,26 @@ account allowance may incur charges ([GitHub billing](https://docs.github.com/en
 Manual fallback still uses hosted execution/storage. Local work uses ordinary
 hardware, electricity/network and disk space; keep evidence only as needed.
 Feature/ARM64/older-API/upgrade/phone usability acceptance remains separate.
+
+## C01.1 edited resource reference
+
+The direct fourteen-case resource fixture stays unchanged. Offline guns edited
+through the original desktop service includes vacant slots; those can change EOS
+zero scalar kinds without changing their values. The separately verified witness
+is `resources-edited.json`; native preparation compares its exact physical slots,
+raw kinds/values, units and displays. Reuse its receipt for unchanged reference
+inputs. When changing resource/edit inputs, regenerate/check it independently:
+
+```powershell
+. ./build/windows-env.ps1
+& $pyfaReference -I tools/android_reference/resources_edited.py --source build/reference-upstream --database android/build/engine/assets/engine/eve.db --output 'C:/absolute/new-reference-directory' --check tools/android_reference/fixtures/resources-edited.json
+& $pyfaHeadless -I android/ci/test_resource_summary.py
+```
+
+A changed or added test fixture requires the engine-assets stage before Gradle:
+use the complete build mode, then native/full verification as appropriate. Do not
+reuse old staged assets merely because the application source stayed unchanged.
+C01.1 retained 90 valid gates, three exact partial-store recoveries, every complete
+native failure log and a missing-witness package failure; only affected builds and
+prepare/restored/summary reran. Its receipt explicitly records the unavailable
+first optional shared failure PNG/logcat. Required passing artifacts remain intact.

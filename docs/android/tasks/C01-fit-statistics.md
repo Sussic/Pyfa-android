@@ -14,7 +14,7 @@ units, formatting, detail precision and the meaning of available capacity.
 | C01.2 | F05.12–F05.15: capacitor | Capacity/effective capacity, correctly distinguished stable percentage/range versus depletion seconds, recharge/use/signed delta/effective excess gain and neutralizer resistance; independent battery/projected-neut and stable/unstable cases, native details and restart. |
 | C01.3 | F05.16–F05.27: defenses and tank | Every damage resistance and multiplier, raw/effective HP and selected pattern contributions, raw/effective reinforced/sustained passive and active tank, applicable projected repair and spool details; independent assumption changes, typed persistence/history extension where needed, native controls/restart and screenshots. |
 
-C01.1 is active; C01.2 and C01.3 follow sequentially. These children retain the
+C01.1 is verified for delivery; C01.2 and C01.3 follow sequentially after its merge. These children retain the
 parent's full acceptance rather than dropping fields. C01.3 may be subdivided
 before implementation if the native outcome needs another bounded review.
 Named damage-pattern management remains D05; audited C01 assumption inputs must
@@ -42,7 +42,7 @@ across empty/fitted/over-capacity/drone/cargo/fighter cases; exact
 counts/types/units and justified existing numeric tolerances; meaningful host
 read-only, mutation/reversal and restart checks; APK/lint/package inspection;
 real offline native UI/engine cases and screenshot review; full local plan with
-all prior gates. Tests and evidence are pending, not passing claims.
+all prior gates. Required verification is completed in the linked receipt below.
 
 Known game-data attribute defaults are genuine EOS values, including zero bays
 on hulls without that capacity. Do not fabricate missing-capacity fixture inputs.
@@ -52,48 +52,27 @@ for every resource pair. Ten accepted saved-fit cases require native restart;
 four provisional fighter/over-hardpoint cases use an isolated diagnostic engine
 without expanding the durable input contract or claiming C05 editor support.
 
-Progress: two fresh original-desktop exports agree. Seven focused host tests pass
-all fourteen cases and ten saved fits reopened in a fresh process, with no desktop
-imports/network access or game-database writes. Eight focused raw-validator tests
-pass LF/CRLF equivalence and reject incorrect hashes, missing fixtures, changed
-content even with updated hashes, other whitespace, wrong scalar kinds/values,
-units, overload and labels. APK/native-test compilation and lint pass at their
-recorded development revisions. Earlier host/compile failures remain retained.
-Final candidate e0e01d9b passed 90/93 local gates, including every inherited native
-check and the fourteen-case resource probe. Saved-resource preparation exposed a
-test-only copy-selection error: DuplicateFit returns the whole library, so the
-test selected an older fit. The equality assertion remains; select the sole new
-ID and verify its name. Preserve the original failed attempt, APK and partial
-store. Eight focused repair regressions pass. Recovery independently verifies
-all 147 original inputs/statistics and removes only the two exact failed test
-fits. Rebuild the test APK, require unchanged application/fixture bytes and exact
-source equivalence outside this correction, then reuse the 90 valid results and
-retry only prepare/restored/summary. Final screenshot review/delivery are pending.
+C01.1 delivery evidence: [receipt](../evidence/c01-1-native.json) records reviewed
+code `e310303f`, actual gate commits, retained APK hashes and three native failures
+plus the missing-witness staging failure. All 93 local gates pass. All 63 required
+native executions, 154 required screenshots and the optional failed-run diagnostic
+are reviewed. Ten resource fits plus a copy and the 147 inherited fits persist
+through restart. Four provisional fighter/over-hardpoint cases remain isolated
+real-EOS diagnostics; no C05 editor is claimed.
 
-C01.1 bounded retry update: copy-ID correction passed, then preparation rejected
-an empty module slot because the fixture loop ordinal was used as a physical EOS
-index. Select the newly occupied index and preserve every resource/state/charge
-assertion. Both failures, APKs and partial stores are archived separately. Twelve
-focused source/recovery tests pass. The second recovery verifies all 147 original
-inputs, revisions, metadata and EOS statistics, checks the exact three synthetic
-partial records and sole railgun recent-use promotion, then restores the original
-baseline in a separate copy. Production code, fixtures, tolerances, timeouts and
-performance requirements remain unchanged. Only corrected test build/package,
-prepare, restored and summary remain; keep the 90 valid earlier gates.
+Two fresh original wx resource-view exports cover fourteen cases and overloads for
+every pair. A separate two-process original desktop editing witness preserves the
+vacant slots in Offline guns, including their zero scalar kinds. Seven original
+host tests, eleven fixture/type validator tests, eighteen exact source/asset/recovery
+tests and the actual-report corruption checks pass. Original resource fixture bytes
+remain unchanged; reported hashes match verified retained APK bytes, and references
+match after CRLF-to-LF normalization only. Every functional, type, tolerance,
+restart, performance and overload assertion remains intact.
 
-C01.1 latest: module-slot correction ebe1d810 passed build/lint/package/signature,
-then preparation reached Offline guns and rejected a strict calibration scalar
-kind mismatch. Original pinned desktop vacancy filling reproduces the native
-0.0 kind; the earlier direct-fit fixture omitted those slots. Preserve that fixture
-and add a separate edited-fit witness. Two independent fresh exports agree, and
-its canonical slots/all eleven values/types/units/displays match the actual archived
-native fit with read-only state unchanged. Eleven fixture-validator tests pass.
-The exact third source/asset guard and all 18 recovery regressions pass. A separate
-recovery verifies all 147 original fit inputs, revisions, metadata and EOS statistics
-and removes only four exact partial test fits after checking recent-use promotions.
-The witness is wired with every strict assertion retained; native retry/delivery remain pending.
-All 90 earlier gates remain retained. Three full failure logs/stores remain archived;
-the first optional shared failure PNG/logcat were overwritten by the second attempt
-and are explicitly unavailable. Required passing screenshots remain intact. Next:
-commit the reviewed correction, require unchanged app/original asset bytes plus only
-the independently verified witness addition, and retry prepare/restored/summary.
+Three bounded recoveries independently verified all original 147 fit inputs,
+revisions, metadata and EOS statistics before removing only known partial synthetic
+test records. Full original failure logs/stores/APKs remain retained. The first
+optional shared failure PNG/logcat were overwritten by the second failure and are
+explicitly recorded as unavailable, never passing evidence. Later diagnostics are
+archived by hash; required passing screenshots are intact. C01.2 starts after the
+exact-head local result, PR review and C01.1 merge.
