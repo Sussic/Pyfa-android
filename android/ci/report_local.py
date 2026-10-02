@@ -29,12 +29,33 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    runner_reuse=state.get('runner_fix_reuse',[])
+    proof=runner_reuse[-1] if runner_reuse else None
+    if proof:
+        from local_verification import pending_runner_fix
+        pending_runner_fix(root,proof['from_commit'],proof['to_commit'],proof['completed_before_adoption'])
+        assert proof['to_commit']==state['commit'] and proof['prepared'] and proof['installed']
+        archive=run/proof['archive']
+        assert archive.resolve().is_relative_to(run.resolve())
+        assert sha(archive/'apks/app-debug.apk')==sha(run/'apks/app-debug.apk')==proof['app_sha256']
+        assert sha(archive/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']
+        assert sha(run/'apks/app-debug-androidTest.apk')==proof['new_test_apk_sha256']
+        from zipfile import ZipFile
+        with ZipFile(archive/'apks/app-debug-androidTest.apk') as old, ZipFile(run/'apks/app-debug-androidTest.apk') as new:
+            assets={name for name in old.namelist() if name.startswith('assets/')}
+            assert assets=={name for name in new.namelist() if name.startswith('assets/')}
+            assert all(old.read(name)==new.read(name) for name in assets)
     checked_reuse=set()
     for gate in state['plan']:
         row=latest[gate]
         assert row['exit_code']==0 and row['tested_commit'],gate
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
+            comparison_commit=state['commit']
+            if proof and gate in proof['completed_before_adoption']:
+                assert not gate.startswith('native:mutation-history-')
+                if row['tested_commit']==proof['from_commit']:continue
+                comparison_commit=proof['from_commit']
             if gate == 'native:summary':
                 from summary_repair import equivalent
                 equivalent(root, state['commit'], row['tested_commit'])
@@ -42,21 +63,21 @@ def validate(run,root):
             assert gate.startswith(('desktop:','reference:','headless:','build:')),gate
             if row['tested_commit'] in checked_reuse: continue
             checked_reuse.add(row['tested_commit'])
-            changes=subprocess.check_output(['git','diff','--name-only',row['tested_commit'],state['commit']],cwd=root,text=True).splitlines()
+            changes=subprocess.check_output(['git','diff','--name-only',row['tested_commit'],comparison_commit],cwd=root,text=True).splitlines()
             allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1',
                 'android/ci/check-history.py','android/ci/history_progress.py',
                 'android/ci/report_local.py','android/ci/test_report_local.py','AGENTS.md'}
             if 'tools/android_headless/check_history_mutations.py' in changes:
                 from local_verification import pending_mutation_count_fix
                 reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']
-                    and r['to_commit'] == state['commit'])
-                pending_mutation_count_fix(root, row['tested_commit'], state['commit'], reuse['completed_before_adoption'])
+                    and r['to_commit'] == comparison_commit)
+                pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
                 assert gate in reuse['completed_before_adoption']
                 allowed.add('tools/android_headless/check_history_mutations.py')
             assert all(name in allowed or name.startswith('docs/android/') for name in changes),changes
             if 'android/ci/check-history.py' in changes:
                 before=subprocess.check_output(['git','show',row['tested_commit']+':android/ci/check-history.py'],cwd=root,text=True,encoding='utf-8')
-                after=subprocess.check_output(['git','show',state['commit']+':android/ci/check-history.py'],cwd=root,text=True,encoding='utf-8')
+                after=subprocess.check_output(['git','show',comparison_commit+':android/ci/check-history.py'],cwd=root,text=True,encoding='utf-8')
                 expected=before.replace('import json\n','import json\nimport os\n',1).replace('timeout=900)',"timeout=2400 if os.name == 'nt' else 900)",1)
                 assert after==expected,'History changed beyond the approved timeout'
             import ast
@@ -64,7 +85,7 @@ def validate(run,root):
                 return {node.name:ast.dump(node,include_attributes=False) for node in ast.walk(ast.parse(source))
                     if isinstance(node,ast.FunctionDef) and node.name in ('plan','host','build','execute')}
             earlier=subprocess.check_output(['git','show',row['tested_commit']+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
-            tested=subprocess.check_output(['git','show',state['commit']+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
+            tested=subprocess.check_output(['git','show',comparison_commit+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
             assert executed(earlier)==executed(tested),'Reused host/build commands changed'
     summary=json.loads((run/'native/native-summary.json').read_text(encoding='utf-8'))
     assert summary['checkout_sha']==latest['native:summary']['tested_commit'] and summary['workflow_run'] is None

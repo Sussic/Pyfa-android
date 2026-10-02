@@ -41,6 +41,27 @@ def pending_mutation_count_fix(root, before, after, completed):
     assert old.count('(2 if args.matrix_only else 22)') == 1
     assert new == old.replace('(2 if args.matrix_only else 22)', '(2 if args.matrix_only else 23)', 1)
 
+def pending_runner_fix(root, before, after, completed):
+    """Only the missing storage flag may change before any B09.2 phase passes."""
+    assert 'native:check-history.py' in completed
+    assert not any(g.startswith('native:mutation-history-') for g in completed)
+    path = 'android/app/src/androidTest/java/io/github/sussic/pyfa/DiagnosticTestRunner.kt'
+    def source(commit, name):
+        return subprocess.check_output(['git', 'show', commit + ':' + name], cwd=root, text=True, encoding='utf-8')
+    old = source(before, path)
+    ending = '!arguments.containsKey("b091_phase"))'
+    assert old.count(ending) == 1
+    assert source(after, path) == old.replace(ending,
+        '!arguments.containsKey("b091_phase") &&\n            !arguments.containsKey("b092_phase"))', 1)
+    changes = subprocess.check_output(['git', 'diff', '--name-only', before, after], cwd=root, text=True).splitlines()
+    allowed = {path, 'android/ci/local_verification.py', 'android/ci/report_local.py', 'android/ci/test_pending_runner_fix.py'}
+    assert path in changes and set(changes) <= allowed, changes
+    import ast
+    def executed(text):
+        return {n.name: ast.dump(n, include_attributes=False) for n in ast.walk(ast.parse(text))
+            if isinstance(n, ast.FunctionDef) and n.name in ('plan', 'host', 'build', 'execute')}
+    assert executed(source(before, 'android/ci/local_verification.py')) == executed(source(after, 'android/ci/local_verification.py'))
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -89,6 +110,15 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and args.adopt_pending_runner_fix:
+                assert self.state['status']=='failed'
+                assert self.state['attempts'][-1]['gate']=='native:mutation-history-0-prepare'
+                assert self.state['attempts'][-1]['exit_code']!=0
+                pending_runner_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                proof={'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),'prepared':False}
+                self.state.setdefault('runner_fix_reuse',[]).append(proof)
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
@@ -273,6 +303,29 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            fixes=self.state.get('runner_fix_reuse',[])
+            if fixes and not fixes[-1]['prepared']:
+                proof=fixes[-1]
+                archive=self.directory/'pending-runner-fix-original'
+                archive.mkdir(exist_ok=False)
+                (archive/'run.json').write_bytes(self.original_run_bytes)
+                shutil.copytree(self.directory/'apks',archive/'apks')
+                shutil.copyfile(self.native/'apk-contents.json',archive/'apk-contents.json')
+                proof['archive']=archive.name
+                proof['app_sha256']=sha(archive/'apks/app-debug.apk')
+                proof['old_test_apk_sha256']=sha(archive/'apks/app-debug-androidTest.apk')
+                self.build('apks-lint')
+                assert sha(ROOT/'android/app/build/outputs/apk/debug/app-debug.apk')==proof['app_sha256'], 'Target APK changed; earlier native proof is invalid'
+                self.build('package')
+                from zipfile import ZipFile
+                old_test=archive/'apks/app-debug-androidTest.apk'
+                new_test=self.directory/'apks/app-debug-androidTest.apk'
+                with ZipFile(old_test) as old, ZipFile(new_test) as new:
+                    assets={name for name in old.namelist() if name.startswith('assets/')}
+                    assert assets=={name for name in new.namelist() if name.startswith('assets/')}
+                    assert all(old.read(name)==new.read(name) for name in assets), 'Packaged fixtures changed'
+                proof['new_test_apk_sha256']=sha(new_test);proof['prepared']=True
+                save(self.file,self.state)
             for step in self.state['plan']:
                 if step in self.state['completed']:continue
                 if (self.directory/'PAUSE').exists():
@@ -282,6 +335,15 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if fixes and not fixes[-1].get('installed'):
+                        proof=fixes[-1]
+                        def graph_hash():
+                            return subprocess.check_output(['adb','-s',self.serial,'shell','run-as','io.github.sussic.pyfa.dev',
+                                'sha256sum','no_backup/fits/graph.sqlite3'],text=True).split()[0]
+                        prior_graph=graph_hash()
+                        self.execute('environment:pending-test-runner-update',['adb','-s',self.serial,'install','-r','-t',self.directory/'apks/app-debug-androidTest.apk'])
+                        assert graph_hash()==prior_graph, 'Test runner installation changed the retained fit store'
+                        proof['retained_graph_sha256']=prior_graph;proof['installed']=True;save(self.file,self.state)
                     from history_progress import HistoryProgress
                     diagnostics=HistoryProgress(self.directory/'diagnostics'/f'{step.replace(":", "-")}-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' or step.startswith('native:mutation-history-') else nullcontext()
                     with diagnostics:
@@ -317,6 +379,7 @@ def main():
     parser.add_argument('--run');parser.add_argument('--source');parser.add_argument('--reference-python')
     parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
     parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
+    parser.add_argument('--adopt-pending-runner-fix',action='store_true',help='Adopt only the exact missing B09.2 storage flag after its first phase failed; preserve earlier proof and rebuild the test APK')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
