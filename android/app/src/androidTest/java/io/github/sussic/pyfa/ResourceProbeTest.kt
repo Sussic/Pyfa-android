@@ -7,10 +7,14 @@ import android.os.Process
 import android.provider.Settings
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -79,11 +83,12 @@ class ResourceProbeTest {
             // Render the same production cards with actual native EOS results,
             // rather than an expected fixture or a separate test renderer.
             compose.activity.runOnUiThread {
-                compose.activity.setContent { MaterialTheme {
-                    Column(Modifier.verticalScroll(rememberScrollState())) {
+                compose.activity.setContent { MaterialTheme { Scaffold { insets ->
+                    Column(Modifier.padding(insets).verticalScroll(rememberScrollState()).padding(24.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp)) {
                         decoded.forEach { (name, row) -> ResourceCard(name, RESOURCE_LABELS.getValue(name), row, "probe-$index") }
                     }
-                } }
+                } } }
             }
             compose.waitForIdle()
             for ((name, row) in decoded) {
@@ -92,7 +97,7 @@ class ResourceProbeTest {
                 if (row.overloaded == true) compose.onNodeWithTag("resources-overload-$name").assertTextEquals("Over capacity")
                 compose.onNodeWithTag("resources-details-$name").performScrollTo().performClick()
                 compose.onNodeWithTag("resources-used-detail-$name").performScrollTo().assertTextEquals("Used: ${row.usedDetail} ${row.unit}")
-                compose.onNodeWithTag("resources-total-detail-$name").performScrollTo().assertTextEquals("Capacity: ${row.totalDetail} ${row.unit}")
+                compose.onNodeWithTag("resources-total-detail-$name").performScrollTo().assertIsDisplayed().assertTextEquals("Capacity: ${row.totalDetail} ${row.unit}")
                 if ((index == 3 && name == "cpu") || (index == 12 && name == "fighter_bay") || (index == 9 && name == "cargo_bay")) {
                     ParcelFileDescriptor.AutoCloseInputStream(instrumentation.uiAutomation.executeShellCommand(
                         "screencap -p /sdcard/Download/pyfa-c011-probe-$index-$name.png")).use { it.readBytes() }

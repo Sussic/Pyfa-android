@@ -20,14 +20,14 @@ assert adb('shell','getprop','ro.kernel.qemu').strip() == '1'
 assert adb('shell','settings','get','global','airplane_mode_on').strip() == '1'
 adb('shell','am','force-stop',package)
 path = f'/sdcard/Download/pyfa-c011-{phase}.json'
-adb('shell','rm','-f',path)
+names = {'probe':['probe-3-cpu','probe-12-fighter_bay','probe-9-cargo_bay'],
+         'prepare':['prepare-empty-detail','prepare-5','prepare-8','prepare-9'], 'restored':['restored']}[phase]
+adb('shell','rm','-f',path,*(f'/sdcard/Download/pyfa-c011-{name}.png' for name in names))
 command = ['shell','am','instrument','-w','-r','-e','class',
            'io.github.sussic.pyfa.'+('ResourceProbeTest' if phase=='probe' else 'ResourcesTest')]
 if phase != 'probe': command += ['-e','c011_phase',phase]
 output = adb(*command,f'{package}.test/io.github.sussic.pyfa.DiagnosticTestRunner',timeout=900)
 (evidence/f'resources-{phase}-instrumentation.txt').write_text(output,encoding='utf-8')
-names = {'probe':['probe-3-cpu','probe-12-fighter_bay','probe-9-cargo_bay'],
-         'prepare':['prepare-empty-detail','prepare-5','prepare-8','prepare-9'], 'restored':['restored']}[phase]
 for name in names:
     remote = f'/sdcard/Download/pyfa-c011-{name}.png'
     if subprocess.run(['adb','shell','test','-f',remote],timeout=30).returncode == 0:

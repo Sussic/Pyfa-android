@@ -148,8 +148,13 @@ def main():
         def test_presentation_source_is_exact_and_boundary_rounding_matches(self):
             def body(text):
                 nodes=ast.parse(text).body
-                return ast.dump(ast.Module(body=[n for n in nodes if not isinstance(n,ast.Expr)],type_ignores=[]),include_attributes=False)
-            compare(body((args.source/'gui/utils/numberFormatter.py').read_text()),body((ROOT/'android_bridge/number_format.py').read_text()))
+                if nodes and isinstance(nodes[0],ast.Expr) and isinstance(nodes[0].value,ast.Constant) and type(nodes[0].value.value) is str:
+                    nodes=nodes[1:]  # Only the adapter's leading license/provenance docstring.
+                return ast.dump(ast.Module(body=nodes,type_ignores=[]),include_attributes=False)
+            adapter=(ROOT/'android_bridge/number_format.py').read_text()
+            compare(body((args.source/'gui/utils/numberFormatter.py').read_text()),body(adapter))
+            for extra in ("\nprint('unexpected')\n", "\n'additional expression'\n", "\nimport os\n"):
+                self.assertNotEqual(body(adapter),body(adapter+extra))
             from android_bridge.number_format import formatAmount
             compare('1M',formatAmount(999999,3,0,9))
             compare('906.2',formatAmount(906.25,4,0,9))

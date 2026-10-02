@@ -65,9 +65,12 @@ exports agree across fourteen cases, including overloads for all eleven pairs.
 Seven host checks pass, including ten fits reopened in a fresh process; eight
 focused raw-validator regressions pass. Resource query/screen and native tests are
 implemented; APK/test compilation and lint pass at development revisions. Earlier
-failed host and compile attempts remain retained. Native execution, visual review
-and full final-commit verification are pending. Exact next action: execute the
-native resource diagnostic, then the saved-fit UI/restart chain and full plan.
+failed host and compile attempts remain retained. Candidate `f68503dd` passed all
+five build/package gates and the native fourteen-case diagnostic. Three diagnostic
+screens were reviewed; its wrapper now respects system-bar insets after a bottom
+detail line was partly covered. Production screen uses the existing Scaffold.
+Final saved-fit UI/restart, corrected screenshots and full verification remain
+pending. Exact next action: run the final 93-gate plan, then review and deliver C01.1.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master
 now has manual hosted fallback workflows. No owner configuration step remains.

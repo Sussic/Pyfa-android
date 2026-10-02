@@ -71,6 +71,10 @@ def summarize(probe, reports, engine, prior_pids=()):
         pids.add(report['pid'])
         start = report['runtime_start']['persistence']
         assert start['enabled'] is True and start['opened_existing'] is True
+        manifest = report['runtime_start']['manifest']
+        for key in ('desktop_source_commit','database_logical_sha256','engine_source_sha256','source_data_sha256'):
+            assert manifest[key] == engine[key]
+        settings(fixture['eos_settings'],report['runtime_start']['eos_settings'])
         assert len(report['ids']) == len(set(report['ids'])) == len(report['observations']) == 10
         saved = report['saved']; assert saved['ids'] == report['ids'] and len(saved['resources']) == 10
         if phase == 'prepare':
@@ -87,9 +91,11 @@ def summarize(probe, reports, engine, prior_pids=()):
         else:
             assert saved == prepared and saved['pid'] != report['pid']
             assert report['protocol_rejections'] == []
-            for row, retained in zip(report['observations'],saved['resources']):
+            durable = [case for case in cases if case['execution']=='durable']
+            for case, row, retained in zip(durable,report['observations'],saved['resources']):
                 actual = row['actual']
                 assert actual['fit_id'] == retained['fit_id'] and actual['resources'] == retained['resources']
                 assert type(actual['revision']) is int and actual['revision'] >= 1
+                resources(case['resources'],actual['resources'])
     return {'task':'C01.1','complete':True,'cases':14,'resource_pairs':11,
             'durable_fits':10,'copy_checked':True,'process_restart':True,'protocol_rejections':9}
