@@ -114,6 +114,19 @@ def capacitor_details(fit_id):
     return encoded(_bridge.capacitor_details(fit_id))
 
 
+def defense_details(fit_id):
+    return encoded(_bridge.defense_details(fit_id))
+
+
+def defense_persistence_snapshot():
+    """Read confirmed durable inputs for the native diagnostic boundary."""
+    _engine._check_thread()
+    from android_bridge.store import decode_graph
+    if _bridge._store is None:
+        raise RuntimeError('Persistent storage required for this diagnostic')
+    return encoded(decode_graph(_bridge._store.current.payload))
+
+
 def cargo_action_options(fit_id, item_id, from_cargo):
     return encoded(_bridge.cargo_action_options(fit_id, item_id, from_cargo))
 

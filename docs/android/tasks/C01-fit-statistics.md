@@ -110,3 +110,30 @@ intact. No assertion, tolerance, timeout or A10 requirement was weakened.
 
 PR #37 merged as 1c3beef9 from ca052755; merge/head trees match and its
 exact-head local/full-verification passed. C01.2 is closed; C01.3 is next.
+
+## C01.3 bounded outcomes
+
+C01.3.1 selected2026-10-02 from `adafcadc`, branch
+codex/c01-3-1-defense-details: F05.16–F05.22 defenses/HP and usable incoming
+damage contributions. Display all twelve resistances and three multipliers;
+raw/effective HP per layer and total, toggle with retained units/precision;
+edit each EM/thermal/kinetic/explosive contribution independently, reject invalid
+or all-zero patterns, persist accepted values and include their history disposition.
+Use actual EOS and unmodified original resistance refresh/pattern command evidence.
+Verify single/mixed patterns, active/offline resistance and HP modules, read-only
+queries, rejection/no-op, Undo/Redo, copy, recreation and separate-process restart.
+Final delivery requires APK/lint/package, every inherited gate, native screen/raw
+assertions, screenshot review and report-corruption checks. Named pattern libraries
+remain D05. C01.3.2 follows delivery and retains F05.23–F05.27 tank/spool acceptance.
+The parent remains active until both children are verified and delivered.
+
+C01.3.1 verification: [receipt](../evidence/c01-3-1-native.json) records all
+101 required local gates on `e0778290`, 67 native executions, 189 restored fits
+(174 inherited), 165 reviewed screenshots and 23 rejected actual-report
+corruptions. Fourteen independent original wx/EOS cases and four single-field
+damage-contribution witnesses agree in two fresh reference processes. Twenty-two
+fixture/schema/transport regressions and ten historical capacitor source guards
+pass. The full run needed no native retry; completed results remain retained.
+The earlier development compile failure is recorded separately. All inherited
+assertions, tolerances, timeouts, restart boundaries and A10 criteria are intact.
+Delivery PR, successful exact-head local status and merge remain pending.

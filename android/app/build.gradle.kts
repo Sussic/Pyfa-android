@@ -19,8 +19,8 @@ android {
         applicationId = "io.github.sussic.pyfa"
         minSdk = 24
         targetSdk = 36
-        versionCode = 29
-        versionName = "0.1.0-c01.2"
+        versionCode = 30
+        versionName = "0.1.0-c01.3.1"
         ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
         testInstrumentationRunner = "io.github.sussic.pyfa.DiagnosticTestRunner"
     }

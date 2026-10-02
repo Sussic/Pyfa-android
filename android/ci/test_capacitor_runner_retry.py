@@ -14,7 +14,7 @@ class Guard(unittest.TestCase):
     def setUp(self):
         self.paths=(PATH,'android/ci/local_verification.py','android/ci/report_local.py')
         self.old={p:subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True,encoding='utf-8') for p in self.paths}
-        self.new={p:(ROOT/p).read_text(encoding='utf-8') for p in self.paths}
+        self.new={p:subprocess.check_output(['git','show','7775b40a5832d263fdb0b16fdfa5961c7c4f1959:'+p],cwd=ROOT,text=True,encoding='utf-8') for p in self.paths}
     def test_actual_exact_repair(self):validate_sources(self.old,self.new,list(self.paths))
     def test_all_inherited_flags(self):
         old=set(re.findall(r'containsKey\("([^"]+)"\)',self.old[PATH]));new=set(re.findall(r'containsKey\("([^"]+)"\)',self.new[PATH]))

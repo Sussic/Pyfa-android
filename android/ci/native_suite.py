@@ -25,11 +25,12 @@ EXCLUDED = ['PerformanceTest', 'BridgeContractTest', 'PersistenceTest', 'FitLibr
     'ChargeEditingTest', 'VariationEditingTest', 'RackOrderingTest', 'BulkChargesTest',
     'BulkStatesTest', 'CloneFillTest', 'BulkVariationRemovalTest', 'HullModeTest',
     'SubsystemTest', 'StructureServiceTest', 'CargoStackTest', 'CargoActionTest',
-    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest', 'ResourceProbeTest', 'ResourcesTest', 'CapacitorTest']
+    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest', 'ResourceProbeTest', 'ResourcesTest', 'CapacitorTest', 'DefenseTest']
 MUTATION_STEPS = [f'mutation-history-{group}-{phase}' for group in range(4) for phase in ('prepare', 'restored')]
 RESOURCE_STEPS = ['resources-'+phase for phase in ('probe','prepare','restored')]
 CAPACITOR_STEPS = ['capacitor-'+phase for phase in ('prepare','restored')]
-STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, *CAPACITOR_STEPS, 'summary']
+DEFENSE_STEPS = ['defenses-'+phase for phase in ('prepare','restored')]
+STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, *CAPACITOR_STEPS, *DEFENSE_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
     'io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack',
@@ -169,6 +170,8 @@ def main():
                     command = [sys.executable, str(ROOT/'ci/check-mutation-history.py'), '--group', group, '--phase', phase]
                 elif step in RESOURCE_STEPS:
                     command = [sys.executable, str(ROOT/'ci/check-resources.py'), '--phase', step.split('-')[1]]
+                elif step in DEFENSE_STEPS:
+                    command = [sys.executable, str(ROOT/'ci/check-defenses.py'), '--phase', step.split('-')[1]]
                 elif step in CAPACITOR_STEPS:
                     command = [sys.executable, str(ROOT/'ci/check-capacitor.py'), '--phase', step.split('-')[1]]
                 else:

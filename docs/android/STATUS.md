@@ -1,11 +1,43 @@
 # Android project status
 
-Updated: 2026-10-02. **C01.2 delivered; C01.3 defenses/tank is next.**
+Updated: 2026-10-03. **C01.3.1 verified; delivery pending.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Current outcome — C01.3.1 defenses and incoming damage
+
+Selected from delivered master `adafcadc` on codex/c01-3-1-defense-details.
+F05.16–F05.22: all twelve shield/armor/hull resistances, each resistance
+multiplier, raw and selected-pattern effective HP per layer and total, HP/EHP
+toggle, and all four independently editable incoming damage contributions.
+Preserve precise typed EOS results, current-fit/revision refresh, offline durable
+inputs and global Undo/Redo. Named pattern management remains D05.
+Required: independent original wx/EOS states for single/mixed patterns, fitted
+resistance/HP modifiers, active/offline changes; rejection/read-only/history/copy
+and fresh-process persistence checks; APK/lint/package and the full inherited
+local/native suite, screenshot review and actual-report corruption rejection.
+C01.3.2 follows only after this outcome's review, checks, push and merge; it owns
+F05.23–F05.27 passive/active reinforced/sustained tank and spool details.
+
+Implementation/source review complete. Two fresh unmodified wx/EOS exports agree
+for fourteen cases and four individual contribution witnesses. Host matrix,
+read-only/GC, input/history/rejection/no-op/failed-save/copy and fresh-process
+restart pass; twenty-two fixture/schema/transport regressions and the extended
+original history matrix pass. Ten historical capacitor source/package guards pass.
+All 101 required local gates pass on `e0778290`: 56 reference/host, five build
+and 40 native gates, with 67 native executions and all A10 requirements retained.
+All 189 fits, including 174 inherited fits, survive process restart. All 165
+required screenshots are reviewed; 23 actual-report corruptions are rejected.
+[Receipt](evidence/c01-3-1-native.json) binds gate commits, logs, APK hashes and QA.
+The existing full run completed without native retries; its passing results were
+preserved across continuations. The earlier development diagnostics-accessor
+compile failure and repaired app/test/lint run remain recorded. No assertion,
+tolerance, timeout or performance criterion changed. Hosted checks were not run.
+Push, focused PR, exact-head local status and merge remain pending. Exact next is
+C01.3.2 repair/tank/spool after this delivery closes, as one coherent outcome.
 
 ## Latest delivery — C01.2 capacitor
 

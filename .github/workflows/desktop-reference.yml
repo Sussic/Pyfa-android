@@ -439,6 +439,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-capacitor-check"
+      - name: Verify original defense values and contribution witnesses
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/defenses.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-defenses-reference"
+          --check tools/android_reference/fixtures/defenses.json
+      - name: Verify defense queries, incoming-damage history and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_defenses.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-defenses-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

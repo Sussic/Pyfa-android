@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[StructureServiceEditorModel::class.java],
                 ViewModelProvider(this)[CargoEditorModel::class.java],
                 ViewModelProvider(this)[NotesModel::class.java], ViewModelProvider(this)[EditHistoryModel::class.java],
-                ViewModelProvider(this)[ResourcesModel::class.java], ViewModelProvider(this)[CapacitorModel::class.java])
+                ViewModelProvider(this)[ResourcesModel::class.java], ViewModelProvider(this)[CapacitorModel::class.java], ViewModelProvider(this)[DefenseModel::class.java])
         }
     }
 
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel, historyModel: EditHistoryModel, resourcesModel: ResourcesModel, capacitorModel: CapacitorModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel, historyModel: EditHistoryModel, resourcesModel: ResourcesModel, capacitorModel: CapacitorModel, defenseModel: DefenseModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -103,6 +103,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showTransfers by rememberSaveable { mutableStateOf(false) }
     var showNotes by rememberSaveable { mutableStateOf(false) }
     var showResources by rememberSaveable { mutableStateOf(false) }
+    var showDefenses by rememberSaveable { mutableStateOf(false) }
     var showCapacitor by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
@@ -126,7 +127,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     ) {
         Scaffold { insets ->
             Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers, showNotes, showResources, showCapacitor) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers, showNotes, showResources, showCapacitor, showDefenses) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
@@ -140,6 +141,8 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                         if (!showAbout && !showNotes) EditHistoryControls(historyModel)
                         if (showNotes) {
                             NotesEditor(notesModel, onBack = { showNotes = false })
+                        } else if (showDefenses) {
+                            DefenseView(defenseModel, onBack = { showDefenses = false })
                         } else if (showCapacitor) {
                             CapacitorView(capacitorModel, onBack = { showCapacitor = false })
                         } else if (showResources) {
@@ -191,7 +194,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                                 onSubsystems = { subsystemModel.open(); showSubsystems = true },
                                 onServices = { structureModel.open(); showServices = true },
                                 onCargo = { cargoModel.open(); showCargo = true },
-                                onNotes = { showNotes = true }, onResources = { showResources = true }, onCapacitor = { showCapacitor = true })
+                                onNotes = { showNotes = true }, onResources = { showResources = true }, onCapacitor = { showCapacitor = true }, onDefenses = { showDefenses = true })
                         }
                     }
                 }
@@ -201,7 +204,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit, onNotes: () -> Unit, onResources: () -> Unit, onCapacitor: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit, onNotes: () -> Unit, onResources: () -> Unit, onCapacitor: () -> Unit, onDefenses: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -256,6 +259,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             if (sampleGuns) Text(stringResource(R.string.sample_ammunition, ammunition))
             else Text(current.fit.ship + " · " + current.fit.modules.count { it.emptySlot == null } + " modules")
             Button(onClick = onResources, modifier = Modifier.testTag("resources-open")) { Text("Resources") }
+            Button(onClick = onDefenses, modifier = Modifier.testTag("defense-open")) { Text("Defenses") }
             Button(onClick = onCapacitor, modifier = Modifier.testTag("capacitor-open")) { Text("Capacitor") }
             Button(onClick = onModules, modifier = Modifier.testTag("modules-open")) { Text("Edit modules") }
             TextButton(onClick = onVariations, modifier = Modifier.testTag("variations-open")) { Text("Item variations") }
@@ -279,7 +283,8 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             }
             if (expanded) {
                 for (name in stats.keys.sorted()) {
-                    Text(name.replace('_', ' ') + ": " + formatStat(stats.getValue(name)))
+                    val label = if (name.endsWith("_ehp_uniform")) name.removeSuffix("_uniform") else name
+                    Text(label.replace('_', ' ') + ": " + formatStat(stats.getValue(name)))
                 }
             }
         }
