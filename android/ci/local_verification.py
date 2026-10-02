@@ -30,6 +30,17 @@ BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
 def git(*args): return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
+
+def pending_mutation_count_fix(root, before, after, completed):
+    """Reuse earlier gates only for the exact unexecuted suite-count correction."""
+    assert 'headless:history_mutations' not in completed
+    path = 'tools/android_headless/check_history_mutations.py'
+    def source(commit):
+        return subprocess.check_output(['git', 'show', commit + ':' + path], cwd=root, text=True, encoding='utf-8')
+    old = source(before); new = source(after)
+    assert old.count('(2 if args.matrix_only else 22)') == 1
+    assert new == old.replace('(2 if args.matrix_only else 22)', '(2 if args.matrix_only else 23)', 1)
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -83,6 +94,10 @@ class Run:
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
                 changed=git('diff','--name-only',self.state['commit'],current).splitlines()
                 allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1'}
+                if 'tools/android_headless/check_history_mutations.py' in changed:
+                    assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
+                    pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    allowed.add('tools/android_headless/check_history_mutations.py')
                 if args.restart_native:
                     allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
                         'android/ci/report_local.py','android/ci/test_report_local.py'})
@@ -106,7 +121,8 @@ class Run:
                 assert self.state['plan']==plan(self.state['mode'],self.state['gate'])
                 for row in self.state['attempts']: row.setdefault('tested_commit',self.state['commit'])
                 self.state.setdefault('launcher_fix_reuse',[]).append({'from_commit':self.state['commit'],
-                    'to_commit':current,'changed_files':changed,'unchanged_completed_host_build_inputs':True})
+                    'to_commit':current,'changed_files':changed,'completed_before_adoption':list(self.state['completed']),
+                    'unchanged_completed_host_build_inputs':True})
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             assert self.state['tree']==git('rev-parse','HEAD^{tree}')
         self.native=self.directory/'native';self.native.mkdir(exist_ok=True)

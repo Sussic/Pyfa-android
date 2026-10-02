@@ -234,7 +234,7 @@ def main():
         suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(FixtureBytesTest))
         suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(MutationStateTest))
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != (2 if args.matrix_only else 22) or not result.wasSuccessful() or result.skipped or guard.attempts or network:
+    if result.testsRun != (2 if args.matrix_only else 23) or not result.wasSuccessful() or result.skipped or guard.attempts or network:
         raise RuntimeError('Mutation history regression failed or attempted forbidden access')
     (args.output / 'evidence.json').write_text(json.dumps({'tests_passed': result.testsRun, 'reference_cases': len(expected['cases']),
         'reference_states': sum(len(c['steps']) for c in expected['cases']),

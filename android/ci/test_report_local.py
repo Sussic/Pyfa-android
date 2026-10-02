@@ -119,4 +119,19 @@ class InitialRunnerResultTest(unittest.TestCase):
             with self.subTest(corruption=i):
                 with self.assertRaises((AssertionError,KeyError,ValueError)):initial_junit(value)
 
+class PendingCountCorrectionTest(unittest.TestCase):
+    def test_only_exact_unexecuted_suite_count_change_is_accepted(self):
+        from local_verification import pending_mutation_count_fix
+        before = 'if result.testsRun != (2 if args.matrix_only else 22) or not result.wasSuccessful():\n    raise RuntimeError()\n'
+        after = before.replace('else 22', 'else 23')
+        with patch.object(report_local.subprocess, 'check_output', side_effect=[before, after]):
+            pending_mutation_count_fix(ROOT, 'before', 'after', ['desktop:reference'])
+        for bad in (after.replace('23', '24'), after.replace('not result.wasSuccessful()', 'False'), after + 'extra = True\n'):
+            with patch.object(report_local.subprocess, 'check_output', side_effect=[before, bad]):
+                with self.assertRaises(AssertionError): pending_mutation_count_fix(ROOT, 'before', 'after', [])
+    def test_already_executed_suite_cannot_be_reused(self):
+        from local_verification import pending_mutation_count_fix
+        with self.assertRaises(AssertionError):
+            pending_mutation_count_fix(ROOT, 'before', 'after', ['headless:history_mutations'])
+
 if __name__=='__main__':unittest.main()
