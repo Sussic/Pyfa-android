@@ -93,7 +93,8 @@ class Run:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
                 changed=git('diff','--name-only',self.state['commit'],current).splitlines()
-                allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1'}
+                allowed={'android/ci/local_verification.py','android/ci/native_suite.py','android/verify-local.ps1',
+                    'android/ci/report_local.py','android/ci/test_report_local.py'}
                 if 'tools/android_headless/check_history_mutations.py' in changed:
                     assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
                     pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
