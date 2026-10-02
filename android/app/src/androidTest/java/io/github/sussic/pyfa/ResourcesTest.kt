@@ -145,11 +145,14 @@ class ResourcesTest {
                 val modules = spec.getJSONArray("modules")
                 for (position in 0 until modules.length()) {
                     val module = modules.getJSONObject(position)
+                    val occupied = fit(id).modules.filter { it.name != null }.map { it.index }.toSet()
                     send(BridgeOperation.AddModule(id,item(module.getString("name"))),id)
+                    val added = fit(id).modules.single { it.name != null && it.index !in occupied }
+                    assertEquals(module.getString("name"),added.name)
                     val state = ModuleState.valueOf(module.getString("state"))
-                    if (fit(id).modules[position].state != state)
-                        send(BridgeOperation.SetModuleStates(id,listOf(position),state),id)
-                    if (!module.isNull("charge")) send(BridgeOperation.SetModuleCharge(id,position,item(module.getString("charge"))),id)
+                    if (added.state != state)
+                        send(BridgeOperation.SetModuleStates(id,listOf(added.index),state),id)
+                    if (!module.isNull("charge")) send(BridgeOperation.SetModuleCharge(id,added.index,item(module.getString("charge"))),id)
                 }
                 val cargo = spec.getJSONArray("cargo")
                 for (position in 0 until cargo.length()) cargo.getJSONObject(position).let {

@@ -61,6 +61,43 @@ RETAIN_HOOK='''            if resource_proof and gate in resource_proof['retaine
                 continue
 '''
 
+# Both historical transitions remain exact; neither permits product/fixture edits.
+SLOT_SOURCE='182dcfb02f7dc78e7a0be4176a0666d915811c3bc9b4929e93a5a9ee5347e641'
+SLOT_ARCHIVE='resource-placement-fix-original'
+SLOT_IDS=['13fa26c6a0d94aa6816df494202accf5','63eab694c7ba4bdeb4a8510f8f25a944','b97671414d7044bf9a6e8a79718958bb']
+SLOT_RECORDS=['27a4731a70ad86af9bf776bce6b0ca8389d625491b7602329a5ec291a9d283d3',
+              '504b79fa7f559e4a5ab1c848339b2a1eb19c50432c77b07d6943b1431eb48811',
+              'ba4370a83673148e73ec0bd7bc2763d100d27dc04f5c7995f1cae3bcfdfbf4b1']
+FIRST_REPORT_HOOK=REPORT_HOOK
+FIRST_RETAIN_HOOK=RETAIN_HOOK
+CHAIN_REPORT_HOOK="    resource_reuse=state.get('resource_test_reuse',[])\n    resource_proof=resource_reuse[-1] if resource_reuse else None\n    if resource_proof:\n        from resource_test_retry import exact_source,validate_recovery,assets_equal\n        for index,proof in enumerate(resource_reuse):\n            exact_source(root,proof['from_commit'],proof['to_commit'])\n            following=resource_reuse[index+1] if index+1<len(resource_reuse) else None\n            assert proof['to_commit']==(following['from_commit'] if following else state['commit'])\n            assert proof['prepared'] and proof['installed']\n            assert sha(run/proof['regression_log'])==proof['regression_log_sha256']\n            assert any(row['gate']=='headless:resource-harness-repair' and row['exit_code']==0\n                and row['tested_commit']==proof['to_commit'] and row['log']==proof['regression_log'] for row in state['attempts'])\n            archive=run/proof['archive'];assert archive.resolve().is_relative_to(run.resolve())\n            validate_recovery(root,run,archive/'recovery')\n            assert sha(archive/'recovery/recovery.json')==proof['recovery_receipt_sha256']\n            assert sha(run/'apks/app-debug.apk')==proof['app_sha256']\n            assert sha(archive/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']\n            new_apk=run/following['archive']/'apks/app-debug-androidTest.apk' if following else run/'apks/app-debug-androidTest.apk'\n            assert sha(new_apk)==proof['new_test_apk_sha256']\n            assets_equal(archive/'apks/app-debug-androidTest.apk',new_apk)\n            for name,digest in proof['retained_hashes'].items():assert sha(run/name)==digest\n            assert proof['retained_gates']==[gate for gate in proof['completed_before_adoption'] if gate not in ('build:apks-lint','build:package')]\n"
+CHAIN_RETAIN_HOOK="            if resource_proof and gate in resource_proof['retained_gates']:\n                assert any(gate in proof['retained_gates'] and row['tested_commit']==proof['from_commit'] for proof in resource_reuse)\n                continue\n"
+
+def slot_reporter(source):
+    return replace_once(replace_once(source,FIRST_REPORT_HOOK,CHAIN_REPORT_HOOK),FIRST_RETAIN_HOOK,CHAIN_RETAIN_HOOK)
+
+def placement_graph(original,prior):
+    from android_bridge.store import encode_graph
+    ids=[row['id'] for row in prior['after']['data']]
+    assert len(ids)==len(set(ids))==147
+    assert [key for key in original['fit_order'] if key in ids]==ids
+    extras=[key for key in original['fit_order'] if key not in ids]
+    assert extras==SLOT_IDS and original['sample_id'] in ids
+    # The sole completed recent-use operation was AddModule(Dual 150mm Railgun II).
+    expected_recent=[3106]+[identity for identity in prior['recent_after'] if identity!=3106]
+    assert original['recent']==expected_recent
+    for identifier,digest in zip(SLOT_IDS,SLOT_RECORDS):
+        assert hashlib.sha256(encode_graph(original['records'][identifier]).encode()).hexdigest()==digest
+    for row in prior['after']['data']:
+        assert original['revisions'][row['id']]==row['revision']
+        for field in ('projections','commands'):
+            assert not any(edge['source_id'] in extras for edge in original['records'][row['id']][field])
+    restored=copy.deepcopy(original);restored['fit_order']=ids;restored['recent']=copy.deepcopy(prior['recent_after'])
+    for field in ('records','revisions','modified'):
+        assert set(original[field])==set(original['fit_order'])
+        restored[field]={key:original[field][key] for key in ids}
+    return restored
+
 def replace_once(source,anchor,replacement):
     assert source.count(anchor)==1,anchor
     return source.replace(anchor,replacement,1)
@@ -82,6 +119,13 @@ def updated_reporter(source):
     return replace_once(source,anchor,anchor+RETAIN_HOOK)
 
 def validate_sources(old,new,changes):
+    if hashlib.sha256(old[PATH]).hexdigest()==NEW_SOURCE:
+        assert hashlib.sha256(new[PATH]).hexdigest()==SLOT_SOURCE,'Unrelated resource slot test change'
+        allowed={PATH,'android/ci/resource_test_retry.py','android/ci/test_resource_test_retry.py','android/ci/report_local.py'}
+        assert PATH in changes and all(path in allowed or path.startswith('docs/android/') for path in changes),changes
+        assert new['android/ci/local_verification.py']==old['android/ci/local_verification.py'],'Unrelated launcher change'
+        assert new['android/ci/report_local.py'].decode()==slot_reporter(old['android/ci/report_local.py'].decode()),'Unrelated reporter change'
+        return
     assert hashlib.sha256(old[PATH]).hexdigest()==OLD_SOURCE
     assert hashlib.sha256(new[PATH]).hexdigest()==NEW_SOURCE,'Unrelated resource test change'
     allowed={PATH,'android/ci/resource_test_retry.py','android/ci/test_resource_test_retry.py',
@@ -135,23 +179,28 @@ def validate_recovery(root,run,directory):
     prior=json.loads(prior_path.read_text(encoding='utf-8'));checkpoint=json.loads((directory/'b092-test-expected.json').read_text(encoding='utf-8'))
     assert checkpoint==prior['saved'] and sha(directory/'b092-test-expected.json')==receipt['checkpoint_sha256']
     old,new=GraphStore(original).current,GraphStore(restored).current
-    expected=recovery_graph(decode_graph(old.payload),prior)
+    placement=directory.parent.name==SLOT_ARCHIVE
+    expected=(placement_graph if placement else recovery_graph)(decode_graph(old.payload),prior)
+    if placement:
+        baseline=GraphStore(run/ARCHIVE/'recovery/restored-graph.sqlite3').current
+        assert encode_graph(expected)==encode_graph(decode_graph(baseline.payload)),'Original baseline input or metadata changed'
     assert decode_graph(new.payload)==expected
     assert new.generation==old.generation+1==receipt['generation_after'] and old.generation==receipt['generation_before']
     preserved=encode_graph({field:expected[field] for field in ('records','revisions','modified')})
     assert hashlib.sha256(preserved.encode()).hexdigest()==receipt['preserved_original_inputs_sha256']
-    assert receipt['original_fits']==147 and receipt['removed_ids']==EXTRA_IDS
+    assert receipt['original_fits']==147 and receipt['removed_ids']==(SLOT_IDS if placement else EXTRA_IDS)
     assert receipt['original_library_eos_comparison_passed'] is True
     return receipt
 
 def prepare(runner,proof):
-    archive=runner.directory/ARCHIVE
+    archive_name=ARCHIVE if hashlib.sha256(subprocess.check_output(['git','show',proof['from_commit']+':'+PATH],cwd=Path(__file__).resolve().parents[2])).hexdigest()==OLD_SOURCE else SLOT_ARCHIVE
+    archive=runner.directory/archive_name
     original=json.loads((archive/'run.json').read_text(encoding='utf-8'))
     assert original['commit']==proof['from_commit'] and original['completed']==proof['completed_before_adoption']
     assert original['status']=='failed' and original['attempts'][-1]['gate']=='native:resources-prepare'
     root=Path(__file__).resolve().parents[2]
     validate_recovery(root,runner.directory,archive/'recovery')
-    proof['archive']=ARCHIVE;proof['app_sha256']=sha(runner.directory/'apks/app-debug.apk')
+    proof['archive']=archive_name;proof['app_sha256']=sha(runner.directory/'apks/app-debug.apk')
     proof['old_test_apk_sha256']=sha(archive/'apks/app-debug-androidTest.apk')
     assert sha(runner.directory/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']
     proof['retained_hashes']={str(path.relative_to(runner.directory)):sha(path)
@@ -162,7 +211,7 @@ def prepare(runner,proof):
     runner.execute('headless:resource-harness-repair',[sys.executable,'-I',root/'android/ci/test_resource_test_retry.py'])
     regression=runner.state['attempts'][-1]
     output=(runner.directory/regression['log']).read_text(encoding='utf-8')
-    assert 'Ran 8 tests' in output and '\nOK\n' in output
+    assert 'Ran 12 tests' in output and '\nOK\n' in output
     proof['regression_log']=regression['log'];proof['regression_log_sha256']=sha(runner.directory/regression['log'])
     runner.build('apks-lint')
     assert sha(root/'android/app/build/outputs/apk/debug/app-debug.apk')==proof['app_sha256'],'Application APK changed'
@@ -177,7 +226,7 @@ def prepare(runner,proof):
     proof['prepared']=True
 
 def install(runner,proof):
-    archive=runner.directory/ARCHIVE;root=Path(__file__).resolve().parents[2]
+    archive=runner.directory/proof['archive'];root=Path(__file__).resolve().parents[2]
     receipt=validate_recovery(root,runner.directory,archive/'recovery')
     def adb(*parts): return subprocess.check_output(['adb','-s',runner.serial,*map(str,parts)],timeout=60)
     assert adb('shell','getprop','ro.kernel.qemu').strip()==b'1'

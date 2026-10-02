@@ -33,19 +33,24 @@ def validate(run,root):
     resource_proof=resource_reuse[-1] if resource_reuse else None
     if resource_proof:
         from resource_test_retry import exact_source,validate_recovery,assets_equal
-        exact_source(root,resource_proof['from_commit'],resource_proof['to_commit'])
-        assert resource_proof['to_commit']==state['commit'] and resource_proof['prepared'] and resource_proof['installed']
-        assert sha(run/resource_proof['regression_log'])==resource_proof['regression_log_sha256']
-        assert latest['headless:resource-harness-repair']['exit_code']==0 and latest['headless:resource-harness-repair']['tested_commit']==state['commit']
-        archive=run/resource_proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
-        validate_recovery(root,run,archive/'recovery')
-        assert sha(archive/'recovery/recovery.json')==resource_proof['recovery_receipt_sha256']
-        assert sha(run/'apks/app-debug.apk')==resource_proof['app_sha256']
-        assert sha(archive/'apks/app-debug-androidTest.apk')==resource_proof['old_test_apk_sha256']
-        assert sha(run/'apks/app-debug-androidTest.apk')==resource_proof['new_test_apk_sha256']
-        assets_equal(archive/'apks/app-debug-androidTest.apk',run/'apks/app-debug-androidTest.apk')
-        for name,digest in resource_proof['retained_hashes'].items():assert sha(run/name)==digest
-        assert resource_proof['retained_gates']==[gate for gate in resource_proof['completed_before_adoption'] if gate not in ('build:apks-lint','build:package')]
+        for index,proof in enumerate(resource_reuse):
+            exact_source(root,proof['from_commit'],proof['to_commit'])
+            following=resource_reuse[index+1] if index+1<len(resource_reuse) else None
+            assert proof['to_commit']==(following['from_commit'] if following else state['commit'])
+            assert proof['prepared'] and proof['installed']
+            assert sha(run/proof['regression_log'])==proof['regression_log_sha256']
+            assert any(row['gate']=='headless:resource-harness-repair' and row['exit_code']==0
+                and row['tested_commit']==proof['to_commit'] and row['log']==proof['regression_log'] for row in state['attempts'])
+            archive=run/proof['archive'];assert archive.resolve().is_relative_to(run.resolve())
+            validate_recovery(root,run,archive/'recovery')
+            assert sha(archive/'recovery/recovery.json')==proof['recovery_receipt_sha256']
+            assert sha(run/'apks/app-debug.apk')==proof['app_sha256']
+            assert sha(archive/'apks/app-debug-androidTest.apk')==proof['old_test_apk_sha256']
+            new_apk=run/following['archive']/'apks/app-debug-androidTest.apk' if following else run/'apks/app-debug-androidTest.apk'
+            assert sha(new_apk)==proof['new_test_apk_sha256']
+            assets_equal(archive/'apks/app-debug-androidTest.apk',new_apk)
+            for name,digest in proof['retained_hashes'].items():assert sha(run/name)==digest
+            assert proof['retained_gates']==[gate for gate in proof['completed_before_adoption'] if gate not in ('build:apks-lint','build:package')]
     projection_reuse=state.get('projection_report_reuse',[])
     projection_proof=projection_reuse[-1] if projection_reuse else None
     if projection_proof:
@@ -135,7 +140,7 @@ def validate(run,root):
         if row['tested_commit']!=state['commit']:
             comparison_commit=state['commit']
             if resource_proof and gate in resource_proof['retained_gates']:
-                assert row['tested_commit']==resource_proof['from_commit']
+                assert any(gate in proof['retained_gates'] and row['tested_commit']==proof['from_commit'] for proof in resource_reuse)
                 continue
             if projection_proof and gate in projection_proof['retained_gates']:
                 if row['tested_commit']==projection_proof['from_commit']:continue

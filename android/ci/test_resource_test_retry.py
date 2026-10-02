@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from zipfile import ZipFile
 ROOT=Path(__file__).resolve().parents[2];sys.path[:0]=[str(ROOT),str(ROOT/'android/ci')]
-from resource_test_retry import PATH,EXTRA_IDS,recovery_graph,validate_sources,updated_launcher,updated_reporter,assets_equal
+from resource_test_retry import PATH,EXTRA_IDS,recovery_graph,validate_sources,updated_launcher,updated_reporter,assets_equal,SLOT_IDS,placement_graph,slot_reporter
 
 class ResourceRetryTests(unittest.TestCase):
     @classmethod
@@ -78,5 +78,57 @@ class ResourceRetryTests(unittest.TestCase):
             assets_equal(left,right)
             with ZipFile(right,'w') as archive:archive.writestr('assets/fixture.json',b'{"same":true}\n')
             with self.assertRaises(AssertionError):assets_equal(left,right)
+
+
+    def slot_sources(self):
+        paths=(PATH,'android/ci/local_verification.py','android/ci/report_local.py')
+        old={path:subprocess.check_output(['git','show','86d3e36d:'+path],cwd=ROOT) for path in paths}
+        new=deepcopy(old)
+        new[PATH]=old[PATH].decode().replace('                    send(BridgeOperation.AddModule(id,item(module.getString("name"))),id)\n                    val state = ModuleState.valueOf(module.getString("state"))\n                    if (fit(id).modules[position].state != state)\n                        send(BridgeOperation.SetModuleStates(id,listOf(position),state),id)\n                    if (!module.isNull("charge")) send(BridgeOperation.SetModuleCharge(id,position,item(module.getString("charge"))),id)\n','                    val occupied = fit(id).modules.filter { it.name != null }.map { it.index }.toSet()\n                    send(BridgeOperation.AddModule(id,item(module.getString("name"))),id)\n                    val added = fit(id).modules.single { it.name != null && it.index !in occupied }\n                    assertEquals(module.getString("name"),added.name)\n                    val state = ModuleState.valueOf(module.getString("state"))\n                    if (added.state != state)\n                        send(BridgeOperation.SetModuleStates(id,listOf(added.index),state),id)\n                    if (!module.isNull("charge")) send(BridgeOperation.SetModuleCharge(id,added.index,item(module.getString("charge"))),id)\n',1).encode()
+        new['android/ci/report_local.py']=slot_reporter(old['android/ci/report_local.py'].decode()).encode()
+        return old,new
+
+    def placement(self):
+        graph=deepcopy(self.graph);base=graph['fit_order'][:-2]
+        empty=deepcopy(graph['records'][EXTRA_IDS[0]])
+        copy=deepcopy(graph['records'][EXTRA_IDS[1]])
+        fitted=deepcopy(empty);fitted['spec'].update(name='C01.1 Fitted cruiser',ignore_restrictions=False,
+            drones=[{'active':3,'amount':5,'name':'Hammerhead II'}],
+            modules=[{'empty_slot':'LOW'} for _ in range(5)]+[{'empty_slot':'MED'} for _ in range(4)]+
+            [{'charge':None,'name':'Dual 150mm Railgun II','state':'ACTIVE'}]+[{'empty_slot':'HIGH'} for _ in range(3)]+
+            [{'empty_slot':'RIG'} for _ in range(3)])
+        graph['fit_order']=base+SLOT_IDS
+        for field in ('records','revisions','modified'):graph[field]={key:value for key,value in graph[field].items() if key in base}
+        for identifier,record in zip(SLOT_IDS,[empty,copy,fitted]):
+            graph['records'][identifier]=record;graph['revisions'][identifier]=1;graph['modified'][identifier]=2.0
+        graph['recent']=[3106]+self.prior['recent_after']
+        return graph
+
+    def test_exact_slot_source_and_chain_pass(self):
+        old,new=self.slot_sources();validate_sources(old,new,[PATH,'android/ci/report_local.py'])
+
+    def test_slot_source_rejects_other_changes(self):
+        old,new=self.slot_sources()
+        for path in new:
+            bad=deepcopy(new);bad[path]+=b'# unrelated change\n'
+            with self.subTest(path=path),self.assertRaises(AssertionError):validate_sources(old,bad,[PATH,'android/ci/report_local.py'])
+        with self.assertRaises(AssertionError):validate_sources(old,new,[PATH,'android_bridge/contract.py'])
+
+    def test_placement_recovery_preserves_baseline_and_restores_expected_recent(self):
+        graph=self.placement();before=deepcopy(graph);restored=placement_graph(graph,self.prior)
+        self.assertEqual(graph,before);self.assertEqual(restored['recent'],self.prior['recent_after'])
+        for field in ('records','revisions','modified'):
+            self.assertEqual(restored[field],{key:graph[field][key] for key in restored['fit_order']})
+        self.assertEqual(len(restored['fit_order']),147)
+
+    def test_placement_recovery_rejects_inputs_ids_recent_revisions_order_links(self):
+        for change in (lambda g:g['records'][SLOT_IDS[2]]['spec']['modules'][9].__setitem__('state','OFFLINE'),
+                       lambda g:g['fit_order'].__setitem__(-1,'unexpected'),
+                       lambda g:g.__setitem__('recent',[999]),
+                       lambda g:g['revisions'].__setitem__('baseline-0',2),
+                       lambda g:g['fit_order'].__setitem__(slice(0,2),list(reversed(g['fit_order'][:2]))),
+                       lambda g:g['records']['baseline-0']['commands'].append({'source_id':SLOT_IDS[0]})):
+            bad=self.placement();change(bad)
+            with self.assertRaises(AssertionError):placement_graph(bad,self.prior)
 
 if __name__=='__main__':unittest.main()

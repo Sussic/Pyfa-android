@@ -146,3 +146,14 @@ R03 usability, C07 full implant profiles/locations and Q07 complete projection/
 command matrices retain scope. Older builds reject newer fields and preserve
 storage. Legacy tox remains unaudited; A10 measurements are debug emulator baselines.
 Full parity is not established. Restore-off opens the library while saved fits rebuild.
+
+C01.1 bounded retry update: copy-ID correction passed, then preparation rejected
+an empty module slot because the fixture loop ordinal was used as a physical EOS
+index. Select the newly occupied index and preserve every resource/state/charge
+assertion. Both failures, APKs and partial stores are archived separately. Twelve
+focused source/recovery tests pass. The second recovery verifies all 147 original
+inputs, revisions, metadata and EOS statistics, checks the exact three synthetic
+partial records and sole railgun recent-use promotion, then restores the original
+baseline in a separate copy. Production code, fixtures, tolerances, timeouts and
+performance requirements remain unchanged. Only corrected test build/package,
+prepare, restored and summary remain; keep the 90 valid earlier gates.
