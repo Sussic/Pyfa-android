@@ -749,7 +749,8 @@ class BridgeSession:
                 promoted = used if recent != self._recent else []
                 # Record the original recent-use side effect even when its item
                 # is already first; redo may run after another fit promotes one.
-                if operation in {'add_module', 'replace_module', 'remove_module', 'remove_bulk_modules', 'fill_modules_item'}:
+                if operation in {'add_module', 'replace_module', 'remove_module', 'remove_bulk_modules', 'fill_modules_item',
+                    'set_subsystem', 'add_cargo', 'remove_cargo', 'remove_cargos', 'add_cargo_preset', 'fill_cargo'}:
                     promoted = used or []
                 history = self._history.after_edit(operation, args, self._records, records, promoted)
             modified = {key: self._modified.get(key, 0) for key in records}

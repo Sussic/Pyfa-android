@@ -25,8 +25,9 @@ EXCLUDED = ['PerformanceTest', 'BridgeContractTest', 'PersistenceTest', 'FitLibr
     'ChargeEditingTest', 'VariationEditingTest', 'RackOrderingTest', 'BulkChargesTest',
     'BulkStatesTest', 'CloneFillTest', 'BulkVariationRemovalTest', 'HullModeTest',
     'SubsystemTest', 'StructureServiceTest', 'CargoStackTest', 'CargoActionTest',
-    'CargoTransferTest', 'NotesTest', 'EditHistoryTest']
-STEPS = ['initial', *CHECKS, 'summary']
+    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest']
+MUTATION_STEPS = [f'mutation-history-{group}-{phase}' for group in range(4) for phase in ('prepare', 'restored')]
+STEPS = ['initial', *CHECKS, *MUTATION_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
     'io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack',
@@ -141,8 +142,13 @@ def main():
             else:
                 assert adb('shell','getprop','ro.kernel.qemu').strip()=='1'
                 assert adb('shell','settings','get','global','airplane_mode_on').strip()=='1'
-                script='summarize-tests.py' if step=='summary' else step
-                subprocess.run([sys.executable,str(ROOT/'ci'/script)],cwd=ROOT,check=True)
+                if step in MUTATION_STEPS:
+                    _, _, group, phase = step.split('-')
+                    command = [sys.executable, str(ROOT/'ci/check-mutation-history.py'), '--group', group, '--phase', phase]
+                else:
+                    script='summarize-tests.py' if step=='summary' else step
+                    command = [sys.executable, str(ROOT/'ci'/script)]
+                subprocess.run(command,cwd=ROOT,check=True)
     except BaseException:
         for name, command in [('failure.png',('exec-out','screencap','-p')),
                               ('failure-logcat.txt',('logcat','-d','-t','300','AndroidRuntime:E','PyfaEngine:E','TestRunner:I','python.stderr:W','*:S'))]:

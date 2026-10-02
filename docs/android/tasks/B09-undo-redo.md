@@ -96,9 +96,9 @@ Branch codex/b09-2-mutation-history from delivered master 0685bb32.
 mutation. Recipient-owned linked effects, rename, mode/subsystem, cargo/transfers,
 addition variations/implants and skill overrides now enter session history.
 Library/query/cursor and direct notes writes have explicit lifecycle dispositions.
-Eight focused registration/ownership/preservation/deletion tests pass. Real EOS
-regression is running; independent remaining command reversals, native UI/raw
-restart/screenshots and complete final local verification remain required.
+Eight focused registration/ownership/preservation/deletion tests and six real-EOS
+module regression tests pass. Remaining native UI/raw restart/screenshots and
+complete final local verification remain required.
 
 ## B09.2 independent remaining-command checkpoint
 
@@ -136,3 +136,43 @@ dummy restoration, rather than only its calculation command. No adapter change,
 numeric tolerance change or existing assertion removal was needed for this fix.
 The complete host gate also requires all eight history registration/disposition
 tests; native and final stable-candidate verification remain outstanding.
+
+## B09.2 native candidate
+
+Build 28 (`0.1.0-b09.2`) adds a native remaining-history test: four groups of seven
+cases, each followed by an actual process restart. All 168 independent states use
+the activity Undo/Redo controls. It also checks cargo and transfer selections,
+notes, recreation, stale actions, copied history and deleted-source invalidation.
+Eight independently resumable gates preserve completed groups. Final native
+acceptance expects 147 retained fits, eight distinct new processes and 21 new
+screenshots; these are requirements, not executed results yet.
+
+Reports retain actual restored inputs, scalar kinds, revision/cursor transitions
+and the test APK fixture's byte hash. The raw validator requires that hash to
+match the verified packaged bytes, and those bytes to match the reference after
+CRLF-to-LF normalization only. Twelve focused regressions pass all 168 fixture
+states and reject invalid content/units/types, missing fixtures, incorrect hashes
+and changed fixture bytes even with an updated matching hash. Existing reporter
+regressions pass all 20 tests. B09.1 now additionally asserts its two projection
+recipients retain their one link action during local-module reversals; all
+original 18 cases/108 states, timeouts and restart checks remain.
+
+Development APKs/lint pass (2m02s), signature and package inspection pass for 163
+sources and both ABI ELF dependency sets. Logs are retained in the local
+development root: `b092-native-build-20261002-012041.log`,
+`b092-package-20261002-012532` and `b092-validator-20261002-012445.log`.
+The initial environment-path compile failure and initial validator failure remain
+recorded. The final candidate requires the complete 88-gate local plan, including
+the 23-test new host gate, 60 actual native executions and all 146 required
+screenshots. No hosted workflow or native emulator test has been dispatched for
+this candidate yet. Final review, execution, raw corruption probes, screenshot
+review and PR delivery remain outstanding.
+
+Review found and corrected a concrete recent-use replay issue: cargo/subsystem
+actions must retain promotion even when the item is already first. An independent
+original wx two-fit case, focused bridge comparison and raw-validator regression
+now verify all five interleaved steps, both history cursors and final ordering.
+Native controls repeat the same case; the two extra fits persist across restart.
+Focused original export is retained at `b092-original-20261002-013617`; the new
+validator log and recent-use bridge receipt remain in the development root.
+The earlier build precedes this fix and is not proof for the final candidate.

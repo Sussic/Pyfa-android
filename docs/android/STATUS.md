@@ -39,9 +39,14 @@ Independent original commands now pass 28 cases/168 states in two fresh processe
 the focused bridge comparison passes all states. All 28 durable failure/reversal
 cases separately passed, restoring 35 fits with empty history. Their overall
 attempt remains failed; the corrected focused matrix is development evidence.
-Exact next action: add remaining-mutation native touch/recreation/selection,
-recipient ownership, process restart and raw validation/screenshots, then review
-and fully verify a stable candidate. B09 remains active until every existing
+Native touch/recreation/selection, recipient ownership, process restart and raw
+validation are now implemented as four prepare/restore pairs. Development APKs,
+lint/signature/package and 12 focused raw-validator tests pass; actual native
+execution is still required. A review fix retains cargo/subsystem recent-use promotions when already first,
+so Redo restores ordering after another fit edits cargo. Independent desktop and
+focused bridge checks pass its five-step two-fit case. Exact next action:
+review/commit the complete native candidate, run its 88-gate local plan, inspect raw reports/screenshots and deliver
+the focused PR. B09 remains active until every existing
 mutation has an explicit tested disposition. Later mutation tasks must extend it.
 
 W02 remains delivered. [Commands and evidence](LOCAL-VERIFICATION.md) apply; master

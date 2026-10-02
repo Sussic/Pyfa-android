@@ -204,16 +204,41 @@ def main():
                     stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
             compare({'fits': count, 'history_empty': True}, json.loads((args.output / 'restored.json').read_text()))
 
-    suite = (unittest.TestSuite([MutationHistoryTests('test_all_remaining_original_actions_and_reversals')])
+        def test_recent_redo_repromotes_after_another_fit(self):
+            case = expected['interleaved_recent']; key, other = self.create(case['spec']), self.create(case['other_spec'])
+            self.send('add_cargo', dict(fit_id=other, item_id=case['item_id'], quantity=1))
+            self.send('remove_cargo', dict(fit_id=other, item_id=case['item_id'], quantity=1))
+            observations = []
+            for step in case['steps']:
+                action = step['action']
+                if action == 'do': self.send('add_cargo', dict(fit_id=key, item_id=case['item_id'], quantity=150))
+                elif action in ('undo', 'redo'): self.send(action, dict(fit_id=key))
+                elif action == 'other': self.send('add_cargo', dict(fit_id=other, item_id=case['other_item_id'], quantity=1))
+                owner, unrelated = self.observe(key), self.observe(other)
+                self.equal(step['owner'], owner, {'operation': 'add_cargo'}, action)
+                self.equal(step['other'], unrelated, {'operation': 'add_cargo'}, action)
+                for id_, field in ((key, 'owner_history'), (other, 'other_history')):
+                    row = self.bridge.history_details(id_); undo, redo = row['undo_count'], row['redo_count']
+                    compare(step[field], dict(undo_count=undo, redo_count=redo, can_undo=undo > 0, can_redo=redo > 0))
+                observations.append(dict(action=action, owner=owner, other=unrelated))
+            (args.output / 'interleaved-recent.json').write_text(json.dumps(observations, indent=2, allow_nan=False) + '\n')
+
+    suite = (unittest.TestSuite([MutationHistoryTests('test_all_remaining_original_actions_and_reversals'),
+        MutationHistoryTests('test_recent_redo_repromotes_after_another_fit')])
         if args.matrix_only else unittest.defaultTestLoader.loadTestsFromTestCase(MutationHistoryTests))
     if not args.matrix_only:
         from tools.android_headless.test_history_registration import HistoryRegistrationTest
         suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(HistoryRegistrationTest))
+        sys.path.insert(0, str(ROOT / 'android/ci'))
+        from test_mutation_history_summary import FixtureBytesTest, MutationStateTest
+        suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(FixtureBytesTest))
+        suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(MutationStateTest))
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun != (1 if args.matrix_only else 10) or not result.wasSuccessful() or result.skipped or guard.attempts or network:
+    if result.testsRun != (2 if args.matrix_only else 22) or not result.wasSuccessful() or result.skipped or guard.attempts or network:
         raise RuntimeError('Mutation history regression failed or attempted forbidden access')
     (args.output / 'evidence.json').write_text(json.dumps({'tests_passed': result.testsRun, 'reference_cases': len(expected['cases']),
         'reference_states': sum(len(c['steps']) for c in expected['cases']),
+        'interleaved_recent_steps': len(expected['interleaved_recent']['steps']),
         'complete_verification': not args.matrix_only, 'fresh_process_restore': not args.matrix_only,
         'restored': json.loads((args.output / 'restored.json').read_text()) if not args.matrix_only else None,
         'desktop_import_attempts': guard.attempts, 'network_attempts': network}, indent=2) + '\n')

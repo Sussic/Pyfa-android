@@ -231,14 +231,38 @@ def export(source, database):
             'source_spec': {**linked_spec, 'name': linked.name} if linked_spec else None,
             'setup_link': operation in ('configure_projection', 'remove_projection', 'set_command_active', 'remove_command'),
             'boundary': boundary, 'steps': steps})
+    recent_spec = {**deepcopy(base), 'name': 'Independent recent owner'}
+    recent_other_spec = {**deepcopy(base), 'name': 'Independent recent other'}
+    recent_fit, recent_other = make_fit(recent_spec), make_fit(recent_other_spec)
+    owner_processor, other_processor = service.getCommandProcessor(recent_fit.ID), service.getCommandProcessor(recent_other.ID)
+    market.serviceMarketRecentlyUsedModules['pyfaMarketRecentlyUsedModules'] = []
+    assert other_processor.Submit(commands['add'](recent_other.ID, iid(ammo), 1))
+    assert other_processor.Submit(commands['remove'](recent_other.ID, [iid(ammo)]))
+    def cursor(processor):
+        rows = list(processor.Commands); current = processor.GetCurrentCommand()
+        position = rows.index(current) + 1 if current is not None else 0
+        return dict(undo_count=position, redo_count=len(rows) - position,
+            can_undo=processor.CanUndo(), can_redo=processor.CanRedo())
+    recent_steps = []
+    for action in ('initial', 'do', 'undo', 'other', 'redo'):
+        if action == 'do': assert owner_processor.Submit(commands['add'](recent_fit.ID, iid(ammo), 150))
+        elif action == 'undo': assert owner_processor.Undo()
+        elif action == 'other': assert other_processor.Submit(commands['add'](recent_other.ID, iid('Iron Charge M'), 1))
+        elif action == 'redo': assert owner_processor.Redo()
+        recent_steps.append(dict(action=action, owner=observe(recent_fit), other=observe(recent_other),
+            owner_history=cursor(owner_processor), other_history=cursor(other_processor)))
+    interleaved_recent = dict(spec=recent_spec, other_spec=recent_other_spec, item_id=iid(ammo),
+        other_item_id=iid('Iron Charge M'), steps=recent_steps)
     assert not any(name.startswith('android_bridge') for name in sys.modules)
     for name, module in list(sys.modules.items()):
         if name.split('.')[0] in ('eos', 'service', 'config') and getattr(module, '__file__', None):
             assert Path(module.__file__).resolve().is_relative_to(source), name
     oracle['source_files']['gui/builtinAdditionPanes/cargoView.py'] = digest_file(source / 'gui/builtinAdditionPanes/cargoView.py')
+    oracle['source_files']['service/market.py'] = digest_file(source / 'service/market.py')
     return {'source_commit': SOURCE_COMMIT, 'source_files': oracle['source_files'],
         'eos_settings': dict(configuration.settings), 'database_logical_sha256': logical_database_digest(database),
-        'cases': cases, 'boundary': 'Original Do/Undo bodies and real wx processors; explicit grouped calls and direct skill-profile gap identified per case.'}
+        'cases': cases, 'interleaved_recent': interleaved_recent,
+        'boundary': 'Original Do/Undo bodies and real wx processors; explicit grouped calls and direct skill-profile gap identified per case.'}
 
 
 def main():
@@ -267,6 +291,7 @@ def main():
     (args.output / 'evidence.json').write_text(json.dumps({'task': 'B09.2', 'source_commit': SOURCE_COMMIT,
         'game_database_unchanged': True, 'fresh_process_repeat': True, 'cases': len(actual['cases']),
         'states': sum(len(c['steps']) for c in actual['cases']), 'database_sha256': before,
+        'interleaved_recent_steps': len(actual['interleaved_recent']['steps']),
         'reference_sha256': digest_file(args.output / 'history-mutations.json')}, indent=2) + '\n')
     print('PASS independent B09.2 original history matrix, repeated in fresh process')
 

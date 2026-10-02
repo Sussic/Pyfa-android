@@ -266,7 +266,7 @@ class Run:
                 else:
                     if self.emulator is None:self.start_emulator()
                     from history_progress import HistoryProgress
-                    diagnostics=HistoryProgress(self.directory/'diagnostics'/f'history-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' else nullcontext()
+                    diagnostics=HistoryProgress(self.directory/'diagnostics'/f'{step.replace(":", "-")}-{len(self.state["attempts"]):03}',self.serial) if step=='native:check-history.py' or step.startswith('native:mutation-history-') else nullcontext()
                     with diagnostics:
                         self.execute(step,[sys.executable,ROOT/'android/ci/native_suite.py','--step',step.split(':',1)[1]],cwd=ROOT/'android')
                 self.state['completed'].append(step);save(self.file,self.state)

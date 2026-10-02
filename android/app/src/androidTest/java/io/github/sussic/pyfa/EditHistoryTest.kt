@@ -168,6 +168,9 @@ class EditHistoryTest {
                     row.optJSONArray("recipients")?.let { targets -> for(i in 0 until targets.length()) {
                         val target=create(targets.getJSONObject(i));ids.put(target);recipients.add(target)
                         send(BridgeOperation.AddProjection(id,target,0.0,true,1),listOf(id,target))
+                        // B09.2 registers link creation in the recipient's
+                        // history; local module reversals must preserve it.
+                        assertEquals(1,history(target).undoCount)
                     } }
                     select(id)
                     val recent=EngineRuntime.recent.value.toList();val states=JSONArray();val expected=row.getJSONArray("steps")
@@ -175,6 +178,9 @@ class EditHistoryTest {
                         val step=expected.getJSONObject(i);val action=step.getString("action")
                         when(action) { "do" -> send(operation(id,row),listOf(id));"undo" -> reverse(id,false);"redo" -> reverse(id,true) }
                         val actual=observation(id,recipients);compareState(step.getJSONObject("result"),actual,recent)
+                        for(target in recipients) {
+                            assertEquals(1,history(target).undoCount);assertEquals(0,history(target).redoCount)
+                        }
                         states.put(obj("action" to action,"result" to typed(actual)))
                     }
                     cases.put(obj("name" to row.getString("name"),"fit_id" to id,"recipients" to array(recipients),"recent_before" to array(recent),"steps" to states))
