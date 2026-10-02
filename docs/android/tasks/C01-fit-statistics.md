@@ -113,7 +113,7 @@ exact-head local/full-verification passed. C01.2 is closed; C01.3 is next.
 
 ## C01.3 bounded outcomes
 
-C01.3.1 selected2026-10-02 from dafcadc, branch
+C01.3.1 selected2026-10-02 from `adafcadc`, branch
 codex/c01-3-1-defense-details: F05.16–F05.22 defenses/HP and usable incoming
 damage contributions. Display all twelve resistances and three multipliers;
 raw/effective HP per layer and total, toggle with retained units/precision;

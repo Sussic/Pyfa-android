@@ -74,6 +74,7 @@ sealed interface BridgeOperation {
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
+    data class SetDamagePattern(val fitId: String, val pattern: DamagePattern) : BridgeOperation
     data class AddImplant(val fitId: String, val implant: String, val active: Boolean = true) : BridgeOperation
     data class SetImplantActive(val fitId: String, val slot: Int, val active: Boolean) : BridgeOperation
     data class RemoveImplant(val fitId: String, val slot: Int) : BridgeOperation
@@ -168,6 +169,59 @@ class BridgeProtocolException(message: String) : IllegalArgumentException(messag
 
 object BridgeCodec {
     const val VERSION = 1
+
+    fun decodeDefenses(json: String): FitDefenses {
+        val root = objectValue(StrictJson(json).parse(), "defenses")
+        keys(root, setOf("version", "fit_id", "revision", "defenses"), path = "defenses")
+        requireProtocol(long(root.get("version"), "version") == 1L, "Unsupported defenses version")
+        val revision = long(root.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid defenses revision")
+        fun scalar(raw: Any, unit: String): DefenseScalar {
+            val row = objectValue(raw, "defense scalar")
+            keys(row, setOf("value", "value_type", "unit", "display", "detail"), path = "defense scalar")
+            requireProtocol(text(row.get("unit"), "unit") == unit, "Incorrect defense unit")
+            val value = when (text(row.get("value_type"), "value_type")) {
+                "unavailable" -> { requireProtocol(row.get("value") == JSONObject.NULL, "Unavailable defense has value"); StatValue.Unavailable }
+                "integer" -> StatValue.Integer(long(row.get("value"), "value"))
+                "decimal" -> { val v = row.get("value"); requireProtocol(v is Double, "Decimal defense lost type"); StatValue.Decimal(finite(v as Double, "value")) }
+                else -> fail("Invalid defense scalar type")
+            }
+            requireProtocol(value.numberOrNull()?.let { if (unit == "%") it <= 100 else it >= 0 } != false, "Invalid defense value")
+            fun label(name: String): String? {
+                val result = nullable(row.get(name))?.let { nonempty(it, name) }
+                requireProtocol((result == null) == (value == StatValue.Unavailable), "Defense availability differs")
+                return result
+            }
+            return DefenseScalar(value, unit, label("display"), label("detail"))
+        }
+        val defenses = objectValue(root.get("defenses"), "defenses")
+        keys(defenses, setOf("layers", "total", "pattern"), path = "defenses")
+        val layers = objectValue(defenses.get("layers"), "layers")
+        keys(layers, DEFENSE_LAYERS.keys, path = "layers")
+        val decoded = DEFENSE_LAYERS.keys.associateWith { name ->
+            val row = objectValue(layers.get(name), name)
+            keys(row, setOf("hp", "ehp", "multiplier", "resistances"), path = name)
+            val resist = objectValue(row.get("resistances"), "resistances")
+            keys(resist, DAMAGE_TYPES.keys, path = "resistances")
+            DefenseLayer(scalar(row.get("hp"), "HP"), scalar(row.get("ehp"), "HP"), scalar(row.get("multiplier"), "x"),
+                Collections.unmodifiableMap(DAMAGE_TYPES.keys.associateWith { scalar(resist.get(it), "%") }))
+        }
+        val total = objectValue(defenses.get("total"), "total")
+        keys(total, setOf("hp", "ehp"), path = "total")
+        val pattern = objectValue(defenses.get("pattern"), "pattern")
+        keys(pattern, DAMAGE_TYPES.keys, path = "pattern")
+        val incoming = DAMAGE_TYPES.keys.associateWith { name ->
+            val row = objectValue(pattern.get(name), name)
+            keys(row, setOf("amount", "percentage", "display"), path = name)
+            val amount = number(row.get("amount"), "amount")
+            val percent = number(row.get("percentage"), "percentage")
+            requireProtocol(amount >= 0 && percent in 0.0..100.0, "Invalid incoming contribution")
+            IncomingContribution(amount, percent, nonempty(row.get("display"), "display"))
+        }
+        requireProtocol(incoming.values.sumOf { it.amount }.let { it.isFinite() && it > 0 }, "Empty incoming pattern")
+        return FitDefenses(identifier(root.get("fit_id"), "fit_id"), revision, Collections.unmodifiableMap(decoded),
+            scalar(total.get("hp"), "HP"), scalar(total.get("ehp"), "HP"), Collections.unmodifiableMap(incoming))
+    }
 
     fun decodeCapacitor(json: String): FitCapacitor {
         val root = objectValue(StrictJson(json).parse(), "capacitor")
@@ -377,6 +431,13 @@ object BridgeCodec {
         }
         is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.SetNotes -> "set_notes" to obj("fit_id" to operation.fitId, "text" to noteText(operation.text))
+        is BridgeOperation.SetDamagePattern -> {
+            val p = operation.pattern
+            val values = listOf(p.emAmount, p.thermalAmount, p.kineticAmount, p.explosiveAmount)
+            requireProtocol(values.all { it.isFinite() && it >= 0 } && values.sum().let { it.isFinite() && it > 0 }, "Invalid incoming damage")
+            "set_damage_pattern" to obj("fit_id" to operation.fitId, "pattern" to obj("emAmount" to p.emAmount,
+                "thermalAmount" to p.thermalAmount, "kineticAmount" to p.kineticAmount, "explosiveAmount" to p.explosiveAmount))
+        }
         is BridgeOperation.Undo -> "undo" to obj("fit_id" to operation.fitId)
         is BridgeOperation.Redo -> "redo" to obj("fit_id" to operation.fitId)
         is BridgeOperation.DuplicateFit -> "duplicate_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))

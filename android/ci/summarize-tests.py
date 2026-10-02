@@ -101,7 +101,10 @@ from history_summary import summarize as summarize_history
 from mutation_history_summary import summarize as summarize_mutation_history
 from resource_summary import summarize as summarize_resources
 from capacitor_summary import summarize as summarize_capacitor
+from defense_summary import summarize as summarize_defenses
 summary = {
+    "defenses": summarize_defenses([json.loads((evidence / f"defenses-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
+        engine, {json.loads((evidence / f"capacitor-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("prepare", "restored")}),
     "capacitor": summarize_capacitor([json.loads((evidence / f"capacitor-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
         engine, {json.loads((evidence / f"resources-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("probe", "prepare", "restored")}),
     "resources": summarize_resources(json.loads((evidence / "resources-probe-native.json").read_text(encoding="utf-8")),

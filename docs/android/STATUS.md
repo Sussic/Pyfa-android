@@ -9,7 +9,7 @@ installation, unrelated setup/refactoring or billing changes are authorized here
 
 ## Current outcome — C01.3.1 defenses and incoming damage
 
-Selected from delivered master dafcadc on codex/c01-3-1-defense-details.
+Selected from delivered master `adafcadc` on codex/c01-3-1-defense-details.
 F05.16–F05.22: all twelve shield/armor/hull resistances, each resistance
 multiplier, raw and selected-pattern effective HP per layer and total, HP/EHP
 toggle, and all four independently editable incoming damage contributions.
@@ -21,6 +21,16 @@ and fresh-process persistence checks; APK/lint/package and the full inherited
 local/native suite, screenshot review and actual-report corruption rejection.
 C01.3.2 follows only after this outcome's review, checks, push and merge; it owns
 F05.23–F05.27 passive/active reinforced/sustained tank and spool details.
+
+Implementation/source review complete. Two fresh unmodified wx/EOS exports agree
+for fourteen cases and four individual contribution witnesses. Host matrix,
+read-only/GC, input/history/rejection/no-op/failed-save/copy and fresh-process
+restart pass; twenty-two fixture/schema/transport regressions and the extended
+original history matrix pass. Ten historical capacitor source/package guards pass.
+Development app/test compilation and lint pass after a retained diagnostics
+accessor compile failure; final build will include the last UI/test assertions.
+The final 101-gate plan retains every inherited gate. Native execution, 165 required
+screenshots, actual-report corruption review and delivery remain outstanding.
 
 ## Latest delivery — C01.2 capacitor
 

@@ -1,0 +1,4479 @@
+{
+  "task": "C01.3.1",
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "desktop_defenses_view_sha256": "c58007a4eed817809ebb8444df640fb07f1cbeee2b9f0428db20e8f07f16384c",
+  "cases": [
+    {
+      "spec": {
+        "name": "Uniform incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9331.598711423725,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.33k",
+              "detail": "9331"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9331 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "EM incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 1,
+          "thermalAmount": 0,
+          "kineticAmount": 0,
+          "explosiveAmount": 0
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "multiplier": {
+                "value": 1.0,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.00",
+                "detail": "1.00"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 5000.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "5k",
+                "detail": "5000"
+              },
+              "multiplier": {
+                "value": 2.0,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "2.00",
+                "detail": "2.00"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 10106.34328358209,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "10.1k",
+              "detail": "10106"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 1.0,
+              "percentage": 100.0,
+              "display": "100.0"
+            },
+            "thermal": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "kinetic": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "explosive": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.00x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 2.00x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1375\nResist Multiplier: 1.00x",
+          "armor_ehp": "Armor: 5000\nResist Multiplier: 2.00x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 10106 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Thermal incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 0,
+          "thermalAmount": 1,
+          "kineticAmount": 0,
+          "explosiveAmount": 0
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1718.75,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.72k",
+                "detail": "1718"
+              },
+              "multiplier": {
+                "value": 1.25,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.25",
+                "detail": "1.25"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3846.153846153846,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.85k",
+                "detail": "3846"
+              },
+              "multiplier": {
+                "value": 1.5384615384615385,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.54",
+                "detail": "1.54"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9296.247129735935,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.3k",
+              "detail": "9296"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "thermal": {
+              "amount": 1.0,
+              "percentage": 100.0,
+              "display": "100.0"
+            },
+            "kinetic": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "explosive": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.25x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.54x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1718\nResist Multiplier: 1.25x",
+          "armor_ehp": "Armor: 3846\nResist Multiplier: 1.54x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9296 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Kinetic incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 0,
+          "thermalAmount": 0,
+          "kineticAmount": 1,
+          "explosiveAmount": 0
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2291.666666666667,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.29k",
+                "detail": "2291"
+              },
+              "multiplier": {
+                "value": 1.666666666666667,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.67",
+                "detail": "1.67"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3846.153846153846,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.85k",
+                "detail": "3846"
+              },
+              "multiplier": {
+                "value": 1.5384615384615385,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.54",
+                "detail": "1.54"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9869.163796402603,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.87k",
+              "detail": "9869"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "thermal": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "kinetic": {
+              "amount": 1.0,
+              "percentage": 100.0,
+              "display": "100.0"
+            },
+            "explosive": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.67x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.54x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 2291\nResist Multiplier: 1.67x",
+          "armor_ehp": "Armor: 3846\nResist Multiplier: 1.54x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9869 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Explosive incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 0,
+          "thermalAmount": 0,
+          "kineticAmount": 0,
+          "explosiveAmount": 1
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2750.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.75k",
+                "detail": "2750"
+              },
+              "multiplier": {
+                "value": 2.0,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "2.00",
+                "detail": "2.00"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 2777.777777777778,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.78k",
+                "detail": "2777"
+              },
+              "multiplier": {
+                "value": 1.1111111111111112,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.11",
+                "detail": "1.11"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9259.121061359867,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.26k",
+              "detail": "9259"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "thermal": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "kinetic": {
+              "amount": 0.0,
+              "percentage": 0.0,
+              "display": "0.0"
+            },
+            "explosive": {
+              "amount": 1.0,
+              "percentage": 100.0,
+              "display": "100.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 2.00x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.11x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 2750\nResist Multiplier: 2.00x",
+          "armor_ehp": "Armor: 2777\nResist Multiplier: 1.11x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9259 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Mixed incoming",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 3,
+          "thermalAmount": 7,
+          "kineticAmount": 11,
+          "explosiveAmount": 19
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2226.72064777328,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.23k",
+                "detail": "2226"
+              },
+              "multiplier": {
+                "value": 1.6194331983805672,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.62",
+                "detail": "1.62"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3300.3300330033003,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.3k",
+                "detail": "3300"
+              },
+              "multiplier": {
+                "value": 1.3201320132013201,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.32",
+                "detail": "1.32"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.34328358209,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.492537313432836,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9258.39396435867,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.26k",
+              "detail": "9258"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 3.0,
+              "percentage": 7.5,
+              "display": "7.5"
+            },
+            "thermal": {
+              "amount": 7.0,
+              "percentage": 17.5,
+              "display": "17.5"
+            },
+            "kinetic": {
+              "amount": 11.0,
+              "percentage": 27.500000000000004,
+              "display": "27.5"
+            },
+            "explosive": {
+              "amount": 19.0,
+              "percentage": 47.5,
+              "display": "47.5"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.62x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.32x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 2226\nResist Multiplier: 1.62x",
+          "armor_ehp": "Armor: 3300\nResist Multiplier: 1.32x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9258 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Hardener active",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Multispectrum Shield Hardener II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2809.70625798212,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.81k",
+                "detail": "2809"
+              },
+              "multiplier": {
+                "value": 2.0434227330779056,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "2.04",
+                "detail": "2.04"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.49999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "32.5",
+                  "detail": "32.50"
+                },
+                "thermal": {
+                  "value": 46.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "46.0",
+                  "detail": "46.00"
+                },
+                "kinetic": {
+                  "value": 59.5,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "59.5",
+                  "detail": "59.50"
+                },
+                "explosive": {
+                  "value": 66.25,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "66.2",
+                  "detail": "66.25"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 10244.753245267913,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "10.2k",
+              "detail": "10244"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 2.04x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 2809\nResist Multiplier: 2.04x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 10244 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Hardener online",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Multispectrum Shield Hardener II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9331.598711423725,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.33k",
+              "detail": "9331"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9331 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Hardener offline",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Multispectrum Shield Hardener II",
+            "state": "OFFLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9331.598711423725,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.33k",
+              "detail": "9331"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 9331 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Armor plate",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "1600mm Steel Plates II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 8500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "8.5k",
+                "detail": "8500"
+              },
+              "ehp": {
+                "value": 12592.592592592593,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "12.6k",
+                "detail": "12592"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 12375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "12.4k",
+              "detail": "12375"
+            },
+            "ehp": {
+              "value": 18220.487600312612,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "18.2k",
+              "detail": "18220"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 8500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 12375 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 12592\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 18220 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Shield extender",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Large Shield Extender II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 4625.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "4.62k",
+                "detail": "4625"
+              },
+              "ehp": {
+                "value": 6379.310344827586,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "6.38k",
+                "detail": "6379"
+              },
+              "multiplier": {
+                "value": 1.379310344827586,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 9625.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.62k",
+              "detail": "9625"
+            },
+            "ehp": {
+              "value": 13814.357332113379,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "13.8k",
+              "detail": "13814"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 4625\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 9625 HP",
+          "shield_ehp": "Shield: 6379\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 13814 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Damage control",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Damage Control II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2167.487684729064,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.17k",
+                "detail": "2167"
+              },
+              "multiplier": {
+                "value": 1.5763546798029555,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.58",
+                "detail": "1.58"
+              },
+              "resistances": {
+                "em": {
+                  "value": 12.5,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "12.5",
+                  "detail": "12.50"
+                },
+                "thermal": {
+                  "value": 29.999999999999993,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "30.0",
+                  "detail": "30.00"
+                },
+                "kinetic": {
+                  "value": 47.5,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "47.5",
+                  "detail": "47.50"
+                },
+                "explosive": {
+                  "value": 56.25,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "56.2",
+                  "detail": "56.25"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 4357.298474945534,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "4.36k",
+                "detail": "4357"
+              },
+              "multiplier": {
+                "value": 1.7429193899782134,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.74",
+                "detail": "1.74"
+              },
+              "resistances": {
+                "em": {
+                  "value": 57.49999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "57.5",
+                  "detail": "57.50"
+                },
+                "thermal": {
+                  "value": 44.75,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "44.8",
+                  "detail": "44.75"
+                },
+                "kinetic": {
+                  "value": 44.75,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "44.8",
+                  "detail": "44.75"
+                },
+                "explosive": {
+                  "value": 23.5,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "23.5",
+                  "detail": "23.50"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 6218.905472636816,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "6.22k",
+                "detail": "6218"
+              },
+              "multiplier": {
+                "value": 2.487562189054726,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "2.49",
+                "detail": "2.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 59.8,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "59.8",
+                  "detail": "59.80"
+                },
+                "thermal": {
+                  "value": 59.8,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "59.8",
+                  "detail": "59.80"
+                },
+                "kinetic": {
+                  "value": 59.8,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "59.8",
+                  "detail": "59.80"
+                },
+                "explosive": {
+                  "value": 59.8,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "59.8",
+                  "detail": "59.80"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 12743.691632311413,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "12.7k",
+              "detail": "12743"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.58x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.74x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 2.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 2167\nResist Multiplier: 1.58x",
+          "armor_ehp": "Armor: 4357\nResist Multiplier: 1.74x",
+          "hull_ehp": "Hull: 6218\nResist Multiplier: 2.49x",
+          "total_ehp": "Effective: 12743 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Hull bulkheads",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Reinforced Bulkheads II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3703.703703703704,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.7k",
+                "detail": "3703"
+              },
+              "multiplier": {
+                "value": 1.4814814814814816,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.48",
+                "detail": "1.48"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 3125.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.12k",
+                "detail": "3125"
+              },
+              "ehp": {
+                "value": 4664.179104477612,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "4.66k",
+                "detail": "4664"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 7000.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "7k",
+              "detail": "7000"
+            },
+            "ehp": {
+              "value": 10264.434532319247,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "10.3k",
+              "detail": "10264"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.48x",
+          "hull_hp": "Hull: 3125\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 7000 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 3703\nResist Multiplier: 1.48x",
+          "hull_ehp": "Hull: 4664\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 10264 HP"
+        }
+      }
+    },
+    {
+      "spec": {
+        "name": "Armor membrane",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Multispectrum Energized Membrane II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "ignore_restrictions": false,
+        "cargo": []
+      },
+      "expected": {
+        "defenses": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1896.5517241379312,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.9k",
+                "detail": "1896"
+              },
+              "multiplier": {
+                "value": 1.3793103448275863,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.38",
+                "detail": "1.38"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 4938.271604938271,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "4.94k",
+                "detail": "4938"
+              },
+              "multiplier": {
+                "value": 1.9753086419753083,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.98",
+                "detail": "1.98"
+              },
+              "resistances": {
+                "em": {
+                  "value": 62.5,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "62.5",
+                  "detail": "62.50"
+                },
+                "thermal": {
+                  "value": 51.24999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "51.2",
+                  "detail": "51.25"
+                },
+                "kinetic": {
+                  "value": 51.24999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "51.2",
+                  "detail": "51.25"
+                },
+                "explosive": {
+                  "value": 32.49999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "32.5",
+                  "detail": "32.50"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 10566.166612658291,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "10.6k",
+              "detail": "10566"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 25.0,
+              "display": "25.0"
+            }
+          }
+        },
+        "desktop_tooltips": {
+          "shield_hp": "Shield: 1375\nResist Multiplier: 1.38x",
+          "armor_hp": "Armor: 2500\nResist Multiplier: 1.98x",
+          "hull_hp": "Hull: 2500\nResist Multiplier: 1.49x",
+          "total_hp": "Raw: 6375 HP",
+          "shield_ehp": "Shield: 1896\nResist Multiplier: 1.38x",
+          "armor_ehp": "Armor: 4938\nResist Multiplier: 1.98x",
+          "hull_ehp": "Hull: 3731\nResist Multiplier: 1.49x",
+          "total_ehp": "Effective: 10566 HP"
+        }
+      }
+    }
+  ],
+  "pattern_edits": {
+    "initial": {
+      "layers": {
+        "shield": {
+          "hp": {
+            "value": 1375.0,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "1.38k",
+            "detail": "1375"
+          },
+          "ehp": {
+            "value": 1896.5517241379312,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "1.9k",
+            "detail": "1896"
+          },
+          "multiplier": {
+            "value": 1.3793103448275863,
+            "value_type": "decimal",
+            "unit": "x",
+            "display": "1.38",
+            "detail": "1.38"
+          },
+          "resistances": {
+            "em": {
+              "value": 0.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "0.0",
+              "detail": "0.00"
+            },
+            "thermal": {
+              "value": 19.999999999999996,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "20.0",
+              "detail": "20.00"
+            },
+            "kinetic": {
+              "value": 40.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "40.0",
+              "detail": "40.00"
+            },
+            "explosive": {
+              "value": 50.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "50.0",
+              "detail": "50.00"
+            }
+          }
+        },
+        "armor": {
+          "hp": {
+            "value": 2500.0,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "2.5k",
+            "detail": "2500"
+          },
+          "ehp": {
+            "value": 3703.703703703704,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "3.7k",
+            "detail": "3703"
+          },
+          "multiplier": {
+            "value": 1.4814814814814816,
+            "value_type": "decimal",
+            "unit": "x",
+            "display": "1.48",
+            "detail": "1.48"
+          },
+          "resistances": {
+            "em": {
+              "value": 50.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "50.0",
+              "detail": "50.00"
+            },
+            "thermal": {
+              "value": 35.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "35.0",
+              "detail": "35.00"
+            },
+            "kinetic": {
+              "value": 35.0,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "35.0",
+              "detail": "35.00"
+            },
+            "explosive": {
+              "value": 9.999999999999998,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "10.0",
+              "detail": "10.00"
+            }
+          }
+        },
+        "hull": {
+          "hp": {
+            "value": 2500.0,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "2.5k",
+            "detail": "2500"
+          },
+          "ehp": {
+            "value": 3731.3432835820895,
+            "value_type": "decimal",
+            "unit": "HP",
+            "display": "3.73k",
+            "detail": "3731"
+          },
+          "multiplier": {
+            "value": 1.4925373134328357,
+            "value_type": "decimal",
+            "unit": "x",
+            "display": "1.49",
+            "detail": "1.49"
+          },
+          "resistances": {
+            "em": {
+              "value": 32.99999999999999,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "33.0",
+              "detail": "33.00"
+            },
+            "thermal": {
+              "value": 32.99999999999999,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "33.0",
+              "detail": "33.00"
+            },
+            "kinetic": {
+              "value": 32.99999999999999,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "33.0",
+              "detail": "33.00"
+            },
+            "explosive": {
+              "value": 32.99999999999999,
+              "value_type": "decimal",
+              "unit": "%",
+              "display": "33.0",
+              "detail": "33.00"
+            }
+          }
+        }
+      },
+      "total": {
+        "hp": {
+          "value": 6375.0,
+          "value_type": "decimal",
+          "unit": "HP",
+          "display": "6.38k",
+          "detail": "6375"
+        },
+        "ehp": {
+          "value": 9331.598711423725,
+          "value_type": "decimal",
+          "unit": "HP",
+          "display": "9.33k",
+          "detail": "9331"
+        }
+      },
+      "pattern": {
+        "em": {
+          "amount": 25.0,
+          "percentage": 25.0,
+          "display": "25.0"
+        },
+        "thermal": {
+          "amount": 25.0,
+          "percentage": 25.0,
+          "display": "25.0"
+        },
+        "kinetic": {
+          "amount": 25.0,
+          "percentage": 25.0,
+          "display": "25.0"
+        },
+        "explosive": {
+          "amount": 25.0,
+          "percentage": 25.0,
+          "display": "25.0"
+        }
+      }
+    },
+    "steps": [
+      {
+        "field": "emAmount",
+        "pattern": {
+          "emAmount": 50,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "expected": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1762.8205128205127,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.76k",
+                "detail": "1762"
+              },
+              "multiplier": {
+                "value": 1.282051282051282,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.28",
+                "detail": "1.28"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3906.25,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.91k",
+                "detail": "3906"
+              },
+              "multiplier": {
+                "value": 1.5625,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.56",
+                "detail": "1.56"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9400.413796402601,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.4k",
+              "detail": "9400"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 50.0,
+              "percentage": 40.0,
+              "display": "40.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            }
+          }
+        }
+      },
+      {
+        "field": "thermalAmount",
+        "pattern": {
+          "emAmount": 25,
+          "thermalAmount": 50,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "expected": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1858.1081081081081,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.86k",
+                "detail": "1858"
+              },
+              "multiplier": {
+                "value": 1.3513513513513513,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.35",
+                "detail": "1.35"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9320.794675272287,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.32k",
+              "detail": "9320"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "thermal": {
+              "amount": 50.0,
+              "percentage": 40.0,
+              "display": "40.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            }
+          }
+        }
+      },
+      {
+        "field": "kineticAmount",
+        "pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 50,
+          "explosiveAmount": 25
+        },
+        "expected": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 1964.285714285714,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.96k",
+                "detail": "1964"
+              },
+              "multiplier": {
+                "value": 1.4285714285714284,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.43",
+                "detail": "1.43"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9426.972281449893,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.43k",
+              "detail": "9426"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "kinetic": {
+              "amount": 50.0,
+              "percentage": 40.0,
+              "display": "40.0"
+            },
+            "explosive": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            }
+          }
+        }
+      },
+      {
+        "field": "explosiveAmount",
+        "pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 50
+        },
+        "expected": {
+          "layers": {
+            "shield": {
+              "hp": {
+                "value": 1375.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "1.38k",
+                "detail": "1375"
+              },
+              "ehp": {
+                "value": 2022.0588235294117,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.02k",
+                "detail": "2022"
+              },
+              "multiplier": {
+                "value": 1.4705882352941175,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.47",
+                "detail": "1.47"
+              },
+              "resistances": {
+                "em": {
+                  "value": 0.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "0.0",
+                  "detail": "0.00"
+                },
+                "thermal": {
+                  "value": 19.999999999999996,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "20.0",
+                  "detail": "20.00"
+                },
+                "kinetic": {
+                  "value": 40.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "40.0",
+                  "detail": "40.00"
+                },
+                "explosive": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                }
+              }
+            },
+            "armor": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3472.222222222222,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.47k",
+                "detail": "3472"
+              },
+              "multiplier": {
+                "value": 1.3888888888888888,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.39",
+                "detail": "1.39"
+              },
+              "resistances": {
+                "em": {
+                  "value": 50.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "50.0",
+                  "detail": "50.00"
+                },
+                "thermal": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "kinetic": {
+                  "value": 35.0,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "35.0",
+                  "detail": "35.00"
+                },
+                "explosive": {
+                  "value": 9.999999999999998,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "10.0",
+                  "detail": "10.00"
+                }
+              }
+            },
+            "hull": {
+              "hp": {
+                "value": 2500.0,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "2.5k",
+                "detail": "2500"
+              },
+              "ehp": {
+                "value": 3731.3432835820895,
+                "value_type": "decimal",
+                "unit": "HP",
+                "display": "3.73k",
+                "detail": "3731"
+              },
+              "multiplier": {
+                "value": 1.4925373134328357,
+                "value_type": "decimal",
+                "unit": "x",
+                "display": "1.49",
+                "detail": "1.49"
+              },
+              "resistances": {
+                "em": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "thermal": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "kinetic": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                },
+                "explosive": {
+                  "value": 32.99999999999999,
+                  "value_type": "decimal",
+                  "unit": "%",
+                  "display": "33.0",
+                  "detail": "33.00"
+                }
+              }
+            }
+          },
+          "total": {
+            "hp": {
+              "value": 6375.0,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "6.38k",
+              "detail": "6375"
+            },
+            "ehp": {
+              "value": 9225.624329333723,
+              "value_type": "decimal",
+              "unit": "HP",
+              "display": "9.23k",
+              "detail": "9225"
+            }
+          },
+          "pattern": {
+            "em": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "thermal": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "kinetic": {
+              "amount": 25.0,
+              "percentage": 20.0,
+              "display": "20.0"
+            },
+            "explosive": {
+              "amount": 50.0,
+              "percentage": 40.0,
+              "display": "40.0"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

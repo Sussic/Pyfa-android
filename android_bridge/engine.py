@@ -311,6 +311,17 @@ class HeadlessEngine:
         self._recalculate(source)
         self._recalculate(target)
 
+    def set_damage_pattern(self, fit, pattern):
+        """Apply fit-local incoming contributions using EOS's original pattern model."""
+        self._check_fit(fit)
+        import math
+        amounts=tuple(pattern.values())
+        if set(pattern)!= {'emAmount','thermalAmount','kineticAmount','explosiveAmount'} or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in amounts) or not math.isfinite(sum(amounts)) or sum(amounts)<=0:
+            raise ValueError('Invalid incoming damage contributions')
+        from eos.saveddata.damagePattern import DamagePattern
+        fit.damagePattern=DamagePattern(**pattern)
+        self._recalculate(fit)
+
     def set_skill_level(self, fit, skill_name, level):
         """Edit one skill on this fit's synthetic character through EOS."""
         self._check_fit(fit)

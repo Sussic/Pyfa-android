@@ -21,11 +21,11 @@ PIN='8b04f3b271e614b3e103853b44a7851a63d79d0e'
 FAMILIES=['projection','command','catalog','equipment','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses']
 HEADLESS=['bridge','persistence','library','market','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses']
 BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
