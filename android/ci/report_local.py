@@ -193,6 +193,14 @@ def validate(run,root):
                 pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
                 assert gate in reuse['completed_before_adoption']
                 allowed.add('tools/android_headless/check_history_mutations.py')
+            if 'tools/android_reference/tank.py' in changes:
+                from local_verification import pending_tank_fixture_fix
+                reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']
+                    and r['to_commit'] == comparison_commit)
+                pending_tank_fixture_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
+                assert gate in reuse['completed_before_adoption']
+                allowed.update({'tools/android_reference/tank.py','tools/android_reference/fixtures/tank.json',
+                                'android/ci/test_pending_tank_fixture_fix.py'})
             assert all(name in allowed or name.startswith('docs/android/') for name in changes),changes
             if 'android/ci/check-history.py' in changes:
                 before=subprocess.check_output(['git','show',row['tested_commit']+':android/ci/check-history.py'],cwd=root,text=True,encoding='utf-8')

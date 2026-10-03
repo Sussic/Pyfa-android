@@ -32,6 +32,17 @@ and lint pass for build31. The original invalid spool fixture/hull attempts and
 corrected reference evidence remain retained. Full/native verification and actual
 screenshot review remain outstanding; no full delivery or hosted pass is claimed.
 
+Full run `20261003-011943-7a0aaa27-72c5cf` paused after nine valid gates
+when the labelled falloff witness proved to be inside the mutadaptive optimal.
+Pinned EOS shows that repairer has zero falloff. Only case25 is corrected to
+the ordinary armor repairer at verified10500m optimal plus3000m falloff; two
+fresh original exports agree on reduced nonzero21.3HP/s (zero-range42.7HP/s).
+All28 other cases and fixture metadata are unchanged; packaged-byte/reference
+checks remain strict. Twenty-one affected validator tests, five exact pending
+source/reuse guards and twenty-two reporter regressions pass. Product/native
+test code is unchanged. The same full run resumes with all nine completed
+gates retained under exact source hashes; no native/build gate has executed yet.
+
 ## Latest outcome — C01.3.1 defenses and incoming damage
 
 Selected from delivered master `adafcadc` on codex/c01-3-1-defense-details.

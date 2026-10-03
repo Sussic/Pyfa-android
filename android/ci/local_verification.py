@@ -31,6 +31,31 @@ BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 def git(*args): return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
 
+def pending_tank_fixture_fix(root, before, after, completed):
+    """Only the reviewed, not-yet-executed single falloff witness may change."""
+    assert before == '7a0aaa27b1739d9600e14915d62cb2d35a873db0'
+    assert completed == ['desktop:utilities','desktop:reference','desktop:migration',
+        'reference:projection','reference:command','reference:catalog','reference:equipment',
+        'reference:empty_hulls','reference:module_edits']
+    pairs = {
+        'tools/android_reference/tank.py': (
+            '62cd2fd83c0b74eff761d8b5c57537689e470c615015cd7d822712e3918c8cf2',
+            '5d85254c2ecd7e97b548f0d99803e94d0ac45266acf4030d9d3032939142cfdb'),
+        'tools/android_reference/fixtures/tank.json': (
+            'bb740504554a00c6cfe020d18124409bee2d50308f446aceba31a4e5159fc28d',
+            'c0154338bf8f8c6134fd9a188e4a10ee03082cabaf64c0088bb2e433e24a4aca'),
+    }
+    for path, hashes in pairs.items():
+        for commit, expected in zip((before, after), hashes):
+            content = subprocess.check_output(['git','show',commit+':'+path],cwd=root)
+            assert hashlib.sha256(content.replace(b'\r\n',b'\n')).hexdigest() == expected, path
+    changed = subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed = set(pairs) | {'android/ci/local_verification.py','android/ci/report_local.py',
+                           'android/ci/test_pending_tank_fixture_fix.py'}
+    assert set(pairs) <= set(changed)
+    assert all(path in allowed or path.startswith('docs/android/') for path in changed), changed
+
+
 def pending_mutation_count_fix(root, before, after, completed):
     """Reuse earlier gates only for the exact unexecuted suite-count correction."""
     assert 'headless:history_mutations' not in completed
@@ -237,6 +262,10 @@ class Run:
                     assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
                     pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
                     allowed.add('tools/android_headless/check_history_mutations.py')
+                if 'tools/android_reference/tank.py' in changed:
+                    pending_tank_fixture_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    allowed.update({'tools/android_reference/tank.py','tools/android_reference/fixtures/tank.json',
+                                    'android/ci/test_pending_tank_fixture_fix.py'})
                 if args.restart_native:
                     allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
                         'android/ci/report_local.py','android/ci/test_report_local.py'})

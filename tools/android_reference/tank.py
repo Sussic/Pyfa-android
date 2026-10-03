@@ -53,6 +53,11 @@ def export(source, database):
     for label, distance, quantity in [('falloff', 20000.0, 1),('out of range', 10000000.0, 1),('two sources', 0.0, 2)]:
         cases.append(dict(spec=spec('Spool '+label),source=spec('Spool '+label+' source',[module('Heavy Mutadaptive Remote Armor Repairer II')]),
             projection=dict(range_m=distance,active=True,amount=quantity)))
+    # The mutadaptive repairer has zero falloff. Use the ordinary armor repairer
+    # at its actual all-V Vexor optimal (10500 m) plus falloff (3000 m).
+    cases[25] = dict(spec=spec('Projected Armor falloff'),
+        source=spec('Armor falloff source',[module('Medium Remote Armor Repairer II')]),
+        projection=dict(range_m=13500.0,active=True,amount=1))
     mixed=deepcopy(cases[1]);mixed['spec']['name']='Shield mixed incoming';mixed['spec']['damage_pattern']=dict(emAmount=3,thermalAmount=7,kineticAmount=11,explosiveAmount=19)
     cases.append(mixed)
     for row in cases:
@@ -95,6 +100,7 @@ def export(source, database):
             row['expected']=oracle['observe'](fit)
         assert any(r['expected']['tank']['raw']['reinforced']['armor_spool']['indicated'] for r in cases)
         assert any(r['expected']['tank']['raw']['reinforced']['repairs']['armorRepair']['value'] > r['expected']['tank']['raw']['sustained']['repairs']['armorRepair']['value'] for r in cases)
+        assert 0 < cases[25]['expected']['tank']['raw']['reinforced']['repairs']['armorRepair']['value'] < cases[19]['expected']['tank']['raw']['reinforced']['repairs']['armorRepair']['value']
         assert not any(n.startswith('android_bridge') for n in sys.modules)
         for name,mod in list(sys.modules.items()):
             if name.split('.')[0] in ('eos','service','gui','config') and getattr(mod,'__file__',None):

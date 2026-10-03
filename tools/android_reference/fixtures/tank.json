@@ -5972,7 +5972,7 @@
     },
     {
       "spec": {
-        "name": "Spool falloff",
+        "name": "Projected Armor falloff",
         "ship": "Vexor",
         "skill_level": 5,
         "factor_reload": false,
@@ -5998,8 +5998,8 @@
         "cargo": []
       },
       "source": {
-        "name": "Spool falloff source",
-        "ship": "Rodiva",
+        "name": "Projected Armor falloff source",
+        "ship": "Vexor",
         "skill_level": 5,
         "factor_reload": false,
         "damage_pattern": {
@@ -6020,7 +6020,7 @@
         "environments": [],
         "modules": [
           {
-            "name": "Heavy Mutadaptive Remote Armor Repairer II",
+            "name": "Medium Remote Armor Repairer II",
             "state": "ACTIVE",
             "charge": null
           }
@@ -6030,7 +6030,7 @@
         "cargo": []
       },
       "projection": {
-        "range_m": 20000.0,
+        "range_m": 13500.0,
         "active": true,
         "amount": 1
       },
@@ -6054,11 +6054,11 @@
                   "detail": "0.0"
                 },
                 "armorRepair": {
-                  "value": 346.6666666666667,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "346.7\u02e2",
-                  "detail": "346.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
                 "hullRepair": {
                   "value": 0,
@@ -6070,21 +6070,21 @@
               },
               "armor_spool": {
                 "pre": {
-                  "value": 138.66666666666666,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "138.7",
-                  "detail": "138.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
                 "full": {
-                  "value": 346.6666666666667,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "346.7",
-                  "detail": "346.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
-                "indicated": true,
-                "tooltip": "Spool up: 138.7-346.7"
+                "indicated": false,
+                "tooltip": ""
               }
             },
             "sustained": {
@@ -6097,11 +6097,11 @@
                   "detail": "0.0"
                 },
                 "armorRepair": {
-                  "value": 346.6666666666667,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "346.7\u02e2",
-                  "detail": "346.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
                 "hullRepair": {
                   "value": 0,
@@ -6113,21 +6113,21 @@
               },
               "armor_spool": {
                 "pre": {
-                  "value": 138.66666666666666,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "138.7",
-                  "detail": "138.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
                 "full": {
-                  "value": 346.6666666666667,
+                  "value": 21.333333333333332,
                   "value_type": "decimal",
                   "unit": "HP/s",
-                  "display": "346.7",
-                  "detail": "346.7"
+                  "display": "21.3",
+                  "detail": "21.3"
                 },
-                "indicated": true,
-                "tooltip": "Spool up: 138.7-346.7"
+                "indicated": false,
+                "tooltip": ""
               }
             }
           },
@@ -6149,11 +6149,11 @@
                   "detail": "0.0"
                 },
                 "armorRepair": {
-                  "value": 513.5802469135804,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "513.6\u02e2",
-                  "detail": "513.6"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
                 "hullRepair": {
                   "value": 0.0,
@@ -6165,21 +6165,21 @@
               },
               "armor_spool": {
                 "pre": {
-                  "value": 205.4320987654321,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "205.4",
-                  "detail": "205.4"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
                 "full": {
-                  "value": 513.5802469135804,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "513.6",
-                  "detail": "513.6"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
-                "indicated": true,
-                "tooltip": "Spool up: 205.4-513.6"
+                "indicated": false,
+                "tooltip": ""
               }
             },
             "sustained": {
@@ -6192,11 +6192,11 @@
                   "detail": "0.0"
                 },
                 "armorRepair": {
-                  "value": 513.5802469135804,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "513.6\u02e2",
-                  "detail": "513.6"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
                 "hullRepair": {
                   "value": 0.0,
@@ -6208,21 +6208,21 @@
               },
               "armor_spool": {
                 "pre": {
-                  "value": 205.4320987654321,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "205.4",
-                  "detail": "205.4"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
                 "full": {
-                  "value": 513.5802469135804,
+                  "value": 31.60493827160494,
                   "value_type": "decimal",
                   "unit": "EHP/s",
-                  "display": "513.6",
-                  "detail": "513.6"
+                  "display": "31.6",
+                  "detail": "31.6"
                 },
-                "indicated": true,
-                "tooltip": "Spool up: 205.4-513.6"
+                "indicated": false,
+                "tooltip": ""
               }
             }
           }
