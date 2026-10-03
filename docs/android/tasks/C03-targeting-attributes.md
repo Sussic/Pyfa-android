@@ -104,3 +104,29 @@ integration tests pass. The first staged-validator attempt is retained: its
 correct; it now targets the actual cargo stage. Typed previous graphs are validated
 once before comparison, preserving every member/type check without repeated
 revalidation. Both APKs build and lint passes (`build/c03-staged-build.log`).
+
+Focused native run `c03-targeting-focused-20261003-141846` on `f739cbbd` passed
+all four stages in604.188/545.235/724.516/49.766 seconds. The original900-second
+deadlines and every assertion pass;325 fits (268 inherited) survive all boundaries.
+All24 required targeting screenshots are visually reviewed against their hashes.
+
+Its first summary failed because it expected only the named lowered skill.
+Original EOS strict skill levels also record exact dependent skills as `None`.
+The original failure, full logs, reports, APKs, screenshots and store are retained.
+Two fresh pinned desktop EOS processes independently export all53 complete input
+maps in the host-side companion `targeting-skill-inputs.json` (SHA256
+`ea880615dc7ba080d15440c8eedd51d144e25a24ddff5b5f8ac5adfee425face`).
+The witness binds the complete original specs/edits, source/settings/dataset,
+normalized original targeting fixture hash and original character source hash.
+Summary checks require those exact maps, including every null, and retain all
+manifest/report, type and restart comparisons. Full reference verification now
+repeats this companion export. It is expected-input proof, not Android test data;
+the original packaged targeting fixture and every reported hash are unchanged.
+
+The summary-only retry passes without any Android rerun and verifies all retained
+native inputs remain byte-identical. Sixteen focused validator tests (29 corruption
+subcases),37 actual-report corruptions and18 native protocol guards pass. Missing
+dependents, null-to-zero changes and arbitrary extra null skills are rejected.
+Source review confirms a summary/input-oracle correction only; product code,
+APKs, native assertions, tolerances, timeouts and A10 requirements are unchanged.
+Current next: commit the reviewed correction and start full115-gate delivery proof.

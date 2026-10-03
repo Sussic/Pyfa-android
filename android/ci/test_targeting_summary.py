@@ -75,8 +75,9 @@ class SummaryTests(unittest.TestCase):
         walk(data,'root');return dict(data=data,numeric_types=metadata)
     def inputs(self):
         fixture=json.loads(FIXTURE.read_text(encoding='utf-8'))
-        engine=dict(desktop_source_commit=fixture['source_commit'],database_logical_sha256='logical',engine_source_sha256='engine',source_data_sha256='data',eos_settings=fixture['eos_settings'])
-        graph=dict(sample_id='prior-0',fit_order=[],records={},revisions={},modified={},recent=[],dataset_identity='logical',eos_settings=fixture['eos_settings']);snapshots=[]
+        witness=json.loads(FIXTURE.with_name('targeting-skill-inputs.json').read_text(encoding='utf-8'))
+        engine=dict(desktop_source_commit=fixture['source_commit'],database_logical_sha256=witness['database_logical_sha256'],engine_source_sha256='engine',source_data_sha256='data',eos_settings=fixture['eos_settings'])
+        graph=dict(sample_id='prior-0',fit_order=[],records={},revisions={},modified={},recent=[],dataset_identity=engine['database_logical_sha256'],eos_settings=fixture['eos_settings']);snapshots=[]
         def add(key,spec,revision=1,skills=None,projections=None):
             spec=deepcopy(spec);spec['name']='C03 '+spec['name'];skills=skills or {};projections=projections or []
             graph['fit_order'].append(key);graph['records'][key]=dict(spec=spec,skills=skills,implants=[],projections=projections,commands=[]);graph['revisions'][key]=revision;graph['modified'][key]=0
@@ -85,7 +86,7 @@ class SummaryTests(unittest.TestCase):
         before=deepcopy(graph);inherited=deepcopy(snapshots);ids=[];values=[];edits=[]
         ui_index=next(i for i,c in enumerate(fixture['cases']) if c['spec']['name']=='Drone range' and c['edits'])
         for i,case in enumerate(fixture['cases']):
-            key='target-'+str(i);ids.append(key);spec=deepcopy(case['spec']);skills={};projections=[];mutated=bool(case['edits'] or 'source_spec' in case)
+            key='target-'+str(i);ids.append(key);spec=deepcopy(case['spec']);skills=deepcopy(witness['cases'][i]['skills']);projections=[];mutated=bool(case['edits'] or 'source_spec' in case)
             for step in case['edits']:
                 args=step['args']
                 if step['operation']=='set_module_states':
@@ -143,6 +144,9 @@ class SummaryTests(unittest.TestCase):
                   'ui_revision':lambda r:r[0]['saved']['ui_history']['undone'].update(revision=4),
                   'missing_metadata':lambda r:r[0]['saved']['graph']['numeric_types'].pop('root.revisions.target-0'),
                   'skills':lambda r:r[1]['saved']['graph']['data']['records']['target-41']['skills'].clear(),
+                  'missing_dependent':lambda r:r[1]['saved']['graph']['data']['records']['target-43']['skills'].pop('Electronic Attack Ships'),
+                  'dependent_none_as_zero':lambda r:r[1]['saved']['graph']['data']['records']['target-43']['skills'].update({'Electronic Attack Ships':0}),
+                  'additional_dependent':lambda r:r[1]['saved']['graph']['data']['records']['target-43']['skills'].update({'Synthetic extra skill':None}),
                   'stage_pid':lambda r:r[2].update(pid=r[1]['pid']),
                   'stage_input':lambda r:r[1]['stage_start']['all_fits']['data'][0].update(name='changed'),
                   'stage_outputs':lambda r:r[1]['saved']['outputs'].pop(),

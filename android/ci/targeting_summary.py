@@ -2,6 +2,7 @@
 from capacitor_summary import scalar
 from market_summary import exact
 from copy import deepcopy
+import hashlib,json
 from pathlib import Path
 from evidence_paths import evidence_dir
 from resource_summary import fixture_bytes
@@ -34,9 +35,29 @@ def observation(expected,actual,key,revision):
     exact(revision,actual['revision']);targeting(expected['targeting'],actual['targeting'])
 
 
+def skill_inputs(fixture,engine):
+    """Require the independently exported full EOS cascade, including exact None."""
+    witness=json.loads((ROOT/'tools/android_reference/fixtures/targeting-skill-inputs.json').read_text(encoding='utf-8'))
+    exact('C03.1',witness['task']);exact(fixture['source_commit'],witness['source_commit'])
+    exact(engine['database_logical_sha256'],witness['database_logical_sha256']);settings(fixture['eos_settings'],witness['eos_settings'])
+    assert witness['eos_settings']['strictSkillLevels'] is True
+    normalized=(ROOT/'tools/android_reference/fixtures/targeting.json').read_bytes().replace(b'\r\n',b'\n')
+    exact(hashlib.sha256(normalized).hexdigest(),witness['targeting_fixture_normalized_sha256'])
+    character=(ROOT/'eos/saveddata/character.py').read_bytes().replace(b'\r\n',b'\n')
+    exact(hashlib.sha256(character).hexdigest(),witness['character_source_sha256'])
+    assert len(witness['cases'])==53
+    for index,(case,row) in enumerate(zip(fixture['cases'],witness['cases'])):
+        exact({'case','spec','edits','skills'},set(row));exact(index,row['case'])
+        exact(case['spec'],row['spec']);exact(case['edits'],row['edits'])
+        assert type(row['skills']) is dict
+        for name,level in row['skills'].items():assert type(name) is str and name and (level is None or type(level) is int and 0<=level<=5)
+    return witness['cases']
+
+
 def summarize(reports,engine,prior_pids=()):
     apk=evidence_dir().parent/'apks/app-debug-androidTest.apk';assert apk.is_file()
     reference=(ROOT/'tools/android_reference/fixtures/targeting.json').read_bytes()
+    expected_skills=skill_inputs(json.loads(reference),engine)
     assert len(reports)==4;pids=set(prior_pids);prepared=None;previous=None
     for phase,report in zip(('prepare0','prepare1','prepare2','restored'),reports):
         count={'prepare0':33,'prepare1':45,'prepare2':53,'restored':53}[phase]
@@ -87,12 +108,12 @@ def summarize(reports,engine,prior_pids=()):
             observation(expected,ui[field],ids[ui_index],revision)
         sources=[];expected_order=list(old);edit_indices=[]
         for index,(case,key,row,retained) in enumerate(zip(fixture['cases'],ids,rows,saved['outputs'])):
-            expected_order.append(key);spec=deepcopy(case['spec']);spec['name']='C03 '+spec['name'];skills={}
+            expected_order.append(key);spec=deepcopy(case['spec']);spec['name']='C03 '+spec['name'];skills=expected_skills[index]['skills']
             for edit in case['edits']:
                 operation,args=edit['operation'],edit['args']
                 if operation=='set_module_states':
                     for position in args['module_indices']:spec['modules'][position]['state']=args['state']
-                elif operation=='set_skill_level':skills[args['skill']]=args['level']
+                elif operation=='set_skill_level':pass # Full original EOS cascade is independently exported above.
                 elif operation=='add_cargo':spec['cargo']=[dict(name='Antimatter Charge M',amount=args['quantity'])]
                 else:raise AssertionError('Unexpected reference operation')
             record=after['records'][key];exact({'spec','skills','implants','projections','commands'},set(record));fit_inputs(spec,record['spec'])

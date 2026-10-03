@@ -137,9 +137,13 @@ def main():
     actual=json.loads((args.output/'targeting.json').read_text(encoding='utf-8'));compare(actual,json.loads((args.output/'repeat.json').read_text(encoding='utf-8')))
     if args.check:compare(json.loads(args.check.read_text(encoding='utf-8')),actual)
     compare(before,digest_file(args.database));validate_source(args.source)
+    with (args.output/'skill-inputs.log').open('w',encoding='utf-8') as log:
+        subprocess.run([sys.executable,'-I',str(ROOT/'tools/android_reference/targeting_skill_inputs.py'),'--source',str(args.source),'--database',str(args.database),
+            '--output',str(args.output/'skill-inputs'),'--check',str(ROOT/'tools/android_reference/fixtures/targeting-skill-inputs.json')],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=300)
     receipt=dict(task='C03.1',source_commit=SOURCE_COMMIT,database_sha256=before,database_logical_sha256=baseline['database_logical_sha256'],
         fresh_process_repeat=True,game_database_unchanged=True,cases=len(actual['cases']),hulls=len(actual['hull_inventory']),holds=len(actual['hold_attributes']),
-        available_holds=actual['available_holds'],absent_holds=actual['absent_holds'],reference_sha256=digest_file(args.output/'targeting.json'))
+        available_holds=actual['available_holds'],absent_holds=actual['absent_holds'],reference_sha256=digest_file(args.output/'targeting.json'),
+        skill_input_witness_sha256=digest_file(ROOT/'tools/android_reference/fixtures/targeting-skill-inputs.json'))
     (args.output/'evidence.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps(receipt))
 
 

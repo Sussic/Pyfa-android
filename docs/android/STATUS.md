@@ -23,13 +23,17 @@ Implementation/source review complete;53 independent original wx/EOS cases,
 all437 hulls' hold inventory,21 holds and8 reference locks. Two fresh exports,
 host matrix/history/copy/restart,16 validator tests,26 integration checks and
 22 historical reuse guards pass. Both updated APKs compile; lint passes.
-Native execution and screenshot review remain outstanding. Exact next: commit
-the candidate and run only the new native pair/summary on a verified synthetic
-C02 baseline, then full115-gate delivery verification after readiness passes.
+Focused native preparation/restart on `f739cbbd` passes all four stages,325 fits,
+18 protocol guards and24 reviewed screenshots. Independent full skill-input
+witnesses repair the final summary's incomplete cascade expectation;37 actual
+report corruptions and16 affected validators pass. All native proof is retained.
+Exact next: commit the summary/input-oracle correction, then full115-gate
+delivery verification, every inherited/A10 gate and215 screenshots.
 The first focused prepare attempt on `c4233aa5` timed out at900 seconds after
 reaching311 fits/case42 undo. Proof is retained; preparation is now three bounded
 stages with the same900-second deadlines, all assertions and added restart proof.
-The corrected staged native test and summary still require focused verification.
+The original summary failure remains recorded alongside its passing summary-only
+retry. No product code, original targeting fixture, APK or reported hash changed.
 
 ## Latest outcome — C02 outgoing statistics
 
