@@ -112,6 +112,10 @@ class SummaryTests(unittest.TestCase):
             add(key,case['spec'],edges)
             values.append(dict(fit_id=key, revision=1, **deepcopy(case['expected'])))
         graph['recent']=recent_after_removal(before['recent'],3530)
+        for index, delta in ((4,8),(23,4)):
+            values[index]['revision'] += delta
+            graph['revisions'][ids[index]] += delta
+            next(s for s in snapshots if s['id']==ids[index])['revision'] += delta
         copied=deepcopy(graph['records'][ids[23]]);copied['spec']['name']='C01.3.2 copy'
         graph['fit_order'].append('copy');graph['records']['copy']=copied;graph['revisions']['copy']=1;graph['modified']['copy']=0
         snap=deepcopy(next(s for s in snapshots if s['id']==ids[23]));snap.update(id='copy',name='C01.3.2 copy');snapshots.append(snap)
@@ -125,8 +129,16 @@ class SummaryTests(unittest.TestCase):
         start=dict(manifest={k:v for k,v in engine.items() if k!='eos_settings'}, eos_settings=engine['eos_settings'], persistence=dict(enabled=True,opened_existing=True))
         common=dict(task='C01.3.2',runtime_start=start,ids=ids,saved=saved,copy_observation=copy,fixture_sha256=hashlib.sha256(FIXTURE.read_bytes()).hexdigest(),
             observations=[dict(case=i,actual=deepcopy(v)) for i,v in enumerate(values)])
-        return [dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS),
-                dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine
+        prepared=dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS)
+        for index, delta in ((4,8),(23,4)):prepared['observations'][index]['actual']['revision'] -= delta
+        # Emulate JSONObject integral-double rendering while retaining type metadata.
+        for wrapper in (saved['graph'],saved['all_fits']):
+            entries = wrapper['data']['records'].values() if type(wrapper['data']) is dict else wrapper['data']
+            for entry in entries:
+                for edge in entry['projections']:
+                    if edge['range_m'].is_integer(): edge['range_m']=int(edge['range_m'])
+        prepared['saved']=deepcopy(saved)
+        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine
     def test_complete_summary_and_corruptions(self):
         reports,engine=self.inputs()
         with tempfile.TemporaryDirectory() as directory:
@@ -157,6 +169,14 @@ class SummaryTests(unittest.TestCase):
                     'wrong_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3531]),
                     'missing_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[]),
                     'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),
+                    'armor_revision':lambda r:r[0]['observations'][4]['actual'].update(revision=2),
+                    'projection_revision':lambda r:r[0]['observations'][23]['actual'].update(revision=2),
+                    'unedited_revision':lambda r:r[0]['observations'][0]['actual'].update(revision=2),
+                    'restored_revision':lambda r:r[1]['observations'][4]['actual'].update(revision=1),
+                    'boolean_range':lambda r:r[0]['saved']['graph']['data']['records']['target-23']['projections'][0].update(range_m=False),
+                    'fractional_amount':lambda r:r[0]['saved']['graph']['data']['records']['target-23']['projections'][0].update(amount=1.0),
+                    'range_kind':lambda r:r[0]['saved']['graph']['numeric_types'].update({'root.records.target-23.projections[0].range_m':'integer'}),
+                    'snapshot_range_kind':lambda r:r[0]['saved']['all_fits']['numeric_types'].update({f"root[{next(i for i,v in enumerate(r[0]['saved']['all_fits']['data']) if v['id']=='target-23')}].projections[0].range_m":'integer'}),
                 }
                 for name,change in changes.items():
                     with self.subTest(name=name):

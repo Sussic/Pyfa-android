@@ -114,6 +114,7 @@ TANK_EXPECTED_RECENT = '''        exact(before['sample_id'], after['sample_id'])
         module_ids = [row['id'] for row in catalog if row['name'] == module_name]
         exact([3530], module_ids)
         exact(recent_after_removal(before.get('recent',[]), module_ids[0]), after.get('recent',[]))'''
+TANK_REVISION = "            tank(case['expected'], retained); tank(case['expected'], row['actual'])\n            exact(retained['fit_id'], row['actual']['fit_id']); exact(retained['tank'], row['actual']['tank'])\n            # Prepare observations precede the eight armor/four projection\n            # edit/history operations. Restored observations follow all edits.\n            delta = {4:8, 23:4}.get(row['case'], 0) if phase == 'prepare' else 0\n            exact(row['actual']['revision'] + delta, retained['revision'])\n"
 TANK_RECENT_TESTS = '''class RecentTests(unittest.TestCase):
     def test_exact_twenty_item_eviction(self):self.assertEqual([3530,*range(1,20)],recent_after_removal(list(range(1,21)),3530))
     def test_existing_item_promoted_once(self):self.assertEqual([3530,1,2],recent_after_removal([1,3530,2],3530))
@@ -129,11 +130,18 @@ TANK_RECENT_TESTS = '''class RecentTests(unittest.TestCase):
 '''
 
 
+TANK_PROJECTION = "def projection_inputs(expected, actual):\n    assert type(actual) is list and len(expected) == len(actual)\n    for left, right in zip(expected, actual):\n        exact({'source_id','range_m','active','amount'}, set(right))\n        for key in ('source_id','active','amount'): exact(left[key], right[key])\n        # JSONObject writes integral doubles without a decimal suffix. The\n        # separately checked numeric_types metadata retains their double kind.\n        assert type(right['range_m']) in (int,float)\n        assert left['range_m'] == right['range_m']\n\n\n"
+
+
 def corrected_tank_source(source):
     from capacitor_runner_retry import once
     source=once(source,'from copy import deepcopy\n','from copy import deepcopy\nimport json\n')
     source=once(source,'def summarize(reports, engine, prior_pids=()):',TANK_RECENT+'def summarize(reports, engine, prior_pids=()):')
-    return once(source,"        exact(before['sample_id'], after['sample_id']); exact(before.get('recent',[]), after.get('recent',[]))",TANK_EXPECTED_RECENT)
+    source=once(source,"        exact(before['sample_id'], after['sample_id']); exact(before.get('recent',[]), after.get('recent',[]))",TANK_EXPECTED_RECENT)
+    source=once(source,"            tank(case['expected'], retained); tank(case['expected'], row['actual']); exact(retained, row['actual'])\n",TANK_REVISION)
+    source=once(source,'def summarize(reports, engine, prior_pids=()):',TANK_PROJECTION+'def summarize(reports, engine, prior_pids=()):')
+    source=once(source,"            exact(list(projections), actual['projections'])","            projection_inputs(list(projections), actual['projections'])")
+    return once(source,"            exact(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])\n","            projection_inputs(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])\n            for index in range(len(projections)):\n                exact('decimal', saved['graph']['numeric_types'][f'root.records.{key}.projections[{index}].range_m'])\n                snapshot_index = all_fits.index(snapshot)\n                exact('decimal', saved['all_fits']['numeric_types'][f'root[{snapshot_index}].projections[{index}].range_m'])\n")
 
 
 def corrected_tank_test_source(source):
@@ -142,6 +150,11 @@ def corrected_tank_test_source(source):
     source=once(source,"        copied=deepcopy(graph['records'][ids[23]])","        graph['recent']=recent_after_removal(before['recent'],3530)\n        copied=deepcopy(graph['records'][ids[23]])")
     anchor="                    'edit':lambda r:r[0]['saved']['edits'][0]['after']['tank']['raw']['reinforced']['repairs']['armorRepair'].update(value=9999),\n"
     source=once(source,anchor,anchor+"                    'wrong_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3531]),\n                    'missing_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[]),\n                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n")
+    source=once(source,"        graph['recent']=recent_after_removal(before['recent'],3530)\n","        graph['recent']=recent_after_removal(before['recent'],3530)\n        for index, delta in ((4,8),(23,4)):\n            values[index]['revision'] += delta\n            graph['revisions'][ids[index]] += delta\n            next(s for s in snapshots if s['id']==ids[index])['revision'] += delta\n")
+    source=once(source,"        return [dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS),\n                dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine","        prepared=dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS)\n        for index, delta in ((4,8),(23,4)):prepared['observations'][index]['actual']['revision'] -= delta\n        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine")
+    source=once(source,"                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n","                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n                    'armor_revision':lambda r:r[0]['observations'][4]['actual'].update(revision=2),\n                    'projection_revision':lambda r:r[0]['observations'][23]['actual'].update(revision=2),\n                    'unedited_revision':lambda r:r[0]['observations'][0]['actual'].update(revision=2),\n                    'restored_revision':lambda r:r[1]['observations'][4]['actual'].update(revision=1),\n")
+    source=once(source,"        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine","        # Emulate JSONObject integral-double rendering while retaining type metadata.\n        for wrapper in (saved['graph'],saved['all_fits']):\n            entries = wrapper['data']['records'].values() if type(wrapper['data']) is dict else wrapper['data']\n            for entry in entries:\n                for edge in entry['projections']:\n                    if edge['range_m'].is_integer(): edge['range_m']=int(edge['range_m'])\n        prepared['saved']=deepcopy(saved)\n        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine")
+    source=once(source,"                    'restored_revision':lambda r:r[1]['observations'][4]['actual'].update(revision=1),\n",'                    \'restored_revision\':lambda r:r[1][\'observations\'][4][\'actual\'].update(revision=1),\n                    \'boolean_range\':lambda r:r[0][\'saved\'][\'graph\'][\'data\'][\'records\'][\'target-23\'][\'projections\'][0].update(range_m=False),\n                    \'fractional_amount\':lambda r:r[0][\'saved\'][\'graph\'][\'data\'][\'records\'][\'target-23\'][\'projections\'][0].update(amount=1.0),\n                    \'range_kind\':lambda r:r[0][\'saved\'][\'graph\'][\'numeric_types\'].update({\'root.records.target-23.projections[0].range_m\':\'integer\'}),\n                    \'snapshot_range_kind\':lambda r:r[0][\'saved\'][\'all_fits\'][\'numeric_types\'].update({f"root[{next(i for i,v in enumerate(r[0][\'saved\'][\'all_fits\'][\'data\']) if v[\'id\']==\'target-23\')}].projections[0].range_m":\'integer\'}),\n')
     return once(source,'class NativeBoundaryTests(unittest.TestCase):',TANK_RECENT_TESTS+'class NativeBoundaryTests(unittest.TestCase):')
 
 

@@ -53,6 +53,17 @@ def recent_after_removal(previous, module_id):
     return [module_id, *[i for i in previous if i != module_id][:19]]
 
 
+def projection_inputs(expected, actual):
+    assert type(actual) is list and len(expected) == len(actual)
+    for left, right in zip(expected, actual):
+        exact({'source_id','range_m','active','amount'}, set(right))
+        for key in ('source_id','active','amount'): exact(left[key], right[key])
+        # JSONObject writes integral doubles without a decimal suffix. The
+        # separately checked numeric_types metadata retains their double kind.
+        assert type(right['range_m']) in (int,float)
+        assert left['range_m'] == right['range_m']
+
+
 def summarize(reports, engine, prior_pids=()):
     apk = evidence_dir().parent/'apks/app-debug-androidTest.apk'
     assert apk.is_file(), 'Retained verified test APK required'
@@ -111,12 +122,16 @@ def summarize(reports, engine, prior_pids=()):
             actual = after['records'][key]
             exact({'spec','skills','implants','projections','commands'}, set(actual)); fit_inputs(original, actual['spec'])
             for field in ('skills','implants','commands'): exact({} if field == 'skills' else [], actual[field])
-            exact(list(projections), actual['projections'])
+            projection_inputs(list(projections), actual['projections'])
             snapshot = snapshots[key]
             exact(original['name'], snapshot['name']); exact(original['ship'], snapshot['ship'])
             exact([dict(index=i,**m) for i,m in enumerate(original['modules'])], snapshot['modules'])
             for field in ('skills','implants','commands'): exact({} if field == 'skills' else [], snapshot[field])
-            exact(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])
+            projection_inputs(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])
+            for index in range(len(projections)):
+                exact('decimal', saved['graph']['numeric_types'][f'root.records.{key}.projections[{index}].range_m'])
+                snapshot_index = all_fits.index(snapshot)
+                exact('decimal', saved['all_fits']['numeric_types'][f'root[{snapshot_index}].projections[{index}].range_m'])
 
         for case, key, row, retained in zip(fixture['cases'], ids, rows, saved['tanks']):
             edge = []
@@ -125,7 +140,12 @@ def summarize(reports, engine, prior_pids=()):
                 edge = [dict(source_id=sender, **case['projection'])]
             record(key, case['spec'], edge)
             exact(key, retained['fit_id']); exact(after['revisions'][key], retained['revision'])
-            tank(case['expected'], retained); tank(case['expected'], row['actual']); exact(retained, row['actual'])
+            tank(case['expected'], retained); tank(case['expected'], row['actual'])
+            exact(retained['fit_id'], row['actual']['fit_id']); exact(retained['tank'], row['actual']['tank'])
+            # Prepare observations precede the eight armor/four projection
+            # edit/history operations. Restored observations follow all edits.
+            delta = {4:8, 23:4}.get(row['case'], 0) if phase == 'prepare' else 0
+            exact(row['actual']['revision'] + delta, retained['revision'])
         copies = set(after['fit_order']) - set(inherited_ids) - set(ids) - set(sources.values())
         assert len(copies) == 1; copy = copies.pop(); exact(copy, saved['copy_id'])
         original = deepcopy(after['records'][ids[23]]); original['spec']['name'] = 'C01.3.2 copy'
