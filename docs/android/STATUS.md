@@ -43,9 +43,17 @@ matched profile apply/clear/undo/redo states while preserving that assertion.
 Focused witness, seven exact-source/failed-constructor guards,22 reporter and
 six inherited integration checks pass. Product, fixtures, plan and completed
 host inputs are unchanged. Preserve the original failed log/run snapshot.
-Exact next: commit the narrow witness repair and resume only the failed gate and
-pending dependants with the54 valid results retained. Native execution,191
-required screenshots and actual-report review remain pending.
+Witness repair `118a4a4a` passed the failed history gate, bringing retention to55.
+The next resource gate exposed the old unsupported-fighter assumption. A focused
+category-only fix still failed on a newly supported, schema-valid20-squad case;
+one diagnostic established its explicit desktop-matched tube/bay overloads.
+The corrected boundary asserts those values/inputs and still rejects incompatible
+modules and squadron size above EOS maximum. Seven resource tests,11 validators,
+seven exact-source/failed-constructor guards and affected reporter/adoption tests
+pass. Product/fixtures remain unchanged; every original failure stays retained.
+Exact next: commit this resource-test correction and resume that failed gate plus
+pending dependants with55 valid results retained. Native execution,191 required
+screenshots and actual-report review remain pending.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 

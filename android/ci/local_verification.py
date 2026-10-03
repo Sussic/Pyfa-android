@@ -85,6 +85,29 @@ def pending_output_history_fix(root, before, after, completed):
     assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
 
 
+OUTPUT_RESOURCE_BEFORE='118a4a4aa0af57dae0fdb60b64d4406251b70c95'
+
+
+def pending_output_resource_fix(root, before, after, completed):
+    """Only the reviewed C02 diagnostic fighter boundary may change."""
+    assert before==OUTPUT_RESOURCE_BEFORE and completed==plan('full',None)[:55]
+    assert plan('full',None)[55]=='headless:resources'
+    path='tools/android_headless/check_resources.py'
+    for revision,digest in ((before,'d7eb87af482e02d80668bf218502726944f26c90e2b9d7a7594d884927c9c0ba'),
+                            (after,'9f2b992ebbc38a8925d8cdde617a301ce5bee674cffb7cad9d465624d60671f1')):
+        source=subprocess.check_output(['git','show',revision+':'+path],cwd=root)
+        assert hashlib.sha256(source.replace(b'\r\n',b'\n')).hexdigest()==digest,path
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/local_verification.py','android/ci/report_local.py','android/ci/test_output_resource_retry.py'}
+    assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
+    import ast
+    def executed(revision):
+        source=subprocess.check_output(['git','show',revision+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
+        return {n.name:ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(source))
+                if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
+    assert executed(before)==executed(after),'Executed host/build behavior changed'
+
+
 def pending_runner_fix(root, before, after, completed):
     """Only the missing storage flag may change before any B09.2 phase passes."""
     assert 'native:check-history.py' in completed
@@ -278,6 +301,15 @@ class Run:
                 proof={'from_commit':self.state['commit'],'to_commit':current,
                     'completed_before_adoption':list(self.state['completed']),'prepared':False}
                 self.state.setdefault('runner_fix_reuse',[]).append(proof)
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_launcher_fix and self.state['commit']==OUTPUT_RESOURCE_BEFORE:
+                assert self.state['status']=='failed'
+                assert self.state['attempts'][-1]['gate']=='headless:resources' and self.state['attempts'][-1]['exit_code']!=0
+                assert self.state['plan']==plan(self.state['mode'],self.state['gate'])
+                pending_output_resource_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                for row in self.state['attempts']:row.setdefault('tested_commit',self.state['commit'])
+                self.state['output_resource_reuse']={'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed'])}
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'

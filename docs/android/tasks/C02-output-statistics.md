@@ -89,3 +89,31 @@ an actual failed-constructor integration retaining every tested commit and the
 failed attempt. The22 reporter and six inherited adoption tests also pass.
 Resume the existing run, retry this gate and continue pending dependants; no full
 chain restart or earlier-gate rerun is needed.
+
+## Full-run resource boundary correction
+
+The history retry at `118a4a4a` passed;55 gates are retained. The resource gate
+failed because its C01.1 test still expected every fighter-bearing diagnostic
+input to be unsupported. C02 intentionally accepts validated initial fighter
+inputs. Preserve `logs/056-headless-resources.log`, its worker `tests.log` and
+`failed-resource-boundary-118a4a4a/run.json`.
+
+A focused error-category correction still failed on an accepted case. Rather
+than retrying unchanged, one direct diagnostic checked all four ephemeral cases:
+incompatible turret/launcher states and Firbolg squad size9 (EOS maximum6) reject
+with INVALID_EDIT;20 valid squads of6 are accepted with explicit tube/bay
+overloads. The corrected test requires every original desktop resource value,
+unit/type/display/overload flag and exact retained fighter input for that case,
+and keeps exact rejection/data preservation for the other three. This reflects
+C02's existing supported schema; no product code, fixture or capacity assertion
+was weakened. The full14-case resource matrix and fresh-process restoration stay.
+
+Focused seven resource tests and11 raw validators pass. Seven exact-source and
+actual failed-constructor tests prove retention of the55 gates and original
+mixed commit stamps; seven prior witness guards,22 reporter and six inherited
+adoption checks pass. Reuse permits only this exact resource test correction
+from `118a4a4a`, unchanged executed host/build ASTs and the55-gate boundary.
+The earlier54-gate witness proof remains independently validated. Preserve the
+first focused failure and the subsequent diagnostic/corrected logs. A quoting
+typo in the new guard regression file was repaired before its seven tests passed;
+the failed focused log remains. No native proof is yet claimed.

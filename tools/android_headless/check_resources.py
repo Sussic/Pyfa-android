@@ -133,7 +133,7 @@ def main():
             self.bridge._available=False
             with self.assertRaises(RuntimeError): self.bridge.resource_details(key)
 
-        def test_diagnostic_inputs_do_not_expand_saved_fit_creation(self):
+        def test_diagnostic_module_and_fighter_creation_boundaries(self):
             for row in expected['cases']:
                 if row['execution']=='durable': continue
                 spec=deepcopy(row['spec'])
@@ -141,9 +141,17 @@ def main():
                 before=deepcopy(self.bridge._records)
                 response=json.loads(self.bridge.dispatch(json.dumps(dict(version=1,request_id='diagnostic-boundary',
                     session_id=self.bridge.session_id,operation='create_fit',arguments=dict(spec=spec),expected_revisions={}))))
-                self.assertEqual('error',response['status'])
-                self.assertEqual('INVALID_REQUEST' if row['fighters'] else 'INVALID_EDIT',response['error']['code'])
-                compare(before,self.bridge._records)
+                if row['spec']['name']=='Fighter tube and bay overload':
+                    self.assertEqual('ok',response['status']);self.assertIsNone(response['error'])
+                    key=response['fits'][0]['id'];actual=self.bridge.resource_details(key)['resources']
+                    compare_resources(row['resources'],actual)
+                    compare(row['fighters'],self.bridge._records[key]['spec']['fighters'])
+                    self.assertTrue(actual['fighter_tubes']['overloaded']);self.assertTrue(actual['fighter_bay']['overloaded'])
+                    for old,record in before.items():compare(record,self.bridge._records[old])
+                else:
+                    self.assertEqual('error',response['status'])
+                    self.assertEqual('INVALID_EDIT',response['error']['code'])
+                    compare(before,self.bridge._records)
 
         def test_presentation_source_is_exact_and_boundary_rounding_matches(self):
             def body(text):
