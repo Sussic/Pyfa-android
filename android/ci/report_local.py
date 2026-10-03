@@ -198,10 +198,14 @@ def validate(run,root):
                 pending_stale_test_fixture_fix(root,row['tested_commit'],comparison_commit)
                 allowed.add('android/ci/test_stale_history_retry.py')
             if 'tools/android_headless/check_history_mutations.py' in changes:
-                from local_verification import pending_mutation_count_fix
+                from local_verification import pending_mutation_count_fix,pending_output_history_fix,OUTPUT_HISTORY_BEFORE
                 reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']
                     and r['to_commit'] == comparison_commit)
-                pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
+                if row['tested_commit']==OUTPUT_HISTORY_BEFORE:
+                    pending_output_history_fix(root,row['tested_commit'],comparison_commit,reuse['completed_before_adoption'])
+                    allowed.add('android/ci/test_output_history_retry.py')
+                else:
+                    pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
                 assert gate in reuse['completed_before_adoption']
                 allowed.add('tools/android_headless/check_history_mutations.py')
             if 'tools/android_reference/tank.py' in changes:

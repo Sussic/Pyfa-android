@@ -66,6 +66,25 @@ def pending_mutation_count_fix(root, before, after, completed):
     assert old.count('(2 if args.matrix_only else 22)') == 1
     assert new == old.replace('(2 if args.matrix_only else 22)', '(2 if args.matrix_only else 23)', 1)
 
+OUTPUT_HISTORY_BEFORE='4b42c02f8af88057f557c3c542dec0dbedb28b28'
+
+
+def pending_output_history_fix(root, before, after, completed):
+    """Reuse only the 54 gates before the failed C02 registration witness."""
+    assert before==OUTPUT_HISTORY_BEFORE
+    assert completed==plan('full',None)[:54]
+    assert plan('full',None)[54]=='headless:history_mutations'
+    path='tools/android_headless/check_history_mutations.py'
+    for revision,digest in ((before,'0ade08192b8fee95f92168eca3c0a327b1aad8175621537df40c996c5ad23431'),
+                            (after,'3ff31dc4ed5b6f0eee41437af0cfb6b00d1e81509bb75a3254f84e0d7316555d')):
+        source=subprocess.check_output(['git','show',revision+':'+path],cwd=root)
+        assert hashlib.sha256(source.replace(b'\r\n',b'\n')).hexdigest()==digest,path
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/local_verification.py','android/ci/report_local.py',
+             'android/ci/test_output_history_retry.py'}
+    assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
+
+
 def pending_runner_fix(root, before, after, completed):
     """Only the missing storage flag may change before any B09.2 phase passes."""
     assert 'native:check-history.py' in completed
@@ -272,8 +291,14 @@ class Run:
                     pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
                     allowed.add('android/ci/test_stale_history_retry.py')
                 if 'tools/android_headless/check_history_mutations.py' in changed:
-                    assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
-                    pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    if self.state['commit']==OUTPUT_HISTORY_BEFORE:
+                        assert self.state['status']=='failed'
+                        assert self.state['attempts'][-1]['gate']=='headless:history_mutations' and self.state['attempts'][-1]['exit_code']!=0
+                        pending_output_history_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                        allowed.update({'android/ci/test_output_history_retry.py',*[p for p in changed if p.startswith('docs/android/')]})
+                    else:
+                        assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
+                        pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
                     allowed.add('tools/android_headless/check_history_mutations.py')
                 if 'tools/android_reference/tank.py' in changed:
                     pending_tank_fixture_fix(ROOT, self.state['commit'], current, self.state['completed'])

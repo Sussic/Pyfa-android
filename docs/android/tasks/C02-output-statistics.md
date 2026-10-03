@@ -64,3 +64,28 @@ Exact next: commit this coherent candidate, run the109-gate full local plan,
 review all191 required screenshots and actual-report corruptions, then deliver.
 No complete native result, hosted Actions pass, feature merge or phone install
 is claimed before that proof.
+
+## Full-run history registration repair
+
+Run `20261003-063304-4b42c02f-3dd323` at `4b42c02f` passed54 gates.
+Gate55 failed at the unchanged full-history-coverage assertion: C02 added
+`set_target_profile`, but the remaining-action witness set had not exercised it.
+All28 original cases passed; the other22 tests, including durable failures and
+restart, passed. Preserve `logs/054-headless-history_mutations.log`, its worker
+`tests.log` and `failed-history-registration-4b42c02f/run.json`.
+
+The repair adds eight apply/clear/undo/redo observations using original C02 cases35
+and36, with exact revisions, cursors, labels, profiles, outputs and recent-use
+preservation. The coverage assertion, all original cases,23-test count, numeric
+tolerances,900-second host deadline and every native/A10 requirement stay intact.
+A focused execution of the actual new witness passes. Its first private harness
+attempt omitted BridgeSession from the execution namespace; that diagnostic log
+is retained and the corrected focused execution passes. No product/fixture changes.
+
+Reuse is limited to the exact original `4b42c02f` and its preceding54 gates.
+SHA256 guards accept only the reviewed witness extension; every other harness,
+engine, fixture or completed-boundary change fails. Seven focused guards include
+an actual failed-constructor integration retaining every tested commit and the
+failed attempt. The22 reporter and six inherited adoption tests also pass.
+Resume the existing run, retry this gate and continue pending dependants; no full
+chain restart or earlier-gate rerun is needed.

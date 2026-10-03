@@ -182,6 +182,34 @@ def main():
             compare(['emAmount','thermalAmount','kineticAmount','explosiveAmount'],incoming)
             covered.add('set_damage_pattern')
             (args.output/'incoming-history.json').write_text(json.dumps(dict(fields=incoming,original_matrix_cases=28,independent_fixture_sha256=digest_file(ROOT/'tools/android_reference/fixtures/defenses.json')))+'\n',encoding='utf-8')
+            # C02 target-profile actions also need explicit registered coverage.
+            output_fixture_path=ROOT/'tools/android_reference/fixtures/output.json'
+            output_fixture=json.loads(output_fixture_path.read_text(encoding='utf-8'))
+            compare(output_fixture['eos_settings'],engine.settings)
+            self.bridge._reset_storage();self.bridge=BridgeSession(engine)
+            initial=output_fixture['cases'][35];changed=output_fixture['cases'][36]
+            key=self.create(initial['spec']);recent=deepcopy(self.bridge.recent_items())
+            cleared=deepcopy(initial['expected']['output']);cleared['effective']=False
+            cleared['firepower']['effective']=deepcopy(cleared['firepower']['raw'])
+            profile_states=[]
+            for value,wanted in ((changed['spec']['target_profile'],changed['expected']['output']),(None,cleared)):
+                for action,expected_output,expected_profile in (
+                        ('set_target_profile',wanted,value),('undo',initial['expected']['output'],initial['spec']['target_profile']),
+                        ('redo',wanted,value),('undo',initial['expected']['output'],initial['spec']['target_profile'])):
+                    previous=self.bridge._revisions[key]
+                    arguments=dict(fit_id=key,profile=value) if action=='set_target_profile' else dict(fit_id=key)
+                    self.send(action,arguments)
+                    self.assertEqual(previous+1,self.bridge._revisions[key])
+                    actual=self.bridge.output_details(key)
+                    compare(expected_output,actual['output']);compare(expected_profile,actual['target_profile'])
+                    compare(expected_profile,self.bridge._records[key]['spec']['target_profile'])
+                    compare(recent,self.bridge.recent_items())
+                    history=self.bridge.history_details(key);done=action!='undo'
+                    self.assertEqual(int(done),history['undo_count']);self.assertEqual(int(not done),history['redo_count'])
+                    self.assertEqual('Change target profile',history['undo_label'] if done else history['redo_label'])
+                    profile_states.append(dict(action=action,revision=actual['revision'],target_profile=actual['target_profile'],output=actual['output']))
+            self.assertEqual(8,len(profile_states));covered.add('set_target_profile')
+            (args.output/'output-history.json').write_text(json.dumps(dict(states=profile_states,independent_fixture_sha256=digest_file(output_fixture_path)),indent=2)+'\n',encoding='utf-8')
             compare(set(LABELS) - set(MODULE_LABELS), covered - {'change_variation'})
             compare({'implant', 'drone'}, contexts)
             (args.output / 'observations.json').write_text(json.dumps(observations, indent=2, allow_nan=False) + '\n')

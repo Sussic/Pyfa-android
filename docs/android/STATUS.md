@@ -35,8 +35,17 @@ copy and a39-fit fresh-process restart pass. Twenty-five output validator tests
 pass. Both APKs/new native test compile and offline lint passes. All105 inherited
 gates/order remain, adding exactly four C02 gates (109 total). See the
 [task](tasks/C02-output-statistics.md) for source review and preserved failures.
-Exact next: commit stable candidate and execute one complete local suite; native
-execution,191 required screenshots and actual-report review are still pending.
+Full run `20261003-063304-4b42c02f-3dd323` retained54 passing gates, including
+all independent references. Its remaining-mutation host gate failed because the
+new profile operation lacked an explicit witness in the registration assertion;
+all28 original cases and the other22 tests passed. Added eight independently
+matched profile apply/clear/undo/redo states while preserving that assertion.
+Focused witness, seven exact-source/failed-constructor guards,22 reporter and
+six inherited integration checks pass. Product, fixtures, plan and completed
+host inputs are unchanged. Preserve the original failed log/run snapshot.
+Exact next: commit the narrow witness repair and resume only the failed gate and
+pending dependants with the54 valid results retained. Native execution,191
+required screenshots and actual-report review remain pending.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 
