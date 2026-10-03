@@ -1,13 +1,13 @@
 # Android project status
 
-Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 active.**
+Updated: 2026-10-03. **C01 delivered; C02 next.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Selected outcome — C01.3.2 repair, tank and spool
+## Latest outcome — C01.3.2 repair, tank and spool
 
 Selected from delivered master `2d941fd9` on `codex/c01-3-2-tank-details`.
 Deliver all F05.23–F05.27 together: passive shield recharge, active shield,
@@ -43,8 +43,11 @@ only affected build/package and tank phases. Final-summary corrections enforce
 original recent-use promotion, exact eight/four history revision advances and
 exact projection ranges with decimal metadata. All assertions, tolerances,
 timeouts, restart boundaries and A10 requirements remain intact. No full chain
-restart or unexecuted Actions pass. Exact next: receipt/source review, push/PR,
-truthful `local/full-verification`, merge; then select C02 from the live queue.
+restart or unexecuted Actions pass. [PR #39](https://github.com/Sussic/Pyfa-android/pull/39) merged as `9d6df566`
+from reviewed head `f305d4dd`; merge/head trees match. The exact-head
+`local/full-verification` passed. C01.3.2, C01.3 and C01 are closed.
+Exact next: select and bound C02 firepower, mining, bombs and outgoing stats
+from the live queue, then implement one coherent accepted outcome.
 
 ## Latest outcome — C01.3.1 defenses and incoming damage
 

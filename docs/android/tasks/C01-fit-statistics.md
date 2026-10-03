@@ -1,7 +1,7 @@
 # C01 resources, capacitor and defenses
 
 Selected 2026-10-02 after B09.2 PR #35, from delivered master b48f40d7.
-Parent remains active until all F05.01–F05.27 acceptance rows are verified.
+C01 is delivered: all F05.01–F05.27 acceptance rows have independent/local native evidence.
 Retain Kotlin/Compose, Chaquopy, serialized EOS, offline persistence and all prior
 acceptance gates. Calculation formulas remain in EOS; pinned desktop views define
 units, formatting, detail precision and the meaning of available capacity.
@@ -176,4 +176,6 @@ were rerun. The original fixture pause, native failure and summary failures
 remain archived. Final validation preserves exact packaged fixture hashes,
 CRLF-to-LF-only reference comparison, history revision advances, projection
 numeric metadata, every inherited assertion/tolerance/timeout and A10 criteria.
-Delivery remains pending PR merge; C01/C01.3 close together afterward. C02 follows.
+[PR #39](https://github.com/Sussic/Pyfa-android/pull/39) merged as `9d6df566`
+from reviewed head `f305d4dd`; merge/head trees match and exact-head
+`local/full-verification` passed. C01.3.2, C01.3 and C01 are closed. C02 follows.
