@@ -118,6 +118,32 @@ class OutputTest {
         return JSONArray(names)
     }
 
+    private fun profileRequestNumbers(cases: JSONArray) {
+        for (index in listOf(14, 15, 16, 35, 36)) {
+            val spec = JSONObject(wire(cases.getJSONObject(index).getJSONObject("spec")))
+            spec.remove("ignore_restrictions"); spec.remove("cargo")
+            val decoded = BridgeCodec.decodeFitSpec(wire(spec))
+            val profile = decoded.targetProfile!!
+            for (operation in listOf(BridgeOperation.CreateFit(decoded), BridgeOperation.SetTargetProfile("wire-fit", profile))) {
+                val revisions = if (operation is BridgeOperation.CreateFit) emptyMap() else mapOf("wire-fit" to 1L)
+                val request = BridgeRequest("wire-request", "wire-session", operation, revisions)
+                val encoded = JSONObject(BridgeCodec.encodeRequest(request)).getJSONObject("arguments")
+                val row = if (operation is BridgeOperation.CreateFit) encoded.getJSONObject("spec").getJSONObject("target_profile") else encoded.getJSONObject("profile")
+                val expected = this.profile(profile) as JSONObject
+                for (key in expected.keys()) {
+                    assertEquals(expected.get(key), row.get(key))
+                    if (expected.get(key) != JSONObject.NULL) assertTrue("$index $key lost decimal type", row.get(key) is Double)
+                }
+                if (operation is BridgeOperation.CreateFit) {
+                    assertTrue(encoded.getJSONObject("spec").getInt("skill_level") == decoded.skillLevel)
+                    assertTrue(encoded.getJSONObject("spec").getBoolean("factor_reload") == decoded.factorReload)
+                }
+            }
+        }
+        val nullProfile = BridgeRequest("wire-request", "wire-session", BridgeOperation.SetTargetProfile("wire-fit", null), mapOf("wire-fit" to 1L))
+        assertEquals(JSONObject.NULL, JSONObject(BridgeCodec.encodeRequest(nullProfile)).getJSONObject("arguments").get("profile"))
+    }
+
     @Test fun outputViewsProfileHistoryAndRestartOffline() {
         EngineRuntime.start(context).get(120,TimeUnit.SECONDS)
         assertEquals(1,Settings.Global.getInt(context.contentResolver,Settings.Global.AIRPLANE_MODE_ON))
@@ -127,6 +153,7 @@ class OutputTest {
         assertTrue(start.getJSONObject("persistence").getBoolean("enabled"));assertTrue(start.getJSONObject("persistence").getBoolean("opened_existing"))
         assertEquals(if(phase=="prepare")230 else 268,EngineRuntime.library.value.size)
         val bytes=instrumentation.context.assets.open("output-expected.json").use { it.readBytes() };val fixture=JSONObject(bytes.toString(Charsets.UTF_8));val cases=fixture.getJSONArray("cases");assertEquals(37,cases.length())
+        profileRequestNumbers(cases)
         val file=File(context.noBackupFilesDir,"c02-expected.json");val observations=JSONArray();val ids=JSONArray();var guards=JSONArray();val edits=JSONArray()
         if(phase=="prepare") {
             val inherited=ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit)));val inheritedGraph=graph()

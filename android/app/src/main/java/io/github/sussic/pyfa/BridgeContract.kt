@@ -468,9 +468,30 @@ object BridgeCodec {
             requireProtocol(revision >= 0, "Revision must be nonnegative")
             revisions.put(id, revision)
         }
-        return obj("version" to VERSION, "request_id" to request.requestId, "session_id" to request.sessionId,
-            "operation" to name, "expected_revisions" to revisions, "arguments" to arguments).toString()
+        val envelope = obj("version" to VERSION, "request_id" to request.requestId, "session_id" to request.sessionId,
+            "operation" to name, "expected_revisions" to revisions, "arguments" to arguments)
+        // JSONObject strips the decimal suffix from integral doubles. EOS uses
+        // the profile's numeric types when applying even zero/100% resistance.
+        val path = when (val op = request.operation) {
+            is BridgeOperation.CreateFit -> if (op.spec.targetProfile != null) listOf("arguments", "spec", "target_profile") else null
+            is BridgeOperation.SetTargetProfile -> if (op.profile != null) listOf("arguments", "profile") else null
+            else -> null
+        }
+        return if (path == null) envelope.toString() else encodeProfilePath(envelope, path)
     }
+
+    private fun encodeProfilePath(value: JSONObject, path: List<String>): String =
+        value.keys().asSequence().joinToString(",", "{", "}") { key ->
+            val item = value.get(key)
+            when {
+                path.isEmpty() -> {
+                    requireProtocol(item == JSONObject.NULL || item is Double, "Invalid profile numeric type")
+                    JSONObject.quote(key) + ":" + item.toString()
+                }
+                key == path.first() -> JSONObject.quote(key) + ":" + encodeProfilePath(value.getJSONObject(key), path.drop(1))
+                else -> JSONObject().put(key, item).toString().let { it.substring(1, it.length - 1) }
+            }
+        }
 
     fun decodeResponse(json: String): BridgeResponse {
         val value = objectValue(StrictJson(json).parse(), "response")
