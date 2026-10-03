@@ -199,3 +199,9 @@ per-operation limits, process boundaries, timeouts or A10 requirements changed.
 Final source review and diff checks cover the coherent implementation and its
 concrete corrections. Delivery publishes only the truthful local result. Next
 approved outcome after merge is C03 targeting/navigation and attribute inspection.
+
+Delivered2026-10-03 in [PR #40](https://github.com/Sussic/Pyfa-android/pull/40).
+Reviewed delivery head `a1801b5c36909cb4f35db41efe9598c443342796`, merge
+`5b9559938f08ad547cf8701cf253e426d8b410ac`; trees match
+`ff077f1e755a137f3877f494b6eac57309782d9a`. Exact-head local verification passed
+before merge. No hosted dispatch or unexecuted Actions success was claimed.

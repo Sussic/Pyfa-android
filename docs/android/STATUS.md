@@ -1,13 +1,13 @@
 # Android project status
 
-Updated: 2026-10-03. **C01 delivered; C02 active.**
+Updated: 2026-10-03. **C02 delivered; C03 next.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
 
-## Selected outcome — C02 outgoing statistics
+## Latest outcome — C02 outgoing statistics
 
 All F06.01–F06.14 are implemented and locally verified on
 `codex/c02-output-statistics`, reviewed/tested code `1b4630d3`.
@@ -35,8 +35,11 @@ proof was recovered byte-for-byte; only its read-only restored phase needed
 reexecution after collection failures. No assertion, tolerance, timeout, restart
 boundary or A10 requirement changed. No hosted Actions pass is claimed.
 
-Exact next: push/merge this reviewed C02 deliverable with truthful
-`local/full-verification`, update the closure checkpoint, then select approved C03.
+Delivered [PR #40](https://github.com/Sussic/Pyfa-android/pull/40), reviewed delivery
+head `a1801b5c`, merge `5b955993`. Live exact-head `local/full-verification`
+passed; PR was MERGEABLE/CLEAN. The merge tree equals the reviewed head tree
+`ff077f1e755a137f3877f494b6eac57309782d9a`. No hosted workflow ran.
+Exact next approved task: C03 targeting/navigation and attribute inspector.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 
