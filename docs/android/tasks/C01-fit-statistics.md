@@ -163,3 +163,17 @@ read-only/GC, refresh, offline/removal and projection-removal Undo/Redo, copying
 recreation and fresh-process persistence, strict types/units/nulls, corrupted
 reports and fixtures. All inherited full local gates and screenshot review remain
 required. No full/native completion is claimed until actual execution/review.
+
+C01.3.2 verification complete: [receipt](../evidence/c01-3-2-native.json)
+records105 required gates,69 native executions,230 restored fits (189 inherited),
+178 required reviewed screenshots plus one optional diagnostic,35 rejected
+actual-report corruptions,26 fixture/transport and18 exact-summary-source tests.
+Two independent fresh original wx/EOS exports agree for29 cases. Product source
+`7a0aaa27`, corrected native test `e49c7220`, summary `b0c401fa` are separately
+recorded. Exact proofs retain100 unaffected gates through the targeted history
+wait repair; only affected build/package, tank prepare/restored and summary
+were rerun. The original fixture pause, native failure and summary failures
+remain archived. Final validation preserves exact packaged fixture hashes,
+CRLF-to-LF-only reference comparison, history revision advances, projection
+numeric metadata, every inherited assertion/tolerance/timeout and A10 criteria.
+Delivery remains pending PR merge; C01/C01.3 close together afterward. C02 follows.

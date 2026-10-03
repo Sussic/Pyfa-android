@@ -24,48 +24,27 @@ Use focused checks during implementation. Complete implementation, fixtures and
 summary validators before one full verification; retain valid existing evidence.
 Live master and absence of open PRs verified before selection.
 
-Implementation/source review complete. Two fresh original wx/EOS exports agree
-for29 cases. Focused host matrix, read-only/GC, state/removal/projection history,
-copy and process restart pass. Expanded21 fixture/summary/transport regressions
-and all22 inherited defense validator tests pass. Development app/test APK builds
-and lint pass for build31. The original invalid spool fixture/hull attempts and
-corrected reference evidence remain retained. Full/native verification and actual
-screenshot review remain outstanding; no full delivery or hosted pass is claimed.
+Implementation and source review complete. All105 required local gates pass:
+58 reference/host, five build and42 native gates;69 actual native test executions,
+230 fits (189 inherited) survive restart. All178 required screenshots and one
+optional summary-failure diagnostic are reviewed. Two fresh original wx/EOS
+exports agree for29 cases. Twenty-six focused fixture/schema/transport tests,
+18 exact-summary-source guards,25 history-repair guards and35 actual-report
+corruptions pass. [Receipt](evidence/c01-3-2-native.json) binds every gate to its
+actual tested commit, logs, APK hashes, screenshot QA and retained-result proofs.
 
-Full run `20261003-011943-7a0aaa27-72c5cf` paused after nine valid gates
-when the labelled falloff witness proved to be inside the mutadaptive optimal.
-Pinned EOS shows that repairer has zero falloff. Only case25 is corrected to
-the ordinary armor repairer at verified10500m optimal plus3000m falloff; two
-fresh original exports agree on reduced nonzero21.3HP/s (zero-range42.7HP/s).
-All28 other cases and fixture metadata are unchanged; packaged-byte/reference
-checks remain strict. Twenty-one affected validator tests, five exact pending
-source/reuse guards and twenty-two reporter regressions pass. Product/native
-test code is unchanged. The same full run resumes with all nine completed
-gates retained under exact source hashes.
-
-The same run passed all102 gates before new tank prepare: all58 reference/host,
-five build and all39 inherited native gates. All165 inherited screenshots are
-reviewed. Tank prepare completed29 calculation/screen cases, then failed at
-`TankTest.kt:192` with a correctly rejected stale revision following asynchronous
-Undo (749s, within unchanged900s). Failed logs/APK/screens and229-fit partial
-store remain archived. All189 inherited records/revisions/metadata are unchanged.
-The exact native test repair waits for a newer revision and completed history
-refresh at all nine Undo/Redo boundaries; assertions and limits remain intact.
-Twenty-five focused wait/source/package/recovery guards,21 summary and22 reporter tests
-pass. Recovery in a copied store restores the exact189-fit prior graph, removing
-only40 proven synthetic phase fits. Next: rebuild affected test/package checks,
-prove app APK/fixtures identical, then retry tank prepare/restored and summary
-in this retained run. No full-chain restart, hosted result or delivery is claimed.
-
-Targeted repair `e49c7220` passes app/test/lint, package and corrected test
-signature; app APK is byte-identical and every non-bytecode test entry unchanged.
-Tank prepare/restored now pass, with all230 fits and104 gates retained. Final
-summary alone fails because it expected recent equipment unchanged across module
-removal/Redo. Actual recent list correctly promotes3530 (Medium Armor Repairer II)
-and evicts the twentieth old item, matching the pinned equipment fixture and
-existing desktop removal/history policy. Correct only this expected list;
-strictly reject wrong IDs/order/duplicates/eviction and retain read-only per-case
-recent assertions. Next: focused validator/source checks, then summary only.
+Run `20261003-011943-7a0aaa27-72c5cf` is complete. Product code remains
+`7a0aaa27`; corrected native test/package evidence is `e49c7220`; final summary
+is `b0c401fa`. Preserve the original nine-gate falloff-fixture pause, stale
+Undo-revision tank failure, and both summary failures. The targeted test repair
+retained100 unaffected gates, proved app APK byte identity/test non-bytecode
+content identity, recovered the exact189-fit synthetic baseline, and reran
+only affected build/package and tank phases. Final-summary corrections enforce
+original recent-use promotion, exact eight/four history revision advances and
+exact projection ranges with decimal metadata. All assertions, tolerances,
+timeouts, restart boundaries and A10 requirements remain intact. No full chain
+restart or unexecuted Actions pass. Exact next: receipt/source review, push/PR,
+truthful `local/full-verification`, merge; then select C02 from the live queue.
 
 ## Latest outcome — C01.3.1 defenses and incoming damage
 
