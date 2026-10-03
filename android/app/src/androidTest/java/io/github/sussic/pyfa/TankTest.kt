@@ -71,6 +71,16 @@ class TankTest {
     private fun ready(id: String) {
         compose.waitUntil(60_000) { !model.loading && model.error == null && model.details?.let { it.fitId == id && it.revision == fit(id).revision } == true }; sync()
     }
+    private fun reverse(id: String, redo: Boolean) {
+        ready(id); val revision = fit(id).revision
+        val history = ViewModelProvider(compose.activity)[EditHistoryModel::class.java]
+        compose.waitUntil(60_000) { !history.loading && !history.editing && history.options?.revision == revision }
+        val tag = if (redo) "history-redo" else "history-undo"
+        compose.onNodeWithTag(tag).performScrollTo().assertIsEnabled()
+        click(tag)
+        compose.waitUntil(60_000) { fit(id).revision > revision && !history.loading && !history.editing && history.options?.revision == fit(id).revision }
+        assertNull(history.error); ready(id)
+    }
     private fun open(id: String) { EngineRuntime.selectFit(context, id).get(30, TimeUnit.SECONDS); sync(); click("tank-open"); ready(id) }
     private fun text(tag: String, row: TankScalar) { compose.onNodeWithTag(tag).performScrollTo().assertTextEquals(row.display?.let { "$it ${row.unit}" } ?: "Unavailable") }
     private fun screen(id: String, expected: JSONObject) {
@@ -185,24 +195,24 @@ class TankTest {
             val armor = ids.getString(4); open(armor); val original = query(armor)
             send(BridgeOperation.SetModuleStates(armor, listOf(0), ModuleState.OFFLINE), listOf(armor)); ready(armor)
             assertEquals(0.0, query(armor).modes.getValue("raw").reinforced.repairs.getValue("armorRepair").value.numberOrNull()!!, 0.0)
-            val changed = raw(query(armor)); click("history-undo"); ready(armor); assertEquals(original.modes, query(armor).modes)
-            click("history-redo"); ready(armor); compare(changed.getJSONObject("tank"), raw(query(armor)).getJSONObject("tank"), strict=false)
+            val changed = raw(query(armor)); reverse(armor, false); assertEquals(original.modes, query(armor).modes)
+            reverse(armor, true); compare(changed.getJSONObject("tank"), raw(query(armor)).getJSONObject("tank"), strict=false)
             edits.put(obj("action" to "offline", "after" to changed, "redo" to raw(query(armor))))
-            click("history-undo"); ready(armor)
+            reverse(armor, false)
             send(BridgeOperation.RemoveModule(armor, 0), listOf(armor)); ready(armor)
             assertEquals(0.0, query(armor).modes.getValue("raw").reinforced.repairs.getValue("armorRepair").value.numberOrNull()!!, 0.0)
-            val removed = raw(query(armor)); click("history-undo"); ready(armor); assertEquals(original.modes, query(armor).modes)
-            click("history-redo"); ready(armor); compare(removed.getJSONObject("tank"), raw(query(armor)).getJSONObject("tank"), strict=false)
+            val removed = raw(query(armor)); reverse(armor, false); assertEquals(original.modes, query(armor).modes)
+            reverse(armor, true); compare(removed.getJSONObject("tank"), raw(query(armor)).getJSONObject("tank"), strict=false)
             edits.put(obj("action" to "remove_module", "after" to removed, "redo" to raw(query(armor))))
-            click("history-undo"); ready(armor); click("tank-back")
+            reverse(armor, false); click("tank-back")
             val owner = ids.getString(23); val source = sources.getString(owner); open(owner); val before = query(owner)
             send(BridgeOperation.RemoveProjection(source, owner), listOf(source, owner)); ready(owner)
             val noProjection = query(owner); assertFalse(noProjection.modes.getValue("raw").reinforced.indicated)
             assertEquals(0.0, noProjection.modes.getValue("raw").reinforced.repairs.getValue("armorRepair").value.numberOrNull()!!, 0.0)
-            click("history-undo"); ready(owner); assertEquals(before.modes, query(owner).modes)
-            click("history-redo"); ready(owner); assertEquals(noProjection.modes, query(owner).modes)
+            reverse(owner, false); assertEquals(before.modes, query(owner).modes)
+            reverse(owner, true); assertEquals(noProjection.modes, query(owner).modes)
             edits.put(obj("action" to "remove_projection", "after" to raw(noProjection), "redo" to raw(query(owner))))
-            click("history-undo"); ready(owner); reference(cases.getJSONObject(23).getJSONObject("expected"), query(owner))
+            reverse(owner, false); reference(cases.getJSONObject(23).getJSONObject("expected"), query(owner))
             val old = EngineRuntime.library.value.map { it.id }.toSet()
             val copy = send(BridgeOperation.DuplicateFit(owner, "C01.3.2 copy"), listOf(owner)).fits.single { it.id !in old }.id
             assertEquals(before.modes, query(copy).modes); assertEquals(0, EngineRuntime.editHistory(context, copy).get(120, TimeUnit.SECONDS).undoCount)

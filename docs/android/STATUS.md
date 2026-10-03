@@ -22,7 +22,7 @@ report rejection, read-only/refresh/history/copy/recreation/restart checks;
 APK/lint/package, every inherited local gate and actual screenshot review.
 Use focused checks during implementation. Complete implementation, fixtures and
 summary validators before one full verification; retain valid existing evidence.
-Live master and absence of open PRs verified before selection. No run is active.
+Live master and absence of open PRs verified before selection.
 
 Implementation/source review complete. Two fresh original wx/EOS exports agree
 for29 cases. Focused host matrix, read-only/GC, state/removal/projection history,
@@ -41,7 +41,21 @@ All28 other cases and fixture metadata are unchanged; packaged-byte/reference
 checks remain strict. Twenty-one affected validator tests, five exact pending
 source/reuse guards and twenty-two reporter regressions pass. Product/native
 test code is unchanged. The same full run resumes with all nine completed
-gates retained under exact source hashes; no native/build gate has executed yet.
+gates retained under exact source hashes.
+
+The same run passed all102 gates before new tank prepare: all58 reference/host,
+five build and all39 inherited native gates. All165 inherited screenshots are
+reviewed. Tank prepare completed29 calculation/screen cases, then failed at
+`TankTest.kt:192` with a correctly rejected stale revision following asynchronous
+Undo (749s, within unchanged900s). Failed logs/APK/screens and229-fit partial
+store remain archived. All189 inherited records/revisions/metadata are unchanged.
+The exact native test repair waits for a newer revision and completed history
+refresh at all nine Undo/Redo boundaries; assertions and limits remain intact.
+Twenty-five focused wait/source/package/recovery guards,21 summary and22 reporter tests
+pass. Recovery in a copied store restores the exact189-fit prior graph, removing
+only40 proven synthetic phase fits. Next: rebuild affected test/package checks,
+prove app APK/fixtures identical, then retry tank prepare/restored and summary
+in this retained run. No full-chain restart, hosted result or delivery is claimed.
 
 ## Latest outcome — C01.3.1 defenses and incoming damage
 

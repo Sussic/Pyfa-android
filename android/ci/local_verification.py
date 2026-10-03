@@ -177,6 +177,19 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and getattr(args,'adopt_tank_history_fix',False):
+                assert self.state['status']=='failed' and self.state['completed']==plan('full',None)[:-3]
+                failure=next(row for row in reversed(self.state['attempts']) if row['gate'].startswith('native:'))
+                assert failure['gate']=='native:tank-prepare' and failure['exit_code']!=0
+                from tank_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                before=self.state['commit']
+                for row in self.state['attempts']:row.setdefault('tested_commit',before)
+                self.state['tank_history_reuse']={'from_commit':before,'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),
+                    'retained_gates':[g for g in self.state['completed'] if g not in ('build:apks-lint','build:package')],
+                    'prepared':False,'installed':False}
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_capacitor_runner_fix:
                 from capacitor_runner_retry import exact_source
                 assert self.state['status']=='failed' and self.state['completed']==plan('full',None)[:-3]
@@ -440,6 +453,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            tank_fix=self.state.get('tank_history_reuse')
+            if tank_fix and not tank_fix['prepared']:
+                from tank_history_retry import prepare
+                prepare(self,tank_fix);save(self.file,self.state)
             capacitor_fix=self.state.get('capacitor_runner_reuse')
             if capacitor_fix and not capacitor_fix['prepared']:
                 from capacitor_runner_retry import prepare
@@ -507,6 +524,9 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if tank_fix and not tank_fix['installed']:
+                        from tank_history_retry import install
+                        install(self,tank_fix);save(self.file,self.state)
                     if capacitor_fix and not capacitor_fix['installed']:
                         from capacitor_runner_retry import install
                         install(self,capacitor_fix);save(self.file,self.state)
@@ -572,6 +592,7 @@ def main():
     parser.add_argument('--adopt-projection-report-fix',action='store_true',help='Revalidate retained successful group 3 preparation after exact decimal projection-range comparison repair; no instrumentation rerun')
     parser.add_argument('--adopt-resource-test-fix',action='store_true',help='Adopt the exact C01.1 copy-ID test repair and validated two-fit recovery; retain all unchanged proof')
     parser.add_argument('--adopt-capacitor-runner-fix',action='store_true',help='Adopt only the exact missing C01.2 persistent runner flag; retain all prior gates and app APK')
+    parser.add_argument('--adopt-tank-history-fix',action='store_true',help='Adopt only the exact C01.3.2 revision wait repair; recover its validated synthetic baseline and rerun affected gates')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

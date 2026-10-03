@@ -29,6 +29,14 @@ def validate(run,root):
         assert name in files or name.replace('/',chr(92)) in files, 'Required evidence is absent from the manifest: '+name
     assert not state.get('hosted_actions_pass',False), 'Local results cannot claim Actions success'
     latest={row['gate']:row for row in state['attempts']}
+    tank_proof=state.get('tank_history_reuse')
+    if tank_proof:
+        from tank_history_retry import exact_source,validate_retained
+        exact_source(root,tank_proof['from_commit'],tank_proof['to_commit'])
+        assert tank_proof['to_commit']==state['commit'] and tank_proof['prepared'] and tank_proof['installed']
+        validate_retained(root,run,tank_proof)
+        for gate in ('headless:tank-history-guard','build:apks-lint','build:package','build:tank-test-signature'):
+            assert latest[gate]['exit_code']==0 and latest[gate]['tested_commit']==state['commit']
     capacitor_proof=state.get('capacitor_runner_reuse')
     if capacitor_proof:
         from capacitor_runner_retry import exact_source,validate_retained
@@ -150,6 +158,9 @@ def validate(run,root):
                 assert row['tested_commit']==capacitor_proof['from_commit']
                 continue
             comparison_commit=state['commit']
+            if tank_proof and gate in tank_proof['retained_gates']:
+                if row['tested_commit']==tank_proof['from_commit']:continue
+                comparison_commit=tank_proof['from_commit']
             if resource_proof and gate in resource_proof['retained_gates']:
                 assert any(gate in proof['retained_gates'] and row['tested_commit']==proof['from_commit'] for proof in resource_reuse)
                 continue
