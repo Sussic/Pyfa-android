@@ -86,10 +86,9 @@ private fun OutputRow(name: String, label: String, spool: OutputSpool, damage: M
 }
 
 @Composable
-private fun TargetProfileEditor(model: OutputModel, fit: FitSnapshot, result: FitOutput) {
+private fun TargetProfileEditor(model: OutputModel, fit: FitSnapshot, result: FitOutput, expanded: Boolean, onToggle: () -> Unit) {
     val context = LocalContext.current
-    var expanded by rememberSaveable(fit.id) { mutableStateOf(false) }
-    TextButton(onClick = { expanded = !expanded }, modifier = Modifier.testTag("output-profile-open")) { Text("Target profile") }
+    TextButton(onClick = onToggle, modifier = Modifier.testTag("output-profile-open")) { Text("Target profile") }
     if (!expanded) return
     val profile = result.targetProfile
     var em by remember(fit.id, result.revision) { mutableStateOf(((profile?.emAmount ?: 0.0)*100).toString()) }
@@ -131,6 +130,11 @@ internal fun OutputView(model: OutputModel, onBack: () -> Unit) {
     Text("Output statistics", style = MaterialTheme.typography.headlineLarge)
     TextButton(onClick = onBack, modifier = Modifier.testTag("output-back")) { Text("Back") }
     if (fit == null) { Text("Open a fit to view its output."); return }
+    // Revision refreshes temporarily remove the statistics below. Keep these
+    // choices outside that branch so profile edits and history retain the UI.
+    var page by rememberSaveable(fit.id) { mutableStateOf("firepower") }
+    var raw by rememberSaveable(fit.id) { mutableStateOf(false) }
+    var profileExpanded by rememberSaveable(fit.id) { mutableStateOf(false) }
     LaunchedEffect(fit.id, fit.revision) { model.load(context, fit) }
     Text("${fit.name} · ${fit.ship}", style = MaterialTheme.typography.titleLarge)
     if (model.loading) Text("Loading statistics…", Modifier.testTag("output-loading"))
@@ -139,15 +143,13 @@ internal fun OutputView(model: OutputModel, onBack: () -> Unit) {
         TextButton(onClick = { model.load(context, fit, true) }) { Text("Try again") }
     }
     val result = model.details?.takeIf { it.fitId == fit.id && it.revision == fit.revision } ?: return
-    var page by rememberSaveable(fit.id) { mutableStateOf("firepower") }
     for ((name, label) in listOf("firepower" to "Firepower", "mining" to "Mining yield", "bombing" to "Bombing", "outgoing" to "Outgoing repairs")) {
         TextButton(onClick = { page = name }, modifier = Modifier.testTag("output-page-$name")) { Text(label) }
     }
     Text("Default spool: ${result.defaultSpoolPercentage}%", Modifier.testTag("output-default-spool"))
-    TargetProfileEditor(model, fit, result)
+    TargetProfileEditor(model, fit, result, profileExpanded) { profileExpanded = !profileExpanded }
     when (page) {
         "firepower" -> {
-            var raw by rememberSaveable(fit.id) { mutableStateOf(false) }
             Text(if (result.effective && !raw) "Effective damage · target profile applied" else "Raw damage · no target profile", Modifier.testTag("output-mode"))
             TextButton(onClick = { raw = !raw }, modifier = Modifier.testTag("output-toggle")) { Text(if (raw) "Show effective damage" else "Show raw damage") }
             for ((name, row) in result.firepower.getValue(if (raw) "raw" else "effective")) {
