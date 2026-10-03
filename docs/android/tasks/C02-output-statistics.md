@@ -116,4 +116,40 @@ from `118a4a4a`, unchanged executed host/build ASTs and the55-gate boundary.
 The earlier54-gate witness proof remains independently validated. Preserve the
 first focused failure and the subsequent diagnostic/corrected logs. A quoting
 typo in the new guard regression file was repaired before its seven tests passed;
-the failed focused log remains. No native proof is yet claimed.
+the failed focused log remains.
+
+## Native profile serialization and editor refresh
+
+The same run at `31cb2859` passed106 gates, including every inherited native,
+offline, restart and A10 gate, before C02 prepare failed on an exact decimal-kind
+assertion. Android JSONObject writes integral Double profile values as integers.
+Original uniform0.0/1.0 profiles therefore produced integer zero effective drone
+damage instead of the reference decimal zero. A focused EOS reproduction proves
+both cases; mixed-profile14 remains unchanged. All numbers and type assertions
+remain exact; no fixture or reported result is rewritten.
+
+Repair `eab3e092` preserves only the target-profile path's decimal representation
+in CreateFit and SetTargetProfile requests. Other request fields use the original
+JSONObject serialization; clearing a profile keeps its existing null encoding.
+Native assertions check all eight fields for original cases14/15/16/35/36.
+Both APKs and offline lint pass. The focused native retry passed all37 calculation
+cases, protocol guards, screenshots and profile HP history, then failed because
+the editor's expanded state was discarded during a revision refresh.
+
+Repair `4408f796` places profile expansion, selected page and raw/effective choice
+before the temporary loading branch, scoped to the selected fit. The exact Clear
+action, existing60-second UI waits,120-second requests,900-second C02 phases and
+all original comparisons remain. The focused prepare/restart pair passes on a
+fresh disposable API36 emulator seeded from a validated230-fit prior report.
+Its actual summary passes all37 outputs,268 fits,copy/history,manifest/settings,
+packaged fixture bytes and18 protocol rejection checks. Evidence:
+`c02-profile-focused-20261003-101218`; earlier failures/preflight logs are retained.
+
+The changed app APK requires fresh final build/package and native proof. Eight
+source/constructor regression tests accept only these exact three Kotlin changes
+and retain only60 unchanged reference/host gates. They reject any other profile,
+fixture, engine, host execution, assertion or boundary difference. The original
+106 results and failure remain archived with their actual commit stamps; they do
+not become passes for the new APK. Affected22 reporter, seven resource-reuse,
+seven witness and six prior-adoption regressions pass. Final delivery still needs
+all109 gates,191 actual screenshot reviews and actual-report corruption checks.

@@ -124,6 +124,15 @@ reviewed launcher/reporting/diagnostic changes and the exact approved history
 import/timeout expression while retaining host/build inputs and tested commits.
 Do not use ordinary resume against a partially mutated test library.
 
+The C02 profile-number/editor repair is an exact exception for the failed
+`31cb2859` output-prepare run. The same `-RestartNative` command archives its
+APKs, native evidence and actual commit stamps, retains only60 unchanged
+reference/host gates, then rebuilds all five build/package gates and runs all44
+native gates on a fresh disposable store. SHA256 guards accept only the reviewed
+three Kotlin files and scoped launcher/reporting changes; engine, fixtures,
+assertion removal and unrelated differences fail. This does not reuse native
+results from an older application APK or claim an unexecuted hosted check.
+
 ## Summary-only recovery and fixture identity
 
 A failed aggregate summary can be repaired without rerunning completed gates:

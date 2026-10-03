@@ -51,9 +51,21 @@ The corrected boundary asserts those values/inputs and still rejects incompatibl
 modules and squadron size above EOS maximum. Seven resource tests,11 validators,
 seven exact-source/failed-constructor guards and affected reporter/adoption tests
 pass. Product/fixtures remain unchanged; every original failure stays retained.
-Exact next: commit this resource-test correction and resume that failed gate plus
-pending dependants with55 valid results retained. Native execution,191 required
-screenshots and actual-report review remain pending.
+Resource repair `31cb2859` passed. The same run reached106 completed gates,
+including every inherited native/offline/A10 gate. C02 prepare then failed:
+JSONObject serialized profile0.0/1.0 as integers, changing an EOS scalar's kind.
+Android-only profile serialization repair `eab3e092` preserves decimals; its
+focused retry passed all37 cases but exposed editor collapse during history
+refresh. Repair `4408f796` keeps view choices through refreshes. Both APKs/lint,
+the focused C02 prepare/restart pair and actual output summary now pass:
+37 cases,268 fits,230 inherited fits,18 protocol rejections. All failures remain.
+Eight exact-source/constructor guards retain only60 unchanged reference/host
+results;22 reporter, seven resource-reuse, seven witness and six adoption checks
+pass. Because the app APK changed, all five build/package and44 native gates
+must run on the final APK and fresh disposable store. Old106-gate native proof
+and183 reviewed images remain historical evidence. No full completion claimed.
+Exact next: resume this run with the narrowly verified `-RestartNative` repair,
+then final191-screen review, actual-report corruption checks, receipt and delivery.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 

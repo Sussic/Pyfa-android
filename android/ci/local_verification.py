@@ -311,6 +311,18 @@ class Run:
                 self.state['output_resource_reuse']={'from_commit':self.state['commit'],'to_commit':current,
                     'completed_before_adoption':list(self.state['completed'])}
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.restart_native:
+                from output_profile_retry import BEFORE,exact_source
+                if self.state['commit']==BEFORE:
+                    assert self.state['status']=='failed' and self.state['mode']=='full' and self.state['gate'] is None
+                    assert self.state['attempts'][-1]['gate']=='native:output-prepare' and self.state['attempts'][-1]['exit_code']!=0
+                    exact_source(ROOT,self.state['commit'],current,self.state['completed'])
+                    for row in self.state['attempts']:row.setdefault('tested_commit',self.state['commit'])
+                    retained=[g for g in self.state['completed'] if g.startswith(('desktop:','reference:','headless:'))]
+                    self.state['output_profile_host_reuse']={'from_commit':self.state['commit'],'to_commit':current,
+                        'completed_before_adoption':list(self.state['completed']),'retained_gates':retained}
+                    self.state['completed']=retained
+                    self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
@@ -499,9 +511,21 @@ class Run:
                     if (self.directory/name).exists():shutil.copyfile(self.directory/name,archive/name)
                 retained=list((self.directory/'apks').glob('*.apk'))
                 assert len(retained)==2, 'Both previously tested APKs are required'
-                for apk in retained:
-                    current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))
-                    assert len(current)==1 and sha(apk)==sha(current[0]), 'Reused APK differs from the tested copy'
+                profile_fix=self.state.get('output_profile_host_reuse')
+                if profile_fix:
+                    # The app changed: preserve old proof, rebuild all package
+                    # gates and execute every native gate on a fresh store.
+                    shutil.copytree(self.directory/'apks',archive/'apks')
+                    profile_fix.update(archive=archive.name,
+                        archived_apk_hashes={p.name:sha(p) for p in retained},
+                        archived_native_hashes={str(p.relative_to(archive/'native')):sha(p) for p in (archive/'native').rglob('*') if p.is_file()})
+                    from output_profile_retry import validate_retained
+                    validate_retained(ROOT,self.directory,profile_fix)
+                    assert self.state['completed']==profile_fix['retained_gates']
+                else:
+                    for apk in retained:
+                        current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))
+                        assert len(current)==1 and sha(apk)==sha(current[0]), 'Reused APK differs from the tested copy'
                 if (self.directory/'avd').exists():
                     assert (self.directory/'avd').resolve().parent==self.directory
                     shutil.rmtree(self.directory/'avd')
