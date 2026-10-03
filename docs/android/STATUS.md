@@ -9,63 +9,34 @@ installation, unrelated setup/refactoring or billing changes are authorized here
 
 ## Selected outcome — C02 outgoing statistics
 
-Selected2026-10-03 from delivered master `c887fd6b` on
-`codex/c02-output-statistics`; live default branch/open PRs checked after C01.
-Deliver all F06.01–F06.14 as one coherent statistics outcome: weapon,
-drone/fighter and total DPS/volley with four damage-type shares and pre/full/current
-spool detail; target-profile effective/raw assumptions; module/drone/combined
-mining yield/drain/efficiency and second/hour units; reversible firepower/mining
-view; all24 bomb counts with signature/Red Giant effects and original rounding;
-outgoing capacitor/shield/armor/hull compact/full spool values.
-Reuse EOS and pinned original views, serialized engine/typed bridge and existing
-storage/history. Related per-fit assumptions must be explicitly validated,
-persisted and undoable; named-profile management stays D05, addition editors
-stay C04/C05. Preserve every inventory acceptance row; no fabricated defaults.
-Acceptance: independent original wx/EOS representative turret/missile/spool,
-drone/fighter, mining crystal/noncrystal, profile, bomb/environment and outgoing
-cases; strict rejected inputs/results/fixtures, read-only/GC, atomic mutations,
-copy/history/recreation/restart and screenshots; APK/lint/package and all inherited
-local gates. Use focused development checks. Prepare the entire implementation,
-fixture matrix and summary validators before one expensive full verification.
-No active verification or watcher; C01 results remain complete and preserved.
-Implementation and source review complete. Two fresh original wx/EOS exports
-agree on37 cases; all37 focused calculations, profile history/atomic rejection,
-copy and a39-fit fresh-process restart pass. Twenty-five output validator tests
-(including21 synthetic corruptions), the affected inherited guards and reporter
-pass. Both APKs/new native test compile and offline lint passes. All105 inherited
-gates/order remain, adding exactly four C02 gates (109 total). See the
-[task](tasks/C02-output-statistics.md) for source review and preserved failures.
-Full run `20261003-063304-4b42c02f-3dd323` retained54 passing gates, including
-all independent references. Its remaining-mutation host gate failed because the
-new profile operation lacked an explicit witness in the registration assertion;
-all28 original cases and the other22 tests passed. Added eight independently
-matched profile apply/clear/undo/redo states while preserving that assertion.
-Focused witness, seven exact-source/failed-constructor guards,22 reporter and
-six inherited integration checks pass. Product, fixtures, plan and completed
-host inputs are unchanged. Preserve the original failed log/run snapshot.
-Witness repair `118a4a4a` passed the failed history gate, bringing retention to55.
-The next resource gate exposed the old unsupported-fighter assumption. A focused
-category-only fix still failed on a newly supported, schema-valid20-squad case;
-one diagnostic established its explicit desktop-matched tube/bay overloads.
-The corrected boundary asserts those values/inputs and still rejects incompatible
-modules and squadron size above EOS maximum. Seven resource tests,11 validators,
-seven exact-source/failed-constructor guards and affected reporter/adoption tests
-pass. Product/fixtures remain unchanged; every original failure stays retained.
-Resource repair `31cb2859` passed. The same run reached106 completed gates,
-including every inherited native/offline/A10 gate. C02 prepare then failed:
-JSONObject serialized profile0.0/1.0 as integers, changing an EOS scalar's kind.
-Android-only profile serialization repair `eab3e092` preserves decimals; its
-focused retry passed all37 cases but exposed editor collapse during history
-refresh. Repair `4408f796` keeps view choices through refreshes. Both APKs/lint,
-the focused C02 prepare/restart pair and actual output summary now pass:
-37 cases,268 fits,230 inherited fits,18 protocol rejections. All failures remain.
-Eight exact-source/constructor guards retain only60 unchanged reference/host
-results;22 reporter, seven resource-reuse, seven witness and six adoption checks
-pass. Because the app APK changed, all five build/package and44 native gates
-must run on the final APK and fresh disposable store. Old106-gate native proof
-and183 reviewed images remain historical evidence. No full completion claimed.
-Exact next: resume this run with the narrowly verified `-RestartNative` repair,
-then final191-screen review, actual-report corruption checks, receipt and delivery.
+All F06.01–F06.14 are implemented and locally verified on
+`codex/c02-output-statistics`, reviewed/tested code `1b4630d3`.
+Weapon/drone/fighter/total DPS and volley include damage shares, raw/effective
+target assumptions and current/initial/full spool details. Mining includes
+module/drone/combined yield, drain, efficiency and second/hour values. Bombing
+shows all24 counts with original signature/Red Giant/rounding behavior. Outgoing
+capacitor/shield/armor/hull detail preserves compact and full spool values.
+Per-fit target assumptions persist through copy, undo/redo, recreation and restart.
+Named profiles, addition editors and spool editors retain their roadmap owners.
+
+All109 required gates pass:60 reference/host, five build/package and44 native;
+71 actual native executions,268 persisted fits (230 inherited),191 reviewed
+screenshots and36 actual-report corruption rejections. Two fresh pinned wx/EOS
+exports agree on37 cases. [Receipt](evidence/c02-native.json) binds tested commits,
+APKs, logs, screenshot hashes and retained-result proofs; [task](tasks/C02-output-statistics.md)
+records source review, repairs and every preserved failure.
+
+Run `20261003-063304-4b42c02f-3dd323` is complete; no active watcher.
+Reused60 unchanged reference/host results through exact source proofs. After the
+Android profile/UI repairs, rebuilt both APKs and ran all required native gates.
+A charge transport failure left empty raw proof and a partially mutated store,
+requiring a fresh native chain while keeping65 non-native gates. Cargo prepare
+proof was recovered byte-for-byte; only its read-only restored phase needed
+reexecution after collection failures. No assertion, tolerance, timeout, restart
+boundary or A10 requirement changed. No hosted Actions pass is claimed.
+
+Exact next: push/merge this reviewed C02 deliverable with truthful
+`local/full-verification`, update the closure checkpoint, then select approved C03.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 
@@ -243,7 +214,7 @@ Reuse `build/windows-env.ps1`: Python3.11.9 reference/headless, JDK17.0.20.1+1,
 SDK36/build35, Gradle8.13 and installed WHPX. No timed host suite alongside Gradle.
 Keep every inherited functional/type/unit/GC/restart/performance/screenshot gate.
 
-Build **30** is the latest locally emulator-tested development build; the debug
+Build **32** is the latest locally emulator-tested development build; the debug
 APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Forecasts for remaining
 implementation are unknown. A working APK is not full Pyfa parity. User usability,
 ARM64 execution, older APIs, signing/upgrades and safe persistent phone use remain

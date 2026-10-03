@@ -22,7 +22,7 @@ and corrupted-report validation; every inherited host/build/package/offline
 native gate, A10 requirements and actual screenshot review. Complete focused
 implementation validation and summary preflight before full verification.
 
-Implementation and source review complete; native execution is still pending.
+Implementation, source review and required local native verification complete.
 The serialized EOS reader supplies both damage modes, all five actual damage
 components (including pure breacher damage), current/initial/full spool values,
 mining second/hour detail,24 bomb cells and four outgoing rows. Compose consumes
@@ -60,10 +60,9 @@ mismatch, and the initial no-op revision expectation (existing bridge refresh
 revisions advance once while inputs/history/modification order remain stable).
 Evidence remains under local c02-reference-20261003-0545/0555 and
 c02-host-20261003-0615/0630 directories and build/c02-* logs. C01 proof stays closed.
-Exact next: commit this coherent candidate, run the109-gate full local plan,
-review all191 required screenshots and actual-report corruptions, then deliver.
-No complete native result, hosted Actions pass, feature merge or phone install
-is claimed before that proof.
+All109 final gates and191 screenshot reviews now pass; see the final delivery
+section and [exact-commit receipt](../evidence/c02-native.json). No hosted Actions
+execution, release, phone installation or usability sign-off is claimed.
 
 ## Full-run history registration repair
 
@@ -153,3 +152,50 @@ fixture, engine, host execution, assertion or boundary difference. The original
 not become passes for the new APK. Affected22 reporter, seven resource-reuse,
 seven witness and six prior-adoption regressions pass. Final delivery still needs
 all109 gates,191 actual screenshot reviews and actual-report corruption checks.
+
+## Final local delivery proof
+
+Tested code `1b4630d31efe64770be5fd283a274ec2b7dd8561`, run
+`20261003-063304-4b42c02f-3dd323`:109 gates pass (60 reference/host, five
+build/package,44 native),71 actual native executions,268 saved fits including
+230 inherited,191 actual screenshot reviews and36 actual-report corruptions
+rejected. Two independent fresh original exports cover37 legal synthetic cases.
+All14 inventory rows now link concrete reference/native evidence. Package/lint,
+offline installation, serialized EOS, GC/read-only, numeric kinds/units/display,
+profile history/copy/recreation, fresh-process restoration and A10 checks remain.
+The screenshots record minor inherited scrolled-header/status-bar overlap;
+the statistics and detail rows remain readable. User usability is not signed off.
+
+The final Android repair reused only60 unchanged host/reference gates with exact
+source guards, then rebuilt and ran native verification on the final APKs. At74
+gates, charge prepare instrumentation passed but ADB went offline. Same-AVD raw
+report and seven screenshots were empty, while the store contained partial new
+fits. Those bytes/diagnostics and failed logs125/127 remain in
+`failed-charge-empty-evidence-1b4630d3`. A fresh native chain was necessary;65
+valid non-native gates stayed retained. Its first boot lacked41MB of the required
+disk space. Removing only verified inactive disposable AVDs freed space; their
+APKs/screenshots/reports/logs remain. Installed environments were reused.
+
+At cargo actions, prepare instrumentation passed but collection truncated when
+ADB disconnected. The unchanged same-AVD prepared report was recovered with
+before/after SHA equality, prior store/PID checks, installed APK hashes and five
+screenshots. A targeted restored phase passed native assertions but private
+isolated Python ignored PYTHONUTF8 and misdecoded Unicode names. Its summary
+failure remains logged153. No strings/hashes were rewritten. Direct byte
+collection found the actual restored report empty (failed155). Only that
+read-only restored phase was reexecuted with verified UTF8 collection; original
+prepare remained intact. The unchanged original cargo summary then passed.
+`cargo-transport-recovery.json` binds actual raw phase bytes, combined report,
+source, APKs and original prepare instrumentation; archives preserve all failures.
+The outstanding23 native gates and final summary subsequently passed.
+
+An additional private corruption-helper attempt failed before execution because
+its file was Windows1252. Original bytes are preserved; changing only the private
+file encoding to UTF8 allowed all36 actual-report corruptions to be rejected.
+No tracked implementation/fixture/validator change or native rerun was needed.
+
+No test data, reported hashes, functional assertions, numerical tolerances,
+per-operation limits, process boundaries, timeouts or A10 requirements changed.
+Final source review and diff checks cover the coherent implementation and its
+concrete corrections. Delivery publishes only the truthful local result. Next
+approved outcome after merge is C03 targeting/navigation and attribute inspection.
