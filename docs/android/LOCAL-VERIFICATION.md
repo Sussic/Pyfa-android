@@ -18,9 +18,19 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate resources
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate capacitor
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate tank
+./android/verify-local.ps1 -Action start -Mode desktop -Gate output
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
+
+C02 extends the required plan to 109 gates: 60 reference/host, five build and
+44 native gates (71 actual native test executions). Output adds37 independent
+original wx/EOS cases and two persistent native phases;268 synthetic saved fits
+and191 required screenshots retain all inherited acceptance checks. These are
+requirements until the exact-commit receipt records execution and visual review.
+The output focused pair covers calculations, target-profile history, failed-save
+atomicity, copy and fresh-process persistence. Native phases retain their existing
+900-second deadlines; the approved history-only Windows timeout is unchanged.
 
 C01.3.2 extends the required plan to 105 gates: 58 reference/host, five build
 and 42 native gates. Tank adds29 original desktop cases,21 focused

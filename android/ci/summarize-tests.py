@@ -103,7 +103,10 @@ from resource_summary import summarize as summarize_resources
 from capacitor_summary import summarize as summarize_capacitor
 from defense_summary import summarize as summarize_defenses
 from tank_summary import summarize as summarize_tank
+from output_summary import summarize as summarize_output
 summary = {
+    "output": summarize_output([json.loads((evidence / f"output-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
+        engine, {json.loads((evidence / f"tank-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("prepare", "restored")}),
     "tank": summarize_tank([json.loads((evidence / f"tank-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
         engine, {json.loads((evidence / f"defenses-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("prepare", "restored")}),
     "defenses": summarize_defenses([json.loads((evidence / f"defenses-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],

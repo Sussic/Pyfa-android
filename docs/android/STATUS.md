@@ -1,11 +1,42 @@
 # Android project status
 
-Updated: 2026-10-03. **C01 delivered; C02 next.**
+Updated: 2026-10-03. **C01 delivered; C02 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Selected outcome — C02 outgoing statistics
+
+Selected2026-10-03 from delivered master `c887fd6b` on
+`codex/c02-output-statistics`; live default branch/open PRs checked after C01.
+Deliver all F06.01–F06.14 as one coherent statistics outcome: weapon,
+drone/fighter and total DPS/volley with four damage-type shares and pre/full/current
+spool detail; target-profile effective/raw assumptions; module/drone/combined
+mining yield/drain/efficiency and second/hour units; reversible firepower/mining
+view; all24 bomb counts with signature/Red Giant effects and original rounding;
+outgoing capacitor/shield/armor/hull compact/full spool values.
+Reuse EOS and pinned original views, serialized engine/typed bridge and existing
+storage/history. Related per-fit assumptions must be explicitly validated,
+persisted and undoable; named-profile management stays D05, addition editors
+stay C04/C05. Preserve every inventory acceptance row; no fabricated defaults.
+Acceptance: independent original wx/EOS representative turret/missile/spool,
+drone/fighter, mining crystal/noncrystal, profile, bomb/environment and outgoing
+cases; strict rejected inputs/results/fixtures, read-only/GC, atomic mutations,
+copy/history/recreation/restart and screenshots; APK/lint/package and all inherited
+local gates. Use focused development checks. Prepare the entire implementation,
+fixture matrix and summary validators before one expensive full verification.
+No active verification or watcher; C01 results remain complete and preserved.
+Implementation and source review complete. Two fresh original wx/EOS exports
+agree on37 cases; all37 focused calculations, profile history/atomic rejection,
+copy and a39-fit fresh-process restart pass. Twenty-five output validator tests
+(including21 synthetic corruptions), the affected inherited guards and reporter
+pass. Both APKs/new native test compile and offline lint passes. All105 inherited
+gates/order remain, adding exactly four C02 gates (109 total). See the
+[task](tasks/C02-output-statistics.md) for source review and preserved failures.
+Exact next: commit stable candidate and execute one complete local suite; native
+execution,191 required screenshots and actual-report review are still pending.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 

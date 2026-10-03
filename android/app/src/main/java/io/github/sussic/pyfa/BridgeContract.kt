@@ -28,6 +28,9 @@ data class FitSpec(
     val drones: List<DroneSpec>,
     val modeId: Int? = null,
     val notes: String? = null,
+    val targetProfile: TargetProfile? = null,
+    val fighters: List<FighterSpec> = emptyList(),
+    val environments: List<EnvironmentSpec> = emptyList(),
 )
 
 sealed interface BridgeOperation {
@@ -74,6 +77,7 @@ sealed interface BridgeOperation {
     data class SwapModules(val fitId: String, val fromPosition: Int, val toPosition: Int) : BridgeOperation
     data class SetModuleStates(val fitId: String, val moduleIndices: List<Int>, val state: ModuleState) : BridgeOperation
     data class SetSkillLevel(val fitId: String, val skill: String, val level: Int) : BridgeOperation
+    data class SetTargetProfile(val fitId: String, val profile: TargetProfile?) : BridgeOperation
     data class SetDamagePattern(val fitId: String, val pattern: DamagePattern) : BridgeOperation
     data class AddImplant(val fitId: String, val implant: String, val active: Boolean = true) : BridgeOperation
     data class SetImplantActive(val fitId: String, val slot: Int, val active: Boolean) : BridgeOperation
@@ -169,6 +173,90 @@ class BridgeProtocolException(message: String) : IllegalArgumentException(messag
 
 object BridgeCodec {
     const val VERSION = 1
+
+    private fun decodeTargetProfile(raw: Any): TargetProfile? {
+        if (raw == JSONObject.NULL) return null
+        val row = objectValue(raw, "target profile")
+        keys(row, setOf("emAmount", "thermalAmount", "kineticAmount", "explosiveAmount", "maxVelocity", "signatureRadius", "radius", "hp"), path = "target profile")
+        fun required(key: String, resistance: Boolean = false): Double {
+            val value = number(row.get(key), key)
+            requireProtocol(if (resistance) value in 0.0..1.0 else value >= 0, "Invalid target profile value")
+            return value
+        }
+        fun dimension(key: String): Double? = nullable(row.get(key))?.let { number(it, key).also { v -> requireProtocol(v > 0, "Invalid target dimension") } }
+        return TargetProfile(required("emAmount", true), required("thermalAmount", true), required("kineticAmount", true), required("explosiveAmount", true),
+            required("maxVelocity"), dimension("signatureRadius"), required("radius"), dimension("hp"))
+    }
+
+    private fun encodeTargetProfile(profile: TargetProfile?): JSONObject? = profile?.let {
+        obj("emAmount" to it.emAmount, "thermalAmount" to it.thermalAmount, "kineticAmount" to it.kineticAmount, "explosiveAmount" to it.explosiveAmount,
+            "maxVelocity" to it.maxVelocity, "signatureRadius" to it.signatureRadius, "radius" to it.radius, "hp" to it.hp).also { decodeTargetProfile(it) }
+    }
+
+    fun decodeOutput(json: String): FitOutput {
+        val root = objectValue(StrictJson(json).parse(), "output")
+        keys(root, setOf("version", "fit_id", "revision", "output", "target_profile"), path = "output")
+        requireProtocol(long(root.get("version"), "version") == 1L, "Unsupported output version")
+        val revision = long(root.get("revision"), "revision"); requireProtocol(revision >= 1, "Invalid output revision")
+        fun scalar(raw: Any, unit: String): OutputScalar {
+            val row = objectValue(raw, "output scalar")
+            keys(row, setOf("value", "value_type", "unit", "display", "detail"), path = "output scalar")
+            requireProtocol(text(row.get("unit"), "unit") == unit, "Incorrect output unit")
+            val value = when (text(row.get("value_type"), "value_type")) {
+                "unavailable" -> { requireProtocol(row.get("value") == JSONObject.NULL, "Unavailable output has value"); StatValue.Unavailable }
+                "integer" -> StatValue.Integer(long(row.get("value"), "value"))
+                "decimal" -> { val v = row.get("value"); requireProtocol(v is Double, "Decimal output lost type"); StatValue.Decimal(finite(v as Double, "value")) }
+                else -> fail("Invalid output scalar type")
+            }
+            fun label(key: String): String? = nullable(row.get(key))?.let { nonempty(it, key) }.also {
+                requireProtocol((it == null) == (value == StatValue.Unavailable), "Output availability differs")
+            }
+            requireProtocol(value.numberOrNull()?.let { it >= 0 } != false, "Invalid output value")
+            return OutputScalar(value, unit, label("display"), label("detail"))
+        }
+        fun spool(row: JSONObject, unit: String): OutputSpool = OutputSpool(scalar(row.get("current"), unit), scalar(row.get("pre"), unit),
+            scalar(row.get("full"), unit), bool(row.get("indicated"), "indicated"), text(row.get("tooltip"), "tooltip"))
+        val output = objectValue(root.get("output"), "output values")
+        keys(output, setOf("firepower", "mining", "bombing", "outgoing", "effective", "default_spool_percentage"), path = "output values")
+        val firepower = objectValue(output.get("firepower"), "firepower"); keys(firepower, setOf("raw", "effective"), path = "firepower")
+        val modes = listOf("raw", "effective").associateWith { mode ->
+            val rows = objectValue(firepower.get(mode), mode); keys(rows, setOf("weapon", "drone", "total", "volley"), path = mode)
+            java.util.Collections.unmodifiableMap(listOf("weapon", "drone", "total", "volley").associateWith { name ->
+                val row = objectValue(rows.get(name), name); keys(row, setOf("current", "pre", "full", "indicated", "tooltip", "damage"), path = name)
+                val unit = if (name == "volley") "HP" else "DPS"
+                val damage = objectValue(row.get("damage"), "damage"); keys(damage, OUTPUT_DAMAGE.keys, path = "damage")
+                OutputFirepower(spool(row, unit), java.util.Collections.unmodifiableMap(OUTPUT_DAMAGE.keys.associateWith { kind ->
+                    val cell = objectValue(damage.get(kind), kind); keys(cell, setOf("amount", "share"), path = kind)
+                    OutputDamage(scalar(cell.get("amount"), unit), scalar(cell.get("share"), "%"))
+                }))
+            })
+        }
+        val mining = objectValue(output.get("mining"), "mining"); keys(mining, setOf("module", "drone", "total"), path = "mining")
+        val miners = listOf("module", "drone", "total").associateWith { name ->
+            val row = objectValue(mining.get(name), name); keys(row, setOf("yield_second", "drain_second", "yield_hour", "drain_hour", "efficiency"), path = name)
+            OutputMining(scalar(row.get("yield_second"), "m³/s"), scalar(row.get("drain_second"), "m³/s"), scalar(row.get("yield_hour"), "m³/hour"),
+                scalar(row.get("drain_hour"), "m³/hour"), scalar(row.get("efficiency"), "%"))
+        }
+        val bombing = objectValue(output.get("bombing"), "bombing"); keys(bombing, setOf("signature", "environment_multiplier", "levels"), path = "bombing")
+        val levels = array(bombing.get("levels"), "levels"); requireProtocol(levels.size == 6, "Missing bomb levels")
+        val bombs = levels.mapIndexed { level, raw ->
+            val row = objectValue(raw, "bomb level"); keys(row, setOf("covert_ops_level", "counts"), path = "bomb level")
+            requireProtocol(integer(row.get("covert_ops_level"), "covert_ops_level", 0, 5) == level, "Incorrect bomb level")
+            val counts = objectValue(row.get("counts"), "counts"); keys(counts, OUTPUT_DAMAGE.keys - "pure", path = "counts")
+            java.util.Collections.unmodifiableMap((OUTPUT_DAMAGE.keys - "pure").associateWith { scalar(counts.get(it), "bombs") })
+        }
+        val outgoing = objectValue(output.get("outgoing"), "outgoing"); keys(outgoing, OUTPUT_REMOTE.keys, path = "outgoing")
+        val remote = OUTPUT_REMOTE.keys.associateWith { name ->
+            val row = objectValue(outgoing.get(name), name); keys(row, setOf("current", "pre", "full", "indicated", "tooltip"), path = name)
+            spool(row, if (name == "capacitor") "GJ/s" else "HP/s")
+        }
+        val percentage = number(output.get("default_spool_percentage"), "default_spool_percentage"); requireProtocol(percentage in 0.0..100.0, "Invalid spool percentage")
+        val profile = decodeTargetProfile(root.get("target_profile")); val effective = bool(output.get("effective"), "effective")
+        requireProtocol(effective == (profile != null), "Target profile availability differs")
+        return FitOutput(identifier(root.get("fit_id"), "fit_id"), revision, java.util.Collections.unmodifiableMap(modes), java.util.Collections.unmodifiableMap(miners),
+            OutputBombing(scalar(bombing.get("signature"), "m"), scalar(bombing.get("environment_multiplier"), "x"), immutableList(bombs)),
+            java.util.Collections.unmodifiableMap(remote), effective, percentage, profile)
+    }
 
     fun decodeTank(json: String): FitTank {
         val root = objectValue(StrictJson(json).parse(), "tank")
@@ -415,9 +503,9 @@ object BridgeCodec {
     fun decodeFitSpec(value: JSONObject): FitSpec {
         keys(value, setOf("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
             "modules", "drones", "target_profile", "implants", "boosters", "projections", "commands", "environments"),
-            setOf("mode", "notes"), path = "spec")
-        requireProtocol(value.get("target_profile") === JSONObject.NULL, "target_profile is unsupported")
-        for (key in listOf("implants", "boosters", "projections", "commands", "environments")) {
+            setOf("mode", "notes", "fighters"), path = "spec")
+        val targetProfile = decodeTargetProfile(value.get("target_profile"))
+        for (key in listOf("implants", "boosters", "projections", "commands")) {
             requireProtocol(array(value.get(key), "spec.$key").isEmpty(), "Initial $key are unsupported")
         }
         val damage = objectValue(value.get("damage_pattern"), "damage_pattern")
@@ -449,6 +537,17 @@ object BridgeCodec {
             },
             if (value.has("mode")) integer(value.get("mode"), "spec.mode", 1) else null,
             if (value.has("notes")) noteText(value.get("notes")) else null,
+            targetProfile,
+            if (value.has("fighters")) array(value.get("fighters"), "fighters").map { raw ->
+                val row = objectValue(raw, "fighter"); keys(row, setOf("name", "amount", "active"), path = "fighter")
+                FighterSpec(nonempty(row.get("name"), "name"), integer(row.get("amount"), "amount", 1), bool(row.get("active"), "active"))
+            } else emptyList(),
+            array(value.get("environments"), "environments").map { raw ->
+                val row = objectValue(raw, "environment"); keys(row, setOf("name", "state"), path = "environment")
+                val name = text(row.get("name"), "name"); val state = enumValue<ModuleState>(row.get("state"), "state")
+                requireProtocol(name in (1..6).map { "Class $it Red Giant Effects" } && state in listOf(ModuleState.ONLINE, ModuleState.OFFLINE), "Invalid bomb environment")
+                EnvironmentSpec(name, state)
+            }.also { rows -> unique(rows.map { it.name }, "environment names") },
         )
     }
 
@@ -463,9 +562,10 @@ object BridgeCodec {
             "security" to obj("system" to spec.security.system.name, "pilot" to finite(spec.security.pilot, "pilot")),
             "modules" to jsonArray(spec.modules.map { obj("name" to it.name, "state" to it.state.name, "charge" to it.charge) }),
             "drones" to jsonArray(spec.drones.map { obj("name" to it.name, "amount" to it.amount, "active" to it.active) }),
-            "target_profile" to null, "implants" to JSONArray(), "boosters" to JSONArray(),
-            "projections" to JSONArray(), "commands" to JSONArray(), "environments" to JSONArray(),
+            "target_profile" to encodeTargetProfile(spec.targetProfile), "implants" to JSONArray(), "boosters" to JSONArray(),
+            "projections" to JSONArray(), "commands" to JSONArray(), "environments" to jsonArray(spec.environments.map { obj("name" to it.name, "state" to it.state.name) }),
         )
+        if (spec.fighters.isNotEmpty()) value.put("fighters", jsonArray(spec.fighters.map { obj("name" to it.name, "amount" to it.amount, "active" to it.active) }))
         spec.modeId?.let { value.put("mode", integer(it, "spec.mode", 1)) }
         spec.notes?.let { value.put("notes", noteText(it)) }
         decodeFitSpec(value) // Keep construction and fixture decoding subject to the same shape checks.
@@ -480,6 +580,9 @@ object BridgeCodec {
         }
         is BridgeOperation.RenameFit -> "rename_fit" to obj("fit_id" to operation.fitId, "name" to fitName(operation.name))
         is BridgeOperation.SetNotes -> "set_notes" to obj("fit_id" to operation.fitId, "text" to noteText(operation.text))
+        is BridgeOperation.SetTargetProfile -> {
+            "set_target_profile" to obj("fit_id" to operation.fitId, "profile" to encodeTargetProfile(operation.profile))
+        }
         is BridgeOperation.SetDamagePattern -> {
             val p = operation.pattern
             val values = listOf(p.emAmount, p.thermalAmount, p.kineticAmount, p.explosiveAmount)

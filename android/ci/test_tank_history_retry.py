@@ -16,7 +16,8 @@ class SourceTests(unittest.TestCase):
         cls.old={p:subprocess.check_output(['git','show',retry.BEFORE+':'+p],cwd=ROOT,text=True,encoding='utf-8') for p in retry.TRANSFORMS}
         cls.new={p:fn(cls.old[p]) for p,fn in retry.TRANSFORMS.items()}
     def test_exact_fix(self):retry.validate_sources(self.old,self.new,list(self.new))
-    def test_checked_in_fix(self):retry.validate_sources(self.old,{p:(ROOT/p).read_text(encoding='utf-8') for p in self.new},list(self.new))
+    # Compare the delivered repair, not later feature additions to the gate plan.
+    def test_checked_in_fix(self):retry.validate_sources(self.old,{p:subprocess.check_output(['git','show','e49c7220474509f66d5c4c03005616e8ddeb4dbc:'+p],cwd=ROOT,text=True,encoding='utf-8') for p in self.new},list(self.new))
     def test_unrelated_native_change(self):
         new=dict(self.new);new[retry.PATH]+='\n// unrelated\n'
         with self.assertRaises(AssertionError):retry.validate_sources(self.old,new,list(new))

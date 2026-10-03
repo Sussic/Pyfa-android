@@ -118,6 +118,10 @@ def tank_details(fit_id):
     return encoded(_bridge.tank_details(fit_id))
 
 
+def output_details(fit_id):
+    return encoded(_bridge.output_details(fit_id))
+
+
 def defense_details(fit_id):
     return encoded(_bridge.defense_details(fit_id))
 

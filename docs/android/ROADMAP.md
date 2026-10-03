@@ -79,7 +79,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
 | C01 | done | B04 | [Resources, capacitor and defenses (parent)](tasks/C01-fit-statistics.md) | Every audited resource/capacitor/tank field has correct units/rounding and matches raw reference results under relevant assumptions. |
-| C02 | ready | B04 | Firepower, bombs and mining stats | Audited outgoing fields match representative turret, missile, bomb and mining cases; unsupported/absent values remain distinguishable from zero. |
+| C02 | active | B04 | Firepower, bombs and mining stats | Audited outgoing fields match representative turret, missile, bomb and mining cases; unsupported/absent values remain distinguishable from zero. |
 | C03 | ready | B04 | Targeting/navigation and attribute inspector | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. |
 | C04 | ready | B04 | Drone editing | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
 | C05 | ready | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
