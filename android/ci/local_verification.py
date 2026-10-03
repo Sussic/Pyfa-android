@@ -265,7 +265,7 @@ class Run:
                 if 'tools/android_reference/tank.py' in changed:
                     pending_tank_fixture_fix(ROOT, self.state['commit'], current, self.state['completed'])
                     allowed.update({'tools/android_reference/tank.py','tools/android_reference/fixtures/tank.json',
-                                    'android/ci/test_pending_tank_fixture_fix.py'})
+                                    'android/ci/test_pending_tank_fixture_fix.py','docs/android/STATUS.md'})
                 if args.restart_native:
                     allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
                         'android/ci/report_local.py','android/ci/test_report_local.py'})

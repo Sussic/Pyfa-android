@@ -1,6 +1,9 @@
 """Exact pending falloff correction cannot reuse changed or executed inputs."""
 from pathlib import Path
 import subprocess
+import json
+import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 import local_verification as launcher
@@ -38,6 +41,30 @@ class PendingTankTests(unittest.TestCase):
         key='after:tools/android_reference/fixtures/tank.json'
         self.outputs[key]=self.outputs[key].replace(b'Empty tank',b'Other tank')
         with self.assertRaises(AssertionError):self.validate()
+    def test_actual_paused_constructor_retains_nine_gates_and_status_note(self):
+        previous=subprocess.check_output(['git','show',BEFORE+':android/ci/local_verification.py'],cwd=ROOT,text=True,encoding='utf-8')
+        self.changed.append('docs/android/STATUS.md')
+        def git(*args):
+            if args[0]=='-C':return launcher.PIN
+            if args[0]=='status':return ''
+            if args[0]=='rev-parse':return 'after' if args[1]=='HEAD' else 'tree'
+            if args[0]=='diff':return '\n'.join(self.changed)
+            if args[0]=='show':return previous
+            raise AssertionError(args)
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)
+            state=dict(status='paused',commit=BEFORE,tree='previous',mode='full',gate=None,plan=launcher.plan('full',None),
+                completed=COMPLETED,attempts=[dict(gate=g,exit_code=0) for g in COMPLETED])
+            (path/'run.json').write_text(json.dumps(state),encoding='utf-8')
+            args=SimpleNamespace(run=str(path),action='resume',adopt_launcher_fix=True,restart_native=False,source=None,reference_python=None,
+                adopt_capacitor_runner_fix=False,adopt_resource_test_fix=False,adopt_projection_report_fix=False,adopt_stale_history_fix=False,
+                adopt_cargo_observer_fix=False,adopt_pending_settings_fix=False,adopt_pending_runner_fix=False)
+            with patch.object(launcher,'git',side_effect=git),patch.object(launcher.subprocess,'check_output',side_effect=self.output):
+                runner=launcher.Run(args)
+            self.assertEqual(COMPLETED,runner.state['completed'])
+            self.assertEqual('after',runner.state['commit'])
+            self.assertEqual([BEFORE]*9,[r['tested_commit'] for r in runner.state['attempts']])
+            self.assertEqual(COMPLETED,runner.state['launcher_fix_reuse'][0]['completed_before_adoption'])
 
 
 if __name__ == '__main__': unittest.main()
