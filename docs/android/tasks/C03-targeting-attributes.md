@@ -130,3 +130,16 @@ dependents, null-to-zero changes and arbitrary extra null skills are rejected.
 Source review confirms a summary/input-oracle correction only; product code,
 APKs, native assertions, tolerances, timeouts and A10 requirements are unchanged.
 Current next: commit the reviewed correction and start full115-gate delivery proof.
+
+Full run `20261003-150233-9badd3ec-e6ca98` on `9badd3ec` passed58 gates through
+headless capacitor. Defense calculations and restart passed; its22-test validator
+then failed only the persistent-flag set expectation, missing `c031_phase`.
+This original failure and logs remain. The repair adds that exact literal while
+keeping every historical flag and the storage-preservation assertions.
+Twenty-two defense validators and10 focused reuse guards pass. The existing
+launcher/reporter reuse path admits only that complete exact-source replacement
+at this58-gate boundary; unrelated test/native/engine/fixture differences fail.
+Executed plan/host/build/execute function bodies and every completed input remain
+identical. No new framework, fixture, numerical assertion or timeout changes.
+Next: commit the repair, resume only the failed gate and remaining dependants,
+and preserve all58 passing results. Full native/build delivery proof is outstanding.

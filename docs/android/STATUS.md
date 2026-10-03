@@ -27,8 +27,12 @@ Focused native preparation/restart on `f739cbbd` passes all four stages,325 fits
 18 protocol guards and24 reviewed screenshots. Independent full skill-input
 witnesses repair the final summary's incomplete cascade expectation;37 actual
 report corruptions and16 affected validators pass. All native proof is retained.
-Exact next: commit the summary/input-oracle correction, then full115-gate
-delivery verification, every inherited/A10 gate and215 screenshots.
+Full run `20261003-150233-9badd3ec-e6ca98` retains58 passing gates. It stopped at
+the inherited defense validator's omitted `c031_phase` expectation; its numerical
+and restart phases passed. The exact one-literal expectation repair passes22
+validator and10 strict source-reuse guards. Exact next: commit that repair and
+resume the same run from defenses, retaining58 gates, then every remaining gate
+and215 screenshots. Build/native delivery execution has not started in this run.
 The first focused prepare attempt on `c4233aa5` timed out at900 seconds after
 reaching311 fits/case42 undo. Proof is retained; preparation is now three bounded
 stages with the same900-second deadlines, all assertions and added restart proof.

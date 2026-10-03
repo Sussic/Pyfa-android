@@ -171,6 +171,20 @@ def pending_stale_test_fixture_fix(root,before,after):
     assert old.count(line)==1 and source(after)==old.replace(line,replacement,1)
 
 
+def pending_defense_phase_flag_fix(root,before,after,completed):
+    """Retain only the58 preceding gates for the exact unexecuted flag expectation."""
+    assert before=='9badd3ec58aa3a5bb2e325ec60da5751eea64830'
+    assert completed==plan('full',None)[:58] and 'headless:defenses' not in completed
+    path='android/ci/test_defense_summary.py'
+    def source(commit):return subprocess.check_output(['git','show',commit+':'+path],cwd=root,text=True,encoding='utf-8')
+    old=source(before);line="{'c013_phase','c0132_phase','c02_phase'}"
+    replacement="{'c013_phase','c0132_phase','c02_phase','c031_phase'}"
+    assert old.count(line)==1 and source(after)==old.replace(line,replacement,1), 'Unrelated defense test change'
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/local_verification.py','android/ci/report_local.py','android/ci/test_pending_defense_phase_flag_fix.py'}
+    assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
+
+
 def save(path,value):
     temporary=path.with_suffix('.tmp')
     temporary.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
@@ -334,6 +348,10 @@ class Run:
                 if 'android/ci/test_stale_history_retry.py' in changed:
                     pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
                     allowed.add('android/ci/test_stale_history_retry.py')
+                if 'android/ci/test_defense_summary.py' in changed:
+                    assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='headless:defenses' and self.state['attempts'][-1]['exit_code']!=0
+                    pending_defense_phase_flag_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                    allowed.update({'android/ci/test_defense_summary.py','android/ci/test_pending_defense_phase_flag_fix.py',*[p for p in changed if p.startswith('docs/android/')]})
                 if 'tools/android_headless/check_history_mutations.py' in changed:
                     if self.state['commit']==OUTPUT_HISTORY_BEFORE:
                         assert self.state['status']=='failed'
