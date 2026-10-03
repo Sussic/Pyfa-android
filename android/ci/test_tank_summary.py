@@ -12,7 +12,7 @@ import unittest
 from unittest.mock import patch
 from zipfile import ZipFile
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from tank_summary import tank, summarize, REJECTIONS
+from tank_summary import tank, summarize, REJECTIONS, recent_after_removal
 from resource_summary import fixture_bytes
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -111,6 +111,7 @@ class SummaryTests(unittest.TestCase):
                 edges=[dict(source_id=source,**case['projection'])]
             add(key,case['spec'],edges)
             values.append(dict(fit_id=key, revision=1, **deepcopy(case['expected'])))
+        graph['recent']=recent_after_removal(before['recent'],3530)
         copied=deepcopy(graph['records'][ids[23]]);copied['spec']['name']='C01.3.2 copy'
         graph['fit_order'].append('copy');graph['records']['copy']=copied;graph['revisions']['copy']=1;graph['modified']['copy']=0
         snap=deepcopy(next(s for s in snapshots if s['id']==ids[23]));snap.update(id='copy',name='C01.3.2 copy');snapshots.append(snap)
@@ -153,11 +154,26 @@ class SummaryTests(unittest.TestCase):
                     'copy':lambda r:r[0]['saved']['copy_tank'].update(fit_id='target-23'),
                     'saved':lambda r:r[1]['saved']['tanks'][0].update(revision=2),
                     'edit':lambda r:r[0]['saved']['edits'][0]['after']['tank']['raw']['reinforced']['repairs']['armorRepair'].update(value=9999),
+                    'wrong_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3531]),
+                    'missing_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[]),
+                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),
                 }
                 for name,change in changes.items():
                     with self.subTest(name=name):
                         bad=deepcopy(reports);change(bad)
                         with self.assertRaises((AssertionError,KeyError)):summarize(bad,engine,{99})
+
+
+class RecentTests(unittest.TestCase):
+    def test_exact_twenty_item_eviction(self):self.assertEqual([3530,*range(1,20)],recent_after_removal(list(range(1,21)),3530))
+    def test_existing_item_promoted_once(self):self.assertEqual([3530,1,2],recent_after_removal([1,3530,2],3530))
+    def test_empty_list(self):self.assertEqual([3530],recent_after_removal([],3530))
+    def test_invalid_list(self):
+        for value in ([1,1],[True],[1.0],list(range(1,22))):
+            with self.assertRaises(AssertionError):recent_after_removal(value,3530)
+    def test_invalid_promoted_id(self):
+        for value in (True,3530.0,0):
+            with self.assertRaises(AssertionError):recent_after_removal([],value)
 
 
 class NativeBoundaryTests(unittest.TestCase):

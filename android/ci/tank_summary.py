@@ -1,6 +1,7 @@
 """C01.3.2 strict tank scalar and original presentation comparisons."""
 from capacitor_summary import scalar
 from copy import deepcopy
+import json
 from pathlib import Path
 from evidence_paths import evidence_dir
 from resource_summary import fixture_bytes
@@ -43,6 +44,15 @@ def tank(expected, actual):
             assert type(observed['tooltip']) is str and reference['tooltip'] == observed['tooltip']
 
 
+def recent_after_removal(previous, module_id):
+    assert type(previous) is list and len(previous) <= 20
+    assert all(type(i) is int and 0 < i < 2**63 for i in previous)
+    assert len(previous) == len(set(previous)) and type(module_id) is int and 0 < module_id < 2**63
+    # Original module removal promotes the removed item; Undo does not rewind
+    # equipment recent use and Redo promotes that same item again.
+    return [module_id, *[i for i in previous if i != module_id][:19]]
+
+
 def summarize(reports, engine, prior_pids=()):
     apk = evidence_dir().parent/'apks/app-debug-androidTest.apk'
     assert apk.is_file(), 'Retained verified test APK required'
@@ -72,7 +82,13 @@ def summarize(reports, engine, prior_pids=()):
         exact(inherited_ids, before['fit_order']); exact(inherited_ids, after['fit_order'][:189])
         assert len(after['fit_order']) == len(set(after['fit_order'])) == 230
         assert set(after['fit_order']) == set(after['records']) == set(after['revisions']) == set(after['modified'])
-        exact(before['sample_id'], after['sample_id']); exact(before.get('recent',[]), after.get('recent',[]))
+        exact(before['sample_id'], after['sample_id'])
+        catalog = json.loads((ROOT/'tools/android_reference/fixtures/equipment.json').read_text(encoding='utf-8'))['catalog']['items']
+        module_name = fixture['cases'][4]['spec']['modules'][0]['name']
+        exact('Medium Armor Repairer II', module_name)
+        module_ids = [row['id'] for row in catalog if row['name'] == module_name]
+        exact([3530], module_ids)
+        exact(recent_after_removal(before.get('recent',[]), module_ids[0]), after.get('recent',[]))
         exact(engine['database_logical_sha256'], before['dataset_identity']); exact(before['dataset_identity'], after['dataset_identity'])
         settings(fixture['eos_settings'], before['eos_settings']); settings(fixture['eos_settings'], after['eos_settings'])
         snapshots = {row['id']:row for row in all_fits}; assert len(snapshots) == 230

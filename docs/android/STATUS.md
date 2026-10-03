@@ -57,6 +57,16 @@ only40 proven synthetic phase fits. Next: rebuild affected test/package checks,
 prove app APK/fixtures identical, then retry tank prepare/restored and summary
 in this retained run. No full-chain restart, hosted result or delivery is claimed.
 
+Targeted repair `e49c7220` passes app/test/lint, package and corrected test
+signature; app APK is byte-identical and every non-bytecode test entry unchanged.
+Tank prepare/restored now pass, with all230 fits and104 gates retained. Final
+summary alone fails because it expected recent equipment unchanged across module
+removal/Redo. Actual recent list correctly promotes3530 (Medium Armor Repairer II)
+and evicts the twentieth old item, matching the pinned equipment fixture and
+existing desktop removal/history policy. Correct only this expected list;
+strictly reject wrong IDs/order/duplicates/eviction and retain read-only per-case
+recent assertions. Next: focused validator/source checks, then summary only.
+
 ## Latest outcome — C01.3.1 defenses and incoming damage
 
 Selected from delivered master `adafcadc` on codex/c01-3-1-defense-details.
