@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.ParcelFileDescriptor
 import android.os.Process
+import android.util.Log
 import android.provider.Settings
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -126,14 +127,26 @@ class TargetingTest {
         assertEquals(1,Settings.Global.getInt(context.contentResolver,Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED,context.checkSelfPermission(Manifest.permission.INTERNET))
         val phase=InstrumentationRegistry.getArguments().getString("c031_phase") ?: error("Missing phase")
-        assertTrue(phase in listOf("prepare","restored"));val start=JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120,TimeUnit.SECONDS))
+        assertTrue(phase in listOf("prepare0","prepare1","prepare2","restored"));val start=JSONObject(EngineRuntime.bridgeDiagnostics(context).get(120,TimeUnit.SECONDS))
         assertTrue(start.getJSONObject("persistence").getBoolean("enabled"));assertTrue(start.getJSONObject("persistence").getBoolean("opened_existing"))
-        assertEquals(if(phase=="prepare")268 else 325,EngineRuntime.library.value.size)
+        assertEquals(when(phase) { "prepare0" -> 268; "prepare1" -> 301; "prepare2" -> 313; else -> 325 },EngineRuntime.library.value.size)
+        val stageStart=obj("graph" to ModuleTestJson.typed(graph()),"all_fits" to ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit))))
+        assertTrue(EngineRuntime.library.value.all { EngineRuntime.editHistory(context,it.id).get(120,TimeUnit.SECONDS).let { h -> h.undoCount==0 && h.redoCount==0 } })
         val bytes=instrumentation.context.assets.open("targeting-expected.json").use { it.readBytes() };val fixture=JSONObject(bytes.toString(Charsets.UTF_8));val cases=fixture.getJSONArray("cases");assertEquals(53,cases.length())
         val file=File(context.noBackupFilesDir,"c031-expected.json");val ids=JSONArray();val observations=JSONArray();val edits=JSONArray();var rejections=JSONArray()
-        if(phase=="prepare") {
-            val inherited=ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit)));val inheritedGraph=graph()
-            for(index in 0 until cases.length()) {
+        if(phase!="restored") {
+            val prior=if(phase=="prepare0")null else JSONObject(file.readText(Charsets.UTF_8))
+            if(prior!=null) {
+                assertNotEquals(prior.getInt("pid"),Process.myPid());compare(prior.getJSONObject("graph"),stageStart.getJSONObject("graph"),strict=false)
+                compare(prior.getJSONObject("all_fits"),stageStart.getJSONObject("all_fits"),strict=false)
+                val previous=prior.getJSONArray("ids");for(i in 0 until previous.length())ids.put(previous.getString(i))
+                val previousEdits=prior.getJSONArray("edits");for(i in 0 until previousEdits.length())edits.put(previousEdits.getJSONObject(i))
+            }
+            val inherited=prior?.getJSONObject("inherited") ?: ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit)))
+            val inheritedGraph=(prior?.getJSONObject("inherited_graph") ?: stageStart.getJSONObject("graph")).getJSONObject("data")
+            val range=when(phase) { "prepare0" -> 0 until 33; "prepare1" -> 33 until 45; else -> 45 until 53 }
+            for(index in range) {
+                Log.i("PyfaC031", "START $phase case=$index");val caseStarted=System.nanoTime()
                 val case=cases.getJSONObject(index);val id=create(case.getJSONObject("spec"));ids.put(id)
                 if(case.has("initial"))reference(case.getJSONObject("initial"),query(id))
                 val steps=case.getJSONArray("edits")
@@ -157,7 +170,21 @@ class TargetingTest {
                 val observed=raw(query(id));val stable=wire(ModuleTestJson.typed(graph()));val history=EngineRuntime.editHistory(context,id).get(120,TimeUnit.SECONDS)
                 repeat(3) { Runtime.getRuntime().gc();compare(observed,raw(query(id)),strict=false);assertEquals(stable,wire(ModuleTestJson.typed(graph())));assertEquals(history,EngineRuntime.editHistory(context,id).get(120,TimeUnit.SECONDS)) }
                 observations.put(obj("case" to index,"actual" to observed))
+                Log.i("PyfaC031", "PASS $phase case=$index elapsed_ms=${(System.nanoTime()-caseStarted)/1_000_000}")
             }
+            var uiHistory=prior?.getJSONObject("ui_history")
+            if(phase=="prepare0") {
+                val historyIndex=(0 until ids.length()).first { cases.getJSONObject(it).getJSONObject("spec").getString("name")=="Drone range" && cases.getJSONObject(it).getJSONArray("edits").length()>0 }
+                val historyId=ids.getString(historyIndex);open(historyId);detail("drone_range",query(historyId).main.getValue("drone_range"))
+                val historyBefore=raw(query(historyId));reverse(historyId,false)
+                reference(cases.getJSONObject(historyIndex).getJSONObject("initial"),query(historyId))
+                assertTrue(compose.onAllNodesWithTag("targeting-drone_range-precision").fetchSemanticsNodes().isNotEmpty());val historyUndone=raw(query(historyId))
+                reverse(historyId,true);reference(cases.getJSONObject(historyIndex).getJSONObject("expected"),query(historyId))
+                detail("drone_range",query(historyId).main.getValue("drone_range"));screenshot("prepare-history")
+                uiHistory=obj("case" to historyIndex,"before" to historyBefore,"undone" to historyUndone,"redone" to raw(query(historyId)))
+            }
+            var copied: String?=null
+            if(phase=="prepare2") {
             fun named(name: String)=(0 until cases.length()).first { cases.getJSONObject(it).getJSONObject("spec").getString("name")==name }
             val sensorCases=(0 until cases.length()).distinctBy { cases.getJSONObject(it).getJSONObject("expected").getJSONObject("targeting").getString("sensor_type") }
             assertEquals(setOf("Magnetometric","Ladar","Radar","Gravimetric","Multispectral"),sensorCases.map { cases.getJSONObject(it).getJSONObject("expected").getJSONObject("targeting").getString("sensor_type") }.toSet())
@@ -178,14 +205,6 @@ class TargetingTest {
                 if(key=="sensor")compose.onNodeWithTag("targeting-sensor-type").performScrollTo().assertTextEquals("Sensor type: ${row.sensorType}")
                 for(field in extra)detail(field,row.details.getValue(field));screenshot("prepare-$key")
             }
-            val historyIndex=(0 until cases.length()).first { cases.getJSONObject(it).getJSONObject("spec").getString("name")=="Drone range" && cases.getJSONObject(it).getJSONArray("edits").length()>0 }
-            val historyId=ids.getString(historyIndex);open(historyId);detail("drone_range",query(historyId).main.getValue("drone_range"))
-            val historyBefore=raw(query(historyId));reverse(historyId,false)
-            reference(cases.getJSONObject(historyIndex).getJSONObject("initial"),query(historyId))
-            assertTrue(compose.onAllNodesWithTag("targeting-drone_range-precision").fetchSemanticsNodes().isNotEmpty());val historyUndone=raw(query(historyId))
-            reverse(historyId,true);reference(cases.getJSONObject(historyIndex).getJSONObject("expected"),query(historyId))
-            detail("drone_range",query(historyId).main.getValue("drone_range"));screenshot("prepare-history")
-            val uiHistory=obj("case" to historyIndex,"before" to historyBefore,"undone" to historyUndone,"redone" to raw(query(historyId)))
             val available=fixture.getJSONArray("available_holds")
             for(i in 0 until available.length()) {
                 val attr=available.getString(i)
@@ -206,12 +225,17 @@ class TargetingTest {
             reference(cases.getJSONObject(named("Targeting Vexor")).getJSONObject("expected"),query(copy))
             compose.activityRule.scenario.recreate();ready(owner);reference(cases.getJSONObject(named("Targeting Vexor")).getJSONObject("expected"),model.details!!)
             assertTrue(compose.onAllNodesWithTag("targeting-specialShipHoldCapacity-precision").fetchSemanticsNodes().isNotEmpty())
+            copied=copy
+            }
             val finalGraph=graph();val previous=inherited.getJSONArray("data");val priorIds=(0 until previous.length()).map { previous.getJSONObject(it).getString("id") }
             compare(inherited,ModuleTestJson.typed(JSONArray(priorIds.map { ModuleTestJson.fit(fit(it)) })),strict=false)
             for(id in priorIds)for(field in listOf("records","revisions","modified"))compare(ModuleTestJson.typed(inheritedGraph.getJSONObject(field).get(id)),ModuleTestJson.typed(finalGraph.getJSONObject(field).get(id)),strict=false)
-            assertEquals(325,EngineRuntime.library.value.size)
+            assertEquals(if(phase=="prepare2")325 else 268+ids.length(),EngineRuntime.library.value.size)
+            // Observe every retained case after each additional process boundary.
+            while(observations.length()>0)observations.remove(0)
+            for(i in 0 until ids.length()) { reference(cases.getJSONObject(i).getJSONObject("expected"),query(ids.getString(i)));observations.put(obj("case" to i,"actual" to raw(query(ids.getString(i))))) }
             file.writeText(wire(obj("pid" to Process.myPid(),"ids" to ids,"inherited" to inherited,"inherited_graph" to ModuleTestJson.typed(inheritedGraph),"graph" to ModuleTestJson.typed(finalGraph),
-                "all_fits" to ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit))),"edits" to edits,"ui_history" to uiHistory,"copy_id" to copy,"copy_targeting" to raw(query(copy)),
+                "all_fits" to ModuleTestJson.typed(JSONArray(EngineRuntime.library.value.map(ModuleTestJson::fit))),"edits" to edits,"ui_history" to uiHistory,"copy_id" to copied,"copy_targeting" to copied?.let { raw(query(it)) },
                 "outputs" to JSONArray((0 until ids.length()).map { raw(query(ids.getString(it))) }))),Charsets.UTF_8)
         } else {
             val saved=JSONObject(file.readText(Charsets.UTF_8));assertNotEquals(saved.getInt("pid"),Process.myPid())
@@ -224,8 +248,8 @@ class TargetingTest {
         }
         val saved=JSONObject(file.readText(Charsets.UTF_8));val descriptors=instrumentation.uiAutomation.executeShellCommandRw("dd of=/sdcard/Download/pyfa-c031-$phase.json")
         ParcelFileDescriptor.AutoCloseInputStream(descriptors[0]).use { completion ->
-            ParcelFileDescriptor.AutoCloseOutputStream(descriptors[1]).use { it.write(wire(obj("task" to "C03.1","phase" to phase,"pid" to Process.myPid(),"runtime_start" to start,"ids" to ids,"observations" to observations,
-                "protocol_rejections" to rejections,"saved" to saved,"copy_observation" to raw(query(saved.getString("copy_id"))),
+            ParcelFileDescriptor.AutoCloseOutputStream(descriptors[1]).use { it.write(wire(obj("task" to "C03.1","phase" to phase,"pid" to Process.myPid(),"runtime_start" to start,"stage_start" to stageStart,"ids" to ids,"observations" to observations,
+                "protocol_rejections" to rejections,"saved" to saved,"copy_observation" to if(saved.isNull("copy_id"))null else raw(query(saved.getString("copy_id"))),
                 "fixture_sha256" to MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) })).toByteArray(Charsets.UTF_8)) };completion.readBytes()
         }
     }

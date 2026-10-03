@@ -212,7 +212,7 @@ class NativeBoundaryTests(unittest.TestCase):
         from local_verification import plan
         self.assertIn('reference:tank',plan('full',None));self.assertIn('headless:tank',plan('full',None))
         self.assertIn('native:tank-prepare',plan('full',None));self.assertIn('native:tank-restored',plan('full',None))
-        self.assertEqual(113,len(plan('full',None)))
+        self.assertEqual(115,len(plan('full',None)))
     def test_hash_verified_pull_rejects_truncation_wrong_hash_and_empty(self):
         text=(ROOT/'android/ci/check-tank.py').read_text(encoding='utf-8');tree=ast.parse(text)
         function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='pull')

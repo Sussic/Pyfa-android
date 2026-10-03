@@ -25,7 +25,11 @@ host matrix/history/copy/restart,16 validator tests,26 integration checks and
 22 historical reuse guards pass. Both updated APKs compile; lint passes.
 Native execution and screenshot review remain outstanding. Exact next: commit
 the candidate and run only the new native pair/summary on a verified synthetic
-C02 baseline, then full113-gate delivery verification after readiness passes.
+C02 baseline, then full115-gate delivery verification after readiness passes.
+The first focused prepare attempt on `c4233aa5` timed out at900 seconds after
+reaching311 fits/case42 undo. Proof is retained; preparation is now three bounded
+stages with the same900-second deadlines, all assertions and added restart proof.
+The corrected staged native test and summary still require focused verification.
 
 ## Latest outcome — C02 outgoing statistics
 

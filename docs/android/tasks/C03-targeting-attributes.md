@@ -77,5 +77,30 @@ passes. Native execution and visual review are still outstanding.
 Next: commit the coherent candidate, run the new
 native pair and its actual-report summary against a verified268-fit C02 synthetic
 baseline on a fresh offline AVD. This focused proof does not replace delivery.
-After readiness and visual review, full delivery requires all113 gates,73 native
+After readiness and visual review, full delivery requires all115 gates,75 native
 executions,325 persisted fits and215 reviewed screenshots on the final revision.
+
+The first focused Android prepare attempt on `c4233aa5` hit its900-second
+deadline. Run `c03-targeting-focused-20261003-135257` retains its APKs, raw log,
+logcat and partial store (SHA256
+`a54c65e2352ec138779bf874a3f5ec69bd835fdaf86df95359784233ee71221c`).
+The store reached311 fits and case42's undo revision3; successive three-GC groups
+continued through14:08:24. History replay rebuilds the whole retained graph;
+this is progressing execution, not proof of a hung case. It is a failed attempt,
+not partial delivery success. The earlier private seed helper's Windows manifest
+separator lookup failure is also retained, with exact hash/size checks unchanged.
+
+Preparation is now bounded at cases0–32,33–44 and45–52, followed by the original
+full restored verification. All53 cases and every edit/undo/redo/GC/copy/UI
+assertion remain; each stage still has900 seconds and existing operation limits.
+UI undo/redo executes in the first stage while that history exists, and later
+stages retain its original exact proof. Additional restart checks compare the
+typed incoming graph/snapshots and prior observations; every inherited fit remains
+unchanged. Native progress logs record each case's start, pass and elapsed time.
+No product implementation, fixture, calculation, timeout or A10 criterion changed.
+The staged validators (16 tests, including26 corruption subcases) and26 inherited
+integration tests pass. The first staged-validator attempt is retained: its
+"recent" corruption targeted a pre-cargo stage whose empty list was already
+correct; it now targets the actual cargo stage. Typed previous graphs are validated
+once before comparison, preserving every member/type check without repeated
+revalidation. Both APKs build and lint passes (`build/c03-staged-build.log`).

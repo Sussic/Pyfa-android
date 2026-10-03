@@ -24,16 +24,21 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action start -Mode native
 ```
 
-C03.1 extends the required plan to 113 gates: 62 reference/host, five build and
-46 native gates (73 actual native test executions). Targeting/navigation adds53
+C03.1 extends the required plan to 115 gates: 62 reference/host, five build and
+48 native gates (75 actual native test executions). Targeting/navigation adds53
 independent original wx/EOS cases, all437 hulls' hold inventory, all21 holds and
-eight reference lock sizes. Two persistent native phases follow C02, retaining
+eight reference lock sizes. Three bounded prepare stages and a restored phase
+follow C02, retaining
 all earlier cases and gates;325 synthetic fits and215 required screenshots are
 required. These are
 requirements until the exact-commit receipt records execution and visual review.
 The targeting focused pair covers module/skill/cargo/projected modifiers, history,
 copy isolation, precise details and fresh-process persistence. The inherited output
-pair retains target-profile and failed-save checks. Native phases keep their existing
+pair retains target-profile and failed-save checks. Each targeting prepare stage
+keeps the900-second deadline and original per-operation limits. The additional
+process boundaries compare the exact typed graph, snapshots, inherited fits and
+previous observations before continuing; no case or history replay is dropped.
+Native phases keep their existing
 900-second deadlines; the approved history-only Windows timeout is unchanged.
 
 C01.3.2 extends the required plan to 105 gates: 58 reference/host, five build

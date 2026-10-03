@@ -106,7 +106,7 @@ from tank_summary import summarize as summarize_tank
 from output_summary import summarize as summarize_output
 from targeting_summary import summarize as summarize_targeting
 summary = {
-    "targeting": summarize_targeting([json.loads((evidence / f"targeting-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
+    "targeting": summarize_targeting([json.loads((evidence / f"targeting-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare0", "prepare1", "prepare2", "restored")],
         engine, {json.loads((evidence / f"output-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("prepare", "restored")}),
     "output": summarize_output([json.loads((evidence / f"output-{phase}-native.json").read_text(encoding="utf-8")) for phase in ("prepare", "restored")],
         engine, {json.loads((evidence / f"tank-{phase}-native.json").read_text(encoding="utf-8"))["pid"] for phase in ("prepare", "restored")}),

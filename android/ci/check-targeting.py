@@ -7,7 +7,7 @@ import subprocess
 from evidence_paths import evidence_dir
 
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--phase',choices=('prepare','restored'),required=True)
+parser.add_argument('--phase',choices=('prepare0','prepare1','prepare2','restored'),required=True)
 phase=parser.parse_args().phase
 evidence=evidence_dir();package='io.github.sussic.pyfa.dev'
 
@@ -34,7 +34,7 @@ assert adb('shell','settings','get','global','airplane_mode_on').strip()==b'1'
 adb('shell','am','force-stop',package)
 from pathlib import Path
 fixture=json.loads((Path(__file__).resolve().parents[2]/'tools/android_reference/fixtures/targeting.json').read_text(encoding='utf-8'))
-names={'prepare':['prepare-targeting','prepare-sensor','prepare-drone_range','prepare-align','prepare-signature','prepare-warp_speed','prepare-cargo','prepare-history',*[f'prepare-hold-{attribute}' for attribute in fixture['available_holds']],'prepare-absent'],'restored':['restored']}[phase]
+names={'prepare0':['prepare-history'],'prepare1':[], 'prepare2':['prepare-targeting','prepare-sensor','prepare-drone_range','prepare-align','prepare-signature','prepare-warp_speed','prepare-cargo',*[f'prepare-hold-{attribute}' for attribute in fixture['available_holds']],'prepare-absent'],'restored':['restored']}[phase]
 path=f'/sdcard/Download/pyfa-c031-{phase}.json'
 adb('shell','rm','-f',path,*(f'/sdcard/Download/pyfa-c031-{name}.png' for name in names))
 command=['adb','shell','am','instrument','-w','-r','-e','class','io.github.sussic.pyfa.TargetingTest',
@@ -43,8 +43,11 @@ log=evidence/f'targeting-{phase}-instrumentation.txt'
 try:
     result=subprocess.run(command,capture_output=True,timeout=900)
 except subprocess.TimeoutExpired as error:
-    log.write_bytes((error.stdout or b'')+(error.stderr or b''));raise
+    log.write_bytes((error.stdout or b'')+(error.stderr or b''))
+    (evidence/f'targeting-{phase}-progress.txt').write_bytes(adb('logcat','-d','-s','PyfaC031:I','*:S',timeout=60));raise
 log.write_bytes(result.stdout+result.stderr)
+progress=adb('logcat','-d','-s','PyfaC031:I','*:S',timeout=60)
+(evidence/f'targeting-{phase}-progress.txt').write_bytes(progress)
 output=log.read_text(encoding='utf-8')
 for name in names:
     remote=f'/sdcard/Download/pyfa-c031-{name}.png'

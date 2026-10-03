@@ -37,8 +37,10 @@ def observation(expected,actual,key,revision):
 def summarize(reports,engine,prior_pids=()):
     apk=evidence_dir().parent/'apks/app-debug-androidTest.apk';assert apk.is_file()
     reference=(ROOT/'tools/android_reference/fixtures/targeting.json').read_bytes()
-    assert len(reports)==2;pids=set(prior_pids);prepared=None
-    for phase,report in zip(('prepare','restored'),reports):
+    assert len(reports)==4;pids=set(prior_pids);prepared=None;previous=None
+    for phase,report in zip(('prepare0','prepare1','prepare2','restored'),reports):
+        count={'prepare0':33,'prepare1':45,'prepare2':53,'restored':53}[phase]
+        full=phase in ('prepare2','restored');total=325 if full else 268+count
         fixture=fixture_bytes(apk,reference,report['fixture_sha256'],'targeting-expected.json')
         assert fixture['task']=='C03.1' and fixture['source_commit']==engine['desktop_source_commit']
         settings(fixture['eos_settings'],engine['eos_settings']);assert len(fixture['hull_inventory'])==437
@@ -50,21 +52,27 @@ def summarize(reports,engine,prior_pids=()):
         start=report['runtime_start'];assert start['persistence']['enabled'] is True and start['persistence']['opened_existing'] is True
         for key in ('desktop_source_commit','database_logical_sha256','engine_source_sha256','source_data_sha256'):exact(engine[key],start['manifest'][key])
         settings(fixture['eos_settings'],start['eos_settings'])
+        stage=report['stage_start'];exact({'graph','all_fits'},set(stage))
+        if previous is None:
+            exact(report['saved']['inherited_graph'],stage['graph']);exact(report['saved']['inherited'],stage['all_fits'])
+        else:
+            exact(previous['graph'],stage['graph']);exact(previous['all_fits'],stage['all_fits'])
         ids,rows,saved=report['ids'],report['observations'],report['saved']
-        assert len(ids)==len(set(ids))==len(rows)==len(fixture['cases'])==53
-        exact(ids,saved['ids']);assert len(saved['outputs'])==53;exact(list(range(53)),[row['case'] for row in rows])
+        assert len(fixture['cases'])==53 and len(ids)==len(set(ids))==len(rows)==count
+        exact(ids,saved['ids']);assert len(saved['outputs'])==count;exact(list(range(count)),[row['case'] for row in rows])
         inherited,all_fits=typed(saved['inherited']),typed(saved['all_fits'])
         before,after=typed(saved['inherited_graph']),typed(saved['graph'])
-        old=[row['id'] for row in inherited];assert len(old)==len(set(old))==268 and len(all_fits)==325
+        old=[row['id'] for row in inherited];assert len(old)==len(set(old))==268 and len(all_fits)==total
         exact(old,before['fit_order']);exact(old,after['fit_order'][:268])
-        assert len(after['fit_order'])==len(set(after['fit_order']))==325
+        assert len(after['fit_order'])==len(set(after['fit_order']))==total
         assert set(after['fit_order'])==set(after['records'])==set(after['revisions'])==set(after['modified'])
         exact(before['sample_id'],after['sample_id']);exact(engine['database_logical_sha256'],before['dataset_identity']);exact(before['dataset_identity'],after['dataset_identity'])
         settings(fixture['eos_settings'],before['eos_settings']);settings(fixture['eos_settings'],after['eos_settings'])
         cargo_case=next(case for case in fixture['cases'] if case['spec']['name']=='Cargo tooltip refresh')
         cargo_item=cargo_case['edits'][0]['args']['item_id']
-        exact(([cargo_item]+[i for i in before.get('recent',[]) if i!=cargo_item])[:20],after.get('recent',[]))
-        snapshots={row['id']:row for row in all_fits};assert len(snapshots)==325 and set(snapshots)==set(after['fit_order'])
+        wanted_recent=([cargo_item]+[i for i in before.get('recent',[]) if i!=cargo_item])[:20] if full else before.get('recent',[])
+        exact(wanted_recent,after.get('recent',[]))
+        snapshots={row['id']:row for row in all_fits};assert len(snapshots)==total and set(snapshots)==set(after['fit_order'])
         assert set(ids)<=set(snapshots) and not set(ids)&set(old)
         for row in inherited:
             key=row['id'];exact(row,snapshots[key])
@@ -108,22 +116,36 @@ def summarize(reports,engine,prior_pids=()):
             revision=6 if index==ui_index else 4 if mutated else 1
             exact(revision,after['revisions'][key]);exact(revision,snapshot['revision'])
             observation(case['expected'],retained,key,revision)
-            observation(case['expected'],row['actual'],key,revision if phase=='restored' else 4 if mutated else 1)
+            observation(case['expected'],row['actual'],key,revision)
             if mutated:edit_indices.append(index)
         exact(edit_indices,[edit['case'] for edit in saved['edits']])
         for edit in saved['edits']:
             index=edit['case'];case=fixture['cases'][index];exact({'case','applied','undone','redone'},set(edit))
             for field,expected,revision in (('applied',case['expected'],2),('undone',case['initial'],3),('redone',case['expected'],4)):
                 observation(expected,edit[field],ids[index],revision)
-        assert len(sources)==3
+        assert len(sources)==(3 if full else 0)
         owner_index=next(i for i,case in enumerate(fixture['cases']) if case['spec']['name']=='Targeting Vexor')
-        copied=saved['copy_id'];assert copied not in old and copied not in ids and copied not in sources
-        expected_order.append(copied);exact(expected_order,after['fit_order'])
-        original=deepcopy(after['records'][ids[owner_index]]);original['spec']['name']='C03 copy';exact(original,after['records'][copied])
-        exact(3,after['revisions'][copied]);exact(3,snapshots[copied]['revision'])
-        exact({k:v for k,v in snapshots[ids[owner_index]].items() if k not in ('id','name','revision')},{k:v for k,v in snapshots[copied].items() if k not in ('id','name','revision')})
-        observation(fixture['cases'][owner_index]['expected'],saved['copy_targeting'],copied,3);exact(saved['copy_targeting'],report['copy_observation'])
-        if phase=='prepare':exact(report['pid'],saved['pid']);exact(REJECTIONS,report['protocol_rejections']);prepared=saved
-        else:assert saved['pid']!=report['pid'];exact(prepared,saved);exact([],report['protocol_rejections'])
+        if full:
+            copied=saved['copy_id'];assert copied not in old and copied not in ids and copied not in sources
+            expected_order.append(copied)
+            original=deepcopy(after['records'][ids[owner_index]]);original['spec']['name']='C03 copy';exact(original,after['records'][copied])
+            exact(3,after['revisions'][copied]);exact(3,snapshots[copied]['revision'])
+            exact({k:v for k,v in snapshots[ids[owner_index]].items() if k not in ('id','name','revision')},{k:v for k,v in snapshots[copied].items() if k not in ('id','name','revision')})
+            observation(fixture['cases'][owner_index]['expected'],saved['copy_targeting'],copied,3);exact(saved['copy_targeting'],report['copy_observation'])
+        else:
+            for value in (saved['copy_id'],saved['copy_targeting'],report['copy_observation']):assert value is None
+        exact(expected_order,after['fit_order'])
+        if phase=='restored':assert saved['pid']!=report['pid'];exact(prepared,saved)
+        else:exact(report['pid'],saved['pid'])
+        exact(REJECTIONS if phase=='prepare2' else [],report['protocol_rejections'])
+        if previous is not None:
+            for field in ('ids','edits','outputs'):
+                exact(previous[field],saved[field][:len(previous[field])])
+            for field in ('inherited','inherited_graph','ui_history'):exact(previous[field],saved[field])
+            previous_graph=typed(previous['graph'])
+            for key in previous_graph['fit_order']:
+                for field in ('records','revisions','modified'):exact(previous_graph[field][key],after[field][key])
+        previous=saved
+        if phase=='prepare2':prepared=saved
     return dict(task='C03.1',complete=True,cases=53,hold_attributes=21,available_holds=14,absent_holds=7,reference_targets=8,
         saved_fits=325,inherited_fits=268,copy_checked=True,process_restart=True,protocol_rejections=len(REJECTIONS))

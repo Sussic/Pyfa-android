@@ -102,11 +102,23 @@ class SummaryTests(unittest.TestCase):
         add('copy',fixture['cases'][owner]['spec'],3);graph['records']['copy']['spec']['name']='C03 copy';snapshots[-1]['name']='C03 copy'
         copied=dict(fit_id='copy',revision=3,**deepcopy(fixture['cases'][owner]['expected']))
         ui=dict(case=ui_index,before=dict(fit_id=ids[ui_index],revision=4,**deepcopy(fixture['cases'][ui_index]['expected'])),undone=dict(fit_id=ids[ui_index],revision=5,**deepcopy(fixture['cases'][ui_index]['initial'])),redone=deepcopy(values[ui_index]))
-        saved=dict(pid=100,ids=ids,inherited=self.typed(inherited),inherited_graph=self.typed(before),graph=self.typed(graph),all_fits=self.typed(snapshots),edits=edits,ui_history=ui,copy_id='copy',copy_targeting=copied,outputs=values)
+        saved=dict(pid=102,ids=ids,inherited=self.typed(inherited),inherited_graph=self.typed(before),graph=self.typed(graph),all_fits=self.typed(snapshots),edits=edits,ui_history=ui,copy_id='copy',copy_targeting=copied,outputs=values)
         start=dict(manifest={k:v for k,v in engine.items() if k!='eos_settings'},eos_settings=fixture['eos_settings'],persistence=dict(enabled=True,opened_existing=True))
         common=dict(task='C03.1',runtime_start=start,ids=ids,saved=saved,copy_observation=copied,fixture_sha256=hashlib.sha256(FIXTURE.read_bytes()).hexdigest(),observations=[dict(case=i,actual=deepcopy(v)) for i,v in enumerate(values)])
-        prepared=dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS);prepared['observations'][ui_index]['actual']['revision']=4
-        return [prepared,dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])],engine
+        stages=[];previous=dict(graph=self.typed(before),all_fits=self.typed(inherited))
+        for group,count in enumerate((33,45,53)):
+            row=deepcopy(common);row.update(phase='prepare'+str(group),pid=100+group,protocol_rejections=REJECTIONS if group==2 else [],stage_start=deepcopy(previous))
+            stage=row['saved'];stage['pid']=100+group
+            if group<2:
+                stage['ids']=stage['ids'][:count];stage['outputs']=stage['outputs'][:count];stage['edits']=[e for e in stage['edits'] if e['case']<count]
+                stage['copy_id']=stage['copy_targeting']=row['copy_observation']=None
+                partial=deepcopy(graph);partial['fit_order']=partial['fit_order'][:268+count];partial['recent']=deepcopy(before['recent'])
+                for field in ('records','revisions','modified'):partial[field]={key:partial[field][key] for key in partial['fit_order']}
+                stage['graph']=self.typed(partial);stage['all_fits']=self.typed([s for s in snapshots if s['id'] in partial['fit_order']])
+            row['ids']=deepcopy(stage['ids']);row['observations']=row['observations'][:count]
+            stages.append(row);previous={field:deepcopy(stage[field]) for field in ('graph','all_fits')}
+        restored=dict(**deepcopy(common),phase='restored',pid=103,protocol_rejections=[],stage_start=deepcopy(previous))
+        return [*stages,restored],engine
     def test_complete_summary_and_corruptions(self):
         reports,engine=self.inputs()
         with tempfile.TemporaryDirectory() as directory:
@@ -120,17 +132,22 @@ class SummaryTests(unittest.TestCase):
                   'settings':lambda r:r[0]['runtime_start']['eos_settings'].update(globalDefaultSpoolupPercentage=.5),
                   'restart':lambda r:r[1]['runtime_start']['persistence'].update(opened_existing=False),
                   'missing_case':lambda r:r[0]['observations'].pop(),'order':lambda r:r[0]['observations'][0].update(case=1),
-                  'revision':lambda r:r[0]['observations'][0]['actual'].update(revision=2),'restored_revision':lambda r:r[1]['observations'][0]['actual'].update(revision=2),
-                  'recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[]),
+                  'revision':lambda r:r[0]['observations'][0]['actual'].update(revision=2),'restored_revision':lambda r:r[3]['observations'][0]['actual'].update(revision=2),
+                  'recent':lambda r:r[2]['saved']['graph']['data'].update(recent=[]),
                   'inherited':lambda r:r[0]['saved']['all_fits']['data'][0].update(name='changed'),
                   'inherited_kind':lambda r:r[0]['saved']['graph']['numeric_types'].update({'root.revisions.prior-0':'decimal'}),
                   'graph_order':lambda r:r[0]['saved']['graph']['data']['fit_order'].reverse(),
-                  'copy':lambda r:r[0]['copy_observation'].update(fit_id='wrong'),
-                  'guards':lambda r:r[0].update(protocol_rejections=[]),
+                  'copy':lambda r:r[2]['copy_observation'].update(fit_id='wrong'),
+                  'guards':lambda r:r[2].update(protocol_rejections=[]),
                   'edit_revision':lambda r:r[0]['saved']['edits'][0]['undone'].update(revision=2),
                   'ui_revision':lambda r:r[0]['saved']['ui_history']['undone'].update(revision=4),
                   'missing_metadata':lambda r:r[0]['saved']['graph']['numeric_types'].pop('root.revisions.target-0'),
-                  'skills':lambda r:r[0]['saved']['graph']['data']['records']['target-41']['skills'].clear(),
+                  'skills':lambda r:r[1]['saved']['graph']['data']['records']['target-41']['skills'].clear(),
+                  'stage_pid':lambda r:r[2].update(pid=r[1]['pid']),
+                  'stage_input':lambda r:r[1]['stage_start']['all_fits']['data'][0].update(name='changed'),
+                  'stage_outputs':lambda r:r[1]['saved']['outputs'].pop(),
+                  'stage_graph':lambda r:r[1]['saved']['graph']['data']['records']['target-0']['spec'].update(name='changed'),
+                  'stage_inherited':lambda r:r[1]['saved']['inherited']['data'][0].update(name='changed'),
                   'hold':lambda r:r[0]['observations'][0]['actual']['targeting']['holds'].pop(),
                   'lock':lambda r:r[0]['observations'][0]['actual']['targeting']['lock_times'][0].update(radius=26),
                 }

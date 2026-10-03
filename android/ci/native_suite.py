@@ -32,7 +32,7 @@ CAPACITOR_STEPS = ['capacitor-'+phase for phase in ('prepare','restored')]
 DEFENSE_STEPS = ['defenses-'+phase for phase in ('prepare','restored')]
 TANK_STEPS = ['tank-'+phase for phase in ('prepare','restored')]
 OUTPUT_STEPS = ['output-'+phase for phase in ('prepare','restored')]
-TARGETING_STEPS = ['targeting-'+phase for phase in ('prepare','restored')]
+TARGETING_STEPS = ['targeting-'+phase for phase in ('prepare0','prepare1','prepare2','restored')]
 STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, *CAPACITOR_STEPS, *DEFENSE_STEPS, *TANK_STEPS, *OUTPUT_STEPS, *TARGETING_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
