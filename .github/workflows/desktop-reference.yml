@@ -487,6 +487,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-output-check"
+      - name: Export original targeting/navigation and all hold families
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/targeting.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-targeting-reference"
+          --check tools/android_reference/fixtures/targeting.json
+      - name: Verify targeting/navigation read-only, history and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_targeting.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-targeting-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

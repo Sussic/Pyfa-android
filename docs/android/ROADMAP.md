@@ -80,7 +80,9 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | --- | --- | --- | --- | --- |
 | C01 | done | B04 | [Resources, capacitor and defenses (parent)](tasks/C01-fit-statistics.md) | Every audited resource/capacitor/tank field has correct units/rounding and matches raw reference results under relevant assumptions. |
 | C02 | done | B04 | Firepower, bombs and mining stats | Audited outgoing fields match representative turret, missile, bomb and mining cases; unsupported/absent values remain distinguishable from zero. |
-| C03 | ready | B04 | Targeting/navigation and attribute inspector | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. |
+| C03 | active | B04 | [Targeting/navigation and attribute inspector](tasks/C03-targeting-attributes.md) | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. Parent remains active through both children. |
+| C03.1 | active | B04 | Targeting/navigation and complete cargo details | All F07.01–F07.30, original lock/sensor/navigation/hold values, modifier edits and native/offline/restart proof. |
+| C03.2 | queued | C03.1 | Complete ship/item/charge inspection | F07.31–F07.32 and F07.34–F07.48 grouped current/base/raw attributes, affectors, effects, variations and every equipment detail family. |
 | C04 | ready | B04 | Drone editing | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
 | C05 | ready | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
 | C06 | ready | B01, B03 | Offline character profiles | All-V/custom skills can be selected, edited and saved; requirements and affectors are inspectable and bonuses match references. |

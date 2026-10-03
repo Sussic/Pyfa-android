@@ -14,7 +14,12 @@ class ProfileRetryTests(unittest.TestCase):
         paths=[*repair.PAIRS,'android/ci/local_verification.py']
         cls.old={p:subprocess.check_output(['git','show',repair.BEFORE+':'+p],cwd=ROOT) for p in paths}
     def setUp(self):
-        self.new={p:(ROOT/p).read_bytes() for p in self.old}
+        # The proof belongs to these delivered C02 sources, never C03's new code.
+        self.new={p:subprocess.check_output(['git','show','1b4630d31efe64770be5fd283a274ec2b7dd8561:'+p],cwd=ROOT) for p in self.old}
+        gate_patch=patch.multiple(launcher,FAMILIES=[g for g in launcher.FAMILIES if g!='targeting'],
+            HEADLESS=[g for g in launcher.HEADLESS if g!='targeting'],
+            NATIVE_STEPS=[g for g in launcher.NATIVE_STEPS if not g.startswith('targeting-')])
+        gate_patch.start();self.addCleanup(gate_patch.stop)
         self.changed=[*repair.PAIRS,'android/ci/local_verification.py','android/ci/report_local.py',
                       'android/ci/output_profile_retry.py','android/ci/test_output_profile_retry.py']
         self.completed=launcher.plan('full',None)[:106]

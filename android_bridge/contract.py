@@ -320,6 +320,15 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
 
+    def targeting_details(self, fit_id):
+        """Read EOS targeting/navigation without mutating fit inputs or history."""
+        from .targeting import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
     def output_details(self, fit_id):
         """Read all current output values without changing inputs/history."""
         from .output import details

@@ -1,11 +1,31 @@
 # Android project status
 
-Updated: 2026-10-03. **C02 delivered; C03 next.**
+Updated: 2026-10-03. **C02 delivered; C03.1 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Selected outcome — C03.1 targeting/navigation and cargo details
+
+Selected from delivered master `b88713b3` on `codex/c03-targeting-attributes`.
+Deliver all F07.01–F07.30 together: targeting/lock times, sensors/jam chance,
+drone range, navigation/align/signature/warp and all21 special holds with precise
+details and original cargo aggregate. EOS remains the calculation authority;
+the unchanged pinned desktop view supplies independent expected values/display.
+Acceptance includes representative hull/sensor/hold families, skill/module/modifier
+edits, cargo refresh, history/copy/read-only/GC/recreation/restart, strict fixture/
+result rejection, native screenshots and every inherited local gate/A10 check.
+[C03 task](tasks/C03-targeting-attributes.md) retains C03.2 full item inspection;
+parent C03 stays active until both coherent child outcomes are verified/delivered.
+Implementation/source review complete;53 independent original wx/EOS cases,
+all437 hulls' hold inventory,21 holds and8 reference locks. Two fresh exports,
+host matrix/history/copy/restart,16 validator tests,26 integration checks and
+22 historical reuse guards pass. Both updated APKs compile; lint passes.
+Native execution and screenshot review remain outstanding. Exact next: commit
+the candidate and run only the new native pair/summary on a verified synthetic
+C02 baseline, then full113-gate delivery verification after readiness passes.
 
 ## Latest outcome — C02 outgoing statistics
 

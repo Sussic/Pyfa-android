@@ -193,6 +193,55 @@ object BridgeCodec {
             "maxVelocity" to it.maxVelocity, "signatureRadius" to it.signatureRadius, "radius" to it.radius, "hp" to it.hp).also { decodeTargetProfile(it) }
     }
 
+    fun decodeTargeting(json: String): FitTargeting {
+        val root = objectValue(StrictJson(json).parse(), "targeting")
+        keys(root, setOf("version", "fit_id", "revision", "targeting"), path = "targeting")
+        requireProtocol(long(root.get("version"), "version") == 1L, "Unsupported targeting version")
+        val revision = long(root.get("revision"), "revision"); requireProtocol(revision >= 1, "Invalid targeting revision")
+        fun scalar(raw: Any, unit: String, signed: Boolean = false): TargetingScalar {
+            val row = objectValue(raw, "targeting scalar")
+            keys(row, setOf("value", "value_type", "unit", "display", "detail"), path = "targeting scalar")
+            requireProtocol(text(row.get("unit"), "unit") == unit, "Incorrect targeting unit")
+            val value = when (text(row.get("value_type"), "value_type")) {
+                "unavailable" -> { requireProtocol(row.get("value") == JSONObject.NULL, "Unavailable targeting has value"); StatValue.Unavailable }
+                "integer" -> StatValue.Integer(long(row.get("value"), "value"))
+                "decimal" -> { val v = row.get("value"); requireProtocol(v is Double, "Decimal targeting lost type"); StatValue.Decimal(finite(v as Double, "value")) }
+                else -> fail("Invalid targeting scalar type")
+            }
+            fun label(key: String): String? = nullable(row.get(key))?.let { nonempty(it, key) }.also {
+                requireProtocol((it == null) == (value == StatValue.Unavailable), "Targeting availability differs")
+            }
+            requireProtocol(signed || value.numberOrNull()?.let { it >= 0 } != false, "Invalid targeting value")
+            return TargetingScalar(value, unit, label("display"), label("detail"))
+        }
+        val stats = objectValue(root.get("targeting"), "targeting values")
+        keys(stats, setOf("main", "lock_times", "sensor_type", "holds") + TARGETING_DETAIL_UNITS.keys, path = "targeting values")
+        val main = objectValue(stats.get("main"), "main"); keys(main, TARGETING_UNITS.keys, path = "main")
+        val sensor = text(stats.get("sensor_type"), "sensor_type")
+        requireProtocol(sensor in setOf("Magnetometric", "Ladar", "Radar", "Gravimetric", "Multispectral"), "Unknown sensor type")
+        val locks = array(stats.get("lock_times"), "lock_times").mapIndexed { index, raw ->
+            val row = objectValue(raw, "lock time"); keys(row, setOf("name", "radius", "time"), path = "lock time")
+            val name = text(row.get("name"), "name"); val radius = integer(row.get("radius"), "radius", 1)
+            requireProtocol(index < TARGETING_RADII.size && name == TARGETING_RADII.keys.elementAt(index) && radius == TARGETING_RADII.getValue(name), "Incorrect reference target")
+            ReferenceLockTime(name, radius, scalar(row.get("time"), "s"))
+        }
+        requireProtocol(locks.size == TARGETING_RADII.size, "Missing reference target")
+        val holds = array(stats.get("holds"), "holds").mapIndexed { index, raw ->
+            val row = objectValue(raw, "hold"); keys(row, setOf("attribute", "name", "present", "capacity"), path = "hold")
+            val attribute = text(row.get("attribute"), "attribute"); val name = text(row.get("name"), "name")
+            requireProtocol(index < TARGETING_HOLDS.size && attribute == TARGETING_HOLDS.keys.elementAt(index) && name == TARGETING_HOLDS.getValue(attribute), "Incorrect special hold")
+            val present = bool(row.get("present"), "present"); val capacity = scalar(row.get("capacity"), "m³")
+            requireProtocol(present == ((capacity.value.numberOrNull() ?: 0.0) > 0), "Hold presence differs from capacity")
+            SpecialHold(attribute, name, present, capacity)
+        }
+        requireProtocol(holds.size == TARGETING_HOLDS.size, "Missing special hold")
+        val mainValues = immutableMap(TARGETING_UNITS.mapValues { (key, unit) -> scalar(main.get(key), unit) })
+        requireProtocol(mainValues.getValue("targets").value is StatValue.Integer || mainValues.getValue("targets").value == StatValue.Unavailable, "Target count lost integer type")
+        return FitTargeting(identifier(root.get("fit_id"), "fit_id"), revision,
+            mainValues, immutableList(locks), sensor,
+            immutableMap(TARGETING_DETAIL_UNITS.mapValues { (key, unit) -> scalar(stats.get(key), unit, signed = key == "warp_core") }), immutableList(holds))
+    }
+
     fun decodeOutput(json: String): FitOutput {
         val root = objectValue(StrictJson(json).parse(), "output")
         keys(root, setOf("version", "fit_id", "revision", "output", "target_profile"), path = "output")
