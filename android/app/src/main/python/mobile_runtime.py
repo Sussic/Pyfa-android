@@ -114,6 +114,10 @@ def capacitor_details(fit_id):
     return encoded(_bridge.capacitor_details(fit_id))
 
 
+def tank_details(fit_id):
+    return encoded(_bridge.tank_details(fit_id))
+
+
 def defense_details(fit_id):
     return encoded(_bridge.defense_details(fit_id))
 

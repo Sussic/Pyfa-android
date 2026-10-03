@@ -1,11 +1,50 @@
 # Android project status
 
-Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 next.**
+Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Selected outcome — C01.3.2 repair, tank and spool
+
+Selected from delivered master `2d941fd9` on `codex/c01-3-2-tank-details`.
+Deliver all F05.23–F05.27 together: passive shield recharge, active shield,
+armor and hull repairs, raw/effective reinforced/sustained values, capacitor
+limits and projected repair contributions, armor pre/full/current spool details.
+EOS remains the calculation authority; preserve original desktop units,
+formatting, applicable states and explicit unavailable values. Any required
+assumption edit must preserve typed inputs, history and offline persistence.
+Acceptance: independent original wx/EOS fixtures for capacitor-limited/stable,
+projected repair, active/offline/removal and spool states; strict protocol and
+report rejection, read-only/refresh/history/copy/recreation/restart checks;
+APK/lint/package, every inherited local gate and actual screenshot review.
+Use focused checks during implementation. Complete implementation, fixtures and
+summary validators before one full verification; retain valid existing evidence.
+Live master and absence of open PRs verified before selection.
+
+Implementation and source review complete. All105 required local gates pass:
+58 reference/host, five build and42 native gates;69 actual native test executions,
+230 fits (189 inherited) survive restart. All178 required screenshots and one
+optional summary-failure diagnostic are reviewed. Two fresh original wx/EOS
+exports agree for29 cases. Twenty-six focused fixture/schema/transport tests,
+18 exact-summary-source guards,25 history-repair guards and35 actual-report
+corruptions pass. [Receipt](evidence/c01-3-2-native.json) binds every gate to its
+actual tested commit, logs, APK hashes, screenshot QA and retained-result proofs.
+
+Run `20261003-011943-7a0aaa27-72c5cf` is complete. Product code remains
+`7a0aaa27`; corrected native test/package evidence is `e49c7220`; final summary
+is `b0c401fa`. Preserve the original nine-gate falloff-fixture pause, stale
+Undo-revision tank failure, and both summary failures. The targeted test repair
+retained100 unaffected gates, proved app APK byte identity/test non-bytecode
+content identity, recovered the exact189-fit synthetic baseline, and reran
+only affected build/package and tank phases. Final-summary corrections enforce
+original recent-use promotion, exact eight/four history revision advances and
+exact projection ranges with decimal metadata. All assertions, tolerances,
+timeouts, restart boundaries and A10 requirements remain intact. No full chain
+restart or unexecuted Actions pass. Exact next: receipt/source review, push/PR,
+truthful `local/full-verification`, merge; then select C02 from the live queue.
 
 ## Latest outcome — C01.3.1 defenses and incoming damage
 
@@ -141,7 +180,7 @@ Reuse `build/windows-env.ps1`: Python3.11.9 reference/headless, JDK17.0.20.1+1,
 SDK36/build35, Gradle8.13 and installed WHPX. No timed host suite alongside Gradle.
 Keep every inherited functional/type/unit/GC/restart/performance/screenshot gate.
 
-Build **28** is the latest locally emulator-tested development build; the debug
+Build **30** is the latest locally emulator-tested development build; the debug
 APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Forecasts for remaining
 implementation are unknown. A working APK is not full Pyfa parity. User usability,
 ARM64 execution, older APIs, signing/upgrades and safe persistent phone use remain

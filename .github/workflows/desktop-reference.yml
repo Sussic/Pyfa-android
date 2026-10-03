@@ -455,6 +455,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-defenses-check"
+      - name: Verify original repair, tank and spool presentation
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/tank.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-tank-reference"
+          --check tools/android_reference/fixtures/tank.json
+      - name: Verify tank read-only, repair history and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_tank.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-tank-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

@@ -102,7 +102,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | ID | State | Depends on | One outcome | Done when |
 | --- | --- | --- | --- | --- |
 | C01.3.1 | done | C01.2 | Defenses and incoming damage | F05.16–F05.22 all resistances/multipliers, raw/effective layer/total HP, HP/EHP toggle and four independently editable damage contributions pass original desktop/native/history/restart checks. |
-| C01.3.2 | ready | C01.3.1 | Repair and tank details | F05.23–F05.27 passive/active raw/effective reinforced/sustained tank, capacitor/projected repairs and pre/full/current spool details pass independent/native checks. |
+| C01.3.2 | active | C01.3.1 | Repair and tank details | F05.23–F05.27 passive/active raw/effective reinforced/sustained tank, capacitor/projected repairs and pre/full/current spool details pass independent/native checks. |
 
 ## D — expose interacting fits and scenarios
 

@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 import tempfile
@@ -155,6 +156,32 @@ class EquivalenceTest(unittest.TestCase):
         with patch.object(repair.subprocess, 'check_output', side_effect=[
                 'android/ci/local_verification.py\n', 'def build(): return 1\n', 'def build(): return 2\n']):
             with self.assertRaises(AssertionError): repair.equivalent(Path('.'), 'before', 'after')
+
+
+class TankRecentSourceTests(unittest.TestCase):
+    def setUp(self):
+        self.root=Path(__file__).resolve().parents[2]
+        self.before='e49c7220474509f66d5c4c03005616e8ddeb4dbc'
+        self.old=subprocess.check_output(['git','show',self.before+':android/ci/tank_summary.py'],cwd=self.root,text=True,encoding='utf-8')
+        self.old_test=subprocess.check_output(['git','show',self.before+':android/ci/test_tank_summary.py'],cwd=self.root,text=True,encoding='utf-8')
+        self.new=repair.corrected_tank_source(self.old);self.new_test=repair.corrected_tank_test_source(self.old_test)
+    def test_checked_in_exact_change(self):
+        self.assertEqual(self.new,(self.root/'android/ci/tank_summary.py').read_text(encoding='utf-8'))
+        self.assertEqual(self.new_test,(self.root/'android/ci/test_tank_summary.py').read_text(encoding='utf-8'))
+    def equivalent(self,source=None,changes=None):
+        changed=changes or 'android/ci/tank_summary.py\nandroid/ci/test_tank_summary.py\nandroid/ci/summary_repair.py\n'
+        with patch.object(repair.subprocess,'check_output',side_effect=[changed,source or self.new,self.old,self.new_test,self.old_test]):
+            return repair.equivalent(self.root,'before','after')
+    def test_exact_source_reuse(self):self.equivalent()
+    def test_changed_tolerance_rejected(self):
+        with self.assertRaises(AssertionError):self.equivalent(self.new+'\n# unrelated tolerance adjustment\n')
+    def test_omitted_recent_check_rejected(self):
+        altered=self.new.replace("        exact(recent_after_removal(before.get('recent',[]), module_ids[0]), after.get('recent',[]))",'        pass')
+        with self.assertRaises(AssertionError):self.equivalent(altered)
+    def test_product_change_rejected(self):
+        with self.assertRaises(AssertionError):self.equivalent(changes='android/ci/tank_summary.py\nandroid_bridge/tank.py\n')
+    def test_fixture_change_rejected(self):
+        with self.assertRaises(AssertionError):self.equivalent(changes='android/ci/tank_summary.py\ntools/android_reference/fixtures/tank.json\n')
 
 
 if __name__ == '__main__':

@@ -21,15 +21,40 @@ PIN='8b04f3b271e614b3e103853b44a7851a63d79d0e'
 FAMILIES=['projection','command','catalog','equipment','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank']
 HEADLESS=['bridge','persistence','library','market','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank']
 BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
 def git(*args): return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
+
+def pending_tank_fixture_fix(root, before, after, completed):
+    """Only the reviewed, not-yet-executed single falloff witness may change."""
+    assert before == '7a0aaa27b1739d9600e14915d62cb2d35a873db0'
+    assert completed == ['desktop:utilities','desktop:reference','desktop:migration',
+        'reference:projection','reference:command','reference:catalog','reference:equipment',
+        'reference:empty_hulls','reference:module_edits']
+    pairs = {
+        'tools/android_reference/tank.py': (
+            '62cd2fd83c0b74eff761d8b5c57537689e470c615015cd7d822712e3918c8cf2',
+            '5d85254c2ecd7e97b548f0d99803e94d0ac45266acf4030d9d3032939142cfdb'),
+        'tools/android_reference/fixtures/tank.json': (
+            'bb740504554a00c6cfe020d18124409bee2d50308f446aceba31a4e5159fc28d',
+            'c0154338bf8f8c6134fd9a188e4a10ee03082cabaf64c0088bb2e433e24a4aca'),
+    }
+    for path, hashes in pairs.items():
+        for commit, expected in zip((before, after), hashes):
+            content = subprocess.check_output(['git','show',commit+':'+path],cwd=root)
+            assert hashlib.sha256(content.replace(b'\r\n',b'\n')).hexdigest() == expected, path
+    changed = subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed = set(pairs) | {'android/ci/local_verification.py','android/ci/report_local.py',
+                           'android/ci/test_pending_tank_fixture_fix.py'}
+    assert set(pairs) <= set(changed)
+    assert all(path in allowed or path.startswith('docs/android/') for path in changed), changed
+
 
 def pending_mutation_count_fix(root, before, after, completed):
     """Reuse earlier gates only for the exact unexecuted suite-count correction."""
@@ -152,6 +177,19 @@ class Run:
             assert self.state['status'] != 'passed', 'Completed runs are immutable; start a new run'
             assert not git('status','--porcelain','--untracked-files=normal'), 'Resume the same clean tested commit'
             current=git('rev-parse','HEAD')
+            if self.state['commit']!=current and getattr(args,'adopt_tank_history_fix',False):
+                assert self.state['status']=='failed' and self.state['completed']==plan('full',None)[:-3]
+                failure=next(row for row in reversed(self.state['attempts']) if row['gate'].startswith('native:'))
+                assert failure['gate']=='native:tank-prepare' and failure['exit_code']!=0
+                from tank_history_retry import exact_source
+                exact_source(ROOT,self.state['commit'],current)
+                before=self.state['commit']
+                for row in self.state['attempts']:row.setdefault('tested_commit',before)
+                self.state['tank_history_reuse']={'from_commit':before,'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed']),
+                    'retained_gates':[g for g in self.state['completed'] if g not in ('build:apks-lint','build:package')],
+                    'prepared':False,'installed':False}
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.adopt_capacitor_runner_fix:
                 from capacitor_runner_retry import exact_source
                 assert self.state['status']=='failed' and self.state['completed']==plan('full',None)[:-3]
@@ -237,6 +275,10 @@ class Run:
                     assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
                     pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
                     allowed.add('tools/android_headless/check_history_mutations.py')
+                if 'tools/android_reference/tank.py' in changed:
+                    pending_tank_fixture_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    allowed.update({'tools/android_reference/tank.py','tools/android_reference/fixtures/tank.json',
+                                    'android/ci/test_pending_tank_fixture_fix.py','docs/android/STATUS.md'})
                 if args.restart_native:
                     allowed.update({'android/ci/check-history.py','android/ci/history_progress.py',
                         'android/ci/report_local.py','android/ci/test_report_local.py'})
@@ -411,6 +453,10 @@ class Run:
                 self.state.setdefault('native_restarts',[]).append({'archive':archive.name,'reason':'Failed native chain; fresh disposable store required','commit':self.state['commit']})
                 self.state['completed']=[s for s in self.state['completed'] if not s.startswith('native:')]
             self.state['status']='running';save(self.file,self.state)
+            tank_fix=self.state.get('tank_history_reuse')
+            if tank_fix and not tank_fix['prepared']:
+                from tank_history_retry import prepare
+                prepare(self,tank_fix);save(self.file,self.state)
             capacitor_fix=self.state.get('capacitor_runner_reuse')
             if capacitor_fix and not capacitor_fix['prepared']:
                 from capacitor_runner_retry import prepare
@@ -478,6 +524,9 @@ class Run:
                 elif step.startswith('build:'):self.build(step.split(':')[1])
                 else:
                     if self.emulator is None:self.start_emulator()
+                    if tank_fix and not tank_fix['installed']:
+                        from tank_history_retry import install
+                        install(self,tank_fix);save(self.file,self.state)
                     if capacitor_fix and not capacitor_fix['installed']:
                         from capacitor_runner_retry import install
                         install(self,capacitor_fix);save(self.file,self.state)
@@ -543,6 +592,7 @@ def main():
     parser.add_argument('--adopt-projection-report-fix',action='store_true',help='Revalidate retained successful group 3 preparation after exact decimal projection-range comparison repair; no instrumentation rerun')
     parser.add_argument('--adopt-resource-test-fix',action='store_true',help='Adopt the exact C01.1 copy-ID test repair and validated two-fit recovery; retain all unchanged proof')
     parser.add_argument('--adopt-capacitor-runner-fix',action='store_true',help='Adopt only the exact missing C01.2 persistent runner flag; retain all prior gates and app APK')
+    parser.add_argument('--adopt-tank-history-fix',action='store_true',help='Adopt only the exact C01.3.2 revision wait repair; recover its validated synthetic baseline and rerun affected gates')
     args=parser.parse_args()
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'

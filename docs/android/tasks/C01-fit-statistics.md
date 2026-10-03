@@ -142,3 +142,38 @@ from reviewed head `b1795eb1` with matching trees and successful exact-head
 all repair/tank/spool rows as one deliverable with focused checks during
 implementation and one full verification only after its fixtures/validators
 and complete implementation are ready. C01 remains active until it is delivered.
+
+## C01.3.2 selected outcome
+
+Selected 2026-10-03 from delivered master `2d941fd9`, branch
+`codex/c01-3-2-tank-details`. F05.23–F05.27 form one complete repair/tank
+deliverable. EOS supplies raw/effective tank and sustainable tank; the pinned
+recharge view defines passive shield presentation, six reinforced/sustained
+active repair cells, units and armor spool indication/endpoints. Expose current
+armor output with pre/full spool detail precision. Preserve actual EOS values,
+including projected repair range/quantity and capacitor/reload adjustments.
+The retained EOS setting defaults spool to 100%; module spool and global option
+editors remain C09/I05. Viewing tank must not edit those assumptions.
+
+Acceptance: two independent original wx/EOS exports cover 29 cases including
+all local repair states, passive modifiers, capacitor-limited/battery repairs,
+charged ancillary reload, all three projected repair types, mutadaptive spool,
+falloff/out-of-range/quantity and mixed incoming damage. Host/native checks cover
+read-only/GC, refresh, offline/removal and projection-removal Undo/Redo, copying,
+recreation and fresh-process persistence, strict types/units/nulls, corrupted
+reports and fixtures. All inherited full local gates and screenshot review remain
+required. No full/native completion is claimed until actual execution/review.
+
+C01.3.2 verification complete: [receipt](../evidence/c01-3-2-native.json)
+records105 required gates,69 native executions,230 restored fits (189 inherited),
+178 required reviewed screenshots plus one optional diagnostic,35 rejected
+actual-report corruptions,26 fixture/transport and18 exact-summary-source tests.
+Two independent fresh original wx/EOS exports agree for29 cases. Product source
+`7a0aaa27`, corrected native test `e49c7220`, summary `b0c401fa` are separately
+recorded. Exact proofs retain100 unaffected gates through the targeted history
+wait repair; only affected build/package, tank prepare/restored and summary
+were rerun. The original fixture pause, native failure and summary failures
+remain archived. Final validation preserves exact packaged fixture hashes,
+CRLF-to-LF-only reference comparison, history revision advances, projection
+numeric metadata, every inherited assertion/tolerance/timeout and A10 criteria.
+Delivery remains pending PR merge; C01/C01.3 close together afterward. C02 follows.

@@ -32,6 +32,12 @@ def equivalent(root, tested, head):
     def git(*args):
         return subprocess.check_output(['git', *args], cwd=root, text=True, encoding='utf-8')
     changed = git('diff', '--name-only', tested, head).splitlines()
+    if 'android/ci/tank_summary.py' in changed:
+        assert all(p in {'android/ci/tank_summary.py','android/ci/test_tank_summary.py',
+            'android/ci/summary_repair.py','android/ci/test_summary_repair.py'} or p.startswith('docs/android/') for p in changed), changed
+        assert git('show', head+':android/ci/tank_summary.py') == corrected_tank_source(git('show', tested+':android/ci/tank_summary.py'))
+        assert git('show', head+':android/ci/test_tank_summary.py') == corrected_tank_test_source(git('show', tested+':android/ci/test_tank_summary.py'))
+        return changed
     allowed = {'AGENTS.md', 'android/README.md', 'android/verify-local.ps1',
         'android/ci/local_verification.py', 'android/ci/summary_repair.py',
         'android/ci/test_summary_repair.py', 'android/ci/report_local.py',
@@ -91,6 +97,67 @@ def corrected_persistence_source(source):
     return source.replace('import re\n', 'import re\nimport os\nfrom zipfile import ZipFile\n', 1).replace(old, new, 1)
 
 
+TANK_RECENT = '''def recent_after_removal(previous, module_id):
+    assert type(previous) is list and len(previous) <= 20
+    assert all(type(i) is int and 0 < i < 2**63 for i in previous)
+    assert len(previous) == len(set(previous)) and type(module_id) is int and 0 < module_id < 2**63
+    # Original module removal promotes the removed item; Undo does not rewind
+    # equipment recent use and Redo promotes that same item again.
+    return [module_id, *[i for i in previous if i != module_id][:19]]
+
+
+'''
+TANK_EXPECTED_RECENT = '''        exact(before['sample_id'], after['sample_id'])
+        catalog = json.loads((ROOT/'tools/android_reference/fixtures/equipment.json').read_text(encoding='utf-8'))['catalog']['items']
+        module_name = fixture['cases'][4]['spec']['modules'][0]['name']
+        exact('Medium Armor Repairer II', module_name)
+        module_ids = [row['id'] for row in catalog if row['name'] == module_name]
+        exact([3530], module_ids)
+        exact(recent_after_removal(before.get('recent',[]), module_ids[0]), after.get('recent',[]))'''
+TANK_REVISION = "            tank(case['expected'], retained); tank(case['expected'], row['actual'])\n            exact(retained['fit_id'], row['actual']['fit_id']); exact(retained['tank'], row['actual']['tank'])\n            # Prepare observations precede the eight armor/four projection\n            # edit/history operations. Restored observations follow all edits.\n            delta = {4:8, 23:4}.get(row['case'], 0) if phase == 'prepare' else 0\n            exact(row['actual']['revision'] + delta, retained['revision'])\n"
+TANK_RECENT_TESTS = '''class RecentTests(unittest.TestCase):
+    def test_exact_twenty_item_eviction(self):self.assertEqual([3530,*range(1,20)],recent_after_removal(list(range(1,21)),3530))
+    def test_existing_item_promoted_once(self):self.assertEqual([3530,1,2],recent_after_removal([1,3530,2],3530))
+    def test_empty_list(self):self.assertEqual([3530],recent_after_removal([],3530))
+    def test_invalid_list(self):
+        for value in ([1,1],[True],[1.0],list(range(1,22))):
+            with self.assertRaises(AssertionError):recent_after_removal(value,3530)
+    def test_invalid_promoted_id(self):
+        for value in (True,3530.0,0):
+            with self.assertRaises(AssertionError):recent_after_removal([],value)
+
+
+'''
+
+
+TANK_PROJECTION = "def projection_inputs(expected, actual):\n    assert type(actual) is list and len(expected) == len(actual)\n    for left, right in zip(expected, actual):\n        exact({'source_id','range_m','active','amount'}, set(right))\n        for key in ('source_id','active','amount'): exact(left[key], right[key])\n        # JSONObject writes integral doubles without a decimal suffix. The\n        # separately checked numeric_types metadata retains their double kind.\n        assert type(right['range_m']) in (int,float)\n        assert left['range_m'] == right['range_m']\n\n\n"
+
+
+def corrected_tank_source(source):
+    from capacitor_runner_retry import once
+    source=once(source,'from copy import deepcopy\n','from copy import deepcopy\nimport json\n')
+    source=once(source,'def summarize(reports, engine, prior_pids=()):',TANK_RECENT+'def summarize(reports, engine, prior_pids=()):')
+    source=once(source,"        exact(before['sample_id'], after['sample_id']); exact(before.get('recent',[]), after.get('recent',[]))",TANK_EXPECTED_RECENT)
+    source=once(source,"            tank(case['expected'], retained); tank(case['expected'], row['actual']); exact(retained, row['actual'])\n",TANK_REVISION)
+    source=once(source,'def summarize(reports, engine, prior_pids=()):',TANK_PROJECTION+'def summarize(reports, engine, prior_pids=()):')
+    source=once(source,"            exact(list(projections), actual['projections'])","            projection_inputs(list(projections), actual['projections'])")
+    return once(source,"            exact(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])\n","            projection_inputs(list(projections), snapshot['projections']); exact(after['revisions'][key], snapshot['revision'])\n            for index in range(len(projections)):\n                exact('decimal', saved['graph']['numeric_types'][f'root.records.{key}.projections[{index}].range_m'])\n                snapshot_index = all_fits.index(snapshot)\n                exact('decimal', saved['all_fits']['numeric_types'][f'root[{snapshot_index}].projections[{index}].range_m'])\n")
+
+
+def corrected_tank_test_source(source):
+    from capacitor_runner_retry import once
+    source=once(source,'from tank_summary import tank, summarize, REJECTIONS','from tank_summary import tank, summarize, REJECTIONS, recent_after_removal')
+    source=once(source,"        copied=deepcopy(graph['records'][ids[23]])","        graph['recent']=recent_after_removal(before['recent'],3530)\n        copied=deepcopy(graph['records'][ids[23]])")
+    anchor="                    'edit':lambda r:r[0]['saved']['edits'][0]['after']['tank']['raw']['reinforced']['repairs']['armorRepair'].update(value=9999),\n"
+    source=once(source,anchor,anchor+"                    'wrong_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3531]),\n                    'missing_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[]),\n                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n")
+    source=once(source,"        graph['recent']=recent_after_removal(before['recent'],3530)\n","        graph['recent']=recent_after_removal(before['recent'],3530)\n        for index, delta in ((4,8),(23,4)):\n            values[index]['revision'] += delta\n            graph['revisions'][ids[index]] += delta\n            next(s for s in snapshots if s['id']==ids[index])['revision'] += delta\n")
+    source=once(source,"        return [dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS),\n                dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine","        prepared=dict(**deepcopy(common),phase='prepare',pid=100,protocol_rejections=REJECTIONS)\n        for index, delta in ((4,8),(23,4)):prepared['observations'][index]['actual']['revision'] -= delta\n        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine")
+    source=once(source,"                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n","                    'extra_recent':lambda r:r[0]['saved']['graph']['data'].update(recent=[3530,3082]),\n                    'armor_revision':lambda r:r[0]['observations'][4]['actual'].update(revision=2),\n                    'projection_revision':lambda r:r[0]['observations'][23]['actual'].update(revision=2),\n                    'unedited_revision':lambda r:r[0]['observations'][0]['actual'].update(revision=2),\n                    'restored_revision':lambda r:r[1]['observations'][4]['actual'].update(revision=1),\n")
+    source=once(source,"        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine","        # Emulate JSONObject integral-double rendering while retaining type metadata.\n        for wrapper in (saved['graph'],saved['all_fits']):\n            entries = wrapper['data']['records'].values() if type(wrapper['data']) is dict else wrapper['data']\n            for entry in entries:\n                for edge in entry['projections']:\n                    if edge['range_m'].is_integer(): edge['range_m']=int(edge['range_m'])\n        prepared['saved']=deepcopy(saved)\n        return [prepared, dict(**deepcopy(common),phase='restored',pid=101,protocol_rejections=[])], engine")
+    source=once(source,"                    'restored_revision':lambda r:r[1]['observations'][4]['actual'].update(revision=1),\n",'                    \'restored_revision\':lambda r:r[1][\'observations\'][4][\'actual\'].update(revision=1),\n                    \'boolean_range\':lambda r:r[0][\'saved\'][\'graph\'][\'data\'][\'records\'][\'target-23\'][\'projections\'][0].update(range_m=False),\n                    \'fractional_amount\':lambda r:r[0][\'saved\'][\'graph\'][\'data\'][\'records\'][\'target-23\'][\'projections\'][0].update(amount=1.0),\n                    \'range_kind\':lambda r:r[0][\'saved\'][\'graph\'][\'numeric_types\'].update({\'root.records.target-23.projections[0].range_m\':\'integer\'}),\n                    \'snapshot_range_kind\':lambda r:r[0][\'saved\'][\'all_fits\'][\'numeric_types\'].update({f"root[{next(i for i,v in enumerate(r[0][\'saved\'][\'all_fits\'][\'data\']) if v[\'id\']==\'target-23\')}].projections[0].range_m":\'integer\'}),\n')
+    return once(source,'class NativeBoundaryTests(unittest.TestCase):',TANK_RECENT_TESTS+'class NativeBoundaryTests(unittest.TestCase):')
+
+
 def clear_native_results(directory):
     """Build evidence stays valid when only the disposable native store restarts."""
     for path in directory.iterdir():
@@ -104,7 +171,13 @@ def clear_native_results(directory):
 
 def validate_package(run, root):
     state = json.loads((run / 'run.json').read_text(encoding='utf-8'))
-    archive = (run / state['native_restarts'][-1]['archive']).resolve()
+    tank = state.get('tank_history_reuse') if not state.get('native_restarts') else None
+    if tank:
+        from tank_history_retry import exact_source, validate_retained
+        assert state['completed']==state['plan'][:-1] and len(state['completed'])==104
+        exact_source(root,tank['from_commit'],tank['to_commit']);validate_retained(root,run,tank)
+        assert tank['to_commit']==state['commit'] and tank['prepared'] and tank['installed']
+    archive = (run / (tank['archive'] if tank else state['native_restarts'][-1]['archive'])).resolve()
     assert archive.is_relative_to(run.resolve()) and archive != run.resolve()
     prior = json.loads((archive / 'run.json').read_text(encoding='utf-8'))
     assert prior['status'] == 'failed' and prior['plan'] == state['plan']
@@ -113,9 +186,9 @@ def validate_package(run, root):
     for gate in state['completed']:
         row = latest[gate]
         assert row['exit_code'] == 0 and sha(run / row['log']) == row['log_sha256'], gate
-        if gate.startswith('build:'):
+        if gate.startswith('build:') and not tank:
             assert row == older[gate], 'Archived report is from a different build: ' + gate
-    report_path = archive / 'native/apk-contents.json'
+    report_path = (run if tank else archive) / 'native/apk-contents.json'
     report = json.loads(report_path.read_text(encoding='utf-8'))
     assert set(report) == {'database_bytes', 'database_sha256', 'database_logical_sha256',
         'engine_source_sha256', 'mobile_sources', 'engine_source_files', 'abis'}
@@ -169,7 +242,7 @@ def validate_package(run, root):
                     dynamic = subprocess.check_output(['readelf', '-d', str(library)], text=True)
                     assert info['needed'] == re.findall(r'\(NEEDED\).*?\[(.*?)\]', dynamic), name
     engine = json.loads((run / 'native/engine-native.json').read_text(encoding='utf-8'))
-    archived_engine = json.loads((archive / 'native/engine-native.json').read_text(encoding='utf-8'))
+    archived_engine = engine if tank else json.loads((archive / 'native/engine-native.json').read_text(encoding='utf-8'))
     for key in ('database_sha256', 'database_logical_sha256', 'engine_source_sha256'):
         assert report[key] == engine[key] == archived_engine[key], key
     return report_path, {'archive': archive.name, 'report_sha256': sha(report_path),
@@ -243,7 +316,7 @@ def finish(run, root):
             for p in run.rglob('*') if p.is_file() and not p.is_relative_to(run / 'avd')
             and p.name not in ('run.lock', 'files.json')}
         save(run / 'files.json', files)
-        print('PASS outstanding summary; all 77 completed results retained. Screenshot review remains required.')
+        print(f'PASS outstanding summary; all {len(state["completed"])-1} completed results retained. Screenshot review remains required.')
     finally:
         msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
         lock.close()

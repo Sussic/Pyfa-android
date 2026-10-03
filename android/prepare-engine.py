@@ -113,6 +113,7 @@ def main():
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/resources-edited.json", tests / "resources-edited-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/capacitor.json", tests / "capacitor-expected.json")
     shutil.copyfile(ROOT / "tools/android_reference/fixtures/defenses.json", tests / "defenses-expected.json")
+    shutil.copyfile(ROOT / "tools/android_reference/fixtures/tank.json", tests / "tank-expected.json")
     print(json.dumps({k: v for k, v in info.items() if k != "engine_sources"}, indent=2))
 
 

@@ -96,7 +96,7 @@ class NativeBoundaryTests(unittest.TestCase):
         path=ROOT/'android/app/src/androidTest/java/io/github/sussic/pyfa/DiagnosticTestRunner.kt'
         flags=set(re.findall(r'containsKey\("([^"]+)"\)',path.read_text(encoding='utf-8')))
         historical=subprocess.check_output(['git','show','7775b40a5832d263fdb0b16fdfa5961c7c4f1959:android/app/src/androidTest/java/io/github/sussic/pyfa/DiagnosticTestRunner.kt'],cwd=ROOT,text=True)
-        self.assertEqual(set(re.findall(r'containsKey\("([^"]+)"\)',historical))|{'c013_phase'},flags)
+        self.assertEqual(set(re.findall(r'containsKey\("([^"]+)"\)',historical))|{'c013_phase','c0132_phase'},flags)
         condition=' and '.join(f'{flag!r} not in args' for flag in sorted(flags))
         self.assertTrue(eval(condition,{'args':set()}))
         for flag in flags:self.assertFalse(eval(condition,{'args':{flag}}))
