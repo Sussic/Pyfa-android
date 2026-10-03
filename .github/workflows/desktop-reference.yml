@@ -471,6 +471,22 @@ jobs:
           --source reference-upstream
           --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
           --output "${{ runner.temp }}/pyfa-tank-check"
+      - name: Verify original firepower, mining, bombing and outgoing presentation
+        shell: pwsh
+        run: >-
+          python -I tools/android_reference/output.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-output-reference"
+          --check tools/android_reference/fixtures/output.json
+      - name: Verify output read-only, target-profile history and restart
+        shell: pwsh
+        run: >-
+          & "${{ runner.temp }}/pyfa-headless-venv/Scripts/python.exe"
+          -I tools/android_headless/check_output.py
+          --source reference-upstream
+          --database "${{ runner.temp }}/pyfa-desktop-reference/eve.db"
+          --output "${{ runner.temp }}/pyfa-output-check"
       - name: Show concise evidence or failure excerpt
         if: always()
         shell: pwsh

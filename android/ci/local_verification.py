@@ -21,11 +21,11 @@ PIN='8b04f3b271e614b3e103853b44a7851a63d79d0e'
 FAMILIES=['projection','command','catalog','equipment','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank','output']
 HEADLESS=['bridge','persistence','library','market','empty_hulls','module_edits',
     'charge_edits','variation_edits','rack_ordering','bulk_charges','bulk_states',
     'clone_fill','bulk_variation_removal','hull_modes','subsystems','structures',
-    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank']
+    'cargo_stacks','cargo_actions','cargo_transfers','notes','history','history_mutations','resources','capacitor','defenses','tank','output']
 BUILD=['dependencies','engine-assets','apks-lint','signature','package']
 
 
@@ -65,6 +65,48 @@ def pending_mutation_count_fix(root, before, after, completed):
     old = source(before); new = source(after)
     assert old.count('(2 if args.matrix_only else 22)') == 1
     assert new == old.replace('(2 if args.matrix_only else 22)', '(2 if args.matrix_only else 23)', 1)
+
+OUTPUT_HISTORY_BEFORE='4b42c02f8af88057f557c3c542dec0dbedb28b28'
+
+
+def pending_output_history_fix(root, before, after, completed):
+    """Reuse only the 54 gates before the failed C02 registration witness."""
+    assert before==OUTPUT_HISTORY_BEFORE
+    assert completed==plan('full',None)[:54]
+    assert plan('full',None)[54]=='headless:history_mutations'
+    path='tools/android_headless/check_history_mutations.py'
+    for revision,digest in ((before,'0ade08192b8fee95f92168eca3c0a327b1aad8175621537df40c996c5ad23431'),
+                            (after,'3ff31dc4ed5b6f0eee41437af0cfb6b00d1e81509bb75a3254f84e0d7316555d')):
+        source=subprocess.check_output(['git','show',revision+':'+path],cwd=root)
+        assert hashlib.sha256(source.replace(b'\r\n',b'\n')).hexdigest()==digest,path
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/local_verification.py','android/ci/report_local.py',
+             'android/ci/test_output_history_retry.py'}
+    assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
+
+
+OUTPUT_RESOURCE_BEFORE='118a4a4aa0af57dae0fdb60b64d4406251b70c95'
+
+
+def pending_output_resource_fix(root, before, after, completed):
+    """Only the reviewed C02 diagnostic fighter boundary may change."""
+    assert before==OUTPUT_RESOURCE_BEFORE and completed==plan('full',None)[:55]
+    assert plan('full',None)[55]=='headless:resources'
+    path='tools/android_headless/check_resources.py'
+    for revision,digest in ((before,'d7eb87af482e02d80668bf218502726944f26c90e2b9d7a7594d884927c9c0ba'),
+                            (after,'9f2b992ebbc38a8925d8cdde617a301ce5bee674cffb7cad9d465624d60671f1')):
+        source=subprocess.check_output(['git','show',revision+':'+path],cwd=root)
+        assert hashlib.sha256(source.replace(b'\r\n',b'\n')).hexdigest()==digest,path
+    changes=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={path,'android/ci/local_verification.py','android/ci/report_local.py','android/ci/test_output_resource_retry.py'}
+    assert path in changes and all(p in allowed or p.startswith('docs/android/') for p in changes),changes
+    import ast
+    def executed(revision):
+        source=subprocess.check_output(['git','show',revision+':android/ci/local_verification.py'],cwd=root,text=True,encoding='utf-8')
+        return {n.name:ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(source))
+                if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
+    assert executed(before)==executed(after),'Executed host/build behavior changed'
+
 
 def pending_runner_fix(root, before, after, completed):
     """Only the missing storage flag may change before any B09.2 phase passes."""
@@ -260,6 +302,27 @@ class Run:
                     'completed_before_adoption':list(self.state['completed']),'prepared':False}
                 self.state.setdefault('runner_fix_reuse',[]).append(proof)
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_launcher_fix and self.state['commit']==OUTPUT_RESOURCE_BEFORE:
+                assert self.state['status']=='failed'
+                assert self.state['attempts'][-1]['gate']=='headless:resources' and self.state['attempts'][-1]['exit_code']!=0
+                assert self.state['plan']==plan(self.state['mode'],self.state['gate'])
+                pending_output_resource_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                for row in self.state['attempts']:row.setdefault('tested_commit',self.state['commit'])
+                self.state['output_resource_reuse']={'from_commit':self.state['commit'],'to_commit':current,
+                    'completed_before_adoption':list(self.state['completed'])}
+                self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.restart_native:
+                from output_profile_retry import BEFORE,exact_source
+                if self.state['commit']==BEFORE:
+                    assert self.state['status']=='failed' and self.state['mode']=='full' and self.state['gate'] is None
+                    assert self.state['attempts'][-1]['gate']=='native:output-prepare' and self.state['attempts'][-1]['exit_code']!=0
+                    exact_source(ROOT,self.state['commit'],current,self.state['completed'])
+                    for row in self.state['attempts']:row.setdefault('tested_commit',self.state['commit'])
+                    retained=[g for g in self.state['completed'] if g.startswith(('desktop:','reference:','headless:'))]
+                    self.state['output_profile_host_reuse']={'from_commit':self.state['commit'],'to_commit':current,
+                        'completed_before_adoption':list(self.state['completed']),'retained_gates':retained}
+                    self.state['completed']=retained
+                    self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current:
                 assert args.adopt_launcher_fix or args.restart_native, 'Resume the same commit, explicitly adopt a launcher fix, or restart native verification'
                 assert args.restart_native or not any(step.startswith('native:') for step in self.state['completed']), 'Native execution has begun; require a fresh native run'
@@ -272,8 +335,14 @@ class Run:
                     pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
                     allowed.add('android/ci/test_stale_history_retry.py')
                 if 'tools/android_headless/check_history_mutations.py' in changed:
-                    assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
-                    pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
+                    if self.state['commit']==OUTPUT_HISTORY_BEFORE:
+                        assert self.state['status']=='failed'
+                        assert self.state['attempts'][-1]['gate']=='headless:history_mutations' and self.state['attempts'][-1]['exit_code']!=0
+                        pending_output_history_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                        allowed.update({'android/ci/test_output_history_retry.py',*[p for p in changed if p.startswith('docs/android/')]})
+                    else:
+                        assert not any(row['gate'] == 'headless:history_mutations' for row in self.state['attempts'])
+                        pending_mutation_count_fix(ROOT, self.state['commit'], current, self.state['completed'])
                     allowed.add('tools/android_headless/check_history_mutations.py')
                 if 'tools/android_reference/tank.py' in changed:
                     pending_tank_fixture_fix(ROOT, self.state['commit'], current, self.state['completed'])
@@ -442,9 +511,21 @@ class Run:
                     if (self.directory/name).exists():shutil.copyfile(self.directory/name,archive/name)
                 retained=list((self.directory/'apks').glob('*.apk'))
                 assert len(retained)==2, 'Both previously tested APKs are required'
-                for apk in retained:
-                    current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))
-                    assert len(current)==1 and sha(apk)==sha(current[0]), 'Reused APK differs from the tested copy'
+                profile_fix=self.state.get('output_profile_host_reuse')
+                if profile_fix:
+                    # The app changed: preserve old proof, rebuild all package
+                    # gates and execute every native gate on a fresh store.
+                    shutil.copytree(self.directory/'apks',archive/'apks')
+                    profile_fix.update(archive=archive.name,
+                        archived_apk_hashes={p.name:sha(p) for p in retained},
+                        archived_native_hashes={str(p.relative_to(archive/'native')):sha(p) for p in (archive/'native').rglob('*') if p.is_file()})
+                    from output_profile_retry import validate_retained
+                    validate_retained(ROOT,self.directory,profile_fix)
+                    assert self.state['completed']==profile_fix['retained_gates']
+                else:
+                    for apk in retained:
+                        current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))
+                        assert len(current)==1 and sha(apk)==sha(current[0]), 'Reused APK differs from the tested copy'
                 if (self.directory/'avd').exists():
                     assert (self.directory/'avd').resolve().parent==self.directory
                     shutil.rmtree(self.directory/'avd')

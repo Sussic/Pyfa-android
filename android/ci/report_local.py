@@ -148,6 +148,19 @@ def validate(run,root):
             assets={name for name in old.namelist() if name.startswith('assets/')}
             assert assets=={name for name in new.namelist() if name.startswith('assets/')}
             assert all(old.read(name)==new.read(name) for name in assets)
+    output_profile_proof=state.get('output_profile_host_reuse')
+    if output_profile_proof:
+        from output_profile_retry import validate_retained
+        validate_retained(root,run,output_profile_proof)
+        assert output_profile_proof['to_commit']==state['commit']
+        for gate in state['plan']:
+            if gate.startswith(('build:','native:')):assert latest[gate]['tested_commit']==state['commit'],gate
+    output_resource_proof=state.get('output_resource_reuse')
+    if output_resource_proof:
+        from local_verification import pending_output_resource_fix
+        pending_output_resource_fix(root,output_resource_proof['from_commit'],output_resource_proof['to_commit'],
+                                    output_resource_proof['completed_before_adoption'])
+        assert (output_profile_proof['from_commit'] if output_profile_proof else state['commit'])==output_resource_proof['to_commit']
     checked_reuse=set()
     for gate in state['plan']:
         row=latest[gate]
@@ -158,6 +171,12 @@ def validate(run,root):
                 assert row['tested_commit']==capacitor_proof['from_commit']
                 continue
             comparison_commit=state['commit']
+            if output_profile_proof and gate in output_profile_proof['retained_gates']:
+                comparison_commit=output_profile_proof['from_commit']
+                if row['tested_commit']==comparison_commit:continue
+            if output_resource_proof and gate in output_resource_proof['completed_before_adoption']:
+                if row['tested_commit']==output_resource_proof['from_commit']:continue
+                comparison_commit=output_resource_proof['from_commit']
             if tank_proof and gate in tank_proof['retained_gates']:
                 if row['tested_commit']==tank_proof['from_commit']:continue
                 comparison_commit=tank_proof['from_commit']
@@ -198,10 +217,14 @@ def validate(run,root):
                 pending_stale_test_fixture_fix(root,row['tested_commit'],comparison_commit)
                 allowed.add('android/ci/test_stale_history_retry.py')
             if 'tools/android_headless/check_history_mutations.py' in changes:
-                from local_verification import pending_mutation_count_fix
+                from local_verification import pending_mutation_count_fix,pending_output_history_fix,OUTPUT_HISTORY_BEFORE
                 reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']
                     and r['to_commit'] == comparison_commit)
-                pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
+                if row['tested_commit']==OUTPUT_HISTORY_BEFORE:
+                    pending_output_history_fix(root,row['tested_commit'],comparison_commit,reuse['completed_before_adoption'])
+                    allowed.add('android/ci/test_output_history_retry.py')
+                else:
+                    pending_mutation_count_fix(root, row['tested_commit'], comparison_commit, reuse['completed_before_adoption'])
                 assert gate in reuse['completed_before_adoption']
                 allowed.add('tools/android_headless/check_history_mutations.py')
             if 'tools/android_reference/tank.py' in changes:

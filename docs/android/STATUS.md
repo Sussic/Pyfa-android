@@ -1,11 +1,42 @@
 # Android project status
 
-Updated: 2026-10-03. **C01 delivered; C02 next.**
+Updated: 2026-10-03. **C01 delivered; C02 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Selected outcome — C02 outgoing statistics
+
+All F06.01–F06.14 are implemented and locally verified on
+`codex/c02-output-statistics`, reviewed/tested code `1b4630d3`.
+Weapon/drone/fighter/total DPS and volley include damage shares, raw/effective
+target assumptions and current/initial/full spool details. Mining includes
+module/drone/combined yield, drain, efficiency and second/hour values. Bombing
+shows all24 counts with original signature/Red Giant/rounding behavior. Outgoing
+capacitor/shield/armor/hull detail preserves compact and full spool values.
+Per-fit target assumptions persist through copy, undo/redo, recreation and restart.
+Named profiles, addition editors and spool editors retain their roadmap owners.
+
+All109 required gates pass:60 reference/host, five build/package and44 native;
+71 actual native executions,268 persisted fits (230 inherited),191 reviewed
+screenshots and36 actual-report corruption rejections. Two fresh pinned wx/EOS
+exports agree on37 cases. [Receipt](evidence/c02-native.json) binds tested commits,
+APKs, logs, screenshot hashes and retained-result proofs; [task](tasks/C02-output-statistics.md)
+records source review, repairs and every preserved failure.
+
+Run `20261003-063304-4b42c02f-3dd323` is complete; no active watcher.
+Reused60 unchanged reference/host results through exact source proofs. After the
+Android profile/UI repairs, rebuilt both APKs and ran all required native gates.
+A charge transport failure left empty raw proof and a partially mutated store,
+requiring a fresh native chain while keeping65 non-native gates. Cargo prepare
+proof was recovered byte-for-byte; only its read-only restored phase needed
+reexecution after collection failures. No assertion, tolerance, timeout, restart
+boundary or A10 requirement changed. No hosted Actions pass is claimed.
+
+Exact next: push/merge this reviewed C02 deliverable with truthful
+`local/full-verification`, update the closure checkpoint, then select approved C03.
 
 ## Latest outcome — C01.3.2 repair, tank and spool
 
@@ -183,7 +214,7 @@ Reuse `build/windows-env.ps1`: Python3.11.9 reference/headless, JDK17.0.20.1+1,
 SDK36/build35, Gradle8.13 and installed WHPX. No timed host suite alongside Gradle.
 Keep every inherited functional/type/unit/GC/restart/performance/screenshot gate.
 
-Build **30** is the latest locally emulator-tested development build; the debug
+Build **32** is the latest locally emulator-tested development build; the debug
 APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Forecasts for remaining
 implementation are unknown. A working APK is not full Pyfa parity. User usability,
 ARM64 execution, older APIs, signing/upgrades and safe persistent phone use remain

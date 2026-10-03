@@ -25,13 +25,14 @@ EXCLUDED = ['PerformanceTest', 'BridgeContractTest', 'PersistenceTest', 'FitLibr
     'ChargeEditingTest', 'VariationEditingTest', 'RackOrderingTest', 'BulkChargesTest',
     'BulkStatesTest', 'CloneFillTest', 'BulkVariationRemovalTest', 'HullModeTest',
     'SubsystemTest', 'StructureServiceTest', 'CargoStackTest', 'CargoActionTest',
-    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest', 'ResourceProbeTest', 'ResourcesTest', 'CapacitorTest', 'DefenseTest', 'TankTest']
+    'CargoTransferTest', 'NotesTest', 'EditHistoryTest', 'MutationHistoryTest', 'ResourceProbeTest', 'ResourcesTest', 'CapacitorTest', 'DefenseTest', 'TankTest', 'OutputTest']
 MUTATION_STEPS = [f'mutation-history-{group}-{phase}' for group in range(4) for phase in ('prepare', 'restored')]
 RESOURCE_STEPS = ['resources-'+phase for phase in ('probe','prepare','restored')]
 CAPACITOR_STEPS = ['capacitor-'+phase for phase in ('prepare','restored')]
 DEFENSE_STEPS = ['defenses-'+phase for phase in ('prepare','restored')]
 TANK_STEPS = ['tank-'+phase for phase in ('prepare','restored')]
-STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, *CAPACITOR_STEPS, *DEFENSE_STEPS, *TANK_STEPS, 'summary']
+OUTPUT_STEPS = ['output-'+phase for phase in ('prepare','restored')]
+STEPS = ['initial', *CHECKS, *MUTATION_STEPS, *RESOURCE_STEPS, *CAPACITOR_STEPS, *DEFENSE_STEPS, *TANK_STEPS, *OUTPUT_STEPS, 'summary']
 INITIAL_TESTS = {
     'io.github.sussic.pyfa.AppShellTest.offlineLaunchShowsHonestStatusAndNavigatesBack',
     'io.github.sussic.pyfa.AppShellTest.aboutSurvivesActivityRecreationAndLandscapeWithSystemBack',
@@ -171,6 +172,8 @@ def main():
                     command = [sys.executable, str(ROOT/'ci/check-mutation-history.py'), '--group', group, '--phase', phase]
                 elif step in RESOURCE_STEPS:
                     command = [sys.executable, str(ROOT/'ci/check-resources.py'), '--phase', step.split('-')[1]]
+                elif step in OUTPUT_STEPS:
+                    command = [sys.executable, str(ROOT/'ci/check-output.py'), '--phase', step.split('-')[1]]
                 elif step in TANK_STEPS:
                     command = [sys.executable, str(ROOT/'ci/check-tank.py'), '--phase', step.split('-')[1]]
                 elif step in DEFENSE_STEPS:

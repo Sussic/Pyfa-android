@@ -165,9 +165,10 @@ class TankRecentSourceTests(unittest.TestCase):
         self.old=subprocess.check_output(['git','show',self.before+':android/ci/tank_summary.py'],cwd=self.root,text=True,encoding='utf-8')
         self.old_test=subprocess.check_output(['git','show',self.before+':android/ci/test_tank_summary.py'],cwd=self.root,text=True,encoding='utf-8')
         self.new=repair.corrected_tank_source(self.old);self.new_test=repair.corrected_tank_test_source(self.old_test)
+    # Historical reuse proof remains bound to its reviewed delivered correction.
     def test_checked_in_exact_change(self):
-        self.assertEqual(self.new,(self.root/'android/ci/tank_summary.py').read_text(encoding='utf-8'))
-        self.assertEqual(self.new_test,(self.root/'android/ci/test_tank_summary.py').read_text(encoding='utf-8'))
+        self.assertEqual(self.new,subprocess.check_output(['git','show','b0c401fa2aeb14f73daa16b47f543aa57458a698:android/ci/tank_summary.py'],cwd=self.root,text=True,encoding='utf-8'))
+        self.assertEqual(self.new_test,subprocess.check_output(['git','show','b0c401fa2aeb14f73daa16b47f543aa57458a698:android/ci/test_tank_summary.py'],cwd=self.root,text=True,encoding='utf-8'))
     def equivalent(self,source=None,changes=None):
         changed=changes or 'android/ci/tank_summary.py\nandroid/ci/test_tank_summary.py\nandroid/ci/summary_repair.py\n'
         with patch.object(repair.subprocess,'check_output',side_effect=[changed,source or self.new,self.old,self.new_test,self.old_test]):

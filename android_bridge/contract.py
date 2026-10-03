@@ -78,6 +78,7 @@ ARGUMENTS = {
     "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
     "set_notes": ("fit_id", "text"),
     "set_damage_pattern": ("fit_id", "pattern"),
+    "set_target_profile": ("fit_id", "profile"),
     "undo": ("fit_id",), "redo": ("fit_id",),
     "delete_fit": ("fit_id", "resolve_references"),
     "add_module": ("fit_id", "item_id"),
@@ -125,7 +126,7 @@ STATES = {"OFFLINE", "ONLINE", "ACTIVE", "OVERHEATED"}
 def _spec(spec):
     _object(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern", "security",
                    "modules", "drones", "target_profile", "implants", "boosters", "projections",
-                   "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes"))
+                   "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes", "fighters"))
     if "notes" in spec:
         _notes(spec["notes"])
     if "mode" in spec:
@@ -144,8 +145,13 @@ def _spec(spec):
     if spec["security"]["system"] not in {"HISEC", "LOWSEC", "NULLSEC", "WSPACE"}:
         _invalid()
     _number(spec["security"]["pilot"])
-    if spec["target_profile"] is not None or any(spec[key] != [] for key in (
-            "implants", "boosters", "projections", "commands", "environments")):
+    from .output_inputs import profile, environments, fighters
+    try:
+        profile(spec['target_profile']); environments(spec['environments']); fighters(spec.get('fighters',[]))
+    except ValueError as error:
+        _invalid(str(error))
+    if any(spec[key] != [] for key in (
+            "implants", "boosters", "projections", "commands")):
         raise ContractError("INVALID_EDIT", "Those fit features are not supported by this bridge yet")
     if type(spec["modules"]) is not list or type(spec["drones"]) is not list:
         _invalid()
@@ -313,6 +319,16 @@ class BridgeSession:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
+
+    def output_details(self, fit_id):
+        """Read all current output values without changing inputs/history."""
+        from .output import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id]),
+                "target_profile": deepcopy(self._records[fit_id]['spec']['target_profile'])}
 
     def defense_details(self, fit_id):
         """Read current EOS defenses without changing inputs/history/recent use."""
@@ -653,6 +669,12 @@ class BridgeSession:
                 _number(value)
             if any(v < 0 for v in args['pattern'].values()) or not math.isfinite(sum(args['pattern'].values())) or sum(args['pattern'].values()) <= 0:
                 _invalid('Incoming damage contributions must be nonnegative with a positive finite total')
+        if operation == "set_target_profile":
+            from .output_inputs import profile
+            try:
+                profile(args['profile'])
+            except ValueError as error:
+                _invalid(str(error))
         for key in ("fit_id", "source_id", "target_id"):
             if key in args:
                 _text(args[key], True)
@@ -754,6 +776,11 @@ class BridgeSession:
                 pattern = old_pattern if args['pattern'] == old_pattern else args['pattern']
                 self.engine.set_damage_pattern(fits[args['fit_id']], pattern)
                 specs[args['fit_id']] = {**specs[args['fit_id']], 'damage_pattern': deepcopy(pattern)}
+            elif operation == "set_target_profile":
+                old_profile = specs[args['fit_id']]['target_profile']
+                profile = old_profile if args['profile'] == old_profile else args['profile']
+                self.engine.set_target_profile(fits[args['fit_id']], profile)
+                specs[args['fit_id']] = {**specs[args['fit_id']], 'target_profile': deepcopy(profile)}
             elif operation == "duplicate_fit":
                 logical_id = uuid.uuid4().hex
                 record = deepcopy(self._records[args["fit_id"]])

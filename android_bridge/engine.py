@@ -79,12 +79,14 @@ class HeadlessEngine:
         self._check_thread()
         _keys(spec, ("name", "ship", "skill_level", "factor_reload", "damage_pattern",
                      "security", "modules", "drones", "target_profile", "implants",
-                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes"))
+                     "boosters", "projections", "commands", "environments"), ("ignore_restrictions", "mode", "cargo", "notes", "fighters"))
         if 'notes' in spec:
             from .notes import validate
             validate(spec['notes'])
-        if spec["target_profile"] is not None or any(spec[key] != [] for key in (
-                "implants", "boosters", "projections", "commands", "environments")):
+        from .output_inputs import profile, environments, fighters
+        profile(spec['target_profile']); environments(spec['environments']); fighters(spec.get('fighters',[]))
+        if any(spec[key] != [] for key in (
+                "implants", "boosters", "projections", "commands")):
             raise ValueError("This adapter does not implement those scenario inputs yet")
         _integer(spec["skill_level"], 0, 5)
         if not isinstance(spec["name"], str) or not spec["name"] or type(spec["factor_reload"]) is not bool:
@@ -130,7 +132,8 @@ class HeadlessEngine:
             fit.mode = Mode(mode_item)
         fit.character = Character("Headless synthetic skills", defaultLevel=spec["skill_level"])
         fit.damagePattern = DamagePattern(**spec["damage_pattern"])
-        fit.targetProfile = None
+        from eos.saveddata.targetProfile import TargetProfile
+        fit.targetProfile = None if spec['target_profile'] is None else TargetProfile(**spec['target_profile'])
         fit.factorReload = spec["factor_reload"]
         fit.implantLocation = ImplantLocation.FIT
         fit.systemSecurity = security
@@ -171,6 +174,19 @@ class HeadlessEngine:
             drone.amountActive = row["active"]
             drone.owner = fit
             fit.drones.append(drone)
+        from eos.saveddata.fighter import Fighter
+        for row in spec.get('fighters',[]):
+            fighter = Fighter(self._item(row['name']))
+            fighter.owner = fit
+            fit.fighters.append(fighter)
+            if row['amount'] > fighter.fighterSquadronMaxSize:
+                raise ValueError('Fighter amount exceeds its squadron size')
+            fighter.amount = row['amount']; fighter.active = row['active']
+        for row in spec['environments']:
+            effect = Module(self._item(row['name']))
+            effect.state = FittingModuleState[row['state']]
+            effect.owner = fit
+            fit.projectedModules.append(effect)
         seen_cargo = set()
         for row in spec.get("cargo", []):
             _keys(row, ("name", "amount"))
@@ -320,6 +336,14 @@ class HeadlessEngine:
             raise ValueError('Invalid incoming damage contributions')
         from eos.saveddata.damagePattern import DamagePattern
         fit.damagePattern=DamagePattern(**pattern)
+        self._recalculate(fit)
+
+    def set_target_profile(self, fit, value):
+        self._check_fit(fit)
+        from .output_inputs import profile
+        from eos.saveddata.targetProfile import TargetProfile
+        profile(value)
+        fit.targetProfile = None if value is None else TargetProfile(**value)
         self._recalculate(fit)
 
     def set_skill_level(self, fit, skill_name, level):
