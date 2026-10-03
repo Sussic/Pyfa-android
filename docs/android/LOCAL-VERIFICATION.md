@@ -17,11 +17,18 @@ Run from the repository root in PowerShell, with a clean committed checkout:
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate history_mutations
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate resources
 ./android/verify-local.ps1 -Action start -Mode desktop -Gate capacitor
+./android/verify-local.ps1 -Action start -Mode desktop -Gate tank
 ./android/verify-local.ps1 -Action start -Mode build
 ./android/verify-local.ps1 -Action start -Mode native
 ```
 
-C01.3.1 extends the required plan to 101 gates: 56 reference/host, five build
+C01.3.2 extends the required plan to 105 gates: 58 reference/host, five build
+and 42 native gates. Tank adds29 original desktop cases,21 focused
+fixture/summary/transport regressions and two persistent native phases.
+All prior gates remain required. These counts describe the required plan;
+STATUS and the exact-commit receipt record actual execution.
+
+C01.3.1 extended the required plan to 101 gates: 56 reference/host, five build
 and 40 native gates. Defenses add fourteen original desktop cases, four individual
 incoming-contribution witnesses, twenty-two fixture/schema/transport regressions
 and separate native prepare/restored processes. Every inherited check remains.
@@ -194,3 +201,19 @@ C01.1 retained 90 valid gates, three exact partial-store recoveries, every compl
 native failure log and a missing-witness package failure; only affected builds and
 prepare/restored/summary reran. Its receipt explicitly records the unavailable
 first optional shared failure PNG/logcat. Required passing artifacts remain intact.
+
+## Focused C01.3.2 tank checks
+
+Use a fresh external directory for each reference or host evidence attempt:
+
+```powershell
+. ./build/windows-env.ps1
+& $pyfaReference -I tools/android_reference/tank.py --source build/reference-upstream --database android/build/engine/assets/engine/eve.db --output 'C:/absolute/new-tank-reference-directory' --check tools/android_reference/fixtures/tank.json
+& $pyfaHeadless -I tools/android_headless/check_tank.py --source build/reference-upstream --database android/build/engine/assets/engine/eve.db --output 'C:/absolute/new-tank-host-directory'
+& $pyfaHeadless -I android/ci/test_tank_summary.py
+```
+
+The full launcher includes both tank phases after defenses, preserving all189
+prior fits and their inputs/types, and restoring all230 fits in a new process.
+Review its actual tank screenshots alongside every inherited screenshot.
+Focused checks do not replace the full delivery suite or screenshot review.

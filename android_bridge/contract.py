@@ -305,6 +305,15 @@ class BridgeSession:
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self._fits[fit_id])}
 
+    def tank_details(self, fit_id):
+        """Read EOS tank/spool without changing inputs, history or recent use."""
+        from .tank import details
+        self.engine._check_thread()
+        if not self._available:
+            raise RuntimeError("Restart the fitting engine")
+        return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
+                **details(self.engine, self._fits[fit_id])}
+
     def defense_details(self, fit_id):
         """Read current EOS defenses without changing inputs/history/recent use."""
         from .defenses import details

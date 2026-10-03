@@ -1,11 +1,36 @@
 # Android project status
 
-Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 next.**
+Updated: 2026-10-03. **C01.3.1 delivered; C01.3.2 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
 W02, B09.1 and B09.2 are delivered. No hosted dispatch, delegation, release, phone
 installation, unrelated setup/refactoring or billing changes are authorized here.
+
+## Selected outcome — C01.3.2 repair, tank and spool
+
+Selected from delivered master `2d941fd9` on `codex/c01-3-2-tank-details`.
+Deliver all F05.23–F05.27 together: passive shield recharge, active shield,
+armor and hull repairs, raw/effective reinforced/sustained values, capacitor
+limits and projected repair contributions, armor pre/full/current spool details.
+EOS remains the calculation authority; preserve original desktop units,
+formatting, applicable states and explicit unavailable values. Any required
+assumption edit must preserve typed inputs, history and offline persistence.
+Acceptance: independent original wx/EOS fixtures for capacitor-limited/stable,
+projected repair, active/offline/removal and spool states; strict protocol and
+report rejection, read-only/refresh/history/copy/recreation/restart checks;
+APK/lint/package, every inherited local gate and actual screenshot review.
+Use focused checks during implementation. Complete implementation, fixtures and
+summary validators before one full verification; retain valid existing evidence.
+Live master and absence of open PRs verified before selection. No run is active.
+
+Implementation/source review complete. Two fresh original wx/EOS exports agree
+for29 cases. Focused host matrix, read-only/GC, state/removal/projection history,
+copy and process restart pass. Expanded21 fixture/summary/transport regressions
+and all22 inherited defense validator tests pass. Development app/test APK builds
+and lint pass for build31. The original invalid spool fixture/hull attempts and
+corrected reference evidence remain retained. Full/native verification and actual
+screenshot review remain outstanding; no full delivery or hosted pass is claimed.
 
 ## Latest outcome — C01.3.1 defenses and incoming damage
 
@@ -141,7 +166,7 @@ Reuse `build/windows-env.ps1`: Python3.11.9 reference/headless, JDK17.0.20.1+1,
 SDK36/build35, Gradle8.13 and installed WHPX. No timed host suite alongside Gradle.
 Keep every inherited functional/type/unit/GC/restart/performance/screenshot gate.
 
-Build **28** is the latest locally emulator-tested development build; the debug
+Build **30** is the latest locally emulator-tested development build; the debug
 APK is `android/app/build/outputs/apk/debug/app-debug.apk`. Forecasts for remaining
 implementation are unknown. A working APK is not full Pyfa parity. User usability,
 ARM64 execution, older APIs, signing/upgrades and safe persistent phone use remain

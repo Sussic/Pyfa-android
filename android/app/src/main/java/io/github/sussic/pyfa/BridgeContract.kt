@@ -170,6 +170,55 @@ class BridgeProtocolException(message: String) : IllegalArgumentException(messag
 object BridgeCodec {
     const val VERSION = 1
 
+    fun decodeTank(json: String): FitTank {
+        val root = objectValue(StrictJson(json).parse(), "tank")
+        keys(root, setOf("version", "fit_id", "revision", "tank"), path = "tank")
+        requireProtocol(long(root.get("version"), "version") == 1L, "Unsupported tank version")
+        val revision = long(root.get("revision"), "revision")
+        requireProtocol(revision >= 1, "Invalid tank revision")
+        fun scalar(raw: Any, unit: String): TankScalar {
+            val row = objectValue(raw, "tank scalar")
+            keys(row, setOf("value", "value_type", "unit", "display", "detail"), path = "tank scalar")
+            requireProtocol(text(row.get("unit"), "unit") == unit, "Incorrect tank unit")
+            val value = when (text(row.get("value_type"), "value_type")) {
+                "unavailable" -> { requireProtocol(row.get("value") == JSONObject.NULL, "Unavailable tank has value"); StatValue.Unavailable }
+                "integer" -> StatValue.Integer(long(row.get("value"), "value"))
+                "decimal" -> { val v = row.get("value"); requireProtocol(v is Double, "Decimal tank lost type"); StatValue.Decimal(finite(v as Double, "value")) }
+                else -> fail("Invalid tank scalar type")
+            }
+            // EOS can produce negative sustained endpoints under capacitor limits;
+            // retain its result instead of clamping it in presentation.
+            fun label(name: String): String? {
+                val result = nullable(row.get(name))?.let { nonempty(it, name) }
+                requireProtocol((result == null) == (value == StatValue.Unavailable), "Tank availability differs")
+                return result
+            }
+            return TankScalar(value, unit, label("display"), label("detail"))
+        }
+        val tank = objectValue(root.get("tank"), "tank modes")
+        keys(tank, setOf("raw", "effective"), path = "tank modes")
+        val modes = listOf("raw", "effective").associateWith { mode ->
+            val unit = if (mode == "raw") "HP/s" else "EHP/s"
+            val row = objectValue(tank.get(mode), mode)
+            keys(row, setOf("passive_shield", "reinforced", "sustained"), path = mode)
+            val variants = listOf("reinforced", "sustained").associateWith { stability ->
+                val variant = objectValue(row.get(stability), stability)
+                keys(variant, setOf("repairs", "armor_spool"), path = stability)
+                val repairs = objectValue(variant.get("repairs"), "repairs")
+                keys(repairs, TANK_REPAIRS.keys, path = "repairs")
+                val spool = objectValue(variant.get("armor_spool"), "armor spool")
+                keys(spool, setOf("pre", "full", "indicated", "tooltip"), path = "armor spool")
+                val indicated = bool(spool.get("indicated"), "indicated")
+                val tooltip = text(spool.get("tooltip"), "tooltip")
+                requireProtocol(indicated == tooltip.isNotEmpty(), "Spool indication differs")
+                TankVariant(Collections.unmodifiableMap(TANK_REPAIRS.keys.associateWith { scalar(repairs.get(it), unit) }),
+                    scalar(spool.get("pre"), unit), scalar(spool.get("full"), unit), indicated, tooltip)
+            }
+            TankMode(scalar(row.get("passive_shield"), unit), variants.getValue("reinforced"), variants.getValue("sustained"))
+        }
+        return FitTank(identifier(root.get("fit_id"), "fit_id"), revision, Collections.unmodifiableMap(modes))
+    }
+
     fun decodeDefenses(json: String): FitDefenses {
         val root = objectValue(StrictJson(json).parse(), "defenses")
         keys(root, setOf("version", "fit_id", "revision", "defenses"), path = "defenses")
