@@ -216,6 +216,12 @@ def validate(run,root):
                 from local_verification import pending_stale_test_fixture_fix
                 pending_stale_test_fixture_fix(root,row['tested_commit'],comparison_commit)
                 allowed.add('android/ci/test_stale_history_retry.py')
+            if 'android/ci/targeting_summary.py' in changes:
+                from local_verification import pending_targeting_metadata_index_fix
+                reuse=next(r for r in state['launcher_fix_reuse'] if r['from_commit']==row['tested_commit'] and r['to_commit']==comparison_commit)
+                pending_targeting_metadata_index_fix(root,row['tested_commit'],comparison_commit,reuse['completed_before_adoption'])
+                assert gate in reuse['completed_before_adoption']
+                allowed.update({'android/ci/targeting_summary.py','android/ci/test_targeting_summary.py','android/ci/test_pending_targeting_metadata_index_fix.py'})
             if 'android/ci/test_defense_summary.py' in changes:
                 from local_verification import pending_defense_phase_flag_fix
                 reuse=next(r for r in state['launcher_fix_reuse'] if r['from_commit']==row['tested_commit'] and r['to_commit']==comparison_commit)

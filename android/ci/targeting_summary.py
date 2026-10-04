@@ -54,6 +54,24 @@ def skill_inputs(fixture,engine):
     return witness['cases']
 
 
+def metadata_groups(wrapper,prefixes):
+    """Index exactly the old prefix filters, including overlapping opaque IDs."""
+    groups={prefix:{} for prefix in prefixes};trie={}
+    for prefix in groups:
+        node=trie
+        for char in prefix:node=node.setdefault(char,{})
+        node[None]=prefix
+    for name,kind in wrapper['numeric_types'].items():
+        node=trie
+        for index,char in enumerate(name):
+            node=node.get(char)
+            if node is None:break
+            prefix=node.get(None)
+            if prefix is not None and (index+1==len(name) or name[index+1] in '.['):
+                groups[prefix][name]=kind
+    return groups
+
+
 def summarize(reports,engine,prior_pids=()):
     apk=evidence_dir().parent/'apks/app-debug-androidTest.apk';assert apk.is_file()
     reference=(ROOT/'tools/android_reference/fixtures/targeting.json').read_bytes()
@@ -95,12 +113,13 @@ def summarize(reports,engine,prior_pids=()):
         exact(wanted_recent,after.get('recent',[]))
         snapshots={row['id']:row for row in all_fits};assert len(snapshots)==total and set(snapshots)==set(after['fit_order'])
         assert set(ids)<=set(snapshots) and not set(ids)&set(old)
+        prefixes=[f'root.{field}.{key}' for key in old for field in ('records','revisions','modified')]
+        before_metadata=metadata_groups(saved['inherited_graph'],prefixes);after_metadata=metadata_groups(saved['graph'],prefixes)
         for row in inherited:
             key=row['id'];exact(row,snapshots[key])
             for field in ('records','revisions','modified'):
                 exact(before[field][key],after[field][key]);prefix=f'root.{field}.{key}'
-                def metadata(wrapper):return {k:v for k,v in wrapper['numeric_types'].items() if k==prefix or k.startswith(prefix+'.') or k.startswith(prefix+'[')}
-                exact(metadata(saved['inherited_graph']),metadata(saved['graph']))
+                exact(before_metadata[prefix],after_metadata[prefix])
         ui=saved['ui_history'];ui_index=next(i for i,case in enumerate(fixture['cases']) if case['spec']['name']=='Drone range' and case['edits'])
         exact(ui_index,ui['case']);exact({'case','before','undone','redone'},set(ui))
         ui_case=fixture['cases'][ui_index]

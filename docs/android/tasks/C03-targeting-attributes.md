@@ -165,3 +165,54 @@ Use the existing test framework and local launcher. Android's official
 [edge-to-edge setup](https://developer.android.com/develop/ui/compose/system/setup-e2e)
 and [inset consumption](https://developer.android.com/develop/ui/compose/system/insets-ui)
 provide the platform handling, without dependency or infrastructure changes.
+
+Focused keyboard proof `c031-keyboard-focused-20261004-042420` on `e2005c92`
+passes offline ephemeral storage, query retention, recreation and dismissal.
+All3 original screenshots are hash-verified and visually reviewed. Open/recreated
+viewport top63/bottom1048 and input top880/bottom1048 stay inside actual1920px
+window/status63/IME872 bounds; closed viewport bottom1857 with IME0. Five strict
+geometry validator tests pass. Both APKs/lint/signature/package pass. Earlier
+catalog-readiness, boot-service and transfer failures retain their logs/images.
+Disk exhaustion was resolved by deleting only stopped owned disposable probe
+AVDs while retaining captured evidence; original screenshots unavailable after
+one failed transfer are not represented as recovered or approved.
+
+Historical full run `20261003-150233-9badd3ec-e6ca98` preserves interrupted
+cargo prerequisite failures (actual66 versus required57; original interrupted
+store unavailable), native restarts and the System UI/IME failure. Its exact10-fit
+store remains in `library-ime-failure/partial-graph.sqlite3`, SHA256
+`88a12f9f65cd1843986546114e78e452cc84b377654e651b43758a3a803af039`.
+The original9 IDs/revisions match prior B02 proof. Temporary tracked checkpoint
+editing also hit the clean-tree guard; restoring the exact tree allowed resume.
+The final historical run paused after78 gates for the actual visual defect.
+
+## C03.1.2 — validator metadata indexing (selected2026-10-04)
+
+Fresh full run `20261004-042857-bfbbe157-2dd1cc` passed61 gates through host output.
+All desktop references, original targeting/skill-input exports and host regression
+matrices passed. Targeting prepare/restored engine processes completed; its
+16-test summary validator subprocess then exceeded the unchanged60-second limit.
+The raw failure and partial host artifacts remain in that run. No native/build
+gate has executed there and no full success is claimed.
+
+Bounded scope: profile and index repeated inherited numeric-metadata prefix
+lookups while preserving every existing comparison. No application, engine,
+fixture, tolerance, restart boundary or deadline changes. Acceptance requires
+prefix-filter equivalence (including overlapping IDs and boundary characters),
+all16 original tests/29 corruption subcases within the existing60 seconds, and
+the full delivery suite/215 screenshot review. Keep completed61-gate inputs exact;
+reuse only through the installed launcher/reporter's narrowly proven source seam.
+The failed targeting gate and all remaining prerequisites must execute after repair.
+
+Retained diagnostic profiles show one complete synthetic summary spent12.458 of
+13.683 seconds in6,432 metadata filters/30,089,983 prefix calls. The equivalent
+prefix trie takes1.606 seconds for the same full summary; all582,166 exact-value
+calls and19 typed-wrapper validations remain. The new boundary/overlapping-ID
+regression compares every indexed subset to the original filter directly.
+All16 original tests and29 corruption subcases plus that regression pass as17
+tests in21.215 seconds (21.532 subprocess seconds), inside the unchanged60 seconds.
+Twelve source-reuse guards reject removed assertions/corruptions, weaker prefix
+boundaries, changed deadlines/fixtures/engine/app, missing gates, executed failed
+gate reuse and a different baseline. Application/APKs, fixtures, numerical
+tolerances, native900-second deadlines and A10 checks are unchanged.
+Full proof and215 screenshot review remain outstanding.

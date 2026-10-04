@@ -209,6 +209,64 @@ def plan(mode,gate):
         ['native:'+name for name in NATIVE_STEPS if mode in ('full','native')]
 
 
+def pending_targeting_metadata_index_fix(root,before,after,completed):
+    """Retain only the61 inputs completed before this exact unexecuted validator fix."""
+    assert before=='bfbbe1570c82b0e884f18461fa379f59b793dfbd'
+    assert completed==plan('full',None)[:61] and len(completed)==61 and completed[-1]=='headless:output'
+    def source(revision,path):
+        return subprocess.check_output(['git','show',revision+':'+path],cwd=root,text=True,encoding='utf-8')
+    changed=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True,encoding='utf-8').splitlines()
+    allowed={'android/ci/targeting_summary.py','android/ci/test_targeting_summary.py',
+        'android/ci/local_verification.py','android/ci/report_local.py','android/ci/test_pending_targeting_metadata_index_fix.py'}
+    assert changed and all(p in allowed or p.startswith('docs/android/') for p in changed)
+    index='''def metadata_groups(wrapper,prefixes):
+    """Index exactly the old prefix filters, including overlapping opaque IDs."""
+    groups={prefix:{} for prefix in prefixes};trie={}
+    for prefix in groups:
+        node=trie
+        for char in prefix:node=node.setdefault(char,{})
+        node[None]=prefix
+    for name,kind in wrapper['numeric_types'].items():
+        node=trie
+        for index,char in enumerate(name):
+            node=node.get(char)
+            if node is None:break
+            prefix=node.get(None)
+            if prefix is not None and (index+1==len(name) or name[index+1] in '.['):
+                groups[prefix][name]=kind
+    return groups
+
+
+'''
+    path='android/ci/targeting_summary.py';old=source(before,path)
+    marker='def summarize(reports,engine,prior_pids=()):'
+    scan="                def metadata(wrapper):return {k:v for k,v in wrapper['numeric_types'].items() if k==prefix or k.startswith(prefix+'.') or k.startswith(prefix+'[')}\n                exact(metadata(saved['inherited_graph']),metadata(saved['graph']))"
+    loop='        for row in inherited:'
+    indexed="        prefixes=[f'root.{field}.{key}' for key in old for field in ('records','revisions','modified')]\n        before_metadata=metadata_groups(saved['inherited_graph'],prefixes);after_metadata=metadata_groups(saved['graph'],prefixes)\n"+loop
+    assert old.count(marker)==old.count(scan)==old.count(loop)==1
+    expected=old.replace(marker,index+marker).replace(loop,indexed).replace(scan,'                exact(before_metadata[prefix],after_metadata[prefix])')
+    assert source(after,path)==expected, 'Targeting validation changed beyond exact equivalent metadata indexing'
+    regression='''class MetadataIndexTests(unittest.TestCase):
+    def test_exact_prefix_memberships(self):
+        ids=('a','ab','a.b','a[0]','a.b[0]','a.','a[','')
+        prefixes=[f'root.{field}.{key}' for field in ('records','revisions','modified') for key in ids]
+        names={prefix+suffix for prefix in prefixes for suffix in ('','.value','[0]','.nested[1].x','z','[broken')}
+        names|={'root.other.a.value','root.records.other.value','unrelated'}
+        for changed in (False,True):
+            wrapper=dict(numeric_types={name:('decimal' if changed and index%2 else 'integer') for index,name in enumerate(sorted(names))})
+            expected={prefix:{k:v for k,v in wrapper['numeric_types'].items() if k==prefix or k.startswith(prefix+'.') or k.startswith(prefix+'[')} for prefix in prefixes}
+            self.assertEqual(expected,metadata_groups(wrapper,prefixes))
+        self.assertEqual({},metadata_groups(dict(numeric_types={'root.records.a.x':'integer'}),[]))
+
+
+'''
+    path='android/ci/test_targeting_summary.py';old=source(before,path)
+    imports='from targeting_summary import targeting,summarize,REJECTIONS'
+    main="if __name__=='__main__':unittest.main()"
+    assert old.count(imports)==old.count(main)==1
+    assert source(after,path)==old.replace(imports,imports+',metadata_groups').replace(main,regression+main), 'Original targeting tests or corruptions changed'
+
+
 class Run:
     def __init__(self,args):
         self.args=args
@@ -348,6 +406,10 @@ class Run:
                 if 'android/ci/test_stale_history_retry.py' in changed:
                     pending_stale_test_fixture_fix(ROOT,self.state['commit'],current)
                     allowed.add('android/ci/test_stale_history_retry.py')
+                if 'android/ci/targeting_summary.py' in changed:
+                    assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='headless:targeting' and self.state['attempts'][-1]['exit_code']!=0
+                    pending_targeting_metadata_index_fix(ROOT,self.state['commit'],current,self.state['completed'])
+                    allowed.update({'android/ci/targeting_summary.py','android/ci/test_targeting_summary.py','android/ci/test_pending_targeting_metadata_index_fix.py',*[p for p in changed if p.startswith('docs/android/')]})
                 if 'android/ci/test_defense_summary.py' in changed:
                     assert self.state['status']=='failed' and self.state['attempts'][-1]['gate']=='headless:defenses' and self.state['attempts'][-1]['exit_code']!=0
                     pending_defense_phase_flag_fix(ROOT,self.state['commit'],current,self.state['completed'])

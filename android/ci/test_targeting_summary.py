@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 from zipfile import ZipFile
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from targeting_summary import targeting,summarize,REJECTIONS
+from targeting_summary import targeting,summarize,REJECTIONS,metadata_groups
 from resource_summary import fixture_bytes
 FIXTURE=Path(__file__).resolve().parents[2]/'tools/android_reference/fixtures/targeting.json'
 
@@ -159,6 +159,19 @@ class SummaryTests(unittest.TestCase):
                     with self.subTest(name=name):
                         bad=deepcopy(reports);change(bad)
                         with self.assertRaises((AssertionError,KeyError)):summarize(bad,engine,{99})
+
+
+class MetadataIndexTests(unittest.TestCase):
+    def test_exact_prefix_memberships(self):
+        ids=('a','ab','a.b','a[0]','a.b[0]','a.','a[','')
+        prefixes=[f'root.{field}.{key}' for field in ('records','revisions','modified') for key in ids]
+        names={prefix+suffix for prefix in prefixes for suffix in ('','.value','[0]','.nested[1].x','z','[broken')}
+        names|={'root.other.a.value','root.records.other.value','unrelated'}
+        for changed in (False,True):
+            wrapper=dict(numeric_types={name:('decimal' if changed and index%2 else 'integer') for index,name in enumerate(sorted(names))})
+            expected={prefix:{k:v for k,v in wrapper['numeric_types'].items() if k==prefix or k.startswith(prefix+'.') or k.startswith(prefix+'[')} for prefix in prefixes}
+            self.assertEqual(expected,metadata_groups(wrapper,prefixes))
+        self.assertEqual({},metadata_groups(dict(numeric_types={'root.records.a.x':'integer'}),[]))
 
 
 if __name__=='__main__':unittest.main()
