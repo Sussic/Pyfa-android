@@ -240,3 +240,11 @@ geometry and persistence assertions, tolerances and deadlines. Acceptance requir
 focused offline native proof and reviewed screenshots, then the complete stable
 delivery suite. Previous native results remain historical if the test APK changes;
 reuse unchanged host inputs only with exact source/prerequisite proof.
+
+First focused candidate `9564f0ca` passes all5 build/package checks. Its first
+probe attempt stopped before instrumentation on the emulator's12GB free-space
+prerequisite; stopped owned no-snapshot RAM files were removed with receipts,
+preserving userdata/evidence. The next probe passed its existing geometry,
+recreation and dismissal assertions, then exposed an incorrect added navigation
+step: the equipment charge picker returns directly home, not to equipment.
+Remove that extra step before retrying; filtered-script proof remains pending.

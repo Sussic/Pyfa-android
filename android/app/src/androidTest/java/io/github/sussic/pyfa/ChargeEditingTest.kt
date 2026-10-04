@@ -122,7 +122,7 @@ class ChargeEditingTest {
         compose.onNodeWithTag("charges-search").performScrollTo()
         val closed = keyboardViewport(false); screenshot("keyboard-probe-closed")
         assertEquals("Script", picker.query)
-        click("charges-back"); click("equipment-back")
+        click("charges-back")
         enter(ship, 0)
         compose.onNodeWithTag("charges-search").performScrollTo().performClick()
         edit("charges-search", "Tracking Speed Script")
