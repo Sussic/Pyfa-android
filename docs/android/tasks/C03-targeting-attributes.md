@@ -143,3 +143,25 @@ Executed plan/host/build/execute function bodies and every completed input remai
 identical. No new framework, fixture, numerical assertion or timeout changes.
 Next: commit the repair, resume only the failed gate and remaining dependants,
 and preserve all58 passing results. Full native/build delivery proof is outstanding.
+
+## C03.1.1 — keyboard viewport repair (selected2026-10-04)
+
+Parent C03.1 remains active. Screenshot review of the current full run found
+`charge-edits-active.png` draws the scrolled Recent edits heading under status
+icons while the software keyboard is open. Numerical/native charge tests passed;
+this is a failed visual acceptance result, recorded by exact hash in the run's
+`keyboard-visual-failure.json`. The run paused cleanly after variations with78
+passing gates. Preserve all previous failures and original requirements.
+
+Bounded scope: activity IME resize, consume Scaffold insets, keyboard-aware
+viewport padding/clipping; a test tag and native geometry assertions against
+actual system/IME insets. Retain all existing charge matrix, compatibility,
+rejection, recreation, copy and restart assertions. No fitting calculations,
+fixtures, storage behavior, numerical tolerance or existing timeout changes.
+Acceptance: focused offline native keyboard/search/recreation/back proof and
+actual screenshot review; both APKs/lint/package; complete stable-candidate full
+verification and all215 existing required screenshots before parent delivery.
+Use the existing test framework and local launcher. Android's official
+[edge-to-edge setup](https://developer.android.com/develop/ui/compose/system/setup-e2e)
+and [inset consumption](https://developer.android.com/develop/ui/compose/system/insets-ui)
+provide the platform handling, without dependency or infrastructure changes.

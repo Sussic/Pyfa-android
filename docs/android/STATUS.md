@@ -1,6 +1,6 @@
 # Android project status
 
-Updated: 2026-10-03. **C02 delivered; C03.1 active.**
+Updated: 2026-10-04. **C02 delivered; C03.1 active.**
 
 The active user-authorized goal continues sequential ready, approved roadmap work,
 one reviewed outcome through required local checks, push and merge at a time.
@@ -27,12 +27,20 @@ Focused native preparation/restart on `f739cbbd` passes all four stages,325 fits
 18 protocol guards and24 reviewed screenshots. Independent full skill-input
 witnesses repair the final summary's incomplete cascade expectation;37 actual
 report corruptions and16 affected validators pass. All native proof is retained.
-Full run `20261003-150233-9badd3ec-e6ca98` retains58 passing gates. It stopped at
-the inherited defense validator's omitted `c031_phase` expectation; its numerical
-and restart phases passed. The exact one-literal expectation repair passes22
-validator and10 strict source-reuse guards. Exact next: commit that repair and
-resume the same run from defenses, retaining58 gates, then every remaining gate
-and215 screenshots. Build/native delivery execution has not started in this run.
+Full run `20261003-150233-9badd3ec-e6ca98` on committed `aefc6faf` is paused
+with78 passing gates through native variations. Live master is `b88713b3`;
+PR #33 is merged and no PR is open. Both APK hashes and all67 non-native logs
+are verified. Two native restarts preserve interrupted cargo prerequisite and
+System UI/IME failures; the latter's exact10-fit store is retained. Temporary
+STATUS editing hit the clean-tree guard; the tested tree was restored before resume.
+27 current screenshots are reviewed. The charge-active screenshot fails visual QA:
+its scrolled heading overlaps status icons with the software keyboard open.
+Selected child **C03.1.1 keyboard viewport repair**: correct activity resize and
+consumed/clipped insets, retain all controls and add native geometry/recreation
+checks. EOS, fixtures, numerical assertions, deadlines and every existing gate
+remain unchanged. Exact next: implement this bounded repair, focused build/native
+proof, then complete full stable-candidate verification and all215 screenshot QA.
+Earlier passing native results remain historical after the application changes.
 The first focused prepare attempt on `c4233aa5` timed out at900 seconds after
 reaching311 fits/case42 undo. Proof is retained; preparation is now three bounded
 stages with the same900-second deadlines, all assertions and added restart proof.

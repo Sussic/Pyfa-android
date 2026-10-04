@@ -64,6 +64,56 @@ class ChargeEditingTest {
         ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(
             "screencap -p /sdcard/Download/pyfa-b04231-$name.png")).use { it.readBytes() }
     }
+    private fun keyboardViewport(visible: Boolean = true): JSONObject {
+        compose.waitUntil(10_000) {
+            compose.activity.window.decorView.rootWindowInsets?.isVisible(android.view.WindowInsets.Type.ime()) == visible
+        }
+        sync()
+        val decor = compose.activity.window.decorView
+        val insets = checkNotNull(decor.rootWindowInsets)
+        val bars = insets.getInsets(android.view.WindowInsets.Type.systemBars())
+        val ime = insets.getInsets(android.view.WindowInsets.Type.ime())
+        val viewport = compose.onNodeWithTag("app-content-viewport").fetchSemanticsNode().boundsInWindow
+        val field = compose.onNodeWithTag("charges-search").getUnclippedBoundsInRoot()
+        val density = context.resources.displayMetrics.density
+        val fieldTop = field.top.value * density
+        val fieldBottom = field.bottom.value * density
+        val bottom = decor.height - maxOf(bars.bottom, if (visible) ime.bottom else 0)
+        assertTrue("Viewport overlaps status bar", viewport.top >= bars.top)
+        assertTrue("Viewport overlaps keyboard/navigation", viewport.bottom <= bottom)
+        assertTrue("Search field obscured above viewport", fieldTop >= viewport.top)
+        assertTrue("Search field obscured by keyboard", fieldBottom <= viewport.bottom)
+        return obj("keyboard_visible" to visible, "window_height" to decor.height,
+            "status_top" to bars.top, "navigation_bottom" to bars.bottom, "ime_bottom" to ime.bottom,
+            "viewport_top" to viewport.top.toDouble(), "viewport_bottom" to viewport.bottom.toDouble(),
+            "field_top" to fieldTop.toDouble(), "field_bottom" to fieldBottom.toDouble(),
+            "resize_mode" to (compose.activity.window.attributes.softInputMode and android.view.WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST))
+    }
+    private fun keyboardProbe() {
+        EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
+        assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
+        assertFalse(diagnostics().getJSONObject("persistence").getBoolean("enabled"))
+        click("equipment-open"); click("equipment-charges")
+        waitFor { !picker.loading && picker.options != null }
+        compose.onNodeWithTag("charges-search").performScrollTo().performClick()
+        edit("charges-search", "Script")
+        compose.onNodeWithTag("charges-active").performScrollTo()
+        val first = keyboardViewport(); screenshot("keyboard-probe-open")
+        compose.activityRule.scenario.recreate(); sync()
+        assertEquals("Script", picker.query)
+        compose.onNodeWithTag("charges-search").performScrollTo().performClick()
+        compose.onNodeWithTag("charges-active").performScrollTo()
+        val recreated = keyboardViewport(); screenshot("keyboard-probe-recreated")
+        ParcelFileDescriptor.AutoCloseInputStream(InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand("input keyevent 4")).use { it.readBytes() }
+        compose.onNodeWithTag("charges-back").assertExists()
+        compose.onNodeWithTag("charges-search").performScrollTo()
+        val closed = keyboardViewport(false); screenshot("keyboard-probe-closed")
+        assertEquals("Script", picker.query)
+        retain(obj("task" to "C03.1.1", "ephemeral" to true, "open" to first,
+            "recreated" to recreated, "closed" to closed), "keyboard-probe")
+    }
     private fun retain(value: JSONObject, phase: String) {
         val descriptors = InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommandRw(
             "dd of=/sdcard/Download/pyfa-b04231-$phase.json")
@@ -120,6 +170,9 @@ class ChargeEditingTest {
     }
 
     @Test fun chargesAndDiscoverySurviveRestartOffline() {
+        if (InstrumentationRegistry.getArguments().getString("keyboard_viewport_probe") == "true") {
+            keyboardProbe(); return
+        }
         val phase = InstrumentationRegistry.getArguments().getString("b04231_phase") ?: error("Missing phase")
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
@@ -136,6 +189,7 @@ class ChargeEditingTest {
         val compatibility = JSONArray()
         val rejections = JSONArray()
         var codec = JSONArray()
+        var viewport: JSONObject? = null
         val saved = File(context.noBackupFilesDir, "b04231-test-expected.json")
         try {
             when (phase) {
@@ -240,7 +294,8 @@ class ChargeEditingTest {
                     waitFor { !picker.loading && picker.options?.fitId == ship }
                     assertNull(picker.position)
                     edit("charges-search", "Script")
-                    compose.onNodeWithTag("charges-active").performScrollTo(); screenshot("active")
+                    compose.onNodeWithTag("charges-active").performScrollTo()
+                    viewport = keyboardViewport(); screenshot("active")
                     // Existing no-charge ship proves active-fit changes cannot leave stale choices.
                     val empty = fits().first { it.id in originalIds && it.modules.none { mod -> mod.name != null } }
                     EngineRuntime.selectFit(context, empty.id).get(30, TimeUnit.SECONDS)
@@ -275,11 +330,12 @@ class ChargeEditingTest {
                 "runtime_start" to runtimeStart, "runtime_end" to diagnostics(), "before" to before, "after" to library(),
                 "options" to allOptions(), "recent_before" to recentBefore, "recent_after" to array(EngineRuntime.recent.value),
                 "cases" to observed, "compatibility" to compatibility, "rejections" to rejections, "codec_rejections" to codec,
-                "saved" to JSONObject(saved.readText(Charsets.UTF_8)), "checks" to array(if (phase == "prepare") listOf(
+                "saved" to JSONObject(saved.readText(Charsets.UTF_8)), "keyboard_viewport" to viewport,
+                "checks" to array(if (phase == "prepare") listOf(
                     "complete_matrix", "all_4242_charge_sets", "projection_and_command_recipients", "prior_fits_unchanged",
                     "picker_pagination_search", "picker_recreation", "load_replace_unload", "neighbour_state_charge_retained",
                     "script", "laser_crystal", "mining_crystal", "active_fit_discovery", "empty_fit_refresh", "independent_copy",
-                    "rejections_atomic", "recent_unchanged", "typed_protocol_guards") else listOf(
+                    "rejections_atomic", "recent_unchanged", "typed_protocol_guards", "keyboard_viewport") else listOf(
                     "fresh_process_restore", "identities_states_charges_values_retained", "options_and_recent_retained", "reopen_each_fit"))), phase)
         } catch (error: Throwable) { screenshot("failure"); throw error }
     }
