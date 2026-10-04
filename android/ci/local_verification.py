@@ -384,6 +384,20 @@ class Run:
                     'completed_before_adoption':list(self.state['completed'])}
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.restart_native:
+                from charge_keyboard_retry import BEFORE as charge_before,exact_source as charge_source
+                if self.state['commit']==charge_before:
+                    assert self.state['status']=='failed' and self.state['mode']=='full' and self.state['gate'] is None
+                    assert self.state['attempts'][-1]['gate']=='native:check-charge-edits.py' and self.state['attempts'][-1]['exit_code']!=0
+                    charge_source(ROOT,self.state['commit'],current,self.state['completed'])
+                    for row in self.state['attempts']:row.setdefault('tested_commit',self.state['commit'])
+                    retained=[g for g in self.state['completed'] if g.startswith(('desktop:','reference:','headless:'))]
+                    latest={row['gate']:row for row in self.state['attempts'] if row['exit_code']==0}
+                    self.state['charge_keyboard_host_reuse']={'from_commit':self.state['commit'],'to_commit':current,
+                        'completed_before_adoption':list(self.state['completed']),'retained_gates':retained,
+                        'retained_log_hashes':{gate:latest[gate]['log_sha256'] for gate in retained}}
+                    self.state['completed']=retained
+                    self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.restart_native:
                 from output_profile_retry import BEFORE,exact_source
                 if self.state['commit']==BEFORE:
                     assert self.state['status']=='failed' and self.state['mode']=='full' and self.state['gate'] is None
@@ -591,17 +605,24 @@ class Run:
                     if (self.directory/name).exists():shutil.copyfile(self.directory/name,archive/name)
                 retained=list((self.directory/'apks').glob('*.apk'))
                 assert len(retained)==2, 'Both previously tested APKs are required'
-                profile_fix=self.state.get('output_profile_host_reuse')
+                charge_fix=self.state.get('charge_keyboard_host_reuse')
+                profile_fix=charge_fix or self.state.get('output_profile_host_reuse')
                 if profile_fix:
-                    # The app changed: preserve old proof, rebuild all package
-                    # gates and execute every native gate on a fresh store.
+                    # The app or test package changed: preserve old proof, rebuild
+                    # every package gate and run every native gate on a fresh store.
                     shutil.copytree(self.directory/'apks',archive/'apks')
                     profile_fix.update(archive=archive.name,
                         archived_apk_hashes={p.name:sha(p) for p in retained},
                         archived_native_hashes={str(p.relative_to(archive/'native')):sha(p) for p in (archive/'native').rglob('*') if p.is_file()})
-                    from output_profile_retry import validate_retained
+                    if charge_fix:
+                        from charge_keyboard_retry import validate_retained
+                    else:
+                        from output_profile_retry import validate_retained
                     validate_retained(ROOT,self.directory,profile_fix)
                     assert self.state['completed']==profile_fix['retained_gates']
+                    if charge_fix:
+                        from charge_keyboard_retry import reuse_build
+                        reuse_build(self,charge_fix)
                 else:
                     for apk in retained:
                         current=list((ROOT/'android/app/build/outputs/apk').rglob(apk.name))

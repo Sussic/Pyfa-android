@@ -257,3 +257,21 @@ selected module's charge must still equal29001. Use the original full test's
 selection helper in the probe and retain its filtered-result screenshot through
 an observation callback, so the focused proof exercises that exact interaction.
 The original full-test assertions and numerical matrix remain intact.
+
+The existing explicit native-restart/reporter path gains a narrowly pinned source
+proof for the exact ChargeEditingTest repair. It retains only62 unchanged host/
+reference gates, validates their original log hashes and composes the existing
+`bfbbe157`→`9272c2a5` metadata proof separately. All older build/native results are
+archived; every native gate requires the new test APK and a fresh store. If all5
+build gates already passed for the exact new commit, their actual logs and APKs
+are imported with their original execution stamps and validated source manifest.
+Otherwise the installed build gates execute normally. No hosted job, service,
+SDK/tool setup or required assertion/tolerance/deadline changes.
+
+Seventeen focused source/build-provenance regressions reject other engine/app/
+fixture changes, altered assertions/deadlines, wrong/incomplete/failed build
+proof, corrupted logs/APKs/manifests and changed gate order. Constructor/import
+tests preserve older commit stamps and require all fresh native gates. Twenty-two
+reporter and8 inherited output-reuse regressions also pass. Actual native proof
+and full screenshot review remain pending. The platform idle wait shares the
+existing10-second bound, following [UiAutomation's documented global timeout](https://developer.android.com/reference/android/app/UiAutomation#waitForIdle(long,%20long)).

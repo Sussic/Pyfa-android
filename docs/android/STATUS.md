@@ -23,8 +23,11 @@ screenshots are reviewed; the failed charge image is not approved.
 Selected **C03.1.3 keyboard-ready charge selection**: diagnose the platform IME
 resize/scroll race, retain every existing assertion/deadline and prove filtered
 result selection/loading in the focused offline native probe before full delivery.
-Exact next: synchronize IME/layout readiness, build and run the focused probe;
-then prove eligible input reuse and execute a fresh complete native chain.
+Synchronization and the probe are implemented. Two added probe assumptions
+(return route and vacant rack slots) were corrected after native failures; it now
+uses the full-test selection helper. Complete success remains pending. Exact next:
+build the stable candidate, run/review its5-image probe, then restart the complete
+native chain through proven62-host input reuse and same-commit build reuse.
 
 Original candidate `bfbbe157` initially stopped after61
 passing reference/host gates. All fresh desktop exports and host calculations,
@@ -37,9 +40,12 @@ Selected **C03.1.2 validator metadata indexing** is implemented: one diagnostic
 summary falls from13.68 to1.61 profiled seconds;30 million repeated prefix checks
 were the hotspot. All16 original validators plus prefix-equivalence regression
 pass in21.5 seconds within the unchanged60-second deadline. Twelve exact-source
-guards pass, rejecting assertion/deadline/fixture/engine/app changes. Commit and
-validate reuse of61 completed gates through the existing launcher/reporter; rerun
-the failed gate and all remaining build/native/screenshot requirements.
+guards pass;61 unchanged inputs were reused and targeting/build/native proceeded.
+The installed restart/reporter path now also narrowly proves the exact charge-test
+correction, archives old native/APK proof and requires all fresh native gates.
+Seventeen source/build-provenance regressions,22 reporter regressions and8 inherited
+output-reuse regressions pass. Valid same-commit5-gate build proof can be imported
+with unchanged logs/APK hashes; every invalid or missing prerequisite is rejected.
 
 Keyboard repair C03.1.1 passes5 build gates,5 geometry validators and focused
 native run `c031-keyboard-focused-20261004-042420` with3 hash-verified reviewed

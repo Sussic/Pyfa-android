@@ -148,6 +148,13 @@ def validate(run,root):
             assets={name for name in old.namelist() if name.startswith('assets/')}
             assert assets=={name for name in new.namelist() if name.startswith('assets/')}
             assert all(old.read(name)==new.read(name) for name in assets)
+    charge_keyboard_proof=state.get('charge_keyboard_host_reuse')
+    if charge_keyboard_proof:
+        from charge_keyboard_retry import validate_retained
+        validate_retained(root,run,charge_keyboard_proof)
+        assert charge_keyboard_proof['to_commit']==state['commit']
+        for gate in state['plan']:
+            if gate.startswith(('build:','native:')):assert latest[gate]['tested_commit']==state['commit'],gate
     output_profile_proof=state.get('output_profile_host_reuse')
     if output_profile_proof:
         from output_profile_retry import validate_retained
@@ -171,6 +178,9 @@ def validate(run,root):
                 assert row['tested_commit']==capacitor_proof['from_commit']
                 continue
             comparison_commit=state['commit']
+            if charge_keyboard_proof and gate in charge_keyboard_proof['retained_gates']:
+                comparison_commit=charge_keyboard_proof['from_commit']
+                if row['tested_commit']==comparison_commit:continue
             if output_profile_proof and gate in output_profile_proof['retained_gates']:
                 comparison_commit=output_profile_proof['from_commit']
                 if row['tested_commit']==comparison_commit:continue
