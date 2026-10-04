@@ -124,17 +124,14 @@ class ChargeEditingTest {
         assertEquals("Script", picker.query)
         click("charges-back")
         enter(ship, 0)
-        compose.onNodeWithTag("charges-search").performScrollTo().performClick()
-        edit("charges-search", "Tracking Speed Script")
-        val filtered = keyboardViewport()
-        compose.onNodeWithTag("charge-item-29001").performScrollTo().assertIsDisplayed()
-        screenshot("keyboard-probe-result")
-        click("charge-item-29001"); click("charge-load-0")
-        waitFor { !picker.loading && !picker.editing && picker.error == null && picker.options?.modules?.getOrNull(0)?.chargeId == 29001 }
-        assertEquals(29001, options(ship).modules.single().chargeId)
+        var filtered: JSONObject? = null
+        choose("Tracking Speed Script", 29001, 0) {
+            filtered = it; screenshot("keyboard-probe-result")
+        }
+        assertEquals(29001, options(ship).modules.single { it.index == 0 }.chargeId)
         screenshot("keyboard-probe-loaded")
         retain(obj("task" to "C03.1.3", "ephemeral" to true, "open" to first,
-            "recreated" to recreated, "closed" to closed, "filtered" to filtered,
+            "recreated" to recreated, "closed" to closed, "filtered" to checkNotNull(filtered),
             "filtered_result_visible" to true, "loaded_charge_id" to 29001), "keyboard-probe")
     }
     private fun retain(value: JSONObject, phase: String) {
@@ -145,9 +142,11 @@ class ChargeEditingTest {
             completion.readBytes()
         }
     }
-    private fun choose(name: String, id: Int, target: Int) {
+    private fun choose(name: String, id: Int, target: Int, onFiltered: ((JSONObject) -> Unit)? = null) {
         edit("charges-search", name)
-        keyboardViewport()
+        val viewport = keyboardViewport()
+        compose.onNodeWithTag("charge-item-$id").performScrollTo().assertIsDisplayed()
+        onFiltered?.invoke(viewport)
         click("charge-item-$id")
         click("charge-load-$target")
         waitFor { !picker.loading && !picker.editing && picker.error == null && picker.options?.modules?.getOrNull(target)?.chargeId == id }

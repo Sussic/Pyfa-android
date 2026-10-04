@@ -248,3 +248,12 @@ preserving userdata/evidence. The next probe passed its existing geometry,
 recreation and dismissal assertions, then exposed an incorrect added navigation
 step: the equipment charge picker returns directly home, not to equipment.
 Remove that extra step before retrying; filtered-script proof remains pending.
+
+Corrected candidate `db59358a` also passes all5 build/package gates. Its probe
+displayed/selected/loaded Tracking Speed Script, then failed a new assertion that
+incorrectly assumed the options list contained only fitted modules. The bridge
+also exposes vacant rack slots. Check the exact target index0 instead; the
+selected module's charge must still equal29001. Use the original full test's
+selection helper in the probe and retain its filtered-result screenshot through
+an observation callback, so the focused proof exercises that exact interaction.
+The original full-test assertions and numerical matrix remain intact.
