@@ -8,7 +8,7 @@ delegation, releases, phone installs, new infrastructure or billing changes.
 
 ## Current outcome
 
-`codex/c03-targeting-attributes`, based on master `b88713b3`; no open PR yet.
+`codex/c03-targeting-attributes`, based on master `b88713b3`; [PR #41](https://github.com/Sussic/Pyfa-android/pull/41).
 C03.1 implements all F07.01–F07.30 targeting/navigation and all21 cargo holds
 through serialized EOS and the independently pinned wx view. C03 remains active;
 C03.2 retains complete ship/item/charge inspection. [Task](tasks/C03-targeting-attributes.md)
@@ -29,8 +29,8 @@ truncated original and failed-transfer logs; the replacement is verified against
 matching APKs and source/local hashes, then visually reviewed. Focused1 and two
 successful supplementary native calls are separate from the required75.
 
-Exact next: commit reviewed receipt/docs, push this fork branch, open/review its
-PR, publish truthful exact-head `local/full-verification` and merge after checks.
+Exact next: validate/publish truthful exact-head `local/full-verification` on PR
+#41, finish live PR review/checks and merge after every required check passes.
 Then select C03.2, record its complete attribute/effect matrix and acceptance
 checks, and implement the next coherent outcome. No current blocker.
 
