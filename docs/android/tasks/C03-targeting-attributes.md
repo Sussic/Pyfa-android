@@ -307,3 +307,61 @@ it derives the corrected62 entries from the immutable archived76-gate run and
 retains every actual execution stamp, original snapshot, APK and store. All
 remaining native gates are still required.23 source/provenance,22 reporter and8
 inherited reuse regressions pass. Actual post-adoption validation remains next.
+
+## C03.1 final verification and review — 2026-10-04
+
+The preceding pending statements describe retained development checkpoints.
+Candidate `f462a1e7b7ed179484a7b19a17e003d2b204ef10` now passes the complete local
+run `20261004-042857-bfbbe157-2dd1cc`: all115 gates,75 required native executions,
+325 saved fits with268 inherited fits intact,215 reviewed screenshots and37
+rejections of corruptions to the four actual targeting reports. The
+[receipt](../evidence/c03-1-native.json) binds raw logs, APKs, reports, screenshot
+hashes/observations and every exact-source reuse prerequisite. No hosted workflow
+was dispatched or labelled passing. Fork PR delivery remains the next step;
+C03 remains active until complete inspector child C03.2 is also delivered.
+
+All62 reference/host and5 build gates pass. The unchanged pinned wx/EOS oracle
+supplies53 cases and complete437-hull hold enumeration. Native proof preserves
+every original value/type/unit/display/detail comparison, module/skill/cargo/
+projection change, edit/undo/redo/GC/copy witness and prior-stage graph. All three
+targeting preparations and the final restored process pass with their original
+900-second bounds. Every inherited offline, restart, numerical and A10 gate also
+passes; the recorded Windows history bound remains unchanged.
+
+The charge-test synchronization shares its original ten-second deadline with
+platform layout idleness. The original compatibility/state/copy/restart matrix
+passes on the completed full run. The focused `c85a20a3` probe actually filters,
+selects and loads Tracking Speed Script29001 through that same selection helper;
+all five transfer-verified images were reviewed. Its one native call is separate
+from the required75. CI independent-list ownership passes53 focused regressions
+and real post-adoption provenance validation. Host/build inputs retain their
+actual tested commits; no older Android result is relabelled as current.
+
+An initial full-run `fit.png` transfer was truncated. Its original bytes are
+retained in `initial-png-recovery/fit-truncated.png`. The unchanged existing
+offline shell UI test ran in separate ephemeral storage against matching APKs:
+the first UI pass had a failed artifact transfer; after diagnosed transport
+recovery the UI passed again. Source-before/source-after/local SHA256 checks and
+full PNG decoding establish the recovered image, then full-size review confirms
+the visible controls and statistics. Only that image was replaced; the full run
+and325-fit store were untouched. Both successful supplementary UI calls and the
+failed transfer/logs remain explicitly recorded. Delivery has78 successful native
+calls overall:75 required,1 focused and2 supplementary, with no inflated gate count.
+
+Final source review confirms EOS worker ownership, serialized execution and
+fit/revision identity checks. Generation tokens discard obsolete loads; the view
+renders only current matching results and retains expanded details per fit.
+Strict immutable decoding requires complete ordered eight-lock/21-hold families,
+correct units and numeric kinds, finite values and consistent availability.
+Warp-core strength retains its signed original value; hold absence is explicit
+while precise zero remains the actual EOS result. No Kotlin fitting formula,
+engine/fixture change, tolerance or performance relaxation is introduced.
+
+All production images are legible within system/keyboard boundaries. Three
+inherited resource-probe images have low-contrast status-bar icons because
+ResourceProbeTest replaces content with a default light MaterialTheme; the
+production activity uses the explicit dark scheme. Their statistics/details are
+readable and native assertions pass. This test-content limitation is recorded
+in individual review observations; it is not an unrecorded product correction.
+API36 x86_64 runtime and ARM64 package inspection do not establish ARM64 runtime,
+older APIs, signing/upgrade or user usability. Full feature parity stays open.

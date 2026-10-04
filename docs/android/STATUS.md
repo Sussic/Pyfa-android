@@ -1,88 +1,57 @@
 # Android project status
 
-Updated: 2026-10-04. **C02 delivered; C03.1 active.**
+Updated: 2026-10-04. **C03.1 verified; fork delivery pending.**
 
-The authorized goal continues sequential ready, approved work through review,
-local verification and fork delivery. Preserve completed W02 setup; no hosted
-workflow dispatch, delegation, releases, phone installs or billing changes.
+The authorized goal continues sequential ready, approved outcomes through review,
+local verification and fork delivery. Preserve W02 setup; no hosted dispatch,
+delegation, releases, phone installs, new infrastructure or billing changes.
 
 ## Current outcome
 
-`codex/c03-targeting-attributes`, selected from master `b88713b3`; no open PR.
-C03.1 implements F07.01–F07.30 targeting/navigation and all21 cargo holds using
-serialized EOS and the independently pinned original wx view. C03.2 retains full
-item inspection. [Task](tasks/C03-targeting-attributes.md) owns the matrices,
-source review and failure history; [roadmap](ROADMAP.md) owns delivered scope.
+`codex/c03-targeting-attributes`, based on master `b88713b3`; no open PR yet.
+C03.1 implements all F07.01–F07.30 targeting/navigation and all21 cargo holds
+through serialized EOS and the independently pinned wx view. C03 remains active;
+C03.2 retains complete ship/item/charge inspection. [Task](tasks/C03-targeting-attributes.md)
+owns the matrices, source review and accurately retained failure history.
 
-Candidate `9272c2a5`, full run `20261004-042857-bfbbe157-2dd1cc`, stopped after76
-passing gates at charge-picker script selection with the IME open. The actual
-9-fit failed store is retained; its original8 IDs/revisions match the preceding
-module report. All62 host/reference and5 build gates passed. Twenty-seven current
-screenshots are reviewed; the failed charge image is not approved.
+Candidate `f462a1e7` passes full local run `20261004-042857-bfbbe157-2dd1cc`:
+all115 gates (62 reference/host,5 build/package,48 native),75 required native
+executions,325 saved fits/268 inherited,215 manually reviewed screenshots and37
+actual-report corruption rejections. [Receipt](evidence/c03-1-native.json) binds
+actual execution stamps, raw hashes, all source-equivalence prerequisites and
+limits. Completed evidence validation passes; no hosted Actions pass is claimed.
 
-Selected **C03.1.3 keyboard-ready charge selection**: diagnose the platform IME
-resize/scroll race, retain every existing assertion/deadline and prove filtered
-result selection/loading in the focused offline native probe before full delivery.
-Synchronization and the probe are implemented. Two added probe assumptions
-(return route and vacant rack slots) were corrected after native failures; it now
-uses the full-test selection helper. Complete success remains pending. Exact next:
-build the stable candidate, run/review its5-image probe, then restart the complete
-native chain through proven62-host input reuse and same-commit build reuse.
+Keyboard viewport/selection repairs pass focused offline proof and the original
+full charge matrix/restart checks. Metadata indexing preserves all comparisons
+and the60-second deadline. CI list-ownership repair passes53 focused regressions
+and actual post-adoption validation. Initial screenshot recovery retains the
+truncated original and failed-transfer logs; the replacement is verified against
+matching APKs and source/local hashes, then visually reviewed. Focused1 and two
+successful supplementary native calls are separate from the required75.
 
-Original candidate `bfbbe157` initially stopped after61
-passing reference/host gates. All fresh desktop exports and host calculations,
-GC/history/copy/restart checks passed. `headless:targeting` completed its two engine
-processes but its validator subprocess exceeded the unchanged60-second deadline.
-Raw logs/partial proof are retained; the equivalent indexing correction allowed
-the targeting gate and subsequent build/native gates to proceed on `9272c2a5`.
-
-Selected **C03.1.2 validator metadata indexing** is implemented: one diagnostic
-summary falls from13.68 to1.61 profiled seconds;30 million repeated prefix checks
-were the hotspot. All16 original validators plus prefix-equivalence regression
-pass in21.5 seconds within the unchanged60-second deadline. Twelve exact-source
-guards pass;61 unchanged inputs were reused and targeting/build/native proceeded.
-The installed restart/reporter path now also narrowly proves the exact charge-test
-correction, archives old native/APK proof and requires all fresh native gates.
-Seventeen source/build-provenance regressions,22 reporter regressions and8 inherited
-output-reuse regressions pass. Valid same-commit5-gate build proof can be imported
-with unchanged logs/APK hashes; every invalid or missing prerequisite is rejected.
-
-Current `c85a20a3` focused native probe passes with5 hash-verified reviewed images.
-The full restart imported67 valid host/build gates and passed native initial5
-tests, then paused at68 gates after a separate proof validator found a list alias:
-adding imported build gates also extended the recorded retained-host list.
-Selected **C03.1.3.1 evidence-list ownership** corrects only CI bookkeeping and
-adds an integration regression. Preserve valid APKs, native initial proof and
-store; resume through a narrowly verified launcher-only adoption after repair.
-The correction and exact CI-only adoption are implemented:23 source/provenance,
-22 reporter and8 inherited reuse tests pass. Actual adoption validation is next;
-no build, engine, fixture, APK, native assertion or deadline changed.
-
-Keyboard repair C03.1.1 passes5 build gates,5 geometry validators and focused
-native run `c031-keyboard-focused-20261004-042420` with3 hash-verified reviewed
-screenshots, including recreation and keyboard dismissal. Earlier full run
-`20261003-150233-9badd3ec-e6ca98` paused on `aefc6faf` after78 gates when visual QA
-found status-bar overlap. Those native results are historical after the app fix.
-Full delivery still requires115 gates/75 native executions/325 fits and215
-screenshot reviews; no full success or delivery is claimed.
+Exact next: commit reviewed receipt/docs, push this fork branch, open/review its
+PR, publish truthful exact-head `local/full-verification` and merge after checks.
+Then select C03.2, record its complete attribute/effect matrix and acceptance
+checks, and implement the next coherent outcome. No current blocker.
 
 ## Delivered work
 
-W02 and B09.1 [PR #33](https://github.com/Sussic/Pyfa-android/pull/33) remain closed;
+W02/B09.1 [PR #33](https://github.com/Sussic/Pyfa-android/pull/33) remain closed.
 B09.2 [receipt](evidence/b09-2-native.json) preserves history disposition. C01 is
-closed through [resources](evidence/c01-1-native.json),
-[capacitor](evidence/c01-2-native.json), [defenses](evidence/c01-3-1-native.json) and
-[tank](evidence/c01-3-2-native.json). C02 [PR #40](https://github.com/Sussic/Pyfa-android/pull/40)
-passed109 gates/71 native executions/268 fits/191 screenshot reviews; its
-[receipt](evidence/c02-native.json) binds actual commits and retained proof.
+closed through [resources](evidence/c01-1-native.json), [capacitor](evidence/c01-2-native.json),
+[defenses](evidence/c01-3-1-native.json) and [tank](evidence/c01-3-2-native.json).
+C02 [PR #40](https://github.com/Sussic/Pyfa-android/pull/40) passed109 gates/71
+native executions/268 fits/191 reviewed screenshots; [receipt](evidence/c02-native.json).
 Earlier A/B milestones remain closed in their task/evidence files and ROADMAP.
 
 ## Execution and limits
 
-Use the installed [local launcher](LOCAL-VERIFICATION.md),
-`build/windows-env.ps1` and ignored `build/WINDOWS-CHECKPOINT.md`. Never edit the
-tracked candidate during a run. Preserve every inherited gate and A10 requirement.
-Kotlin/Compose + Chaquopy + serialized EOS remain within accepted A10 limits;
-[scope](SCOPE.md), [architecture](ARCHITECTURE.md) and [evidence rules](DEVELOPMENT.md)
-apply. Both ABIs are packaged; API36 x86_64 native proof is separate from ARM64,
-older-API, signing/upgrade and user-usability acceptance. Full parity is unproven.
+Use the installed [local launcher](LOCAL-VERIFICATION.md), `build/windows-env.ps1`
+and ignored `build/WINDOWS-CHECKPOINT.md`. Reuse only valid unchanged inputs;
+preserve every inherited assertion, tolerance, restart, screenshot and A10 gate.
+Kotlin/Compose + Chaquopy + serialized EOS retain accepted A10 limits. Both ABIs
+are packaged; API36 x86_64 runtime proof does not establish ARM64, older APIs,
+signing/upgrade or user usability. Three test-replaced light-theme resource-probe
+images have recorded status-bar contrast limits; product screens are readable.
+Full feature parity remains unproven. [Roadmap](ROADMAP.md), [scope](SCOPE.md),
+[architecture](ARCHITECTURE.md) and [development](DEVELOPMENT.md) apply.
