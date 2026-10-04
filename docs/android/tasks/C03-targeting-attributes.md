@@ -216,3 +216,27 @@ boundaries, changed deadlines/fixtures/engine/app, missing gates, executed faile
 gate reuse and a different baseline. Application/APKs, fixtures, numerical
 tolerances, native900-second deadlines and A10 checks are unchanged.
 Full proof and215 screenshot review remain outstanding.
+
+## C03.1.3 — keyboard-ready charge selection (selected2026-10-04)
+
+Full candidate `9272c2a5` passed76 gates through native module editing. Charge
+prepare then failed its existing `charge-item-29001` visibility assertion after
+filtering Tracking Speed Script with the IME opening. The retained actual image
+shows the search field at the keyboard edge and the result below the viewport;
+the fixed status-bar boundary is clear. This suggests a platform resize/scroll
+timing race; a focused reproduction must establish the correction.
+
+The exact failed9-fit store is retained in the full run's
+`charge-keyboard-failure/partial-graph.sqlite3`, SHA256
+`3da2ad960d331403d7a51f94b1e690ee15435b273c7331da47f2007a586a2f6b`.
+Its original8 IDs/revisions match the preceding module report. Main run state
+was preserved during diagnostic extraction; original instrumentation and image
+hashes are bound in `charge-keyboard-failure/receipt.json`.
+
+Bounded outcome: synchronize actual keyboard/layout readiness before scrolling
+to a filtered charge, and extend the existing ephemeral probe to assert/select/
+load that script with the IME open. Keep original visibility, numerical, restart,
+geometry and persistence assertions, tolerances and deadlines. Acceptance requires
+focused offline native proof and reviewed screenshots, then the complete stable
+delivery suite. Previous native results remain historical if the test APK changes;
+reuse unchanged host inputs only with exact source/prerequisite proof.

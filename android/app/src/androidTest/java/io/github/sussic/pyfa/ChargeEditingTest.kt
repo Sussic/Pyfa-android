@@ -65,9 +65,15 @@ class ChargeEditingTest {
             "screencap -p /sdcard/Download/pyfa-b04231-$name.png")).use { it.readBytes() }
     }
     private fun keyboardViewport(visible: Boolean = true): JSONObject {
+        val deadline = android.os.SystemClock.uptimeMillis() + 10_000
         compose.waitUntil(10_000) {
             compose.activity.window.decorView.rootWindowInsets?.isVisible(android.view.WindowInsets.Type.ime()) == visible
         }
+        // Compose idleness alone does not wait for the platform IME animation and
+        // its subsequent focused-field bring-into-view request. Share the existing
+        // ten-second deadline with accessibility/layout idleness before scrolling.
+        InstrumentationRegistry.getInstrumentation().uiAutomation.waitForIdle(
+            500, (deadline - android.os.SystemClock.uptimeMillis()).coerceAtLeast(1))
         sync()
         val decor = compose.activity.window.decorView
         val insets = checkNotNull(decor.rootWindowInsets)
@@ -116,8 +122,20 @@ class ChargeEditingTest {
         compose.onNodeWithTag("charges-search").performScrollTo()
         val closed = keyboardViewport(false); screenshot("keyboard-probe-closed")
         assertEquals("Script", picker.query)
-        retain(obj("task" to "C03.1.1", "ephemeral" to true, "open" to first,
-            "recreated" to recreated, "closed" to closed), "keyboard-probe")
+        click("charges-back"); click("equipment-back")
+        enter(ship, 0)
+        compose.onNodeWithTag("charges-search").performScrollTo().performClick()
+        edit("charges-search", "Tracking Speed Script")
+        val filtered = keyboardViewport()
+        compose.onNodeWithTag("charge-item-29001").performScrollTo().assertIsDisplayed()
+        screenshot("keyboard-probe-result")
+        click("charge-item-29001"); click("charge-load-0")
+        waitFor { !picker.loading && !picker.editing && picker.error == null && picker.options?.modules?.getOrNull(0)?.chargeId == 29001 }
+        assertEquals(29001, options(ship).modules.single().chargeId)
+        screenshot("keyboard-probe-loaded")
+        retain(obj("task" to "C03.1.3", "ephemeral" to true, "open" to first,
+            "recreated" to recreated, "closed" to closed, "filtered" to filtered,
+            "filtered_result_visible" to true, "loaded_charge_id" to 29001), "keyboard-probe")
     }
     private fun retain(value: JSONObject, phase: String) {
         val descriptors = InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommandRw(
@@ -129,6 +147,7 @@ class ChargeEditingTest {
     }
     private fun choose(name: String, id: Int, target: Int) {
         edit("charges-search", name)
+        keyboardViewport()
         click("charge-item-$id")
         click("charge-load-$target")
         waitFor { !picker.loading && !picker.editing && picker.error == null && picker.options?.modules?.getOrNull(target)?.chargeId == id }
