@@ -94,7 +94,12 @@ class ChargeEditingTest {
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
         assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
         assertFalse(diagnostics().getJSONObject("persistence").getBoolean("enabled"))
-        click("equipment-open"); click("equipment-charges")
+        val ship = create("Rupture", "Keyboard viewport probe", listOf(ModuleSpec("Tracking Computer II", ModuleState.ACTIVE)))
+        EngineRuntime.selectFit(context, ship).get(30, TimeUnit.SECONDS)
+        click("equipment-open")
+        val equipment = ViewModelProvider(compose.activity)[EquipmentModel::class.java]
+        waitFor { !equipment.busy && equipment.catalog != null }
+        click("equipment-charges")
         waitFor { !picker.loading && picker.options != null }
         compose.onNodeWithTag("charges-search").performScrollTo().performClick()
         edit("charges-search", "Script")
