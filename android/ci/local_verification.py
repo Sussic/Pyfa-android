@@ -383,6 +383,11 @@ class Run:
                 self.state['output_resource_reuse']={'from_commit':self.state['commit'],'to_commit':current,
                     'completed_before_adoption':list(self.state['completed'])}
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
+            if self.state['commit']!=current and args.adopt_launcher_fix and self.state.get('charge_keyboard_host_reuse'):
+                from charge_keyboard_retry import ALIAS_BEFORE,adopt_alias_fix
+                if self.state['commit']==ALIAS_BEFORE:
+                    adopt_alias_fix(ROOT,self.directory,self.state,current,self.original_run_bytes)
+                    self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.restart_native:
                 from charge_keyboard_retry import BEFORE as charge_before,exact_source as charge_source
                 if self.state['commit']==charge_before:
@@ -395,7 +400,7 @@ class Run:
                     self.state['charge_keyboard_host_reuse']={'from_commit':self.state['commit'],'to_commit':current,
                         'completed_before_adoption':list(self.state['completed']),'retained_gates':retained,
                         'retained_log_hashes':{gate:latest[gate]['log_sha256'] for gate in retained}}
-                    self.state['completed']=retained
+                    self.state['completed']=list(retained)
                     self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             if self.state['commit']!=current and args.restart_native:
                 from output_profile_retry import BEFORE,exact_source

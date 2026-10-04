@@ -275,3 +275,35 @@ tests preserve older commit stamps and require all fresh native gates. Twenty-tw
 reporter and8 inherited output-reuse regressions also pass. Actual native proof
 and full screenshot review remain pending. The platform idle wait shares the
 existing10-second bound, following [UiAutomation's documented global timeout](https://developer.android.com/reference/android/app/UiAutomation#waitForIdle(long,%20long)).
+
+## C03.1.3.1 — evidence-list ownership (selected2026-10-04)
+
+Stable `c85a20a3` passes all5 build/package gates,47 retained source/reporter
+regressions and the focused offline keyboard/filter/select/load probe. All5 actual
+screenshots are hash-verified and reviewed in
+`c031-keyboard-focused-20261004-062405/screenshot-review.json`. The installed full
+restart imports62 host/reference and5 same-commit build gates, then passes the5
+native initial tests. A separate post-restart provenance validator rejects its
+metadata: the completed and retained-host lists share an object, so importing
+build gates extends both. Requested pause completes cleanly after initial at68.
+No full pass or passing status has been published.
+
+Bounded correction: give the completed list independent ownership; retain exactly
+the original62 host gates, and add a constructor/import integration regression.
+Restore only that metadata from the immutable archived76-gate prior run. Prove
+the exact CI-only source pair and unchanged app/test APKs, retain all valid logs,
+initial native proof and store, and adopt through the existing explicit launcher
+seam. Every remaining native gate, screenshot and performance requirement still
+must execute. Acceptance includes actual post-adoption provenance validation,
+source-mutation rejection checks and the complete full delivery suite.
+
+Implemented independent completed-list ownership and a regression that appends a
+build gate after construction and requires the recorded host list to stay62.
+Six additional alias-adoption regressions pin the exact launcher source pair,
+reject any Android/test/fixture/native-gate changes or altered list copy, and
+preserve the original paused snapshot/completed inputs. The existing explicit
+AdoptLauncherFix seam accepts only this exact paused68-gate source/proof pair;
+it derives the corrected62 entries from the immutable archived76-gate run and
+retains every actual execution stamp, original snapshot, APK and store. All
+remaining native gates are still required.23 source/provenance,22 reporter and8
+inherited reuse regressions pass. Actual post-adoption validation remains next.

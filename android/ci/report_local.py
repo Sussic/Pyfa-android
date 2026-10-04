@@ -154,7 +154,10 @@ def validate(run,root):
         validate_retained(root,run,charge_keyboard_proof)
         assert charge_keyboard_proof['to_commit']==state['commit']
         for gate in state['plan']:
-            if gate.startswith(('build:','native:')):assert latest[gate]['tested_commit']==state['commit'],gate
+            if gate.startswith(('build:','native:')):
+                alias=charge_keyboard_proof.get('bookkeeping_fix')
+                retained=alias and gate in alias['retained_input_gates'] and latest[gate]['tested_commit']==alias['from_commit']
+                assert latest[gate]['tested_commit']==state['commit'] or retained,gate
     output_profile_proof=state.get('output_profile_host_reuse')
     if output_profile_proof:
         from output_profile_retry import validate_retained
@@ -174,6 +177,8 @@ def validate(run,root):
         assert row['exit_code']==0 and row['tested_commit'],gate
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
+            alias=charge_keyboard_proof.get('bookkeeping_fix') if charge_keyboard_proof else None
+            if alias and gate in alias['retained_input_gates'] and row['tested_commit']==alias['from_commit']:continue
             if capacitor_proof and gate in capacitor_proof['retained_gates']:
                 assert row['tested_commit']==capacitor_proof['from_commit']
                 continue

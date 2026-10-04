@@ -12,6 +12,62 @@ PAIR=('5b012207c654cf83e7b95e36121ebd73d5616679937a6cf54523f6ce19cbd167','4e0670
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
+ALIAS_BEFORE='c85a20a3013e7dc3328d3a905ef49752d8ed7762'
+ALIAS_LOCAL_PAIR=('4ed2356c76735f9b65de41aaa913b452ed10876f3860cf3932c70fa7c43b6c08','e00bfe0f0b081f0f0c0367cb10e4534649523e4c12f4f4de5a6c26590fee25b2')
+
+def alias_source(root,before,after):
+    assert before==ALIAS_BEFORE
+    local='android/ci/local_verification.py'
+    def source(revision):return subprocess.check_output(['git','show',revision+':'+local],cwd=root)
+    for revision,digest in zip((before,after),ALIAS_LOCAL_PAIR):
+        assert hashlib.sha256(source(revision).replace(b'\r\n',b'\n')).hexdigest()==digest
+    changed=subprocess.check_output(['git','diff','--name-only',before,after],cwd=root,text=True).splitlines()
+    allowed={local,'android/ci/charge_keyboard_retry.py','android/ci/test_charge_keyboard_retry.py','android/ci/report_local.py'}
+    assert local in changed and all(p in allowed or p.startswith('docs/android/') for p in changed)
+    def executed(revision):
+        tree=ast.parse(source(revision).decode())
+        return {n.name:ast.dump(n,include_attributes=False) for n in ast.walk(tree)
+                if isinstance(n,ast.FunctionDef) and n.name in ('plan','host','build','execute')}
+    assert executed(before)==executed(after)
+
+def validate_alias(root,run,proof):
+    alias=proof['bookkeeping_fix'];alias_source(root,alias['from_commit'],alias['to_commit'])
+    assert alias['to_commit']==proof['to_commit']
+    path=run/alias['original_run_file'];assert path.resolve().is_relative_to(run.resolve())
+    assert sha(path)==alias['original_run_sha256']
+    original=json.loads(path.read_text());from local_verification import plan
+    assert original['commit']==ALIAS_BEFORE and original['status']=='paused'
+    assert original['completed']==alias['retained_input_gates']==plan('full',None)[:68]
+    assert plan('full',None)[67]=='native:initial'
+    old=original['charge_keyboard_host_reuse']
+    assert old['retained_gates']==proof['retained_gates']+plan('build',None)
+    assert old['completed_before_adoption']==proof['completed_before_adoption']
+    assert old['build_reuse']==proof['build_reuse']
+    assert old['retained_log_hashes']==proof['retained_log_hashes']
+    current=json.loads((run/'run.json').read_text())
+    older={r['gate']:r for r in original['attempts']};latest={r['gate']:r for r in current['attempts']}
+    for gate in alias['retained_input_gates']:
+        assert latest[gate]==older[gate] and latest[gate]['exit_code']==0
+        assert sha(run/latest[gate]['log'])==latest[gate]['log_sha256']
+
+def adopt_alias_fix(root,run,state,current,original_bytes):
+    from local_verification import plan
+    alias_source(root,state['commit'],current)
+    assert state['status']=='paused' and state['completed']==plan('full',None)[:68]
+    proof=state['charge_keyboard_host_reuse']
+    prior=json.loads((run/proof['archive']/'run.json').read_text())
+    retained=[g for g in prior['completed'] if g.startswith(('desktop:','reference:','headless:'))]
+    assert proof['retained_gates']==retained+plan('build',None)
+    corrected=json.loads(json.dumps(proof));corrected['retained_gates']=retained
+    validate_retained(root,run,corrected)
+    path=run/'charge-keyboard-alias-before.json'
+    if path.exists():assert path.read_bytes()==original_bytes
+    else:path.write_bytes(original_bytes)
+    proof['retained_gates']=list(retained)
+    proof['bookkeeping_fix']=dict(from_commit=state['commit'],to_commit=current,retained_input_gates=list(state['completed']),
+        original_run_file=path.name,original_run_sha256=sha(path))
+    proof['to_commit']=current
+
 def validated_build(run,proof,commit):
     source=(run.parent/proof['source_run']).resolve()
     assert source.parent==run.parent.resolve() and source!=run.resolve()
@@ -76,6 +132,9 @@ def exact_source(root,before,after,completed):
 
 def validate_retained(root,run,proof):
     exact_source(root,proof['from_commit'],proof['to_commit'],proof['completed_before_adoption'])
+    alias=proof.get('bookkeeping_fix')
+    if alias:validate_alias(root,run,proof)
+    build_commit=alias['from_commit'] if alias else proof['to_commit']
     archive=(run/proof['archive']).resolve()
     assert archive.is_relative_to(run.resolve()) and archive!=run.resolve()
     prior=json.loads((archive/'run.json').read_text(encoding='utf-8'))
@@ -102,11 +161,11 @@ def validate_retained(root,run,proof):
     for gate,digest in proof['retained_log_hashes'].items():
         assert latest[gate]['log_sha256']==sha(run/latest[gate]['log'])==digest,gate
     if proof.get('build_reuse'):
-        source,state,latest_build=validated_build(run,proof['build_reuse'],proof['to_commit'])
+        source,state,latest_build=validated_build(run,proof['build_reuse'],build_commit)
         current=json.loads((run/'run.json').read_text())
         current_latest={row['gate']:row for row in current['attempts']}
         for gate in state['completed']:
             row=current_latest[gate]
-            assert row['reused_from_run']==source.name and row['tested_commit']==proof['to_commit']
+            assert row['reused_from_run']==source.name and row['tested_commit']==build_commit
             assert row['log_sha256']==sha(run/row['log'])==latest_build[gate]['log_sha256']
         for name,digest in proof['build_reuse']['apk_hashes'].items():assert sha(run/'apks'/name)==digest

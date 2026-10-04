@@ -93,6 +93,55 @@ class KeyboardRetryTests(unittest.TestCase):
             self.assertTrue(all(row['tested_commit']==repair.BEFORE for row in runner.state['attempts'][1:]))
             self.assertEqual(1,runner.state['attempts'][-1]['exit_code'])
             self.assertEqual('after',runner.state['commit'])
+            runner.state['completed'].append('build:dependencies')
+            self.assertEqual(62,len(proof['retained_gates']))
+            self.assertIsNot(runner.state['completed'],proof['retained_gates'])
+
+class AliasFixTests(unittest.TestCase):
+    def setUp(self):
+        self.old=subprocess.check_output(['git','show',repair.ALIAS_BEFORE+':android/ci/local_verification.py'],cwd=ROOT)
+        self.new=(ROOT/'android/ci/local_verification.py').read_bytes()
+        self.changed=['android/ci/local_verification.py','android/ci/charge_keyboard_retry.py','android/ci/report_local.py','android/ci/test_charge_keyboard_retry.py']
+    def output(self,args,**kwargs):
+        if args[1]=='diff':return '\n'.join(self.changed)
+        return self.old if args[2].startswith(repair.ALIAS_BEFORE+':') else self.new
+    def validate(self):
+        with patch.object(repair.subprocess,'check_output',side_effect=self.output):repair.alias_source(ROOT,repair.ALIAS_BEFORE,'after')
+    def test_exact_ci_only_alias_source_passes(self):self.validate()
+    def test_removed_list_copy_fails(self):
+        self.new=self.new.replace(b"self.state['completed']=list(retained)",b"self.state['completed']=retained")
+        with self.assertRaises(AssertionError):self.validate()
+    def test_app_test_fixture_or_native_gate_change_fails(self):
+        for path in (repair.PATH,'android/app/src/main/java/io/github/sussic/pyfa/MainActivity.kt',
+                     'tools/android_reference/fixtures/targeting.json','android/ci/native_suite.py'):
+            with self.subTest(path=path):
+                self.changed.append(path)
+                with self.assertRaises(AssertionError):self.validate()
+                self.changed.pop()
+    def test_other_alias_baseline_fails(self):
+        with self.assertRaises(AssertionError):repair.alias_source(ROOT,'other','after')
+    def test_adoption_restores_only_hosts_preserving_completed_inputs_and_original_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run=Path(directory);(run/'archive').mkdir()
+            prior=dict(completed=launcher.plan('full',None)[:76])
+            (run/'archive/run.json').write_text(json.dumps(prior))
+            state=dict(commit=repair.ALIAS_BEFORE,status='paused',completed=launcher.plan('full',None)[:68],
+                charge_keyboard_host_reuse=dict(archive='archive',retained_gates=launcher.plan('full',None)[:67],
+                    to_commit=repair.ALIAS_BEFORE))
+            original=json.dumps(state).encode();original_completed=list(state['completed'])
+            with patch.object(repair.subprocess,'check_output',side_effect=self.output),patch.object(repair,'validate_retained') as verify:
+                repair.adopt_alias_fix(ROOT,run,state,'after',original)
+            self.assertEqual(launcher.plan('full',None)[:62],verify.call_args.args[2]['retained_gates'])
+            proof=state['charge_keyboard_host_reuse']
+            self.assertEqual(launcher.plan('full',None)[:62],proof['retained_gates'])
+            self.assertEqual(original_completed,state['completed'])
+            self.assertEqual(original_completed,proof['bookkeeping_fix']['retained_input_gates'])
+            self.assertEqual(original,(run/proof['bookkeeping_fix']['original_run_file']).read_bytes())
+            self.assertEqual('after',proof['to_commit'])
+    def test_wrong_pause_boundary_rejected(self):
+        state=dict(commit=repair.ALIAS_BEFORE,status='paused',completed=launcher.plan('full',None)[:67])
+        with patch.object(repair.subprocess,'check_output',side_effect=self.output):
+            with self.assertRaises(AssertionError):repair.adopt_alias_fix(ROOT,ROOT,state,'after',b'')
 
 class BuildReuseTests(unittest.TestCase):
     def setUp(self):

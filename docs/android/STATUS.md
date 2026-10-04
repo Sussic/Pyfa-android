@@ -47,6 +47,17 @@ Seventeen source/build-provenance regressions,22 reporter regressions and8 inher
 output-reuse regressions pass. Valid same-commit5-gate build proof can be imported
 with unchanged logs/APK hashes; every invalid or missing prerequisite is rejected.
 
+Current `c85a20a3` focused native probe passes with5 hash-verified reviewed images.
+The full restart imported67 valid host/build gates and passed native initial5
+tests, then paused at68 gates after a separate proof validator found a list alias:
+adding imported build gates also extended the recorded retained-host list.
+Selected **C03.1.3.1 evidence-list ownership** corrects only CI bookkeeping and
+adds an integration regression. Preserve valid APKs, native initial proof and
+store; resume through a narrowly verified launcher-only adoption after repair.
+The correction and exact CI-only adoption are implemented:23 source/provenance,
+22 reporter and8 inherited reuse tests pass. Actual adoption validation is next;
+no build, engine, fixture, APK, native assertion or deadline changed.
+
 Keyboard repair C03.1.1 passes5 build gates,5 geometry validators and focused
 native run `c031-keyboard-focused-20261004-042420` with3 hash-verified reviewed
 screenshots, including recreation and keyboard dismissal. Earlier full run
