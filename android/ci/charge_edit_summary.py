@@ -1,6 +1,7 @@
 """Require complete native charge parity, typed values and durable restart."""
 from copy import deepcopy
 import json
+import math
 from pathlib import Path
 from market_summary import exact
 from module_edit_summary import typed_compare
@@ -8,8 +9,27 @@ from module_edit_summary import typed_compare
 PREPARE = ['complete_matrix', 'all_4242_charge_sets', 'projection_and_command_recipients', 'prior_fits_unchanged',
     'picker_pagination_search', 'picker_recreation', 'load_replace_unload', 'neighbour_state_charge_retained',
     'script', 'laser_crystal', 'mining_crystal', 'active_fit_discovery', 'empty_fit_refresh', 'independent_copy',
-    'rejections_atomic', 'recent_unchanged', 'typed_protocol_guards']
+    'rejections_atomic', 'recent_unchanged', 'typed_protocol_guards', 'keyboard_viewport']
 RESTORED = ['fresh_process_restore', 'identities_states_charges_values_retained', 'options_and_recent_retained', 'reopen_each_fit']
+
+
+def keyboard_viewport(row, visible=True):
+    """Reject obscured input and viewport using measured Android/Compose geometry."""
+    assert type(row) is dict and set(row) == {'keyboard_visible', 'window_height', 'status_top',
+        'navigation_bottom', 'ime_bottom', 'viewport_top', 'viewport_bottom', 'field_top', 'field_bottom', 'resize_mode'}
+    assert row['keyboard_visible'] is visible
+    for key in ('window_height', 'status_top', 'navigation_bottom', 'ime_bottom', 'resize_mode'):
+        assert type(row[key]) is int and row[key] >= 0
+    for key in ('viewport_top', 'viewport_bottom', 'field_top', 'field_bottom'):
+        assert type(row[key]) in (int, float) and math.isfinite(row[key])
+    assert row['resize_mode'] == 16  # Android SOFT_INPUT_ADJUST_RESIZE.
+    assert row['window_height'] > 0 and row['status_top'] > 0
+    if visible:
+        assert row['ime_bottom'] > row['navigation_bottom']
+    else:
+        assert row['ime_bottom'] == 0
+    bottom = row['window_height'] - max(row['navigation_bottom'], row['ime_bottom'])
+    assert row['status_top'] <= row['viewport_top'] <= row['field_top'] < row['field_bottom'] <= row['viewport_bottom'] <= bottom
 
 
 def summarize(reports, engine):
@@ -17,6 +37,8 @@ def summarize(reports, engine):
     assert [report['phase'] for report in reports] == ['prepare', 'restored']
     assert len({report['pid'] for report in reports}) == 2
     prepare, restored = reports
+    keyboard_viewport(prepare['keyboard_viewport'])
+    assert restored['keyboard_viewport'] is None
     for report in reports:
         assert report['task'] == 'B04.2.3.1'
         for stage in ('runtime_start', 'runtime_end'):

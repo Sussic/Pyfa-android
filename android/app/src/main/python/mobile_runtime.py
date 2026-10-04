@@ -122,6 +122,10 @@ def output_details(fit_id):
     return encoded(_bridge.output_details(fit_id))
 
 
+def targeting_details(fit_id):
+    return encoded(_bridge.targeting_details(fit_id))
+
+
 def defense_details(fit_id):
     return encoded(_bridge.defense_details(fit_id))
 

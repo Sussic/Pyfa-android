@@ -202,7 +202,7 @@ class NativeBoundaryTests(unittest.TestCase):
         previous=subprocess.check_output(['git','show','2d941fd9:'+path],cwd=ROOT,text=True,encoding='utf-8')
         current=(ROOT/path).read_text(encoding='utf-8')
         flags=lambda text:set(re.findall(r'containsKey\("([^"]+)"\)',text))
-        self.assertEqual(flags(previous)|{'c0132_phase','c02_phase'}, flags(current))
+        self.assertEqual(flags(previous)|{'c0132_phase','c02_phase','c031_phase'}, flags(current))
         condition=' and '.join(f'{flag!r} not in args' for flag in sorted(flags(current)))
         self.assertTrue(eval(condition,{'args':set()}))
         for flag in flags(current): self.assertFalse(eval(condition,{'args':{flag}}))
@@ -212,7 +212,7 @@ class NativeBoundaryTests(unittest.TestCase):
         from local_verification import plan
         self.assertIn('reference:tank',plan('full',None));self.assertIn('headless:tank',plan('full',None))
         self.assertIn('native:tank-prepare',plan('full',None));self.assertIn('native:tank-restored',plan('full',None))
-        self.assertEqual(109,len(plan('full',None)))
+        self.assertEqual(115,len(plan('full',None)))
     def test_hash_verified_pull_rejects_truncation_wrong_hash_and_empty(self):
         text=(ROOT/'android/ci/check-tank.py').read_text(encoding='utf-8');tree=ast.parse(text)
         function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='pull')

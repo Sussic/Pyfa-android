@@ -14,6 +14,11 @@ class HistoryWitnessReuseTests(unittest.TestCase):
         cls.previous=subprocess.check_output(['git','show',BEFORE+':'+PATH],cwd=ROOT)
         cls.previous_launcher=subprocess.check_output(['git','show',BEFORE+':android/ci/local_verification.py'],cwd=ROOT,text=True,encoding='utf-8')
     def setUp(self):
+        # Exercise the delivered C02 boundary, before C03 added its own gates.
+        gate_patch=patch.multiple(launcher,FAMILIES=[g for g in launcher.FAMILIES if g!='targeting'],
+            HEADLESS=[g for g in launcher.HEADLESS if g!='targeting'],
+            NATIVE_STEPS=[g for g in launcher.NATIVE_STEPS if not g.startswith('targeting-')])
+        gate_patch.start();self.addCleanup(gate_patch.stop)
         self.current=(ROOT/PATH).read_bytes();self.completed=launcher.plan('full',None)[:54]
         self.changed=[PATH,'android/ci/local_verification.py','android/ci/report_local.py','android/ci/test_output_history_retry.py','docs/android/STATUS.md']
     def output(self,args,**kwargs):

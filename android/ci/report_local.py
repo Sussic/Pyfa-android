@@ -148,6 +148,16 @@ def validate(run,root):
             assets={name for name in old.namelist() if name.startswith('assets/')}
             assert assets=={name for name in new.namelist() if name.startswith('assets/')}
             assert all(old.read(name)==new.read(name) for name in assets)
+    charge_keyboard_proof=state.get('charge_keyboard_host_reuse')
+    if charge_keyboard_proof:
+        from charge_keyboard_retry import validate_retained
+        validate_retained(root,run,charge_keyboard_proof)
+        assert charge_keyboard_proof['to_commit']==state['commit']
+        for gate in state['plan']:
+            if gate.startswith(('build:','native:')):
+                alias=charge_keyboard_proof.get('bookkeeping_fix')
+                retained=alias and gate in alias['retained_input_gates'] and latest[gate]['tested_commit']==alias['from_commit']
+                assert latest[gate]['tested_commit']==state['commit'] or retained,gate
     output_profile_proof=state.get('output_profile_host_reuse')
     if output_profile_proof:
         from output_profile_retry import validate_retained
@@ -167,10 +177,15 @@ def validate(run,root):
         assert row['exit_code']==0 and row['tested_commit'],gate
         assert sha(run/row['log'])==row['log_sha256'],gate
         if row['tested_commit']!=state['commit']:
+            alias=charge_keyboard_proof.get('bookkeeping_fix') if charge_keyboard_proof else None
+            if alias and gate in alias['retained_input_gates'] and row['tested_commit']==alias['from_commit']:continue
             if capacitor_proof and gate in capacitor_proof['retained_gates']:
                 assert row['tested_commit']==capacitor_proof['from_commit']
                 continue
             comparison_commit=state['commit']
+            if charge_keyboard_proof and gate in charge_keyboard_proof['retained_gates']:
+                comparison_commit=charge_keyboard_proof['from_commit']
+                if row['tested_commit']==comparison_commit:continue
             if output_profile_proof and gate in output_profile_proof['retained_gates']:
                 comparison_commit=output_profile_proof['from_commit']
                 if row['tested_commit']==comparison_commit:continue
@@ -216,6 +231,18 @@ def validate(run,root):
                 from local_verification import pending_stale_test_fixture_fix
                 pending_stale_test_fixture_fix(root,row['tested_commit'],comparison_commit)
                 allowed.add('android/ci/test_stale_history_retry.py')
+            if 'android/ci/targeting_summary.py' in changes:
+                from local_verification import pending_targeting_metadata_index_fix
+                reuse=next(r for r in state['launcher_fix_reuse'] if r['from_commit']==row['tested_commit'] and r['to_commit']==comparison_commit)
+                pending_targeting_metadata_index_fix(root,row['tested_commit'],comparison_commit,reuse['completed_before_adoption'])
+                assert gate in reuse['completed_before_adoption']
+                allowed.update({'android/ci/targeting_summary.py','android/ci/test_targeting_summary.py','android/ci/test_pending_targeting_metadata_index_fix.py'})
+            if 'android/ci/test_defense_summary.py' in changes:
+                from local_verification import pending_defense_phase_flag_fix
+                reuse=next(r for r in state['launcher_fix_reuse'] if r['from_commit']==row['tested_commit'] and r['to_commit']==comparison_commit)
+                pending_defense_phase_flag_fix(root,row['tested_commit'],comparison_commit,reuse['completed_before_adoption'])
+                assert gate in reuse['completed_before_adoption']
+                allowed.update({'android/ci/test_defense_summary.py','android/ci/test_pending_defense_phase_flag_fix.py'})
             if 'tools/android_headless/check_history_mutations.py' in changes:
                 from local_verification import pending_mutation_count_fix,pending_output_history_fix,OUTPUT_HISTORY_BEFORE
                 reuse = next(r for r in state['launcher_fix_reuse'] if r['from_commit'] == row['tested_commit']

@@ -11,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
@@ -71,7 +74,7 @@ class MainActivity : ComponentActivity() {
                 ViewModelProvider(this)[StructureServiceEditorModel::class.java],
                 ViewModelProvider(this)[CargoEditorModel::class.java],
                 ViewModelProvider(this)[NotesModel::class.java], ViewModelProvider(this)[EditHistoryModel::class.java],
-                ViewModelProvider(this)[ResourcesModel::class.java], ViewModelProvider(this)[CapacitorModel::class.java], ViewModelProvider(this)[DefenseModel::class.java], ViewModelProvider(this)[TankModel::class.java], ViewModelProvider(this)[OutputModel::class.java])
+                ViewModelProvider(this)[ResourcesModel::class.java], ViewModelProvider(this)[CapacitorModel::class.java], ViewModelProvider(this)[DefenseModel::class.java], ViewModelProvider(this)[TankModel::class.java], ViewModelProvider(this)[OutputModel::class.java], ViewModelProvider(this)[TargetingModel::class.java])
         }
     }
 
@@ -87,7 +90,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel, historyModel: EditHistoryModel, resourcesModel: ResourcesModel, capacitorModel: CapacitorModel, defenseModel: DefenseModel, tankModel: TankModel, outputModel: OutputModel) {
+private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentModel, moduleModel: ModuleEditorModel, chargeModel: ChargeEditorModel, variationModel: VariationEditorModel, rackModel: RackEditorModel, bulkModel: BulkChargeEditorModel, bulkStateModel: BulkStateEditorModel, modeModel: ModeEditorModel, subsystemModel: SubsystemEditorModel, structureModel: StructureServiceEditorModel, cargoModel: CargoEditorModel, notesModel: NotesModel, historyModel: EditHistoryModel, resourcesModel: ResourcesModel, capacitorModel: CapacitorModel, defenseModel: DefenseModel, tankModel: TankModel, outputModel: OutputModel, targetingModel: TargetingModel) {
     var showAbout by rememberSaveable { mutableStateOf(false) }
     var showEquipment by rememberSaveable { mutableStateOf(false) }
     var showModules by rememberSaveable { mutableStateOf(false) }
@@ -106,6 +109,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
     var showDefenses by rememberSaveable { mutableStateOf(false) }
     var showTank by rememberSaveable { mutableStateOf(false) }
     var showOutput by rememberSaveable { mutableStateOf(false) }
+    var showTargeting by rememberSaveable { mutableStateOf(false) }
     var showCapacitor by rememberSaveable { mutableStateOf(false) }
     fun variations(position: Int?) {
         variationModel.open((EngineRuntime.state.value as? EngineState.Ready)?.fit?.id, position)
@@ -128,8 +132,10 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
         ),
     ) {
         Scaffold { insets ->
-            Box(Modifier.fillMaxSize().padding(insets), contentAlignment = Alignment.TopCenter) {
-                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers, showNotes, showResources, showCapacitor, showDefenses, showTank, showOutput) {
+            Box(Modifier.fillMaxSize().padding(insets).consumeWindowInsets(insets)
+                .imePadding().clipToBounds().testTag("app-content-viewport"),
+                contentAlignment = Alignment.TopCenter) {
+                key(showAbout, showEquipment, showModules, showCharges, showVariations, showRack, showBulk, showBulkStates, showModes, showSubsystems, showServices, showCargo, showTransfers, showNotes, showResources, showCapacitor, showDefenses, showTank, showOutput, showTargeting) {
                     Column(
                         Modifier.widthIn(max = 600.dp).fillMaxWidth()
                             .verticalScroll(rememberScrollState()).padding(24.dp),
@@ -143,6 +149,8 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                         if (!showAbout && !showNotes) EditHistoryControls(historyModel)
                         if (showNotes) {
                             NotesEditor(notesModel, onBack = { showNotes = false })
+                        } else if (showTargeting) {
+                            TargetingView(targetingModel, onBack = { showTargeting = false })
                         } else if (showOutput) {
                             OutputView(outputModel, onBack = { showOutput = false })
                         } else if (showTank) {
@@ -200,7 +208,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
                                 onSubsystems = { subsystemModel.open(); showSubsystems = true },
                                 onServices = { structureModel.open(); showServices = true },
                                 onCargo = { cargoModel.open(); showCargo = true },
-                                onNotes = { showNotes = true }, onResources = { showResources = true }, onCapacitor = { showCapacitor = true }, onDefenses = { showDefenses = true }, onTank = { showTank = true }, onOutput = { showOutput = true })
+                                onNotes = { showNotes = true }, onResources = { showResources = true }, onCapacitor = { showCapacitor = true }, onDefenses = { showDefenses = true }, onTank = { showTank = true }, onOutput = { showOutput = true }, onTargeting = { showTargeting = true })
                         }
                     }
                 }
@@ -210,7 +218,7 @@ private fun PyfaApp(libraryModel: FitLibraryModel, equipmentModel: EquipmentMode
 }
 
 @Composable
-private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit, onNotes: () -> Unit, onResources: () -> Unit, onCapacitor: () -> Unit, onDefenses: () -> Unit, onTank: () -> Unit, onOutput: () -> Unit) {
+private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment: () -> Unit, onModules: () -> Unit, onVariations: () -> Unit, onModes: () -> Unit, onSubsystems: () -> Unit, onServices: () -> Unit, onCargo: () -> Unit, onNotes: () -> Unit, onResources: () -> Unit, onCapacitor: () -> Unit, onDefenses: () -> Unit, onTank: () -> Unit, onOutput: () -> Unit, onTargeting: () -> Unit) {
     val context = LocalContext.current
     val focus = LocalFocusManager.current
     val engine by EngineRuntime.state.collectAsState(context = Dispatchers.Main)
@@ -267,6 +275,7 @@ private fun Home(libraryModel: FitLibraryModel, onAbout: () -> Unit, onEquipment
             Button(onClick = onResources, modifier = Modifier.testTag("resources-open")) { Text("Resources") }
             Button(onClick = onDefenses, modifier = Modifier.testTag("defense-open")) { Text("Defenses") }
             Button(onClick = onOutput, modifier = Modifier.testTag("output-open")) { Text("Output statistics") }
+            Button(onClick = onTargeting, modifier = Modifier.testTag("targeting-open")) { Text("Targeting and navigation") }
             Button(onClick = onTank, modifier = Modifier.testTag("tank-open")) { Text("Repair and tank") }
             Button(onClick = onCapacitor, modifier = Modifier.testTag("capacitor-open")) { Text("Capacitor") }
             Button(onClick = onModules, modifier = Modifier.testTag("modules-open")) { Text("Edit modules") }
