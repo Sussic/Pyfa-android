@@ -38,13 +38,14 @@ its scrolled heading overlaps status icons with the software keyboard open.
 Selected child **C03.1.1 keyboard viewport repair**: correct activity resize and
 consumed/clipped insets, retain all controls and add native geometry/recreation
 checks. EOS, fixtures, numerical assertions, deadlines and every existing gate
-remain unchanged. Repair `3ce746a2` passes all5 local build/package gates and5
-geometry validator tests. First ephemeral native probe stopped before geometry:
-the equipment catalog had not finished loading. Raw failure/screenshot/logcat
-are retained in `c031-keyboard-focused-20261004-040819`. Probe prerequisite fix
-`71eb6014` creates/selects a synthetic fit and waits for the catalog. Exact next:
-rebuild the corrected probe, verify native geometry/screenshots, then complete
-full stable-candidate verification and all215 screenshot QA.
+remain unchanged. Corrected candidate `e2005c92` passes all5 local build/package
+gates;5 geometry validator tests pass. Focused native proof
+`c031-keyboard-focused-20261004-042420` passes ephemeral/offline geometry,
+recreation and dismissal with3 hash-verified reviewed screenshots. Earlier
+catalog-readiness, boot-service and screenshot-transfer failures remain retained;
+disk exhaustion resolved by removing only stopped disposable probe AVDs, retaining
+logs/native proof. Exact next: run full stable-candidate local verification,
+review all215 required screenshots, then deliver C03.1 after every gate passes.
 Earlier passing native results remain historical after the application changes.
 The first focused prepare attempt on `c4233aa5` timed out at900 seconds after
 reaching311 fits/case42 undo. Proof is retained; preparation is now three bounded
