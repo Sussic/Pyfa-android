@@ -11,6 +11,9 @@ user after technical verification; it is not a substitute for correctness tests.
 The desktop feature set is the acceptance reference, not its window layout.
 Capabilities hidden in menus, settings and item details count as features too.
 
+**Reconciled 19 October 2026.** The offline core is families F01–F20 apart from their online parts; F21 and the dataset-refresh half of F23 are optional
+online capabilities. Current implementation and verification state per family is in the [ROADMAP inventory](ROADMAP.md); this file still owns only the boundary.
+
 ## Coverage map — full parity remains unverified
 
 A02 expanded these 23 families into [239 observable behavior rows](PARITY.md),

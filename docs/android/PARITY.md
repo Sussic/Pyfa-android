@@ -5,6 +5,10 @@ This is a static source audit, not an observed desktop UI session or proof of an
 Android implementation. [SCOPE.md](SCOPE.md) owns the product boundary;
 [ROADMAP.md](ROADMAP.md) owns task state. A01 proves only its recorded host fixture.
 
+**Reconciliation note (19 October 2026).** The `NUP`-style status codes and `D: —; A: —` slots in this file are evidence slots, not implementation state; most
+rows have not been back-filled and therefore say nothing about code that now exists (for example F08 drone editing is implemented, with its native acceptance open).
+Use the reconciled feature inventory in [ROADMAP](ROADMAP.md) for current state and [STATUS](STATUS.md) for what was verified on the merged variant.
+
 Each row has a stable ID, one delivery owner, a behavior/acceptance target, pinned
 source links, required check types and an evidence slot. A07 now supplies limited
 Android baseline evidence to the rows below; later rows link focused delivery

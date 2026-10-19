@@ -1,10 +1,99 @@
 # Android project status
 
+## Start here — authoritative working copy and current control point (reconciled 19 October 2026)
+
+This section supersedes every older "current", "next" and "package pending" statement
+below; those sections are retained as dated history. STATUS owns the single next action,
+ROADMAP owns feature state (see its reconciled inventory), task briefs own acceptance and
+receipts own proof.
+
+**Authoritative copy.** `C:\Users\HallT\Documents\Codex\Pyfa-Claude-Handoff-20261019\review-copy\3-merged-variant\repo`,
+local Git branch `dev/merged-g052-d042-local` (no remote, never pushed). Baseline commit
+`52dc78b` records the exact bytes listed in `review-copy\MERGED-VARIANT-SOURCE-MANIFEST.json`
+(1,087 files, 45,308,323 bytes); `1b047e0` adds ten small scaffolding files; later commits are documentation only.
+This is a **local variant, not the exact cloud D04.2 source**. Choose it over the other copies
+because it is the only one that contains the D04.2 pilot-security source, the G05.2 graph work, the local
+shield-regeneration and remote-repair native adapters and the owner's C04 drone-editing files together
+(all eleven C04/harness files of the owner's uncommitted work are byte-identical here; see the comparison
+below). It was not chosen for being newest.
+
+**How it was built** (each step verified, none repeated here):
+1. Clean G05.2 base: Downloads transport set (3 parts) reassembles to `Pyfa-native-remote-repair-all-modes-reviewed-20261018.zip`
+   (27,810,066 bytes, SHA256 `4c2e978d…`). The 954-file exact-route tree was recovered from the intake candidate
+   by reversing `local-docs-and-adapter.patch`, then checked against the immutable `EXACT-ROUTE-SOURCE-FREEZE.json`;
+   its `STATUS.md`/`ROADMAP.md` were set to the archive's clean bytes.
+2. D04.2 route: `G05.2-to-d042-pilot-security.patch` from `Pyfa-native-pilot-security-reviewed-20261018.zip`
+   (137,641,210 bytes, SHA256 `f160e689…`, rebuilt from the two transport parts and accepted by the external
+   audit `D04-2-REVIEW-PACKAGE-FINAL.json`). Preflight, dry-run, apply and `--final` passed with zero offset/fuzz/reject (176 paths).
+3. Local shield-regeneration patch `local-docs-and-adapter.patch` (`d39e6db0…`), non-documentation hunks only:
+   `shield_regeneration_native.py`, its test, and additions to `local_verification.py` and `native_suite.py`.
+4. Remote-repair adapter `remote-repair-native-adapter.patch` (`4c73b75a…`; 4 modified + 2 added paths). The patch is LF-only
+   but three target files are mostly CRLF, so no patch tool applies it verbatim; those three files are the adapter's
+   freeze-bound final bytes, proven equal to patch-applied-to-intake modulo line endings. The two new files come straight from the patch.
+5. `STATUS.md` and `ROADMAP.md`: explicit three-way merges (clean G05.2 base / local+adapter / D04.2 final). Every
+   input variant is kept unmodified in `review-copy\doc-variants`.
+
+**What the counts mean** (they describe different comparisons):
+- D04.2 route: 176 paths touched (47 modified, 129 added) relative to the G05.2 exact-route tree.
+- Four "inherited" deviations compare the *D04.2 route result* with the *D04.2 delivery freeze* (1,076 paths): 1,072 exact, 4 differ —
+  `android/ci/local_verification.py`, `android/ci/native_suite.py`, `docs/android/LOCAL-VERIFICATION.md` (local harness/documentation
+  additions in the owner's base) and `android_bridge/README.md` (line endings only). The route does not touch them.
+- This variant against the same freeze: 1,070 exact, 6 differ = those four plus the deliberately merged `STATUS.md` and `ROADMAP.md`.
+- This variant against the route result: exactly nine paths (the four local adapter files, `local_verification.py`,
+  `native_suite.py`, `LOCAL-VERIFICATION.md`, `STATUS.md`, `ROADMAP.md`).
+- "Six-file": `remote-repair-native-adapter.patch` touches six paths; `local-docs-and-adapter.patch` also touches six, a different set.
+- Original working copy comparison: of the owner's 18 uncommitted/untracked paths, 11 are byte-identical here, `android/verify-local.ps1` was missing
+  and has been added, and 6 differ (`local_verification.py` and `LOCAL-VERIFICATION.md` by additive harness/adapter edits; `AGENTS.md` by two reworded lines plus an added section;
+  `H01-cleanup-first.md` by two lines; `STATUS.md` and `ROADMAP.md` by the merged doc state). The owner's `STATUS.md`/`ROADMAP.md` are an older, smaller doc state (102,871 and 31,883 bytes),
+  not newer work; they stay in the original.
+- The old StateFlow lint patch (`pyfa-a7-stateflow-lint-proposal-20261018`) is **superseded, not outstanding**: the packaged
+  `MainActivity.kt` already collects `offlineFeatures` and uses it in 14 predicates. Do not apply it (its preimage no longer exists).
+
+**Verification of this variant (19 October 2026; nothing below is APK or device evidence).**
+- Python 3.11 host checks: remote-repair adapter 17/17, shield-regeneration adapter 17/17, projected-module-charges 10/10.
+- Desktop/reference/headless plan (110 of the 190-gate default plan, which is 190 gates, not 190 tests; the other 80 are build, native and acceptance gates and were not run):
+  88 passed, 22 failed (nothing left unreached). Causes: no wxPython-free Python environment (3 gates); six headless gates not triaged
+  (history, history_mutations, defenses, tank, output, inspector_lifecycle); drone gates bound to the private database's physical hash (12);
+  the drone harness needs evidence documents and git history that are not in this tree (1). `inspector_presentation` failed first and passed
+  after the pinned reference source was linked into the disposable overlay.
+- D04.2 EOS host inventory: 601 of 629 methods pass. 28 not accepted: 20 need the cloud `reconstructed-source` tree, 5 need
+  `tools/android_reference/command.json` in the reference source, 3 import the Linux-only `resource` module.
+  Chunk 6 passed only with `graphs/data/fitRemoteReps` supplied from the original repository's committed HEAD.
+- Not run: Gradle compile, APK assembly, lint, instrumentation, emulator, physical device, ARM64, upgrade-over-data.
+  Reason: the Codex project folder measured 34.39 GB logical against the 32 GiB (34.36 GB) retained-storage cap, and a fresh engine-asset rebuild plus roughly 3 GiB
+  of Gradle output would need admission. Cloud evidence for the D04.2 source remains `PASSED_COMPILE_ONLY` (main and AndroidTest Kotlin);
+  offline lint was blocked there and is unproven.
+- Older device evidence (A07 x86_64 emulator, earlier full local verification of B/C01–C03 candidates, the C04 API36 guest ANR diagnostics) belongs
+  to earlier commits and must not be read as verification of this variant.
+
+**Run and test.** This tree is a source subset. Large inputs live outside it: pinned reference checkout and `.venv\reference` (in the original project folder,
+used read-only), `staticdata/` and the inspector fixtures (in `pyfa-g052-build-preparation-20261018\repo`), the Android SDK, JDK 17 and Gradle caches
+(outside the project; preserved Gradle home in `pyfa-g052-offline-build-20261018`). The game database is generated, never taken from the private copy.
+Scripts used for the 19 October runs are kept in `review-copy\verification-tools` (paths are hard-coded; read its README first).
+Quick adapter check: from `android/ci`, `python -B -m unittest test_remote_repair_native test_shield_regeneration_native test_projected_module_charges_native`
+(Python 3.11; synthetic tests only). Android build and device steps follow `android/verify-local.ps1` and [LOCAL-VERIFICATION](LOCAL-VERIFICATION.md);
+they have not been run for this variant.
+
+**Where things belong.** Source: this repository only. Test results and logs: outside the repository (task folders or `verification-tools` output), referenced by
+hash. Build output, APKs and generated engine assets: `android/build` (git-ignored, never committed). Archives and delivery packages: the handoff folder
+(`Pyfa-native-pilot-security-reviewed-20261018.zip`, transport parts, `package-inspection`) as read-only reference. Databases, signing keys and credentials:
+never in the repository.
+
+**Limitations.** Pilot-security and environment features are partial (see ROADMAP inventory); no Android execution result exists for this variant;
+the retained-storage cap blocks a fresh build; the `fitRemoteReps` source and other unchanged upstream files are not in this subset.
+
+**Remaining work, in order.**
+1. Close verification gaps for this variant: wx-free headless environment, cloud reference-source tree, triage of the six untriaged headless gates and the
+   `history` action-coverage mismatch, a decision on the drone-gate database binding; then one sequential Gradle compile/lint/APK attempt once the storage cap has headroom.
+2. Native acceptance on the emulator for the integrated-but-unexecuted slices (C04 first, on a compatible guest; then the three local adapter phases), before any device work.
+3. First missing-capability milestone: C10 mutated items (blocks mutated drone editing and exact interchange), then the unstarted graph families.
+
+
 > Merge note (review copy, 2026-10-19): the local G05.2 execution-control and integration sections below are preserved
 > verbatim from the local adapter candidate and describe the pre-D04.2 G05.2 candidate. The D04.2 cloud control point and
 > its historical chain follow. Unmodified copies of every variant are in review-copy/doc-variants.
 
-## Current execution control: G05.2 local remote-repair adapter
+## Historical (superseded 19 October 2026 by Start here): G05.2 local remote-repair adapter execution control
 
 The current bounded task adds an opt-in `remote_repair_graph` phase with exactly
 42 existing Android methods: 22 contract, 15 model and 5 UI. It uses the reviewed
@@ -112,7 +201,7 @@ Version 35/0.1.0-c04 is inherited. H01 remains closed without a purge; closed C0
 gates are not reopened. Newer cloud slices are separately coordinated and are
 not assumed to be included in the downloaded G05.2 archive.
 
-# Current cloud control point: D04.2 pilot security and Character inheritance, implementation (2026-10-18)
+# Current cloud control point: D04.2 pilot security and Character inheritance, implementation (2026-10-18) — superseded: audited source/evidence package accepted, see Start here
 
 Selected bounded outcome: editable offline-character security and saved-fit Character or explicit pilot-security choice for the six original supported hulls. Preserve raw null versus numeric zero through migration, copies, atomic shared history, refresh and reopen. Existing native creation/import explicit-zero defaults remain qualified, not silently migrated. EOS remains the numerical authority. No broad environments or other feature family is opened.
 
@@ -124,7 +213,7 @@ No candidate, native compile, lint, device or package pass is yet claimed for D0
 
 ## Previous checkpoint (historical)
 
-# Current cloud control point: D05.4 local named RAH, cloud-reviewed/compiled; package pending (2026-10-18)
+# Current cloud control point: D05.4 local named RAH, cloud-reviewed/compiled; package pending (2026-10-18) — superseded: D05.4 package closed, see Start here
 
 Local Reactive Armor Hardeners can use durable custom patterns or protected Selected Ammo independently of fit incoming damage. Shared edits, dual-holder deletion, history, stale-input refusal and fresh reopen use the existing authority. Fit Pattern, disabled and explicit built-ins stay distinct. See [D05.4 scope and exact qualifications](D05-4-LOCAL-NAMED-RAH.md).
 

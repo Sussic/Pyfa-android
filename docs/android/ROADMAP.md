@@ -9,7 +9,50 @@ local proof is complete but reserved external delivery is pending; it may satisf
 a technical dependency on the same validated inputs, not publication/release.
 Completed setup is not an implementation milestone.
 
-## Current bounded outcome: D05.4 package closure — 18 October 2026
+## Current bounded outcome: reconciled starting point — 19 October 2026
+
+The authoritative working copy, its composition and all verification results are in [STATUS](STATUS.md) ("Start here"). D05.4 is closed
+(archive SHA256 `f91cb91c…`, independently verified) and D04.2 pilot security is an audited source/evidence package
+(`ACCEPTED_AUDITED_SOURCE_AND_EVIDENCE_HANDOFF_WITH_QUALIFICATIONS`; compile-only, no APK or device claim). Earlier "package pending" statements below are historical.
+No new feature is selected; the next action is the verification-gap closure listed in STATUS. Readiness does not authorize execution.
+
+### Reconciled feature inventory (19 October 2026)
+
+Legend. Implementation: **impl** = code present in this variant, **partial**, **none**. Host/ref = synthetic or host tests and independent desktop-reference comparison.
+Native = Kotlin compile, emulator instrumentation or device. "Cloud" = compiled/tested in the cloud lane at an earlier source, not on this variant.
+Historical = earlier candidate commits; applicability to this variant is not established. Live acceptance (owner usability) is **none** for every row.
+Missing evidence means unknown, not unimplemented.
+
+| Family (tasks) | Intended behaviour | Implementation | Host/ref verification | Native/device verification | Source / manifest | Evidence | Remaining work | Next action |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| F01 library, search, notes (B02, B03, B08) | Save, search, duplicate, filter and annotate fits offline | impl | historical, done | historical emulator; not re-run here | merged manifest | tasks B02/B03/B08 | desktop tags/folders not found (Q01) | include in R01 |
+| F02 fitting, charges, modes (B04, B06) | Modules, rigs, charges, hull modes, subsystems, structures | impl | historical, done | historical emulator | merged manifest | tasks B04/B06 | none known | R01 |
+| F03 bulk edit, undo (B05, B09) | Multi-select ammunition/state/variation changes with undo/redo | impl | historical, done | historical emulator | merged manifest | tasks B05/B09 | mixed-family bulk coverage open | R01 |
+| F04 cargo (B07) | Cargo stacks, transfers, presets | impl | historical, done | historical emulator | merged manifest | task B07 | none known | R01 |
+| F05 resources, capacitor, defenses (C01) | CPU/PG, cap, resists, EHP, tank | impl | historical, done | historical emulator | merged manifest | tasks C01 | none known | R01 |
+| F06 output stats (C02) | Firepower, bombs, mining | impl | historical, done | historical emulator | merged manifest | task C02 | none known | R01 |
+| F07 targeting, attributes (C03) | Targeting, navigation, full item/ship attributes | impl (C03.2 verified-local) | historical, done | historical emulator; C03.2 delivery unpublished | merged manifest | tasks C03 | C03.2 delivery step | R01 |
+| F08 drones (C04) | Stacks, split/merge with active counts, bandwidth, control range | impl, integrated (not missing) | host and reference proof; approved active-count conservation | Kotlin debug APK built earlier; **native acceptance not achieved** (API36 diagnostic guest ANR; that guest's ownership/source state is incompatible) | merged manifest (11 owner C04 files identical) | task C04 and plan | native acceptance, F08.04/F08.05 evidence | C04 native plan on a compatible guest |
+| F09 fighters (C05) | Squadrons, abilities, recent/similar selection | impl | cloud host proof | cloud compile; device open | merged manifest | tasks C05 | device gates | emulator acceptance |
+| F10 character profiles (C06) | Offline skill/security profiles, requirements | partial (profiles/history integrated; requirements/affectors need native acceptance) | host proof | cloud compile; device open | merged manifest | OFFLINE-INTEGRATION | native acceptance, skill refresh (ESI) | native acceptance |
+| F11 implants (C07) | Fit-local implants, shared character implants, detached sets | partial (C07.1–C07.3 cloud reviewed/compiled) | cloud host proof | compile only | merged manifest | C07 docs | device gates | emulator acceptance |
+| F12 boosters (C08) | Boosters and side effects | impl | cloud host proof | cloud compile; device open | merged manifest | C08 doc | device gates | emulator acceptance |
+| F13 heat, spool, reactive armor (C09) | Spool override, heat detail, built-in RAH | partial (C09.1/C09.2) | cloud host proof | compile only | merged manifest | C09 docs | broader module options | emulator acceptance |
+| F14 mutated items (C10) | Edit rolled attributes of mutated modules and drones | **none** (queued; no editor) | none | none | — | ROADMAP row | all | schedule after verification gaps |
+| F15 projections (D01, D02) | Projected modules/fits/drones/fighters, ranges, linked recalculation | partial (D01.1–D01.9 impl) | finite reference parity (D02.1, D02.2) | compile only | merged manifest | D01/D02 docs | individual/bulk and interaction coverage | D02 qualification |
+| F16 command fits (D03) | Saved command fits and bursts | partial (D03.1) | cloud proof | compile only | merged manifest | D03 doc | broader editor | later |
+| F17 environments, security (D04) | System and pilot security, environment effects | partial (D04.1 structure security; D04.2 pilot security) | D04.2: 629 host methods planned, 601 pass here; numerical 203 observations accepted in the audited package | compile-only in cloud; none here | merged manifest | D04-1 doc, D04.2 package receipts | wormhole/weather/environment editor not implemented | decide scope |
+| F18 patterns, profiles (D05) | Named target profiles, incoming damage patterns, Selected Ammo, local RAH | partial (D05.1–D05.4) | cloud proof | compile only | merged manifest | D05 docs | global/default profiles, interchange | later |
+| F19 graphs (G01–G11) | Every graph family with fit comparison | partial: impl G03, G04, G05, G06, G07, G09; **none** G01, G02, G08, G10, G11 | finite reference parity for implemented families | compile only; execution open | merged manifest | G docs | five families, shared actions | G08 prerequisite, then G01/G02 |
+| F20 interchange (I01, I02) | EFT plus DNA, XML, EFS, multibuy, CSV, HTML, skills/profile formats | partial: EFT import/export (I01); **none** I02.01–I02.08 | host proof for EFT | compile only | merged manifest | I01 doc | all non-EFT formats | after C10 |
+| F21 ESI, prices (I03, I04) | Optional online sync and cached prices | **none** (optional, requires network) | none | none | — | ROADMAP rows | all | later, optional |
+| F22 preferences (I06) | Calculation/display defaults, overrides, localization | **none** except task-specific settings | none | none | — | ROADMAP rows | all (including global defaults) | later |
+| F23 data and backup (A07, I05, R02) | Bundled data; refresh, backup/restore; upgrades keep fits | partial: bundled data (A07); **none** refresh/backup | A07 only | A07 x86_64 historical; ARM64 and upgrade-over-data unverified | merged manifest | A07 receipt | I05, R02 | later |
+| Release (R01–R04) | Full offline audit, packaging, device review, final build | none | — | — | — | ROADMAP rows | all | last |
+
+Offline core means F01–F20 (without the online parts of F20/F21); F21 and the refresh half of F23 are optional online capabilities.
+
+## Superseded outcome (historical): D05.4 package closure and D04.2 planning — 18 October 2026
 
 D05.4 local named RAH has accepted source, Python/current-source reuse, finite candidate and actual native codec/wire proof. Main/instrumentation Kotlin compilation passed; final package remains pending; [STATUS](STATUS.md) owns the single next action. Complete the distinct docs-only delivery freeze, eleven direct cumulative reconstruction routes, archive audit and Library round-trip before selecting another implementation. Earlier G05.2 downloads/hashes were verified at 15:28 UTC and isolated local integration was underway at 15:47 UTC; no manual-transfer request is pending for that batch.
 
@@ -265,7 +308,7 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | C03 | verified-local | B04 | [Targeting/navigation and attribute inspector](tasks/C03-targeting-attributes.md) | Drone control range and all audited miscellaneous/ship/item attributes are reachable and correct; search/detail behavior works on a phone. Both children have local proof; C03.2 external delivery is pending. |
 | C03.1 | done | B04 | Targeting/navigation and complete cargo details | All F07.01–F07.30 verified in the [full local receipt](evidence/c03-1-native.json): original lock/sensor/navigation/hold values, modifier edits and native/offline/restart proof. Delivered [PR #41](https://github.com/Sussic/Pyfa-android/pull/41), merge745fc1e2. |
 | C03.2 | verified-local | C03.1 | Complete ship/item/charge inspection | F07.31–F07.32 and F07.34–F07.48 grouped current/base/raw attributes, affectors, effects, variations and every equipment detail family. |
-| C04 | paused | B04 | [Drone editing](tasks/C04-drone-editing.md) | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
+| C04 | paused (code integrated; native acceptance blocked, not missing) | B04 | [Drone editing](tasks/C04-drone-editing.md) | Add/split/merge stacks, activate/select counts and respect bandwidth/limits; damage and drone control range react correctly. |
 | C05 | cloud-compiled; device gates open | B04 | Fighter editing | Squadron quantities and ability states update statistics; save/reopen retains abilities and selected states. |
 | C06 | active | B01, B03 | Offline character profiles | All-V/custom skills can be selected, edited and saved; requirements and affectors are inspectable and bonuses match references. |
 | C07 | partial; C07.1–C07.3 cloud reviewed/compiled; device open | C06 | Implants and implant sets | Slot handling and applying/saving sets match Pyfa; profile changes update dependent fits. |
@@ -302,12 +345,12 @@ Early dependency requirements are ordering constraints, not claims of feasibilit
 | D03 | active (D03.1 cloud reviewed/compiled; broader scope open) | B02, C06, C07 | Command-fit editor | Select/configure command sources, their enabled states and applicable strengths; recipient results persist and match A05/A09 plus audited options. |
 | D04 | partial; D04.1 cloud compiled | B04 | Environments and security modifiers | Supported wormhole/weather/site/security scenarios can be applied/removed; stacking and restored baselines match reference cases. |
 | D04.1 | cloud reviewed/compiled; device open | B04 | Structure system security | Four original security choices, EOS rig effects, history and saved graph restoration. No pilot-security or environment expansion. |
-| D04.2 | queued design/preflight after D05.4 package closure | D04.1, C06 profiles/history | Pilot security and character inheritance | Settle raw Character versus explicit values, protected character semantics, copying/migration and six source-menu hull availability before implementation. No broad environment editor or new graph family. |
-| D05 | D05.1–D05.3 cloud compiled; D05.4 cloud reviewed/compiled; package pending; remaining scope open | C01, C02 | Damage patterns and target profiles | Named target profiles, incoming libraries, Selected Ammo and local named RAH have bounded child evidence. Global/default profiles, interchange and full native acceptance remain open; do not close the parent from cloud proof. |
+| D04.2 | audited source/evidence package accepted (compile-only; no APK or device claim) — queued design text is historical | D04.1, C06 profiles/history | Pilot security and character inheritance | Settle raw Character versus explicit values, protected character semantics, copying/migration and six source-menu hull availability before implementation. No broad environment editor or new graph family. |
+| D05 | D05.1–D05.3 cloud compiled; D05.4 cloud reviewed/compiled and package closed; remaining scope open | C01, C02 | Damage patterns and target profiles | Named target profiles, incoming libraries, Selected Ammo and local named RAH have bounded child evidence. Global/default profiles, interchange and full native acceptance remain open; do not close the parent from cloud proof. |
 | D05.1 | cloud source/host/compile checkpoint; device open | C01, C02 | [Reusable named target profiles](D05-1-TARGET-PROFILES.md) | Built-in/custom selection, atomic shared edits, history and restart preserve identity and exact raw/effective assumptions; device qualification remains separate. |
 | D05.2 | cloud source/host/compile checkpoint; device open | C01.3, C02, C06, C09.2, D05.1 | [Named incoming damage patterns](D05-2-DAMAGE-PATTERNS.md) | Built-in/custom library, live per-fit binding, exact anonymous detach, Uniform reset/delete, shared edits/history/restart; preserve positive-total fit domain and existing RAH overrides. Global/default patterns remain separate; ammo-derived patterns are D05.3 and local named RAH bindings are D05.4. |
 | D05.3 | cloud reviewed/compiled; device open | D05.2 | [Selected-item incoming pattern](D05-3-SELECTED-ITEM-PATTERN.md) | Equipment derives protected Selected Ammo from base item damage, with atomic shared binding/history, finite reference/reopen and actual-wire proof. Positive-total boundary remains; zero-total incoming assignment and global/default patterns remain open. Local named RAH is D05.4. Exact package/Library acceptance belongs to external receipts. |
-| D05.4 | cloud reviewed/compiled; package pending; device open | D05.2, D05.3, C09.2 | [Local named RAH patterns](D05-4-LOCAL-NAMED-RAH.md) | Durable custom/Selected Ammo module references, atomic holder edits/delete/history, zero refusal and fresh reopen; accepted 25-row/250-scalar candidate and 47/9 actual-wire proof retain publication/positive-zero qualifications. No new graph sampling. All 532 instrumentation methods in 139 classes compiled only; final delivery and device gates remain separate. |
+| D05.4 | cloud reviewed/compiled; package closed; device open | D05.2, D05.3, C09.2 | [Local named RAH patterns](D05-4-LOCAL-NAMED-RAH.md) | Durable custom/Selected Ammo module references, atomic holder edits/delete/history, zero refusal and fresh reopen; accepted 25-row/250-scalar candidate and 47/9 actual-wire proof retain publication/positive-zero qualifications. No new graph sampling. All 532 instrumentation methods in 139 classes compiled only; final delivery and device gates remain separate. |
 
 ## G — port one graph family at a time
 
