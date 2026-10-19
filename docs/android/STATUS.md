@@ -52,19 +52,67 @@ below). It was not chosen for being newest.
 **Verification of this variant (19 October 2026; nothing below is APK or device evidence).**
 - Python 3.11 host checks: remote-repair adapter 17/17, shield-regeneration adapter 17/17, projected-module-charges 10/10.
 - Desktop/reference/headless plan (110 of the 190-gate default plan, which is 190 gates, not 190 tests; the other 80 are build, native and acceptance gates and were not run):
-  88 passed, 22 failed (nothing left unreached). Causes: no wxPython-free Python environment (3 gates); six headless gates not triaged
-  (history, history_mutations, defenses, tank, output, inspector_lifecycle); drone gates bound to the private database's physical hash (12);
-  the drone harness needs evidence documents and git history that are not in this tree (1). `inspector_presentation` failed first and passed
-  after the pinned reference source was linked into the disposable overlay.
-- D04.2 EOS host inventory: 601 of 629 methods pass. 28 not accepted: 20 need the cloud `reconstructed-source` tree, 5 need
-  `tools/android_reference/command.json` in the reference source, 3 import the Linux-only `resource` module.
-  Chunk 6 passed only with `graphs/data/fitRemoteReps` supplied from the original repository's committed HEAD.
+  91 passed, 19 failed (triaged below). The first pass used the wrong interpreter for headless gates; under the existing wx-free `.venv\headless`
+  `headless:base`, `projection` and `command` pass.
+- D04.2 EOS host inventory (629 methods in 49 chunks): 619 methods succeed individually; 10 do not (3 in chunk 7, 3 in chunk 13, 4 in chunk 19). Each of those
+  chunks fails the acceptance audit, which needs every method exactly once. Chunk 6 succeeded only with `graphs/data/fitRemoteReps` supplied from the original repository's committed HEAD.
+  Causes are in the triage below. (An earlier version of this note said 601 and 28; it counted whole chunks.)
 - Not run: Gradle compile, APK assembly, lint, instrumentation, emulator, physical device, ARM64, upgrade-over-data.
   Reason: the Codex project folder measured 34.39 GB logical against the 32 GiB (34.36 GB) retained-storage cap, and a fresh engine-asset rebuild plus roughly 3 GiB
   of Gradle output would need admission. Cloud evidence for the D04.2 source remains `PASSED_COMPILE_ONLY` (main and AndroidTest Kotlin);
   offline lint was blocked there and is unproven.
 - Older device evidence (A07 x86_64 emulator, earlier full local verification of B/C01–C03 candidates, the C04 API36 guest ANR diagnostics) belongs
   to earlier commits and must not be read as verification of this variant.
+
+### Verification triage and ordered unblock plan (19 October 2026, later)
+
+Evidence (logs, exact commands, bisects) is kept outside the repository in `review-copy\verification-evidence-20261019`; `COMMANDS.md` there has the command shapes.
+Classification: **code** = behaviour of this source disagrees with its check; **stale check** = check or fixture predates a deliberate later feature;
+**provenance** = check needs history or evidence that is not in this tree; **environment** = interpreter or layout; **platform** = Linux-only.
+
+| Gate / test | Result | Cause | Class |
+| --- | --- | --- | --- |
+| headless:base, projection, command | pass | needed the wx-free `.venv\headless` interpreter and a git repository in the run root (`git rev-parse HEAD`) | environment (cleared) |
+| headless:history | 5/6 tests pass; `test_all_original_actions_and_repeated_reversals` errors | `MODULE_LABELS` has 6 actions with no reference case in `tools/android_reference/fixtures/history.json`: `fit_implant`, `remove_implants`, `set_module_rah`, `set_module_spool`, `set_system_security`, `toggle_implants` | stale check (missing independent desktop cases) |
+| headless:history_mutations | 22/23 pass; 1 errors (542 s) | 49 of the 85 `LABELS` have no reference case (projected modules/drones/fighters/fits, command fits, boosters, fighters, ...) | stale check |
+| headless:defenses | 21/22 pass; 1 errors | `git show 7775b40a:...DiagnosticTestRunner.kt`: the commit exists in the original partial clone, but that blob is not stored locally (filter `blob:none`); reading it needs one online fetch | provenance |
+| headless:tank | 25/26 pass; 1 fails | persistent-flag set now also contains `offline_features_phase` (added by the offline-features harness); the test's expected set predates it | stale check |
+| headless:output | fails in `check_output.py` | the old check expects `INVALID_REQUEST` for a target profile with `hp: 0`; D05.1 intentionally keeps finite HP zero valid ("finite zero remains zero"), so the bridge now accepts it | stale check (needs reviewed update with desktop evidence) |
+| headless:inspector_lifecycle | 1 test, 25 booster-shape subtests fail | actual booster inspection (affector/view counts) differs from the pinned inspector reference; the **same 25 failures occur on the clean G05.2 tree**, so it is not caused by D04.2 or the local adapters | code or fixture, pre-existing; not yet explained |
+| 12 drone gates (4 reference, 8 headless) | fail at the database check | fixtures `drone-*.json` record `database_sha256 e0dc4b3d...` (physical hash of the bundled game database); the disposable database has the same logical hash (`5857af3e...`) but physical hash `9aa20cac...` | provenance/binding |
+| headless:drone_harness | 3 errors, 5 skips | needs `docs/android/evidence/...` documents and git history absent here; 5 tests are Linux-only (`pidfd`, `waitid`) | provenance + platform |
+| EOS host chunk 7 (3 methods) | setUpClass of `test_remote_repair_amount_distance.IndependentAmountSourceTests` and 1 time-axes method | reads the original graph getter from a hard-coded cloud path `.../reconstructed-source/graphs/data/fitRemoteReps/getter.py` | provenance |
+| EOS host chunk 13 (3 methods) | `test_target_candidate` fails to import | imports the Linux-only `resource` module (memory limits) | platform |
+| EOS host chunk 19 (4 methods) | `test_command_fit_editor` | reads `$PYFA_REFERENCE_SOURCE/tools/android_reference/command.json`; the pinned checkout has no `tools/` (the file exists in this repository) | provenance (test assumes a reconstructed reference tree) |
+
+**Existing local inputs.** The host inventory records 1,144 reference-source inputs; 1,044 match by hash a local source (588+23 in the pinned worktree, 2 in pinned git, 380 in this repository,
+51 in the original's HEAD). 100 do not: upstream `tests/` and `_development/`, files this variant edits, and the `graphs/data/fitDamageStats`, `fitRemoteReps` and `fitWarpTime` files,
+whose bytes in the cloud's reconstructed source differ from both the pin and the original's HEAD. The cloud tree cannot be recreated from local material and must not be fabricated;
+a local reconstruction from the pin plus this repository's `tools/` would run these tests but give a qualified result.
+
+**Wx-free environment.** One exists: `PyfaDevelopment\.venv\headless` (Python 3.11.9, SQLAlchemy 1.4.50, Logbook 1.7.0.post0, greenlet 3.0.3; no wxPython, no numpy). No installation is needed.
+
+**Drone gates.** The expected hash is the physical hash of the bundled static game database (`e0dc4b3d...`, in the build-preparation tree), i.e. Pyfa game data built from the pinned static data; it is not personal
+saved-fit data (saved fits live in the app's own store; the harness keeps `saveddata` in memory). Safe options: (1) approve a hash-verified read-only copy of that game database into a disposable folder and run the 12 gates against
+the copy unchanged; (2) change the gates to accept the logical dataset hash, which is a reviewed harness change, not a blind edit of the expected value. Nothing was changed.
+
+**Android compile/lint/APK budget (one sequential attempt).** Last comparable attempt (offline, `--no-daemon`, 86 tasks): 596 s, peak job commit 3.05 GB, 1.42 GiB owned storage, lint failed on the StateFlow rule now fixed in this source.
+Proposed envelope: 20 minute timeout, 4 GiB commit cap, host RAM floor 4 GiB (12 GB free now), 10 GiB disk floor (59 GB free), 3 GiB new retained storage (workspace ~0.3, Gradle home copy 0.68, outputs 0.75-1.0, temp). Present:
+JDK 17 and Android SDK 35 (`build-tools 35.0.0`, platforms), Gradle 8.13 and its offline dependency cache (preserved in `pyfa-g052-offline-build-20261018\gradle-home`; completeness for the D04.2 sources is unproven), the six Python wheels (2.9 MB, build-preparation tree).
+To prepare offline: regenerate engine assets from the merged sources without `prepare-dependencies.py`, which downloads. Missing: nothing that needs installing. Blocked by storage: the Codex tree is 32.18 GiB against the 32 GiB cap.
+Cleanup candidates (nothing deleted): `package-inspection` 0.55 GiB (re-extractable from the verified zip), the two transport zips 0.13 GiB (duplicate of the verified zip), archived abandoned attempts 0.13 GiB; larger relocations need your decision (`c04-startup-observation-artifacts` 3.74 GiB,
+`emulator-smoke-20261018` 3.35 GiB, C04 budget artifacts 6-10 GiB are irreplaceable evidence).
+
+**Ordered unblock plan.**
+1. Approve the drone-gate option, then run the 12 drone gates and `drone_harness` (platform skips stay skips).
+2. Obtain independent desktop-reference cases for the 6 + 49 unreferenced history actions, and reviewed updates for the stale tank flag set and output `hp: 0` assertion; do not edit expectations blindly.
+3. Explain the 25 booster-shape lifecycle failures (it is pre-existing; start from the booster inspection path and the pinned inspector fixtures).
+4. Decide the reconstructed-source question (cloud tree, or a documented local reconstruction) for chunks 7 and 19; run chunk 13 on Linux/WSL or accept a documented platform exclusion.
+5. Free or raise the storage cap by about 3.5 GiB, then run one guarded compile/lint/APK attempt; keep compile, APK, lint, instrumentation, emulator, ARM64 and upgrade results separate.
+6. Only then select feature work (C10 first).
+
+Open question about the original repository: it is a partial clone (blob filter, promisor remote). My read-only `git show`/`cat-file` calls against it and against the pinned reference checkout could in principle have lazy-fetched a missing blob from GitHub.
+No new object file newer than 5 October was found there afterwards, so no fetch is evidenced, but it is not ruled out. Routine `git status` also refreshes its index stat cache (no content change). Later probes set `GIT_NO_LAZY_FETCH=1` and `GIT_OPTIONAL_LOCKS=0`.
 
 **Run and test.** This tree is a source subset. Large inputs live outside it: pinned reference checkout and `.venv\reference` (in the original project folder,
 used read-only), `staticdata/` and the inspector fixtures (in `pyfa-g052-build-preparation-20261018\repo`), the Android SDK, JDK 17 and Gradle caches
@@ -83,8 +131,7 @@ never in the repository.
 the retained-storage cap blocks a fresh build; the `fitRemoteReps` source and other unchanged upstream files are not in this subset.
 
 **Remaining work, in order.**
-1. Close verification gaps for this variant: wx-free headless environment, cloud reference-source tree, triage of the six untriaged headless gates and the
-   `history` action-coverage mismatch, a decision on the drone-gate database binding; then one sequential Gradle compile/lint/APK attempt once the storage cap has headroom.
+1. Follow the ordered unblock plan in the triage section above (drone-gate approval, reference cases for stale history checks, lifecycle explanation, reconstructed-source decision, storage headroom, then one guarded Gradle attempt).
 2. Native acceptance on the emulator for the integrated-but-unexecuted slices (C04 first, on a compatible guest; then the three local adapter phases), before any device work.
 3. First missing-capability milestone: C10 mutated items (blocks mutated drone editing and exact interchange), then the unstarted graph families.
 
