@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Pyfa Dev</string>
+    <string name="brand">PYFA / ANDROID</string>
+    <string name="home_title">Your offline fits.</string>
+    <string name="milestone">EARLY DEVELOPMENT</string>
+    <string name="status_title">A saved fit library.</string>
+    <string name="status_body">Create ship and structure fits, edit modules and charges, and switch fitted module, drone and implant variations offline. Arrange racks, inspect desktop heat estimates, and change selected or similar modules’ ammunition, states and variations together, or remove modules in one action. Choose supported hull modes and strategic-cruiser subsystems, retaining their changing slots and saved fits offline. Fit hull-compatible structure services and inspect their bonuses. Add, remove and change cargo stacks with saved quantities and EOS volume. Cargo presets, fill and fitted-item transfers remain in development.</string>
+    <string name="engine_loading">Preparing the bundled game data and calculating…</string>
+    <string name="engine_failed">The fitting engine could not start.</string>
+    <string name="sample_title">Vexor · all skills V</string>
+    <string name="sample_ammunition">Both guns: %1$s</string>
+    <string name="no_ammunition">No ammunition</string>
+    <string name="switch_ammunition">Switch both guns’ ammunition</string>
+    <string name="total_dps">Total damage</string>
+    <string name="drone_control_range">Drone control range</string>
+    <string name="gun_optimal">Gun optimal range</string>
+    <string name="all_attributes">Show all 39 sample attributes</string>
+    <string name="hide_attributes">Hide detailed attributes</string>
+    <string name="about_button">About this build</string>
+    <string name="about_title">About Pyfa Android</string>
+    <string name="back">Back</string>
+    <string name="about_goal">A personal Android port of Pyfa, built for offline fitting and complete fitting statistics.</string>
+    <string name="about_scope">The goal includes bulk edits, drones, projected effects and command bursts. These features are still in development.</string>
+    <string name="about_credit">Based on Pyfa by the Pyfa developers. Source and license are available in the project repository.</string>
+    <string name="source_url" translatable="false">github.com/Sussic/Pyfa-android</string>
+    <string name="license_label" translatable="false">GNU General Public License v3</string>
+    <string name="version">Development build %1$s</string>
+</resources>

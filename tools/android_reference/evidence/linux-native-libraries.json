@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/libn/libnotify/libnotify4_0.8.3-1build2_amd64.deb",
+    "sha256": "4d856e960ac0ec137e9908b6df0fa295e04c175b0be239450de2243be49524df"
+  },
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/libx/libxtst/libxtst6_1.2.3-1.1build1_amd64.deb",
+    "sha256": "632d74c760f0a4e844c499e7bc1eca4c709aa096fde783a7a6807604aef77545"
+  },
+  {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/libtiff5_4.3.0-6ubuntu0.13_amd64.deb",
+    "sha256": "298a778a6a579a556f6bb4e32512cd76e0483b57b4a379ee85397f62fe21f225"
+  }
+]

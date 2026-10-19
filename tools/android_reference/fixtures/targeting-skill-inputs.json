@@ -1,0 +1,2026 @@
+{
+  "task": "C03.1",
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "targeting_fixture_normalized_sha256": "74b135985d9a054ddd8b43d03cc83ef5ebc01238897c3e329f75ad5277a98e98",
+  "character_source_sha256": "1ba5d3cc5259f570d40a6ed93e7e920ac733af30d2fb637ed1f98239651d77a5",
+  "cases": [
+    {
+      "case": 0,
+      "spec": {
+        "name": "Targeting Primae",
+        "ship": "Primae",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 1,
+      "spec": {
+        "name": "Targeting Rorqual",
+        "ship": "Rorqual",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 2,
+      "spec": {
+        "name": "Targeting Hoarder",
+        "ship": "Hoarder",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 3,
+      "spec": {
+        "name": "Targeting Kryos",
+        "ship": "Kryos",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 4,
+      "spec": {
+        "name": "Targeting Miasmos Quafe Ultra Edition",
+        "ship": "Miasmos Quafe Ultra Edition",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 5,
+      "spec": {
+        "name": "Targeting Metamorphosis",
+        "ship": "Metamorphosis",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 6,
+      "spec": {
+        "name": "Targeting Squall",
+        "ship": "Squall",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 7,
+      "spec": {
+        "name": "Targeting Odysseus",
+        "ship": "Odysseus",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 8,
+      "spec": {
+        "name": "Targeting Bantam",
+        "ship": "Bantam",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 9,
+      "spec": {
+        "name": "Targeting Slasher",
+        "ship": "Slasher",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 10,
+      "spec": {
+        "name": "Targeting Navitas",
+        "ship": "Navitas",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 11,
+      "spec": {
+        "name": "Targeting Apotheosis",
+        "ship": "Apotheosis",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 12,
+      "spec": {
+        "name": "Targeting Executioner",
+        "ship": "Executioner",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 13,
+      "spec": {
+        "name": "Targeting Vexor",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 14,
+      "spec": {
+        "name": "Targeting Rifter",
+        "ship": "Rifter",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 15,
+      "spec": {
+        "name": "Targeting Caracal",
+        "ship": "Caracal",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 16,
+      "spec": {
+        "name": "Targeting Maller",
+        "ship": "Maller",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 17,
+      "spec": {
+        "name": "Targeting Dominix",
+        "ship": "Dominix",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 18,
+      "spec": {
+        "name": "Targeting Raitaru",
+        "ship": "Raitaru",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 19,
+      "spec": {
+        "name": "Targeting Leopard",
+        "ship": "Leopard",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 20,
+      "spec": {
+        "name": "No trained skills",
+        "ship": "Vexor",
+        "skill_level": 0,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 21,
+      "spec": {
+        "name": "Drone range",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Drone Link Augmentor II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 22,
+      "spec": {
+        "name": "Drone range",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Drone Link Augmentor II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 23,
+      "spec": {
+        "name": "Targeting script",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Sensor Booster II",
+            "state": "ACTIVE",
+            "charge": "Targeting Range Script"
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 24,
+      "spec": {
+        "name": "Targeting script",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Sensor Booster II",
+            "state": "ACTIVE",
+            "charge": "Targeting Range Script"
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 25,
+      "spec": {
+        "name": "Scan script",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Sensor Booster II",
+            "state": "ACTIVE",
+            "charge": "Scan Resolution Script"
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 26,
+      "spec": {
+        "name": "Scan script",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Sensor Booster II",
+            "state": "ACTIVE",
+            "charge": "Scan Resolution Script"
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 27,
+      "spec": {
+        "name": "Sensor resistance",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Signal Amplifier II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 28,
+      "spec": {
+        "name": "Sensor resistance",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Signal Amplifier II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 29,
+      "spec": {
+        "name": "Afterburner",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "10MN Afterburner II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 30,
+      "spec": {
+        "name": "Afterburner",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "10MN Afterburner II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 31,
+      "spec": {
+        "name": "Microwarpdrive",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "50MN Microwarpdrive II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 32,
+      "spec": {
+        "name": "Microwarpdrive",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "50MN Microwarpdrive II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 33,
+      "spec": {
+        "name": "Armor mass",
+        "ship": "Dominix",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "1600mm Steel Plates II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 34,
+      "spec": {
+        "name": "Armor mass",
+        "ship": "Dominix",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "1600mm Steel Plates II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 35,
+      "spec": {
+        "name": "Warp speed",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Medium Hyperspatial Velocity Optimizer II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 36,
+      "spec": {
+        "name": "Warp speed",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Medium Hyperspatial Velocity Optimizer II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 37,
+      "spec": {
+        "name": "Warp core",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Warp Core Stabilizer II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 38,
+      "spec": {
+        "name": "Warp core",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Warp Core Stabilizer II",
+            "state": "ACTIVE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 39,
+      "spec": {
+        "name": "Cargo expansion",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Expanded Cargohold II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 40,
+      "spec": {
+        "name": "Cargo expansion",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [
+          {
+            "name": "Expanded Cargohold II",
+            "state": "ONLINE",
+            "charge": null
+          }
+        ],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_module_states",
+          "args": {
+            "module_indices": [
+              0
+            ],
+            "state": "OFFLINE"
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 41,
+      "spec": {
+        "name": "Skill Drone Avionics",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Drone Avionics",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Drone Avionics": 0
+      }
+    },
+    {
+      "case": 42,
+      "spec": {
+        "name": "Skill Advanced Drone Avionics",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Advanced Drone Avionics",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Advanced Drone Avionics": 0
+      }
+    },
+    {
+      "case": 43,
+      "spec": {
+        "name": "Skill Long Range Targeting",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Long Range Targeting",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Long Range Targeting": 0,
+        "Logistics Cruisers": null,
+        "Tactical Logistics Reconfiguration": null,
+        "Electronic Attack Ships": null,
+        "Logistics Frigates": null
+      }
+    },
+    {
+      "case": 44,
+      "spec": {
+        "name": "Skill Signature Analysis",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Signature Analysis",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Signature Analysis": 0,
+        "Logistics Cruisers": null,
+        "Recon Ships": null,
+        "Tactical Logistics Reconfiguration": null,
+        "Logistics Frigates": null
+      }
+    },
+    {
+      "case": 45,
+      "spec": {
+        "name": "Skill Navigation",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Navigation",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Gallente Titan": null,
+        "Minmatar Titan": null,
+        "Caldari Titan": null,
+        "Amarr Titan": null,
+        "Propulsion Jamming": null,
+        "Navigation": 0,
+        "Afterburner": null,
+        "Fuel Conservation": null,
+        "Acceleration Control": null,
+        "Evasive Maneuvering": null,
+        "High Speed Maneuvering": null,
+        "Warp Drive Operation": null,
+        "Jump Drive Operation": null,
+        "Micro Jump Drive Operation": null,
+        "Interceptors": null,
+        "Interdictors": null,
+        "Jump Fuel Conservation": null,
+        "Jump Drive Calibration": null,
+        "Amarr Carrier": null,
+        "Caldari Carrier": null,
+        "Gallente Carrier": null,
+        "Minmatar Carrier": null,
+        "Jump Portal Generation": null,
+        "Heavy Interdiction Cruisers": null,
+        "Black Ops": null,
+        "Amarr Propulsion Systems": null,
+        "Caldari Propulsion Systems": null,
+        "Gallente Propulsion Systems": null,
+        "Minmatar Propulsion Systems": null,
+        "Lancer Dreadnoughts": null,
+        "Capital Jump Portal Generation": null,
+        "Capital Micro Jump Drive Operation": null,
+        "Command Carriers": null
+      }
+    },
+    {
+      "case": 46,
+      "spec": {
+        "name": "Skill Evasive Maneuvering",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Evasive Maneuvering",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Evasive Maneuvering": 0,
+        "Interceptors": null
+      }
+    },
+    {
+      "case": 47,
+      "spec": {
+        "name": "Skill Warp Drive Operation",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Warp Drive Operation",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Gallente Titan": null,
+        "Minmatar Titan": null,
+        "Caldari Titan": null,
+        "Amarr Titan": null,
+        "Warp Drive Operation": 0,
+        "Jump Drive Operation": null,
+        "Micro Jump Drive Operation": null,
+        "Jump Fuel Conservation": null,
+        "Jump Drive Calibration": null,
+        "Amarr Carrier": null,
+        "Caldari Carrier": null,
+        "Gallente Carrier": null,
+        "Minmatar Carrier": null,
+        "Jump Portal Generation": null,
+        "Black Ops": null,
+        "Lancer Dreadnoughts": null,
+        "Capital Jump Portal Generation": null,
+        "Capital Micro Jump Drive Operation": null,
+        "Command Carriers": null
+      }
+    },
+    {
+      "case": 48,
+      "spec": {
+        "name": "Skill Target Management",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "set_skill_level",
+          "args": {
+            "skill": "Target Management",
+            "level": 0
+          }
+        }
+      ],
+      "skills": {
+        "Target Management": 0,
+        "Advanced Target Management": null,
+        "Flag Cruisers": null
+      }
+    },
+    {
+      "case": 49,
+      "spec": {
+        "name": "Cargo tooltip refresh",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [
+        {
+          "operation": "add_cargo",
+          "args": {
+            "item_id": 230,
+            "quantity": 123
+          }
+        }
+      ],
+      "skills": {}
+    },
+    {
+      "case": 50,
+      "spec": {
+        "name": "Projected ECM",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 51,
+      "spec": {
+        "name": "Projected Damping",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    },
+    {
+      "case": 52,
+      "spec": {
+        "name": "Projected Warp disruption",
+        "ship": "Vexor",
+        "skill_level": 5,
+        "factor_reload": false,
+        "damage_pattern": {
+          "emAmount": 25,
+          "thermalAmount": 25,
+          "kineticAmount": 25,
+          "explosiveAmount": 25
+        },
+        "target_profile": null,
+        "security": {
+          "system": "HISEC",
+          "pilot": 0.0
+        },
+        "implants": [],
+        "boosters": [],
+        "projections": [],
+        "commands": [],
+        "environments": [],
+        "modules": [],
+        "drones": [],
+        "cargo": [],
+        "ignore_restrictions": false
+      },
+      "edits": [],
+      "skills": {}
+    }
+  ]
+}

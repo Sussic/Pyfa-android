@@ -1,0 +1,63 @@
+{
+  "sourceCommit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "databaseLogicalSha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "sourceFiles": {
+    "eos/saveddata/ship.py": "31a8417f553037c1de42ef0b7eef104af998d79bf8d59f2cc9ec098e90658a6a"
+  },
+  "modeFamilies": [
+    {
+      "id": 34317,
+      "name": "Confessor",
+      "choices": [
+        34319,
+        34321,
+        34323
+      ]
+    },
+    {
+      "id": 34562,
+      "name": "Svipul",
+      "choices": [
+        34564,
+        34566,
+        34570
+      ]
+    },
+    {
+      "id": 34828,
+      "name": "Jackdaw",
+      "choices": [
+        35676,
+        35677,
+        35678
+      ]
+    },
+    {
+      "id": 35683,
+      "name": "Hecate",
+      "choices": [
+        35686,
+        35687,
+        35688
+      ]
+    },
+    {
+      "id": 89807,
+      "name": "Anhinga",
+      "choices": [
+        90061,
+        90063,
+        90065
+      ]
+    },
+    {
+      "id": 89808,
+      "name": "Skua",
+      "choices": [
+        90060,
+        90062,
+        90064
+      ]
+    }
+  ]
+}

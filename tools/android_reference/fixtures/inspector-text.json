@@ -1,0 +1,1679 @@
+{
+  "schema": 1,
+  "sourceCommit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "databaseLogicalSha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "items": [
+    {
+      "item_id": 206,
+      "expected": {
+        "description": "The be-all and end-all of medium-sized missiles, the Nova heavy missile is a must for those who want a guaranteed kill no matter the cost.",
+        "traits": null,
+        "description_plain": "The be-all and end-all of medium-sized missiles, the Nova heavy missile is a must for those who want a guaranteed kill no matter the cost.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 207,
+      "expected": {
+        "description": "First introduced by the armaments lab of the Wiyrkomi Corporation, the Mjolnir heavy missile is a solid investment with a large payload and steady performance.",
+        "traits": null,
+        "description_plain": "First introduced by the armaments lab of the Wiyrkomi Corporation, the Mjolnir heavy missile is a solid investment with a large payload and steady performance.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 208,
+      "expected": {
+        "description": "Originally designed as a 'finisher' - the killing blow to a crippled ship - the Inferno heavy missile has since gone through various technological upgrades. The latest version has a lighter payload than the original, but much improved guidance systems.",
+        "traits": null,
+        "description_plain": "Originally designed as a 'finisher' - the killing blow to a crippled ship - the Inferno heavy missile has since gone through various technological upgrades. The latest version has a lighter payload than the original, but much improved guidance systems.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 209,
+      "expected": {
+        "description": "The Scourge heavy missile is an old relic from the Caldari-Gallente War that is still in widespread use because of its low price and versatility.",
+        "traits": null,
+        "description_plain": "The Scourge heavy missile is an old relic from the Caldari-Gallente War that is still in widespread use because of its low price and versatility.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 230,
+      "expected": {
+        "description": "Consists of two components: a shell of titanium and a core of antimatter atoms suspended in plasma state. Railguns launch the shell directly, while particle blasters pump the plasma into a cyclotron and process the plasma into a bolt that is then fired.\r\n\r\n50% reduced optimal range.",
+        "traits": null,
+        "description_plain": "Consists of two components: a shell of titanium and a core of antimatter atoms suspended in plasma state. Railguns launch the shell directly, while particle blasters pump the plasma into a cyclotron and process the plasma into a bolt that is then fired. \n50% reduced optimal range.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 405,
+      "expected": {
+        "description": "Transfers shield power over to the target ship, aiding in its defense.",
+        "traits": null,
+        "description_plain": "Transfers shield power over to the target ship, aiding in its defense.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 442,
+      "expected": {
+        "description": "Scans the cargo hold of another ship.",
+        "traits": null,
+        "description_plain": "Scans the cargo hold of another ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 443,
+      "expected": {
+        "description": "Scans the target ship and provides a tactical analysis of its capabilities. The further it goes beyond scan range, the more inaccurate its results will be.",
+        "traits": null,
+        "description_plain": "Scans the target ship and provides a tactical analysis of its capabilities. The further it goes beyond scan range, the more inaccurate its results will be.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 447,
+      "expected": {
+        "description": "Disrupts the target ship's navigation computer, disabling warping, jumping, microwarpdrives and micro jump drives.",
+        "traits": null,
+        "description_plain": "Disrupts the target ship's navigation computer, disabling warping, jumping, microwarpdrives and micro jump drives.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 450,
+      "expected": {
+        "description": "Rapid fire multi-barreled energy weapon that delivers a steady stream of damage. \r\n\r\nRequires frequency crystal ammo types: Gamma, Infrared, Microwave, Multifrequency, Radio, Standard, Ultraviolet, Xray.",
+        "traits": null,
+        "description_plain": "Rapid fire multi-barreled energy weapon that delivers a steady stream of damage. \nRequires frequency crystal ammo types: Gamma, Infrared, Microwave, Multifrequency, Radio, Standard, Ultraviolet, Xray.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 482,
+      "expected": {
+        "description": "Has an improved technology beam, making the extraction process more efficient. Useful for extracting all but the rarest ore.",
+        "traits": null,
+        "description_plain": "Has an improved technology beam, making the extraction process more efficient. Useful for extracting all but the rarest ore.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 484,
+      "expected": {
+        "description": "This multi-barrel autocannon is designed for skirmish warfare. \r\n\r\nMust be loaded with any of the following projectile ammo types: Carbonized Lead, Depleted Uranium, EMP, Fusion, Nuclear, Phased Plasma, Proton, or Titanium Sabot.",
+        "traits": null,
+        "description_plain": "This multi-barrel autocannon is designed for skirmish warfare. \nMust be loaded with any of the following projectile ammo types: Carbonized Lead, Depleted Uranium, EMP, Fusion, Nuclear, Phased Plasma, Proton, or Titanium Sabot.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 518,
+      "expected": {
+        "description": "Gives a bonus to the speed and damage of projectile turrets.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Gives a bonus to the speed and damage of projectile turrets. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 521,
+      "expected": {
+        "description": "Utilizes a combination of containment field emitters and redundancy systems to mitigate the impact of critical system damage. \r\n\r\nGrants a bonus to resistance for shield, armor and hull.\r\n\r\nOnly one Damage Control can be fit at a given time.",
+        "traits": null,
+        "description_plain": "Utilizes a combination of containment field emitters and redundancy systems to mitigate the impact of critical system damage. \nGrants a bonus to resistance for shield, armor and hull. \nOnly one Damage Control can be fit at a given time.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 526,
+      "expected": {
+        "description": "Reduces the maximum speed of a ship by employing micro energy streams which effectively entangle the target temporarily, thereby slowing it down.",
+        "traits": null,
+        "description_plain": "Reduces the maximum speed of a ship by employing micro energy streams which effectively entangle the target temporarily, thereby slowing it down.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 529,
+      "expected": {
+        "description": "Transfers capacitor energy to another ship.",
+        "traits": null,
+        "description_plain": "Transfers capacitor energy to another ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 530,
+      "expected": {
+        "description": "Drains energy from the target ship and adds it to your own.\r\n\r\nNote: A Nosferatu module will not drain your target's capacitor below your own capacitor level.",
+        "traits": null,
+        "description_plain": "Drains energy from the target ship and adds it to your own. \nNote: A Nosferatu module will not drain your target's capacitor below your own capacitor level.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 533,
+      "expected": {
+        "description": "Neutralizes a portion of the energy in the target ship's capacitor.",
+        "traits": null,
+        "description_plain": "Neutralizes a portion of the energy in the target ship's capacitor.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 561,
+      "expected": {
+        "description": "A small multi-barreled railgun for frigates. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \r\n\r\nRequires hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium.",
+        "traits": null,
+        "description_plain": "A small multi-barreled railgun for frigates. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \nRequires hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 577,
+      "expected": {
+        "description": "Provides a quick injection of power into the capacitor.",
+        "traits": null,
+        "description_plain": "Provides a quick injection of power into the capacitor.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 580,
+      "expected": {
+        "description": "Emits random electronic bursts which have a chance of momentarily disrupting target locks on ships within range.\r\n\r\nThis module can be equipped to Battleship, Marauder, Black Ops, Command Ship, Hauler, Blockade Runner, and Deep Space Transport ships.\r\n\r\nNote: Only one module of this type can be activated at the same time. Additionally, fitting a Burst Jammer module will disable interdiction nullification.",
+        "traits": null,
+        "description_plain": "Emits random electronic bursts which have a chance of momentarily disrupting target locks on ships within range. \nThis module can be equipped to Battleship, Marauder, Black Ops, Command Ship, Hauler, Blockade Runner, and Deep Space Transport ships. \nNote: Only one module of this type can be activated at the same time. Additionally, fitting a Burst Jammer module will disable interdiction nullification.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 587,
+      "expected": {
+        "description": "The Rifter is a very powerful combat frigate and can easily tackle the best frigates out there. It has gone through many radical design phases since its inauguration during the Minmatar Rebellion. The Rifter has a wide variety of offensive capabilities, making it an unpredictable and deadly adversary.",
+        "traits": "<b>Minmatar Frigate bonuses (per skill level):</b><br />\n7.5% bonus to Small Projectile Turret rate of fire<br />\n10% bonus to Small Projectile Turret falloff",
+        "description_plain": "The Rifter is a very powerful combat frigate and can easily tackle the best frigates out there. It has gone through many radical design phases since its inauguration during the Minmatar Rebellion. The Rifter has a wide variety of offensive capabilities, making it an unpredictable and deadly adversary.",
+        "traits_plain": "Minmatar Frigate bonuses (per skill level):\n7.5% bonus to Small Projectile Turret rate of fire\n10% bonus to Small Projectile Turret falloff"
+      }
+    },
+    {
+      "item_id": 621,
+      "expected": {
+        "description": "The Caracal is a powerful vessel that specializes in missile deployment. It has excellent shield defenses, but poor armor plating. Its missile arsenal, when fully stocked, is capable of making mincemeat of almost anyone.",
+        "traits": "<b>Caldari Cruiser bonuses (per skill level):</b><br />\n5% bonus to Rapid Light Missile, Heavy Missile and Heavy Assault Missile Launcher rate of fire<br />\n10% bonus to Heavy Missile and Heavy Assault Missile max velocity",
+        "description_plain": "The Caracal is a powerful vessel that specializes in missile deployment. It has excellent shield defenses, but poor armor plating. Its missile arsenal, when fully stocked, is capable of making mincemeat of almost anyone.",
+        "traits_plain": "Caldari Cruiser bonuses (per skill level):\n5% bonus to Rapid Light Missile, Heavy Missile and Heavy Assault Missile Launcher rate of fire\n10% bonus to Heavy Missile and Heavy Assault Missile max velocity"
+      }
+    },
+    {
+      "item_id": 626,
+      "expected": {
+        "description": "The Vexor is a strong combat ship that is also geared to operate in a variety of other roles. The Vexor is especially useful for surveying in potentially hostile sectors as it can stay on duty for a very long time before having to return to base. Furthermore, it is well capable of defending itself against even concentrated attacks.",
+        "traits": "<b>Gallente Cruiser bonuses (per skill level):</b><br />\n5% bonus to Medium Hybrid Turret damage<br />\n10% bonus to Drone hitpoints, damage and mining yield",
+        "description_plain": "The Vexor is a strong combat ship that is also geared to operate in a variety of other roles. The Vexor is especially useful for surveying in potentially hostile sectors as it can stay on duty for a very long time before having to return to base. Furthermore, it is well capable of defending itself against even concentrated attacks.",
+        "traits_plain": "Gallente Cruiser bonuses (per skill level):\n5% bonus to Medium Hybrid Turret damage\n10% bonus to Drone hitpoints, damage and mining yield"
+      }
+    },
+    {
+      "item_id": 645,
+      "expected": {
+        "description": "The Dominix is one of the old warhorses dating back to the Gallente-Caldari War. While no longer regarded as the king of the hill, it is by no means obsolete. Its formidable hulk and powerful drone arsenal means that anyone not in the largest and latest battleships will regret ever locking horns with it.",
+        "traits": "<b>Gallente Battleship bonuses (per skill level):</b><br />\n10% bonus to Drone hitpoints and damage<br />\n7.5% bonus to Drone optimal range and tracking speed<br />\n<br />\n<b>Role Bonus:</b><br />\n100% bonus to Shield Extender hitpoints<br />\n50% bonus to Armor Plate hitpoints<br />\n5% additional bonus to Reinforced Bulkhead hitpoints",
+        "description_plain": "The Dominix is one of the old warhorses dating back to the Gallente-Caldari War. While no longer regarded as the king of the hill, it is by no means obsolete. Its formidable hulk and powerful drone arsenal means that anyone not in the largest and latest battleships will regret ever locking horns with it.",
+        "traits_plain": "Gallente Battleship bonuses (per skill level):\n10% bonus to Drone hitpoints and damage\n7.5% bonus to Drone optimal range and tracking speed\nRole Bonus:\n100% bonus to Shield Extender hitpoints\n50% bonus to Armor Plate hitpoints\n5% additional bonus to Reinforced Bulkhead hitpoints"
+      }
+    },
+    {
+      "item_id": 1201,
+      "expected": {
+        "description": "Heavy Attack Drone",
+        "traits": null,
+        "description_plain": "Heavy Attack Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1202,
+      "expected": {
+        "description": "Civilian Mining Drone",
+        "traits": null,
+        "description_plain": "Civilian Mining Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1893,
+      "expected": {
+        "description": "Dissipates energy weapon damage efficiently, thus allowing them to be fired more rapidly. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Dissipates energy weapon damage efficiently, thus allowing them to be fired more rapidly. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1948,
+      "expected": {
+        "description": "Projects a low intensity field of ionized particles to disrupt the effectiveness of enemy sensors. Very effective against the Magnetometric-based sensors used by Gallente, Serpentis, ORE and SoE ships.",
+        "traits": null,
+        "description_plain": "Projects a low intensity field of ionized particles to disrupt the effectiveness of enemy sensors. Very effective against the Magnetometric-based sensors used by Gallente, Serpentis, ORE and SoE ships.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1949,
+      "expected": {
+        "description": "Augments the sensor and electronics suite of the fitted ship. Benefits include additional locked targets, increased maximum target acquisition range, faster locking speed, and increased sensor strength.\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Augments the sensor and electronics suite of the fitted ship. Benefits include additional locked targets, increased maximum target acquisition range, faster locking speed, and increased sensor strength. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1952,
+      "expected": {
+        "description": "Gives an increase to targeting range, scan resolution and sensor strength. This module can be loaded with scripts to increase its effectiveness in certain areas.  \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Gives an increase to targeting range, scan resolution and sensor strength. This module can be loaded with scripts to increase its effectiveness in certain areas. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1963,
+      "expected": {
+        "description": "Can only be activated on targets to increase their scan resolutions, boost their targeting range and improve their sensor strength. This module can be loaded with scripts to increase its effectiveness in certain areas. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Can only be activated on targets to increase their scan resolutions, boost their targeting range and improve their sensor strength. This module can be loaded with scripts to increase its effectiveness in certain areas. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 1968,
+      "expected": {
+        "description": "Reduces the range and speed of a targeted ship's sensors. This module can be loaded with scripts to increase its effectiveness in certain areas. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Reduces the range and speed of a targeted ship's sensors. This module can be loaded with scripts to increase its effectiveness in certain areas. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2032,
+      "expected": {
+        "description": "Increases the capacitor recharge rate.",
+        "traits": null,
+        "description_plain": "Increases the capacitor recharge rate.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2048,
+      "expected": {
+        "description": "Utilizes a combination of containment field emitters and redundancy systems to mitigate the impact of critical system damage. \r\n\r\nGrants a bonus to resistance for shield, armor and hull.\r\n\r\nOnly one Damage Control can be fit at a given time.",
+        "traits": null,
+        "description_plain": "Utilizes a combination of containment field emitters and redundancy systems to mitigate the impact of critical system damage. \nGrants a bonus to resistance for shield, armor and hull. \nOnly one Damage Control can be fit at a given time.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2108,
+      "expected": {
+        "description": "Disrupts the turret range and tracking speed of the target ship. This module can be loaded with scripts to increase its effectiveness in certain areas. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Disrupts the turret range and tracking speed of the target ship. This module can be loaded with scripts to increase its effectiveness in certain areas. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2185,
+      "expected": {
+        "description": "Medium Scout Drone",
+        "traits": null,
+        "description_plain": "Medium Scout Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2205,
+      "expected": {
+        "description": "Light Scout Drone",
+        "traits": null,
+        "description_plain": "Light Scout Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2410,
+      "expected": {
+        "description": "Designed for long engagements between medium sized ships. Slow firing rate, but makes up for it with a large missile capacity.",
+        "traits": null,
+        "description_plain": "Designed for long engagements between medium sized ships. Slow firing rate, but makes up for it with a large missile capacity.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2456,
+      "expected": {
+        "description": "Light Scout Drone",
+        "traits": null,
+        "description_plain": "Light Scout Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2466,
+      "expected": {
+        "description": "Light Scout Drone",
+        "traits": null,
+        "description_plain": "Light Scout Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 2488,
+      "expected": {
+        "description": "Light Scout Drone",
+        "traits": null,
+        "description_plain": "Light Scout Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3082,
+      "expected": {
+        "description": "Cruiser-sized large barrel turret. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \r\n\r\nRequires either regular or advanced hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium, Javelin, Spike.",
+        "traits": null,
+        "description_plain": "Cruiser-sized large barrel turret. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \nRequires either regular or advanced hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium, Javelin, Spike.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3106,
+      "expected": {
+        "description": "This cruiser-sized weapon is a double-barreled version of the frigate class 150mm railgun. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \r\n\r\nRequires either regular or advanced hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium, Javelin, Spike.",
+        "traits": null,
+        "description_plain": "This cruiser-sized weapon is a double-barreled version of the frigate class 150mm railgun. Railguns use magnetic rails to fire solid chunks of matter at hypersonic speed. The accurate range of railguns is very good, but due to technical limitations it cannot use onboard guidance. This results in a fairly rapid drop in accuracy at extreme ranges. \nRequires either regular or advanced hybrid charge types: Antimatter, Iridium, Iron, Lead, Plutonium, Thorium, Tungsten, Uranium, Javelin, Spike.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3514,
+      "expected": {
+        "description": "Do you know what you are, capsuleer? The truth will not comfort you.<br>You are a frightened child running headfirst towards oblivion.\r\n\r\nAnd I?\r\nI am the only one who tried to stop you.\r\nI am the Messiah that you turned against.\r\n\r\nYou persecuted me, hunted my children.\r\nVowed to burn my Promised Land to ash.\r\n\r\nNow I have returned, and I know you better than you know yourself.\r\n\r\nI will vanquish your fear, and commute your flesh to dust.\r\n\r\n<i>- Sansha Kuvakei</i><br><br>",
+        "traits": "<b>Amarr Carrier bonuses (per skill level):</b><br />\n5% bonus to Fighter damage<br />\n5% bonus to Fighter weapon explosion radius and explosion velocity<br />\n3+ bonus to ship warp core strength<br />\n<br />\n<b>Caldari Carrier bonuses (per skill level):</b><br />\n5% bonus to Fighter damage<br />\n20% bonus to Afterburner velocity bonus<br />\n3+ bonus to ship warp core strength<br />\n<br />\n<b>Role Bonus:</b><br />\n• Can fit Networked Sensor Array<br />\n• Can fit Burst Projectors<br />\n• Can use two Command Burst modules<br />\n200% bonus to Command Burst area of effect range<br />\n• Can launch Light and Heavy Fighters<br />\n• Can lock at extended ranges<br />\n400% bonus to Armor Plates and Shield Extenders<br />\n50% bonus to Remote Sensor Dampener resistance<br />\n50% bonus to Stasis effect resistance<br />\n50% increase to Remote Electronic Assistance impedance<br />\n• Conduit Jump capable<br />\n5x penalty to Entosis Link duration",
+        "description_plain": "Do you know what you are, capsuleer? The truth will not comfort you.\nYou are a frightened child running headfirst towards oblivion. \nAnd I? \nI am the only one who tried to stop you. \nI am the Messiah that you turned against. \nYou persecuted me, hunted my children. \nVowed to burn my Promised Land to ash. \nNow I have returned, and I know you better than you know yourself. \nI will vanquish your fear, and commute your flesh to dust. \n- Sansha Kuvakei",
+        "traits_plain": "Amarr Carrier bonuses (per skill level):\n5% bonus to Fighter damage\n5% bonus to Fighter weapon explosion radius and explosion velocity\n3+ bonus to ship warp core strength\nCaldari Carrier bonuses (per skill level):\n5% bonus to Fighter damage\n20% bonus to Afterburner velocity bonus\n3+ bonus to ship warp core strength\nRole Bonus:\n• Can fit Networked Sensor Array\n• Can fit Burst Projectors\n• Can use two Command Burst modules\n200% bonus to Command Burst area of effect range\n• Can launch Light and Heavy Fighters\n• Can lock at extended ranges\n400% bonus to Armor Plates and Shield Extenders\n50% bonus to Remote Sensor Dampener resistance\n50% bonus to Stasis effect resistance\n50% increase to Remote Electronic Assistance impedance\n• Conduit Jump capable\n5x penalty to Entosis Link duration"
+      }
+    },
+    {
+      "item_id": 3530,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the armor of the ship.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the armor of the ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3532,
+      "expected": {
+        "description": "A limited run of these ships was released to capsuleers at the end of YC 112, as a platform to utilize an influx of <url=showinfo:3581>Purloined Sansha Data Analyzers</url> that CONCORD had acquired. CONCORD's hope was that capsuleers could find a way to use the hardware against Sansha forces as they began mounting organized incursions into territories across the cluster.<br><br>The specialized nature of the hardware in Sansha Data Analyzer technology makes it incompatible with standard data buses, but this ship's unique hull design has an adaptive synchronization suite that allows it to interface with a wide range of non-standard hardware. CONCORD has remained silent on the origin of this design, but a number of amateur analysts maintain that ships of very similar configuration, carrying SCC and DED transponders, have been observed covertly on multiple prior occasions.",
+        "traits": "<b>Role Bonus:</b><br />\n• Can fit Purloined Sansha Data Analyzer",
+        "description_plain": "A limited run of these ships was released to capsuleers at the end of YC 112, as a platform to utilize an influx of Purloined Sansha Data Analyzers that CONCORD had acquired. CONCORD's hope was that capsuleers could find a way to use the hardware against Sansha forces as they began mounting organized incursions into territories across the cluster.\nThe specialized nature of the hardware in Sansha Data Analyzer technology makes it incompatible with standard data buses, but this ship's unique hull design has an adaptive synchronization suite that allows it to interface with a wide range of non-standard hardware. CONCORD has remained silent on the origin of this design, but a number of amateur analysts maintain that ships of very similar configuration, carrying SCC and DED transponders, have been observed covertly on multiple prior occasions.",
+        "traits_plain": "Role Bonus:\n• Can fit Purloined Sansha Data Analyzer"
+      }
+    },
+    {
+      "item_id": 3536,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the armor of the Target ship.\r\n\r\nNote: May only be fitted to capital class ships.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the armor of the Target ship. \nNote: May only be fitted to capital class ships.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3581,
+      "expected": {
+        "description": "CONCORD has acquired untold numbers of these devices from destroyed Sansha vessels during recent raids. The modules have the appearance of standard data analyzers, but when connected to the systems of a suitably modified ship, they exhibit significantly enhanced capabilities.<br><br>Official DED reports on the devices' internal workings cite \"inconclusive results\", but CONCORD has nevertheless opted to distribute these modules to capsuleers in the hope that they might be useful in the fight against Kuvakei's minions.\r\n\r\nNote: Due to recently discovered branch prediction vulnerabilities in certain Upwell Consortium Recursive Computing Modules this analyzer may also be used to collect sensitive information concerning reinforcement periods of Upwell Structures.",
+        "traits": null,
+        "description_plain": "CONCORD has acquired untold numbers of these devices from destroyed Sansha vessels during recent raids. The modules have the appearance of standard data analyzers, but when connected to the systems of a suitably modified ship, they exhibit significantly enhanced capabilities.\nOfficial DED reports on the devices' internal workings cite \"inconclusive results\", but CONCORD has nevertheless opted to distribute these modules to capsuleers in the hope that they might be useful in the fight against Kuvakei's minions. \nNote: Due to recently discovered branch prediction vulnerabilities in certain Upwell Consortium Recursive Computing Modules this analyzer may also be used to collect sensitive information concerning reinforcement periods of Upwell Structures.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3598,
+      "expected": {
+        "description": "Transfers shield power over to the target ship, aiding in its defense.",
+        "traits": null,
+        "description_plain": "Transfers shield power over to the target ship, aiding in its defense.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3831,
+      "expected": {
+        "description": "Increases the maximum strength of the shield.",
+        "traits": null,
+        "description_plain": "Increases the maximum strength of the shield.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3955,
+      "expected": {
+        "description": "Radiates an omnidirectional pulse from the ship that causes EM damage to surrounding vessels.",
+        "traits": null,
+        "description_plain": "Radiates an omnidirectional pulse from the ship that causes EM damage to surrounding vessels.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 3986,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the hull of the Target ship.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the hull of the Target ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4292,
+      "expected": {
+        "description": "An electronic interface designed to augment and enhance a dreadnought's siege warfare abilities. Through a series of electromagnetic polarity field shifts, the siege module diverts energy from the ship's propulsion and warp systems to lend additional power to its offensive and defensive capabilities.\r\n\r\nThis results in a tremendous increase in damage, as well as a greatly increased rate of defensive self-sustenance. Defensive benefits include improved self-repair and shield boosting effectiveness, as well as increased resistance to most forms of electronic warfare. As a side effect of the ionic field created by the siege module, beneficial remote repair and capacitor transfer effects are ineffective against the fitted ship while the module is active.\r\nIn addition, the lack of power to locomotion systems means that neither standard propulsion nor warp travel are available to the ship nor are you allowed to dock until out of siege mode.\r\n\r\nNotes: \r\n- A siege module requires Strontium clathrates to run and operate effectively. \r\n- Bonuses to the Shield Booster amount and duration are only applied to Capital sized boosters.\r\n- Bonuses to the Armor Repairer amount and duration are only applied to Capital sized repairers.\r\n- Only one siege module can be fitted to a dreadnought class ship. The increased shield boosting and armor repairing gained from the Siege Module is subject to a stacking penalty when used with other similar modules that affect the same attribute on the ship.",
+        "traits": null,
+        "description_plain": "An electronic interface designed to augment and enhance a dreadnought's siege warfare abilities. Through a series of electromagnetic polarity field shifts, the siege module diverts energy from the ship's propulsion and warp systems to lend additional power to its offensive and defensive capabilities. \nThis results in a tremendous increase in damage, as well as a greatly increased rate of defensive self-sustenance. Defensive benefits include improved self-repair and shield boosting effectiveness, as well as increased resistance to most forms of electronic warfare. As a side effect of the ionic field created by the siege module, beneficial remote repair and capacitor transfer effects are ineffective against the fitted ship while the module is active. \nIn addition, the lack of power to locomotion systems means that neither standard propulsion nor warp travel are available to the ship nor are you allowed to dock until out of siege mode. \nNotes: \n- A siege module requires Strontium clathrates to run and operate effectively. \n- Bonuses to the Shield Booster amount and duration are only applied to Capital sized boosters. \n- Bonuses to the Armor Repairer amount and duration are only applied to Capital sized repairers. \n- Only one siege module can be fitted to a dreadnought class ship. The increased shield boosting and armor repairing gained from the Siege Module is subject to a stacking penalty when used with other similar modules that affect the same attribute on the ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4296,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the hull of the Target ship.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the hull of the Target ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4383,
+      "expected": {
+        "description": "The Micro Jump Drive is a module that spools up, then jumps the ship forward 100km in the direction it is facing. Upon arrival, the ship maintains its direction and velocity. Warp scramblers can be used to disrupt the module. Spool up time is reduced by the skill <a href=showinfo:4385>Micro Jump Drive Operation</a>.\r\n\r\nThe Micro Jump Drive was developed by Duvolle Laboratories Advanced Manifold Theory Unit. The drive was conceived by the late Avagher Xarasier, the genius behind several ground-breaking innovations of that era.",
+        "traits": null,
+        "description_plain": "The Micro Jump Drive is a module that spools up, then jumps the ship forward 100km in the direction it is facing. Upon arrival, the ship maintains its direction and velocity. Warp scramblers can be used to disrupt the module. Spool up time is reduced by the skill Micro Jump Drive Operation. \nThe Micro Jump Drive was developed by Duvolle Laboratories Advanced Manifold Theory Unit. The drive was conceived by the late Avagher Xarasier, the genius behind several ground-breaking innovations of that era.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4391,
+      "expected": {
+        "description": "Provides a quick boost in shield strength. The module takes Cap Booster charges and will start consuming the ship's capacitor upon the charges running out. Deactivating the module while it has no cap boosters loaded starts reloading, if there are cap boosters available in cargo hold.\r\n\r\nNote: Can use Cap Booster 150 and 200 as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits": null,
+        "description_plain": "Provides a quick boost in shield strength. The module takes Cap Booster charges and will start consuming the ship's capacitor upon the charges running out. Deactivating the module while it has no cap boosters loaded starts reloading, if there are cap boosters available in cargo hold. \nNote: Can use Cap Booster 150 and 200 as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4393,
+      "expected": {
+        "description": "The Drone Damage Amplifier projects a multi-node quantum entanglement onto the ship's drone or fighter communications net, creating a bridged processor link that allows for better real-time trajectory projections.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Drone Damage Amplifier projects a multi-node quantum entanglement onto the ship's drone or fighter communications net, creating a bridged processor link that allows for better real-time trajectory projections. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4403,
+      "expected": {
+        "description": "The Reactive Armor Hardener possesses an advanced nano membrane that reacts to armor layer damage by shifting between resistances over time. This makes it able to align its defenses against whichever incoming damage types are prevalent.\r\n\r\nThe module spreads 60% resistance over the four damage types, starting at 15% in each.\r\n\r\nOnly one of this module type can be fitted at a time. Prototype Inferno Module.",
+        "traits": null,
+        "description_plain": "The Reactive Armor Hardener possesses an advanced nano membrane that reacts to armor layer damage by shifting between resistances over time. This makes it able to align its defenses against whichever incoming damage types are prevalent. \nThe module spreads 60% resistance over the four damage types, starting at 15% in each. \nOnly one of this module type can be fitted at a time. Prototype Inferno Module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 4405,
+      "expected": {
+        "description": "The Drone Damage Amplifier projects a multi-node quantum entanglement onto the ship's drone or fighter communications net, creating a bridged processor link that allows for better real-time trajectory projections.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Drone Damage Amplifier projects a multi-node quantum entanglement onto the ship's drone or fighter communications net, creating a bridged processor link that allows for better real-time trajectory projections. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 9944,
+      "expected": {
+        "description": "Grants a bonus to the firing rate and damage of hybrid turrets. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Grants a bonus to the firing rate and damage of hybrid turrets. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 10250,
+      "expected": {
+        "description": "Mining Drone",
+        "traits": null,
+        "description_plain": "Mining Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 10998,
+      "expected": {
+        "description": "When activated this unit attempts to compensate for fluctuations and disruptions of the ship's warp core. As a side effect, the host ship's maximum targeting range, scan resolution and drone bandwidth are penalized while this module is fitted.\r\n\r\nOnly one of this module type can be fitted at a time.",
+        "traits": null,
+        "description_plain": "When activated this unit attempts to compensate for fluctuations and disruptions of the ship's warp core. As a side effect, the host ship's maximum targeting range, scan resolution and drone bandwidth are penalized while this module is fitted. \nOnly one of this module type can be fitted at a time.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 11370,
+      "expected": {
+        "description": "This prototype of an advanced cloaking mechanism was one of the last major technological breakthroughs to come out of Crielere Labs. Although it does work it is not really a finished product and has some serious drawbacks, most notably the fact that the module creates high sensor disruption while fitted and can not operate unless at minimum velocity.\r\n\r\nNote: Fitting two or more cloaking devices to a ship negates their use, as unsynchronized light deflection causes interference.",
+        "traits": null,
+        "description_plain": "This prototype of an advanced cloaking mechanism was one of the last major technological breakthroughs to come out of Crielere Labs. Although it does work it is not really a finished product and has some serious drawbacks, most notably the fact that the module creates high sensor disruption while fitted and can not operate unless at minimum velocity. \nNote: Fitting two or more cloaking devices to a ship negates their use, as unsynchronized light deflection causes interference.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 11957,
+      "expected": {
+        "description": "Force recon ships are the cruiser-class equivalent of covert ops frigates. While not as resilient as combat recon ships, they are nonetheless able to do their job as reconnaissance vessels very effectively, due in no small part to their ability to interface with covert ops cloaking devices and set up cynosural fields for incoming capital ships.",
+        "traits": "<b>Caldari Cruiser bonuses (per skill level):</b><br />\n5% bonus to Medium Hybrid Turret damage<br />\n10% reduction in ECM Target Jammer activation cost<br />\n<br />\n<b>Recon Ships bonuses (per skill level):</b><br />\n30% bonus to ECM Target Jammer strength<br />\n20% reduction in Cloaking Devices CPU requirement<br />\n<br />\n<b>Role Bonus:</b><br />\n80% reduction in Cynosural Field Generator and Covert Cynosural Field Generator liquid ozone consumption<br />\n50% reduction in Cynosural Field Generator and Covert Cynosural Field Generator duration<br />\n• Can fit Covert Ops Cloaking Device, Cynosural Field Generator, and Covert Cynosural Field Generator modules<br />\n• Cloak reactivation delay reduced to 5 seconds",
+        "description_plain": "Force recon ships are the cruiser-class equivalent of covert ops frigates. While not as resilient as combat recon ships, they are nonetheless able to do their job as reconnaissance vessels very effectively, due in no small part to their ability to interface with covert ops cloaking devices and set up cynosural fields for incoming capital ships.",
+        "traits_plain": "Caldari Cruiser bonuses (per skill level):\n5% bonus to Medium Hybrid Turret damage\n10% reduction in ECM Target Jammer activation cost\nRecon Ships bonuses (per skill level):\n30% bonus to ECM Target Jammer strength\n20% reduction in Cloaking Devices CPU requirement\nRole Bonus:\n80% reduction in Cynosural Field Generator and Covert Cynosural Field Generator liquid ozone consumption\n50% reduction in Cynosural Field Generator and Covert Cynosural Field Generator duration\n• Can fit Covert Ops Cloaking Device, Cynosural Field Generator, and Covert Cynosural Field Generator modules\n• Cloak reactivation delay reduced to 5 seconds"
+      }
+    },
+    {
+      "item_id": 12038,
+      "expected": {
+        "description": "Specifically engineered to fire torpedoes, stealth bombers represent the next generation in covert ops craft. The bombers are designed for sneak attacks on large vessels with powerful missile guidance technology enabling the torpedoes to strike faster and from a longer distance.",
+        "traits": "<b>Amarr Frigate bonuses (per skill level):</b><br />\n10% bonus to Torpedo flight time<br />\n15% bonus to Torpedo max velocity<br />\n<br />\n<b>Covert Ops bonuses (per skill level):</b><br />\n5% bonus to EM Bomb damage<br />\n15% bonus to EM Torpedo damage<br />\n<br />\n<b>Role Bonus:</b><br />\n99.65% reduction in Torpedo Launcher powergrid requirement<br />\n50% reduction in Cloaking Devices CPU requirement<br />\n• No targeting delay after Cloaking Device deactivation<br />\n• Can fit Covert Ops Cloaking Device, Covert Cynosural Field Generator and Bomb Launcher<br />\n• Cloak reactivation delay reduced to 15 seconds",
+        "description_plain": "Specifically engineered to fire torpedoes, stealth bombers represent the next generation in covert ops craft. The bombers are designed for sneak attacks on large vessels with powerful missile guidance technology enabling the torpedoes to strike faster and from a longer distance.",
+        "traits_plain": "Amarr Frigate bonuses (per skill level):\n10% bonus to Torpedo flight time\n15% bonus to Torpedo max velocity\nCovert Ops bonuses (per skill level):\n5% bonus to EM Bomb damage\n15% bonus to EM Torpedo damage\nRole Bonus:\n99.65% reduction in Torpedo Launcher powergrid requirement\n50% reduction in Cloaking Devices CPU requirement\n• No targeting delay after Cloaking Device deactivation\n• Can fit Covert Ops Cloaking Device, Covert Cynosural Field Generator and Bomb Launcher\n• Cloak reactivation delay reduced to 15 seconds"
+      }
+    },
+    {
+      "item_id": 12058,
+      "expected": {
+        "description": "Gives a boost to the maximum velocity of the ship when activated. The thrust that boosts the ship, and the corresponding maximum velocity bonus, are limited by the mass of the ship that uses this module.\r\n\r\nNote: Usually fit on Cruisers and Battlecruisers.",
+        "traits": null,
+        "description_plain": "Gives a boost to the maximum velocity of the ship when activated. The thrust that boosts the ship, and the corresponding maximum velocity bonus, are limited by the mass of the ship that uses this module. \nNote: Usually fit on Cruisers and Battlecruisers.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 12221,
+      "expected": {
+        "description": "Transfers capacitor energy to another ship.",
+        "traits": null,
+        "description_plain": "Transfers capacitor energy to another ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 12274,
+      "expected": {
+        "description": "A computer system designed for monitoring and guiding missiles in flight, thus allowing for superior effectiveness and lethality. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "A computer system designed for monitoring and guiding missiles in flight, thus allowing for superior effectiveness and lethality. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 12709,
+      "expected": {
+        "description": "A targeting subsystem that projects an electronic \"Tag\" on the target thus making it easier to target and hit. \r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "A targeting subsystem that projects an electronic \"Tag\" on the target thus making it easier to target and hit. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 16278,
+      "expected": {
+        "description": "A unit used to extract valuable materials from ice asteroids. Used on Mining barges and Exhumers.",
+        "traits": null,
+        "description_plain": "A unit used to extract valuable materials from ice asteroids. Used on Mining barges and Exhumers.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 17480,
+      "expected": {
+        "description": "The mining barge was designed by <a href=showinfo:30//500014>ORE</a> to facilitate advancing the mining profession to a whole new level. Each barge was created to excel at a specific function, the Procurer's being durability and self-defense.\r\n\r\nMining barges are equipped with electronic subsystems specifically designed to accommodate Strip Mining and Ice Harvesting modules.",
+        "traits": "<b>Mining Barge bonuses (per skill level):</b><br />\n6% bonus to ship shield hitpoints<br />\n2% in Strip Miner yield<br />\n-2% Ice Harvester duration<br />\n-2% in Gas Harvester duration<br />\n<br />\n<b>Role Bonus:</b><br />\n50% bonus to drone damage and hitpoints",
+        "description_plain": "The mining barge was designed by ORE to facilitate advancing the mining profession to a whole new level. Each barge was created to excel at a specific function, the Procurer's being durability and self-defense. \nMining barges are equipped with electronic subsystems specifically designed to accommodate Strip Mining and Ice Harvesting modules.",
+        "traits_plain": "Mining Barge bonuses (per skill level):\n6% bonus to ship shield hitpoints\n2% in Strip Miner yield\n-2% Ice Harvester duration\n-2% in Gas Harvester duration\nRole Bonus:\n50% bonus to drone damage and hitpoints"
+      }
+    },
+    {
+      "item_id": 17482,
+      "expected": {
+        "description": "A bulk ore extractor designed for use on Mining Barges and Exhumers.",
+        "traits": null,
+        "description_plain": "A bulk ore extractor designed for use on Mining Barges and Exhumers.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 17912,
+      "expected": {
+        "description": "The Modulated Strip Miner II uses many of the same crystal frequency modulation technologies as the Modulated Deep Core Miner II, except it lacks the deep core mining capacity of its smaller sibling. \r\n\r\nCan only be fit to Mining Barges and Exhumers.\r\n\r\nUses mining crystals. \r\n\r\nCannot fit a mercoxit mining crystal.",
+        "traits": null,
+        "description_plain": "The Modulated Strip Miner II uses many of the same crystal frequency modulation technologies as the Modulated Deep Core Miner II, except it lacks the deep core mining capacity of its smaller sibling. \nCan only be fit to Mining Barges and Exhumers. \nUses mining crystals. \nCannot fit a mercoxit mining crystal.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 19720,
+      "expected": {
+        "description": "The Revelation represents the pinnacle of Amarrian military technology. Maintaining their proud tradition of producing the strongest armor plating to be found anywhere, the Empire's engineers outdid themselves in creating what is arguably the most resilient dreadnought in existence.\r\n\r\nAdded to that, the Revelation's ability to fire capital beams makes its position on the battlefield a unique one. When extended sieges are the order of the day, this is the ship you call in.",
+        "traits": "<b>Amarr Dreadnought bonuses (per skill level):</b><br />\n5% bonus to Capital Energy Turret damage<br />\n4% bonus to all armor resistances<br />\n10% reduction in Capital Energy Turret activation cost<br />\n<br />\n<b>Role Bonus:</b><br />\n• Can fit a Siege module<br />\n5x penalty to Entosis Link cycle time",
+        "description_plain": "The Revelation represents the pinnacle of Amarrian military technology. Maintaining their proud tradition of producing the strongest armor plating to be found anywhere, the Empire's engineers outdid themselves in creating what is arguably the most resilient dreadnought in existence. \nAdded to that, the Revelation's ability to fire capital beams makes its position on the battlefield a unique one. When extended sieges are the order of the day, this is the ship you call in.",
+        "traits_plain": "Amarr Dreadnought bonuses (per skill level):\n5% bonus to Capital Energy Turret damage\n4% bonus to all armor resistances\n10% reduction in Capital Energy Turret activation cost\nRole Bonus:\n• Can fit a Siege module\n5x penalty to Entosis Link cycle time"
+      }
+    },
+    {
+      "item_id": 20353,
+      "expected": {
+        "description": "Increases the maximum strength of the Armor.\r\n\r\nPenalty: Adds to your ship's mass, making it less agile and maneuverable in addition to decreasing the factor of thrust gained from speed modules like Afterburners and MicroWarpdrives.",
+        "traits": null,
+        "description_plain": "Increases the maximum strength of the Armor. \nPenalty: Adds to your ship's mass, making it less agile and maneuverable in addition to decreasing the factor of thrust gained from speed modules like Afterburners and MicroWarpdrives.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 21096,
+      "expected": {
+        "description": "Generates a cynosural field for advanced ship jump drives to lock on to.\r\n\r\nNote: Can only be fit by Force Recon Ships, Heavy Interdiction Cruisers, and Black Ops.",
+        "traits": null,
+        "description_plain": "Generates a cynosural field for advanced ship jump drives to lock on to. \nNote: Can only be fit by Force Recon Ships, Heavy Interdiction Cruisers, and Black Ops.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 22470,
+      "expected": {
+        "description": "Command ships are engineered specifically to wreak havoc on a battlefield of many. Sporting advanced command module interfaces, these vessels are more than capable of turning the tide in large engagements. Command ships represent the ultimate in Command Burst efficiency; the boosts they give their comrades in combat make them indispensable assets to any well-rounded fleet.",
+        "traits": "<b>Caldari Battlecruiser bonuses (per skill level):</b><br />\n10% bonus to kinetic Heavy Missile and Heavy Assault Missile damage<br />\n4% bonus to all shield resistances<br />\n<br />\n<b>Command Ships bonuses (per skill level):</b><br />\n7.5% bonus to Heavy Missile and Heavy Assault Missile Launcher rate of fire<br />\n5% bonus to Heavy Missile and Heavy Assault Missile explosion radius<br />\n4% bonus to Shield Command and Information Command burst strength and duration<br />\n<br />\n<b>Role Bonus:</b><br />\n• Can use two Command Burst modules<br />\n50% bonus to Command Burst area of effect range",
+        "description_plain": "Command ships are engineered specifically to wreak havoc on a battlefield of many. Sporting advanced command module interfaces, these vessels are more than capable of turning the tide in large engagements. Command ships represent the ultimate in Command Burst efficiency; the boosts they give their comrades in combat make them indispensable assets to any well-rounded fleet.",
+        "traits_plain": "Caldari Battlecruiser bonuses (per skill level):\n10% bonus to kinetic Heavy Missile and Heavy Assault Missile damage\n4% bonus to all shield resistances\nCommand Ships bonuses (per skill level):\n7.5% bonus to Heavy Missile and Heavy Assault Missile Launcher rate of fire\n5% bonus to Heavy Missile and Heavy Assault Missile explosion radius\n4% bonus to Shield Command and Information Command burst strength and duration\nRole Bonus:\n• Can use two Command Burst modules\n50% bonus to Command Burst area of effect range"
+      }
+    },
+    {
+      "item_id": 22572,
+      "expected": {
+        "description": "Energy Neutralizer Drone",
+        "traits": null,
+        "description_plain": "Energy Neutralizer Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 22765,
+      "expected": {
+        "description": "Shield Maintenance Drone",
+        "traits": null,
+        "description_plain": "Shield Maintenance Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23055,
+      "expected": {
+        "description": "<b>Type:</b> Light Fighter\r\n<b>Role:</b> Attack\r\n<b>Description:</b> The Templar is a general purpose attack craft.\r\n\r\n<b>Pulse Cannon</b>: This weapon-system does significant damage. However the short barrel length hurts its accuracy against small, fast moving targets.\r\n<b>Microwarpdrive</b>: Giving a significant speed boost at the cost of higher signature radius. The Microwarpdrive has a long cool-down cycle between uses.\r\n<b>Heavy Rocket Salvo</b>: A simplified, significantly shorter ranged version of starship launched Heavy Missiles.",
+        "traits": null,
+        "description_plain": "Type: Light Fighter \nRole: Attack \nDescription: The Templar is a general purpose attack craft. \nPulse Cannon: This weapon-system does significant damage. However the short barrel length hurts its accuracy against small, fast moving targets. \nMicrowarpdrive: Giving a significant speed boost at the cost of higher signature radius. The Microwarpdrive has a long cool-down cycle between uses. \nHeavy Rocket Salvo: A simplified, significantly shorter ranged version of starship launched Heavy Missiles.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23473,
+      "expected": {
+        "description": "Heavy ECM Drone",
+        "traits": null,
+        "description_plain": "Heavy ECM Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23506,
+      "expected": {
+        "description": "Heavy Sensor Dampener Drone",
+        "traits": null,
+        "description_plain": "Heavy Sensor Dampener Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23510,
+      "expected": {
+        "description": "Heavy Tracking Disruptor Drone",
+        "traits": null,
+        "description_plain": "Heavy Tracking Disruptor Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23512,
+      "expected": {
+        "description": "Heavy Target Painter Drone",
+        "traits": null,
+        "description_plain": "Heavy Target Painter Drone",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23527,
+      "expected": {
+        "description": "Increases drone control range.",
+        "traits": null,
+        "description_plain": "Increases drone control range.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23536,
+      "expected": {
+        "description": "Heavy Webifier Drone\r\n\r\nBecause of the instability inherent in affixing large, ship-capable webifier equipment to a small, mobile, independently powered carrier such as a mobile drone, the manufacturer had to sacrifice certain aspects of the drone's infrastructure. As a result, the drone has a high signature radius, making it relatively easy to target and hit, and isn't sturdy enough to suffer more than a few blows to its carapace.",
+        "traits": null,
+        "description_plain": "Heavy Webifier Drone \nBecause of the instability inherent in affixing large, ship-capable webifier equipment to a small, mobile, independently powered carrier such as a mobile drone, the manufacturer had to sacrifice certain aspects of the drone's infrastructure. As a result, the drone has a high signature radius, making it relatively easy to target and hit, and isn't sturdy enough to suffer more than a few blows to its carapace.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23674,
+      "expected": {
+        "description": "Righteous fury given form, this weapon system rains a firestorm of unmatched raw destruction upon its target.\r\n\r\nNotes: This weapon can only fire on ships that are capital-sized or larger. After firing, you will be immobile for thirty seconds and unable to dock, tether, cloak, or activate your jump drive for five minutes.",
+        "traits": null,
+        "description_plain": "Righteous fury given form, this weapon system rains a firestorm of unmatched raw destruction upon its target. \nNotes: This weapon can only fire on ships that are capital-sized or larger. After firing, you will be immobile for thirty seconds and unable to dock, tether, cloak, or activate your jump drive for five minutes.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 23757,
+      "expected": {
+        "description": "The Archon was commissioned by the Imperial Navy to act as a personnel and fighter carrier. The order to create the ship came as part of a unilateral initiative issued by Navy Command in the wake of Emperor Kor-Azor's assassination. Sporting the latest in fighter command interfacing technology and possessing characteristically strong defenses, the Archon is a powerful aid in any engagement.\r\n\r\nThe Archon is capable of generating a <a href=showinfo:83094>Jump Conduit Portal</a> which allows it to instantaneously transport itself and nearby fleet members to a target cynosural beacon. Ship classes that can be moved via conduit: Frigates, Destroyers, Cruisers, Battlecruisers, and Battleships.",
+        "traits": "<b>Amarr Carrier bonuses (per skill level):</b><br />\n4% bonus to all armor resistances<br />\n5% bonus to Cenobite Support Fighter neutralization optimal range<br />\n2% bonus to Cenobite Support Fighter neutralization strength<br />\n1% bonus to Armored Command and Information Command burst strength and duration<br />\n<br />\n<b>Role Bonus:</b><br />\n• Can fit Integrated Sensor Array<br />\n• Can fit Capital Micro Jump Drive and Capital Micro Jump Field Generator<br />\n• Can fit two Command Burst modules<br />\n200% bonus to Command Burst area of effect range<br />\n• Can launch Light and Support Fighters<br />\n• Can lock at extended ranges<br />\n• Conduit Jump capable<br />\n5x penalty to Entosis Link duration",
+        "description_plain": "The Archon was commissioned by the Imperial Navy to act as a personnel and fighter carrier. The order to create the ship came as part of a unilateral initiative issued by Navy Command in the wake of Emperor Kor-Azor's assassination. Sporting the latest in fighter command interfacing technology and possessing characteristically strong defenses, the Archon is a powerful aid in any engagement. \nThe Archon is capable of generating a Jump Conduit Portal which allows it to instantaneously transport itself and nearby fleet members to a target cynosural beacon. Ship classes that can be moved via conduit: Frigates, Destroyers, Cruisers, Battlecruisers, and Battleships.",
+        "traits_plain": "Amarr Carrier bonuses (per skill level):\n4% bonus to all armor resistances\n5% bonus to Cenobite Support Fighter neutralization optimal range\n2% bonus to Cenobite Support Fighter neutralization strength\n1% bonus to Armored Command and Information Command burst strength and duration\nRole Bonus:\n• Can fit Integrated Sensor Array\n• Can fit Capital Micro Jump Drive and Capital Micro Jump Field Generator\n• Can fit two Command Burst modules\n200% bonus to Command Burst area of effect range\n• Can launch Light and Support Fighters\n• Can lock at extended ranges\n• Conduit Jump capable\n5x penalty to Entosis Link duration"
+      }
+    },
+    {
+      "item_id": 23773,
+      "expected": {
+        "description": "The liberty of our people is solely our responsibility. Tempting as it is to foist this burden upon our well-wishers, we must never forget that the onus of our emancipation rests with us and us alone.\r\n\r\nFor too long, our proud people have been subjugated to the whims of enslavers, forced to endure relentless suffering and humiliation at the hands of people whose motivations, masked though they may be by florid religious claptrap, remain as base and despicable as those of the playground bully.\r\n\r\nIf ever there was a time to rise – if ever there was a time to join hands with our brothers – that time is now. At this exact junction in history we have within our grasp the means to loosen our tormentors' hold and win freedom for our kin. Opportunities are there to be taken.\r\n\r\nBrothers, we must rise.\r\n\r\n<i>-Maleatu Shakor, Republic Parliament Head\r\n                Speaking before the Tribal Council\r\n                                   November 27th, YC 107</i>",
+        "traits": "<b>Minmatar Titan bonuses (per skill level):</b><br />\n180% bonus to Capital Projectile Turret damage<br />\n5% bonus to Capital Projectile Turret rate of fire<br />\n10+ bonus to ship warp core strength<br />\n<br />\n<b>Role Bonus:</b><br />\n• Can fit a Doomsday module<br />\n• Can fit a Phenomena Generator module<br />\n• Can fit a Jump Portal Generator module<br />\n• Can fit a Clone Vat Bay module<br />\n• Can use three Command Burst modules<br />\n200% bonus to Command Burst area of effect range<br />\n500% bonus to Armor Plates and Shield Extenders<br />\n80% bonus to Sensor Dampener resistance<br />\n80% bonus to Weapon Disruption resistance<br />\n80% bonus to Stasis effect resistance<br />\n80% increase to Remote Electronic Assistance impedance<br />\n5x penalty to Entosis Link duration",
+        "description_plain": "The liberty of our people is solely our responsibility. Tempting as it is to foist this burden upon our well-wishers, we must never forget that the onus of our emancipation rests with us and us alone. \nFor too long, our proud people have been subjugated to the whims of enslavers, forced to endure relentless suffering and humiliation at the hands of people whose motivations, masked though they may be by florid religious claptrap, remain as base and despicable as those of the playground bully. \nIf ever there was a time to rise – if ever there was a time to join hands with our brothers – that time is now. At this exact junction in history we have within our grasp the means to loosen our tormentors' hold and win freedom for our kin. Opportunities are there to be taken. \nBrothers, we must rise. \n-Maleatu Shakor, Republic Parliament Head \nSpeaking before the Tribal Council \nNovember 27th, YC 107",
+        "traits_plain": "Minmatar Titan bonuses (per skill level):\n180% bonus to Capital Projectile Turret damage\n5% bonus to Capital Projectile Turret rate of fire\n10+ bonus to ship warp core strength\nRole Bonus:\n• Can fit a Doomsday module\n• Can fit a Phenomena Generator module\n• Can fit a Jump Portal Generator module\n• Can fit a Clone Vat Bay module\n• Can use three Command Burst modules\n200% bonus to Command Burst area of effect range\n500% bonus to Armor Plates and Shield Extenders\n80% bonus to Sensor Dampener resistance\n80% bonus to Weapon Disruption resistance\n80% bonus to Stasis effect resistance\n80% increase to Remote Electronic Assistance impedance\n5x penalty to Entosis Link duration"
+      }
+    },
+    {
+      "item_id": 25266,
+      "expected": {
+        "description": "The core technology employed by Gas Scoops dates back centuries, to a time when the extraction of material in space was still a growing industry. Originally, asteroid miners had seen the tractor beams and in-space catalytic conversions used by today's Gas Scoops as a promising new method for extracting spaceborne ore. After many unsuccessful research projects and years of fruitless experiments however, the industry decided to return its focus to laser technology, which was eventually mastered to a level that has sustained the mining profession to this day.\r\n\r\nWhen the first interstellar Gas Clouds were discovered, they proved particularly challenging for industrialists to extract raw materials from. Many methods were tried, and although successful acquisition was always guaranteed, there was a need for much greater efficiency. It was not until the mining industry returned to long-abandoned projects that a solution was found. Since that time, Gas harvesting technology has slowly moved forward, giving birth to new industries and economies in the process.",
+        "traits": null,
+        "description_plain": "The core technology employed by Gas Scoops dates back centuries, to a time when the extraction of material in space was still a growing industry. Originally, asteroid miners had seen the tractor beams and in-space catalytic conversions used by today's Gas Scoops as a promising new method for extracting spaceborne ore. After many unsuccessful research projects and years of fruitless experiments however, the industry decided to return its focus to laser technology, which was eventually mastered to a level that has sustained the mining profession to this day. \nWhen the first interstellar Gas Clouds were discovered, they proved particularly challenging for industrialists to extract raw materials from. Many methods were tried, and although successful acquisition was always guaranteed, there was a need for much greater efficiency. It was not until the mining industry returned to long-abandoned projects that a solution was found. Since that time, Gas harvesting technology has slowly moved forward, giving birth to new industries and economies in the process.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 25861,
+      "expected": {
+        "description": "A specialized scanner used to detect salvageable items in ship wrecks.",
+        "traits": null,
+        "description_plain": "A specialized scanner used to detect salvageable items in ship wrecks.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 26913,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the armor of the Target ship.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the armor of the Target ship.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 27678,
+      "expected": {
+        "description": "Emits an area-of-effect electronic burst, centered on the designated target, which has a chance to momentarily disrupt the target locks of any ship within range.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect electronic burst, centered on the designated target, which has a chance to momentarily disrupt the target locks of any ship within range. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 27914,
+      "expected": {
+        "description": "A missile launcher bay module facilitating bomb preparation, and deployment. \r\n\r\nNote: Bomb Launchers can only be equipped by Stealth Bombers and each bomber can only equip one bomb launcher. Your ship must be at the minimum velocity before you can activate this module.",
+        "traits": null,
+        "description_plain": "A missile launcher bay module facilitating bomb preparation, and deployment. \nNote: Bomb Launchers can only be equipped by Stealth Bombers and each bomber can only equip one bomb launcher. Your ship must be at the minimum velocity before you can activate this module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 27920,
+      "expected": {
+        "description": "Radiates an omnidirectional pulse upon detonation that causes EM damage to surrounding vessels. The bomb employs an advanced armor hardening system which makes it highly resistant to EM damage, thus enabling delivery of multiple bombs to a given target area.",
+        "traits": null,
+        "description_plain": "Radiates an omnidirectional pulse upon detonation that causes EM damage to surrounding vessels. The bomb employs an advanced armor hardening system which makes it highly resistant to EM damage, thus enabling delivery of multiple bombs to a given target area.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 28352,
+      "expected": {
+        "description": "The Rorqual was conceived and designed by Outer Ring Excavations in response to a growing need for capital industry platforms with the ability to support and sustain large-scale mining operations in uninhabited areas of space.\r\n\r\nThe Rorqual is notably capable of using a capital industrial core to substantially increase its industrial capabilities, while empowering its defenses during deployment in a static configuration. A key element of the industrial capacity unlocked by activating an industrial core is the ability to use compressor modules, with the Rorqual able to use the powerful and logistically impressive capital compressors.\r\n\r\nAdditionally, the Rorqual is able to fit a capital tractor beam unit, capable of pulling in cargo containers from far greater distances and at far greater speeds than smaller beams can. It also possesses a sizeable drone bay, jump drive capability and the capacity to fit a clone vat bay. This combination of elements makes the Rorqual the ideal nexus to build deep space mining operations around.\r\n\r\nDue to its specialization towards industrial operations, its ship maintenance bay is able to accommodate only industrial ships, mining barges and their tech 2 variants.",
+        "traits": "<b>Capital Industrial Ships bonuses (per skill level):</b><br />\n5% bonus to Mining Foreman Burst effect strength and duration<br />\n3% bonus to Shield Command Burst effect strength and duration<br />\n5% reduction in fuel consumption for Capital Industrial Core<br />\n10% bonus to Drone hitpoints and damage<br />\n10% bonus in Drone ore mining yield<br />\n6% reduction in Drone ice harvesting cycle time<br />\n<br />\n<b>Industrial Command Ships bonuses (per skill level):</b><br />\n5% bonus in Mining Foreman Burst range<br />\n<br />\n<b>Role Bonus:</b><br />\n400% bonus to Remote Shield Booster optimal range<br />\n90% reduction to effective distance traveled for jump fatigue<br />\n• Can fit Capital Industrial Core<br />\n• Can fit Clone Vat Bay<br />\n• Can operate 'Excavator' Drones<br />\n• Can fit three Command Burst modules<br />\n• Can fit one Pulse Activated Nexus Invulnerability Core module<br />\n50% bonus to Command and Mining Foreman Burst area of effect range<br />\n5x penalty to Entosis Link cycle time<br />\n200% bonus to Cargo Scanners range<br />\n• can connect to Mobile Phase Anchor deployables, providing 100 points of power",
+        "description_plain": "The Rorqual was conceived and designed by Outer Ring Excavations in response to a growing need for capital industry platforms with the ability to support and sustain large-scale mining operations in uninhabited areas of space. \nThe Rorqual is notably capable of using a capital industrial core to substantially increase its industrial capabilities, while empowering its defenses during deployment in a static configuration. A key element of the industrial capacity unlocked by activating an industrial core is the ability to use compressor modules, with the Rorqual able to use the powerful and logistically impressive capital compressors. \nAdditionally, the Rorqual is able to fit a capital tractor beam unit, capable of pulling in cargo containers from far greater distances and at far greater speeds than smaller beams can. It also possesses a sizeable drone bay, jump drive capability and the capacity to fit a clone vat bay. This combination of elements makes the Rorqual the ideal nexus to build deep space mining operations around. \nDue to its specialization towards industrial operations, its ship maintenance bay is able to accommodate only industrial ships, mining barges and their tech 2 variants.",
+        "traits_plain": "Capital Industrial Ships bonuses (per skill level):\n5% bonus to Mining Foreman Burst effect strength and duration\n3% bonus to Shield Command Burst effect strength and duration\n5% reduction in fuel consumption for Capital Industrial Core\n10% bonus to Drone hitpoints and damage\n10% bonus in Drone ore mining yield\n6% reduction in Drone ice harvesting cycle time\nIndustrial Command Ships bonuses (per skill level):\n5% bonus in Mining Foreman Burst range\nRole Bonus:\n400% bonus to Remote Shield Booster optimal range\n90% reduction to effective distance traveled for jump fatigue\n• Can fit Capital Industrial Core\n• Can fit Clone Vat Bay\n• Can operate 'Excavator' Drones\n• Can fit three Command Burst modules\n• Can fit one Pulse Activated Nexus Invulnerability Core module\n50% bonus to Command and Mining Foreman Burst area of effect range\n5x penalty to Entosis Link cycle time\n200% bonus to Cargo Scanners range\n• can connect to Mobile Phase Anchor deployables, providing 100 points of power"
+      }
+    },
+    {
+      "item_id": 32787,
+      "expected": {
+        "description": "Once launched and given the order to salvage, this drone will automatically seek out your wrecks in the vicinity, salvage from them any useable materials and deposit those materials in your ship's cargohold. It will not, however, loot any valuables contained within the wrecks.\n\nA salvage drone respects wreck ownership and will focus on its operator's wrecks unless explicitly ordered otherwise. Whether or not its operator chooses to display that same respect is another question entirely.",
+        "traits": null,
+        "description_plain": "Once launched and given the order to salvage, this drone will automatically seek out your wrecks in the vicinity, salvage from them any useable materials and deposit those materials in your ship's cargohold. It will not, however, loot any valuables contained within the wrecks.\nA salvage drone respects wreck ownership and will focus on its operator's wrecks unless explicitly ordered otherwise. Whether or not its operator chooses to display that same respect is another question entirely.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 33076,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the armor of the ship. The module can optionally use Nanite Repair Paste to increase repair effectiveness. Deactivating the module while it has no Nanite Repair Paste loaded starts reloading, if there is Nanite Repair Paste available in cargo hold. \r\n\r\nNote: Can use Nanite Repair Paste as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the armor of the ship. The module can optionally use Nanite Repair Paste to increase repair effectiveness. Deactivating the module while it has no Nanite Repair Paste loaded starts reloading, if there is Nanite Repair Paste available in cargo hold. \nNote: Can use Nanite Repair Paste as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35832,
+      "expected": {
+        "description": "As the entry-level product in the Upwell Consortium's Citadel range of space stations, the Astrahus has been designed as an economical option for medium-scale operations in space, such as serving as a base of operations for a small- to medium-sized corporation, or as an outpost for larger corporations or even small alliances.\r\n\r\nThe Astrahus has been built with new spaceship tethering technology as standard, and will happily accommodate ships under capital size, and even freighter-class hulls, in its internal docking bays. The Astrahus can be configured using Upwell's Standup brand service and structure modules so as to serve the specific needs of the structure operator. Further adjustment of the hardware of the Astrahus can be achieved by installed Standup M-Set rigs to optimize the specific role of the citadel.",
+        "traits": "<b>Role Bonus:</b><br />\n25% bonus to all structure combat rig effects<br />\n25% reduction in citadel service module fuel consumption<br />\n• While this structure has at least one online service module it enters full power mode and will gain increased shield and armor hitpoints.<br />\n• This structure requires an Astrahus Upwell Quantum Core to be installed for anchoring to complete",
+        "description_plain": "As the entry-level product in the Upwell Consortium's Citadel range of space stations, the Astrahus has been designed as an economical option for medium-scale operations in space, such as serving as a base of operations for a small- to medium-sized corporation, or as an outpost for larger corporations or even small alliances. \nThe Astrahus has been built with new spaceship tethering technology as standard, and will happily accommodate ships under capital size, and even freighter-class hulls, in its internal docking bays. The Astrahus can be configured using Upwell's Standup brand service and structure modules so as to serve the specific needs of the structure operator. Further adjustment of the hardware of the Astrahus can be achieved by installed Standup M-Set rigs to optimize the specific role of the citadel.",
+        "traits_plain": "Role Bonus:\n25% bonus to all structure combat rig effects\n25% reduction in citadel service module fuel consumption\n• While this structure has at least one online service module it enters full power mode and will gain increased shield and armor hitpoints.\n• This structure requires an Astrahus Upwell Quantum Core to be installed for anchoring to complete"
+      }
+    },
+    {
+      "item_id": 35834,
+      "expected": {
+        "description": "Envisaged as the flagship product in the Upwell Consortium's Citadel range of space stations, the Keepstar has been designed for the most important and largest-scale of operations in space, such as providing a fully-featured home for large alliances, and even coalitions, or as a key element in the fortification of large territorial empires.\r\n\r\nThe Keepstar has been built with new spaceship tethering technology as standard, and it will accommodate all size classes of ship, including 'supercapital' vessels, in its internal docking bays. The defensive capabilities of the Keepstar are formidable and are highly enhanced in lower security star systems with the ability to mount area effect and 'doomsday' weapons. The Keepstar can be configured using Upwell's Standup brand service and structure modules so as to serve the specific needs of the structure operator. Further adjustment of the hardware of the Keepstar can be achieved by installed Standup XL-Set rigs to optimize the specific role of the citadel.\r\n\r\nOn June 14th YC125 CONCORD updated the capsuleer structure regulations to disallow the anchoring of any new XL structures in highsec space. XL structures that were anchored before this date will not be affected by this change unless they are unanchored.",
+        "traits": "<b>Role Bonus:</b><br />\n25% bonus to all structure combat rig effects<br />\n25% reduction in citadel service module fuel consumption<br />\n30% bonus to the rate of fire and capacitor consumption of Standup Burst Projectors and Guided Bomb Launchers<br />\n• While this structure has at least one online service module it enters full power mode and will gain increased shield and armor hitpoints and an extra reinforcement cycle<br />\n• New Keepstars may not be anchored within highsec space<br />\n• This structure requires a Keepstar Upwell Quantum Core to be installed for anchoring to complete",
+        "description_plain": "Envisaged as the flagship product in the Upwell Consortium's Citadel range of space stations, the Keepstar has been designed for the most important and largest-scale of operations in space, such as providing a fully-featured home for large alliances, and even coalitions, or as a key element in the fortification of large territorial empires. \nThe Keepstar has been built with new spaceship tethering technology as standard, and it will accommodate all size classes of ship, including 'supercapital' vessels, in its internal docking bays. The defensive capabilities of the Keepstar are formidable and are highly enhanced in lower security star systems with the ability to mount area effect and 'doomsday' weapons. The Keepstar can be configured using Upwell's Standup brand service and structure modules so as to serve the specific needs of the structure operator. Further adjustment of the hardware of the Keepstar can be achieved by installed Standup XL-Set rigs to optimize the specific role of the citadel. \nOn June 14th YC125 CONCORD updated the capsuleer structure regulations to disallow the anchoring of any new XL structures in highsec space. XL structures that were anchored before this date will not be affected by this change unless they are unanchored.",
+        "traits_plain": "Role Bonus:\n25% bonus to all structure combat rig effects\n25% reduction in citadel service module fuel consumption\n30% bonus to the rate of fire and capacitor consumption of Standup Burst Projectors and Guided Bomb Launchers\n• While this structure has at least one online service module it enters full power mode and will gain increased shield and armor hitpoints and an extra reinforcement cycle\n• New Keepstars may not be anchored within highsec space\n• This structure requires a Keepstar Upwell Quantum Core to be installed for anchoring to complete"
+      }
+    },
+    {
+      "item_id": 35924,
+      "expected": {
+        "description": "The Standup XL Energy Neutralizer is superheavy capacitor warfare device capable of draining the energy reserves of extra-large ships, such as capital ships. The XL Energy Neutralizer is designed to be mounted in structure emplacements and can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "The Standup XL Energy Neutralizer is superheavy capacitor warfare device capable of draining the energy reserves of extra-large ships, such as capital ships. The XL Energy Neutralizer is designed to be mounted in structure emplacements and can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35928,
+      "expected": {
+        "description": "The Standup Arcing Vorton Projector utilizes the latest developments in the emerging field of spatiotemporal weaponry to bring structure operators a devastating weapon to use in defense of their properties. Capable of striking multiple targets in rapid succession, the Arcing Vorton Projector has the potential to severely disrupt enemy fleet cohesion. The Arcing Vorton Projector is designed to be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.\r\n\r\nThis module can be installed on Keepstar or Upwell Palatine Keepstar structures.\r\nThis module can only be activated against capital class ships.\r\nThis module does not function in high-security space.",
+        "traits": null,
+        "description_plain": "The Standup Arcing Vorton Projector utilizes the latest developments in the emerging field of spatiotemporal weaponry to bring structure operators a devastating weapon to use in defense of their properties. Capable of striking multiple targets in rapid succession, the Arcing Vorton Projector has the potential to severely disrupt enemy fleet cohesion. The Arcing Vorton Projector is designed to be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology. \nThis module can be installed on Keepstar or Upwell Palatine Keepstar structures. \nThis module can only be activated against capital class ships. \nThis module does not function in high-security space.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35940,
+      "expected": {
+        "description": "The Standup Variable Spectrum ECM is an electronic warfare system designed for rapid switching of the sensor spectrum being targeted by jamming pulses. The system uses Standup brand spectrum switching scripts to give structure operators the great flexiblity when using the Variable Spectrum ECM. The system may be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "The Standup Variable Spectrum ECM is an electronic warfare system designed for rapid switching of the sensor spectrum being targeted by jamming pulses. The system uses Standup brand spectrum switching scripts to give structure operators the great flexiblity when using the Variable Spectrum ECM. The system may be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35941,
+      "expected": {
+        "description": "The Standup Remote Sensor Dampener is an electronic warfare system designed to give structure operators the capability of reducing the scan resolution and targeting range of enemy ships. The Remote Sensor Dampener system may be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Standup Remote Sensor Dampener is an electronic warfare system designed to give structure operators the capability of reducing the scan resolution and targeting range of enemy ships. The Remote Sensor Dampener system may be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35943,
+      "expected": {
+        "description": "The Standup Stasis Webifier is a propulsion jamming system that is designed to reduce the maximum speed of targeted ships by using micro energy streams to entangle the target and reduce its effective speed. This module has incredible range, however it may only be activated in short bursts separated by cooldown periods. The Stasis Webifier system may be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "The Standup Stasis Webifier is a propulsion jamming system that is designed to reduce the maximum speed of targeted ships by using micro energy streams to entangle the target and reduce its effective speed. This module has incredible range, however it may only be activated in short bursts separated by cooldown periods. The Stasis Webifier system may be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35944,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst neutralizes a portion of the energy in affected ships' capacitor. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst neutralizes a portion of the energy in affected ships' capacitor. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35945,
+      "expected": {
+        "description": "The Standup Weapon Disruptor is an electronic warfare system designed to reduce the range and tracking speed of turrets and reduces range and precision of missiles on targeted ships. The Weapon Disruptor system can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Standup Weapon Disruptor is an electronic warfare system designed to reduce the range and tracking speed of turrets and reduces range and precision of missiles on targeted ships. The Weapon Disruptor system can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35947,
+      "expected": {
+        "description": "The Standup Target Painter is an electronic warfare system that uses Upwell Proprietary Weapon Navigation Technology to project an electronic \"tag\" onto the target ship, effectively increasing the signature of the target and thereby making it easier to track and hit. The Target Painter system can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Standup Target Painter is an electronic warfare system that uses Upwell Proprietary Weapon Navigation Technology to project an electronic \"tag\" onto the target ship, effectively increasing the signature of the target and thereby making it easier to track and hit. The Target Painter system can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35949,
+      "expected": {
+        "description": "The Standup Focused Warp Disruptor I is a powerful propulsion jamming system that will interfere with a target ship's navigation computer, disabling warping and jumping. This module has incredible range and is capable of disrupting all ships including the largest vessels in New Eden, however it may only be activated in short bursts separated by cooldown periods. This module can also be installed with a Standup Focused Warp Scrambling Script to provide it with the ability to disrupt microwarpdrives and micro jump drives. The Standup Focused Warp Disruptor system can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "The Standup Focused Warp Disruptor I is a powerful propulsion jamming system that will interfere with a target ship's navigation computer, disabling warping and jumping. This module has incredible range and is capable of disrupting all ships including the largest vessels in New Eden, however it may only be activated in short bursts separated by cooldown periods. This module can also be installed with a Standup Focused Warp Scrambling Script to provide it with the ability to disrupt microwarpdrives and micro jump drives. The Standup Focused Warp Disruptor system can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 35959,
+      "expected": {
+        "description": "The Standup Ballistic Control System is a set of computer, guidance and loading system upgrades designed to improve the effectiveness of missile launchers systems installed in the same structure. The Ballistic Control System can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "The Standup Ballistic Control System is a set of computer, guidance and loading system upgrades designed to improve the effectiveness of missile launchers systems installed in the same structure. The Ballistic Control System can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 37479,
+      "expected": {
+        "description": "This module spools up and then teleports the user and up to 24 nearby ships along with all drones, fighters, probes and bombs 100km in the direction the ship is facing. All ships teleported will retain their movement direction and velocity in the new location.\r\n\r\nNote: The micro jump field only affects capsuleer-piloted ships and will not move certain ship types, including; Capital Ships, Freighters, and Industrial Command Ships.",
+        "traits": null,
+        "description_plain": "This module spools up and then teleports the user and up to 24 nearby ships along with all drones, fighters, probes and bombs 100km in the direction the ship is facing. All ships teleported will retain their movement direction and velocity in the new location. \nNote: The micro jump field only affects capsuleer-piloted ships and will not move certain ship types, including; Capital Ships, Freighters, and Industrial Command Ships.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 37480,
+      "expected": {
+        "description": "Command Destroyers represent a versatile addition to fleets of all sizes. Being the smallest and most agile platforms for Command Burst technology positions them as the premier support option for fast-moving wolf packs. Unique access to Micro Jump Field Generators also allows them to perform maneuvers that rapidly reposition other ships, be they friend or foe.",
+        "traits": "<b>Command Destroyers bonuses (per skill level):</b><br />\n5% reduction in Micro Jump Field Generator spool up time<br />\n2% bonus to Shield Command and Skirmish Command Burst effect strength and duration<br />\n<br />\n<b>Minmatar Destroyer bonuses (per skill level):</b><br />\n10% bonus to Light Missile and Rocket damage<br />\n4% bonus to all shield resistances<br />\n<br />\n<b>Role Bonus:</b><br />\n95% reduction in powergrid requirements for Command Bursts<br />\n50% reduction in Microwarpdrive signature radius penalty<br />\n50% reduction in reactivation delay for Defender Launcher<br />\n• Can fit Micro Jump Field Generators<br />\n• Can use one Command Burst module",
+        "description_plain": "Command Destroyers represent a versatile addition to fleets of all sizes. Being the smallest and most agile platforms for Command Burst technology positions them as the premier support option for fast-moving wolf packs. Unique access to Micro Jump Field Generators also allows them to perform maneuvers that rapidly reposition other ships, be they friend or foe.",
+        "traits_plain": "Command Destroyers bonuses (per skill level):\n5% reduction in Micro Jump Field Generator spool up time\n2% bonus to Shield Command and Skirmish Command Burst effect strength and duration\nMinmatar Destroyer bonuses (per skill level):\n10% bonus to Light Missile and Rocket damage\n4% bonus to all shield resistances\nRole Bonus:\n95% reduction in powergrid requirements for Command Bursts\n50% reduction in Microwarpdrive signature radius penalty\n50% reduction in reactivation delay for Defender Launcher\n• Can fit Micro Jump Field Generators\n• Can use one Command Burst module"
+      }
+    },
+    {
+      "item_id": 37532,
+      "expected": {
+        "description": "The Standup Signal Amplifier augments the scan resolution and maximum targeting range of the host structure. Additionally, the Signal Amplifier system will add bandwidth to the structure's systems allowing it to lock additional targets. The Signal Amplifier can be installed as a module in Upwell technology structures.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "The Standup Signal Amplifier augments the scan resolution and maximum targeting range of the host structure. Additionally, the Signal Amplifier system will add bandwidth to the structure's systems allowing it to lock additional targets. The Signal Amplifier can be installed as a module in Upwell technology structures. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40635,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the maximum speed of the affected ships.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the maximum speed of the affected ships. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40636,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst neutralizes a portion of the energy in affected ships' capacitor.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst neutralizes a portion of the energy in affected ships' capacitor. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40696,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst disrupts the affected ships' navigation computer which prevents them from warping.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst disrupts the affected ships' navigation computer which prevents them from warping. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40697,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the range and speed of affected ships' sensors.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the range and speed of affected ships' sensors. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40698,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst projects an electronic \"tag\" on affected ships thus making them easier to target and hit. \r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst projects an electronic \"tag\" on affected ships thus making them easier to target and hit. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 40699,
+      "expected": {
+        "description": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the turret range and tracking speed of the affected ships.\r\n\r\nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst, centered on the designated location. The burst reduces the turret range and tracking speed of the affected ships. \nNote: Only Supercarriers can fit modules of this type. Only one module of this type can be fit per Supercarrier.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 41040,
+      "expected": {
+        "description": "Stasis Grapplers reduce the maximum speed of a target ship by employing micro energy streams which effectively entangle the target temporarily, thereby slowing it down.\r\nThis slowing effect is strongest at very close ranges, and diminishes as range increases.\r\nHeavy Stasis Grapplers require a very stable base platform, and therefore may only be fitted to Battleships and Capital Ships.",
+        "traits": null,
+        "description_plain": "Stasis Grapplers reduce the maximum speed of a target ship by employing micro energy streams which effectively entangle the target temporarily, thereby slowing it down. \nThis slowing effect is strongest at very close ranges, and diminishes as range increases. \nHeavy Stasis Grapplers require a very stable base platform, and therefore may only be fitted to Battleships and Capital Ships.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 41476,
+      "expected": {
+        "description": "This module uses nano-assemblers to repair damage done to the armor of the Target ship. The module can optionally use Nanite Repair Paste to increase repair effectiveness. Deactivating the module while it has no Nanite Repair Paste loaded starts reloading, if there is Nanite Repair Paste available in cargo hold. \r\n\r\nNote: Can use Nanite Repair Paste as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits": null,
+        "description_plain": "This module uses nano-assemblers to repair damage done to the armor of the Target ship. The module can optionally use Nanite Repair Paste to increase repair effectiveness. Deactivating the module while it has no Nanite Repair Paste loaded starts reloading, if there is Nanite Repair Paste available in cargo hold. \nNote: Can use Nanite Repair Paste as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 41480,
+      "expected": {
+        "description": "Transfers shield power over to the target ship, aiding in its defense. The module takes Cap Booster charges and will start consuming the ship's capacitor upon the charges running out. Deactivating the module while it has no cap boosters loaded starts reloading, if there are cap boosters available in cargo hold.\r\n\r\nNote: Can use Cap Booster 25 as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits": null,
+        "description_plain": "Transfers shield power over to the target ship, aiding in its defense. The module takes Cap Booster charges and will start consuming the ship's capacitor upon the charges running out. Deactivating the module while it has no cap boosters loaded starts reloading, if there are cap boosters available in cargo hold. \nNote: Can use Cap Booster 25 as fuel. Reloading time is 60 seconds. Prototype Inferno Module.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42526,
+      "expected": {
+        "description": "This module can be loaded with a variety of Armor Command Burst Charges to project a field of beneficial nanites over fleet members, improving their armor defenses.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Armor Command Burst Charges to project a field of beneficial nanites over fleet members, improving their armor defenses.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42527,
+      "expected": {
+        "description": "This module can be loaded with a variety of Information Command Burst Charges to project a field of beneficial nanites over fleet members, improving their sensor and electronic warfare capabilities.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Information Command Burst Charges to project a field of beneficial nanites over fleet members, improving their sensor and electronic warfare capabilities.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42528,
+      "expected": {
+        "description": "This module can be loaded with a variety of Mining Foreman Burst Charges to project a field of beneficial nanites over fleet members, improving their mining capabilities.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Mining Foreman Burst Charges to project a field of beneficial nanites over fleet members, improving their mining capabilities.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42529,
+      "expected": {
+        "description": "This module can be loaded with a variety of Shield Command Burst Charges to project a field of beneficial nanites over fleet members, improving their shield defenses.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Shield Command Burst Charges to project a field of beneficial nanites over fleet members, improving their shield defenses.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42530,
+      "expected": {
+        "description": "This module can be loaded with a variety of Skirmish Command Burst Charges to project a field of beneficial nanites over fleet members, improving their hit-and-run capabilities.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Skirmish Command Burst Charges to project a field of beneficial nanites over fleet members, improving their hit-and-run capabilities.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42694,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42529>Shield Command Burst</a> module and dispersed across allied ships to improve local and remote shield booster modules.\r\n\r\nThe bonus provided by this module does not apply to Capital sized local booster modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Shield Command Burst module and dispersed across allied ships to improve local and remote shield booster modules. \nThe bonus provided by this module does not apply to Capital sized local booster modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42695,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42529>Shield Command Burst</a> module and dispersed across allied ships to provide increased shield resistances.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Shield Command Burst module and dispersed across allied ships to provide increased shield resistances.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42696,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42529>Shield Command Burst</a> module and dispersed across allied ships to enhance defensive shield strength.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Shield Command Burst module and dispersed across allied ships to enhance defensive shield strength.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42829,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42528>Mining Foreman Burst</a> module and dispersed across allied ships to improve the range of their mining laser, ice harvester and gas cloud harvester modules.\r\n\r\nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Mining Foreman Burst module and dispersed across allied ships to improve the range of their mining laser, ice harvester and gas cloud harvester modules. \nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42830,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42528>Mining Foreman Burst</a> module and dispersed across allied ships to greatly enhance the speed of their mining modules, allowing increased yield over time. This effect also reduces the capacitor requirements of the mining laser to compensate for the faster cycle times.\r\n\r\nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Mining Foreman Burst module and dispersed across allied ships to greatly enhance the speed of their mining modules, allowing increased yield over time. This effect also reduces the capacitor requirements of the mining laser to compensate for the faster cycle times. \nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42831,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42528>Mining Foreman Burst</a> module and dispersed across allied ships to increase the lifespan of their advanced mining crystals.\r\n\r\nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Mining Foreman Burst module and dispersed across allied ships to increase the lifespan of their advanced mining crystals. \nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42832,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42526>Armor Command Burst</a> module and dispersed across allied ships to provide increased armor resistances.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Armor Command Burst module and dispersed across allied ships to provide increased armor resistances.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42833,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42526>Armor Command Burst</a> module and dispersed across allied ships to improve local and remote armor repairer modules.\r\n\r\nThe bonus provided by this module does not apply to Capital sized local repairer modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Armor Command Burst module and dispersed across allied ships to improve local and remote armor repairer modules. \nThe bonus provided by this module does not apply to Capital sized local repairer modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42834,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42526>Armor Command Burst</a> module and dispersed across allied ships to enhance armor durability.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Armor Command Burst module and dispersed across allied ships to enhance armor durability.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42835,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42527>Information Command Burst</a> module and dispersed across allied ships to improve the scan resolution and maximum target lock range of their sensors.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Information Command Burst module and dispersed across allied ships to improve the scan resolution and maximum target lock range of their sensors.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42836,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42527>Information Command Burst</a> module and dispersed across allied ships to enhance the range and strength of their sensor dampener, weapon disruptor, target painter, and targeted ECM modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Information Command Burst module and dispersed across allied ships to enhance the range and strength of their sensor dampener, weapon disruptor, target painter, and targeted ECM modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42837,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:42527>Information Command Burst</a> module and dispersed across allied ships to harden their sensor and tracking systems against enemy disruption.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Information Command Burst module and dispersed across allied ships to harden their sensor and tracking systems against enemy disruption.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42838,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42530>Skirmish Command Burst</a> module and dispersed across allied ships to reduce their effective signature radius and improve their agility, making them harder for enemy weapons to hit.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Skirmish Command Burst module and dispersed across allied ships to reduce their effective signature radius and improve their agility, making them harder for enemy weapons to hit.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42839,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42530>Skirmish Command Burst</a> module and dispersed across allied ships to improve the maximum range of their stasis webifier, warp scrambler and warp disruptor modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Skirmish Command Burst module and dispersed across allied ships to improve the maximum range of their stasis webifier, warp scrambler and warp disruptor modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 42840,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42530>Skirmish Command Burst</a> module and dispersed across allied ships to enhance the thrust potential of their afterburner and microwarpdrive modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Skirmish Command Burst module and dispersed across allied ships to enhance the thrust potential of their afterburner and microwarpdrive modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47069,
+      "expected": {
+        "description": "Emits an area-of-effect electronic burst centered on the designated location, which has a chance to disrupt the target locks of any ship within range. Ships hit by the burst have a chance to be jammed for 40 seconds. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect electronic burst centered on the designated location, which has a chance to disrupt the target locks of any ship within range. Ships hit by the burst have a chance to be jammed for 40 seconds. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47070,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst reduces the range and speed of affected ships' sensors. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst reduces the range and speed of affected ships' sensors. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47071,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst reduces the maximum speed of the affected ships. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst reduces the maximum speed of the affected ships. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47072,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst projects an electronic \"tag\" on affected ships thus making them easier to target and hit. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst projects an electronic \"tag\" on affected ships thus making them easier to target and hit. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47073,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst disrupts the affected ships' navigation computer which prevents them from warping. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst disrupts the affected ships' navigation computer which prevents them from warping. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47074,
+      "expected": {
+        "description": "Emits an area-of-effect burst centered on the designated location. The burst reduces the turret range, turret tracking speed, missile range, and missile precision of the affected ships. Only one module of this type can be fit per structure.\r\n\r\nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits": null,
+        "description_plain": "Emits an area-of-effect burst centered on the designated location. The burst reduces the turret range, turret tracking speed, missile range, and missile precision of the affected ships. Only one module of this type can be fit per structure. \nStandup is a proprietary system that uses a Structure Autonomous Nanoassembly Device (Upwell) containing integrated template software, a nanoassembler array and sufficient nanomass to enable the construction of a variety of service modules, structure modules and structure rigs when inserted into the appropriate slots on a structure built with Upwell technology.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47269,
+      "expected": {
+        "description": "A light craft that is evidently the Collective's equivalent of a frigate, the Damavik has proven adaptable to capsuleer technology along with the other Triglavian ship designs recovered from Abyssal Deadspace.\r\n\r\nThe Damavik is capable of mounting Light Entropic Disintegrators and an array of support weapons such as energy neutralizers and pulse weapons. The ship also makes use of drones and has a long-range remote repair capability.\r\n\r\n<i>Damavik Subclade of Perun Clade revised adaptation schema for cladeship of the 3 tactical troika classification has been accepted for imprinting in advancing-time generations after cladistic glorification over Samovda Subclade. Tactical subrole dispersal is in the gift of strategic troika.</i> – partial translation of data included in recovered design schematics of the Damavik",
+        "traits": "<b>Precursor Frigate bonuses (per skill level):</b><br />\n5% bonus to Light Entropic Disintegrator damage<br />\n4% bonus to all armor resistances<br />\n<br />\n<b>Role Bonus:</b><br />\n100% bonus to Remote Armor Repairer range<br />\n50% reduced Energy Neutralizer capacitor need<br />\n50% reduced Remote Armor Repairer capacitor need<br />\n50% reduced Smart Bomb capacitor need",
+        "description_plain": "A light craft that is evidently the Collective's equivalent of a frigate, the Damavik has proven adaptable to capsuleer technology along with the other Triglavian ship designs recovered from Abyssal Deadspace. \nThe Damavik is capable of mounting Light Entropic Disintegrators and an array of support weapons such as energy neutralizers and pulse weapons. The ship also makes use of drones and has a long-range remote repair capability. \nDamavik Subclade of Perun Clade revised adaptation schema for cladeship of the 3 tactical troika classification has been accepted for imprinting in advancing-time generations after cladistic glorification over Samovda Subclade. Tactical subrole dispersal is in the gift of strategic troika. – partial translation of data included in recovered design schematics of the Damavik",
+        "traits_plain": "Precursor Frigate bonuses (per skill level):\n5% bonus to Light Entropic Disintegrator damage\n4% bonus to all armor resistances\nRole Bonus:\n100% bonus to Remote Armor Repairer range\n50% reduced Energy Neutralizer capacitor need\n50% reduced Remote Armor Repairer capacitor need\n50% reduced Smart Bomb capacitor need"
+      }
+    },
+    {
+      "item_id": 47270,
+      "expected": {
+        "description": "A powerful strike craft that is the Collective's conception of a cruiser, the Vedmak has proven adaptable to capsuleer technology along with the other Triglavian ship designs recovered from Abyssal Deadspace.\r\n\r\nThe Vedmak is capable of mounting Heavy Entropic Disintegrators and an array of support weapons such as energy neutralizers and pulse weapons. The ship also makes use of drones and has a long-range remote repair capability.\r\n\r\n<i>Vedmak Subclade of Svarog Clade relinquished the adaptation schema of reverse-time accepted 81 tactical troika classification into the cladeflow of Triglav after cladistic mortification by Dazhbog Subclade. Strategic troika have advancing-time pressure for adaptation into tactical subroles.</i> – partial translation of data included in recovered design schematics of the Vedmak",
+        "traits": "<b>Precursor Cruiser bonuses (per skill level):</b><br />\n5% bonus to Heavy Entropic Disintegrator damage<br />\n7.5% bonus to Heavy Entropic Disintegrator optimal range<br />\n<br />\n<b>Role Bonus:</b><br />\n100% bonus to Remote Armor Repairer range<br />\n50% reduced Energy Neutralizer capacitor need<br />\n50% reduced Remote Armor Repairer capacitor need<br />\n50% reduced Smart Bomb capacitor need",
+        "description_plain": "A powerful strike craft that is the Collective's conception of a cruiser, the Vedmak has proven adaptable to capsuleer technology along with the other Triglavian ship designs recovered from Abyssal Deadspace. \nThe Vedmak is capable of mounting Heavy Entropic Disintegrators and an array of support weapons such as energy neutralizers and pulse weapons. The ship also makes use of drones and has a long-range remote repair capability. \nVedmak Subclade of Svarog Clade relinquished the adaptation schema of reverse-time accepted 81 tactical troika classification into the cladeflow of Triglav after cladistic mortification by Dazhbog Subclade. Strategic troika have advancing-time pressure for adaptation into tactical subroles. – partial translation of data included in recovered design schematics of the Vedmak",
+        "traits_plain": "Precursor Cruiser bonuses (per skill level):\n5% bonus to Heavy Entropic Disintegrator damage\n7.5% bonus to Heavy Entropic Disintegrator optimal range\nRole Bonus:\n100% bonus to Remote Armor Repairer range\n50% reduced Energy Neutralizer capacitor need\n50% reduced Remote Armor Repairer capacitor need\n50% reduced Smart Bomb capacitor need"
+      }
+    },
+    {
+      "item_id": 47272,
+      "expected": {
+        "description": "This small Entropic Disintegrator is typically seen in use on Triglavian frigates and destroyers, which are able to handle the relatively minimal radiation and gravitational tidal forces the weapon generates as a side-effect of its operation.\r\n\r\nEntropic Disintegrators draw on the tremendous power of the Triglavian singularity-based energy systems to convert exotic matter into a particle stream directed with locally generated entropic force. While powerful, the range of the weapon is limited by the attenuation of entropic forces, which dissipate critically beyond the optimal range. As a result this weapon has no falloff range.\r\n\r\nThe particle stream generates thermal and explosive reactions on impact, and the entropic forces resolve into a localized gravitational conduit that steadily increases the acceleration on the exotic particles. In effect, the weapon's damage potential increases to a maximum level as long as the particle stream is kept on the same target.\r\n\r\nRequires exotic plasma charge ammo types: Baryon, Meson, and Tetryon.",
+        "traits": null,
+        "description_plain": "This small Entropic Disintegrator is typically seen in use on Triglavian frigates and destroyers, which are able to handle the relatively minimal radiation and gravitational tidal forces the weapon generates as a side-effect of its operation. \nEntropic Disintegrators draw on the tremendous power of the Triglavian singularity-based energy systems to convert exotic matter into a particle stream directed with locally generated entropic force. While powerful, the range of the weapon is limited by the attenuation of entropic forces, which dissipate critically beyond the optimal range. As a result this weapon has no falloff range. \nThe particle stream generates thermal and explosive reactions on impact, and the entropic forces resolve into a localized gravitational conduit that steadily increases the acceleration on the exotic particles. In effect, the weapon's damage potential increases to a maximum level as long as the particle stream is kept on the same target. \nRequires exotic plasma charge ammo types: Baryon, Meson, and Tetryon.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47908,
+      "expected": {
+        "description": "Entropic Disintegrators generate a considerable amount of radiation when firing and this must be contained in order to avoid a dangerous build up. Bringing online additional Entropic Radiation Sinks allows the weapons to be fired at higher levels of energy and more rapidly, considerably increasing their damage potential.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Entropic Disintegrators generate a considerable amount of radiation when firing and this must be contained in order to avoid a dangerous build up. Bringing online additional Entropic Radiation Sinks allows the weapons to be fired at higher levels of energy and more rapidly, considerably increasing their damage potential. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47918,
+      "expected": {
+        "description": "This medium-sized Entropic Disintegrator is normally seen in use on Triglavian cruisers or battlecruisers, which are able to handle the increased radiation and serious gravitational tidal forces the weapon generates as a side-effect of its operation.\r\n\r\nEntropic Disintegrators draw on the tremendous power of the Triglavian singularity-based energy systems to convert exotic matter into a particle stream directed with locally generated entropic force. While powerful, the range of the weapon is limited by the attenuation of entropic forces, which dissipate critically beyond the optimal range. As a result this weapon has no falloff range.\r\n\r\nThe particle stream generates thermal and explosive reactions on impact, and the entropic forces resolve into a localized gravitational conduit that steadily increases the acceleration on the exotic particles. In effect, the weapon's damage potential increases to a maximum level as long as the particle stream is kept on the same target.\r\n\r\nRequires either standard or advanced exotic plasma charge ammo types: Baryon, Meson, Tetryon, Mystic, and Occult.",
+        "traits": null,
+        "description_plain": "This medium-sized Entropic Disintegrator is normally seen in use on Triglavian cruisers or battlecruisers, which are able to handle the increased radiation and serious gravitational tidal forces the weapon generates as a side-effect of its operation. \nEntropic Disintegrators draw on the tremendous power of the Triglavian singularity-based energy systems to convert exotic matter into a particle stream directed with locally generated entropic force. While powerful, the range of the weapon is limited by the attenuation of entropic forces, which dissipate critically beyond the optimal range. As a result this weapon has no falloff range. \nThe particle stream generates thermal and explosive reactions on impact, and the entropic forces resolve into a localized gravitational conduit that steadily increases the acceleration on the exotic particles. In effect, the weapon's damage potential increases to a maximum level as long as the particle stream is kept on the same target. \nRequires either standard or advanced exotic plasma charge ammo types: Baryon, Meson, Tetryon, Mystic, and Occult.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 47930,
+      "expected": {
+        "description": "An Entropic Disintegrator uses charges of exotic plasma to provide the particle feedstock for the weapon's beam, with different forms of exotic matter modulating the beam's characteristics.\r\n\r\nAn experimental exotic plasma charge developed using advanced technology in conjunction with Precursor weapons tech, the Occult charge achieves heavy thermal and explosive damage potential. \r\n\r\nThis high damage comes at the expense of range and significant loss in the stability of the disintegrator beam. This instability reduces the tracking of weapons using Occult Exotic Plasma charges.",
+        "traits": null,
+        "description_plain": "An Entropic Disintegrator uses charges of exotic plasma to provide the particle feedstock for the weapon's beam, with different forms of exotic matter modulating the beam's characteristics. \nAn experimental exotic plasma charge developed using advanced technology in conjunction with Precursor weapons tech, the Occult charge achieves heavy thermal and explosive damage potential. \nThis high damage comes at the expense of range and significant loss in the stability of the disintegrator beam. This instability reduces the tracking of weapons using Occult Exotic Plasma charges.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 49712,
+      "expected": {
+        "description": "A cruiser-sized vessel that is oriented towards remote armor repair and seems to be the Collective's equivalent of a support cruiser, the Rodiva is another Triglavian design that has proven adaptable to capsuleer technology, as with previously recovered examples of ship architecture recovered from Abyssal Deadspace.\r\n\r\nThe Rodiva's remote repair systems are considerably enhanced by adaptive armor-repair mutaplasmids that are used as nanite feedstock for its remote repair projectors. As the armor-repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor-repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output.\r\n\r\n<i>By the prayer of Convocation of Triglav Outside the Struggle, Rodiva Subclade of Veles Clade relinquished the adaptation scheme of now-time accepted 72 tactical troika classification into the cladeflow of Triglav. Strategic troika have advancing-time pressure for adaptation into tactical subroles conforming to now-time accepted noema of cladistic proving by Convocation of Triglav Outside the Struggle.</i> – partial translation of data included in recovered design schematics of the Rodiva",
+        "traits": "<b>Precursor Cruiser bonuses (per skill level):</b><br />\n12.5% bonus to Mutadaptive Remote Armor Repairer amount<br />\n5% reduced Mutadaptive Remote Armor Repairer capacitor need<br />\n<br />\n<b>Role Bonus:</b><br />\n525% bonus to Mutadaptive Remote Armor Repairer range<br />\n100% bonus to Remote Capacitor Transfer range<br />\n50% reduced Energy Neutralizer capacitor need<br />\n50% reduced Smart Bomb capacitor need<br />\n50% reduced Remote Capacitor Transfer capacitor need",
+        "description_plain": "A cruiser-sized vessel that is oriented towards remote armor repair and seems to be the Collective's equivalent of a support cruiser, the Rodiva is another Triglavian design that has proven adaptable to capsuleer technology, as with previously recovered examples of ship architecture recovered from Abyssal Deadspace. \nThe Rodiva's remote repair systems are considerably enhanced by adaptive armor-repair mutaplasmids that are used as nanite feedstock for its remote repair projectors. As the armor-repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor-repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output. \nBy the prayer of Convocation of Triglav Outside the Struggle, Rodiva Subclade of Veles Clade relinquished the adaptation scheme of now-time accepted 72 tactical troika classification into the cladeflow of Triglav. Strategic troika have advancing-time pressure for adaptation into tactical subroles conforming to now-time accepted noema of cladistic proving by Convocation of Triglav Outside the Struggle. – partial translation of data included in recovered design schematics of the Rodiva",
+        "traits_plain": "Precursor Cruiser bonuses (per skill level):\n12.5% bonus to Mutadaptive Remote Armor Repairer amount\n5% reduced Mutadaptive Remote Armor Repairer capacitor need\nRole Bonus:\n525% bonus to Mutadaptive Remote Armor Repairer range\n100% bonus to Remote Capacitor Transfer range\n50% reduced Energy Neutralizer capacitor need\n50% reduced Smart Bomb capacitor need\n50% reduced Remote Capacitor Transfer capacitor need"
+      }
+    },
+    {
+      "item_id": 49770,
+      "expected": {
+        "description": "Triglavian remote armor repair equipment use mutadaptive technology to restore lost material with escalating effect over time. This is achieved using specialized armor repair mutaplasmids as nanite feedstock for the remote repair projectors.\r\n\r\nAs the armor repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output.",
+        "traits": null,
+        "description_plain": "Triglavian remote armor repair equipment use mutadaptive technology to restore lost material with escalating effect over time. This is achieved using specialized armor repair mutaplasmids as nanite feedstock for the remote repair projectors. \nAs the armor repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 49773,
+      "expected": {
+        "description": "Triglavian remote armor repair equipment use mutadaptive technology to restore lost material with escalating effect over time. This is achieved using specialized armor repair mutaplasmids as nanite feedstock for the remote repair projectors.\r\n\r\nAs the armor repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output.",
+        "traits": null,
+        "description_plain": "Triglavian remote armor repair equipment use mutadaptive technology to restore lost material with escalating effect over time. This is achieved using specialized armor repair mutaplasmids as nanite feedstock for the remote repair projectors. \nAs the armor repair mutaplasmid stream is able to adapt itself in real-time to specific target ship conditions far more efficiently than standard armor repair nanites, the efficiency of armor repairing performed by the nanite stream on a given target increases over time towards a maximal repair output.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 54731,
+      "expected": {
+        "description": "The <i>Skybreaker</i>-class frigate was commissioned from Upwell by the New Eden Common Defense Initiative while the organization was still a counter-Triglavian strategy group headed by Provost Marshal Kasiha Valkanir. When EDENCOM was officially announced as the new central command for the defense of New Eden in YC122, the research and development of a line of ships capable of bearing radical new weaponry was widely rumored following Triglavian raids on Upwell development facilities.\r\n\r\nThe Upwell Consortium had been working on adapting Arcing Vorton Projector weaponry to a ship-based form since the success of the technology as an anti-fleet weapon on Keepstar Citadels. The first Triglavian invasions in mid-YC121 spurred that effort on even before EDENCOM underwrote the project, providing access to scientists and engineers from the secret weapons programs of the four core empires, and even the SoCT.\r\n\r\nThe <i>Skybreaker</i>-class is intended to operate in groups as an escort and counter-attack frigate. With strong shielding and high-output Arcing Vorton Projectors, this swift little ship is a disruptive counter-force in any engagement.",
+        "traits": "<b>EDENCOM Frigate bonuses (per skill level):</b><br />\n6% bonus to all shield resistances<br />\n5% bonus to Small Vorton Projector damage",
+        "description_plain": "The Skybreaker-class frigate was commissioned from Upwell by the New Eden Common Defense Initiative while the organization was still a counter-Triglavian strategy group headed by Provost Marshal Kasiha Valkanir. When EDENCOM was officially announced as the new central command for the defense of New Eden in YC122, the research and development of a line of ships capable of bearing radical new weaponry was widely rumored following Triglavian raids on Upwell development facilities. \nThe Upwell Consortium had been working on adapting Arcing Vorton Projector weaponry to a ship-based form since the success of the technology as an anti-fleet weapon on Keepstar Citadels. The first Triglavian invasions in mid-YC121 spurred that effort on even before EDENCOM underwrote the project, providing access to scientists and engineers from the secret weapons programs of the four core empires, and even the SoCT. \nThe Skybreaker-class is intended to operate in groups as an escort and counter-attack frigate. With strong shielding and high-output Arcing Vorton Projectors, this swift little ship is a disruptive counter-force in any engagement.",
+        "traits_plain": "EDENCOM Frigate bonuses (per skill level):\n6% bonus to all shield resistances\n5% bonus to Small Vorton Projector damage"
+      }
+    },
+    {
+      "item_id": 54739,
+      "expected": {
+        "description": "Small Vorton Projectors are designed to work with small-hull ships specially engineered to support these potent and high-energy weapons. Originally developed by the Upwell Consortium for use on Keepstar Citadels, the Arcing Vorton Projector is a product of spatiotemporal engineering and a weapon capable of striking multiple targets in rapid succession.\r\n\r\nTo adapt this powerful weapon to ship hulls of any size was no easy feat and required dedicated ship designs. Even then, these weapons cannot be fired using ship capacitors alone and must use one-shot, ultra-high energy Condenser Packs as charges.",
+        "traits": null,
+        "description_plain": "Small Vorton Projectors are designed to work with small-hull ships specially engineered to support these potent and high-energy weapons. Originally developed by the Upwell Consortium for use on Keepstar Citadels, the Arcing Vorton Projector is a product of spatiotemporal engineering and a weapon capable of striking multiple targets in rapid succession. \nTo adapt this powerful weapon to ship hulls of any size was no easy feat and required dedicated ship designs. Even then, these weapons cannot be fired using ship capacitors alone and must use one-shot, ultra-high energy Condenser Packs as charges.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 54973,
+      "expected": {
+        "description": "Fine-tuning of the Arcing Vorton Projector's energy waveforms greatly assists in reducing the waste energy discharges during firing. This has the benefit of boosting damage output and reducing ablation of the ultraconducting nanocabling. The calculations involved are complex but a supplementary Vorton Tuning System provides additional computing capacity.\r\n\r\nGrants a bonus to the firing rate and damage of Vorton Projectors.\r\n\r\nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits": null,
+        "description_plain": "Fine-tuning of the Arcing Vorton Projector's energy waveforms greatly assists in reducing the waste energy discharges during firing. This has the benefit of boosting damage output and reducing ablation of the ultraconducting nanocabling. The calculations involved are complex but a supplementary Vorton Tuning System provides additional computing capacity. \nGrants a bonus to the firing rate and damage of Vorton Projectors. \nPenalty: Using more than one type of this module or similar modules that affect the same attribute on the ship will be penalized.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 60281,
+      "expected": {
+        "description": "An advanced custom-cut frequency crystal whose refractive qualities are specifically suited to boosting yield when mining Simple Ores such as Plagioclase, Pyroxeres, Scordite, Veldspar and Mordunium.\r\n\r\nDue to their molecular make-up and the strength of the modulated miner's beam, these crystals will deteriorate through extended use. Can be loaded into modulated mining lasers only.\r\n\r\nType A crystals are used with modulated mining equipment and provide steady yields, with low residues and high reliability. A crystal choice for methodical mining operations prioritizing resource utilization over time.",
+        "traits": null,
+        "description_plain": "An advanced custom-cut frequency crystal whose refractive qualities are specifically suited to boosting yield when mining Simple Ores such as Plagioclase, Pyroxeres, Scordite, Veldspar and Mordunium. \nDue to their molecular make-up and the strength of the modulated miner's beam, these crystals will deteriorate through extended use. Can be loaded into modulated mining lasers only. \nType A crystals are used with modulated mining equipment and provide steady yields, with low residues and high reliability. A crystal choice for methodical mining operations prioritizing resource utilization over time.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 60313,
+      "expected": {
+        "description": "Ever-increasing demand for the products derived from gas cloud resources finally drove yet another breakthrough in gas harvesting technology, with the old scoop tech's integrated tractor beam and gas conversion systems massively overhauled to include broad-sweep beams and high-efficiency, multiplexed catalytic conversion arrays. The large increase in the size of the installed hardware and the power requirements of the equipment has meant that only larger ships can be contemplated as platforms for the new Gas Cloud Harvesters. Given these demands and the advantages of using dedicated mining ships, the practical module designs were soon specialized for use on mining barges and exhumers.\r\n\r\nWhen the first interstellar Gas Clouds were discovered, they proved particularly challenging for industrialists to extract raw materials from. Many methods were tried, and although successful acquisition was always guaranteed, there was a need for much greater efficiency. It was not until the mining industry returned to long-abandoned projects that a solution was found. Since that time, gas harvesting technology has slowly moved forward, giving birth to new industries and economies in the process.",
+        "traits": null,
+        "description_plain": "Ever-increasing demand for the products derived from gas cloud resources finally drove yet another breakthrough in gas harvesting technology, with the old scoop tech's integrated tractor beam and gas conversion systems massively overhauled to include broad-sweep beams and high-efficiency, multiplexed catalytic conversion arrays. The large increase in the size of the installed hardware and the power requirements of the equipment has meant that only larger ships can be contemplated as platforms for the new Gas Cloud Harvesters. Given these demands and the advantages of using dedicated mining ships, the practical module designs were soon specialized for use on mining barges and exhumers. \nWhen the first interstellar Gas Clouds were discovered, they proved particularly challenging for industrialists to extract raw materials from. Many methods were tried, and although successful acquisition was always guaranteed, there was a need for much greater efficiency. It was not until the mining industry returned to long-abandoned projects that a solution was found. Since that time, gas harvesting technology has slowly moved forward, giving birth to new industries and economies in the process.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 83465,
+      "expected": {
+        "description": "The Capital Micro Jump Drive is a specialized Carrier module that spools up, then jumps the ship forward 250km in the direction it is facing. Upon arrival, the ship maintains its direction and velocity. Warp scramblers can be used to disrupt the module. Spool up time is reduced by the skill <a href=showinfo:4385>Micro Jump Drive Operation</a>.\r\n\r\nThe Micro Jump Drive was developed by Duvolle Laboratories Advanced Manifold Theory Unit. The drive was conceived of by the late Avagher Xarasier, the genius behind several ground-breaking innovations of that era.",
+        "traits": null,
+        "description_plain": "The Capital Micro Jump Drive is a specialized Carrier module that spools up, then jumps the ship forward 250km in the direction it is facing. Upon arrival, the ship maintains its direction and velocity. Warp scramblers can be used to disrupt the module. Spool up time is reduced by the skill Micro Jump Drive Operation. \nThe Micro Jump Drive was developed by Duvolle Laboratories Advanced Manifold Theory Unit. The drive was conceived of by the late Avagher Xarasier, the genius behind several ground-breaking innovations of that era.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 85084,
+      "expected": {
+        "description": "Featuring a compact recloning vat that receives its clones' nanoheuristic mappings upon death, Breacher Pod Launchers provide eligible ships the ability to send boarding parties rapidly into enemy ships via Breacher Pods.",
+        "traits": null,
+        "description_plain": "Featuring a compact recloning vat that receives its clones' nanoheuristic mappings upon death, Breacher Pod Launchers provide eligible ships the ability to send boarding parties rapidly into enemy ships via Breacher Pods.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 85087,
+      "expected": {
+        "description": "Developed by the Deathless Custodians in late YC126, the Tholos is a fusion of Thukker starship engineering, cutting-edge Caldari electronics, and breakthroughs in shipboard bioinformatic technology. This synergy beckoned into reality the perfect machine for the Circle’s preferred hit and run doctrine.\r\n\r\nThe Tholos boasts the capabilities to use both Breacher Pod Launchers and Covert Ops Cloaking Devices.",
+        "traits": "<b>Caldari Destroyer bonuses (per skill level):</b><br />\n7.5% bonus to Shield Booster amount<br />\n<br />\n<b>Minmatar Destroyer bonuses (per skill level):</b><br />\n5% bonus to ship Stasis Webifier resistance<br />\n<br />\n<b>Role Bonus:</b><br />\n150% bonus to Small Projectile Turret and Rocket damage<br />\n• Can fit one Small Breacher Pod Launcher<br />\n• Can fit Covert Ops Cloaking Device<br />\n100% reduction in Cloaking Devices CPU requirement<br />\n• Cloak reactivation delay reduced to 15 seconds<br />\n• Immune to all Cargo Scanners",
+        "description_plain": "Developed by the Deathless Custodians in late YC126, the Tholos is a fusion of Thukker starship engineering, cutting-edge Caldari electronics, and breakthroughs in shipboard bioinformatic technology. This synergy beckoned into reality the perfect machine for the Circle’s preferred hit and run doctrine. \nThe Tholos boasts the capabilities to use both Breacher Pod Launchers and Covert Ops Cloaking Devices.",
+        "traits_plain": "Caldari Destroyer bonuses (per skill level):\n7.5% bonus to Shield Booster amount\nMinmatar Destroyer bonuses (per skill level):\n5% bonus to ship Stasis Webifier resistance\nRole Bonus:\n150% bonus to Small Projectile Turret and Rocket damage\n• Can fit one Small Breacher Pod Launcher\n• Can fit Covert Ops Cloaking Device\n100% reduction in Cloaking Devices CPU requirement\n• Cloak reactivation delay reduced to 15 seconds\n• Immune to all Cargo Scanners"
+      }
+    },
+    {
+      "item_id": 85088,
+      "expected": {
+        "description": "SCARAB Breacher Pods are filled with Shriker clones designed to board and wreak havoc in the vulnerable interiors of target ships — bypassing traditional damage resistances.",
+        "traits": null,
+        "description_plain": "SCARAB Breacher Pods are filled with Shriker clones designed to board and wreak havoc in the vulnerable interiors of target ships — bypassing traditional damage resistances.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 89608,
+      "expected": {
+        "description": "This module can be loaded with a variety of Expedition Command Burst Charges to project a field of beneficial nanites over fleet members, improving their probing and hacking capabilities.",
+        "traits": null,
+        "description_plain": "This module can be loaded with a variety of Expedition Command Burst Charges to project a field of beneficial nanites over fleet members, improving their probing and hacking capabilities.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 89612,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:89608>Expedition Command Burst</a> module and dispersed across allied ships to enhance their probe scan strength and analyzer virus coherence.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Expedition Command Burst module and dispersed across allied ships to enhance their probe scan strength and analyzer virus coherence.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 89613,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:89608>Expedition Command Burst</a> module and dispersed across allied ships to enhance directional scanner, analyzer and salvager range.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Expedition Command Burst module and dispersed across allied ships to enhance directional scanner, analyzer and salvager range.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 89614,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into an <a href=showinfo:89608>Expedition Command Burst</a> module and dispersed across allied ships to reduce their maximum scan deviation with probes and time needed to salvage wrecks with salvaging modules.",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into an Expedition Command Burst module and dispersed across allied ships to reduce their maximum scan deviation with probes and time needed to salvage wrecks with salvaging modules.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 90733,
+      "expected": {
+        "description": "This compact bundle of active nanites can be loaded into a <a href=showinfo:42528>Mining Foreman Burst</a> module and dispersed across allied ships to greatly enhance the precision and efficiency of their mining modules, increasing the chance of critical successes and decreasing the chance of residue for mining lasers.\r\n\r\nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits": null,
+        "description_plain": "This compact bundle of active nanites can be loaded into a Mining Foreman Burst module and dispersed across allied ships to greatly enhance the precision and efficiency of their mining modules, increasing the chance of critical successes and decreasing the chance of residue for mining lasers. \nAll mining foreman bursts also enable upgraded functionality for any integrated Mining Surveyors on affected ships",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92033,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house a webifier.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house a webifier. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92036,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house a neutralizer.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house a neutralizer. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92039,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house ECM.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house ECM. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92461,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house a target painter.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house a target painter. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92464,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house a sensor dampener.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house a sensor dampener. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    },
+    {
+      "item_id": 92467,
+      "expected": {
+        "description": "The combat chassis of this light drone has been adapted to also house a tracking disruption.\r\n\r\nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits": null,
+        "description_plain": "The combat chassis of this light drone has been adapted to also house a tracking disruption. \nIts design is inhuman in origin, having been developed inside a Rogue Drone hive. Its link to the hive was never formed, and now it serves at the behest of the humans it was built to destroy.",
+        "traits_plain": null
+      }
+    }
+  ],
+  "probes": [
+    {
+      "input": null,
+      "expected": {
+        "description": null,
+        "traits": null,
+        "description_plain": null,
+        "traits_plain": null
+      }
+    },
+    {
+      "input": "",
+      "expected": {
+        "description": "",
+        "traits": "",
+        "description_plain": null,
+        "traits_plain": null
+      }
+    },
+    {
+      "input": "First paragraph\n\nSecond paragraph — café 🧪",
+      "expected": {
+        "description": "First paragraph\n\nSecond paragraph — café 🧪",
+        "traits": "First paragraph\n\nSecond paragraph — café 🧪",
+        "description_plain": "First paragraph\nSecond paragraph — café 🧪",
+        "traits_plain": "First paragraph Second paragraph — café 🧪"
+      }
+    },
+    {
+      "input": "<font color=\"#ff0000\">Color</font> <a href=\"showinfo:626\">Vexor</a> &amp; Unicode Ω",
+      "expected": {
+        "description": "<font color=\"#ff0000\">Color</font> <a href=\"showinfo:626\">Vexor</a> &amp; Unicode Ω",
+        "traits": "<font color=\"#ff0000\">Color</font> <a href=\"showinfo:626\">Vexor</a> &amp; Unicode Ω",
+        "description_plain": "Color Vexor & Unicode Ω",
+        "traits_plain": "Color Vexor & Unicode Ω"
+      }
+    },
+    {
+      "input": "<p>One</p><p>Two<br>Three</p>",
+      "expected": {
+        "description": "<p>One</p><p>Two<br>Three</p>",
+        "traits": "<p>One</p><p>Two<br>Three</p>",
+        "description_plain": "\nOne\nTwo\nThree",
+        "traits_plain": "\nOne\nTwo\nThree"
+      }
+    },
+    {
+      "input": "<b>Heading</b><ul><li>First</li><li>Second</li></ul>",
+      "expected": {
+        "description": "<b>Heading</b><ul><li>First</li><li>Second</li></ul>",
+        "traits": "<b>Heading</b><ul><li>First</li><li>Second</li></ul>",
+        "description_plain": "Heading\n\nFirst\n\nSecond",
+        "traits_plain": "Heading\n\nFirst\n\nSecond"
+      }
+    },
+    {
+      "input": "Literal ￼ and <img src=\"missing-local-image.png\"> image cell",
+      "expected": {
+        "description": "Literal ￼ and <img src=\"missing-local-image.png\"> image cell",
+        "traits": "Literal ￼ and <img src=\"missing-local-image.png\"> image cell",
+        "description_plain": "Literal ￼ and  image cell",
+        "traits_plain": "Literal ￼ and  image cell"
+      }
+    }
+  ]
+}

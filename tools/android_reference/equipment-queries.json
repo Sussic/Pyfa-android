@@ -1,0 +1,7 @@
+[
+  "Dual 150mm Railgun II", "railgun", "railgun t2", "small armour rep t2",
+  "civ* launcher", "re:^Dual (150|250)mm Railgun", "re:[", "re:(railgun",
+  "a", "zz-no-such-equipment", "Data Subverter", "QA Damage", "Standup",
+  "'Habitat' Miner", "Prototype Iris", "Hardwiring ZMX", "Scourge Light",
+  "Ice", "Hobgoblin", "50mn mwd", "tracking comp", "R.A.M."
+]

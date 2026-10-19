@@ -1,0 +1,41 @@
+[
+  {"name":"mixed-family-selected-variation","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Spike M"},
+    {"name":"Dual 150mm Railgun I","state":"ACTIVE","charge":"Antimatter Charge M"},
+    {"name":"200mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"},
+    {"name":"Sensor Booster I","state":"ACTIVE","charge":"Scan Resolution Script"}],
+    "operations":[["variation",0,[0,1,2,3],"SELECTED","Dual 150mm Railgun I"]]},
+  {"name":"related-variant-similar-variation","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun I","state":"ACTIVE","charge":"Antimatter Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Spike M"},
+    {"name":"200mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"}],
+    "operations":[["variation",0,[0],"SIMILAR","Dual 150mm Railgun II"]]},
+  {"name":"active-state-variation","ship":"Rifter","modules":[
+    {"name":"Breach Control","state":"ACTIVE"}],
+    "operations":[["variation",0,[0],"SELECTED","Damage Control II"]]},
+  {"name":"selected-removal-history","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Antimatter Charge M"},
+    {"name":"Sensor Booster I","state":"ACTIVE","charge":"Scan Resolution Script"},
+    {"name":"Damage Control II","state":"ONLINE"}],
+    "operations":[["remove",0,[0,2],"SELECTED"]]},
+  {"name":"similar-removal-history","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun I","state":"ACTIVE","charge":"Antimatter Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"},
+    {"name":"Sensor Booster I","state":"ACTIVE","charge":"Scan Resolution Script"}],
+    "operations":[["remove",0,[0],"SIMILAR"]]},
+  {"name":"unchanged-variation","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"ACTIVE","charge":"Antimatter Charge M"}],
+    "operations":[["variation",0,[0,1],"SELECTED","Dual 150mm Railgun II"]]},
+  {"name":"direct-command-partial-rejection","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun I","state":"ACTIVE","charge":"Antimatter Charge M"},
+    {"name":"Sensor Booster I","state":"ACTIVE","charge":"Scan Resolution Script"}],
+    "operations":[["variation_direct",0,[0,1],"SELECTED","Dual 150mm Railgun II"]]},
+  {"name":"projected-variation-and-removal","ship":"Celestis","modules":[
+    {"name":"Remote Sensor Dampener I","state":"ACTIVE","charge":"Scan Resolution Dampening Script"},
+    {"name":"Remote Sensor Dampener II","state":"ACTIVE","charge":"Scan Resolution Dampening Script"}],
+    "recipients":[{"name":"Bulk recipient Vexor","ship":"Vexor"},
+                  {"name":"Bulk recipient Rifter","ship":"Rifter"}],
+    "operations":[["variation",0,[0,1],"SELECTED","Remote Sensor Dampener II"],
+                  ["remove",0,[0,1],"SELECTED"]]}
+]

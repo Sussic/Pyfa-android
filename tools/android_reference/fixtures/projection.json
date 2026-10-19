@@ -1,0 +1,3848 @@
+{
+  "comparison_tolerance": {
+    "absolute": 1e-09,
+    "relative": 1e-10
+  },
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "dataset_metadata": {
+    "client_build": "3424810",
+    "dump_time": "1783448238",
+    "schema_version": "4"
+  },
+  "desktop_wx_version": "4.2.1",
+  "eos_settings": {
+    "globalDefaultSpoolupPercentage": 1.0,
+    "strictSkillLevels": true,
+    "useStaticAdaptiveArmorHardener": false
+  },
+  "inputs": {
+    "source": {
+      "boosters": [],
+      "commands": [],
+      "damage_pattern": {
+        "emAmount": 25,
+        "explosiveAmount": 25,
+        "kineticAmount": 25,
+        "thermalAmount": 25
+      },
+      "drones": [],
+      "environments": [],
+      "factor_reload": false,
+      "implants": [],
+      "modules": [
+        {
+          "charge": "Antimatter Charge M",
+          "name": "Dual 150mm Railgun II",
+          "state": "ACTIVE"
+        },
+        {
+          "charge": "Targeting Range Dampening Script",
+          "name": "Remote Sensor Dampener II",
+          "state": "ACTIVE"
+        }
+      ],
+      "name": "A04 synthetic Celestis projector",
+      "projections": [],
+      "security": {
+        "pilot": 0.0,
+        "system": "HISEC"
+      },
+      "ship": "Celestis",
+      "skill_level": 5,
+      "target_profile": null
+    },
+    "steps": [
+      {
+        "active": true,
+        "amount": 1,
+        "name": "applied_zero",
+        "operation": "add",
+        "range_m": 0.0
+      },
+      {
+        "active": true,
+        "amount": 1,
+        "name": "falloff",
+        "operation": "configure",
+        "range_m": 100000.0
+      },
+      {
+        "active": true,
+        "amount": 1,
+        "name": "distant",
+        "operation": "configure",
+        "range_m": 300000.0
+      },
+      {
+        "active": false,
+        "amount": 1,
+        "name": "inactive",
+        "operation": "configure",
+        "range_m": 0.0
+      },
+      {
+        "active": true,
+        "amount": 1,
+        "name": "reactivated",
+        "operation": "configure",
+        "range_m": 0.0
+      },
+      {
+        "charge": "Scan Resolution Dampening Script",
+        "module_indices": [
+          1
+        ],
+        "name": "script_changed",
+        "operation": "charges"
+      },
+      {
+        "charge": "Targeting Range Dampening Script",
+        "module_indices": [
+          1
+        ],
+        "name": "script_restored",
+        "operation": "charges"
+      },
+      {
+        "name": "removed",
+        "operation": "remove"
+      },
+      {
+        "active": true,
+        "amount": 1,
+        "name": "reapplied_default_range",
+        "operation": "add",
+        "range_m": null
+      },
+      {
+        "name": "removed_again",
+        "operation": "remove"
+      }
+    ],
+    "target": {
+      "boosters": [],
+      "commands": [],
+      "damage_pattern": {
+        "emAmount": 25,
+        "explosiveAmount": 25,
+        "kineticAmount": 25,
+        "thermalAmount": 25
+      },
+      "drones": [
+        {
+          "active": 5,
+          "amount": 5,
+          "name": "Hammerhead II"
+        }
+      ],
+      "environments": [],
+      "factor_reload": false,
+      "implants": [],
+      "modules": [
+        {
+          "charge": "Antimatter Charge M",
+          "name": "Dual 150mm Railgun II",
+          "state": "ACTIVE"
+        },
+        {
+          "charge": "Antimatter Charge M",
+          "name": "Dual 150mm Railgun II",
+          "state": "ACTIVE"
+        },
+        {
+          "name": "Drone Link Augmentor I",
+          "state": "ONLINE"
+        },
+        {
+          "name": "10MN Afterburner II",
+          "state": "ACTIVE"
+        },
+        {
+          "name": "Medium Shield Extender II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Cap Recharger II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Damage Control II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Drone Damage Amplifier II",
+          "state": "ONLINE"
+        },
+        {
+          "name": "Medium Armor Repairer II",
+          "state": "ACTIVE"
+        }
+      ],
+      "name": "A04 synthetic Vexor recipient",
+      "projections": [],
+      "security": {
+        "pilot": 0.0,
+        "system": "HISEC"
+      },
+      "ship": "Vexor",
+      "skill_level": 5,
+      "target_profile": null
+    }
+  },
+  "reference_imports": {
+    "config": "config.py",
+    "eos": "eos/__init__.py",
+    "eos.calc": "eos/calc.py",
+    "eos.capSim": "eos/capSim.py",
+    "eos.config": "eos/config.py",
+    "eos.const": "eos/const.py",
+    "eos.db": "eos/db/__init__.py",
+    "eos.db.gamedata": "eos/db/gamedata/__init__.py",
+    "eos.db.gamedata.alphaClones": "eos/db/gamedata/alphaClones.py",
+    "eos.db.gamedata.attribute": "eos/db/gamedata/attribute.py",
+    "eos.db.gamedata.category": "eos/db/gamedata/category.py",
+    "eos.db.gamedata.dynamicAttributes": "eos/db/gamedata/dynamicAttributes.py",
+    "eos.db.gamedata.effect": "eos/db/gamedata/effect.py",
+    "eos.db.gamedata.group": "eos/db/gamedata/group.py",
+    "eos.db.gamedata.implantSet": "eos/db/gamedata/implantSet.py",
+    "eos.db.gamedata.item": "eos/db/gamedata/item.py",
+    "eos.db.gamedata.marketGroup": "eos/db/gamedata/marketGroup.py",
+    "eos.db.gamedata.metaData": "eos/db/gamedata/metaData.py",
+    "eos.db.gamedata.metaGroup": "eos/db/gamedata/metaGroup.py",
+    "eos.db.gamedata.queries": "eos/db/gamedata/queries.py",
+    "eos.db.gamedata.traits": "eos/db/gamedata/traits.py",
+    "eos.db.gamedata.unit": "eos/db/gamedata/unit.py",
+    "eos.db.migration": "eos/db/migration.py",
+    "eos.db.migrations": "eos/db/migrations/__init__.py",
+    "eos.db.migrations.upgrade1": "eos/db/migrations/upgrade1.py",
+    "eos.db.migrations.upgrade10": "eos/db/migrations/upgrade10.py",
+    "eos.db.migrations.upgrade11": "eos/db/migrations/upgrade11.py",
+    "eos.db.migrations.upgrade12": "eos/db/migrations/upgrade12.py",
+    "eos.db.migrations.upgrade13": "eos/db/migrations/upgrade13.py",
+    "eos.db.migrations.upgrade14": "eos/db/migrations/upgrade14.py",
+    "eos.db.migrations.upgrade15": "eos/db/migrations/upgrade15.py",
+    "eos.db.migrations.upgrade16": "eos/db/migrations/upgrade16.py",
+    "eos.db.migrations.upgrade17": "eos/db/migrations/upgrade17.py",
+    "eos.db.migrations.upgrade18": "eos/db/migrations/upgrade18.py",
+    "eos.db.migrations.upgrade19": "eos/db/migrations/upgrade19.py",
+    "eos.db.migrations.upgrade2": "eos/db/migrations/upgrade2.py",
+    "eos.db.migrations.upgrade20": "eos/db/migrations/upgrade20.py",
+    "eos.db.migrations.upgrade21": "eos/db/migrations/upgrade21.py",
+    "eos.db.migrations.upgrade22": "eos/db/migrations/upgrade22.py",
+    "eos.db.migrations.upgrade23": "eos/db/migrations/upgrade23.py",
+    "eos.db.migrations.upgrade24": "eos/db/migrations/upgrade24.py",
+    "eos.db.migrations.upgrade25": "eos/db/migrations/upgrade25.py",
+    "eos.db.migrations.upgrade26": "eos/db/migrations/upgrade26.py",
+    "eos.db.migrations.upgrade27": "eos/db/migrations/upgrade27.py",
+    "eos.db.migrations.upgrade28": "eos/db/migrations/upgrade28.py",
+    "eos.db.migrations.upgrade29": "eos/db/migrations/upgrade29.py",
+    "eos.db.migrations.upgrade3": "eos/db/migrations/upgrade3.py",
+    "eos.db.migrations.upgrade30": "eos/db/migrations/upgrade30.py",
+    "eos.db.migrations.upgrade31": "eos/db/migrations/upgrade31.py",
+    "eos.db.migrations.upgrade32": "eos/db/migrations/upgrade32.py",
+    "eos.db.migrations.upgrade33": "eos/db/migrations/upgrade33.py",
+    "eos.db.migrations.upgrade34": "eos/db/migrations/upgrade34.py",
+    "eos.db.migrations.upgrade35": "eos/db/migrations/upgrade35.py",
+    "eos.db.migrations.upgrade36": "eos/db/migrations/upgrade36.py",
+    "eos.db.migrations.upgrade37": "eos/db/migrations/upgrade37.py",
+    "eos.db.migrations.upgrade38": "eos/db/migrations/upgrade38.py",
+    "eos.db.migrations.upgrade39": "eos/db/migrations/upgrade39.py",
+    "eos.db.migrations.upgrade4": "eos/db/migrations/upgrade4.py",
+    "eos.db.migrations.upgrade40": "eos/db/migrations/upgrade40.py",
+    "eos.db.migrations.upgrade41": "eos/db/migrations/upgrade41.py",
+    "eos.db.migrations.upgrade42": "eos/db/migrations/upgrade42.py",
+    "eos.db.migrations.upgrade43": "eos/db/migrations/upgrade43.py",
+    "eos.db.migrations.upgrade44": "eos/db/migrations/upgrade44.py",
+    "eos.db.migrations.upgrade45": "eos/db/migrations/upgrade45.py",
+    "eos.db.migrations.upgrade46": "eos/db/migrations/upgrade46.py",
+    "eos.db.migrations.upgrade47": "eos/db/migrations/upgrade47.py",
+    "eos.db.migrations.upgrade48": "eos/db/migrations/upgrade48.py",
+    "eos.db.migrations.upgrade49": "eos/db/migrations/upgrade49.py",
+    "eos.db.migrations.upgrade5": "eos/db/migrations/upgrade5.py",
+    "eos.db.migrations.upgrade6": "eos/db/migrations/upgrade6.py",
+    "eos.db.migrations.upgrade7": "eos/db/migrations/upgrade7.py",
+    "eos.db.migrations.upgrade8": "eos/db/migrations/upgrade8.py",
+    "eos.db.migrations.upgrade9": "eos/db/migrations/upgrade9.py",
+    "eos.db.saveddata": "eos/db/saveddata/__init__.py",
+    "eos.db.saveddata.booster": "eos/db/saveddata/booster.py",
+    "eos.db.saveddata.cargo": "eos/db/saveddata/cargo.py",
+    "eos.db.saveddata.character": "eos/db/saveddata/character.py",
+    "eos.db.saveddata.damagePattern": "eos/db/saveddata/damagePattern.py",
+    "eos.db.saveddata.databaseRepair": "eos/db/saveddata/databaseRepair.py",
+    "eos.db.saveddata.drone": "eos/db/saveddata/drone.py",
+    "eos.db.saveddata.fighter": "eos/db/saveddata/fighter.py",
+    "eos.db.saveddata.fit": "eos/db/saveddata/fit.py",
+    "eos.db.saveddata.implant": "eos/db/saveddata/implant.py",
+    "eos.db.saveddata.implantSet": "eos/db/saveddata/implantSet.py",
+    "eos.db.saveddata.miscData": "eos/db/saveddata/miscData.py",
+    "eos.db.saveddata.module": "eos/db/saveddata/module.py",
+    "eos.db.saveddata.mutatorDrone": "eos/db/saveddata/mutatorDrone.py",
+    "eos.db.saveddata.mutatorMod": "eos/db/saveddata/mutatorMod.py",
+    "eos.db.saveddata.override": "eos/db/saveddata/override.py",
+    "eos.db.saveddata.price": "eos/db/saveddata/price.py",
+    "eos.db.saveddata.queries": "eos/db/saveddata/queries.py",
+    "eos.db.saveddata.skill": "eos/db/saveddata/skill.py",
+    "eos.db.saveddata.targetProfile": "eos/db/saveddata/targetProfile.py",
+    "eos.db.saveddata.user": "eos/db/saveddata/user.py",
+    "eos.db.util": "eos/db/util.py",
+    "eos.effectHandlerHelpers": "eos/effectHandlerHelpers.py",
+    "eos.effects": "eos/effects.py",
+    "eos.eqBase": "eos/eqBase.py",
+    "eos.gamedata": "eos/gamedata.py",
+    "eos.modifiedAttributeDict": "eos/modifiedAttributeDict.py",
+    "eos.saveddata": "eos/saveddata/__init__.py",
+    "eos.saveddata.booster": "eos/saveddata/booster.py",
+    "eos.saveddata.boosterSideEffect": "eos/saveddata/boosterSideEffect.py",
+    "eos.saveddata.cargo": "eos/saveddata/cargo.py",
+    "eos.saveddata.character": "eos/saveddata/character.py",
+    "eos.saveddata.citadel": "eos/saveddata/citadel.py",
+    "eos.saveddata.damagePattern": "eos/saveddata/damagePattern.py",
+    "eos.saveddata.drone": "eos/saveddata/drone.py",
+    "eos.saveddata.fighter": "eos/saveddata/fighter.py",
+    "eos.saveddata.fighterAbility": "eos/saveddata/fighterAbility.py",
+    "eos.saveddata.fit": "eos/saveddata/fit.py",
+    "eos.saveddata.implant": "eos/saveddata/implant.py",
+    "eos.saveddata.implantSet": "eos/saveddata/implantSet.py",
+    "eos.saveddata.miscData": "eos/saveddata/miscData.py",
+    "eos.saveddata.mode": "eos/saveddata/mode.py",
+    "eos.saveddata.module": "eos/saveddata/module.py",
+    "eos.saveddata.mutatedMixin": "eos/saveddata/mutatedMixin.py",
+    "eos.saveddata.mutator": "eos/saveddata/mutator.py",
+    "eos.saveddata.override": "eos/saveddata/override.py",
+    "eos.saveddata.price": "eos/saveddata/price.py",
+    "eos.saveddata.ship": "eos/saveddata/ship.py",
+    "eos.saveddata.ssocharacter": "eos/saveddata/ssocharacter.py",
+    "eos.saveddata.targetProfile": "eos/saveddata/targetProfile.py",
+    "eos.saveddata.user": "eos/saveddata/user.py",
+    "eos.utils": "eos/utils/__init__.py",
+    "eos.utils.cycles": "eos/utils/cycles.py",
+    "eos.utils.default": "eos/utils/default.py",
+    "eos.utils.float": "eos/utils/float.py",
+    "eos.utils.pyinst_support": "eos/utils/pyinst_support.py",
+    "eos.utils.round": "eos/utils/round.py",
+    "eos.utils.spoolSupport": "eos/utils/spoolSupport.py",
+    "eos.utils.stats": "eos/utils/stats.py",
+    "utils": "utils/__init__.py",
+    "utils.repr": "utils/repr.py"
+  },
+  "resolved_item_ids": {
+    "10MN Afterburner II": 12058,
+    "Antimatter Charge M": 230,
+    "Cap Recharger II": 2032,
+    "Celestis": 633,
+    "Damage Control II": 2048,
+    "Drone Damage Amplifier II": 4405,
+    "Drone Link Augmentor I": 23527,
+    "Dual 150mm Railgun II": 3106,
+    "Hammerhead II": 2185,
+    "Medium Armor Repairer II": 3530,
+    "Medium Shield Extender II": 3831,
+    "Remote Sensor Dampener II": 1969,
+    "Scan Resolution Dampening Script": 29013,
+    "Targeting Range Dampening Script": 29015,
+    "Vexor": 626
+  },
+  "schema_version": 1,
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+  "states": {
+    "applied_zero": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 31110.351562500004
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "distant": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 62974.19972011451
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "falloff": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 33307.96132418393
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "inactive": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "initial": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "reactivated": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 31110.351562500004
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "reapplied_default_range": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 31110.351562500004
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "removed": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "removed_again": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "script_changed": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 65625.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 165.92187500000003
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    },
+    "script_restored": {
+      "source": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 2407.407407407408
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.9
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 1625.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.65
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1625.0
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 11.699064074874011
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 347250.0
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": true
+        },
+        "capacitor_state": {
+          "unit": "%",
+          "value": 82.47901870326795
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 3.7226741467975693
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 468.75
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 66.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 60000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 0
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 3171.641791044776
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2125.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.67
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 93750.0
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 262.5
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 718.75
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 67.6
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 362.5
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 2068.9655172413795
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 1.0
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.5
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 1500.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.6
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.8
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 86.526
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 33.70967741935483
+        }
+      },
+      "target": {
+        "armor_ehp_uniform": {
+          "unit": "HP",
+          "value": 4357.298474945534
+        },
+        "armor_em_resonance": {
+          "unit": "fraction",
+          "value": 0.425
+        },
+        "armor_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.765
+        },
+        "armor_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "armor_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "armor_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.5525
+        },
+        "capacitor_capacity": {
+          "unit": "GJ",
+          "value": 1812.5
+        },
+        "capacitor_recharge": {
+          "unit": "GJ/s",
+          "value": 15.651986183074262
+        },
+        "capacitor_recharge_time": {
+          "unit": "ms",
+          "value": 289500.00000000006
+        },
+        "capacitor_stable": {
+          "unit": "boolean",
+          "value": false
+        },
+        "capacitor_state": {
+          "unit": "s",
+          "value": 162.0
+        },
+        "capacitor_used": {
+          "unit": "GJ/s",
+          "value": 22.82312607137292
+        },
+        "cpu_output": {
+          "unit": "tf",
+          "value": 375.0
+        },
+        "cpu_used": {
+          "unit": "tf",
+          "value": 258.75
+        },
+        "drone_bandwidth_used": {
+          "unit": "Mbit/s",
+          "value": 50.0
+        },
+        "drone_control_range": {
+          "unit": "m",
+          "value": 80000.0
+        },
+        "drone_dps": {
+          "unit": "HP/s",
+          "value": 286.308
+        },
+        "gun_falloff": {
+          "unit": "m",
+          "value": 6750.0
+        },
+        "gun_optimal": {
+          "unit": "m",
+          "value": 8100.0
+        },
+        "hull_ehp_uniform": {
+          "unit": "HP",
+          "value": 6218.905472636816
+        },
+        "hull_em_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_hp": {
+          "unit": "HP",
+          "value": 2500.0
+        },
+        "hull_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "hull_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.402
+        },
+        "max_target_range": {
+          "unit": "m",
+          "value": 31110.351562500004
+        },
+        "max_velocity": {
+          "unit": "m/s",
+          "value": 626.9749611801242
+        },
+        "powergrid_output": {
+          "unit": "MW",
+          "value": 875.0
+        },
+        "powergrid_used": {
+          "unit": "MW",
+          "value": 352.7
+        },
+        "scan_resolution": {
+          "unit": "mm",
+          "value": 350.0
+        },
+        "shield_ehp_uniform": {
+          "unit": "HP",
+          "value": 4334.975369458128
+        },
+        "shield_em_resonance": {
+          "unit": "fraction",
+          "value": 0.875
+        },
+        "shield_explosive_resonance": {
+          "unit": "fraction",
+          "value": 0.4375
+        },
+        "shield_hp": {
+          "unit": "HP",
+          "value": 2750.0
+        },
+        "shield_kinetic_resonance": {
+          "unit": "fraction",
+          "value": 0.525
+        },
+        "shield_thermal_resonance": {
+          "unit": "fraction",
+          "value": 0.7000000000000001
+        },
+        "total_dps": {
+          "unit": "HP/s",
+          "value": 370.58219354838707
+        },
+        "total_volley": {
+          "unit": "HP",
+          "value": 1361.5469999999998
+        },
+        "weapon_dps": {
+          "unit": "HP/s",
+          "value": 84.27419354838707
+        }
+      }
+    }
+  }
+}

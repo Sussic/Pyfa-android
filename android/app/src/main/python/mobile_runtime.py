@@ -1,0 +1,819 @@
+"""Provisional, serialized Android entry point. EOS owns every value."""
+import importlib.abc
+import importlib.metadata
+from contextlib import closing
+import json
+from pathlib import Path
+import sqlite3
+import sys
+import threading
+import time
+
+_engine = None
+_fit = None
+_bridge = None
+_case = None
+_manifest = None
+_boot_ms = None
+_store_path = None
+_forbidden = []
+_equipment = None
+
+
+class NoDesktop(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname.split(".")[0] in {"wx", "gui", "service", "config"}:
+            _forbidden.append(fullname)
+            raise ImportError("Desktop dependency is unavailable on Android: " + fullname)
+
+
+def encoded(value):
+    return json.dumps(value, sort_keys=True, allow_nan=False)
+
+
+def boot(database_path, manifest_json, case_json, store_path=None):
+    global _engine, _fit, _case, _manifest, _boot_ms, _store_path
+    if _engine is not None:
+        raise RuntimeError("Android engine has already started")
+    start = time.monotonic()
+    sys.meta_path.insert(0, NoDesktop())
+    _manifest = json.loads(manifest_json)
+    _case = json.loads(case_json)
+    _store_path = str(store_path) if store_path else None
+    with closing(sqlite3.connect(Path(database_path).as_uri() + "?mode=ro", uri=True)) as db:
+        if db.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
+            raise ValueError("Bundled database failed SQLite quick_check")
+    from android_bridge import HeadlessEngine
+    _engine = HeadlessEngine(database_path)
+    # SQLite's default SingletonThreadPool relies on Python thread-local state.
+    # Separate Chaquopy JNI calls can lose that state before the ORM session
+    # has pinned a connection. An empty durable graph then sees a new database.
+    # EOS is serialized on one Java worker: retain exactly one SQLite connection.
+    import eos.db
+    from sqlalchemy import create_engine
+    from sqlalchemy.pool import StaticPool
+    previous = eos.db.saveddata_engine
+    assert str(previous.url) == "sqlite:///:memory:" and not _engine._fits
+    eos.db.saveddata_session.close()
+    replacement = create_engine("sqlite:///:memory:", poolclass=StaticPool, echo=False)
+    eos.db.saveddata_engine = replacement
+    eos.db.saveddata_meta.bind = replacement
+    eos.db.saveddata_session.bind = replacement
+    previous.dispose()
+    eos.db.saveddata_meta.create_all()
+    tables = {row[0] for row in eos.db.saveddata_session.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    if tables != set(eos.db.saveddata_meta.tables):
+        raise RuntimeError("Android EOS in-memory schema is incomplete")
+    if _engine.metadata != _manifest["dataset_metadata"]:
+        raise ValueError("Bundled dataset metadata differs from the build manifest")
+    spec = dict(_case)
+    del spec["edit"]
+    if _store_path is None:
+        _fit = _engine.create_fit(spec)
+    _boot_ms = (time.monotonic() - start) * 1000
+    return snapshot() if _fit is not None else encoded({"initialized": True})
+
+
+def bridge_bootstrap():
+    """Open saved fits, or adopt the explicitly ephemeral diagnostic sample."""
+    global _bridge, _fit
+    if _bridge is not None:
+        raise RuntimeError("Android bridge has already started")
+    from android_bridge.contract import BridgeSession
+    spec = dict(_case)
+    del spec["edit"]
+    if _store_path is None:
+        _bridge = BridgeSession(_engine, _fit, spec)
+    else:
+        try:
+            from android_bridge.offline.native_session import NativeSession
+            _bridge = NativeSession(
+                _engine, _store_path, _manifest["database_logical_sha256"], spec)
+        except Exception:
+            # Chaquopy's Java exception boundary omits nested Python causes.
+            # Retain the original bootstrap traceback before re-raising it.
+            import traceback
+            traceback.print_exc()
+            raise
+    _fit = None  # Recovery may replace EOS objects; retain only logical IDs.
+    return _bridge.bootstrap()
+
+
+def bridge_sample_id():
+    _engine._check_thread()
+    return _bridge.sample_id
+
+
+def library_catalog():
+    from android_bridge.catalog import hull_catalog
+    return encoded(hull_catalog(_engine))
+
+
+def library_organization():
+    return encoded(_bridge.organization())
+
+
+def fitting_details(fit_id):
+    return encoded(_bridge.fitting_details(fit_id))
+
+
+def drone_details(fit_id):
+    return encoded(_bridge.drone_details(fit_id))
+
+
+def cargo_details(fit_id):
+    return encoded(_bridge.cargo_details(fit_id))
+
+
+def cargo_transfer_details(fit_id):
+    return encoded(_bridge.cargo_transfer_details(fit_id))
+
+
+def note_details(fit_id):
+    return encoded(_bridge.note_details(fit_id))
+
+
+def history_details(fit_id):
+    return encoded(_bridge.history_details(fit_id))
+
+
+def resource_details(fit_id):
+    return encoded(_bridge.resource_details(fit_id))
+
+
+def capacitor_details(fit_id):
+    return encoded(_bridge.capacitor_details(fit_id))
+
+
+def tank_details(fit_id):
+    return encoded(_bridge.tank_details(fit_id))
+
+
+def output_details(fit_id):
+    return encoded(_bridge.output_details(fit_id))
+
+
+def targeting_details(fit_id):
+    return encoded(_bridge.targeting_details(fit_id))
+
+
+def inspection_options(fit_id):
+    return encoded(_bridge.inspection_options(fit_id))
+
+
+def inspection_details(fit_id, selection_json, effective=False):
+    return encoded(_bridge.inspection_details(fit_id, json.loads(selection_json), effective))
+
+
+def inspection_base_details(item_id):
+    return encoded(_bridge.inspection_base_details(item_id))
+
+
+def defense_details(fit_id):
+    return encoded(_bridge.defense_details(fit_id))
+
+
+def defense_persistence_snapshot():
+    """Read confirmed durable inputs for the native diagnostic boundary."""
+    _engine._check_thread()
+    from android_bridge.store import decode_graph
+    if _bridge._store is None:
+        raise RuntimeError('Persistent storage required for this diagnostic')
+    graph = decode_graph(_bridge._store.current.payload)
+    return encoded(graph.get("fit_graph", graph))
+
+
+def inspection_sql_roles(fit_id, complete=False):
+    """Read original mapped tables independently of inspection properties."""
+    _engine._check_thread()
+    import eos.db
+    from android_bridge.inspection_diagnostics import sql_roles
+    if type(complete) is not bool:
+        raise ValueError('Invalid complete SQL diagnostic flag')
+    return encoded(sql_roles(eos.db.saveddata_session, _bridge._fits[fit_id].ID, complete))
+
+
+def inspection_unit_witnesses(samples_json):
+    """Read-only formatting evidence on the existing serialized worker."""
+    _engine._check_thread()
+    from android_bridge.inspection_diagnostics import unit_witnesses
+    return encoded(unit_witnesses(json.loads(samples_json)))
+
+
+def inspection_equipment_witnesses(fit_id, selection_json):
+    """Read-only, source-file-independent trace on the engine worker."""
+    _engine._check_thread()
+    from android_bridge.inspection_diagnostics import equipment_witnesses
+    _engine.prepare_read(_bridge._fits[fit_id])
+    return encoded(equipment_witnesses(_engine, _bridge._fits[fit_id], json.loads(selection_json)))
+
+
+def inspection_equipment_probes(fit_id, request_json):
+    """Input-only equipment probes on the existing serialized worker."""
+    _engine._check_thread()
+    if any(f.projectedDrones or f.projectedFighters for f in _engine._fits):
+        raise ValueError("Projected-drone evaluation budget: debug equipment probes are not admitted for this graph")
+    from android_bridge.inspection_equipment_diagnostics import equipment_probes
+    return encoded(equipment_probes(_engine, _bridge._fits[fit_id], json.loads(request_json)))
+
+
+def inspection_guard_domains(request_json):
+    _engine._check_thread()
+    from android_bridge.inspection_equipment_diagnostics import guard_domains
+    return encoded(guard_domains(json.loads(request_json)))
+
+
+def cargo_action_options(fit_id, item_id, from_cargo):
+    return encoded(_bridge.cargo_action_options(fit_id, item_id, from_cargo))
+
+
+def charge_options(fit_id):
+    return encoded(_bridge.charge_options(fit_id))
+
+
+def bulk_charge_options(fit_id):
+    return encoded(_bridge.bulk_charge_options(fit_id))
+
+
+def bulk_state_options(fit_id):
+    return encoded(_bridge.bulk_state_options(fit_id))
+
+
+def fill_item_options(fit_id, item_id):
+    return encoded(_bridge.fill_item_options(fit_id, item_id))
+
+
+def clone_vacancy_options(fit_id):
+    return encoded(_bridge.clone_vacancy_options(fit_id))
+
+
+def variation_options(fit_id):
+    return encoded(_bridge.variation_options(fit_id))
+
+
+def mode_options(fit_id):
+    return encoded(_bridge.mode_options(fit_id))
+
+
+def subsystem_options(fit_id):
+    return encoded(_bridge.subsystem_options(fit_id))
+
+
+def structure_service_options(fit_id):
+    return encoded(_bridge.structure_service_options(fit_id))
+
+
+def rack_options(fit_id):
+    return encoded(_bridge.rack_options(fit_id))
+
+
+def variation_families_diagnostics(fit_id):
+    """Complete native menu enumeration using the production family policy."""
+    from android_bridge.variations import choices
+    from android_bridge.market_policy import MarketPolicy
+    from eos.saveddata.module import Module
+    import eos.db
+    _engine._check_thread()
+    fit, policy, rows = _bridge._fits[fit_id], MarketPolicy(), []
+    for row in json.loads(equipment_catalog())['items']:
+        category = row['category']
+        if category not in ('Module', 'Structure Module', 'Drone', 'Implant'):
+            continue
+        item = eos.db.getItem(row['id'])
+        if category in ('Module', 'Structure Module'):
+            try:
+                module = Module(item)
+            except ValueError:
+                continue
+            if module.slot not in (1, 2, 3, 4, 8):
+                continue
+            context = 'module'
+        elif category == 'Drone':
+            context = 'drone'
+        else:
+            if 'implantness' not in item.attributes:
+                continue
+            context = 'implant'
+        rows.append({'id': item.ID, 'context': context, 'choices': choices(_engine, fit, item, context, policy)})
+    return encoded(rows)
+
+
+def variation_addition_diagnostics(fit_id):
+    _engine._check_thread()
+    from eos.const import ImplantLocation
+    fit = _bridge._fits[fit_id]
+    return encoded({'drones': [{'index': i, 'id': drone.itemID, 'amount': drone.amount, 'active': drone.amountActive}
+                              for i, drone in enumerate(fit.drones)],
+        'implants': [{'index': i, 'id': implant.itemID, 'slot': implant.slot, 'active': implant.active}
+                     for i, implant in enumerate(fit.implants)], 'implant_location': ImplantLocation(fit.implantLocation).name})
+
+
+def charge_compatibility_diagnostics():
+    """Complete native compatibility enumeration through production policy."""
+    _engine._check_thread()
+    from android_bridge.charges import compatible
+    from eos.saveddata.module import Module
+    import eos.db
+    rows = []
+    for item in json.loads(equipment_catalog())['items']:
+        if item['category'] not in ('Module', 'Structure Module'):
+            continue
+        value = eos.db.getItem(item['id'])
+        try:
+            module = Module(value)
+        except ValueError:
+            continue  # Original ModuleInfo excludes non-fitting quantum cores.
+        if module.slot in (1, 2, 3, 4, 8):
+            rows.append({'id': item['id'], 'charge_ids': sorted(value.ID for value in compatible(module))})
+    return encoded(rows)
+
+
+def charge_module_diagnostics(fit_id):
+    """Raw EOS charge effects for the debug native comparison, not UI formulas."""
+    _engine._check_thread()
+    from eos.const import FittingModuleState
+    fit = _bridge._fits[fit_id]
+    if not fit.calculated:
+        fit.calculateModifiedAttributes()
+    units = {'maxRange': 'm', 'falloff': 'm', 'trackingSpeed': 'rad/s',
+        'speed': 'ms', 'damageMultiplier': 'multiplier', 'capacitorNeed': 'GJ',
+        'capacitorBonus': 'GJ', 'armorDamageAmount': 'HP', 'shieldBonus': 'HP',
+        'miningAmount': 'm3', 'scanResolutionBonus': '%', 'maxTargetRangeBonus': '%'}
+    return encoded([{'index': i, 'id': mod.itemID, 'state': FittingModuleState(mod.state).name,
+        'charge_id': mod.chargeID, 'attributes': {key: {'value': mod.getModifiedItemAttr(key, None), 'unit': unit}
+            for key, unit in units.items()}} for i, mod in enumerate(fit.modules) if not mod.isEmpty])
+
+
+def recent_items():
+    return encoded(_bridge.recent_items())
+
+
+def module_defaults_diagnostics():
+    """Real module construction policy for the debug native catalogue gate."""
+    _engine._check_thread()
+    from android_bridge import fitting
+    from eos.const import FittingModuleState, FittingSlot
+    catalogue = json.loads(equipment_catalog())
+    before = dict(_engine.resolved_item_ids)
+    rows = []
+    try:
+        for item in catalogue['items']:
+            if item['category'] not in ('Module', 'Structure Module'):
+                continue
+            try:
+                module = fitting.new_module(_engine, item['id'])
+            except ValueError:
+                continue
+            rows.append({'id': module.itemID, 'name': module.item.name, 'slot': FittingSlot(module.slot).name,
+                'state': FittingModuleState(module.state).name,
+                'limit': 'ONLINE' if fitting.ONLINE_EFFECTS.intersection(module.item.effects) else 'ACTIVE'})
+        return encoded(rows)
+    finally:
+        _engine.resolved_item_ids.clear()
+        _engine.resolved_item_ids.update(before)
+
+
+def equipment_catalog():
+    global _equipment
+    _engine._check_thread()
+    if _equipment is None:
+        from android_bridge.market import EquipmentMarket
+        _equipment = EquipmentMarket(_engine)
+    return encoded(_equipment.catalog())
+
+
+def implant_catalog():
+    from android_bridge.character_implants import catalog_response
+    from android_bridge.contract import _json
+    dataset = _manifest.get('database_logical_sha256') if type(_manifest) is dict else None
+    return _json(catalog_response(_engine, dataset))
+
+
+def equipment_search(text):
+    if _equipment is None:
+        equipment_catalog()
+    return encoded(_equipment.search(text))
+
+
+def offline_feature_state(fit_id=None):
+    if not hasattr(_bridge, 'feature_state'):
+        raise RuntimeError('Offline features require durable fit storage')
+    return encoded(_bridge.feature_state(str(fit_id) if fit_id else None))
+
+
+def offline_target_profiles(request_json):
+    if not hasattr(_bridge, 'target_dispatch'):
+        raise RuntimeError('Reopen the offline fitting session')
+    return _bridge.target_dispatch(request_json)
+
+
+def offline_damage_patterns(request_json):
+    if not hasattr(_bridge, 'damage_dispatch'):
+        raise RuntimeError('Reopen the offline fitting session')
+    return _bridge.damage_dispatch(request_json)
+
+
+def offline_implant_sets(request_json):
+    if not hasattr(_bridge, 'implant_sets_dispatch'):
+        raise RuntimeError('Reopen the offline fitting session')
+    return _bridge.implant_sets_dispatch(request_json)
+
+
+def offline_feature_dispatch(request_json):
+    if not hasattr(_bridge, 'feature_dispatch'):
+        raise RuntimeError('Offline features require durable fit storage')
+    return _bridge.feature_dispatch(request_json)
+
+
+def bridge_dispatch(request_json):
+    if _bridge is None:
+        raise RuntimeError("Start the Android bridge before sending requests")
+    return _bridge.dispatch(request_json)
+
+
+def bridge_diagnostics():
+    """Read-only instrumentation provenance on the same engine worker."""
+    if _bridge is None:
+        raise RuntimeError("Start the bridge before reading diagnostics")
+    _engine._check_thread()
+    import eos.config
+    return encoded({
+        "engine_thread": threading.current_thread().name,
+        "main_thread": threading.current_thread() is threading.main_thread(),
+        "session_id": _bridge.session_id,
+        "sample_id": _bridge.sample_id,
+        "persistence": _bridge.persistence_info,
+        "drones": {
+            fit_id: [{"name": drone.item.name, "amount": drone.amount,
+                      "active": drone.amountActive} for drone in fit.drones]
+            for fit_id, fit in _bridge._fits.items()
+        },
+        "retained_fit_count": len(_engine._fits),
+        "saveddata_connectionstring": eos.config.saveddata_connectionstring,
+        "desktop_import_attempts": list(_forbidden),
+        "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": dict(sorted(_engine.resolved_item_ids.items())),
+        "manifest": _manifest,
+    })
+
+
+def _sample_fit():
+    return _bridge.get_fit(_bridge.sample_id) if _bridge is not None else _fit
+
+
+def _refuse_drone_diagnostic_inputs(value):
+    if type(value) is dict:
+        if value.get("projected_drones") or value.get("projected_fighters"):
+            raise ValueError("Projected-drone evaluation budget: legacy diagnostic inputs are not admitted")
+        for child in value.values():
+            _refuse_drone_diagnostic_inputs(child)
+    elif type(value) is list:
+        for child in value:
+            _refuse_drone_diagnostic_inputs(child)
+
+
+def _require_ephemeral():
+    if _engine is not None and any(f.projectedDrones or f.projectedFighters for f in _engine._fits):
+        raise ValueError("Projected-drone evaluation budget: legacy diagnostics are not admitted for this graph")
+    if _store_path is not None:
+        raise RuntimeError("Legacy diagnostics require an ephemeral engine process")
+
+
+def snapshot():
+    fit = _sample_fit()
+    stats = _engine.snapshot(fit)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    return encoded({"stats": stats, "ammunition": fit.modules[0].charge.name})
+
+
+def set_ammunition(name):
+    _require_ephemeral()
+    if name not in (_case["modules"][0]["charge"], _case["edit"]["charge"]):
+        raise ValueError("The development sample supports Antimatter and Iron ammunition")
+    _engine.set_charges(_sample_fit(), _case["edit"]["module_indices"], name)
+    return snapshot()
+
+
+def resolved_items(specs, additional_items):
+    # The worker/session is shared across tests. Report this case's identities,
+    # not the cumulative items resolved by earlier unrelated operations.
+    names = set(additional_items)
+    for spec in specs:
+        names.add(spec["ship"])
+        for row in spec["modules"] + spec["drones"]:
+            names.add(row["name"])
+            if row.get("charge"):
+                names.add(row["charge"])
+    return {name: _engine.resolved_item_ids[name] for name in sorted(names)}
+
+
+def verify_projection(case_json):
+    """Exercise linked fits on the existing worker; return only observed values."""
+    _require_ephemeral()
+    from projection_probe import run
+    case = json.loads(case_json)
+    _refuse_drone_diagnostic_inputs(case)
+    start = time.monotonic()
+    actual = run(_engine, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items(
+            [case["source"], case["target"]],
+            [step["charge"] for step in case["steps"] if step["operation"] == "charges"]),
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["projection_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+        "projection_sequence_ms": (time.monotonic() - start) * 1000,
+    })
+    return encoded(actual)
+
+
+def verify_command(case_json):
+    """Exercise command sources on the same worker; no expected values here."""
+    _require_ephemeral()
+    from command_probe import run
+    case = json.loads(case_json)
+    _refuse_drone_diagnostic_inputs(case)
+    start = time.monotonic()
+    actual = run(_engine, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items(
+            [case["source"], case["target"]],
+            [step[key] for step in case["steps"] for key in ("charge", "skill", "implant") if key in step]),
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["command_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+        "command_sequence_ms": (time.monotonic() - start) * 1000,
+    })
+    return encoded(actual)
+
+
+def verify_resources(cases_json):
+    """Return actual EOS values only; invalid initial states stay ephemeral."""
+    _require_ephemeral()
+    from android_bridge.resource_probe import run
+    cases = json.loads(cases_json)
+    if type(cases) is not list:
+        raise ValueError('Resource cases must be a list')
+    if any(f.projectedDrones or f.projectedFighters for f in _engine._fits) or any(case.get('spec', {}).get('projected_drones') or case.get('spec', {}).get('projected_fighters') for case in cases):
+        raise ValueError('Projected-drone evaluation budget: resource diagnostics are not admitted for projected-drone inputs')
+    values = [run(_engine, case['spec'], case['fighters']) for case in cases]
+    if _forbidden:
+        raise RuntimeError('An unsupported desktop import was attempted')
+    return encoded({'resources': values, 'inputs': cases,
+        'eos_settings': _engine.settings,
+        'database_logical_sha256': _manifest['database_logical_sha256'],
+        'desktop_source_commit': _manifest['desktop_source_commit'],
+        'desktop_import_attempts': list(_forbidden)})
+
+
+def verify_ammunition():
+    """Return actual native values to the independent instrumentation comparator.
+
+    No expected numbers or desktop exporter is imported by the Android runtime.
+    Restore the existing sample so test order and activity recreation are safe.
+    """
+    start = time.monotonic()
+    initial_name = _case["modules"][0]["charge"]
+    try:
+        initial = json.loads(set_ammunition(initial_name))["stats"]
+        changed = json.loads(set_ammunition(_case["edit"]["charge"]))["stats"]
+    finally:
+        restored = json.loads(set_ammunition(initial_name))["stats"]
+    import eos.db
+    from sqlalchemy.exc import OperationalError
+    readonly = False
+    with eos.db.gamedata_engine.connect() as connection:
+        try:
+            connection.execute("UPDATE metadata SET field_value=field_value WHERE field_name='client_build'")
+        except OperationalError as error:
+            if "readonly" not in str(error).lower():
+                raise
+            readonly = True
+    if not readonly:
+        raise RuntimeError("EOS game database unexpectedly permits writes")
+    import greenlet._greenlet
+    from eos.db import migrations
+    return encoded({
+        "states": {"initial": initial, "iron_ammunition": changed, "restored": restored},
+        "inputs": _case, "dataset_metadata": _engine.metadata,
+        "eos_settings": _engine.settings,
+        "resolved_item_ids": resolved_items([_case], [_case["edit"]["charge"]]),
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest["desktop_fixture_sha256"],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "python": sys.version, "native_greenlet_module": greenlet._greenlet.__file__,
+        "dependencies": {name: importlib.metadata.version(name) for name in ("logbook", "sqlalchemy", "greenlet")},
+        "engine_thread": threading.current_thread().name, "readonly_database": readonly,
+        "migration_versions": sorted(migrations.updates),
+        "desktop_import_attempts": _forbidden, "boot_ms": _boot_ms,
+        "edit_sequence_ms": (time.monotonic() - start) * 1000,
+    })
+
+
+_benchmark = None
+
+
+def prepare_benchmark(kind, case_json):
+    """Prepare reusable fits outside measured edits; expose their provenance."""
+    global _benchmark
+    _require_ephemeral()
+    if _engine is None:
+        raise RuntimeError("Start the Android engine before preparing benchmarks")
+    if _benchmark is None:
+        from performance_probe import PerformanceProbe
+        _benchmark = PerformanceProbe(_engine, _sample_fit())
+    case = _case if kind == "ammunition" else json.loads(case_json)
+    _refuse_drone_diagnostic_inputs(case)
+    actual = _benchmark.prepare(kind, case)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    fixture_key = {"ammunition": "desktop_fixture_sha256", "projection": "projection_fixture_sha256",
+                   "command": "command_fixture_sha256"}[kind]
+    actual.update({
+        "inputs": case, "dataset_metadata": _engine.metadata, "eos_settings": _engine.settings,
+        "database_sha256": _manifest["database_sha256"],
+        "database_logical_sha256": _manifest["database_logical_sha256"],
+        "desktop_source_commit": _manifest["desktop_source_commit"],
+        "source_data_sha256": _manifest["source_data_sha256"],
+        "desktop_fixture_sha256": _manifest[fixture_key],
+        "engine_source_sha256": _manifest["engine_source_sha256"],
+        "desktop_import_attempts": list(_forbidden),
+    })
+    return encoded(actual)
+
+
+def step_benchmark(operation):
+    """Apply one edit to existing benchmark fits and serialize observed values."""
+    _require_ephemeral()
+    if _benchmark is None:
+        raise RuntimeError("Prepare a benchmark before editing")
+    actual = _benchmark.step(operation)
+    if _forbidden:
+        raise RuntimeError("An unsupported desktop import was attempted")
+    return encoded(actual)
+
+
+def offline_import_preview(request_json):
+    if not hasattr(type(_bridge), 'import_preview'):
+        raise RuntimeError('Offline imports require a durable graph session')
+    return _bridge.import_preview(request_json)
+
+
+def offline_import_execute(request_json):
+    if not hasattr(type(_bridge), 'import_execute'):
+        raise RuntimeError('Offline imports require a durable graph session')
+    return _bridge.import_execute(request_json)
+
+
+def offline_capacitor_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'capacitor_samples'):
+        raise RuntimeError('Offline capacitor graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.capacitor_samples(request_json,cancelled)
+
+
+def offline_export_preview(request_json):
+    if not hasattr(_bridge, 'export_preview'):
+        raise RuntimeError('Offline export requires durable fit storage')
+    return _bridge.export_preview(request_json)
+
+
+def offline_locktime_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'locktime_samples'):
+        raise RuntimeError('Offline lock-time graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.locktime_samples(request_json,cancelled)
+
+
+def offline_mobility_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'mobility_samples'):
+        raise RuntimeError('Offline mobility graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.mobility_samples(request_json,cancelled)
+
+
+def offline_remote_repair_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'remote_repair_samples'):
+        raise RuntimeError('Offline remote repair graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.remote_repair_samples(request_json,cancelled)
+
+
+def offline_ewar_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'ewar_samples'):
+        raise RuntimeError('Offline EWAR graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.ewar_samples(request_json,cancelled)
+
+
+def offline_shield_regeneration_samples(request_json, cancel_token=None):
+    if not hasattr(type(_bridge), 'shield_regeneration_samples'):
+        raise RuntimeError('Offline shield regeneration graph requires a durable graph session')
+    cancelled=(lambda: bool(cancel_token.get())) if cancel_token is not None else (lambda: False)
+    return _bridge.shield_regeneration_samples(request_json,cancelled)
+
+
+def system_security_details(fit_id):
+    return encoded(_bridge.system_security_details(fit_id))
+
+
+def module_rah_details(fit_id, offset=0, limit=25):
+    return encoded(_bridge.module_rah_details(fit_id, offset=offset, limit=limit))
+
+
+def offline_pilot_security_details(fit_id):
+    return encoded(_bridge.pilot_security_details(fit_id))
+
+
+def module_spool_details(fit_id):
+    return encoded(_bridge.module_spool_details(fit_id))
+
+
+def implant_details(fit_id):
+    return encoded(_bridge.implant_details(fit_id))
+
+
+def implant_add_options(fit_id, item_id):
+    return encoded(_bridge.implant_add_options(fit_id, item_id))
+
+
+
+def booster_details(fit_id):
+    return encoded(_bridge.booster_details(fit_id))
+
+
+def booster_add_options(fit_id, item_id):
+    return encoded(_bridge.booster_add_options(fit_id, item_id))
+
+
+def fighter_similar_selection(fit_id, position):
+    return encoded(_bridge.fighter_similar_selection(fit_id, position))
+
+
+def fighter_details(fit_id):
+    return encoded(_bridge.fighter_details(fit_id))
+
+
+def projected_module_details(fit_id):
+    return encoded(_bridge.projected_module_details(fit_id))
+
+
+def projected_module_options(fit_id, position):
+    return encoded(_bridge.projected_module_options(fit_id, position))
+
+
+def projected_module_charge_preview(fit_id, request_json):
+    return encoded(_bridge.projected_module_charge_preview(fit_id, json.loads(request_json)))
+
+
+def projected_module_add_options(fit_id, item_id):
+    return encoded(_bridge.projected_module_add_options(fit_id, item_id))
+
+
+def projected_drone_details(fit_id):
+    return encoded(_bridge.projected_drone_details(fit_id))
+
+
+def projected_drone_options(fit_id, position):
+    return encoded(_bridge.projected_drone_options(fit_id, position))
+
+
+def projected_drone_add_options(fit_id, item_id):
+    return encoded(_bridge.projected_drone_add_options(fit_id, item_id))
+
+
+def projected_fighter_similar_selection(fit_id, position):
+    return encoded(_bridge.projected_fighter_similar_selection(fit_id, position))
+
+
+def projected_fighter_details(fit_id):
+    return encoded(_bridge.projected_fighter_details(fit_id))
+
+
+def projected_fighter_options(fit_id, position):
+    return encoded(_bridge.projected_fighter_options(fit_id, position))
+
+
+def projected_fighter_add_options(fit_id, item_id):
+    return encoded(_bridge.projected_fighter_add_options(fit_id, item_id))

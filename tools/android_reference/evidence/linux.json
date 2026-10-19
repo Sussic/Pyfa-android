@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "committed_fixture_match": true,
+    "fresh_process_repeat": true,
+    "reversible_ammo_edit": true
+  },
+  "database_bytes": 99897344,
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "database_sha256": "9d96d6b7a34550204c8b5627946cdcdc3eed9b9e77e9ca379038c7a09a6d5dea",
+  "dependencies": {
+    "cffi": "1.16.0",
+    "cryptography": "42.0.4",
+    "greenlet": "3.0.3",
+    "logbook": "1.7.0.post0",
+    "numpy": "1.26.2",
+    "pillow": "10.4.0",
+    "pycparser": "2.22",
+    "pyyaml": "6.0.1",
+    "six": "1.16.0",
+    "sqlalchemy": "1.4.50",
+    "typing-extensions": "4.12.2",
+    "wxPython": "4.2.1"
+  },
+  "exporter_sha256": "85f7d2d77e036a2b7e5bb8dafba96fa5adabb9faf1f8aa6e55a471ce57fc7262",
+  "fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "python": "3.11.16",
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+  "sqlite": "3.53.1"
+}

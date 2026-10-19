@@ -1,0 +1,132 @@
+{
+  "android_runtime_tested": false,
+  "desktop_projection": {
+    "checks": {
+      "committed_fixture_match": true,
+      "complete_restoration": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "range_and_script_changes": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "cffi": "1.16.0",
+      "cryptography": "42.0.4",
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "numpy": "1.26.2",
+      "pillow": "10.4.0",
+      "pycparser": "2.22",
+      "pyyaml": "6.0.1",
+      "six": "1.16.0",
+      "sqlalchemy": "1.4.50",
+      "typing-extensions": "4.12.2",
+      "wxPython": "4.2.1"
+    },
+    "exporter_sha256": "3b8d754d90a61a6e827993cf1d6e0721abe9ce8d79b629f1d6183cf4dc9b7cf7",
+    "fits_per_state": 2,
+    "fixture_sha256": "01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "sqlite": "3.53.1",
+    "states": 11,
+    "stats_per_fit": 39
+  },
+  "headless_ammunition": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "220ce250398f1d2c46f3e80c763dfc9b450151c7",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 10,
+    "checks": {
+      "A01_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 1,
+    "network_attempts": [],
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "reference_fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "ammunition",
+    "scenario_sha256": "69db67a4eb5d7209559ce5e8a1b480e682de5c1fa6741c32deb9221bccd3981d",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "832aee418c59bb3a5016ff9d18f33a6a408aa65feed54a5bbc35b633ec42d56a",
+    "sqlite": "3.53.1",
+    "states": 3,
+    "stats_per_fit": 38,
+    "tracked_worktree_dirty": true
+  },
+  "headless_projection": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "220ce250398f1d2c46f3e80c763dfc9b450151c7",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 8,
+    "checks": {
+      "A04_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "50e27f1b460a0cf18191348c95cc69f1bb679c9db4ff6abcb02ea7d82ff891ac",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 2,
+    "network_attempts": [],
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.11.16",
+    "reference_fixture_sha256": "01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "projection",
+    "scenario_sha256": "9b733f6b783395b8b4bb20f8587b4e66e63dc77abfc7d26a51d5d5b1f9237ce0",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "832aee418c59bb3a5016ff9d18f33a6a408aa65feed54a5bbc35b633ec42d56a",
+    "sqlite": "3.53.1",
+    "states": 11,
+    "stats_per_fit": 39,
+    "tracked_worktree_dirty": true
+  },
+  "regressions": {
+    "desktop_migration": {
+      "backup_preserved": true,
+      "repeat_noop": true,
+      "result": "PASS",
+      "schema": "48-to-49"
+    },
+    "independent_A01_rebuild": true,
+    "reference_utility_tests_passed": 8
+  }
+}

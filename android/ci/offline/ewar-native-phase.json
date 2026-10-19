@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "phase": "ewar_graph",
+  "instrumentation_arguments": {
+    "offline_features_phase": "ewar_graph",
+    "class": "io.github.sussic.pyfa.OfflineEwarContractTest,io.github.sussic.pyfa.OfflineEwarModelTest,io.github.sussic.pyfa.OfflineEwarUiTest"
+  },
+  "expected_methods": {
+    "OfflineEwarContractTest": 15,
+    "OfflineEwarModelTest": 12,
+    "OfflineEwarUiTest": 3
+  },
+  "requirements": [
+    "Explicitly authorized disposable emulator and durable test data, never personal phone data",
+    "Airplane mode on and INTERNET permission absent",
+    "Install matching app and instrumentation APKs from the same verified revision",
+    "Run all 30 methods with zero skips and preserve complete instrumentation results"
+  ],
+  "qualification": "An explicit phase schedule only, not a launcher change, execution receipt, numerical oracle, or device qualification. Existing launchers are not claimed to schedule this phase."
+}

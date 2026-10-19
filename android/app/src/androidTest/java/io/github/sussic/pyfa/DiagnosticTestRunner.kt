@@ -1,0 +1,23 @@
+package io.github.sussic.pyfa
+
+import android.os.Bundle
+import androidx.test.runner.AndroidJUnitRunner
+
+/** Legacy direct-engine probes never open or alter the user's persisted graph. */
+class DiagnosticTestRunner : AndroidJUnitRunner() {
+    override fun onCreate(arguments: Bundle) {
+        if (!arguments.containsKey("b02_phase") && !arguments.containsKey("b03_phase") &&
+            !arguments.containsKey("b032_phase") && !arguments.containsKey("b041_phase") &&
+            !arguments.containsKey("b0421_phase") && !arguments.containsKey("b0422_phase") &&
+            !arguments.containsKey("b04231_phase") && !arguments.containsKey("b04232_phase") &&
+            !arguments.containsKey("b04233_phase") && !arguments.containsKey("b051_phase") &&
+            !arguments.containsKey("b052_phase") && !arguments.containsKey("b053_phase") &&
+            !arguments.containsKey("b054_phase") && !arguments.containsKey("b061_phase") &&
+            !arguments.containsKey("b062_phase") && !arguments.containsKey("b063_phase") &&
+            !arguments.containsKey("b071_phase") && !arguments.containsKey("b072_phase") &&
+            !arguments.containsKey("b073_phase") && !arguments.containsKey("b08_phase") && !arguments.containsKey("b091_phase") &&
+            !arguments.containsKey("b092_phase") && !arguments.containsKey("c011_phase") && !arguments.containsKey("c012_phase") && !arguments.containsKey("c013_phase") && !arguments.containsKey("c0132_phase") && !arguments.containsKey("c02_phase") && !arguments.containsKey("c031_phase") && !arguments.containsKey("c032_phase") && !arguments.containsKey("c032_identity_phase") && !arguments.containsKey("c04_phase") && !arguments.containsKey("offline_features_phase"))
+            EngineRuntime.useEphemeralStorageForDiagnostics()
+        super.onCreate(arguments)
+    }
+}

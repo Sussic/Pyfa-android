@@ -1,0 +1,41 @@
+[
+  {"name":"High rack distance and vacancies","ship":"Vexor","modules":[
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Antimatter Charge M"},
+    {"name":"200mm Railgun II","state":"ACTIVE","charge":"Iron Charge M"},
+    {"name":"Dual 150mm Railgun II","state":"OVERHEATED","charge":"Spike M"}
+  ],"operations":[["HIGH",0,1],["HIGH",1,3],["HIGH",0,2],["HIGH",3,1],["HIGH",2,0],["HIGH",1,0],["HIGH",0,0]]},
+  {"name":"Low rack heated repairers","ship":"Brutix","modules":[
+    {"name":"Medium Armor Repairer II","state":"OVERHEATED"},
+    {"name":"Damage Control II","state":"ONLINE"},
+    {"name":"Medium Armor Repairer II","state":"OVERHEATED"}
+  ],"operations":[["LOW",1,2],["LOW",0,5],["LOW",5,0],["LOW",2,1]]},
+  {"name":"Medium rack heat and offline script","ship":"Caracal","modules":[
+    {"name":"Large Shield Booster II","state":"OVERHEATED"},
+    {"name":"Sensor Booster II","state":"OFFLINE","charge":"Scan Resolution Script"},
+    {"name":"Stasis Webifier II","state":"OVERHEATED"}
+  ],"operations":[["MED",0,1],["MED",2,4],["MED",0,3],["MED",3,0],["MED",4,2],["MED",1,0]]},
+  {"name":"Laser crystals and online state","ship":"Punisher","modules":[
+    {"name":"Gatling Pulse Laser II","state":"OVERHEATED","charge":"Scorch S"},
+    {"name":"Dual Light Pulse Laser II","state":"ONLINE","charge":"Multifrequency S"}
+  ],"operations":[["HIGH",0,1],["HIGH",1,3],["HIGH",3,1],["HIGH",1,0]]},
+  {"name":"Rig positions","ship":"Rifter","modules":[
+    {"name":"Small Ancillary Current Router I","state":"ONLINE"},
+    {"name":"Small Trimark Armor Pump I","state":"ONLINE"}
+  ],"operations":[["RIG",0,1],["RIG",1,2],["RIG",2,1],["RIG",1,0]]},
+  {"name":"Structure service vacancies","ship":"Astrahus","modules":[
+    {"name":"Standup Research Lab I","state":"ONLINE"},
+    {"name":"Standup Manufacturing Plant I","state":"OFFLINE"},
+    {"name":"Standup Multirole Missile Launcher I","state":"ACTIVE","charge":"Standup Heavy Missile"}
+  ],"operations":[["SERVICE",0,1],["SERVICE",1,2],["HIGH",0,2],["HIGH",2,0],["SERVICE",2,1],["SERVICE",1,0]]},
+  {"name":"Projected rack recipients","ship":"Celestis","modules":[
+    {"name":"Remote Sensor Dampener II","state":"OVERHEATED","charge":"Scan Resolution Dampening Script"},
+    {"name":"Remote Sensor Dampener II","state":"ACTIVE","charge":"Targeting Range Dampening Script"}
+  ],"recipients":[{"name":"Ordering projection one","ship":"Vexor"},{"name":"Ordering projection two","ship":"Caracal"}],
+  "operations":[["MED",0,1],["MED",1,4],["MED",4,1],["MED",1,0]]},
+  {"name":"Command rack recipients","ship":"Drake","modules":[
+    {"name":"Shield Command Burst I","state":"ACTIVE","charge":"Shield Harmonizing Charge"},
+    {"name":"Prototype Cloaking Device I","state":"ONLINE"}
+  ],"link":"command","recipients":[{"name":"Ordering command one","ship":"Vexor"},{"name":"Ordering command two","ship":"Caracal"}],
+  "operations":[["HIGH",0,1],["HIGH",1,5],["HIGH",5,1],["HIGH",1,0]]},
+  {"name":"Empty rack view","ship":"Rifter","modules":[],"operations":[]}
+]

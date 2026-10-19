@@ -1,0 +1,140 @@
+{
+  "desktop_projection": {
+    "checks": {
+      "committed_fixture_match": true,
+      "complete_restoration": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "range_and_script_changes": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "5277b4867f313beb0dc9c967c77e983299a3861cece101f166f99b0f867cb5d2",
+    "dependencies": {
+      "cffi": "1.16.0",
+      "cryptography": "42.0.4",
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "numpy": "1.26.2",
+      "pillow": "10.4.0",
+      "pycparser": "2.22",
+      "pyyaml": "6.0.1",
+      "six": "1.16.0",
+      "sqlalchemy": "1.4.50",
+      "typing-extensions": "4.12.2",
+      "wxPython": "4.2.1"
+    },
+    "exporter_sha256": "3b8d754d90a61a6e827993cf1d6e0721abe9ce8d79b629f1d6183cf4dc9b7cf7",
+    "fits_per_state": 2,
+    "fixture_sha256": "991d7189ab3b834bf87ef910e633b0311abc59d17c4ff27e8213e215d61d8460",
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python": "3.11.9",
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "sqlite": "3.45.1",
+    "states": 11,
+    "stats_per_fit": 39
+  },
+  "headless_projection": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "c7293b8983c88fadaa0a8430f2787128998cf1a1",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 8,
+    "checks": {
+      "A04_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "5277b4867f313beb0dc9c967c77e983299a3861cece101f166f99b0f867cb5d2",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 2,
+    "network_attempts": [],
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python": "3.11.9",
+    "reference_fixture_sha256": "01487d69559f274844e9734f880703a7babd32b8367ab0601e13bfa17cce6f05",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "projection",
+    "scenario_sha256": "9b733f6b783395b8b4bb20f8587b4e66e63dc77abfc7d26a51d5d5b1f9237ce0",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "832aee418c59bb3a5016ff9d18f33a6a408aa65feed54a5bbc35b633ec42d56a",
+    "sqlite": "3.45.1",
+    "states": 11,
+    "stats_per_fit": 39,
+    "tracked_worktree_dirty": false
+  },
+  "headless_ammunition": {
+    "absent_desktop_packages": [
+      "wxPython",
+      "numpy",
+      "cryptography",
+      "pyyaml",
+      "pillow"
+    ],
+    "adapter_commit": "c7293b8983c88fadaa0a8430f2787128998cf1a1",
+    "android_runtime_tested": false,
+    "behavioral_tests_passed": 10,
+    "checks": {
+      "A01_comparison": true,
+      "fresh_process_repeat": true,
+      "game_database_unchanged": true,
+      "no_desktop_imports": true,
+      "no_network_operations": true
+    },
+    "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+    "database_sha256": "5277b4867f313beb0dc9c967c77e983299a3861cece101f166f99b0f867cb5d2",
+    "dependencies": {
+      "greenlet": "3.0.3",
+      "logbook": "1.7.0.post0",
+      "sqlalchemy": "1.4.50"
+    },
+    "desktop_import_attempts": [],
+    "engine_modules_loaded": 135,
+    "fits_per_state": 1,
+    "network_attempts": [],
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python": "3.11.9",
+    "reference_fixture_sha256": "6fb3c16b519d0ea4c663b1417fe4d085cbb06b25ff6be4595cfcb94e13b5e0ba",
+    "reference_source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+    "scenario": "ammunition",
+    "scenario_sha256": "69db67a4eb5d7209559ce5e8a1b480e682de5c1fa6741c32deb9221bccd3981d",
+    "source_data_sha256": "a32a03621fac8c57d27d4464b8646bc02edaae21935bf28a52f05ee2ddff056c",
+    "source_manifest_sha256": "832aee418c59bb3a5016ff9d18f33a6a408aa65feed54a5bbc35b633ec42d56a",
+    "sqlite": "3.45.1",
+    "states": 3,
+    "stats_per_fit": 38,
+    "tracked_worktree_dirty": false
+  },
+  "regressions": {
+    "independent_A01_rebuild": true,
+    "reference_utility_tests_passed": 8,
+    "desktop_migration": {
+      "result": "PASS",
+      "schema": "48-to-49",
+      "backup_preserved": true,
+      "repeat_noop": true
+    }
+  },
+  "android_runtime_tested": false,
+  "ci": {
+    "run_id": 34759292301,
+    "job_id": 103729108511,
+    "run_url": "https://github.com/Sussic/Pyfa-android/actions/runs/34759292301",
+    "head_commit": "ef0950fc78168ea9fe77a4792bf741e0c377c353",
+    "delivered_merge": "4ab6b75fa29e4eccfb395369417c7f23c0ee8f22",
+    "conclusion": "success"
+  }
+}

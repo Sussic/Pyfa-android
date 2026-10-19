@@ -1,0 +1,2613 @@
+{
+  "schema": 1,
+  "sourceCommit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "databaseLogicalSha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "units": [
+    {
+      "unit": {
+        "id": 1,
+        "name": "Length",
+        "display": "m"
+      },
+      "value": 0,
+      "expected": "0 m"
+    },
+    {
+      "unit": {
+        "id": 1,
+        "name": "Length",
+        "display": "m"
+      },
+      "value": 1,
+      "expected": "1 m"
+    },
+    {
+      "unit": {
+        "id": 1,
+        "name": "Length",
+        "display": "m"
+      },
+      "value": 1.25,
+      "expected": "1.25 m"
+    },
+    {
+      "unit": {
+        "id": 1,
+        "name": "Length",
+        "display": "m"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m"
+    },
+    {
+      "unit": {
+        "id": 1,
+        "name": "Length",
+        "display": "m"
+      },
+      "value": 123456.789,
+      "expected": "123457 m"
+    },
+    {
+      "unit": {
+        "id": 2,
+        "name": "Mass",
+        "display": "kg"
+      },
+      "value": 0,
+      "expected": "0 kg"
+    },
+    {
+      "unit": {
+        "id": 2,
+        "name": "Mass",
+        "display": "kg"
+      },
+      "value": 1,
+      "expected": "1 kg"
+    },
+    {
+      "unit": {
+        "id": 2,
+        "name": "Mass",
+        "display": "kg"
+      },
+      "value": 1.25,
+      "expected": "1.25 kg"
+    },
+    {
+      "unit": {
+        "id": 2,
+        "name": "Mass",
+        "display": "kg"
+      },
+      "value": -1.25,
+      "expected": "-1.25 kg"
+    },
+    {
+      "unit": {
+        "id": 2,
+        "name": "Mass",
+        "display": "kg"
+      },
+      "value": 123456.789,
+      "expected": "123457 kg"
+    },
+    {
+      "unit": {
+        "id": 3,
+        "name": "Time",
+        "display": "sec"
+      },
+      "value": 0,
+      "expected": "0 sec"
+    },
+    {
+      "unit": {
+        "id": 3,
+        "name": "Time",
+        "display": "sec"
+      },
+      "value": 1,
+      "expected": "1 sec"
+    },
+    {
+      "unit": {
+        "id": 3,
+        "name": "Time",
+        "display": "sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 sec"
+    },
+    {
+      "unit": {
+        "id": 3,
+        "name": "Time",
+        "display": "sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 sec"
+    },
+    {
+      "unit": {
+        "id": 3,
+        "name": "Time",
+        "display": "sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 sec"
+    },
+    {
+      "unit": {
+        "id": 4,
+        "name": "Electric Current",
+        "display": "A"
+      },
+      "value": 0,
+      "expected": "0 A"
+    },
+    {
+      "unit": {
+        "id": 4,
+        "name": "Electric Current",
+        "display": "A"
+      },
+      "value": 1,
+      "expected": "1 A"
+    },
+    {
+      "unit": {
+        "id": 4,
+        "name": "Electric Current",
+        "display": "A"
+      },
+      "value": 1.25,
+      "expected": "1.25 A"
+    },
+    {
+      "unit": {
+        "id": 4,
+        "name": "Electric Current",
+        "display": "A"
+      },
+      "value": -1.25,
+      "expected": "-1.25 A"
+    },
+    {
+      "unit": {
+        "id": 4,
+        "name": "Electric Current",
+        "display": "A"
+      },
+      "value": 123456.789,
+      "expected": "123457 A"
+    },
+    {
+      "unit": {
+        "id": 5,
+        "name": "Temperature",
+        "display": "K"
+      },
+      "value": 0,
+      "expected": "0 K"
+    },
+    {
+      "unit": {
+        "id": 5,
+        "name": "Temperature",
+        "display": "K"
+      },
+      "value": 1,
+      "expected": "1 K"
+    },
+    {
+      "unit": {
+        "id": 5,
+        "name": "Temperature",
+        "display": "K"
+      },
+      "value": 1.25,
+      "expected": "1.25 K"
+    },
+    {
+      "unit": {
+        "id": 5,
+        "name": "Temperature",
+        "display": "K"
+      },
+      "value": -1.25,
+      "expected": "-1.25 K"
+    },
+    {
+      "unit": {
+        "id": 5,
+        "name": "Temperature",
+        "display": "K"
+      },
+      "value": 123456.789,
+      "expected": "123457 K"
+    },
+    {
+      "unit": {
+        "id": 6,
+        "name": "Amount Of Substance",
+        "display": "mol"
+      },
+      "value": 0,
+      "expected": "0 mol"
+    },
+    {
+      "unit": {
+        "id": 6,
+        "name": "Amount Of Substance",
+        "display": "mol"
+      },
+      "value": 1,
+      "expected": "1 mol"
+    },
+    {
+      "unit": {
+        "id": 6,
+        "name": "Amount Of Substance",
+        "display": "mol"
+      },
+      "value": 1.25,
+      "expected": "1.25 mol"
+    },
+    {
+      "unit": {
+        "id": 6,
+        "name": "Amount Of Substance",
+        "display": "mol"
+      },
+      "value": -1.25,
+      "expected": "-1.25 mol"
+    },
+    {
+      "unit": {
+        "id": 6,
+        "name": "Amount Of Substance",
+        "display": "mol"
+      },
+      "value": 123456.789,
+      "expected": "123457 mol"
+    },
+    {
+      "unit": {
+        "id": 7,
+        "name": "Luminous Intensity",
+        "display": "cd"
+      },
+      "value": 0,
+      "expected": "0 cd"
+    },
+    {
+      "unit": {
+        "id": 7,
+        "name": "Luminous Intensity",
+        "display": "cd"
+      },
+      "value": 1,
+      "expected": "1 cd"
+    },
+    {
+      "unit": {
+        "id": 7,
+        "name": "Luminous Intensity",
+        "display": "cd"
+      },
+      "value": 1.25,
+      "expected": "1.25 cd"
+    },
+    {
+      "unit": {
+        "id": 7,
+        "name": "Luminous Intensity",
+        "display": "cd"
+      },
+      "value": -1.25,
+      "expected": "-1.25 cd"
+    },
+    {
+      "unit": {
+        "id": 7,
+        "name": "Luminous Intensity",
+        "display": "cd"
+      },
+      "value": 123456.789,
+      "expected": "123457 cd"
+    },
+    {
+      "unit": {
+        "id": 8,
+        "name": "Area",
+        "display": "m2"
+      },
+      "value": 0,
+      "expected": "0 m2"
+    },
+    {
+      "unit": {
+        "id": 8,
+        "name": "Area",
+        "display": "m2"
+      },
+      "value": 1,
+      "expected": "1 m2"
+    },
+    {
+      "unit": {
+        "id": 8,
+        "name": "Area",
+        "display": "m2"
+      },
+      "value": 1.25,
+      "expected": "1.25 m2"
+    },
+    {
+      "unit": {
+        "id": 8,
+        "name": "Area",
+        "display": "m2"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m2"
+    },
+    {
+      "unit": {
+        "id": 8,
+        "name": "Area",
+        "display": "m2"
+      },
+      "value": 123456.789,
+      "expected": "123457 m2"
+    },
+    {
+      "unit": {
+        "id": 9,
+        "name": "Volume",
+        "display": "m3"
+      },
+      "value": 0,
+      "expected": "0 m³"
+    },
+    {
+      "unit": {
+        "id": 9,
+        "name": "Volume",
+        "display": "m3"
+      },
+      "value": 1,
+      "expected": "1 m³"
+    },
+    {
+      "unit": {
+        "id": 9,
+        "name": "Volume",
+        "display": "m3"
+      },
+      "value": 1.25,
+      "expected": "1.25 m³"
+    },
+    {
+      "unit": {
+        "id": 9,
+        "name": "Volume",
+        "display": "m3"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m³"
+    },
+    {
+      "unit": {
+        "id": 9,
+        "name": "Volume",
+        "display": "m3"
+      },
+      "value": 123456.789,
+      "expected": "123457 m³"
+    },
+    {
+      "unit": {
+        "id": 10,
+        "name": "Speed",
+        "display": "m/sec"
+      },
+      "value": 0,
+      "expected": "0 m/sec"
+    },
+    {
+      "unit": {
+        "id": 10,
+        "name": "Speed",
+        "display": "m/sec"
+      },
+      "value": 1,
+      "expected": "1 m/sec"
+    },
+    {
+      "unit": {
+        "id": 10,
+        "name": "Speed",
+        "display": "m/sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 m/sec"
+    },
+    {
+      "unit": {
+        "id": 10,
+        "name": "Speed",
+        "display": "m/sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m/sec"
+    },
+    {
+      "unit": {
+        "id": 10,
+        "name": "Speed",
+        "display": "m/sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 m/sec"
+    },
+    {
+      "unit": {
+        "id": 11,
+        "name": "Acceleration",
+        "display": "m/sec"
+      },
+      "value": 0,
+      "expected": "0 m/sec"
+    },
+    {
+      "unit": {
+        "id": 11,
+        "name": "Acceleration",
+        "display": "m/sec"
+      },
+      "value": 1,
+      "expected": "1 m/sec"
+    },
+    {
+      "unit": {
+        "id": 11,
+        "name": "Acceleration",
+        "display": "m/sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 m/sec"
+    },
+    {
+      "unit": {
+        "id": 11,
+        "name": "Acceleration",
+        "display": "m/sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m/sec"
+    },
+    {
+      "unit": {
+        "id": 11,
+        "name": "Acceleration",
+        "display": "m/sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 m/sec"
+    },
+    {
+      "unit": {
+        "id": 12,
+        "name": "Wave Number",
+        "display": "m-1"
+      },
+      "value": 0,
+      "expected": "0 m-1"
+    },
+    {
+      "unit": {
+        "id": 12,
+        "name": "Wave Number",
+        "display": "m-1"
+      },
+      "value": 1,
+      "expected": "1 m-1"
+    },
+    {
+      "unit": {
+        "id": 12,
+        "name": "Wave Number",
+        "display": "m-1"
+      },
+      "value": 1.25,
+      "expected": "1.25 m-1"
+    },
+    {
+      "unit": {
+        "id": 12,
+        "name": "Wave Number",
+        "display": "m-1"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m-1"
+    },
+    {
+      "unit": {
+        "id": 12,
+        "name": "Wave Number",
+        "display": "m-1"
+      },
+      "value": 123456.789,
+      "expected": "123457 m-1"
+    },
+    {
+      "unit": {
+        "id": 13,
+        "name": "Mass Density",
+        "display": "kg/m3"
+      },
+      "value": 0,
+      "expected": "0 kg/m3"
+    },
+    {
+      "unit": {
+        "id": 13,
+        "name": "Mass Density",
+        "display": "kg/m3"
+      },
+      "value": 1,
+      "expected": "1 kg/m3"
+    },
+    {
+      "unit": {
+        "id": 13,
+        "name": "Mass Density",
+        "display": "kg/m3"
+      },
+      "value": 1.25,
+      "expected": "1.25 kg/m3"
+    },
+    {
+      "unit": {
+        "id": 13,
+        "name": "Mass Density",
+        "display": "kg/m3"
+      },
+      "value": -1.25,
+      "expected": "-1.25 kg/m3"
+    },
+    {
+      "unit": {
+        "id": 13,
+        "name": "Mass Density",
+        "display": "kg/m3"
+      },
+      "value": 123456.789,
+      "expected": "123457 kg/m3"
+    },
+    {
+      "unit": {
+        "id": 14,
+        "name": "Specific Volume",
+        "display": "m3/kg"
+      },
+      "value": 0,
+      "expected": "0 m3/kg"
+    },
+    {
+      "unit": {
+        "id": 14,
+        "name": "Specific Volume",
+        "display": "m3/kg"
+      },
+      "value": 1,
+      "expected": "1 m3/kg"
+    },
+    {
+      "unit": {
+        "id": 14,
+        "name": "Specific Volume",
+        "display": "m3/kg"
+      },
+      "value": 1.25,
+      "expected": "1.25 m3/kg"
+    },
+    {
+      "unit": {
+        "id": 14,
+        "name": "Specific Volume",
+        "display": "m3/kg"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m3/kg"
+    },
+    {
+      "unit": {
+        "id": 14,
+        "name": "Specific Volume",
+        "display": "m3/kg"
+      },
+      "value": 123456.789,
+      "expected": "123457 m3/kg"
+    },
+    {
+      "unit": {
+        "id": 15,
+        "name": "Current Density",
+        "display": "A/m2"
+      },
+      "value": 0,
+      "expected": "0 A/m2"
+    },
+    {
+      "unit": {
+        "id": 15,
+        "name": "Current Density",
+        "display": "A/m2"
+      },
+      "value": 1,
+      "expected": "1 A/m2"
+    },
+    {
+      "unit": {
+        "id": 15,
+        "name": "Current Density",
+        "display": "A/m2"
+      },
+      "value": 1.25,
+      "expected": "1.25 A/m2"
+    },
+    {
+      "unit": {
+        "id": 15,
+        "name": "Current Density",
+        "display": "A/m2"
+      },
+      "value": -1.25,
+      "expected": "-1.25 A/m2"
+    },
+    {
+      "unit": {
+        "id": 15,
+        "name": "Current Density",
+        "display": "A/m2"
+      },
+      "value": 123456.789,
+      "expected": "123457 A/m2"
+    },
+    {
+      "unit": {
+        "id": 16,
+        "name": "Magnetic Field Strength",
+        "display": "A/m"
+      },
+      "value": 0,
+      "expected": "0 A/m"
+    },
+    {
+      "unit": {
+        "id": 16,
+        "name": "Magnetic Field Strength",
+        "display": "A/m"
+      },
+      "value": 1,
+      "expected": "1 A/m"
+    },
+    {
+      "unit": {
+        "id": 16,
+        "name": "Magnetic Field Strength",
+        "display": "A/m"
+      },
+      "value": 1.25,
+      "expected": "1.25 A/m"
+    },
+    {
+      "unit": {
+        "id": 16,
+        "name": "Magnetic Field Strength",
+        "display": "A/m"
+      },
+      "value": -1.25,
+      "expected": "-1.25 A/m"
+    },
+    {
+      "unit": {
+        "id": 16,
+        "name": "Magnetic Field Strength",
+        "display": "A/m"
+      },
+      "value": 123456.789,
+      "expected": "123457 A/m"
+    },
+    {
+      "unit": {
+        "id": 17,
+        "name": "Amount-Of-Substance Concentration",
+        "display": "mol/m3"
+      },
+      "value": 0,
+      "expected": "0 mol/m3"
+    },
+    {
+      "unit": {
+        "id": 17,
+        "name": "Amount-Of-Substance Concentration",
+        "display": "mol/m3"
+      },
+      "value": 1,
+      "expected": "1 mol/m3"
+    },
+    {
+      "unit": {
+        "id": 17,
+        "name": "Amount-Of-Substance Concentration",
+        "display": "mol/m3"
+      },
+      "value": 1.25,
+      "expected": "1.25 mol/m3"
+    },
+    {
+      "unit": {
+        "id": 17,
+        "name": "Amount-Of-Substance Concentration",
+        "display": "mol/m3"
+      },
+      "value": -1.25,
+      "expected": "-1.25 mol/m3"
+    },
+    {
+      "unit": {
+        "id": 17,
+        "name": "Amount-Of-Substance Concentration",
+        "display": "mol/m3"
+      },
+      "value": 123456.789,
+      "expected": "123457 mol/m3"
+    },
+    {
+      "unit": {
+        "id": 18,
+        "name": "Luminance",
+        "display": "cd/m2"
+      },
+      "value": 0,
+      "expected": "0 cd/m2"
+    },
+    {
+      "unit": {
+        "id": 18,
+        "name": "Luminance",
+        "display": "cd/m2"
+      },
+      "value": 1,
+      "expected": "1 cd/m2"
+    },
+    {
+      "unit": {
+        "id": 18,
+        "name": "Luminance",
+        "display": "cd/m2"
+      },
+      "value": 1.25,
+      "expected": "1.25 cd/m2"
+    },
+    {
+      "unit": {
+        "id": 18,
+        "name": "Luminance",
+        "display": "cd/m2"
+      },
+      "value": -1.25,
+      "expected": "-1.25 cd/m2"
+    },
+    {
+      "unit": {
+        "id": 18,
+        "name": "Luminance",
+        "display": "cd/m2"
+      },
+      "value": 123456.789,
+      "expected": "123457 cd/m2"
+    },
+    {
+      "unit": {
+        "id": 19,
+        "name": "Mass Fraction",
+        "display": "kg/kg = 1"
+      },
+      "value": 0,
+      "expected": "0 kg/kg = 1"
+    },
+    {
+      "unit": {
+        "id": 19,
+        "name": "Mass Fraction",
+        "display": "kg/kg = 1"
+      },
+      "value": 1,
+      "expected": "1 kg/kg = 1"
+    },
+    {
+      "unit": {
+        "id": 19,
+        "name": "Mass Fraction",
+        "display": "kg/kg = 1"
+      },
+      "value": 1.25,
+      "expected": "1.25 kg/kg = 1"
+    },
+    {
+      "unit": {
+        "id": 19,
+        "name": "Mass Fraction",
+        "display": "kg/kg = 1"
+      },
+      "value": -1.25,
+      "expected": "-1.25 kg/kg = 1"
+    },
+    {
+      "unit": {
+        "id": 19,
+        "name": "Mass Fraction",
+        "display": "kg/kg = 1"
+      },
+      "value": 123456.789,
+      "expected": "123457 kg/kg = 1"
+    },
+    {
+      "unit": {
+        "id": 101,
+        "name": "Milliseconds",
+        "display": "s"
+      },
+      "value": 0,
+      "expected": "0 s"
+    },
+    {
+      "unit": {
+        "id": 101,
+        "name": "Milliseconds",
+        "display": "s"
+      },
+      "value": 1,
+      "expected": "0.001 s"
+    },
+    {
+      "unit": {
+        "id": 101,
+        "name": "Milliseconds",
+        "display": "s"
+      },
+      "value": 1.25,
+      "expected": "0.00125 s"
+    },
+    {
+      "unit": {
+        "id": 101,
+        "name": "Milliseconds",
+        "display": "s"
+      },
+      "value": -1.25,
+      "expected": "-0.00125 s"
+    },
+    {
+      "unit": {
+        "id": 101,
+        "name": "Milliseconds",
+        "display": "s"
+      },
+      "value": 123456.789,
+      "expected": "123 s"
+    },
+    {
+      "unit": {
+        "id": 102,
+        "name": "Millimeters",
+        "display": "mm"
+      },
+      "value": 0,
+      "expected": "0 mm"
+    },
+    {
+      "unit": {
+        "id": 102,
+        "name": "Millimeters",
+        "display": "mm"
+      },
+      "value": 1,
+      "expected": "1 mm"
+    },
+    {
+      "unit": {
+        "id": 102,
+        "name": "Millimeters",
+        "display": "mm"
+      },
+      "value": 1.25,
+      "expected": "1.25 mm"
+    },
+    {
+      "unit": {
+        "id": 102,
+        "name": "Millimeters",
+        "display": "mm"
+      },
+      "value": -1.25,
+      "expected": "-1.25 mm"
+    },
+    {
+      "unit": {
+        "id": 102,
+        "name": "Millimeters",
+        "display": "mm"
+      },
+      "value": 123456.789,
+      "expected": "123457 mm"
+    },
+    {
+      "unit": {
+        "id": 103,
+        "name": "MegaPascals",
+        "display": null
+      },
+      "value": 0,
+      "expected": "0"
+    },
+    {
+      "unit": {
+        "id": 103,
+        "name": "MegaPascals",
+        "display": null
+      },
+      "value": 1,
+      "expected": "1"
+    },
+    {
+      "unit": {
+        "id": 103,
+        "name": "MegaPascals",
+        "display": null
+      },
+      "value": 1.25,
+      "expected": "1.25"
+    },
+    {
+      "unit": {
+        "id": 103,
+        "name": "MegaPascals",
+        "display": null
+      },
+      "value": -1.25,
+      "expected": "-1.25"
+    },
+    {
+      "unit": {
+        "id": 103,
+        "name": "MegaPascals",
+        "display": null
+      },
+      "value": 123456.789,
+      "expected": "123457"
+    },
+    {
+      "unit": {
+        "id": 104,
+        "name": "Multiplier",
+        "display": "x"
+      },
+      "value": 0,
+      "expected": "0 x"
+    },
+    {
+      "unit": {
+        "id": 104,
+        "name": "Multiplier",
+        "display": "x"
+      },
+      "value": 1,
+      "expected": "1 x"
+    },
+    {
+      "unit": {
+        "id": 104,
+        "name": "Multiplier",
+        "display": "x"
+      },
+      "value": 1.25,
+      "expected": "1.25 x"
+    },
+    {
+      "unit": {
+        "id": 104,
+        "name": "Multiplier",
+        "display": "x"
+      },
+      "value": -1.25,
+      "expected": "-1.25 x"
+    },
+    {
+      "unit": {
+        "id": 104,
+        "name": "Multiplier",
+        "display": "x"
+      },
+      "value": 123456.789,
+      "expected": "123457 x"
+    },
+    {
+      "unit": {
+        "id": 105,
+        "name": "Percentage",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 105,
+        "name": "Percentage",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "1 %"
+    },
+    {
+      "unit": {
+        "id": 105,
+        "name": "Percentage",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "1.25 %"
+    },
+    {
+      "unit": {
+        "id": 105,
+        "name": "Percentage",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-1.25 %"
+    },
+    {
+      "unit": {
+        "id": 105,
+        "name": "Percentage",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "123457 %"
+    },
+    {
+      "unit": {
+        "id": 106,
+        "name": "Teraflops",
+        "display": "tf"
+      },
+      "value": 0,
+      "expected": "0 tf"
+    },
+    {
+      "unit": {
+        "id": 106,
+        "name": "Teraflops",
+        "display": "tf"
+      },
+      "value": 1,
+      "expected": "1 tf"
+    },
+    {
+      "unit": {
+        "id": 106,
+        "name": "Teraflops",
+        "display": "tf"
+      },
+      "value": 1.25,
+      "expected": "1.25 tf"
+    },
+    {
+      "unit": {
+        "id": 106,
+        "name": "Teraflops",
+        "display": "tf"
+      },
+      "value": -1.25,
+      "expected": "-1.25 tf"
+    },
+    {
+      "unit": {
+        "id": 106,
+        "name": "Teraflops",
+        "display": "tf"
+      },
+      "value": 123456.789,
+      "expected": "123457 tf"
+    },
+    {
+      "unit": {
+        "id": 107,
+        "name": "MegaWatts",
+        "display": "MW"
+      },
+      "value": 0,
+      "expected": "0 MW"
+    },
+    {
+      "unit": {
+        "id": 107,
+        "name": "MegaWatts",
+        "display": "MW"
+      },
+      "value": 1,
+      "expected": "1 MW"
+    },
+    {
+      "unit": {
+        "id": 107,
+        "name": "MegaWatts",
+        "display": "MW"
+      },
+      "value": 1.25,
+      "expected": "1.25 MW"
+    },
+    {
+      "unit": {
+        "id": 107,
+        "name": "MegaWatts",
+        "display": "MW"
+      },
+      "value": -1.25,
+      "expected": "-1.25 MW"
+    },
+    {
+      "unit": {
+        "id": 107,
+        "name": "MegaWatts",
+        "display": "MW"
+      },
+      "value": 123456.789,
+      "expected": "123457 MW"
+    },
+    {
+      "unit": {
+        "id": 108,
+        "name": "Inverse Absolute Percent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "100 %"
+    },
+    {
+      "unit": {
+        "id": 108,
+        "name": "Inverse Absolute Percent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 108,
+        "name": "Inverse Absolute Percent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "-25 %"
+    },
+    {
+      "unit": {
+        "id": 108,
+        "name": "Inverse Absolute Percent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "225 %"
+    },
+    {
+      "unit": {
+        "id": 108,
+        "name": "Inverse Absolute Percent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "-12345579 %"
+    },
+    {
+      "unit": {
+        "id": 109,
+        "name": "Modifier Percent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "-100 %"
+    },
+    {
+      "unit": {
+        "id": 109,
+        "name": "Modifier Percent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "+0 %"
+    },
+    {
+      "unit": {
+        "id": 109,
+        "name": "Modifier Percent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "+25 %"
+    },
+    {
+      "unit": {
+        "id": 109,
+        "name": "Modifier Percent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-225 %"
+    },
+    {
+      "unit": {
+        "id": 109,
+        "name": "Modifier Percent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "+12345578.90 %"
+    },
+    {
+      "unit": {
+        "id": 111,
+        "name": "Inversed Modifier Percent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "100 %"
+    },
+    {
+      "unit": {
+        "id": 111,
+        "name": "Inversed Modifier Percent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 111,
+        "name": "Inversed Modifier Percent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "-25 %"
+    },
+    {
+      "unit": {
+        "id": 111,
+        "name": "Inversed Modifier Percent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "225 %"
+    },
+    {
+      "unit": {
+        "id": 111,
+        "name": "Inversed Modifier Percent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "-12345579 %"
+    },
+    {
+      "unit": {
+        "id": 112,
+        "name": "Radians/Second",
+        "display": "rad/sec"
+      },
+      "value": 0,
+      "expected": "0 rad/sec"
+    },
+    {
+      "unit": {
+        "id": 112,
+        "name": "Radians/Second",
+        "display": "rad/sec"
+      },
+      "value": 1,
+      "expected": "1 rad/sec"
+    },
+    {
+      "unit": {
+        "id": 112,
+        "name": "Radians/Second",
+        "display": "rad/sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 rad/sec"
+    },
+    {
+      "unit": {
+        "id": 112,
+        "name": "Radians/Second",
+        "display": "rad/sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 rad/sec"
+    },
+    {
+      "unit": {
+        "id": 112,
+        "name": "Radians/Second",
+        "display": "rad/sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 rad/sec"
+    },
+    {
+      "unit": {
+        "id": 113,
+        "name": "Hitpoints",
+        "display": "HP"
+      },
+      "value": 0,
+      "expected": "0 HP"
+    },
+    {
+      "unit": {
+        "id": 113,
+        "name": "Hitpoints",
+        "display": "HP"
+      },
+      "value": 1,
+      "expected": "1 HP"
+    },
+    {
+      "unit": {
+        "id": 113,
+        "name": "Hitpoints",
+        "display": "HP"
+      },
+      "value": 1.25,
+      "expected": "1.25 HP"
+    },
+    {
+      "unit": {
+        "id": 113,
+        "name": "Hitpoints",
+        "display": "HP"
+      },
+      "value": -1.25,
+      "expected": "-1.25 HP"
+    },
+    {
+      "unit": {
+        "id": 113,
+        "name": "Hitpoints",
+        "display": "HP"
+      },
+      "value": 123456.789,
+      "expected": "123457 HP"
+    },
+    {
+      "unit": {
+        "id": 114,
+        "name": "capacitor units",
+        "display": "GJ"
+      },
+      "value": 0,
+      "expected": "0 GJ"
+    },
+    {
+      "unit": {
+        "id": 114,
+        "name": "capacitor units",
+        "display": "GJ"
+      },
+      "value": 1,
+      "expected": "1 GJ"
+    },
+    {
+      "unit": {
+        "id": 114,
+        "name": "capacitor units",
+        "display": "GJ"
+      },
+      "value": 1.25,
+      "expected": "1.25 GJ"
+    },
+    {
+      "unit": {
+        "id": 114,
+        "name": "capacitor units",
+        "display": "GJ"
+      },
+      "value": -1.25,
+      "expected": "-1.25 GJ"
+    },
+    {
+      "unit": {
+        "id": 114,
+        "name": "capacitor units",
+        "display": "GJ"
+      },
+      "value": 123456.789,
+      "expected": "123457 GJ"
+    },
+    {
+      "unit": {
+        "id": 115,
+        "name": "groupID",
+        "display": "groupID"
+      },
+      "value": 25,
+      "expected": "Frigate (25) "
+    },
+    {
+      "unit": {
+        "id": 115,
+        "name": "groupID",
+        "display": "groupID"
+      },
+      "value": 0,
+      "expected": "#System (0) "
+    },
+    {
+      "unit": {
+        "id": 116,
+        "name": "typeID",
+        "display": "typeID"
+      },
+      "value": 587,
+      "expected": "Rifter (587) "
+    },
+    {
+      "unit": {
+        "id": 116,
+        "name": "typeID",
+        "display": "typeID"
+      },
+      "value": 0,
+      "expected": "0 "
+    },
+    {
+      "unit": {
+        "id": 117,
+        "name": "Sizeclass",
+        "display": "1=small 2=medium 3=l"
+      },
+      "value": 1,
+      "expected": "Small 2"
+    },
+    {
+      "unit": {
+        "id": 117,
+        "name": "Sizeclass",
+        "display": "1=small 2=medium 3=l"
+      },
+      "value": 2,
+      "expected": "Medium 2"
+    },
+    {
+      "unit": {
+        "id": 117,
+        "name": "Sizeclass",
+        "display": "1=small 2=medium 3=l"
+      },
+      "value": 3,
+      "expected": "Large 2"
+    },
+    {
+      "unit": {
+        "id": 117,
+        "name": "Sizeclass",
+        "display": "1=small 2=medium 3=l"
+      },
+      "value": 4,
+      "expected": "X-Large 2"
+    },
+    {
+      "unit": {
+        "id": 118,
+        "name": "Ore units",
+        "display": "Ore units"
+      },
+      "value": 0,
+      "expected": "0 Ore units"
+    },
+    {
+      "unit": {
+        "id": 118,
+        "name": "Ore units",
+        "display": "Ore units"
+      },
+      "value": 1,
+      "expected": "1 Ore units"
+    },
+    {
+      "unit": {
+        "id": 118,
+        "name": "Ore units",
+        "display": "Ore units"
+      },
+      "value": 1.25,
+      "expected": "1.25 Ore units"
+    },
+    {
+      "unit": {
+        "id": 118,
+        "name": "Ore units",
+        "display": "Ore units"
+      },
+      "value": -1.25,
+      "expected": "-1.25 Ore units"
+    },
+    {
+      "unit": {
+        "id": 118,
+        "name": "Ore units",
+        "display": "Ore units"
+      },
+      "value": 123456.789,
+      "expected": "123457 Ore units"
+    },
+    {
+      "unit": {
+        "id": 119,
+        "name": "attributeID",
+        "display": "attributeID"
+      },
+      "value": 4,
+      "expected": "Mass (4) "
+    },
+    {
+      "unit": {
+        "id": 119,
+        "name": "attributeID",
+        "display": "attributeID"
+      },
+      "value": 0,
+      "expected": "0 "
+    },
+    {
+      "unit": {
+        "id": 120,
+        "name": "attributePoints",
+        "display": "points"
+      },
+      "value": 0,
+      "expected": "0 points"
+    },
+    {
+      "unit": {
+        "id": 120,
+        "name": "attributePoints",
+        "display": "points"
+      },
+      "value": 1,
+      "expected": "1 points"
+    },
+    {
+      "unit": {
+        "id": 120,
+        "name": "attributePoints",
+        "display": "points"
+      },
+      "value": 1.25,
+      "expected": "1.25 points"
+    },
+    {
+      "unit": {
+        "id": 120,
+        "name": "attributePoints",
+        "display": "points"
+      },
+      "value": -1.25,
+      "expected": "-1.25 points"
+    },
+    {
+      "unit": {
+        "id": 120,
+        "name": "attributePoints",
+        "display": "points"
+      },
+      "value": 123456.789,
+      "expected": "123457 points"
+    },
+    {
+      "unit": {
+        "id": 121,
+        "name": "realPercent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 121,
+        "name": "realPercent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "1 %"
+    },
+    {
+      "unit": {
+        "id": 121,
+        "name": "realPercent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "1.25 %"
+    },
+    {
+      "unit": {
+        "id": 121,
+        "name": "realPercent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-1.25 %"
+    },
+    {
+      "unit": {
+        "id": 121,
+        "name": "realPercent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "123457 %"
+    },
+    {
+      "unit": {
+        "id": 122,
+        "name": "Fitting slots",
+        "display": null
+      },
+      "value": 0,
+      "expected": "0"
+    },
+    {
+      "unit": {
+        "id": 122,
+        "name": "Fitting slots",
+        "display": null
+      },
+      "value": 1,
+      "expected": "1"
+    },
+    {
+      "unit": {
+        "id": 122,
+        "name": "Fitting slots",
+        "display": null
+      },
+      "value": 1.25,
+      "expected": "1.25"
+    },
+    {
+      "unit": {
+        "id": 122,
+        "name": "Fitting slots",
+        "display": null
+      },
+      "value": -1.25,
+      "expected": "-1.25"
+    },
+    {
+      "unit": {
+        "id": 122,
+        "name": "Fitting slots",
+        "display": null
+      },
+      "value": 123456.789,
+      "expected": "123457"
+    },
+    {
+      "unit": {
+        "id": 123,
+        "name": "trueTime",
+        "display": "sec"
+      },
+      "value": 0,
+      "expected": "0 sec"
+    },
+    {
+      "unit": {
+        "id": 123,
+        "name": "trueTime",
+        "display": "sec"
+      },
+      "value": 1,
+      "expected": "1 sec"
+    },
+    {
+      "unit": {
+        "id": 123,
+        "name": "trueTime",
+        "display": "sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 sec"
+    },
+    {
+      "unit": {
+        "id": 123,
+        "name": "trueTime",
+        "display": "sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 sec"
+    },
+    {
+      "unit": {
+        "id": 123,
+        "name": "trueTime",
+        "display": "sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 sec"
+    },
+    {
+      "unit": {
+        "id": 124,
+        "name": "Modifier Relative Percent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 124,
+        "name": "Modifier Relative Percent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "1 %"
+    },
+    {
+      "unit": {
+        "id": 124,
+        "name": "Modifier Relative Percent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "1.25 %"
+    },
+    {
+      "unit": {
+        "id": 124,
+        "name": "Modifier Relative Percent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-1.25 %"
+    },
+    {
+      "unit": {
+        "id": 124,
+        "name": "Modifier Relative Percent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "123457 %"
+    },
+    {
+      "unit": {
+        "id": 125,
+        "name": "Newton",
+        "display": "N"
+      },
+      "value": 0,
+      "expected": "0 N"
+    },
+    {
+      "unit": {
+        "id": 125,
+        "name": "Newton",
+        "display": "N"
+      },
+      "value": 1,
+      "expected": "1 N"
+    },
+    {
+      "unit": {
+        "id": 125,
+        "name": "Newton",
+        "display": "N"
+      },
+      "value": 1.25,
+      "expected": "1.25 N"
+    },
+    {
+      "unit": {
+        "id": 125,
+        "name": "Newton",
+        "display": "N"
+      },
+      "value": -1.25,
+      "expected": "-1.25 N"
+    },
+    {
+      "unit": {
+        "id": 125,
+        "name": "Newton",
+        "display": "N"
+      },
+      "value": 123456.789,
+      "expected": "123457 N"
+    },
+    {
+      "unit": {
+        "id": 126,
+        "name": "Light Year",
+        "display": "ly"
+      },
+      "value": 0,
+      "expected": "0 ly"
+    },
+    {
+      "unit": {
+        "id": 126,
+        "name": "Light Year",
+        "display": "ly"
+      },
+      "value": 1,
+      "expected": "1 ly"
+    },
+    {
+      "unit": {
+        "id": 126,
+        "name": "Light Year",
+        "display": "ly"
+      },
+      "value": 1.25,
+      "expected": "1.25 ly"
+    },
+    {
+      "unit": {
+        "id": 126,
+        "name": "Light Year",
+        "display": "ly"
+      },
+      "value": -1.25,
+      "expected": "-1.25 ly"
+    },
+    {
+      "unit": {
+        "id": 126,
+        "name": "Light Year",
+        "display": "ly"
+      },
+      "value": 123456.789,
+      "expected": "123457 ly"
+    },
+    {
+      "unit": {
+        "id": 127,
+        "name": "Absolute Percent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 127,
+        "name": "Absolute Percent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "100 %"
+    },
+    {
+      "unit": {
+        "id": 127,
+        "name": "Absolute Percent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "125 %"
+    },
+    {
+      "unit": {
+        "id": 127,
+        "name": "Absolute Percent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-125 %"
+    },
+    {
+      "unit": {
+        "id": 127,
+        "name": "Absolute Percent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "12345679 %"
+    },
+    {
+      "unit": {
+        "id": 128,
+        "name": "Drone bandwidth",
+        "display": "Mbit/sec"
+      },
+      "value": 0,
+      "expected": "0 Mbit/sec"
+    },
+    {
+      "unit": {
+        "id": 128,
+        "name": "Drone bandwidth",
+        "display": "Mbit/sec"
+      },
+      "value": 1,
+      "expected": "1 Mbit/sec"
+    },
+    {
+      "unit": {
+        "id": 128,
+        "name": "Drone bandwidth",
+        "display": "Mbit/sec"
+      },
+      "value": 1.25,
+      "expected": "1.25 Mbit/sec"
+    },
+    {
+      "unit": {
+        "id": 128,
+        "name": "Drone bandwidth",
+        "display": "Mbit/sec"
+      },
+      "value": -1.25,
+      "expected": "-1.25 Mbit/sec"
+    },
+    {
+      "unit": {
+        "id": 128,
+        "name": "Drone bandwidth",
+        "display": "Mbit/sec"
+      },
+      "value": 123456.789,
+      "expected": "123457 Mbit/sec"
+    },
+    {
+      "unit": {
+        "id": 129,
+        "name": "Hours",
+        "display": null
+      },
+      "value": 0,
+      "expected": "0"
+    },
+    {
+      "unit": {
+        "id": 129,
+        "name": "Hours",
+        "display": null
+      },
+      "value": 1,
+      "expected": "1"
+    },
+    {
+      "unit": {
+        "id": 129,
+        "name": "Hours",
+        "display": null
+      },
+      "value": 1.25,
+      "expected": "1.25"
+    },
+    {
+      "unit": {
+        "id": 129,
+        "name": "Hours",
+        "display": null
+      },
+      "value": -1.25,
+      "expected": "-1.25"
+    },
+    {
+      "unit": {
+        "id": 129,
+        "name": "Hours",
+        "display": null
+      },
+      "value": 123456.789,
+      "expected": "123457"
+    },
+    {
+      "unit": {
+        "id": 133,
+        "name": "Money",
+        "display": "ISK"
+      },
+      "value": 0,
+      "expected": "0 ISK"
+    },
+    {
+      "unit": {
+        "id": 133,
+        "name": "Money",
+        "display": "ISK"
+      },
+      "value": 1,
+      "expected": "1 ISK"
+    },
+    {
+      "unit": {
+        "id": 133,
+        "name": "Money",
+        "display": "ISK"
+      },
+      "value": 1.25,
+      "expected": "1.25 ISK"
+    },
+    {
+      "unit": {
+        "id": 133,
+        "name": "Money",
+        "display": "ISK"
+      },
+      "value": -1.25,
+      "expected": "-1.25 ISK"
+    },
+    {
+      "unit": {
+        "id": 133,
+        "name": "Money",
+        "display": "ISK"
+      },
+      "value": 123456.789,
+      "expected": "123457 ISK"
+    },
+    {
+      "unit": {
+        "id": 134,
+        "name": "Logistical Capacity",
+        "display": "m3/hour"
+      },
+      "value": 0,
+      "expected": "0 m3/hour"
+    },
+    {
+      "unit": {
+        "id": 134,
+        "name": "Logistical Capacity",
+        "display": "m3/hour"
+      },
+      "value": 1,
+      "expected": "1 m3/hour"
+    },
+    {
+      "unit": {
+        "id": 134,
+        "name": "Logistical Capacity",
+        "display": "m3/hour"
+      },
+      "value": 1.25,
+      "expected": "1.25 m3/hour"
+    },
+    {
+      "unit": {
+        "id": 134,
+        "name": "Logistical Capacity",
+        "display": "m3/hour"
+      },
+      "value": -1.25,
+      "expected": "-1.25 m3/hour"
+    },
+    {
+      "unit": {
+        "id": 134,
+        "name": "Logistical Capacity",
+        "display": "m3/hour"
+      },
+      "value": 123456.789,
+      "expected": "123457 m3/hour"
+    },
+    {
+      "unit": {
+        "id": 135,
+        "name": "Astronomical Unit",
+        "display": "AU"
+      },
+      "value": 0,
+      "expected": "0 AU"
+    },
+    {
+      "unit": {
+        "id": 135,
+        "name": "Astronomical Unit",
+        "display": "AU"
+      },
+      "value": 1,
+      "expected": "1 AU"
+    },
+    {
+      "unit": {
+        "id": 135,
+        "name": "Astronomical Unit",
+        "display": "AU"
+      },
+      "value": 1.25,
+      "expected": "1.25 AU"
+    },
+    {
+      "unit": {
+        "id": 135,
+        "name": "Astronomical Unit",
+        "display": "AU"
+      },
+      "value": -1.25,
+      "expected": "-1.25 AU"
+    },
+    {
+      "unit": {
+        "id": 135,
+        "name": "Astronomical Unit",
+        "display": "AU"
+      },
+      "value": 123456.789,
+      "expected": "123457 AU"
+    },
+    {
+      "unit": {
+        "id": 136,
+        "name": "Slot",
+        "display": "Slot"
+      },
+      "value": 0,
+      "expected": "0 Slot"
+    },
+    {
+      "unit": {
+        "id": 136,
+        "name": "Slot",
+        "display": "Slot"
+      },
+      "value": 1,
+      "expected": "1 Slot"
+    },
+    {
+      "unit": {
+        "id": 136,
+        "name": "Slot",
+        "display": "Slot"
+      },
+      "value": 1.25,
+      "expected": "1.25 Slot"
+    },
+    {
+      "unit": {
+        "id": 136,
+        "name": "Slot",
+        "display": "Slot"
+      },
+      "value": -1.25,
+      "expected": "-1.25 Slot"
+    },
+    {
+      "unit": {
+        "id": 136,
+        "name": "Slot",
+        "display": "Slot"
+      },
+      "value": 123456.789,
+      "expected": "123457 Slot"
+    },
+    {
+      "unit": {
+        "id": 137,
+        "name": "Boolean",
+        "display": "1=True 0=False"
+      },
+      "value": 0,
+      "expected": "No "
+    },
+    {
+      "unit": {
+        "id": 137,
+        "name": "Boolean",
+        "display": "1=True 0=False"
+      },
+      "value": 1,
+      "expected": "Yes "
+    },
+    {
+      "unit": {
+        "id": 137,
+        "name": "Boolean",
+        "display": "1=True 0=False"
+      },
+      "value": false,
+      "expected": "No "
+    },
+    {
+      "unit": {
+        "id": 137,
+        "name": "Boolean",
+        "display": "1=True 0=False"
+      },
+      "value": true,
+      "expected": "Yes "
+    },
+    {
+      "unit": {
+        "id": 138,
+        "name": "Units",
+        "display": "units"
+      },
+      "value": 0,
+      "expected": "0 units"
+    },
+    {
+      "unit": {
+        "id": 138,
+        "name": "Units",
+        "display": "units"
+      },
+      "value": 1,
+      "expected": "1 units"
+    },
+    {
+      "unit": {
+        "id": 138,
+        "name": "Units",
+        "display": "units"
+      },
+      "value": 1.25,
+      "expected": "1.25 units"
+    },
+    {
+      "unit": {
+        "id": 138,
+        "name": "Units",
+        "display": "units"
+      },
+      "value": -1.25,
+      "expected": "-1.25 units"
+    },
+    {
+      "unit": {
+        "id": 138,
+        "name": "Units",
+        "display": "units"
+      },
+      "value": 123456.789,
+      "expected": "123457 units"
+    },
+    {
+      "unit": {
+        "id": 139,
+        "name": "Bonus",
+        "display": "+"
+      },
+      "value": 0,
+      "expected": "0 +"
+    },
+    {
+      "unit": {
+        "id": 139,
+        "name": "Bonus",
+        "display": "+"
+      },
+      "value": 1,
+      "expected": "1 +"
+    },
+    {
+      "unit": {
+        "id": 139,
+        "name": "Bonus",
+        "display": "+"
+      },
+      "value": 1.25,
+      "expected": "1.25 +"
+    },
+    {
+      "unit": {
+        "id": 139,
+        "name": "Bonus",
+        "display": "+"
+      },
+      "value": -1.25,
+      "expected": "-1.25 +"
+    },
+    {
+      "unit": {
+        "id": 139,
+        "name": "Bonus",
+        "display": "+"
+      },
+      "value": 123456.789,
+      "expected": "123457 +"
+    },
+    {
+      "unit": {
+        "id": 140,
+        "name": "Level",
+        "display": "Level"
+      },
+      "value": 0,
+      "expected": "0 Level"
+    },
+    {
+      "unit": {
+        "id": 140,
+        "name": "Level",
+        "display": "Level"
+      },
+      "value": 1,
+      "expected": "1 Level"
+    },
+    {
+      "unit": {
+        "id": 140,
+        "name": "Level",
+        "display": "Level"
+      },
+      "value": 1.25,
+      "expected": "1.25 Level"
+    },
+    {
+      "unit": {
+        "id": 140,
+        "name": "Level",
+        "display": "Level"
+      },
+      "value": -1.25,
+      "expected": "-1.25 Level"
+    },
+    {
+      "unit": {
+        "id": 140,
+        "name": "Level",
+        "display": "Level"
+      },
+      "value": 123456.789,
+      "expected": "123457 Level"
+    },
+    {
+      "unit": {
+        "id": 141,
+        "name": "Hardpoints",
+        "display": "hardpoints"
+      },
+      "value": 0,
+      "expected": "0 hardpoints"
+    },
+    {
+      "unit": {
+        "id": 141,
+        "name": "Hardpoints",
+        "display": "hardpoints"
+      },
+      "value": 1,
+      "expected": "1 hardpoints"
+    },
+    {
+      "unit": {
+        "id": 141,
+        "name": "Hardpoints",
+        "display": "hardpoints"
+      },
+      "value": 1.25,
+      "expected": "1.25 hardpoints"
+    },
+    {
+      "unit": {
+        "id": 141,
+        "name": "Hardpoints",
+        "display": "hardpoints"
+      },
+      "value": -1.25,
+      "expected": "-1.25 hardpoints"
+    },
+    {
+      "unit": {
+        "id": 141,
+        "name": "Hardpoints",
+        "display": "hardpoints"
+      },
+      "value": 123456.789,
+      "expected": "123457 hardpoints"
+    },
+    {
+      "unit": {
+        "id": 142,
+        "name": "Sex",
+        "display": "1=Male 2=Unisex 3=Female"
+      },
+      "value": 0,
+      "expected": "0 1=Male 2=Unisex 3=Female"
+    },
+    {
+      "unit": {
+        "id": 142,
+        "name": "Sex",
+        "display": "1=Male 2=Unisex 3=Female"
+      },
+      "value": 1,
+      "expected": "1 1=Male 2=Unisex 3=Female"
+    },
+    {
+      "unit": {
+        "id": 142,
+        "name": "Sex",
+        "display": "1=Male 2=Unisex 3=Female"
+      },
+      "value": 1.25,
+      "expected": "1.25 1=Male 2=Unisex 3=Female"
+    },
+    {
+      "unit": {
+        "id": 142,
+        "name": "Sex",
+        "display": "1=Male 2=Unisex 3=Female"
+      },
+      "value": -1.25,
+      "expected": "-1.25 1=Male 2=Unisex 3=Female"
+    },
+    {
+      "unit": {
+        "id": 142,
+        "name": "Sex",
+        "display": "1=Male 2=Unisex 3=Female"
+      },
+      "value": 123456.789,
+      "expected": "123457 1=Male 2=Unisex 3=Female"
+    },
+    {
+      "unit": {
+        "id": 143,
+        "name": "Datetime",
+        "display": null
+      },
+      "value": 0,
+      "expected": "0"
+    },
+    {
+      "unit": {
+        "id": 143,
+        "name": "Datetime",
+        "display": null
+      },
+      "value": 1,
+      "expected": "1"
+    },
+    {
+      "unit": {
+        "id": 143,
+        "name": "Datetime",
+        "display": null
+      },
+      "value": 1.25,
+      "expected": "1.25"
+    },
+    {
+      "unit": {
+        "id": 143,
+        "name": "Datetime",
+        "display": null
+      },
+      "value": -1.25,
+      "expected": "-1.25"
+    },
+    {
+      "unit": {
+        "id": 143,
+        "name": "Datetime",
+        "display": null
+      },
+      "value": 123456.789,
+      "expected": "123457"
+    },
+    {
+      "unit": {
+        "id": 144,
+        "name": "Warp speed",
+        "display": "AU/s"
+      },
+      "value": 0,
+      "expected": "0 AU/s"
+    },
+    {
+      "unit": {
+        "id": 144,
+        "name": "Warp speed",
+        "display": "AU/s"
+      },
+      "value": 1,
+      "expected": "1 AU/s"
+    },
+    {
+      "unit": {
+        "id": 144,
+        "name": "Warp speed",
+        "display": "AU/s"
+      },
+      "value": 1.25,
+      "expected": "1.25 AU/s"
+    },
+    {
+      "unit": {
+        "id": 144,
+        "name": "Warp speed",
+        "display": "AU/s"
+      },
+      "value": -1.25,
+      "expected": "-1.25 AU/s"
+    },
+    {
+      "unit": {
+        "id": 144,
+        "name": "Warp speed",
+        "display": "AU/s"
+      },
+      "value": 123456.789,
+      "expected": "123457 AU/s"
+    },
+    {
+      "unit": {
+        "id": 205,
+        "name": "modifier realPercent",
+        "display": "%"
+      },
+      "value": 0,
+      "expected": "0 %"
+    },
+    {
+      "unit": {
+        "id": 205,
+        "name": "modifier realPercent",
+        "display": "%"
+      },
+      "value": 1,
+      "expected": "1 %"
+    },
+    {
+      "unit": {
+        "id": 205,
+        "name": "modifier realPercent",
+        "display": "%"
+      },
+      "value": 1.25,
+      "expected": "1.25 %"
+    },
+    {
+      "unit": {
+        "id": 205,
+        "name": "modifier realPercent",
+        "display": "%"
+      },
+      "value": -1.25,
+      "expected": "-1.25 %"
+    },
+    {
+      "unit": {
+        "id": 205,
+        "name": "modifier realPercent",
+        "display": "%"
+      },
+      "value": 123456.789,
+      "expected": "123457 %"
+    }
+  ]
+}

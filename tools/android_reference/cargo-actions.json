@@ -1,0 +1,44 @@
+[
+  {"name":"selected-quantities-and-history","ship":"Vexor","operations":[
+    {"kind":"add","item":"Antimatter Charge S","quantity":2},
+    {"kind":"add","item":"Core Scanner Probe I","quantity":3},
+    {"kind":"add","item":"200mm AutoCannon I","quantity":4},
+    {"kind":"quantity","selected":["Antimatter Charge S","Core Scanner Probe I"],"quantity":7},
+    {"kind":"quantity","selected":["Antimatter Charge S","Core Scanner Probe I"],"quantity":7},
+    {"kind":"quantity","selected":["Core Scanner Probe I"],"quantity":0},
+    {"kind":"remove","selected":["Antimatter Charge S","200mm AutoCannon I"]}
+  ]},
+  {"name":"ammunition-presets","ship":"Vexor","operations":[
+    {"kind":"preset","item":"Core Scanner Probe I"},
+    {"kind":"preset","item":"Multifrequency S"},
+    {"kind":"preset","item":"Antimatter Charge S"},
+    {"kind":"preset","item":"Antimatter Charge S"},
+    {"kind":"preset","item":"200mm AutoCannon I"}
+  ]},
+  {"name":"fill-capacity-boundaries","ship":"Vexor","operations":[
+    {"kind":"add","item":"Antimatter Charge S","quantity":10},
+    {"kind":"fill_cargo","item":"Antimatter Charge S"},
+    {"kind":"fill_cargo","item":"Antimatter Charge S"},
+    {"kind":"remove","selected":["Antimatter Charge S"]},
+    {"kind":"add","item":"Small Standard Container","quantity":4},
+    {"kind":"fill_cargo","item":"Small Standard Container"},
+    {"kind":"fill_market","item":"Antimatter Charge S"},
+    {"kind":"add","item":"Small Standard Container","quantity":1},
+    {"kind":"fill_market","item":"Antimatter Charge S"}
+  ]},
+  {"name":"selected-variation-merges","ship":"Vexor","operations":[
+    {"kind":"add","item":"200mm AutoCannon I","quantity":2},
+    {"kind":"add","item":"200mm AutoCannon II","quantity":3},
+    {"kind":"add","item":"Antimatter Charge S","quantity":4},
+    {"kind":"variation","main":"200mm AutoCannon I","selected":["200mm AutoCannon I","200mm AutoCannon II","Antimatter Charge S"],"item":"200mm AutoCannon II"},
+    {"kind":"variation","main":"200mm AutoCannon II","selected":["200mm AutoCannon II","Antimatter Charge S"],"item":"200mm AutoCannon II"},
+    {"kind":"variation","main":"200mm AutoCannon II","selected":["200mm AutoCannon II","Antimatter Charge S"],"item":"200mm AutoCannon I"}
+  ]},
+  {"name":"structure-presets-and-fill","ship":"Astrahus","operations":[
+    {"kind":"preset","item":"Core Scanner Probe I"},
+    {"kind":"fill_cargo","item":"Core Scanner Probe I"},
+    {"kind":"preset","item":"Antimatter Charge S"},
+    {"kind":"fill_market","item":"Antimatter Charge S"},
+    {"kind":"quantity","selected":["Core Scanner Probe I","Antimatter Charge S"],"quantity":0}
+  ]}
+]

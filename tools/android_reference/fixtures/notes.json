@@ -1,0 +1,734 @@
+{
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_files": {
+    "service/fit.py": "ce08d3d56223ac49a9f71bd84f09490185baa76a7d3d287d7ebe92b040a178d4",
+    "gui/fitCommands/helpers.py": "d76cb6bc5cadc43d82c649b600d5b84d343a24a285ff6837441005759ef86466",
+    "gui/fitCommands/calc/module/localRemove.py": "68e7089da81aa08982a68c6ad62e7184b822127bfc0c14688149162160dbd662",
+    "gui/fitCommands/calc/module/localReplace.py": "75bca8a43c1f8b908d7456bb8ee84827bac9732591add3ff2da6f6980b76460d",
+    "gui/fitCommands/calc/module/localAdd.py": "ddb880d3aa4e91c1e0963a992480926368e90e4820ba5a3a3fe7b5efadda7b40",
+    "service/character.py": "339f24436b93fd692e423200aa2d1d7bddb698fecc50b43a02eabbb3d7242a03",
+    "gui/utils/numberFormatter.py": "abb74d1f2567fd770262c586d28b3a3809a4a246c61075279753f50e12c87499",
+    "gui/builtinAdditionPanes/notesView.py": "5de31af9c8f6299421d305ed79ac592b7829e02ce0954e9015bfa95e7d7101b1",
+    "eos/saveddata/fit.py": "666f954eb0a3028d61d1b5941c5813a63c53b9bf3018f9d453948b2369bb1d36"
+  },
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "initial": {
+    "alpha": {
+      "ship": "Vexor",
+      "notes": null,
+      "stats": {
+        "cpu_used": {
+          "value": 0.0,
+          "unit": "tf"
+        },
+        "cpu_output": {
+          "value": 375.0,
+          "unit": "tf"
+        },
+        "powergrid_used": {
+          "value": 0.0,
+          "unit": "MW"
+        },
+        "powergrid_output": {
+          "value": 875.0,
+          "unit": "MW"
+        },
+        "drone_control_range": {
+          "value": 60000.0,
+          "unit": "m"
+        },
+        "drone_bandwidth_used": {
+          "value": 0,
+          "unit": "Mbit/s"
+        },
+        "weapon_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "drone_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_volley": {
+          "value": 0,
+          "unit": "HP"
+        },
+        "capacitor_capacity": {
+          "value": 1812.5,
+          "unit": "GJ"
+        },
+        "capacitor_recharge_time": {
+          "value": 361875.0,
+          "unit": "ms"
+        },
+        "capacitor_used": {
+          "value": 0,
+          "unit": "GJ/s"
+        },
+        "capacitor_recharge": {
+          "value": 12.521588946459412,
+          "unit": "GJ/s"
+        },
+        "capacitor_stable": {
+          "value": true,
+          "unit": "boolean"
+        },
+        "capacitor_state": {
+          "value": 100,
+          "unit": "%"
+        },
+        "max_velocity": {
+          "value": 243.75,
+          "unit": "m/s"
+        },
+        "max_target_range": {
+          "value": 65625.0,
+          "unit": "m"
+        },
+        "gun_optimal": {
+          "value": 0.0,
+          "unit": "m"
+        },
+        "gun_falloff": {
+          "value": 1.0,
+          "unit": "m"
+        },
+        "shield_hp": {
+          "value": 1375.0,
+          "unit": "HP"
+        },
+        "shield_ehp_uniform": {
+          "value": 1896.5517241379312,
+          "unit": "HP"
+        },
+        "armor_hp": {
+          "value": 2500.0,
+          "unit": "HP"
+        },
+        "armor_ehp_uniform": {
+          "value": 3703.703703703704,
+          "unit": "HP"
+        },
+        "hull_hp": {
+          "value": 2500.0,
+          "unit": "HP"
+        },
+        "hull_ehp_uniform": {
+          "value": 3731.3432835820895,
+          "unit": "HP"
+        },
+        "shield_em_resonance": {
+          "value": 1.0,
+          "unit": "fraction"
+        },
+        "shield_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_kinetic_resonance": {
+          "value": 0.6,
+          "unit": "fraction"
+        },
+        "shield_explosive_resonance": {
+          "value": 0.5,
+          "unit": "fraction"
+        },
+        "armor_em_resonance": {
+          "value": 0.5,
+          "unit": "fraction"
+        },
+        "armor_thermal_resonance": {
+          "value": 0.65,
+          "unit": "fraction"
+        },
+        "armor_kinetic_resonance": {
+          "value": 0.65,
+          "unit": "fraction"
+        },
+        "armor_explosive_resonance": {
+          "value": 0.9,
+          "unit": "fraction"
+        },
+        "hull_em_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_thermal_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_kinetic_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_explosive_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "scan_resolution": {
+          "value": 350.0,
+          "unit": "mm"
+        }
+      }
+    },
+    "beta": {
+      "ship": "Punisher",
+      "notes": null,
+      "stats": {
+        "cpu_used": {
+          "value": 0.0,
+          "unit": "tf"
+        },
+        "cpu_output": {
+          "value": 175.0,
+          "unit": "tf"
+        },
+        "powergrid_used": {
+          "value": 0.0,
+          "unit": "MW"
+        },
+        "powergrid_output": {
+          "value": 83.75,
+          "unit": "MW"
+        },
+        "drone_control_range": {
+          "value": 60000.0,
+          "unit": "m"
+        },
+        "drone_bandwidth_used": {
+          "value": 0,
+          "unit": "Mbit/s"
+        },
+        "weapon_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "drone_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_volley": {
+          "value": 0,
+          "unit": "HP"
+        },
+        "capacitor_capacity": {
+          "value": 500.0,
+          "unit": "GJ"
+        },
+        "capacitor_recharge_time": {
+          "value": 120000.0,
+          "unit": "ms"
+        },
+        "capacitor_used": {
+          "value": 0,
+          "unit": "GJ/s"
+        },
+        "capacitor_recharge": {
+          "value": 10.416666666666666,
+          "unit": "GJ/s"
+        },
+        "capacitor_stable": {
+          "value": true,
+          "unit": "boolean"
+        },
+        "capacitor_state": {
+          "value": 100,
+          "unit": "%"
+        },
+        "max_velocity": {
+          "value": 443.75,
+          "unit": "m/s"
+        },
+        "max_target_range": {
+          "value": 31250.0,
+          "unit": "m"
+        },
+        "gun_optimal": {
+          "value": 0.0,
+          "unit": "m"
+        },
+        "gun_falloff": {
+          "value": 1.0,
+          "unit": "m"
+        },
+        "shield_hp": {
+          "value": 437.5,
+          "unit": "HP"
+        },
+        "shield_ehp_uniform": {
+          "value": 603.448275862069,
+          "unit": "HP"
+        },
+        "armor_hp": {
+          "value": 625.0,
+          "unit": "HP"
+        },
+        "armor_ehp_uniform": {
+          "value": 1157.4074074074074,
+          "unit": "HP"
+        },
+        "hull_hp": {
+          "value": 562.5,
+          "unit": "HP"
+        },
+        "hull_ehp_uniform": {
+          "value": 839.5522388059701,
+          "unit": "HP"
+        },
+        "shield_em_resonance": {
+          "value": 1.0,
+          "unit": "fraction"
+        },
+        "shield_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_kinetic_resonance": {
+          "value": 0.6,
+          "unit": "fraction"
+        },
+        "shield_explosive_resonance": {
+          "value": 0.5,
+          "unit": "fraction"
+        },
+        "armor_em_resonance": {
+          "value": 0.4,
+          "unit": "fraction"
+        },
+        "armor_thermal_resonance": {
+          "value": 0.52,
+          "unit": "fraction"
+        },
+        "armor_kinetic_resonance": {
+          "value": 0.6000000000000001,
+          "unit": "fraction"
+        },
+        "armor_explosive_resonance": {
+          "value": 0.6400000000000001,
+          "unit": "fraction"
+        },
+        "hull_em_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_thermal_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_kinetic_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_explosive_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "scan_resolution": {
+          "value": 800.0,
+          "unit": "mm"
+        }
+      }
+    },
+    "structure": {
+      "ship": "Astrahus",
+      "notes": "Stored structure note\n\u4fdd\u6301",
+      "stats": {
+        "cpu_used": {
+          "value": 0.0,
+          "unit": "tf"
+        },
+        "cpu_output": {
+          "value": 24000.0,
+          "unit": "tf"
+        },
+        "powergrid_used": {
+          "value": 0.0,
+          "unit": "MW"
+        },
+        "powergrid_output": {
+          "value": 1500000.0,
+          "unit": "MW"
+        },
+        "drone_control_range": {
+          "value": 20000,
+          "unit": "m"
+        },
+        "drone_bandwidth_used": {
+          "value": 0,
+          "unit": "Mbit/s"
+        },
+        "weapon_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "drone_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_volley": {
+          "value": 0,
+          "unit": "HP"
+        },
+        "capacitor_capacity": {
+          "value": 200000.0,
+          "unit": "GJ"
+        },
+        "capacitor_recharge_time": {
+          "value": 3600000.0,
+          "unit": "ms"
+        },
+        "capacitor_used": {
+          "value": 0,
+          "unit": "GJ/s"
+        },
+        "capacitor_recharge": {
+          "value": 138.88888888888889,
+          "unit": "GJ/s"
+        },
+        "capacitor_stable": {
+          "value": true,
+          "unit": "boolean"
+        },
+        "capacitor_state": {
+          "value": 100,
+          "unit": "%"
+        },
+        "max_velocity": {
+          "value": 0.0,
+          "unit": "m/s"
+        },
+        "max_target_range": {
+          "value": 350000.0,
+          "unit": "m"
+        },
+        "gun_optimal": {
+          "value": 0.0,
+          "unit": "m"
+        },
+        "gun_falloff": {
+          "value": 1.0,
+          "unit": "m"
+        },
+        "shield_hp": {
+          "value": 3600000.0,
+          "unit": "HP"
+        },
+        "shield_ehp_uniform": {
+          "value": 4500000.0,
+          "unit": "HP"
+        },
+        "armor_hp": {
+          "value": 1800000.0,
+          "unit": "HP"
+        },
+        "armor_ehp_uniform": {
+          "value": 2250000.0,
+          "unit": "HP"
+        },
+        "hull_hp": {
+          "value": 1800000.0,
+          "unit": "HP"
+        },
+        "hull_ehp_uniform": {
+          "value": 2250000.0,
+          "unit": "HP"
+        },
+        "shield_em_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_kinetic_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_explosive_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "armor_em_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "armor_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "armor_kinetic_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "armor_explosive_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "hull_em_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "hull_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "hull_kinetic_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "hull_explosive_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "scan_resolution": {
+          "value": 40.0,
+          "unit": "mm"
+        }
+      }
+    }
+  },
+  "inputs": {
+    "unicode": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+    "whitespace": "  leading\n\ntrailing  \n",
+    "beta": "Independent \u03b2 fit\n42",
+    "long": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+    "structure": "Stored structure note\n\u4fdd\u6301"
+  },
+  "steps": [
+    {
+      "action": "select",
+      "fit": "alpha",
+      "text": null,
+      "saved": {
+        "alpha": null,
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "",
+      "disabled": false,
+      "timer": null,
+      "label": null,
+      "recent": []
+    },
+    {
+      "action": "type",
+      "fit": null,
+      "text": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+      "saved": {
+        "alpha": null,
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+      "disabled": false,
+      "timer": [
+        1000,
+        true
+      ],
+      "label": " (44)",
+      "recent": []
+    },
+    {
+      "action": "save",
+      "fit": null,
+      "text": null,
+      "saved": {
+        "alpha": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+      "disabled": false,
+      "timer": null,
+      "label": " (44)",
+      "recent": []
+    },
+    {
+      "action": "type",
+      "fit": null,
+      "text": "  leading\n\ntrailing  \n",
+      "saved": {
+        "alpha": "Doctrine: \u03b1\u03b2 \u2014 \u63a2\u7d22 \ud83d\ude80\nSecond line\n e\u0301 and \u00e9\t  ",
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "  leading\n\ntrailing  \n",
+      "disabled": false,
+      "timer": [
+        1000,
+        true
+      ],
+      "label": " (22)",
+      "recent": []
+    },
+    {
+      "action": "select",
+      "fit": "beta",
+      "text": null,
+      "saved": {
+        "alpha": "  leading\n\ntrailing  \n",
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "",
+      "disabled": false,
+      "timer": null,
+      "label": null,
+      "recent": []
+    },
+    {
+      "action": "type",
+      "fit": null,
+      "text": "Independent \u03b2 fit\n42",
+      "saved": {
+        "alpha": "  leading\n\ntrailing  \n",
+        "beta": null,
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Independent \u03b2 fit\n42",
+      "disabled": false,
+      "timer": [
+        1000,
+        true
+      ],
+      "label": " (20)",
+      "recent": []
+    },
+    {
+      "action": "select",
+      "fit": "alpha",
+      "text": null,
+      "saved": {
+        "alpha": "  leading\n\ntrailing  \n",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "  leading\n\ntrailing  \n",
+      "disabled": false,
+      "timer": null,
+      "label": " (22)",
+      "recent": []
+    },
+    {
+      "action": "type",
+      "fit": null,
+      "text": "",
+      "saved": {
+        "alpha": "  leading\n\ntrailing  \n",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "",
+      "disabled": false,
+      "timer": [
+        1000,
+        true
+      ],
+      "label": null,
+      "recent": []
+    },
+    {
+      "action": "save",
+      "fit": null,
+      "text": null,
+      "saved": {
+        "alpha": "",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "",
+      "disabled": false,
+      "timer": null,
+      "label": null,
+      "recent": []
+    },
+    {
+      "action": "type",
+      "fit": null,
+      "text": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+      "saved": {
+        "alpha": "",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+      "disabled": false,
+      "timer": [
+        1000,
+        true
+      ],
+      "label": " (4.6k)",
+      "recent": []
+    },
+    {
+      "action": "save",
+      "fit": null,
+      "text": null,
+      "saved": {
+        "alpha": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+      "disabled": false,
+      "timer": null,
+      "label": " (4.6k)",
+      "recent": []
+    },
+    {
+      "action": "select",
+      "fit": "structure",
+      "text": null,
+      "saved": {
+        "alpha": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Stored structure note\n\u4fdd\u6301",
+      "disabled": true,
+      "timer": null,
+      "label": " (24)",
+      "recent": []
+    },
+    {
+      "action": "select",
+      "fit": null,
+      "text": null,
+      "saved": {
+        "alpha": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+        "beta": "Independent \u03b2 fit\n42",
+        "structure": "Stored structure note\n\u4fdd\u6301"
+      },
+      "display": "Stored structure note\n\u4fdd\u6301",
+      "disabled": true,
+      "timer": null,
+      "label": null,
+      "recent": []
+    }
+  ],
+  "copies": {
+    "alpha": "Offline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\nOffline note \u6f22\u5b57 \ud83d\ude80\n",
+    "beta": "Independent \u03b2 fit\n42",
+    "structure": "Stored structure note\n\u4fdd\u6301"
+  },
+  "no_active_error": "Need integer as argument",
+  "boundary": "Unchanged original editNotes, NotesView event methods and EOS deepcopy; inert text/timer ports, real wx events and SQLite commits."
+}

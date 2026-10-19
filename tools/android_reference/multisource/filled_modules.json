@@ -1,0 +1,129 @@
+{
+  "source": [
+    {
+      "charge": "Antimatter Charge M",
+      "name": "Dual 150mm Railgun II",
+      "state": "ACTIVE"
+    },
+    {
+      "charge": "Targeting Range Dampening Script",
+      "name": "Remote Sensor Dampener II",
+      "state": "ACTIVE"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "MED"
+    },
+    {
+      "empty_slot": "MED"
+    },
+    {
+      "empty_slot": "MED"
+    },
+    {
+      "empty_slot": "MED"
+    },
+    {
+      "empty_slot": "HIGH"
+    },
+    {
+      "empty_slot": "HIGH"
+    },
+    {
+      "empty_slot": "RIG"
+    },
+    {
+      "empty_slot": "RIG"
+    },
+    {
+      "empty_slot": "RIG"
+    }
+  ],
+  "target": [
+    {
+      "charge": "Antimatter Charge M",
+      "name": "Dual 150mm Railgun II",
+      "state": "ACTIVE"
+    },
+    {
+      "charge": "Antimatter Charge M",
+      "name": "Dual 150mm Railgun II",
+      "state": "ACTIVE"
+    },
+    {
+      "charge": null,
+      "name": "Drone Link Augmentor I",
+      "state": "ONLINE"
+    },
+    {
+      "charge": null,
+      "name": "10MN Afterburner II",
+      "state": "ACTIVE"
+    },
+    {
+      "charge": null,
+      "name": "Medium Shield Extender II",
+      "state": "ONLINE"
+    },
+    {
+      "charge": null,
+      "name": "Cap Recharger II",
+      "state": "ONLINE"
+    },
+    {
+      "charge": null,
+      "name": "Damage Control II",
+      "state": "ONLINE"
+    },
+    {
+      "charge": null,
+      "name": "Drone Damage Amplifier II",
+      "state": "ONLINE"
+    },
+    {
+      "charge": null,
+      "name": "Medium Armor Repairer II",
+      "state": "ACTIVE"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "LOW"
+    },
+    {
+      "empty_slot": "MED"
+    },
+    {
+      "empty_slot": "HIGH"
+    },
+    {
+      "empty_slot": "RIG"
+    },
+    {
+      "empty_slot": "RIG"
+    },
+    {
+      "empty_slot": "RIG"
+    }
+  ],
+  "provenance": {
+    "description": "Original EOS Fit.fill after legal A04 source/target construction; exporter independently reruns fill and checks raw rows",
+    "oracle_sha256": "37107bf37588a475b543bf8a2132d6508771fec6735134a4cba31475b62e7118",
+    "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e"
+  }
+}
