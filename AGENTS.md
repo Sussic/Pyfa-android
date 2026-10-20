@@ -169,3 +169,20 @@ findings materially change the approach, update and review the affected plan
 before continuing. Automatic continuation does not authorize new scope. Do not
 repeat a whole-plan audit for every small edit; retain safety, resource, release
 and explicit pause boundaries.
+
+## Agent skills
+
+### Issue tracker
+
+For issue/spec tracking, read `docs/agents/issue-tracker.md`.
+The configured tracker is GitHub Issues in `Sussic/Pyfa-android`.
+
+### Triage labels
+
+Before triage or label changes, read `docs/agents/triage-labels.md`
+for the five canonical role mappings.
+
+### Domain docs
+
+Before codebase exploration, read `docs/agents/domain.md`
+for the single-context layout and domain-document consumer rules.
