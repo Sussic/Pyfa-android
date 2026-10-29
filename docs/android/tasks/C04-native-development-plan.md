@@ -1,5 +1,10 @@
 # C04 native acceptance plan
 
+## Current progress pointer - 23 October 2026
+
+[The canonical tracker](../ROADMAP.md) owns current C04 progress; [STATUS](../STATUS.md) owns its execution pointer. This plan retains the acceptance contract, not launch permission. Runtime18 refused physical storage before Android (task-5/RUNTIME18-RESULT.json); no automatic retry. The qualified candidate still has 0/9 accepted native phases, 0/11 executions and 0/5 screenshot reviews; twelve reference/headless gates and the Windows harness do not close those criteria. Preserve the 190-gate full plan and API36 app acceptance; API35 OS-only diagnosis is separate. Earlier counts, cleanup/slot grants and next commands below are historical. All heavy tests are stopped; no cleanup or workload is authorized by this documentation update.
+
+
 ## Current execution contract - 2026-10-17
 
 [STATUS](../STATUS.md) owns authorization and the single next action.
@@ -23,6 +28,18 @@ Latest parent grant after Jita on 2026-10-17 stopped before launch: CPU66.349%
 process checks passed. Zero emulator/app/build executions. Slot released; no
 unchanged retry. See task-2/c04-slot-admission-20261017/handoff.json. The current
 host-resource blocker supersedes earlier pending-slot notices.
+
+### Qualified external artifacts and preserved dirty source
+
+For the current merged candidate, use the canonical
+[qualified external C04 build procedure](../LOCAL-VERIFICATION.md#reuse-a-qualified-external-c04-build-for-focused-development).
+Its explicit verified-input mode supersedes historical clean-checkout and
+hardcoded APK-path assumptions for focused development only. It preserves the
+original build-source binding, separately binds reviewed executing helpers and
+rejects every unreviewed or product/test/input change. Default clean-Git and full
+delivery requirements remain unchanged. Current qualification and authorization
+come from STATUS and the parent handoff, not dated APK examples in this history.
+No runtime phase is authorized or recorded as passing by this procedure link.
 
 ### Candidate and finite acceptance
 

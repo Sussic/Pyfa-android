@@ -18,7 +18,18 @@ class EquipmentMarket:
 
     def _build_catalog(self):
         import eos.db
+        from eos.gamedata import MarketGroup
+        from sqlalchemy.orm import selectinload
         policy = self.policy
+        # Keep the selected tree's ORM identities alive through the build. Load
+        # collections separately so policy traversal does not issue a SELECT for
+        # every group's items/children or create a joined collection cross-product.
+        group_ids = sorted(policy.SHOWN_MARKET_GROUPS)
+        prefetched_groups = []
+        for offset in range(0, len(group_ids), 500):
+            prefetched_groups.extend(eos.db.get_gamedata_session().query(MarketGroup)
+                .filter(MarketGroup.ID.in_(group_ids[offset:offset + 500]))
+                .options(selectinload(MarketGroup.items), selectinload(MarketGroup.children)).all())
         groups, items, searchable = {}, {}, set()
         for name in policy.SEARCH_CATEGORIES:
             for item in eos.db.getItemsByCategory(name):

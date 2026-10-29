@@ -15,7 +15,7 @@ import zipfile
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from drone_delivery import admit_native, validate_native, REFERENCE_FILES
+from drone_delivery import admit_native, validate_native, verified_inputs, REFERENCE_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = 'io.github.sussic.pyfa.dev'
@@ -162,8 +162,36 @@ def require_offline(command, *, clock=time.monotonic, sleep=time.sleep, seconds=
         raise
 
 
+def resolve_inputs(root=None, descriptor=None, descriptor_sha256=None):
+    if not __debug__: raise RuntimeError('Python optimization disables required verification assertions')
+    root = Path(root) if root is not None else ROOT.parent
+    assert (descriptor is None) == (descriptor_sha256 is None), 'Both verified-input options are required'
+    provenance = verified_inputs(descriptor, descriptor_sha256, root) if descriptor is not None else None
+    if provenance is None:
+        assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True).strip(), 'Commit the reviewed candidate first'
+        commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
+        apks = [root / 'android/app/build/outputs/apk/debug/app-debug.apk',
+                root / 'android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk']
+    else:
+        commit = None
+        apks = [Path(provenance['apks'][label]['path']) for label in ('app', 'test')]
+    assert all(path.is_file() for path in apks)
+    with zipfile.ZipFile(apks[0]) as archive:
+        manifest = json.loads(archive.read('assets/engine/manifest.json'))
+        for relative, digest in manifest['engine_sources'].items():
+            assert hashlib.sha256((root / relative).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == digest, relative
+    fixtures = {name: hashlib.sha256((root/'tools/android_reference/fixtures'/name).read_bytes()).hexdigest()
+                for name in REFERENCE_FILES.values()}
+    with zipfile.ZipFile(apks[1]) as archive:
+        for name, digest in fixtures.items():
+            assert hashlib.sha256(archive.read('assets/'+name.replace('.json','-expected.json'))).hexdigest() == digest
+    return dict(commit=commit, apks=apks, fixtures=fixtures, source_provenance=provenance)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verified-inputs', type=Path)
+    parser.add_argument('--verified-inputs-sha256')
     parser.add_argument('--serial', required=True)
     parser.add_argument('--avd', required=True)
     parser.add_argument('--evidence', type=Path, required=True)
@@ -189,20 +217,8 @@ def main():
     assert hashlib.sha256((ROOT.parent/'tools/android_reference/fixtures/drone-conservation.json').read_bytes()).hexdigest()==conservation_metadata['reference_sha256']
     expected_file = ROOT.parent / 'tools/android_reference/fixtures/drone-details.json'
     assert hashlib.sha256(expected_file.read_bytes()).hexdigest() == metadata['reference_sha256']
-    assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT.parent, text=True).strip(), 'Commit the reviewed candidate first'
-    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT.parent, text=True).strip()
-    apks = [ROOT / 'app/build/outputs/apk/debug/app-debug.apk',
-            ROOT / 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk']
-    assert all(path.is_file() for path in apks)
-    with zipfile.ZipFile(apks[0]) as archive:
-        manifest = json.loads(archive.read('assets/engine/manifest.json'))
-        for relative, digest in manifest['engine_sources'].items():
-            assert hashlib.sha256((ROOT.parent / relative).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == digest, relative
-    fixtures = {name: hashlib.sha256((ROOT.parent/'tools/android_reference/fixtures'/name).read_bytes()).hexdigest()
-                for name in REFERENCE_FILES.values()}
-    with zipfile.ZipFile(apks[1]) as archive:
-        for name, digest in fixtures.items():
-            assert hashlib.sha256(archive.read('assets/'+name.replace('.json','-expected.json'))).hexdigest() == digest
+    resolved = resolve_inputs(descriptor=args.verified_inputs, descriptor_sha256=args.verified_inputs_sha256)
+    commit, apks, fixtures = (resolved[key] for key in ('commit', 'apks', 'fixtures'))
     evidence.mkdir(parents=True)
     receipts = []
     def adb(*arguments, data=None, timeout=120):
@@ -250,7 +266,8 @@ def main():
         raw = adb('exec-out', 'cat', '/sdcard/Download/pyfa-c04-' + name + '.png')
         assert raw.startswith(b'\x89PNG\r\n\x1a\n') and len(raw) > 1000
         (evidence / (name + '.png')).write_bytes(raw)
-    (evidence / 'inputs.json').write_text(json.dumps(dict(commit=commit, avd=args.avd, serial=args.serial,
+    (evidence / 'inputs.json').write_text(json.dumps(dict(commit=commit, input_mode='verified-snapshot' if resolved['source_provenance'] else 'clean-git',
+        source_provenance=resolved['source_provenance'], avd=args.avd, serial=args.serial,
         fingerprint=text('shell', 'getprop', 'ro.build.fingerprint'), seed=metadata, conservation_seed=conservation_metadata, fixtures=fixtures, admission=admission,
         apk_sha256={path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in apks}), indent=2))
     install()
@@ -281,11 +298,12 @@ def main():
     run('restored', 'DroneAcceptanceTest', method, 'restored'); private('c04-restored-receipt.json')
     run('mutation-ui', 'DroneUiTest', ['restoredMutationsShowDetailsAndRetainSeparateIdentities'])
     screen('existing-roll-details')
-    report = dict(development_only=True, native_executions=sum(row['tests'] for row in receipts), phases=receipts,
+    assert resolve_inputs(descriptor=args.verified_inputs, descriptor_sha256=args.verified_inputs_sha256) == resolved, 'Inputs changed during native execution'
+    report = dict(input_mode='verified-snapshot' if resolved['source_provenance'] else 'clean-git', development_only=True, native_executions=sum(row['tests'] for row in receipts), phases=receipts,
                   screenshot_review='pending', full_delivery=False,
                   files={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in evidence.iterdir() if p.is_file()})
     (evidence / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
-    checked = validate_native(evidence, commit)
+    checked = validate_native(evidence, commit, verified_inputs_sha256=args.verified_inputs_sha256)
     print(json.dumps(checked))
 
 

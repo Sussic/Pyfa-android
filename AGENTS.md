@@ -186,3 +186,9 @@ for the five canonical role mappings.
 
 Before codebase exploration, read `docs/agents/domain.md`
 for the single-context layout and domain-document consumer rules.
+
+## Progress tracker maintenance
+
+For feature work, verification, continuation or status reports, read the canonical tracker first. At each meaningful stop, update its stable row with bounded acceptance, implemented/integrated/verified distinctions, exact source or dirty-input identity, dated evidence path, genuine blocker and next action. Done requires all stated acceptance evidenced. Keep dated checkpoints as history and point them back to the tracker; preserve failures and scope. Readiness does not authorize execution.
+
+Canonical tracker: [Pyfa](docs/android/ROADMAP.md), current reconciliation section. STATUS carries its execution pointer; task briefs/PARITY retain acceptance. This resolves older wording that treated historical roadmap state labels as current proof.

@@ -1,6 +1,44 @@
 # C04 - drone editing
 
-## Current disposition - 2026-10-16
+## Current verification checkpoint - 2026-10-22
+
+The unchanged Windows drone_harness qualification passed 52 tests with zero
+failures/errors; five Linux pidfd/waitid tests were explicitly skipped (57 total).
+Exact approved decision bytes were restored from genuine commit `2e518a2e...`,
+SHA256 `0f828ccece437de4b51fd65fbe57c62399e297cedb3a4206e9e9775dda236ce2`.
+Genuine inherited launcher `cbda3ade...` is exposed read-only in the separate
+qualification area. Existing tests confirm the unchanged 175-gate prefix and
+190 unique gates, focused entrypoints, exclusions and corruption rejection.
+No product/test code, policy or expected value changed. The completed 12-gate
+reference/headless proof is reused on unchanged tested source/inputs. Two staging
+failures and all guard/source/log/runtime evidence are retained externally under
+`C:/Users/HallT/Documents/Codex/2026-10-22/task-2/c04-harness-qualification-01`.
+See `RESULTS.json`, `SOURCE-AND-INPUTS.json`, `harness.log` and `REVIEW.json`.
+
+[STATUS](../STATUS.md) owns the next bounded native feasibility/acceptance plan
+review. Windows harness proof supplies no Linux/native/device/full delivery
+acceptance. Existing F08 acceptance, upgrade and usability requirements remain.
+
+## Previous verification checkpoint - 2026-10-21
+
+The selected dataset-bound four-reference/eight-headless sequence passed all
+12 gates on the staged merged-source snapshot. References: core, details,
+acceptance and conservation. Headless: core, details, projection, command,
+variations, history, boundaries and conservation, with fresh-process restarts.
+All guards exited 0 cleanly; the longest step took 143.14 seconds of its 180-second
+limit. The Pyfa heavy slot is released. No gate was retried or expectation changed.
+
+The exact database/CRLF inputs were hash-verified before staging and all staged
+source/input bindings were verified afterward. The reviewed deleted-path evidence
+correction passed two synthetic checks and the actual details gate's four tests
+plus restart. The run-only 34 GiB allowance and all earlier failures are preserved;
+no cleanup, native work or delivery operation ran.
+
+[STATUS](../STATUS.md) owns exact per-gate receipts and the next task: separate
+`drone_harness` provenance/platform qualification. Native/full acceptance remains
+open; these host results do not complete C04 or change conservation semantics.
+
+## Historical disposition - 2026-10-16
 
 C04 is blocked on quiet-host admission at local candidate 2e518a2e, stacked on locally verified,
 unpublished C03.2 cddeff02. Drone controls and approved active-count conservation

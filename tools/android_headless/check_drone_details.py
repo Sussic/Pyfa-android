@@ -15,6 +15,20 @@ from tools.android_headless.check import DEPENDENCIES,NoDesktop
 from tools.android_reference.reference import compare,digest_file
 from tools.android_reference.drone_edits import PIN
 
+def source_provenance(root,baseline='5e4a6207'):
+    """Hash present changed sources and retain explicit historical deletion evidence."""
+    def git(*arguments):
+        return subprocess.check_output(['git',*arguments],cwd=root,text=True,encoding='utf-8')
+    commit=git('rev-parse','--verify',baseline+'^{commit}').strip()
+    changed=git('diff','--name-only','--no-renames','--diff-filter=d','-z',commit,'--').split('\0')
+    deleted=git('diff','--name-only','--no-renames','--diff-filter=D','-z',commit,'--').split('\0')
+    new=git('ls-files','--others','--exclude-standard','-z').split('\0')
+    return dict(source_baseline_commit=commit,
+        source_files={relative:digest_file(root/relative) for relative in sorted(set(changed+new))
+                      if relative.endswith(('.py','.kt'))},
+        deleted_source_files={relative:'D' for relative in sorted(deleted)
+                              if relative.endswith(('.py','.kt'))})
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('database','reference','output'): p.add_argument('--'+name,type=Path,required=True)
@@ -167,13 +181,10 @@ def main():
             '--reference',str(args.reference),'--output',str(args.output),'--restore'],check=True,
             stdout=log,stderr=subprocess.STDOUT,timeout=90)
     assert not guard.attempts and not network
-    changed=subprocess.check_output(['git','diff','--name-only','5e4a6207'],cwd=ROOT,text=True).splitlines()
-    new=subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=ROOT,text=True).splitlines()
     evidence=dict(host_only=True,tests=result.testsRun,observations=observed,
         fresh_process_restart=json.loads((args.output/'restored.json').read_text()),
         reference_sha256=digest_file(args.reference),database_sha256=digest_file(args.database),
-        source_files={relative:digest_file(ROOT/relative) for relative in sorted(set(changed+new))
-                      if relative.endswith(('.py','.kt'))},
+        **source_provenance(ROOT),
         limitations=['Native source has not been built or executed','Split/merge unresolved',
                      'Full inherited and integrated C04 verification not run'])
     (args.output/'evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')

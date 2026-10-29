@@ -121,6 +121,107 @@ def validate_observations(core,linked,original,acceptance):
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+
+VERIFIED_HELPER_FILES=frozenset((
+    'android/ci/check-drones.py','android/ci/drone_delivery.py',
+    'android/ci/test_drone_runner.py','android/ci/test_drone_delivery.py',
+    'docs/android/LOCAL-VERIFICATION.md','docs/android/tasks/C04-native-development-plan.md'))
+VERIFIED_DOCUMENTATION_FILES=frozenset((
+    'AGENTS.md','docs/android/ROADMAP.md','docs/android/STATUS.md',
+    'docs/android/tasks/C04-native-development-plan.md'))
+APK_OUTPUTS=('build/app/outputs/apk/debug/app-debug.apk',
+             'build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
+
+
+def source_binding(files):
+    """Reuse the qualified inventory's ordinal path/NUL/hash/LF binding."""
+    return hashlib.sha256(''.join(name+'\0'+files[name]+'\n' for name in sorted(files)).encode('utf-8')).hexdigest()
+
+
+def verified_inputs(path,expected_sha256,root=None):
+    """Validate an explicitly pinned development snapshot; never a clean commit."""
+    if not __debug__: raise RuntimeError('Python optimization disables required verification assertions')
+    root=Path(root) if root is not None else ROOT
+    path=Path(path).resolve(strict=True)
+    assert sha(path)==expected_sha256, 'Verified-input descriptor changed'
+    descriptor=json.loads(path.read_text(encoding='utf-8'))
+    version=descriptor.get('version')
+    assert type(version) is int and version in (1,2), 'Unsupported verified-input version'
+    fields={'version','source_manifest','qualification','apks','reviewed_changes'}
+    assert set(descriptor)==fields|({'documentation_review'} if version==2 else set())
+    def reference(ref):
+        assert set(ref)=={'path','sha256'} and Path(ref['path']).is_absolute()
+        file=Path(ref['path']).resolve(strict=True)
+        assert sha(file)==ref['sha256'], 'Qualified receipt changed: '+str(file)
+        return json.loads(file.read_text(encoding='utf-8'))
+    source=reference(descriptor['source_manifest'])
+    qualification=reference(descriptor['qualification'])
+    candidate=source['candidate']; original=candidate['files']
+    assert Path(candidate['root']).resolve()==root.resolve(), 'Qualified source root differs'
+    def git(*args):
+        return subprocess.check_output(['git',*args],cwd=root,text=True,encoding='utf-8',timeout=10).rstrip('\r\n')
+    assert git('rev-parse','HEAD')==candidate['head'], 'Qualified base HEAD differs'
+    assert git('branch','--show-current')==candidate['branch'], 'Qualified branch differs'
+    names=(set(git('ls-files','-z').split('\0'))|set(git('ls-files','--others','--exclude-standard','-z').split('\0')))-{''}
+    assert names==set(original), 'Qualified source inventory changed'
+    assert VERIFIED_HELPER_FILES<=names, 'Qualified helper inventory is incomplete'
+    assert len({name.casefold() for name in names})==len(names), 'Ambiguous source paths'
+    current={}
+    for name in sorted(names):
+        relative=Path(name)
+        assert not relative.is_absolute() and '..' not in relative.parts and relative.as_posix()==name
+        file=root/relative
+        assert file.resolve(strict=True).is_relative_to(root.resolve()), 'Source escapes checkout'
+        current[name]=sha(file)
+    binding=source_binding(original)
+    assert binding==source['candidate_sha256_map_binding']['sha256']==qualification['source_binding_sha256']
+    assert qualification['maintained_source_files_verified']==len(original)
+    assert qualification['maintained_source_changes']==[]
+    assert qualification['status']=='ASSEMBLY_REUSED_FULL_LINT_AND_PACKAGE_PASS'
+    changes=descriptor['reviewed_changes']
+    actual={name for name in names if original[name]!=current[name]}
+    eligible=VERIFIED_HELPER_FILES|(VERIFIED_DOCUMENTATION_FILES if version==2 else frozenset())
+    assert set(changes)==actual and actual<=eligible, 'Unreviewed or non-helper source change'
+    for name,row in changes.items():
+        assert row==dict(before=original[name],after=current[name]), 'Reviewed helper hashes differ: '+name
+    executing_binding=source_binding(current)
+    if version==2:
+        review=reference(descriptor['documentation_review'])
+        assert set(review)=={'version','source_manifest','qualified_source_binding_sha256',
+            'executing_source_binding_sha256','reviewed_changes','review_notes'}, 'Documentation review schema differs'
+        assert type(review['version']) is int and review['version']==1
+        assert review['source_manifest']==descriptor['source_manifest'], 'Documentation review source differs'
+        assert review['qualified_source_binding_sha256']==binding, 'Documentation review build binding differs'
+        assert review['executing_source_binding_sha256']==executing_binding, 'Documentation review executing binding differs'
+        documents=actual&VERIFIED_DOCUMENTATION_FILES
+        assert documents and set(review['reviewed_changes'])==set(review['review_notes'])==documents, \
+            'Documentation review must cover exactly the changed control documents'
+        for name in documents:
+            assert review['reviewed_changes'][name]==changes[name], 'Documentation review hashes differ: '+name
+            assert isinstance(review['review_notes'][name],str) and review['review_notes'][name].strip(), \
+                'Documentation review rationale missing: '+name
+    for phase,status in (('lint','ASSEMBLY_REUSED_LINT_AND_CLOSURE_PASS'),('package','APK_QUALIFICATION_PASS')):
+        row=qualification[phase]
+        assert row['status']==status and row['exit_code']==0, 'Qualification phase did not pass'
+        if phase=='lint': assert row['errors']==row['fatals']==0
+        proof=reference(dict(path=row['receipt'],sha256=row['receipt_sha256']))
+        assert proof['status']==status
+    assert set(descriptor['apks'])=={'app','test'}
+    apks={}
+    for label,output in zip(('app','test'),APK_OUTPUTS):
+        file=Path(descriptor['apks'][label]); assert file.is_absolute()
+        file=file.resolve(strict=True); expected=qualification['outputs'][output]
+        observed=dict(bytes=file.stat().st_size,sha256=sha(file))
+        assert observed==expected, 'Qualified APK changed: '+label
+        apks[label]=dict(path=str(file),**observed)
+    return dict(mode='verified-snapshot',descriptor=dict(path=str(path),sha256=expected_sha256),
+        base_commit=candidate['head'],branch=candidate['branch'],qualified_git_status=candidate['status'],
+        git_status=git('status','--porcelain'),qualified_source_binding_sha256=binding,
+        executing_source_binding_sha256=executing_binding,reviewed_changes=changes,
+        helper_sha256={name:current[name] for name in sorted(VERIFIED_HELPER_FILES) if name in current},apks=apks,
+        **(dict(documentation_review=descriptor['documentation_review']) if version==2 else {}))
+
+
 def validate_conservation_rows(rows,expected):
     assert len(rows)==len(expected['cases'])==14
     for row,case in zip(rows,expected['cases']):
@@ -175,11 +276,21 @@ def validate_conservation_acceptance(run,state=None):
     return validate_conservation_native(run/'native/c04')
 
 
-def validate_native(directory,commit=None):
+def validate_native(directory,commit=None,*,verified_inputs_sha256=None):
     directory=Path(directory)
     result=json.loads((directory/'result.json').read_text(encoding='utf-8'))
     inputs=json.loads((directory/'inputs.json').read_text(encoding='utf-8'))
-    if commit is not None: assert inputs['commit']==commit
+    mode=inputs.get('input_mode','clean-git')
+    assert mode in ('clean-git','verified-snapshot') and result.get('input_mode','clean-git')==mode
+    provenance=inputs.get('source_provenance')
+    if mode=='verified-snapshot':
+        assert verified_inputs_sha256 is not None, 'Snapshot development proof cannot enter full delivery'
+        assert inputs['commit'] is None and commit is None, 'Snapshot is not an exact tested commit'
+        assert provenance['descriptor']['sha256']==verified_inputs_sha256
+        assert provenance==verified_inputs(provenance['descriptor']['path'],verified_inputs_sha256)
+    else:
+        assert provenance is None and verified_inputs_sha256 is None, 'Snapshot provenance requires explicit mode'
+        if commit is not None: assert inputs['commit']==commit
     assert result['development_only'] is True and result['full_delivery'] is False
     assert result['native_executions']==sum(len(methods) for _,methods in PHASES.values())==11
     assert [row['phase'] for row in result['phases']]==list(PHASES)
@@ -221,7 +332,8 @@ def validate_native(directory,commit=None):
         raw=(directory/name).read_bytes(); assert raw.startswith(b'\x89PNG\r\n\x1a\n') and len(raw)>1000
     return dict(tested_commit=inputs['commit'],native_executions=11,core_cases=18,linked_cases=14,
                 variation_steps=6,conservation=conservation,original_detail_stacks=60,reopened_fits=8,screenshots=list(SCREENSHOTS),
-                split_merge='conservation-native-verified',full_delivery=False)
+                split_merge='conservation-native-verified',full_delivery=False,
+                **(dict(source_provenance=provenance) if mode=='verified-snapshot' else {}))
 
 
 def is_emulator_data(directory,path):

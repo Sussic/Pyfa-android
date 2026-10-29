@@ -1,6 +1,271 @@
 # Android project status
 
-## Start here — authoritative working copy and current control point (reconciled 19 October 2026)
+## Current execution pointer - 29 October 2026
+**Migration checkpoint:** the owner has requested preparation for MSI to Initia.
+Product execution is stopped; no Pyfa workload or diagnostic retry is queued.
+Preserve the complete intended source checkpoint on the existing development
+branch and transfer controls/evidence outside Git. Ownership remains here until
+Initia verifies the exact commit and payload. [Migration instructions](MIGRATION.md)
+record the portable requirements; the existing external handoff records exact
+paths, published commit, payload checksums and local-only sizes. Historical next
+steps below do not authorize execution during migration.
+
+Completed host outcome on 29 October: B04.2.3.3 rack ordering and heat on
+`dev/merged-g052-d042-local`, HEAD `5b6f2312d8aaf5d3bc9eeea89376939d34d445b2`.
+Preserve the inherited 14 status entries, integrated catalogue fix and separate
+11-file C10 candidate. All subsequent checkpoints are retained history; their
+old next-task wording does not select the current task.
+
+Integrated market host verification passed 6/6 in 12.047s; module editing passed
+6/6 in 44.031s, including a distinct OS reader restoring three fits. Charge
+run-01 stopped at 133.594s/exit88 on the unchanged whole-host baseline-drop
+ceiling: one check passed, compatibility enumeration was interrupted and four
+checks were unrun. Owned closure and all 388 input/database checks passed.
+The owner-resumed charge run-02 then passed all six original checks in 183.984s:
+14 cases/74 states, all 4,242 compatibility sets and a distinct OS reader matching
+two durable fits while the writer remained live. Peak Job commit was 255,188,992B
+within 256MiB. All 401 pins/database and protected source checks passed, the Job
+is absent, six recorded identities are closed and the shared slot is released.
+The stopped run-01 and its eleven files remain hash-identical. One incomplete
+telemetry sample remains disclosed. No Android acceptance or writer-death
+recovery follows from these host results; B04 A1-A3 remain false.
+
+Evidence: `C:/Users/HallT/Documents/Codex/2026-10-23/task-5/`:
+`b04-market-integrated-20261028/run-01/GATE-RESULT.json`,
+`b04-module-edits-20261028/run-01/GATE-RESULT.json`, and
+`b04-charge-edits-20261028/run-01/{GATE-RESULT,RESOURCE-ANALYSIS,CLOSURE,POST-INPUTS}.json`,
+and `b04-charge-edits-20261028/run-02/{GATE-RESULT,CLOSURE,POST-INPUTS,PROCESS-SEPARATION}.json`.
+Run-02 used `PLAN-run02.json` and `CONFIG-run02.json` without changing its six
+assertions, 600s aggregate including the nested 90s reader, 256MiB Job or reserves.
+
+The explicit Windows launcher path repair passed six regressions; all 25 existing
+local-result reporter checks passed. Actual launcher planning retains the two
+charge gates and full 190-gate plan. All supporting check Jobs are closed.
+Variation run-01 and run-02 stopped at 166.188s and 101.766s/exit88 on the
+unchanged Job memory cap during reader EOS import. Both failures and their
+thirteen-file manifests remain frozen; closure/input checks passed for each.
+The bound verification helper now loads the full oracle only in the writer,
+avoids receipt reparsing, and preserves every compared family observation on
+disk while releasing detached proof arrays during reader startup. Hash/count
+checks restore all rows for the original final output. Eight focused checks pass;
+the normalized original six-check AST and every assertion/oracle remain intact.
+Corrected run-03 passed all six checks in 129.016s: 17 cases/55 states, all
+5,226 families and a distinct OS reader restoring two durable fits while the
+writer remained live. Peak Job commit was 255,856,640B within the unchanged
+256MiB/600s contract, including its nested 90s reader and all existing reserves.
+All 452 pins/database/protected dirty-source and separate C10 checks passed.
+Its Job is absent, all six birth identities are closed and the shared slot was
+released to Jita after coordination. One incomplete telemetry sample remains
+disclosed; no sampled aggregate peak, writer-death or Android claim follows.
+Evidence: `b04-variation-edits-20261028/run-03/{GATE-RESULT,CLOSURE,POST-INPUTS,PROCESS-SEPARATION}.json`
+under the evidence root above; `CONFIG-lifetime.json` and both failed-run
+manifests preserve the exact as-run inputs. This pointer update is post-gate
+metadata and does not rewrite the sealed source/control bindings.
+The owner resumed the approved milestone with continuation between eligible
+steps. The next existing B04.2.3.3 rack gate passed all six original checks in
+58.000s: nine cases/48 states, four recipients, strict original Thermodynamics
+AST, atomic/stale/write failure behavior, unchanged recent use, independent
+copies, unavailable failed heat and a distinct OS reader matching two saved fits
+while the writer remained live. Peak Job commit was 220,610,560B within the
+unchanged 256MiB/360s contract including its nested 90s reader and all reserves.
+All 477 pins/database/protected dirty source/separate C10 checks passed; its
+Job is absent, nine birth identities are closed and the shared slot is released.
+Two incomplete samples remain disclosed. All original test statements, scalar
+types/tolerances, fixture and clean pinned source were retained. No product
+engine/bridge source change was needed. A pre-run metadata assertion caught and
+corrected a stale variation-only reporter criterion; its preimage/addendum remain.
+Evidence: b04-rack-ordering-20261029/run-01/{GATE-RESULT,CLOSURE,POST-INPUTS,PROCESS-SEPARATION}.json;
+CONFIG.json SHA256 9276e3b13a0cbd916fac21c63db5f8c4a5ff183b5180bfde2c3b16f98f7c428a.
+The existing B04 task/PARITY rows now have applicable supporting host evidence
+for market/recent use, empty hulls, modules/restrictions, charges, variations and
+rack ordering; retain the isolated origin of the accepted hull proof. Earlier
+passes were reused, not replayed. This does not close B04 A1-A3 or qualify the
+historical native/UI/recreation/restart/screenshots on current source.
+Next required B04 acceptance is current-source native qualification and those
+Android workflows. It remains blocked by the existing consumed native20
+resource-stop hold: disposition is required before any fresh bounded Android
+attempt, with limits/access/cleanup stops unchanged. No further independent B04
+host slice is identified by this bounded task/PARITY check; do not broaden into
+B05/R01 or retry native20 to fill the gap.
+29 October disposition check reused and hash-verified native20's saved commit
+diagnosis: global commit grew 4,126,924,800B against the 4,000,000,000B ceiling;
+owned peak was 2,688,552,960B with no Job cap notification. Attribution of the
+remaining global growth is unresolved; no launcher/guard arithmetic defect is
+demonstrated. Existing account mode then passed in 29.203s/256MiB with all 50
+roots (original 49 plus this owner's evidence workspace), closure verified and
+slot released. Retained allocation 48,874,831,973B plus a fresh 8,615,100,416B
+reservation exceeds 52GiB by 1,655,357,541B, or existing OS-only 50GiB by
+3,802,841,189B; the physical free-space floor passed. No emulator was started.
+The owner explicitly authorized compression of only the four named retired RAM
+snapshots, with complete before/after hashes, and one conditional API36 OS-only
+attribution diagnostic. Compression passed: all four full content hashes and
+file identities match; 8,590,196,736B recovered, no deletion. Existing r12 guard
+exited0/25.344s, peak19,382,272B; Job absent and twelve recorded births closed.
+Fresh existing-account mode passed0/24.860s, peak40,263,680B; all 50 roots retain
+40,285,884,793B. Adding the unchanged8,615,100,416B reservation fits existing
+50GiB with4,786,105,991B headroom; minimum free disk28,843,868,160B also passed
+the reserve-plus10GiB floor. This second Job/four births are closed; shared slot
+released. One incomplete sample per guard is disclosed. Original native20 saved
+evidence remains unchanged; compression altered only the four authorized files'
+physical representation. Keep all original diagnostic/acceptance/resource gates;
+the native20-only52GiB exception remains consumed.
+The controller read/hash prerequisite is cleared: the owner supplied the exact
+successful SHA256 and the same supported PowerShell read matched. The original
+denial is preserved; no alternate reader, security change or required-hash waiver.
+The OS-only adapter now verifies current source/tool identities without claiming
+APK qualification; its original application APK resolver remains intact. Bounded
+memory attribution uses existing r12 readers, with all original gates retained.
+Sixteen final focused checks pass, including the900s evidence/closure clock;
+earlier candidates and the default-clock fixture failure remain preserved.
+The single authorized diagnostic21 ran after Beacon's verified shared-slot
+release and refused fresh CPU admission:77.046% mean versus unchanged50%, over
+12.641s. Guard exit1/58.141s, peak63,840,256B, no cap notifications/abort; one
+incomplete sample remains. Full50-root storage and1,103-source/57-input checks
+passed. No SDK/AVD/emulator/guest/app/native phase was reached. Job absent,
+eight creation identities closed, no remaining/unresolved members; slot released.
+Two initial/post-closure attribution snapshots retain unknown counters. They
+cannot answer native20's boot-memory question because no emulator launched.
+Post-attempt checks preserve all1,103 source files,57 pins,11 separate C10 files
+and16 status entries before these metadata-only pointer edits. The single
+invocation is consumed; no repeat is authorized. Recommended owner decision:
+one fresh same-route OS-only invocation during a later idle coordinated window,
+conditional on all unchanged admission checks. Do not raise limits or retry now.
+Current-source APK rebuild/qualification and full Android acceptance remain open.
+Evidence: this chat's outputs/OS21-RESULT.md and work/os-only-attribution/
+{RESULT,POST-INPUTS}.json; runtime-21 retains the refusal, snapshots and closure.
+The preceding compression/access reports and cumulative handoff chain remain.
+Other flow/provenance and Android acceptance remain. Central B04 updates await
+the existing sole writer: its app resumption fails before dispatch/save; the
+immutable rack delta and cumulative writer packet retain all pending updates in
+the existing handoff chain; no central save or ownership change is claimed.
+
+Native20 remains consumed and closed. The native resource hold, current-source
+qualification reopening, complete native/offline/recreation/screenshots and
+final-delivery gates remain. No native retry, cleanup, install, resource-limit
+change or privileged-execution resumption is selected by these repairs.
+
+## Historical execution checkpoint - 26 October 2026
+
+Read [the canonical tracker](ROADMAP.md) first. Dirty source remains dev/merged-g052-d042-local, HEAD5b6f2312d8aaf5d3bc9eeea89376939d34d445b2; preserve unrelated work and all prior evidence.
+
+C04.NATIVE52 is complete for its bounded policy and qualification scope: the reviewed52GiB aggregate allowance binds one native20 API36/x86_64 runtime/AVD without retry.23 focused checks passed; Spec/Standards cleared code and final configuration; canonical offline resolution qualified the complete1102-file executing source binding. Original owner, defaults and45GiB receipts remain unchanged.
+
+C04.NATIVE20 actually launched after supported execution review at15:18UTC, then stopped after165.422s,exit88: host baseline drop reached. The deciding global free-commit drop was4,126,924,800B against the unchanged4,000,000,000B threshold,126,924,800B over. RAM drop was3,815,112,704B; owned kernel job commit peaked at2,688,552,960B with no kernel cap notification. These measurements do not attribute all global change to the emulator. The guard terminated its owned Job before the worker's finally receipt completed; no owner cleanup receipt is invented.
+
+Four complete retained/physical checks passed the full49-root ledger, remaining reservations and10GiB physical floor. Initial RAM/commit,CPU27.517% initial/21.431% preboot against50%,SDK/WHPX/private ports,seeds and private AVD creation passed. Emulator boot began, but no boot-complete/identity/renderer proof was observed. Guest health was not qualified; offline,installation and native tests were not reached. Native acceptance remains0/9 phases,0/11 executions,0/5 screenshot reviews.
+
+Fresh closure verifies native20 Job absent,59 creation-identity checks and5 additional enumerated-PID absence checks with no live/unresolved owned identity; remaining/unresolved guard lists are empty. All5 preparation Jobs are also closed. Pyfa heavy slot is released. Evidence:C:/Users/HallT/Documents/Codex/2026-10-23/task-5/native52/NATIVE20-RESULT.json; amendment/checks/current pins:sibling RESULT.json,REVIEW.json,PREPARATION.json.
+
+Next eligible step is bounded analysis of existing host/global versus owned memory evidence and parent disposition before another fresh heavy attempt. Do not retry native20 or change baseline/resource limits. Cleanup remains explicitly paused. Full190-gate/offline/recreation/restart/device/upgrade/usability proof remains; helper/P8 checks remain complete. No cleanup,security setting,denied-operation retry or publication occurred. Launch-time controls are preserved in native52/STATUS-at-launch.md and ROADMAP-at-launch.md. This terminal tracker update does not retroactively alter sealed execution evidence or qualify future changed controls.
+
+## Retained execution history
+
+### Native52 readiness checkpoint before native20 - 26 October 2026
+
+Read [the canonical tracker](ROADMAP.md) first. Dirty source remains dev/merged-g052-d042-local,HEAD5b6f2312d8aaf5d3bc9eeea89376939d34d445b2;preserve unrelated work and all prior evidence.
+
+C04.NATIVE52 is prepared/reviewed for one future native20 attempt under the parent's explicit52GiB aggregate retained-evidence disposition. The original owner/native45 receipts remain frozen. A new owner copy changes only retained_cap:exact API36/x86_64,runtime/AVD and one integer attempt without automatic retry opt-in. Without that field,native45/OS50/graphics56 behavior is unchanged;global32 default reporting remains.23 focused synthetic checks passed and separate Spec/Standards reviews are clear.
+
+The full49-root ledger,8GiBAVD+16MiBnative+8MiBhost envelopes,10GiBphysical floor,CPU50%,8GiBstartRAM/commit8294967296,4GBtotal memory,1200s deadline and all ownership/closure checks remain unchanged.52GiB is an aggregate allowance including retained old evidence,not new52GiB growth. Native19's50.918GiB projection fits by1.082GiB arithmetically;fresh complete admission is still required.
+
+Parent reports Jita normal closure15:06;Pyfa receives the single heavy slot after reviewed readiness. No emulator/build/heavy command or active port reservation occurred in this preparation. Before any execution,parent must coordinate release,new native20 identity/exact config/current v2 pins and complete resource/retained/CPU/ownership/ports admission. Readiness evidence and actual final qualification pins:C:/Users/HallT/Documents/Codex/2026-10-23/task-5/native52/RESULT.json. Successful final receipts own proof,not planned commands.
+
+Native19 remains a closed45GiB retained-cap refusal before Android,with verified owned closure;no retry/deletion or rewritten receipt. Cleanup remains explicitly paused. API36 native acceptance remains0/9 phases,0/11 executions,0/5 screenshot reviews;full190-gate/offline/recreation/restart/device/upgrade/usability proof remains. Compatibility helper/P8 checks remain complete. No OS/access-security setting change,denied-path retry,publication or unrelated termination occurred.
+
+
+
+
+
+## Current control point - C04 Windows harness qualified (22 October 2026)
+
+Selected child: C04 Windows drone_harness provenance qualification, completed on
+`dev/merged-g052-d042-local`, base HEAD `5b6f231`, preserving all prior local work.
+The approved decision was restored byte-for-byte from genuine local commit
+`2e518a2eb61e20df13836278402950a2ba4918af` (SHA256 `0f828cce...`). A fresh
+source-only qualification area reads genuine `cbda3ade...` launcher history through
+local object alternates with lazy fetch disabled. No obsolete source, fabricated
+history, product/test code, policy, expected value or tolerance changed.
+
+The complete unchanged Windows harness ran 57 tests: 52 successes, zero failures
+or errors, five declared Linux pidfd/waitid skips. The inherited 175-gate prefix,
+190 unique full-plan names, focused entrypoints, exclusions and corruption
+rejections passed their existing checks. No native plan gate was executed.
+The existing 12 reference/headless gate receipts are reused: their source/inputs
+remain equivalent, the new decision is not consumed by those commands, and only
+checkpoint documentation differs. The frozen source and CRLF input remain intact.
+
+Slot `pyfa-c04-harness-20261022` is released. Fresh host/storage admissions used
+the existing tiny guard (268,435,456-byte hard job commit plus 100,000,000-byte
+monitor reserve, 90-second outer deadline, 4 GiB host reserves, 10 GiB disk floor)
+and the parent's explicit application of the run-only 34 GiB allowance. The default
+32 GiB policy is unchanged. Two staging failures (missing evidence directory and
+CRLF alternates) and their focused corrections are retained; neither ran tests.
+No resource stop or remaining owned process occurred. Incomplete sampling keeps
+aggregate sampled peaks unknown; the kernel job-commit cap is independent.
+
+Evidence, exact identities/commands/runtime/log/guards, source equivalence and
+independent Standards/Spec review are in
+`C:/Users/HallT/Documents/Codex/2026-10-22/task-2/c04-harness-qualification-01`
+(`SOURCE-AND-INPUTS.json`, `RESULTS.json`, `COMMAND.json`, `harness.log`,
+`REVIEW.json`); guard receipts and configs are in its parent task directory.
+Existing cleanup classifications remain preserved; no retained project data was
+deleted or relocated. No Gradle, emulator/device, installer, live services,
+push/merge/release or GitHub write occurred.
+
+Exactly one next task: C04 remaining native feasibility/acceptance plan review
+and exact candidate/build equivalence before any separately coordinated native
+diagnostic. This slice authorizes no native execution. Linux coverage, native/full
+acceptance, upgrade checks and user usability remain unverified; C04 stays open.
+
+## Previous control point - C04 reference/host gates passed (21 October 2026)
+
+Authoritative source remains the merged review copy on
+`dev/merged-g052-d042-local`, HEAD `5b6f231`, with the reviewed uncommitted
+provenance checker correction and focused test. D04.2 is already integrated.
+Do not restart package recovery or begin C10.
+
+The selected four-reference/eight-headless outcome passed all 12 gates on the
+fresh disposable source/input snapshot. Reference core, details, acceptance and
+conservation passed. Headless core, details, projection, command, variations,
+history, boundaries and conservation passed, including fresh-process restarts.
+Every main guard exited 0 without an abort or remaining owned process. The longest
+step was conservation at 143.14 seconds, below its enforced 180-second limit.
+The shared-host slot `pyfa-c04-host-20261021-2215` is released; no gate, tool or
+approval is pending.
+
+The bundled game database and its disposable copy match `e0dc4b3d...`; the exact
+original CRLF variation input matches `07230866...`. Expected values, fixtures in
+the authoritative copy and tolerances were not changed. Post-run hashing confirmed
+all 1,101 staged source/input files and 27 pinned witnesses retain their staged
+bindings, including the recorded sole CRLF fixture-byte substitution. Genuine
+baseline history was reused read-only; no obsolete source or commit was fabricated.
+
+The focused details-evidence correction records full baseline `5e4a6207...`, all
+506 legitimate historical deletions as `D`, and present changed/added hashes.
+Two synthetic Python 3.11 checks passed; Standards and Spec reviews were clear.
+The actual details gate then passed four tests and its durable restart, confirming
+the correction in execution. Completed proof is retained for this exact snapshot;
+source/input/environment changes must be assessed before reuse.
+
+The owner-approved run-only 34 GiB allowance and complete admission are preserved;
+the default launcher remains 32 GiB. All historical failures remain retained. The
+seven-group storage disposition remains classification only, with no deletion or
+relocation authorized. No repeated admission-helper work or native reservation was
+introduced during this execution.
+
+Exact commands, per-gate results/timings/guards, source/input bindings and hashes
+are external in `C:\Users\HallT\Documents\Codex\2026-10-21\task-9`:
+`C04-TWELVE-GATE-RESULTS.json`, `C04-MAIN-CLOSING-CHECKPOINT.json`,
+`c04-host-run-01/SOURCE-AND-INPUTS.json`, `C04-HOST-PLAN-READY.json` and the
+`c04-main-*-guard-run-01` receipts. `git diff --check` passed after this update.
+
+Exactly one next task: separately qualify `drone_harness` provenance/platform
+requirements using genuine source/history and the retained failures. It was not
+part of these 12 gates and has not passed this session. Native acceptance and full
+qualification remain unverified; C04 is not fully delivered. No Gradle, emulator,
+release, push, merge or GitHub write occurred or is authorized by this checkpoint.
+
+## Historical starting point - superseded by the control point above (19 October 2026)
 
 This section supersedes every older "current", "next" and "package pending" statement
 below; those sections are retained as dated history. STATUS owns the single next action,
@@ -1827,7 +2092,7 @@ merge, release, budget increase or removal of an acceptance check occurred.
 
 
 C04 remaining-sequence preparation (2026-10-13 17:07 UTC): command/state/evidence manifest ready;
-Jita owns heavy slot. No emulator, ADB, package change, engine regeneration or native
+Parent reports Jita closure15:06;Pyfa slot after reviewed readiness. No emulator, ADB, package change, engine regeneration or native
 execution. Evidence: task-2/c04-remaining-sequence.json (22 pinned source/evidence/
 seed files), c04-sequence-prepare-v2-guard. Preparation exit0 in12.141s, peak job
 commit55,234,560 bytes under256MB, no remaining owned PIDs. An initial receipt-writer

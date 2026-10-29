@@ -1,0 +1,14 @@
+{
+  "status": "approved",
+  "user_decision": "Preserve total active drone counts during split/merge, matching F08.03",
+  "selected": {
+    "id": "F08.03-conserve-v1",
+    "active_counts": "conserve",
+    "split_allocation": "moved_active=min(requested,original_active)",
+    "merge_compatibility": "same item, base, mutaplasmid and exact ordered rolls",
+    "destination_identity": "retained",
+    "authority": "User decision 2026-10-13: preserve total active drone counts during split/merge, matching F08.03"
+  },
+  "allocation_origin": "Deterministic implementation rule within the approved conservation behavior; announced before implementation",
+  "desktop_exception": "Only split/merge active-count behavior departs from the pinned desktop commands; EOS calculations remain pinned"
+}

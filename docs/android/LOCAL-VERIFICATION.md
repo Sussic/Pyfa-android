@@ -16,6 +16,28 @@ This is a sampled stop guard, not a filesystem quota: between-check growth may
 overshoot. It stops owned descendants and preserves partial output for diagnosis;
 it never truncates reports, evicts old evidence or deletes unrelated data.
 
+For the owner-approved 21 October 2026 C04 reference/host run only
+(`pyfa-c04-host-20261021-2145`), the aggregate allowance is 34 GiB
+(36,507,222,016 bytes). The explicit owner disposition is external in task-9's
+`C04-OWNER-ALLOWANCE-2141.json`, bound to the complete 43-root ledger, both verified
+reference aliases and the unchanged 245,251,104-byte reservation. Preserve the
+32 GiB default observer result and assess this exception separately; neither the
+general launcher default nor its command-line maximum changes. Fresh host and
+retention admission, five-second aggregate monitoring, existing stage/time/memory
+limits and the 10 GiB host execution disk floor still apply. No native/build scope,
+automatic growth, deletion, relocation or evidence eviction is authorized.
+
+For the separately bounded 22 October 2026 C04 Windows harness qualification
+(`pyfa-c04-harness-20261022`), the parent explicitly applied the existing run-only
+34 GiB allowance under the owner's test/storage authorization. Fresh accounting
+retained every prior ledger root and registered the new task/output root at
+`C:/Users/HallT/Documents/Codex/2026-10-22/task-2`. The 64 MiB source and 64 MiB
+output planning allowances were retained; no database copy or AVD was needed.
+The default 32 GiB policy and all safety floors remain unchanged. Admission,
+bounded guard results and preserved staging failures are in that task directory;
+the qualification subdirectory owns exact source/provenance and Windows results.
+Five Linux skips and absent native/full proof remain explicit limitations.
+
 Successful cleanup requires all planned gates to pass, an intact file manifest,
 registered AVD identities, a stopped emulator and paths wholly inside that run.
 It covers avd, avd-rN and avd-c04-rN. Junctions, redirected paths, unexpected
@@ -36,6 +58,101 @@ reference/host, five build/package, 25 native), all inherited offline assertions
 raw validators and reviewed screenshots. [Receipt](evidence/w02-local.json) records
 actual commits, earlier failed launcher attempts and retained evidence. B09.1
 feature delivery is resumed under explicit user authorization; setup proof remains valid.
+
+## Reuse a qualified external C04 build for focused development
+
+`android/ci/check-drones.py` accepts `--verified-inputs <absolute-descriptor.json>`
+and `--verified-inputs-sha256 <reviewed-SHA256>` together. Without both options,
+its existing clean-Git requirement and conventional APK paths remain unchanged.
+This explicit mode preserves the actual dirty status and records `commit: null`;
+the original build source and the executing helpers have separate identities.
+It never supplies full-delivery or `local/full-verification` evidence. The full
+reporter's default `validate_native` call rejects snapshot-mode reports.
+
+Use a small external JSON descriptor, not a source copy or another launcher:
+
+```json
+{
+  "version": 1,
+  "source_manifest": {"path": "<absolute-existing-source-map>", "sha256": "<SHA256>"},
+  "qualification": {"path": "<absolute-existing-package-result>", "sha256": "<SHA256>"},
+  "apks": {"app": "<absolute-app-APK>", "test": "<absolute-test-APK>"},
+  "reviewed_changes": {
+    "android/ci/check-drones.py": {"before": "<qualified-hash>", "after": "<reviewed-current-hash>"}
+  }
+}
+```
+
+The source map reuses the existing `candidate` fields (`root`, `head`, `branch`,
+`status`, `files`) and `candidate_sha256_map_binding.sha256`: SHA256 of UTF-8
+ordinal-sorted `path + NUL + lowercase SHA256 + LF`. The package result must bind
+that same source map, report unchanged maintained sources, passing assembly/lint/
+package qualification, and identify both APK hashes/sizes in `outputs`. Its
+hash-bound lint/package child receipts must still match. Preserve the original
+source map, receipts and failed attempts; never rewrite them for helper changes.
+
+For version1, `reviewed_changes` must list exactly every current difference from the original
+map, with exact before/after hashes. Only these six reviewed helper/test/docs
+paths are eligible: `android/ci/check-drones.py`, `android/ci/drone_delivery.py`,
+`android/ci/test_drone_runner.py`, `android/ci/test_drone_delivery.py`,
+`docs/android/LOCAL-VERIFICATION.md`, and
+`docs/android/tasks/C04-native-development-plan.md`. It is an eligibility list,
+not an automatic exclusion: unchanged files need no entry. Any inventory,
+production, Kotlin instrumentation, fixture, dataset or build-configuration
+change stops reuse. Review the descriptor and its digest independently before
+execution. Do not regenerate a new trusted descriptor merely to accept a mismatch.
+
+Version2 adds one mandatory `documentation_review` reference (`path` and
+`sha256`) to the same descriptor. All original source names, HEAD/branch,
+build/helper/APK hashes, qualification receipts, default clean-Git behavior and
+full-delivery restrictions remain checked. This does not allow arbitrary Markdown
+changes. In addition to the six existing eligible paths, only `AGENTS.md`,
+`docs/android/ROADMAP.md`, `docs/android/STATUS.md` and the already eligible
+`docs/android/tasks/C04-native-development-plan.md` may use this reviewed control
+document path. `reviewed_changes` still lists every source difference exactly.
+
+The separately reviewed and hash-pinned JSON record has exactly these fields:
+`version: 1`, `source_manifest` (identical to the descriptor's reference),
+`qualified_source_binding_sha256`, `executing_source_binding_sha256`,
+`reviewed_changes`, and `review_notes`. Both bindings use the complete source-map
+algorithm above. Its changes and nonempty per-file review notes must cover
+exactly the changed documents from the four named control paths; each before/
+after hash must equal the descriptor and actual source. The record is an explicit
+review attestation, not a machine judgement that modified instructions are safe.
+Review the actual changed instructions and acceptance text before pinning it.
+
+Routine tracker edits therefore require renewed exact source/control bindings;
+they do not require rebuilding unchanged APK bytes or erase applicable build/lint/
+package proof. Never edit a frozen receipt, suppress a source mismatch, silently
+refresh a review after instructions change, or reuse a stale record. The complete
+executing binding also makes a changed helper invalidate this documentation
+review. Qualify and pin final helper/test/tracker bytes together, then retain the
+original build identity separately. Use the existing `resolve_inputs` entrypoint
+for offline provenance resolution; it starts no Android transport. Descriptor
+eligibility does not provide resource admission, a heavy slot or native evidence.
+
+After separately coordinated admission and disposable API36/x86_64 emulator
+setup, use the same focused sequence:
+
+```powershell
+& <headless-python> -I -B android/ci/check-drones.py `
+  --verified-inputs <absolute-descriptor.json> --verified-inputs-sha256 <reviewed-SHA256> `
+  --serial <owned-emulator-serial> --avd <new-pyfa-c04-name> `
+  --seed <new-details-seed> --conservation-seed <new-conservation-seed> `
+  --evidence <new-external-evidence-directory> --heavy-slot-released
+```
+
+The runner validates source/receipt/APK bindings before any ADB action and again
+at closure, retains packaged engine/independent fixture checks and records both
+source identities, actual Git status, APK paths/hashes and all reviewed changes
+in `inputs.json`. Its validator rechecks snapshot provenance only with the
+explicit descriptor digest. All nine phases, eleven executions, offline/restart
+checks, five screenshot reviews, deadlines and existing resource/ownership
+protections remain required. Missing, changed or unbound evidence fails closed;
+preserve it and correct the specific cause. This option neither creates an AVD
+nor starts a service, downloads dependencies, rebuilds an APK or grants a slot.
+Focused helper tests live in `test_drone_runner.py` and `test_drone_delivery.py`;
+their synthetic host results do not establish Android runtime acceptance.
 
 ## Start and focused checks
 
@@ -164,6 +281,14 @@ are not passing results; follow STATUS for the actual tested revision.
 The launcher reuses `.venv/headless`, `.venv/reference`, clean pinned
 `build/reference-upstream`, JDK17, installed SDK, readelf and the Gradle wrapper.
 Optional `-SdkPath`, `-JdkPath`, `-SdkManager` select existing installations.
+`-PythonPath` selects an existing pinned Python 3.11 headless interpreter;
+`-ReferencePython` and `-Source` forward the helper's existing reference-runtime
+and pinned desktop-source options. Defaults remain checkout-local. Missing
+Python fails with the explicit path option; build/native/full start or resume
+also rejects a missing JDK17 before dispatch. Plan and desktop actions do not
+require a JDK or replace an inherited JAVA_HOME with a nonexistent path.
+These options install nothing and retain source, clean-checkout, dependency,
+resource, native and final acceptance checks.
 Default SDK manager: `%LOCALAPPDATA%/Android/Sdk/cmdline-tools/22.0/bin/sdkmanager.bat`.
 Installed command tools22 were verified against the official archive SHA256
 `90ae805d20434428bffcb699c290860f19bb5f66a67e6b330067e3de801fb04a`.

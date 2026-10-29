@@ -6,6 +6,8 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+import tempfile
+from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import drone_delivery as d
@@ -46,6 +48,19 @@ class DroneDeliveryTests(unittest.TestCase):
             report_local.validate_c04_delivery(Path('absent'),{'plan':[]},{})
         with self.assertRaisesRegex(AssertionError,'Missing completed conservation gate'):
             report_local.validate_c04_delivery(Path('absent'),{'plan':launcher.plan('full',None)},{})
+
+
+    def test_full_delivery_reporter_rejects_snapshot_mode_before_acceptance(self):
+        import report_local
+        with tempfile.TemporaryDirectory() as folder:
+            run=Path(folder); evidence=run/'native/c04';evidence.mkdir(parents=True)
+            (evidence/'inputs.json').write_text(json.dumps(dict(commit=None,input_mode='verified-snapshot',source_provenance={})))
+            (evidence/'result.json').write_text(json.dumps(dict(input_mode='verified-snapshot')))
+            state=dict(plan=list(d.HOST_GATES)+[d.NATIVE_GATE,d.DECISION_GATE])
+            latest={d.NATIVE_GATE:dict(tested_commit='1'*40)}
+            with patch.object(d,'require_decision'),patch.object(d,'validate_conservation_acceptance'):
+                with self.assertRaisesRegex(AssertionError,'Snapshot development proof cannot enter full delivery'):
+                    report_local.validate_c04_delivery(run,state,latest)
 
     def test_native_methods_fixtures_and_initial_exclusion_are_complete(self):
         from native_suite import EXCLUDED
