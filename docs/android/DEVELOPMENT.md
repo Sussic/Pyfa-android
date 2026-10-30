@@ -1,5 +1,11 @@
 # Development and verification
 
+Current execution authority: [EXECUTION](../../EXECUTION.md) and
+[execution-policy.json](../../execution-policy.json) supersede historical resource
+budgets, migration-only work pauses and runner prohibitions in this document.
+Keep dated proof unchanged. Queue unavailable validation and continue independent
+approved implementation; preserve product acceptance, access and C10 boundaries.
+
 ## What exists today
 
 This is a desktop Pyfa fork with an A01 desktop-reference harness and an A03–A05
@@ -125,8 +131,8 @@ Both hosted workflows remain deliberate manual fallbacks with read-only permissi
 reviewed pinned actions/tools, concurrency, existing time limits, one-day evidence
 and opt-in APK uploads. PR triggers are retired after the demonstrated local
 replacement, on the setup/B09.1 branch; default master follows only after that
-branch is separately delivered. No scheduled builds, runner service, release,
-paid runner or billing/spending change. Investigate one concrete failure before
+branch is separately delivered. Bounded MSI queue execution follows EXECUTION;
+release, paid-runner and billing/spending decisions remain separate. Investigate one concrete failure before
 retrying; preserve failures separately and never fabricate an Actions pass.
 
 ## Delivery

@@ -1,5 +1,16 @@
 # Android task queue
 
+## Current execution policy — 30 October 2026
+
+[EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
+own run locations, RAM/CPU/storage settings, MSI queueing and GitHub checkpoints.
+They supersede the old machine budgets and migration-only pauses below. Continue
+independent approved implementation while environment-dependent checks wait; track
+pending validation by immutable source and exact test selection. Historical
+native failures remain failed, and C10's external candidate remains unintegrated.
+
+## Retained source and verification history
+
 ## Canonical progress tracker - updated 26 October 2026
 
 **Migration pause — 29 October:** prepare the existing work branch and external

@@ -1,42 +1,23 @@
 # Explicit Windows verification
 
-## Bounded artifact retention
+## Current execution and artifact accounting
 
-The local runner now counts allocated bytes across the project's evidence and
-development stores, android/build, android/app/build and its current run. Add
-external generated-output locations with -ArtifactRoot (or --artifact-root).
-Filesystem identities deduplicate overlapping roots, hardlinks and aliases.
-SDK installations and the shared Gradle cache are outside this artifact budget.
+[EXECUTION](../../EXECUTION.md) explains the current Initia/MSI workflow;
+[execution-policy.json](../../execution-policy.json) owns all live resource values.
+The launcher loads that file and records its hash. It counts project roots once
+by filesystem identity, including checkouts, owned tools/caches and evidence.
+Add external generated roots with -ArtifactRoot. Shared installations are charged
+once by ownership. The legacy -ArtifactBudgetGiB override has been retired.
 
-The default aggregate cap is 32 GiB, including retained failed runs and retries;
--ArtifactBudgetGiB can lower it, but cannot raise it above 32. Admission reserves
-8 GiB for a new runtime AVD and checks copies before writing. Active commands are
-checked every five seconds against the aggregate cap and a 4 GiB free-disk reserve.
-This is a sampled stop guard, not a filesystem quota: between-check growth may
-overshoot. It stops owned descendants and preserves partial output for diagnosis;
-it never truncates reports, evicts old evidence or deletes unrelated data.
+Resuming an old run retains its accounting roots and as-run limit in history;
+it uses the current policy for new writes instead of restoring a legacy cap.
+Project-storage decisions use the JSON prompt threshold. Physical disk checks
+reserve the JSON floor plus forecast copies/build/AVD writes. Stored evidence is
+preserved when admission fails. Current output locations come from the policy.
 
-For the owner-approved 21 October 2026 C04 reference/host run only
-(`pyfa-c04-host-20261021-2145`), the aggregate allowance is 34 GiB
-(36,507,222,016 bytes). The explicit owner disposition is external in task-9's
-`C04-OWNER-ALLOWANCE-2141.json`, bound to the complete 43-root ledger, both verified
-reference aliases and the unchanged 245,251,104-byte reservation. Preserve the
-32 GiB default observer result and assess this exception separately; neither the
-general launcher default nor its command-line maximum changes. Fresh host and
-retention admission, five-second aggregate monitoring, existing stage/time/memory
-limits and the 10 GiB host execution disk floor still apply. No native/build scope,
-automatic growth, deletion, relocation or evidence eviction is authorized.
-
-For the separately bounded 22 October 2026 C04 Windows harness qualification
-(`pyfa-c04-harness-20261022`), the parent explicitly applied the existing run-only
-34 GiB allowance under the owner's test/storage authorization. Fresh accounting
-retained every prior ledger root and registered the new task/output root at
-`C:/Users/HallT/Documents/Codex/2026-10-22/task-2`. The 64 MiB source and 64 MiB
-output planning allowances were retained; no database copy or AVD was needed.
-The default 32 GiB policy and all safety floors remain unchanged. Admission,
-bounded guard results and preserved staging failures are in that task directory;
-the qualification subdirectory owns exact source/provenance and Windows results.
-Five Linux skips and absent native/full proof remain explicit limitations.
+Dated resource values in the sections below describe past attempts only. Use
+the policy loader for future jobs; archived launch descriptors require new
+policy-bound execution rather than unchanged replay.
 
 Successful cleanup requires all planned gates to pass, an intact file manifest,
 registered AVD identities, a stopped emulator and paths wholly inside that run.
@@ -45,13 +26,13 @@ contents, unregistered runtimes and evidence-referenced runtime files fail close
 A hash-bound runtime-cleanup.json records completion. Historical receipts keep
 their original validation contract. Paused/failed guests remain until triaged;
 explicit native retries create a fresh runtime without destroying the failed one.
-Budget exhaustion requires retention review rather than an automatic limit raise.
+A storage decision pauses only the writes needing it; continue independent work.
 
 Keep one reusable build output location and reuse unchanged hash-verified APKs.
 No historical artifacts are automatically deduplicated or evicted by this change.
 The current external C04 build directory must be included with -ArtifactRoot when
-using the integrated launcher. Existing 4 GB execution-memory controls remain
-separate from the artifact disk budget.
+using the integrated launcher. Execution admission and sustained-pressure handling
+come from the current policy, separately from artifact accounting.
 
 W02 demonstrated the complete Windows WHPX replacement: 78 gates (48 independent
 reference/host, five build/package, 25 native), all inherited offline assertions,

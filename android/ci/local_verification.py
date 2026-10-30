@@ -1,4 +1,4 @@
-"""Explicit, resumable local verification. No runner service or hosted execution."""
+"""Explicit, resumable, policy-bound local verification with durable MSI offload."""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -15,6 +15,9 @@ from contextlib import nullcontext
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from artifact_retention import ArtifactBudget, cleanup_verified_runtime, register_runtime
+from execution_policy import (AdmissionDeferred, PressureWindow, admit, detect_host,
+                              heavy_lease, load_policy, select)
+from policy_host_metrics import host_memory
 from native_suite import STEPS as NATIVE_STEPS
 from inspection_delivery import PHASES as INSPECTION_PHASES
 from drone_delivery import HOST_GATES as DRONE_HOST_GATES, NATIVE_GATE as DRONE_NATIVE_GATE, DECISION_GATE as DRONE_DECISION_GATE
@@ -372,17 +375,28 @@ def pending_targeting_metadata_index_fix(root,before,after,completed):
 class Run:
     def __init__(self,args):
         self.args=args
+        self.policy,self.policy_sha256=load_policy()
+        self.host=getattr(args,'execution_host',None) or os.environ.get('CODEX_EXECUTION_HOST') or detect_host()
+        if self.host!=detect_host():
+            raise RuntimeError('Selected policy host differs from the actual physical executor')
+        self.workload=('build' if args.mode=='build' else
+                       'focused_test' if args.mode=='desktop' and args.gate else 'full_suite')
+        self.settings=select(self.policy,self.host,self.workload)
+        if self.host=='initia' and self.settings['preferred_host']=='msi':
+            raise AdmissionDeferred('This selection belongs in the durable MSI queue; continue independent implementation on Initia')
+        self.execution_root=Path(self.policy['locations']['execution_root'].format(host=self.host,project=self.policy['project']))
+        self.execution_started=None
+        self.pressure=PressureWindow(self.settings)
         self.directory=Path(args.run).resolve() if args.run else \
-            Path(os.environ['LOCALAPPDATA'])/'PyfaAndroid/PyfaDevelopment/evidence'/(
+            self.execution_root/'results'/(
                 datetime.now().strftime('%Y%m%d-%H%M%S')+'-'+git('rev-parse','--short','HEAD')+'-'+uuid.uuid4().hex[:6])
         assert not self.directory.is_relative_to(ROOT), 'Keep large evidence outside the synced checkout'
         self.file=self.directory/'run.json'
-        artifact_base=Path(os.environ['LOCALAPPDATA'])/'PyfaAndroid/PyfaDevelopment'
+        policy_roots=[value.format(repository=str(ROOT),execution_root=str(self.execution_root),host=self.host)
+                      for value in self.policy['storage']['accounting_roots']]
         self.artifact_budget=ArtifactBudget([
-            artifact_base/'evidence',artifact_base/'development',
-            ROOT/'android/build',ROOT/'android/app/build',self.directory,
-            *getattr(args,'artifact_root',[])],
-            limit=getattr(args,'artifact_budget_gib',32)*1024**3)
+            *policy_roots,ROOT/'android/build',ROOT/'android/app/build',self.directory,
+            *getattr(args,'artifact_root',[])],policy=(self.policy,self.policy_sha256),host=self.host)
         self.artifact_budget.check()
         self.emulator=None
         self.serial=None
@@ -620,10 +634,15 @@ class Run:
                 self.state['commit']=current;self.state['tree']=git('rev-parse','HEAD^{tree}')
             assert self.state['tree']==git('rev-parse','HEAD^{tree}')
         self.state['artifact_retention']={
-            'version':1,'limit_bytes':self.artifact_budget.limit,
+            'version':2,'limit_bytes':self.artifact_budget.limit,
+            'policy_sha256':self.policy_sha256,
+            'historical_policies':self.artifact_budget.historical_policies,
             'roots':self.artifact_budget.roots,'poll_seconds':self.artifact_budget.interval,
             'failed_paused':'preserve until explicitly triaged',
             'budget_response':'stop owned work; never truncate or evict evidence'}
+        self.state['execution_policy']={'path':'execution-policy.json','sha256':self.policy_sha256,
+            'revision':self.policy['policy_revision'],'host':self.host,'workload':self.workload,
+            'workers':self.settings['workers']}
         save(self.file,self.state)
         self.native=self.directory/'native';self.native.mkdir(exist_ok=True)
         os.environ['PYFA_EVIDENCE_DIR']=str(self.native)
@@ -631,14 +650,34 @@ class Run:
         os.environ['PYFA_LOCAL_RUN_ID']=self.directory.name
         os.environ['PYTHONUTF8']='1'
         os.environ.pop('GITHUB_RUN_ID',None);os.environ.pop('GITHUB_STEP_SUMMARY',None)
-        self.reference=Path(args.reference_python or ROOT/'.venv/reference/Scripts/python.exe')
-        self.source=Path(args.source or ROOT/'build/reference-upstream').resolve()
+        self.reference=Path(args.reference_python or self.execution_root/'environments/reference/Scripts/python.exe')
+        self.source=Path(args.source or self.execution_root/'cache/reference-upstream').resolve()
         assert git('-C',str(self.source),'rev-parse','HEAD')==PIN
         self.db=Path(self.state.get('database',ROOT/'android/build/engine/assets/engine/eve.db'))
         assert sys.version_info[:2]==(3,11), 'Reuse the pinned Python 3.11 environment'
         assert sha(ROOT/'android/gradle/wrapper/gradle-wrapper.jar')=='81a82aaea5abcc8ff68b3dfcb58b3c3c429378efd98e7433460610fecd7ae45f'
 
+    def check_running_resources(self):
+        physical,commit=host_memory()
+        now=time.monotonic()
+        if self.pressure.sample(now,physical,commit):
+            raise AdmissionDeferred('Sustained host memory pressure; preserve this run and queue remaining validation')
+        if self.execution_started is not None and now-self.execution_started>=self.settings['timeout_seconds']:
+            raise AdmissionDeferred('Current workload deadline consumed; checkpoint remaining validation')
+
+    def admit_command(self):
+        physical,commit=host_memory()
+        self.artifact_budget.check()
+        measured=self.artifact_budget.latest
+        reasons=admit(self.settings,physical,commit,shutil.disk_usage(self.directory).free,
+                      self.settings['estimated_disk_write_bytes'],measured['allocated_bytes'])
+        if reasons:
+            raise AdmissionDeferred('; '.join(reasons)+'; queue this check and continue independent implementation')
+
     def execute(self,name,command,cwd=ROOT,timeout=None):
+        self.admit_command()
+        remaining=self.settings['timeout_seconds']-(time.monotonic()-self.execution_started)
+        timeout=min(timeout,remaining) if timeout is not None else remaining
         attempt=self.directory/'logs'/f'{len(self.state["attempts"]):03}-{name.replace(":","-")}.log'
         attempt.parent.mkdir(exist_ok=True)
         row={'gate':name,'command':list(map(str,command)),'log':str(attempt.relative_to(self.directory)),
@@ -699,7 +738,9 @@ class Run:
         commands={
             'dependencies':[sys.executable,'prepare-dependencies.py'],
             'engine-assets':[sys.executable,'-I','prepare-engine.py'],
-            'apks-lint':[android/'gradlew.bat','--no-daemon','--console=plain',':app:assembleDebug',':app:assembleDebugAndroidTest',':app:lintDebug'],
+            'apks-lint':[android/'gradlew.bat','--no-daemon','--console=plain',
+                         '--max-workers='+str(self.settings['workers']),
+                         ':app:assembleDebug',':app:assembleDebugAndroidTest',':app:lintDebug'],
             'signature':[sdk/'build-tools/35.0.0/apksigner.bat','verify','--verbose','--print-certs','app/build/outputs/apk/debug/app-debug.apk'],
             'package':[sys.executable,'ci/verify-apk.py']}
         self.execute('build:'+name,commands[name],cwd=android)
@@ -711,7 +752,7 @@ class Run:
 
     def start_emulator(self, suffix=''):
         from drone_delivery import admit_native
-        admit_native()
+        admit_native(starting=True)
         sdk=Path(os.environ['ANDROID_HOME']);tools=Path(os.environ['PYFA_SDKMANAGER']).parent
         self.execute('environment:whpx',[sdk/'emulator/emulator.exe','-accel-check'])
         whpx=(self.directory/self.state['attempts'][-1]['log']).read_text(encoding='utf-8')
@@ -728,7 +769,7 @@ class Run:
         if suffix:
             from drone_delivery import avd_identity
             avds,name=avd_identity(self.directory,len(self.state.get('native_restarts',[])))
-        self.artifact_budget.check(reserve=0 if avds.exists() else 8*1024**3)
+        self.artifact_budget.check(reserve=0 if avds.exists() else self.policy['android_runtime']['new_avd_disk_forecast_bytes'])
         register_runtime(self.state,self.directory,avds,name)
         save(self.file,self.state)
         avds.mkdir(exist_ok=True)
@@ -750,9 +791,10 @@ class Run:
         self.emulator_log=(self.directory/'emulator.log').open('ab')
         self.emulator=subprocess.Popen([str(sdk/'emulator/emulator.exe'),'-avd',name,'-port',str(port),
             '-accel','on','-no-window','-gpu','swiftshader_indirect','-no-snapshot','-noaudio',
-            '-no-boot-anim','-camera-back','none', *(['-memory','2048','-cores','2'] if suffix else [])],stdout=self.emulator_log,stderr=subprocess.STDOUT,
+            '-no-boot-anim','-camera-back','none', '-memory',str(self.policy['android_runtime']['emulator_guest_ram_bytes']//(1024**2)),
+            '-cores',str(self.settings['workers'])],stdout=self.emulator_log,stderr=subprocess.STDOUT,
             creationflags=subprocess.CREATE_NO_WINDOW)
-        deadline=time.monotonic()+300
+        deadline=time.monotonic()+self.policy['android_runtime']['boot_timeout_seconds']
         checked_at=0
         while time.monotonic()<deadline:
             if time.monotonic()-checked_at>=self.artifact_budget.interval:
@@ -761,7 +803,7 @@ class Run:
             boot=subprocess.run(['adb','-s',self.serial,'shell','getprop','sys.boot_completed'],capture_output=True,text=True,timeout=20)
             if boot.returncode==0 and boot.stdout.strip()=='1':break
             time.sleep(1)
-        else:raise RuntimeError('Emulator did not boot within 300 seconds')
+        else:raise RuntimeError('Emulator did not boot within the current policy deadline')
         actual=subprocess.check_output(['adb','-s',self.serial,'emu','avd','name'],text=True)
         assert actual.splitlines()[0]==name
 
@@ -982,6 +1024,12 @@ class Run:
                 for p in self.directory.rglob('*') if p.is_file() and not is_emulator_data(self.directory,p) and p.name not in ('run.lock','files.json')}
             save(self.directory/'files.json',files)
             print('PASS local '+self.state['mode']+'; screenshot review is still a separate required step',flush=True)
+        except AdmissionDeferred as error:
+            self.state['status']='paused'
+            self.state['validation_state']='queued'
+            self.state['resource_deferred_reason']=str(error)
+            save(self.file,self.state)
+            raise
         except BaseException:
             self.state['status']='failed';save(self.file,self.state);raise
         finally:
@@ -1005,8 +1053,10 @@ def main():
     parser.add_argument('--run');parser.add_argument('--source');parser.add_argument('--reference-python')
     parser.add_argument('--artifact-root',action='append',default=[],
                         help='Additional artifact directory to count, never an eviction target')
-    parser.add_argument('--artifact-budget-gib',type=int,choices=range(1,33),default=32,
-                        help='Aggregate retained-artifact cap, at most 32 GiB; never deletes evidence')
+    parser.add_argument('--execution-host',choices=['initia','msi'],
+                        help='Verified physical executor; defaults to CODEX_EXECUTION_HOST or machine identity')
+    parser.add_argument('--artifact-budget-gib',type=int,
+                        help=argparse.SUPPRESS)
     parser.add_argument('--adopt-launcher-fix',action='store_true',help='Reuse unchanged host/build gates before any native gate passed, after a verified launcher-only fix')
     parser.add_argument('--restart-native',action='store_true',help='Archive failed evidence and restart the complete native chain with a fresh disposable AVD; reuse only unchanged host/build gates')
     parser.add_argument('--adopt-pending-runner-fix',action='store_true',help='Adopt only the exact missing B09.2 storage flag after its first phase failed; preserve earlier proof and rebuild the test APK')
@@ -1020,15 +1070,31 @@ def main():
     parser.add_argument('--adopt-capacitor-runner-fix',action='store_true',help='Adopt only the exact missing C01.2 persistent runner flag; retain all prior gates and app APK')
     parser.add_argument('--adopt-tank-history-fix',action='store_true',help='Adopt only the exact C01.3.2 revision wait repair; recover its validated synthetic baseline and rerun affected gates')
     args=parser.parse_args()
+    if args.artifact_budget_gib is not None:
+        parser.error('--artifact-budget-gib is retired; edit and validate execution-policy.json')
     if args.action=='plan':print('\n'.join(plan(args.mode,args.gate)));return
     assert os.name=='nt', 'This explicit launcher owns Windows WHPX AVDs'
     if args.action=='pause':
         assert args.run
         (Path(args.run)/'PAUSE').write_text('Pause at the next completed gate\n',encoding='utf-8');return
     assert args.action!='resume' or args.run
-    runner=Run(args)
-    if args.action=='resume':(runner.directory/'PAUSE').unlink(missing_ok=True)
-    runner.run()
+    try:
+        runner=Run(args)
+        if args.action=='resume':(runner.directory/'PAUSE').unlink(missing_ok=True)
+        with heavy_lease(runner.policy,runner.settings):
+            runner.execution_started=time.monotonic()
+            runner.artifact_budget.resource_check=runner.check_running_resources
+            runner.admit_command()
+            os.environ['DOTNET_PROCESSOR_COUNT']=str(runner.settings['workers'])
+            os.environ['OMP_NUM_THREADS']=str(runner.settings['workers'])
+            runner.run()
+    except AdmissionDeferred as error:
+        if 'runner' in locals():
+            runner.state['validation_state']='queued'
+            runner.state['resource_deferred_reason']=str(error)
+            save(runner.file,runner.state)
+        print('DEFERRED: '+str(error),file=sys.stderr)
+        return 75
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':sys.exit(main())

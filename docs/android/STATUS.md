@@ -1,5 +1,31 @@
 # Android project status
 
+## Resource-policy coordination resumed — 30 October 2026
+
+The shutdown pause is lifted for this active project. Its repository-root
+`execution-policy.json` remains the sole resource authority. MSI shared-tooling
+corrections are verified locally. Initia is reachable again; reconciling its
+final owner checkpoint, adapters and shared modules remains pending. Use
+`docs/pending-validation.json` for those dependencies and continue independent
+implementation instead of restoring a historical whole-project pause.
+
+The shared MSI worker permits Jita/Pyfa only and remains disabled until the
+prepared exact-source publication and queue prerequisites are satisfied. GitHub
+publication still requires the outstanding owner approval. The outdated Beacon
+chat and its application validation stay paused; current Beacon/API implementation
+belongs to its active API owner. No older Beacon application import is requested.
+
+## Current execution policy — 30 October 2026
+
+[EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
+own run locations, RAM/CPU/storage settings, MSI queueing and GitHub checkpoints.
+They supersede the old machine budgets and migration-only pauses below. Continue
+independent approved implementation while environment-dependent checks wait; track
+pending validation by immutable source and exact test selection. Historical
+native failures remain failed, and C10's external candidate remains unintegrated.
+
+## Retained source and verification history
+
 ## Current execution pointer - 29 October 2026
 **Migration checkpoint:** the owner has requested preparation for MSI to Initia.
 Product execution is stopped; no Pyfa workload or diagnostic retry is queued.

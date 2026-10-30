@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "policy_revision": "2026-10-30-initia-v1",
+  "project": "pyfa",
+  "hosts": {
+    "initia": {
+      "ram_reserve_bytes": 2147483648,
+      "running_free_floor_bytes": 1073741824,
+      "running_pressure_grace_seconds": 15,
+      "cpu_workers": 2,
+      "cpu_hard_cap_percent": null,
+      "priority": "below-normal",
+      "heavy_slots": 1,
+      "disk_free_reserve_bytes": 10737418240
+    },
+    "msi": {
+      "ram_reserve_bytes": 4294967296,
+      "running_free_floor_bytes": 2147483648,
+      "running_pressure_grace_seconds": 15,
+      "cpu_workers": 4,
+      "cpu_hard_cap_percent": null,
+      "priority": "below-normal",
+      "heavy_slots": 1,
+      "disk_free_reserve_bytes": 10737418240
+    }
+  },
+  "storage": {
+    "project_prompt_threshold_bytes": 100000000000,
+    "prompt_when": "project_total_exceeds_threshold",
+    "accounting": "Count resolved owned checkouts, environments, caches, retained evidence and artifacts once; charge shared tooling once and reference it. Historical snapshots are retained, not deleted automatically.",
+    "accounting_roots": [
+      "{repository}",
+      "{execution_root}",
+      "C:/Users/HallT/Documents/Codex/2026-10-23/task-5",
+      "C:/Users/HallT/Documents/Codex/2026-10-28/you-are-taking-ownership-of-pyfa",
+      "C:/Users/HallT/AppData/Local/PyfaAndroid/PyfaDevelopment",
+      "C:/Users/HallT/AppData/Local/Android/Sdk",
+      "C:/Users/HallT/Documents/Codex/Restored-Migration-20261030-a1/evidence/Pyfa",
+      "C:/Users/HallT/Documents/Codex/Restored-Migration-20261030-a1/controls/Pyfa",
+      "C:/Users/HallT/Documents/Codex/2026-10-30/continue-the-beacon-project-this-is-2"
+    ]
+  },
+  "workloads": {
+    "light": {
+      "estimated_peak_bytes": 268435456,
+      "timeout_seconds": 60,
+      "needs_heavy_slot": false,
+      "preferred_host": "initia",
+      "estimated_disk_write_bytes": 0
+    },
+    "setup": {
+      "estimated_peak_bytes": 1073741824,
+      "timeout_seconds": 1800,
+      "needs_heavy_slot": true,
+      "preferred_host": "initia",
+      "estimated_disk_write_bytes": 1073741824
+    },
+    "focused_test": {
+      "estimated_peak_bytes": 1073741824,
+      "timeout_seconds": 900,
+      "needs_heavy_slot": true,
+      "preferred_host": "initia",
+      "estimated_disk_write_bytes": 268435456
+    },
+    "build": {
+      "estimated_peak_bytes": 2147483648,
+      "timeout_seconds": 1800,
+      "needs_heavy_slot": true,
+      "preferred_host": "initia",
+      "estimated_disk_write_bytes": 8589934592
+    },
+    "database_test": {
+      "estimated_peak_bytes": 2147483648,
+      "timeout_seconds": 3600,
+      "needs_heavy_slot": true,
+      "preferred_host": "msi",
+      "estimated_disk_write_bytes": 2147483648
+    },
+    "full_suite": {
+      "estimated_peak_bytes": 4294967296,
+      "timeout_seconds": 7200,
+      "needs_heavy_slot": true,
+      "preferred_host": "msi",
+      "estimated_disk_write_bytes": 10737418240
+    }
+  },
+  "routing": {
+    "initia": [
+      "primary working copy",
+      "environment installation",
+      "interactive Windows GUI and device checks",
+      "admitted small focused checks"
+    ],
+    "msi": [
+      "queued broad suites",
+      "heavy builds",
+      "repeated or stress tests",
+      "compatible database checks"
+    ],
+    "capabilities": "Verify pinned Python/reference/data identities for host checks; JDK, Android SDK/image, Windows WHPX and emulator capabilities for native checks. Native/device evidence is host-specific. The external C10 candidate remains unintegrated.",
+    "host_admission": "Observe physical RAM, commit and disk including API and other processes. A cooperative lock does not replace real admission. Queue MSI-preferred work rather than silently routing it to Initia."
+  },
+  "locations": {
+    "source": "current repository; Initia owns the primary checkout",
+    "execution_root": "C:/Users/HallT/Documents/Codex/Execution/{host}/pyfa",
+    "shared_root": "C:/Users/HallT/Documents/Codex/Execution/Shared",
+    "layout": [
+      "environments",
+      "cache",
+      "scratch",
+      "results",
+      "jobs"
+    ],
+    "historical_evidence": "Keep frozen migration evidence in its existing retained location. Do not move source or delete unique work automatically.",
+    "repository_generated_outputs": [
+      "android/build",
+      "android/app/build"
+    ]
+  },
+  "github": {
+    "repository": "Sussic/Pyfa-android",
+    "checkpoint": "Commit coherent scoped source, policy and documentation to a review/WIP branch at useful checkpoints and before offload or leaving work for another host. Preserve unrelated dirty and staged paths. Push WIP with explicit pending or failed validation; no force push, main merge, release or deployment is authorized.",
+    "storage": "Git holds source, policy, queue metadata and compact evidence summaries. Keep credentials, personal data, runtime databases, venvs, SDKs, caches and bulk logs out. Use Actions artifacts or an explicitly authorized release for large reproducible artifacts."
+  },
+  "queue": {
+    "registry_repository": "Sussic/jita-market-app",
+    "issue_title_template": "[MSI queue] pyfa <kind> <sha12>",
+    "worker_root": "C:/Users/HallT/Documents/Codex/Execution/Shared",
+    "states": [
+      "awaiting_snapshot",
+      "queued",
+      "blocked_capability",
+      "running",
+      "passed",
+      "failed",
+      "cancelled",
+      "superseded"
+    ],
+    "runner_name": "jita-local-windows",
+    "runner_labels": [
+      "self-hosted",
+      "Windows",
+      "X64",
+      "jita-windows-local"
+    ],
+    "snapshot_rule": "Use an immutable exact commit containing intended source plus policy SHA256, exact argv and test selection, capabilities, disk forecast and idempotency key. Before publication retain awaiting_snapshot metadata, never test old HEAD as the dirty candidate. Actions queue expiry does not delete durable issue authority."
+  },
+  "development": {
+    "continue": "An unavailable test, environment, shared slot or MSI host blocks only work depending on that result. Continue independent implementation, refactoring, documentation, fixtures, test authoring and available static checks. Use small coherent changes, stable interfaces, dependency injection and fakes at real seams.",
+    "validation": "Record pending source/test selections in docs/pending-validation.json. Run meaningful focused checks when feasible and relevant broader checks before verified/delivered claims. Preserve acceptance assertions and provenance; deferred tests remain unverified. Retry expensive checks after a relevant correction or real prerequisite change.",
+    "supersession": "This file is the only current RAM, CPU and storage policy. Historical receipts and workload-specific product acceptance assertions are evidence, not numeric host defaults. No missing or invalid policy may fall back to inherited limits."
+  },
+  "android_runtime": {
+    "emulator_guest_ram_bytes": 2147483648,
+    "new_avd_disk_forecast_bytes": 8589934592,
+    "boot_timeout_seconds": 300
+  }
+}

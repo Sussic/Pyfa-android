@@ -21,11 +21,13 @@ class VerifyLocalLauncherTests(unittest.TestCase):
         (self.root / 'android').mkdir(parents=True)
         self.launcher = self.root / 'android/verify-local.ps1'
         shutil.copyfile(LAUNCHER, self.launcher)
+        shutil.copyfile(LAUNCHER.parents[1]/'execution-policy.json',self.root/'execution-policy.json')
         self.capture = self.root / 'dispatch.json'
         self.python = self.root / 'qualified interpreter.ps1'
         self.python.write_text("@{arguments=@($args);java_home=$env:JAVA_HOME} | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $env:PYFA_TEST_CAPTURE\n$global:LASTEXITCODE=[int]$env:PYFA_TEST_EXIT\n")
         self.env = {**os.environ, 'PYFA_TEST_CAPTURE': str(self.capture), 'PYFA_TEST_EXIT': '0',
-                    'JAVA_HOME': str(self.root / 'inherited-jdk')}
+                    'JAVA_HOME': str(self.root / 'inherited-jdk'),
+                    'COMPUTERNAME': 'MSI', 'CODEX_EXECUTION_HOST': 'msi'}
 
     def invoke(self, *args):
         return subprocess.run([POWERSHELL, '-NoProfile', '-NonInteractive', '-File', str(self.launcher), *args],
@@ -51,9 +53,22 @@ class VerifyLocalLauncherTests(unittest.TestCase):
         row = self.dispatch('-Action', 'start', '-Mode', 'desktop', '-Gate', 'charge_edits',
                             '-ReferencePython', str(self.python), '-Source', str(self.root / 'pinned reference'))
         for flag, value in (('--gate', 'charge_edits'), ('--reference-python', str(self.python)),
-                            ('--source', str(self.root / 'pinned reference')), ('--artifact-budget-gib', '32')):
+                            ('--source', str(self.root / 'pinned reference')), ('--execution-host', 'msi')):
             self.assertEqual(value, row['arguments'][row['arguments'].index(flag) + 1])
         self.assertEqual(self.env['JAVA_HOME'], row['java_home'])
+
+    def test_old_storage_override_is_retired_before_dispatch(self):
+        result=self.invoke('-PythonPath',str(self.python),'-Action','plan','-ArtifactBudgetGiB','32')
+        self.assertNotEqual(0,result.returncode)
+        self.assertIn('retired',result.stderr)
+        self.assertFalse(self.capture.exists())
+
+    def test_missing_policy_never_falls_back_to_old_limits(self):
+        (self.root/'execution-policy.json').unlink()
+        result=self.invoke('-PythonPath',str(self.python),'-Action','plan')
+        self.assertNotEqual(0,result.returncode)
+        self.assertIn('execution-policy.json',result.stderr)
+        self.assertFalse(self.capture.exists())
 
     def test_build_rejects_missing_jdk_before_dispatch(self):
         result = self.invoke('-PythonPath', str(self.python), '-Action', 'start', '-Mode', 'build')

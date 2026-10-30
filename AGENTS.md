@@ -8,6 +8,13 @@ including projections, command bursts, all useful attributes and graphs. Bulk
 operations (for example, changing ammunition across selected guns) are essential.
 The user confirms usability; agents are responsible for technical correctness.
 
+## Execution policy
+
+Before setup, builds, generated writes, test scheduling or handoff, read
+[EXECUTION](EXECUTION.md) and the sole resource source [execution-policy.json](execution-policy.json).
+They supersede historical machine budgets and runner restrictions. Continue
+independent implementation while validation is queued; report proof separately.
+
 ## Start a session
 
 1. Read the current control point in [STATUS](docs/android/STATUS.md), then its task in
@@ -48,12 +55,12 @@ The user confirms usability; agents are responsible for technical correctness.
   frozen candidates and state exactly which integration/native proof remains.
 - Recover routine implementation failures with focused fixes, checks and review
   within the selected outcome. Use justified task-specific time, memory and
-  evidence budgets; existing caps remain binding. Escalate material scope, risk
-  or permission changes, not each routine step. Resource failures do not authorize
-  unlimited budget growth or another heavy run without its coordinated slot.
-- Complete the selected outcome, focused validation and authorized delivery before
-  starting another. Do not leave a task half-finished merely because a prototype
-  launches. Checkpoint honestly if access or execution time prevents completion.
+  evidence budgets from execution-policy.json. Queue unavailable heavy work and
+  continue independent implementation. Escalate material scope, risk or permission
+  changes, not each routine step; share the physical-host heavy lock.
+- Keep a small dependency-aware ready queue. Continue independent parts of the
+  approved outcome while validation waits, with source-bound pending checks.
+  Complete relevant validation before claiming verified or delivered behavior.
 - Do not spawn other agents by default. Use them only when the current user request
   or applicable higher-priority instructions explicitly authorize delegation.
   When authorized, give agents distinct scopes; avoid overlapping work and repeat
@@ -94,8 +101,8 @@ The user confirms usability; agents are responsible for technical correctness.
   Publish only the truthful `local/full-verification` result after full proof and
   review; an unexecuted Actions check is never a pass. Hosted workflows are manual
   fallbacks on the setup/B09.1 branch until that branch reaches the default branch.
-  No unattended self-hosted runner is authorised. W02 setup alone did not
-  authorize feature continuation. Follow current STATUS and explicit later owner
+  Bounded MSI jobs use the durable queue in EXECUTION; this supersedes the old
+  self-hosted-runner prohibition. Follow current STATUS and explicit later owner
   authorization; historical pauses do not override a later scoped resumption.
   Setup success never supplies feature/native delivery evidence.
 - For documentation-only changes, inspect scope, links and task dependencies and
@@ -158,7 +165,7 @@ a short dependency-aware ready queue. A blocked test, environment, or release ga
 blocks only dependent work; continue independent implementation. Keep integration
 frequent and unfinished work bounded. Stop and report only when remaining work
 genuinely needs unavailable access/evidence or an owner decision/permission. Preserve
-scope, data protection, resource limits, release qualification, and explicit pause
+scope, data protection, current execution policy, release qualification, and explicit pause
 instructions.
 
 Before execution, review the selected outcome’s plan: split it into bounded tasks

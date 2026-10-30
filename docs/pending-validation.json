@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "project": "pyfa",
+  "entries": [
+    {
+      "id": "policy-initia-bootstrap",
+      "source_snapshot": {
+        "kind": "working_tree",
+        "commit": null
+      },
+      "status": "awaiting_snapshot",
+      "selection": "Current policy-bound Initia bootstrap and focused host prerequisites; native acceptance remains pending",
+      "required_capabilities": [
+        "windows",
+        "python-3.11-headless-reference"
+      ],
+      "next_action": "Run admitted Initia setup or queue an exact committed compatible selection on MSI; continue independent approved implementation."
+    },
+    {
+      "id": "policy-msi-queue-integration-20261030",
+      "status": "awaiting_snapshot",
+      "source_snapshot": {
+        "kind": "working_tree",
+        "commit": null,
+        "policy_sha256": "0f9848f7e324e49268e550745d513d4fd6f516fcbb80619684bf47905b8bcef7"
+      },
+      "workload": "light",
+      "argv": [
+        "python",
+        "-c",
+        "print('MSI queue exact-source probe')"
+      ],
+      "required_capabilities": [
+        "windows",
+        "python"
+      ],
+      "queue_issue": null,
+      "dependency": "Outstanding approval for prepared exact-source policy/tooling publication",
+      "next_action": "Publish the approved scoped snapshot, pin its exact commit/policy hash, then run one light queue integration probe; no product acceptance is implied."
+    },
+    {
+      "id": "policy-initia-reconciliation-20261030",
+      "status": "queued",
+      "source_snapshot": {
+        "kind": "working_tree",
+        "commit": null,
+        "policy_sha256": "0f9848f7e324e49268e550745d513d4fd6f516fcbb80619684bf47905b8bcef7"
+      },
+      "required_capabilities": [
+        "connected-initia"
+      ],
+      "queue_issue": null,
+      "dependency": "Reviewed shared-tooling handoff awaiting active Initia owner reconciliation",
+      "next_action": "Read the active owner shutdown checkpoint, compare its final shared reader/runner and portable fixtures, merge only reviewed policy/adapter changes, refresh bindings and record focused results. Keep old Beacon paused."
+    }
+  ]
+}

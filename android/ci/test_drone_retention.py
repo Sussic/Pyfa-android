@@ -150,12 +150,12 @@ class ArtifactBudgetTests(unittest.TestCase):
     def test_copy_reservation_refuses_before_any_output_or_deletion(self):
         p=self.root/'original';p.write_bytes(b'x'*8192)
         amount=retention.usage([self.root])['allocated_bytes']
-        budget=retention.ArtifactBudget([self.root],limit=amount,minimum_free=0)
+        budget=retention.ArtifactBudget([self.root],limit=amount-1,minimum_free=0)
         with self.assertRaises(retention.RetentionError): budget.copy(p,self.root/'copy')
         self.assertFalse((self.root/'copy').exists());self.assertEqual(8192,p.stat().st_size)
     def test_budget_rejects_unreviewed_limit_increase(self):
         with self.assertRaises(retention.RetentionError):
-            retention.ArtifactBudget([self.root],limit=retention.DEFAULT_LIMIT+1)
+            retention.ArtifactBudget([self.root],limit=retention.load_policy()[0]['storage']['project_prompt_threshold_bytes']+1)
     def test_live_growth_stops_owned_parent_and_descendant_without_truncation(self):
         import time
         output=self.root/'grown.bin';pidfile=self.root/'child.pid';log=self.root/'output.log'
@@ -259,15 +259,16 @@ class ArtifactBudgetTests(unittest.TestCase):
                     foreign.kill()
                     foreign.wait()
 
-    def test_resume_keeps_external_roots_and_stricter_prior_limit(self):
+    def test_resume_keeps_external_roots_without_reviving_prior_limit(self):
         prior=self.root/'prior';prior.mkdir();(prior/'data').write_bytes(b'x'*8192)
         current=self.root/'current';current.mkdir()
         budget=retention.ArtifactBudget([current],limit=32768,minimum_free=0)
         budget.include_previous(dict(version=1,roots=[str(prior)],limit_bytes=4096))
         self.assertIn(str(prior.resolve()),budget.roots)
-        self.assertEqual(4096,budget.limit)
-        with self.assertRaises(retention.RetentionError): budget.check()
-        for policy in ({'version':2},dict(version=1,roots=['relative'],limit_bytes=4096)):
+        self.assertEqual(32768,budget.limit)
+        self.assertEqual(4096,budget.historical_policies[0]['limit_bytes'])
+        budget.check()
+        for policy in ({'version':3},dict(version=1,roots=['relative'],limit_bytes=4096)):
             with self.assertRaises(retention.RetentionError): budget.include_previous(policy)
     def test_timeout_is_not_extended_to_storage_poll_interval(self):
         with (self.root/'log').open('wb') as log,self.assertRaises(subprocess.TimeoutExpired):

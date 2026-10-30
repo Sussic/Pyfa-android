@@ -46,18 +46,26 @@ def require_decision():
 
 
 
-def admit_native():
-    if os.name=='nt':
-        class Memory(ctypes.Structure):
-            _fields_=[('length',ctypes.c_ulong),('load',ctypes.c_ulong),
-                      *[(name,ctypes.c_ulonglong) for name in ('total','free','total_page','free_page','total_virtual','free_virtual','extended')]]
-        value=Memory(); value.length=ctypes.sizeof(value)
-        if not ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(value)): raise ctypes.WinError()
-        free=value.free
-    else: free=os.sysconf('SC_AVPHYS_PAGES')*os.sysconf('SC_PAGE_SIZE')
-    measured=dict(free_ram_gib=free/2**30,free_disk_gib=shutil.disk_usage(ROOT).free/2**30)
-    assert measured['free_ram_gib']>=8 and measured['free_disk_gib']>=10, ('C04 native admission: 8 GiB RAM / 10 GiB disk required',measured)
-    return measured
+def admit_native(*, starting=False):
+    """Apply the current host policy, rather than an archived native RAM floor."""
+    sys.path.insert(0,str(ROOT/'scripts'))
+    from execution_policy import AdmissionDeferred,admit,detect_host,load_policy,select
+    from policy_host_metrics import host_memory
+    policy,policy_hash=load_policy()
+    host=os.environ.get('CODEX_EXECUTION_HOST') or detect_host()
+    if host!=detect_host():
+        raise RuntimeError('Selected policy host differs from the actual executor')
+    profile='full_suite' if starting else 'focused_test'
+    settings=select(policy,host,profile)
+    physical,commit=host_memory()
+    disk=shutil.disk_usage(ROOT).free
+    forecast=policy['android_runtime']['new_avd_disk_forecast_bytes'] if starting else 0
+    reasons=admit(settings,physical,commit,disk,forecast,0)
+    if reasons:
+        raise AdmissionDeferred('; '.join(reasons)+'; native validation remains pending')
+    return {'available_physical_bytes':physical,'available_commit_bytes':commit,
+            'free_disk_bytes':disk,'policy_sha256':policy_hash,'host':host,'workload':profile}
+
 
 
 def host_command(step,output,database,reference_python,source):

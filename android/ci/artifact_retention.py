@@ -8,16 +8,23 @@ import re
 import shutil
 import stat
 import subprocess
+import sys
 import time
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
+from execution_policy import (AdmissionDeferred, detect_host, filesystem_path,
+                              load_policy, select, storage_redirect)
+
 GIB = 1024 ** 3
-DEFAULT_LIMIT = 32 * GIB
-MIN_FREE = 4 * GIB
 RUNTIME = re.compile(r'avd(?:-r[0-9]+|-c04-r[0-9]+)?\Z')
 
 
 class RetentionError(RuntimeError):
     pass
+
+
+class ResourceDeferred(RetentionError, AdmissionDeferred):
+    """Only the writes/job requiring unavailable resources wait."""
 
 
 def redirect(path):
@@ -34,7 +41,7 @@ def digest(path):
 
 
 def usage(roots):
-    """Allocated bytes, deduplicated by filesystem identity (including hardlinks)."""
+    """Allocated bytes, deduplicated by identity, using the same long-path reader."""
     directories = set()
     files = set()
     total = 0
@@ -45,80 +52,107 @@ def usage(roots):
         compressed.argtypes = [wintypes.LPCWSTR, ctypes.POINTER(wintypes.DWORD)]
         compressed.restype = wintypes.DWORD
     for supplied in roots:
-        root = Path(supplied)
-        if not root.exists():
+        root = filesystem_path(supplied)
+        try:
+            # Explicit declared aliases may name an owned target; children may not redirect.
+            root = filesystem_path(root.resolve(strict=True))
+        except FileNotFoundError:
             continue
-        root = root.resolve(strict=True)
         stack = [root]
         while stack:
-            path = stack.pop()
+            path = filesystem_path(stack.pop())
             try:
-                if redirect(path):
-                    raise RetentionError('Artifact accounting refuses redirected child: ' + str(path))
-                info = path.stat()
+                info = path.lstat()
             except FileNotFoundError:
-                continue  # Build temporaries can disappear between directory scans.
+                continue  # Normalized temporary files can genuinely disappear.
+            if storage_redirect(info):
+                raise RetentionError('Artifact accounting refuses redirected child: ' + str(path))
             identity = (info.st_dev, info.st_ino)
-            if path.is_dir():
+            if stat.S_ISDIR(info.st_mode):
                 if identity in directories:
                     continue
                 directories.add(identity)
                 try:
-                    stack.extend(path.iterdir())
+                    with os.scandir(path) as entries:
+                        stack.extend(filesystem_path(entry.path) for entry in entries)
                 except FileNotFoundError:
                     continue
-            elif path.is_file() and identity not in files:
-                files.add(identity)
+            elif stat.S_ISREG(info.st_mode) and identity not in files:
                 if os.name == 'nt':
                     high = wintypes.DWORD()
                     ctypes.set_last_error(0)
                     low = compressed(str(path), ctypes.byref(high))
-                    if low == 0xffffffff and ctypes.get_last_error():
-                        if ctypes.get_last_error() in (2, 3):
-                            continue
-                        raise ctypes.WinError(ctypes.get_last_error())
-                    total += (high.value << 32) | low
+                    error = ctypes.get_last_error() if low == 0xffffffff else 0
+                    if error:
+                        if error in (2, 3):
+                            # A Win32 reader failure is not proof of deletion. Confirm
+                            # absence using the same extended path before tolerating it.
+                            try:
+                                path.lstat()
+                            except FileNotFoundError:
+                                continue
+                        raise ctypes.WinError(error)
+                    allocated = (high.value << 32) | low
                 else:
-                    total += getattr(info, 'st_blocks', 0) * 512 or info.st_size
+                    allocated = getattr(info, 'st_blocks', 0) * 512 or info.st_size
+                files.add(identity)
+                total += allocated
     return dict(allocated_bytes=total, files=len(files), directories=len(directories))
 
 
+
 class ArtifactBudget:
-    def __init__(self, roots, limit=DEFAULT_LIMIT, minimum_free=MIN_FREE, interval=5):
-        if not 0 < limit <= DEFAULT_LIMIT:
-            raise RetentionError('Artifact limit must be positive and at most 32 GiB')
+    def __init__(self, roots, limit=None, minimum_free=None, interval=5, *, policy=None, host=None):
+        self.policy, self.policy_sha256 = load_policy() if policy is None else policy
+        self.host = host or os.environ.get('CODEX_EXECUTION_HOST') or detect_host()
+        settings = select(self.policy, self.host, 'light')
+        threshold = self.policy['storage']['project_prompt_threshold_bytes']
+        if limit is not None and (type(limit) is not int or not 0 < limit <= threshold):
+            raise RetentionError('Artifact threshold must be positive and cannot exceed execution-policy.json')
         self.roots = list(dict.fromkeys(str(Path(p).resolve()) for p in roots))
-        self.limit = limit
-        self.minimum_free = minimum_free
+        # Explicit smaller values are a dependency seam for bounded synthetic tests.
+        # Production launchers supply the current policy, never an inherited override.
+        self.limit = threshold if limit is None else limit
+        self.minimum_free = settings['disk_free_reserve_bytes'] if minimum_free is None else minimum_free
         self.interval = interval
         self.latest = None
+        self.historical_policies = []
+        self.resource_check = None
 
     def include_previous(self, policy):
         if policy is None:
             return
-        if not isinstance(policy, dict) or policy.get('version') != 1:
+        if not isinstance(policy, dict) or policy.get('version') not in (1, 2):
             raise RetentionError('Unrecognized saved artifact policy')
         roots, limit = policy.get('roots'), policy.get('limit_bytes')
         if (not isinstance(roots, list) or not roots or
                 any(not isinstance(p, str) or not Path(p).is_absolute() for p in roots) or
-                type(limit) is not int or not 0 < limit <= DEFAULT_LIMIT):
+                type(limit) is not int or limit <= 0):
             raise RetentionError('Invalid saved artifact policy')
         self.roots = list(dict.fromkeys(self.roots + [str(Path(p).resolve()) for p in roots]))
-        self.limit = min(self.limit, limit)
+        self.historical_policies.append({
+            'version': policy['version'], 'limit_bytes': limit,
+            'policy_sha256': policy.get('policy_sha256'),
+            'use': 'as-run history only; current execution-policy.json governs new writes'})
 
     def check(self, reserve=0):
+        if type(reserve) is not int or reserve < 0:
+            raise RetentionError('Provide a nonnegative disk-write forecast')
         result = usage(self.roots)
-        result.update(limit_bytes=self.limit, reserved_bytes=reserve, roots=self.roots)
+        result.update(limit_bytes=self.limit, reserved_bytes=reserve, roots=self.roots,
+                      policy_sha256=self.policy_sha256)
         self.latest = result
-        if result['allocated_bytes'] + reserve > self.limit:
-            raise RetentionError('Aggregate artifact budget exceeded: ' + json.dumps(result))
+        if result['allocated_bytes'] > self.limit:
+            raise ResourceDeferred('Project storage exceeds the current owner prompt threshold: ' + json.dumps(result))
         for root in self.roots:
             path = Path(root)
             while not path.exists():
                 path = path.parent
             free = shutil.disk_usage(path).free
-            if free < self.minimum_free:
-                raise RetentionError(f'Free disk reserve reached: {free} bytes at {path}')
+            if free < self.minimum_free + reserve:
+                raise ResourceDeferred(f'Free disk cannot retain policy reserve plus forecast: {free} bytes at {path}')
+        if self.resource_check is not None:
+            self.resource_check()
         return result
 
     def copy(self, source, destination):
@@ -395,7 +429,7 @@ def cleanup_verified_runtime(directory, *, stopped):
 
 
 def validate_cleanup_receipt(directory, state, manifest):
-    if state.get('artifact_retention', {}).get('version') != 1:
+    if state.get('artifact_retention', {}).get('version') not in (1, 2):
         return  # Historical receipts retain their original evidence contract.
     directory = Path(directory)
     receipt = directory / 'runtime-cleanup.json'
