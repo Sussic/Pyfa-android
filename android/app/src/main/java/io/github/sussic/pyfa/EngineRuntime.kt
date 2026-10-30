@@ -764,6 +764,36 @@ object EngineRuntime {
         }, executor)
     }
 
+    fun mutationDetails(context: Context, fitId: String): CompletableFuture<MutationDetails> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            check(mutableLibrary.value.any { it.id == fitId }) { "This fit is no longer in the library." }
+            try {
+                MutationCodec.decode(Python.getInstance().getModule("mobile_runtime")
+                    .callAttr("mutation_details", fitId).toString()).also { result ->
+                    check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+                }
+            } catch (failure: Exception) { markEngineUnavailable(); throw failure }
+        }, executor)
+    }
+
+    fun mutationDisplayDetails(context: Context, fitId: String): CompletableFuture<MutationDisplayDetails> {
+        val ready = start(context)
+        return CompletableFuture.supplyAsync({
+            ready.join()
+            check(!unavailable) { "Restart the app to recover the fitting engine." }
+            check(mutableLibrary.value.any { it.id == fitId }) { "This fit is no longer in the library." }
+            try {
+                MutationDisplayCodec.decode(Python.getInstance().getModule("mobile_runtime")
+                    .callAttr("mutation_display_details", fitId).toString()).also { result ->
+                    check(result.fitId == fitId && mutableLibrary.value.single { it.id == fitId }.revision == result.revision)
+                }
+            } catch (failure: Exception) { markEngineUnavailable(); throw failure }
+        }, executor)
+    }
+
     fun moduleSpoolDetails(context: Context, fitId: String): CompletableFuture<ModuleSpoolDetails> {
         val ready = start(context)
         return CompletableFuture.supplyAsync({

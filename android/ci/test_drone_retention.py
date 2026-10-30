@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -134,6 +135,24 @@ class RetentionCleanupTests(unittest.TestCase):
 
 
 class ArtifactBudgetTests(unittest.TestCase):
+    @unittest.skipUnless(os.name == 'nt', 'Windows extended-path allocated-byte accounting')
+    def test_allocated_usage_includes_restored_long_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=retention.filesystem_path(Path(directory).resolve()/'long-root')
+            try:
+                nested=root
+                for index in range(12):
+                    nested=nested/('retained-directory-'+str(index))
+                nested.mkdir(parents=True)
+                (nested/'proof.bin').write_bytes(b'long-path-proof'*2048)
+                ordinary=Path(directory)/'long-root'
+                result=retention.usage([ordinary,ordinary])
+                self.assertEqual(1,result['files'])
+                self.assertGreater(result['allocated_bytes'],0)
+            finally:
+                self.assertEqual(Path(str(root)[4:]).resolve(),(Path(directory)/'long-root').resolve())
+                shutil.rmtree(root)
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
     def tearDown(self):

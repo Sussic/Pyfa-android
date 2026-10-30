@@ -121,6 +121,14 @@ def drone_details(fit_id):
     return encoded(_bridge.drone_details(fit_id))
 
 
+def mutation_details(fit_id):
+    return encoded(_bridge.mutation_details(fit_id))
+
+
+def mutation_display_details(fit_id):
+    return encoded(_bridge.mutation_display_details(fit_id))
+
+
 def cargo_details(fit_id):
     return encoded(_bridge.cargo_details(fit_id))
 

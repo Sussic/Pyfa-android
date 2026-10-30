@@ -1,30 +1,102 @@
 # Android project status
 
-## Resource-policy coordination resumed — 30 October 2026
+## Current execution pointer — 30 October 2026
 
-The shutdown pause is lifted for this active project. Its repository-root
-`execution-policy.json` remains the sole resource authority. MSI shared-tooling
-corrections are verified locally. Initia is reachable again; reconciling its
-final owner checkpoint, adapters and shared modules remains pending. Use
-`docs/pending-validation.json` for those dependencies and continue independent
-implementation instead of restoring a historical whole-project pause.
+[C10.F14.02.INTEGRATION-PREP1](tasks/C10-integration-prep1.md) is complete for
+source preparation only. The new complete isolated candidate contains the current
+registered app plus17 selected mutation/reference-producer paths and4 portable
+verification sources. The accepted market prefetch fix is retained; all other
+base application/policy sources match. Original working app, protected S1,
+UNITS1 and index remain unchanged. Source reviews, Python grammar, scalar-test
+AST/witness preservation and patch checks passed. No full-tree test, EOS import,
+build or native run occurred. Source identity and reproducible scoped package:
+current chat `outputs/PYFA-FULL-CANDIDATE-CHECKPOINT.json`.
 
-The shared MSI worker permits Jita/Pyfa only and remains disabled until the
-prepared exact-source publication and queue prerequisites are satisfied. GitHub
-publication still requires the outstanding owner approval. The outdated Beacon
-chat and its application validation stay paused; current Beacon/API implementation
-belongs to its active API owner. No older Beacon application import is requested.
+Next: qualify project3.11 after genuine RAM recovery, or publish/pin this complete
+candidate for capability-qualified MSI work. The latest read-only observation
+was1,711,468,544 B available physical RAM, below light/setup admission. No unchanged
+runtime retry occurred. Portable scalar/EOS/seed commands and new native methods
+remain pending; the policy-only commit is not this feature candidate.
 
-## Current execution policy — 30 October 2026
+[C10.F14.02.UNITS1](tasks/C10-units1.md) remains isolated and unintegrated. The
+ten scalar/unit-layer regression methods now passed under the canonical light
+job on Initia using bundled control Python 3.12. They exercise pinned original
+Unit methods and a raw-commit spy; no actual EOS transaction/native support is
+inferred. The derivative also has two new native UI methods and the exact
+independent oracle asset. Its deferred seed generator and real-EOS verifier
+normalize vacancies before first capture. Those scripts and all twelve Android
+methods remain unexecuted. Protected S1 and integrated application source stay
+unchanged. Exact source/proof: current chat `outputs/PYFA-C10-UNITS-CHECKPOINT.json`.
+
+## Current host checks and facility
+
+The focused policy/harness selection is qualified on control Python 3.12:
+76 passes and 5 declared Linux skips across 81 selected methods. The full run
+first exposed two long-path TemporaryDirectory cleanup errors. Both fixture
+parents now retain extended Windows paths; the affected 14 methods passed on
+rerun and the other unchanged 67 results are reused. Failures and owned closure
+receipts remain retained. All four exact mode plans/full190 gates passed their
+preservation checks. The separate historical cbda3ade method remains pending:
+local object absent, exact connected GitHub commit/ref requests unavailable.
+
+[INITIA.HOST1](tasks/INITIA-HOST1.md) is the next facility prerequisite. Installation
+remains unrun. The latest read-only setup readiness observation was 2,928,664,576 B
+available physical RAM, below the JSON setup reserve plus estimate. No setup job,
+download or installation was started; use fresh canonical admission after real
+recovery. Actual project Python3.11, real EOS/database/reopen, Kotlin compilation,
+native/offline/recreation/screenshots and full F14 acceptance remain pending.
+The original pinned drone oracle is still missing from restored inputs.
+
+## Current execution and publication authority
 
 [EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
-own run locations, RAM/CPU/storage settings, MSI queueing and GitHub checkpoints.
-They supersede the old machine budgets and migration-only pauses below. Continue
-independent approved implementation while environment-dependent checks wait; track
-pending validation by immutable source and exact test selection. Historical
-native failures remain failed, and C10's external candidate remains unintegrated.
+remain the sole resource authority. Shared reader/runner code is unchanged;
+test-fixture cleanup and exact-path command-scoped Git trust preserve assertions.
+No global Git configuration, index or frozen evidence was changed. Source remains
+based on de60525e0595d5a78bc6967754e132c98feba210 on dev/merged-g052-d042-local.
+
+The coordinator published the approved policy/tooling checkpoint on
+`codex/initia-execution-policy-20261030`, commit
+`62ef4ff597200450bcc26fdf9826ab6844bcd805`. Its prior publication hold is cleared.
+The Jita/Pyfa durable MSI queue is enabled; [probe181](https://github.com/Sussic/jita-market-app/issues/181)
+passed from exact Jita commit/policy with worker Python3.13 (infrastructure proof
+only). No merge/release/deployment occurred. The policy-only commit excludes the
+current complete product candidate and later local changes: product jobs remain
+`awaiting_snapshot`, pending reviewed integration/coherent publication and their
+actual capabilities. Do not substitute the policy checkpoint for C10 validation.
+Old Beacon and API chats remain untouched.
+
+Current bindings, detailed receipts and exact next action are in current chat
+`outputs/PYFA-CURRENT-HANDOFF.txt` and [pending validation](../pending-validation.json).
+No task-owned job or reserved heavy slot remains active. Reuse unchanged passing
+checks; do not retry an unchanged resource refusal or replay historical controls.
 
 ## Retained source and verification history
+
+## Historical Initia bootstrap checkpoint — 30 October 2026
+
+The owner resumed Pyfa on Initia. Restoration is verified at source
+`de60525e0595d5a78bc6967754e132c98feba210` and independent reference
+`8b04f3b271e614b3e103853b44a7851a63d79d0e`; the migration-only pause below is
+historical. Selected bounded task: [INITIA.HOST1](tasks/INITIA-HOST1.md), provision
+and verify separate local Python 3.11.9 host/reference environments and run six
+existing launcher regressions. C10 remains external and native20/diagnostic21
+retry dispositions remain consumed. Task brief owns the fixed exits and
+resource/access boundaries. Bootstrap is prepared but fresh admission refused
+before any owned child/download/install: RAM 386,736,128 B, commit 570,384,384 B,
+below the unchanged 4 GiB reserves. All frozen source/control and eleven C10
+files remained unchanged; import/database/launcher checks are unrun. Evidence:
+`C:/Users/HallT/Documents/Codex/2026-10-30/continue-the-beacon-project-this-is-2/work/bootstrap-guard/`.
+Jita coordinates the common resource blocker and next shared slot; Pyfa has no
+active/reserved workload. Exact next action: after relevant memory recovery and
+slot release, bind current source/controls afresh and run INITIA.HOST1 admission;
+retain this refusal, all limits and native dispositions.
+
+Independent light [C10 next-slice preparation](tasks/C10-next-slice.md) is complete:
+the protected raw editor is present only in S1, all eleven product seams match
+their expected before states, and units/conversion/reset gaps remain explicit.
+Proposed next implementation after host setup is isolated F14.02 converted-unit
+entry; no product code, candidate overlay or acceptance claim was added.
 
 ## Current execution pointer - 29 October 2026
 **Migration checkpoint:** the owner has requested preparation for MSI to Initia.

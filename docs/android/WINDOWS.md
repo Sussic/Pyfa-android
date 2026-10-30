@@ -1,5 +1,17 @@
 # Windows Android development setup
 
+## Current execution and storage authority
+
+Read [EXECUTION](../../EXECUTION.md) and
+[execution-policy.json](../../execution-policy.json) before running setup or
+checks. They supersede the machine-specific resource limits and generated-tool
+locations in the historical examples below. Resolve environment/cache/results
+paths from the policy; use the current policy-bound Initia bootstrap and fresh
+manifests. Do not recreate an old r12 launch descriptor. Required tool versions,
+TLS/signature checks, independent reference identities and product assertions
+still apply. Deferred validation blocks only dependent work, and compatible
+MSI work uses the durable shared queue described in EXECUTION.
+
 Use this guide from the repository root in PowerShell. Work only in
 `Sussic/Pyfa-android`. Check `git status --short --branch`, remotes and open fork
 PRs before changing an existing checkout. Keep existing work. Setup does not

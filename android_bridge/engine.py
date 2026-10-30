@@ -189,8 +189,14 @@ class HeadlessEngine:
                     raise ValueError("Invalid empty module slot")
                 fit.modules.appendIgnoreEmpty(Module.buildEmpty(VACANT_SLOTS[row["empty_slot"]]))
                 continue
-            _keys(row, ("name", "state"), ("charge", "spool_cycles", "rah_pattern"))
-            module = Module(self._item(row["name"]))
+            _keys(row, ("name", "state"), ("charge", "spool_cycles", "rah_pattern", "mutation"))
+            if 'mutation' in row:
+                if not restore:
+                    raise ValueError('Creating mutated modules needs the mutation conversion editor')
+                from .mutation_records import restore_module
+                module = restore_module(self, row)
+            else:
+                module = Module(self._item(row["name"]))
             try:
                 state = FittingModuleState[row["state"]]
             except (KeyError, TypeError) as error:

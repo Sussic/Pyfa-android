@@ -1,0 +1,581 @@
+{
+  "ticket": "C10",
+  "schema": 1,
+  "source_commit": "8b04f3b271e614b3e103853b44a7851a63d79d0e",
+  "source_files": {
+    "eos/__init__.py": "68be7f2616d1a0f1486edd78ee0ade2c85c83bf8bc6a9ffd16c4ab00ce192d8c",
+    "eos/config.py": "3f66131823b7c54ea77c8e84c571e6c3e8ec758c9c58c91985d78facdeed1d3d",
+    "eos/const.py": "8191a23c849fa9e76b9a2aabcd36e1ce37055b1f287fe4437b0391fe8fbf90bf",
+    "eos/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eos/utils/pyinst_support.py": "01a8d66f34f8f94c4aa61dc2d4a0303d954ad5266e9d9ffc627ffe9bcd8984ef",
+    "eos/db/migrations/upgrade1.py": "c768abc3971ca3d115471b82973f51bc5c0f89560db41119788210fd3f501c5c",
+    "eos/db/migrations/upgrade10.py": "595c421618ce28e918923fc5a9302c7ea8ab416493dfd3a00ae43c65c164aab5",
+    "eos/db/migrations/upgrade11.py": "f6a2464192574a40be958acbf0d3c022ad7d54ef6e957ccbb8c394f6e8f69eb4",
+    "eos/db/migrations/upgrade12.py": "a326f374fa0349c3a77626f58bcbdbb1c143b3e0d4776011638603841d892871",
+    "eos/db/migrations/upgrade13.py": "f218d317213bda15fc6e73768aa81991f067c7aac597fd707e0ed3c58bd37be8",
+    "eos/db/migrations/upgrade14.py": "2ddea254a3b30a407487a061e143492cb1a58220e9776797ba41b9f795e36ac3",
+    "eos/db/migrations/upgrade15.py": "de5ccbcb6a18db65c16f2f8790fe5a928be792db7d7bb57f6a0d61fabaf18029",
+    "eos/db/migrations/upgrade16.py": "11a167f64633fe845ddd5a5db5b4918ee347a5cd22d754fa923dace4ce4478a2",
+    "eos/db/migrations/upgrade17.py": "4504cc470d89e13dada4339724a8a578ab3b091127cd27d97cf6dd1268b71178",
+    "eos/db/migrations/upgrade18.py": "d92dfc29024d58353e85a4eb010c2a30b486f559938359460593e5411a961798",
+    "eos/db/migrations/upgrade19.py": "a323fd0f5c7140861636de09856a049b6d3e3afdfc45fcdfb45727f27c3b620e",
+    "eos/db/migrations/upgrade2.py": "c5e75a6a900d19021ee8b5ccea44959473e34be6fe8faf10af96e2abc96641e8",
+    "eos/db/migrations/upgrade20.py": "116f2a1f95407d6c38a2cc293dd64f7cda0b23daff5e53a180f83d933de27697",
+    "eos/db/migrations/upgrade21.py": "71a9d20658e9ebde3b353d5b6f5dff2a46a7efac122f1ae4f4a5a3aa8b87d3f8",
+    "eos/db/migrations/upgrade22.py": "d539bb83a76a9583c8f4ae515ca5adf63743b2bb8ab9d64ac31ef8878b17fa55",
+    "eos/db/migrations/upgrade23.py": "5125bd0bb91d7e1791e88e9d54213756cc437af9e9278967f40b12977e79808e",
+    "eos/db/migrations/upgrade24.py": "dae2731131e753cce8f169abec60c5c277372646aac0ac53309bb12163bd4278",
+    "eos/db/migrations/upgrade25.py": "4f8e7f9992740c0c2dea13ed887298f21f4f67839f1091a819a74a83f2a70941",
+    "eos/db/migrations/upgrade26.py": "a7b083eb1d73181b3c7d8cb4be5a3fb528c07b76b826eb69e077d38f4275d331",
+    "eos/db/migrations/upgrade27.py": "10ea6e774e49f10e1b3155cc4fc9a6240616be4070e8c720845605b6f0a6f122",
+    "eos/db/migrations/upgrade28.py": "876925ede0dbf3734f17f793dbf6aa82dd2a2b0b3c9f08b37f69679522df9c89",
+    "eos/db/migrations/upgrade29.py": "d5e0aca6d13bb0389630607cb634f8736fa535f0b9af5fae134eebebec96e415",
+    "eos/db/migrations/upgrade3.py": "d8c2baa45414bc686432ca1303231d8a9dfaf19f9aa38fac8c20b33824b924f0",
+    "eos/db/migrations/upgrade30.py": "67ef0a18f68e2dc75a0982893c032e44fddb50cc36d7ee008b5a91e606c84d45",
+    "eos/db/migrations/upgrade31.py": "21bf285dfe8c3ef684c8e9ff030994696bfa8462f0cc6ebbe202b1e72cba5b56",
+    "eos/db/migrations/upgrade32.py": "2e097d3b5c821414e1fe39cf46d97c5c26b2d076749bbfc8da3cc490feff3a31",
+    "eos/db/migrations/upgrade33.py": "b9d1254fde516afe88a17bc27fd4d563b636db1a0c1d7da4ab32eeea8223ce2e",
+    "eos/db/migrations/upgrade34.py": "c0a2782882abf8a7b7f1e737076e23cf7c17bf3709e5f299472c7e48a5666cfe",
+    "eos/db/migrations/upgrade35.py": "1b5dbeedb21148f6456f855a5d89f9b4b47836c0b342856ae886faf587ffdf27",
+    "eos/db/migrations/upgrade36.py": "1cf700c2a172b8e673a10aa878a89e5797118bd8306166e39997a52e0ddaa51b",
+    "eos/db/migrations/upgrade37.py": "e74ce44920078925d1c13382ec7c112d6640734a066c4e5603373b285436f6b6",
+    "eos/db/migrations/upgrade38.py": "09d22bc2a2b41a57aa26fc22d001b1b0040080d6f5110b84c89a559c70622cf5",
+    "eos/db/migrations/upgrade39.py": "0cb8a5822452d573b180040b9276664292749d7b0bb4b3d6a88c311c01802ede",
+    "eos/db/migrations/upgrade4.py": "cec0a7d3b464e31d60748ffc6f206880a7343f491919e45c39920b3caf5d0647",
+    "eos/db/migrations/upgrade40.py": "276570db6952bd64bc1a806677c4237d24d7535c56a07d0aa81e2f8d3437cc7e",
+    "eos/db/migrations/upgrade41.py": "02a3551870c535f452cdd82ff989a08b27e3ad21a274cf42b23e08b25eb3d807",
+    "eos/db/migrations/upgrade42.py": "3162a27044340251f85b58661067f6b974baf281f4d7fdc2e6bdc1e5d833cf90",
+    "eos/db/migrations/upgrade43.py": "ccd14523e773f7f07fd13cea62159bed9d5bd41faf9834e22a1f4a55e3e92f78",
+    "eos/db/migrations/upgrade44.py": "e0fa59bb89c6b3d88304896141ba5062b719422c52f4271bc181aebdcafce5a8",
+    "eos/db/migrations/upgrade45.py": "3f5f59d131e6e339a5a50ff0d4ae4737cf26f5f5a7321f7a8ecb1f371b42f247",
+    "eos/db/migrations/upgrade46.py": "d3ce4482c8de676719996b499d4f888d61b8f8d5b925446e31679bc83fdf5c0b",
+    "eos/db/migrations/upgrade47.py": "f4523714d287eca16fc453abab31c737745e35418768747115cde3c6ee3729a8",
+    "eos/db/migrations/upgrade48.py": "b41efa13a0c1a52d979ecd2aa4438d7e1b312f5c1c30d548f88025fe86ee0fdd",
+    "eos/db/migrations/upgrade49.py": "ce858a10d1c16e900d09b86d6268cadb605f7f65dd9c04cbe7a3fd08d295961b",
+    "eos/db/migrations/upgrade5.py": "1200156e7761395cbe8888543508877bd6a8e1633214453d74dde1c6d0badcfe",
+    "eos/db/migrations/upgrade6.py": "670c6eea631ca5a87bc1f23d2f5d7d78d9372442827af21d5327372d20904e63",
+    "eos/db/migrations/upgrade7.py": "212c7a1d6e116fd5a99ba77e594396bfc279bed56e0751937465f5400f6d5584",
+    "eos/db/migrations/upgrade8.py": "91c2387a2b3a140ef4a40d228054a8e1c8b3846d0b361fee8be171e025fd9901",
+    "eos/db/migrations/upgrade9.py": "2f5506a31af0ee93568bc092a3579a32b6fa2bc95b4e86a478d0f422b8fce55b",
+    "eos/db/migrations/__init__.py": "088fbad40abc4a6e8e733f52d709a17052e27961ae8df66fd13a1f5d25070bf9",
+    "eos/db/migration.py": "9494f167d4c6015443da9e2030e54a8a65284353ff0e3be705e3def5bf3d75f6",
+    "eos/db/gamedata/__init__.py": "bff763d9c0f20d97c03962fec5516da7e4f27fb431f43bcda2dc0e13341635c7",
+    "eos/calc.py": "bb8ef6c32681e538c3c09b640c3541d67cba9fc73fc361bf1e0daa70e9ec7652",
+    "eos/utils/float.py": "b2499069900b943b638e00f03ec91432433ef19965f6ca879c0a69b7cb5463c8",
+    "eos/utils/spoolSupport.py": "b6986b2e0a90a2d3c219d9fdcde9ea10eff3bb2b027e813c6014d145ffd665d7",
+    "eos/effects.py": "b7b730ce7ce2646ef0dfc570ca0326725de87da1c645012c85ceab0d2143a153",
+    "eos/saveddata/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eos/saveddata/price.py": "c8bc8d967febf81f88eb4861cfe2902b0f5139a8ff98cebdf668f70bd62827dd",
+    "eos/eqBase.py": "75a790de590921d137f9c849ac0354910f9a4a92915a5d00feb3d312ccd21aa9",
+    "eos/gamedata.py": "adf4053bc624f1be3ae83625246fb36f88fc3c38854c374f4803c7a4830a7072",
+    "eos/db/gamedata/alphaClones.py": "c1d44de8353d465af1a41af07f73ad2c16d0a7be3655ddbed44ab57e8fd21588",
+    "eos/db/gamedata/attribute.py": "c277ac44367e5182f853a440cbeee66618c91ac2f98255b5321b65448a62d5a2",
+    "eos/db/gamedata/category.py": "5adb3443ce2a5d537c3cb953b269c4e7de55ec5a043cfeebf0c9b2ae0962ad6e",
+    "eos/db/gamedata/effect.py": "fdcff997cf74c45e454940379724d41dd289f07666c473b1a5ddf48e5fdc7dbf",
+    "eos/db/gamedata/group.py": "14134f28226f3f2117390c5b75f21f74c86c100d2ab8754d5220c621dc6e1e8b",
+    "eos/db/gamedata/dynamicAttributes.py": "980ff1c54296fec33b8cbeb853e5106cc58571abdbcf59a5ea07eb86b8a252dd",
+    "eos/db/gamedata/traits.py": "789a72ffe1982a66d94042313f9a078d292c62849da0406b85fe82da5724aee4",
+    "eos/db/gamedata/item.py": "c7247bad7839cea8cb2f0a3bcc893b188ab2e9ffa399b16623d9d9e9a3756692",
+    "eos/db/gamedata/marketGroup.py": "c7f68d88958b3e872a333df2c6b37263ddb3543ee405e0f8bdc6317b6422eeed",
+    "eos/db/gamedata/metaData.py": "9bc1905364aa241f04799651514b082c5b6e263b170915698bcc619a170fb707",
+    "eos/db/gamedata/metaGroup.py": "1fbc2514b38488da7c36dfc61709e00088d98929b3b846864aa4a19c7edcb568",
+    "eos/db/util.py": "c232e7a4876ff042678758d214c0b4575b0f964e7ff4dbfc204af6075b24c137",
+    "eos/db/gamedata/queries.py": "3f7fd8648683a53d169898e138ae6ecc1d58ffbedc3ade9f2041de904234b1a5",
+    "eos/db/gamedata/unit.py": "31857ca4b2e7141361a2ec3ca20cca331234a681859d9574fb3bb97a61416411",
+    "eos/db/gamedata/implantSet.py": "aa5e2fa3471ef1f0705215e43fae8dfd275afd4ed28126cfd259ec4d7c77d172",
+    "eos/db/saveddata/__init__.py": "3e2771e18ad395b8bab82b6a61ffb7e37db7325c0062bbe31ea22fd7ef347f59",
+    "eos/effectHandlerHelpers.py": "5cd4ea3ee89fb88ac5c8f04bdb5bc4e99c55a94d8bfad2034d29fa657ce54ce1",
+    "eos/modifiedAttributeDict.py": "8047a646230904bdba8e86741f1a1125428d0cbb3632708a3cee365d7b20e72e",
+    "eos/utils/round.py": "6de979b92c0d67cdb15b4e3803c8e3ed46d8e3cd77186b07ae9d3a86da41ea51",
+    "eos/saveddata/boosterSideEffect.py": "5f2b0fceb5c634c4a5e3fd22fab0116cb5565dcfc5017c7ef75957f9e87e821a",
+    "eos/saveddata/booster.py": "23bb44c16762cd16bd4d4ee448360fcaaf76476100d6026c4709e8d19e120e53",
+    "eos/capSim.py": "e6ff5584c7fedb52944267a7fad3ff1fa916f8f047a1b6008c98cbf2277b7e04",
+    "eos/saveddata/character.py": "a3359ae32536145c2861912365c132040513d00fab71bf375d02e8a9356f9150",
+    "eos/saveddata/mode.py": "d3e512d11f821097f2b3fd635b48a4cf485d8709a4a894452d8dd0e5ef63241f",
+    "eos/saveddata/ship.py": "31a8417f553037c1de42ef0b7eef104af998d79bf8d59f2cc9ec098e90658a6a",
+    "eos/saveddata/citadel.py": "55c5a1378690bfc5eb35767a55c782bd5307f0e3c6a412c609da6db19e4179d8",
+    "eos/saveddata/damagePattern.py": "962ac70317a486029c72e29d4cadcfed9ae1877ca1a0d51d2df53f11fe7c9619",
+    "eos/saveddata/mutatedMixin.py": "9b5ab5beba83597b563241e5649d1463e44caf5d85839f5d030569769d31223e",
+    "eos/saveddata/mutator.py": "62529c954f7f3a6a8c0e1a4d85f62eeab6f8756045792953b206ee148d9fe3a6",
+    "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "utils/repr.py": "73d5764e0d6cedf8279dad4d43368f5e555dde4b5ec1f696113c6312f7a31a2d",
+    "eos/utils/cycles.py": "7738b48655400e53140b11d5c914bd1798a7768b8b302dd471b3eec397b6547f",
+    "eos/utils/default.py": "5732c2d835855bc8061dfadaa117c2911fe816b8f2adc85c0e384c8276379c7e",
+    "eos/utils/stats.py": "c49516ec2a4b108328d102714a8a1eecc48d8e0730ca3600569fbc8887ec0f4c",
+    "eos/saveddata/module.py": "79f89d8a4a2a9785e371a7129fb2896398c4fd822afcd0237db05bf2e1a39ad3",
+    "eos/saveddata/targetProfile.py": "2bc70605800c85add21b7813db4a645bd5fbf70edc9f4b9d9c90c08c89e1a9c2",
+    "eos/saveddata/fit.py": "666f954eb0a3028d61d1b5941c5813a63c53b9bf3018f9d453948b2369bb1d36",
+    "eos/db/saveddata/booster.py": "414071ae099156c8c0f8485003226dd1d6c3d4b1a9d008b2046fa20ad3aee0d2",
+    "eos/saveddata/cargo.py": "6508e60dca8c3e2c015c859feda1d296c3ab2bf2acb4d0098404193adb53a4a1",
+    "eos/db/saveddata/cargo.py": "e6aad771b62e29a6e5145d2509d07c2c8ec60f03823d7bb5ee3c5e8256172f08",
+    "eos/saveddata/implant.py": "2b22c627ed3b68c621f6e01188b0c1a05eb5f1f2ba439666a07800ae318dd6e2",
+    "eos/db/saveddata/implant.py": "6cf53d3e37c01f0a3a11bc7fea7245af091ddf6ef8a54b5f806172be88071a16",
+    "eos/saveddata/user.py": "9f10882225b4aad09dd80f2b0dc50b17be2c45660231a9ce040d2f765f94f662",
+    "eos/saveddata/ssocharacter.py": "7997ab2d22be0afa35bf5d22ccd0702b6fc1c4265bba31f0550f2f147f7bf086",
+    "eos/db/saveddata/character.py": "dd0877ec8de56452f21747582701b48a7282dfa4e68e11c9f5a99dab7776b87f",
+    "eos/db/saveddata/damagePattern.py": "c6c572f404e94e0b43cf5b2c57e4a7524ddf510c346ee470867e2022c1cc94d6",
+    "eos/db/saveddata/databaseRepair.py": "e2085e4cd45895597df99c933e0a3dc0d96cf7f4583f3f224d73b6b95fcf7c8e",
+    "eos/saveddata/drone.py": "2979bb5f8e19b4f85ee6e25387c6fce31d3d83fc0e135b50d5c13424bd041735",
+    "eos/db/saveddata/drone.py": "3dc6aec3875c9f364082e7254804aad943e752eccc833c48c192136bac4018d8",
+    "eos/saveddata/fighterAbility.py": "02194180623bbc711322d1f97bc032a76cbf38c72609683faab8cb7841875913",
+    "eos/saveddata/fighter.py": "017cbfdd6b94a0fad6d0ab8d07e3d800b3b6ebbfb1f98def6799221da20908cd",
+    "eos/db/saveddata/fighter.py": "817d2a65bae8b96d1c52b8fc474f569bcc62bf5a8490f94fc797d043af94d7e9",
+    "eos/db/saveddata/module.py": "91ecdc7d832ce16b8d2e06e46e804228f62fc0e5b687c3ed00e0a17b1fe43a25",
+    "eos/db/saveddata/fit.py": "3853ff787a31cb4cb48df50708d551dd2b23d7105e614ca1684c08b356401346",
+    "eos/saveddata/implantSet.py": "063bb7c10a95f9515a2b8599c55d18d08b7898dc4885c824bb6df0db60d18a8f",
+    "eos/db/saveddata/implantSet.py": "d364c4a222390e27e36d0d5664a660801be9cf0cc7813f2c3fe57cf55ff30231",
+    "eos/saveddata/miscData.py": "4a0d0289f81a571c5885bbe9068a52a1fa87065a1c616094af321080dee9ac66",
+    "eos/db/saveddata/miscData.py": "7aeebc81d0c248c4680593b8aa42d1c1355d6da6c4ba81f11921aada7e398eb5",
+    "eos/db/saveddata/mutatorMod.py": "cffe34596fc14dae1668c7975ec7a11876a854555be9e882661ecfa128b6bc13",
+    "eos/db/saveddata/mutatorDrone.py": "e9d4f44fd051c1e7cc628d6879b76718269b96bc6d51150bd7f7102018efc920",
+    "eos/saveddata/override.py": "23539a902d376bb6ed721170663a4d5e1c532ded09dfcaa745b7dfbc9622ef08",
+    "eos/db/saveddata/override.py": "a6da625b40239a03daf34389427ed3a3bfd4cfa353474f593148ed7c1ecb574f",
+    "eos/db/saveddata/price.py": "77560aa04f2ddeaddd2c0fc007578cbdc8a708fd584eca1e1004c8c577a49593",
+    "eos/db/saveddata/queries.py": "b4235e2e1e2886d41c9a89ea1a50b005f51a9c5a336639061c2a1065bc5b49d8",
+    "eos/db/saveddata/skill.py": "2cd392851a7329b59c3eed1d9e62e0ee15fbde78db426202cca698f54055cf30",
+    "eos/db/saveddata/targetProfile.py": "d28b10b79b48a4cfbb4b01596ed297f03bd8e4c97d939b1ea54e564bff018257",
+    "eos/db/saveddata/user.py": "d4ca410704d09f543ff0233dd8f356033451a59ae2afb21edd1eba4820b2c788",
+    "eos/db/__init__.py": "ca3e1b12820905893364634f30b6289d70a5a58a2cecf33001ecd93da9873e26"
+  },
+  "database_sha256": "e0dc4b3d281bd949f0a8089d587053ad66c0fcef90163cc6988e670d15d01065",
+  "database_logical_sha256": "5857af3ea30b3cfdf937120cf08c66f7cbe18dc8356db05b7adde72ee57bc607",
+  "helper_sha256": "292b550ddb4552d74c87116ba82d12d828584f0a175913027cc17d2297f4ec20",
+  "producer_sha256": "21bdfc394c5b6e52d74c5a30bb28920af2ec55d56f77e7ecab2205ea50f9228f",
+  "dependencies": {
+    "wxPython": "4.2.1",
+    "logbook": "1.7.0.post0",
+    "sqlalchemy": "1.4.50",
+    "pyyaml": "6.0.1",
+    "cryptography": "42.0.4",
+    "numpy": "1.26.2",
+    "greenlet": "3.0.3",
+    "typing-extensions": "4.12.2",
+    "pillow": "10.4.0",
+    "six": "1.16.0",
+    "cffi": "1.16.0",
+    "pycparser": "2.22"
+  },
+  "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\HallT\\OneDrive\\Desktop\\Documents\\PyfaDevelopment\\.venv\\reference\\Scripts\\python.exe",
+  "platform": "win32",
+  "sqlite_version": "3.45.1",
+  "eos_settings": {
+    "useStaticAdaptiveArmorHardener": false,
+    "strictSkillLevels": true,
+    "globalDefaultSpoolupPercentage": 1.0
+  },
+  "base_item_id": 438,
+  "mutaplasmid_id": 47746,
+  "resulting_item_id": 47749,
+  "states": [
+    {
+      "fraction": 0.25,
+      "attributes": [
+        {
+          "attribute_id": 6,
+          "value": 20.625
+        },
+        {
+          "attribute_id": 20,
+          "value": 133.3125
+        },
+        {
+          "attribute_id": 30,
+          "value": 11.274999999999999
+        },
+        {
+          "attribute_id": 50,
+          "value": 15.375
+        }
+      ],
+      "metrics": {
+        "cpu_used": {
+          "value": 15.375,
+          "unit": "tf"
+        },
+        "cpu_output": {
+          "value": 162.5,
+          "unit": "tf"
+        },
+        "powergrid_used": {
+          "value": 11.274999999999999,
+          "unit": "MW"
+        },
+        "powergrid_output": {
+          "value": 51.25,
+          "unit": "MW"
+        },
+        "drone_control_range": {
+          "value": 60000.0,
+          "unit": "m"
+        },
+        "drone_bandwidth_used": {
+          "value": 0,
+          "unit": "Mbit/s"
+        },
+        "weapon_dps": {
+          "value": 0.0,
+          "unit": "HP/s"
+        },
+        "drone_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_dps": {
+          "value": 0.0,
+          "unit": "HP/s"
+        },
+        "total_volley": {
+          "value": 0.0,
+          "unit": "HP"
+        },
+        "capacitor_capacity": {
+          "value": 312.5,
+          "unit": "GJ"
+        },
+        "capacitor_recharge_time": {
+          "value": 93750.0,
+          "unit": "ms"
+        },
+        "capacitor_used": {
+          "value": 0.6875,
+          "unit": "GJ/s"
+        },
+        "capacitor_recharge": {
+          "value": 8.333333333333334,
+          "unit": "GJ/s"
+        },
+        "capacitor_stable": {
+          "value": true,
+          "unit": "boolean"
+        },
+        "capacitor_state": {
+          "value": 95.79373333634675,
+          "unit": "%"
+        },
+        "max_velocity": {
+          "value": 1184.0399025805677,
+          "unit": "m/s"
+        },
+        "max_target_range": {
+          "value": 28125.0,
+          "unit": "m"
+        },
+        "gun_optimal": {
+          "value": 0.0,
+          "unit": "m"
+        },
+        "gun_falloff": {
+          "value": 1.0,
+          "unit": "m"
+        },
+        "shield_hp": {
+          "value": 562.5,
+          "unit": "HP"
+        },
+        "shield_ehp_uniform": {
+          "value": 775.8620689655172,
+          "unit": "HP"
+        },
+        "armor_hp": {
+          "value": 562.5,
+          "unit": "HP"
+        },
+        "armor_ehp_uniform": {
+          "value": 833.3333333333333,
+          "unit": "HP"
+        },
+        "hull_hp": {
+          "value": 437.5,
+          "unit": "HP"
+        },
+        "hull_ehp_uniform": {
+          "value": 652.9850746268656,
+          "unit": "HP"
+        },
+        "shield_em_resonance": {
+          "value": 1.0,
+          "unit": "fraction"
+        },
+        "shield_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_kinetic_resonance": {
+          "value": 0.6,
+          "unit": "fraction"
+        },
+        "shield_explosive_resonance": {
+          "value": 0.5,
+          "unit": "fraction"
+        },
+        "armor_em_resonance": {
+          "value": 0.4,
+          "unit": "fraction"
+        },
+        "armor_thermal_resonance": {
+          "value": 0.65,
+          "unit": "fraction"
+        },
+        "armor_kinetic_resonance": {
+          "value": 0.75,
+          "unit": "fraction"
+        },
+        "armor_explosive_resonance": {
+          "value": 0.9,
+          "unit": "fraction"
+        },
+        "hull_em_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_thermal_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_kinetic_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_explosive_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        }
+      }
+    },
+    {
+      "fraction": 0.75,
+      "attributes": [
+        {
+          "attribute_id": 6,
+          "value": 24.474999999999998
+        },
+        {
+          "attribute_id": 20,
+          "value": 143.4375
+        },
+        {
+          "attribute_id": 30,
+          "value": 12.925
+        },
+        {
+          "attribute_id": 50,
+          "value": 17.625
+        }
+      ],
+      "metrics": {
+        "cpu_used": {
+          "value": 17.625,
+          "unit": "tf"
+        },
+        "cpu_output": {
+          "value": 162.5,
+          "unit": "tf"
+        },
+        "powergrid_used": {
+          "value": 12.925,
+          "unit": "MW"
+        },
+        "powergrid_output": {
+          "value": 51.25,
+          "unit": "MW"
+        },
+        "drone_control_range": {
+          "value": 60000.0,
+          "unit": "m"
+        },
+        "drone_bandwidth_used": {
+          "value": 0,
+          "unit": "Mbit/s"
+        },
+        "weapon_dps": {
+          "value": 0.0,
+          "unit": "HP/s"
+        },
+        "drone_dps": {
+          "value": 0,
+          "unit": "HP/s"
+        },
+        "total_dps": {
+          "value": 0.0,
+          "unit": "HP/s"
+        },
+        "total_volley": {
+          "value": 0.0,
+          "unit": "HP"
+        },
+        "capacitor_capacity": {
+          "value": 312.5,
+          "unit": "GJ"
+        },
+        "capacitor_recharge_time": {
+          "value": 93750.0,
+          "unit": "ms"
+        },
+        "capacitor_used": {
+          "value": 0.8158333333333333,
+          "unit": "GJ/s"
+        },
+        "capacitor_recharge": {
+          "value": 8.333333333333334,
+          "unit": "GJ/s"
+        },
+        "capacitor_stable": {
+          "value": true,
+          "unit": "boolean"
+        },
+        "capacitor_state": {
+          "value": 94.998824053525,
+          "unit": "%"
+        },
+        "max_velocity": {
+          "value": 1239.3150850550414,
+          "unit": "m/s"
+        },
+        "max_target_range": {
+          "value": 28125.0,
+          "unit": "m"
+        },
+        "gun_optimal": {
+          "value": 0.0,
+          "unit": "m"
+        },
+        "gun_falloff": {
+          "value": 1.0,
+          "unit": "m"
+        },
+        "shield_hp": {
+          "value": 562.5,
+          "unit": "HP"
+        },
+        "shield_ehp_uniform": {
+          "value": 775.8620689655172,
+          "unit": "HP"
+        },
+        "armor_hp": {
+          "value": 562.5,
+          "unit": "HP"
+        },
+        "armor_ehp_uniform": {
+          "value": 833.3333333333333,
+          "unit": "HP"
+        },
+        "hull_hp": {
+          "value": 437.5,
+          "unit": "HP"
+        },
+        "hull_ehp_uniform": {
+          "value": 652.9850746268656,
+          "unit": "HP"
+        },
+        "shield_em_resonance": {
+          "value": 1.0,
+          "unit": "fraction"
+        },
+        "shield_thermal_resonance": {
+          "value": 0.8,
+          "unit": "fraction"
+        },
+        "shield_kinetic_resonance": {
+          "value": 0.6,
+          "unit": "fraction"
+        },
+        "shield_explosive_resonance": {
+          "value": 0.5,
+          "unit": "fraction"
+        },
+        "armor_em_resonance": {
+          "value": 0.4,
+          "unit": "fraction"
+        },
+        "armor_thermal_resonance": {
+          "value": 0.65,
+          "unit": "fraction"
+        },
+        "armor_kinetic_resonance": {
+          "value": 0.75,
+          "unit": "fraction"
+        },
+        "armor_explosive_resonance": {
+          "value": 0.9,
+          "unit": "fraction"
+        },
+        "hull_em_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_thermal_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_kinetic_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        },
+        "hull_explosive_resonance": {
+          "value": 0.67,
+          "unit": "fraction"
+        }
+      }
+    }
+  ],
+  "initial_spec": {
+    "name": "C10 existing rolled afterburner",
+    "ship": "Rifter",
+    "skill_level": 5,
+    "factor_reload": false,
+    "damage_pattern": {
+      "emAmount": 25,
+      "thermalAmount": 25,
+      "kineticAmount": 25,
+      "explosiveAmount": 25
+    },
+    "target_profile": null,
+    "security": {
+      "system": "HISEC",
+      "pilot": 0.0
+    },
+    "implants": [],
+    "boosters": [],
+    "projections": [],
+    "commands": [],
+    "environments": [],
+    "drones": [],
+    "modules": [
+      {
+        "name": "1MN Abyssal Afterburner",
+        "state": "ACTIVE",
+        "mutation": {
+          "base_item_id": 438,
+          "mutaplasmid_id": 47746,
+          "attributes": [
+            {
+              "attribute_id": 6,
+              "value": 20.625
+            },
+            {
+              "attribute_id": 20,
+              "value": 133.3125
+            },
+            {
+              "attribute_id": 30,
+              "value": 11.274999999999999
+            },
+            {
+              "attribute_id": 50,
+              "value": 15.375
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "adapter_imported": false,
+  "network_attempts": [],
+  "native_acceptance": false,
+  "limits": [
+    "One module/base/mutaplasmid pair only",
+    "No Android or process-restart proof",
+    "Independent oracle generation alone is not candidate acceptance"
+  ]
+}

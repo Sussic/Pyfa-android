@@ -5,53 +5,176 @@
     {
       "id": "policy-initia-bootstrap",
       "source_snapshot": {
-        "kind": "working_tree",
-        "commit": null
+        "baseline": "de60525e0595d5a78bc6967754e132c98feba210",
+        "manifest": "C:\\Users\\HallT\\Documents\\Codex\\2026-10-30\\continue-the-beacon-project-this-is-2\\work\\units-proof-20261030\\CURRENT-LIVE-INPUTS.json",
+        "commit": null,
+        "kind": "dirty_working_tree"
       },
-      "status": "awaiting_snapshot",
+      "status": "blocked_capability",
       "selection": "Current policy-bound Initia bootstrap and focused host prerequisites; native acceptance remains pending",
       "required_capabilities": [
         "windows",
         "python-3.11-headless-reference"
       ],
-      "next_action": "Run admitted Initia setup or queue an exact committed compatible selection on MSI; continue independent approved implementation."
+      "next_action": "Use fresh setup then facility selection after genuine RAM recovery. Policy checkpoint is published and MSI queue enabled; a product request still needs its actual complete source commit/capabilities.",
+      "actual_result": "Focused prerequisites passed on controlPython3.12; project3.11 environments absent. Read-only setup readiness below JSON setup reserve+estimate; no setup job/download/install."
     },
     {
-      "id": "policy-msi-queue-integration-20261030",
+      "status": "passed",
+      "actual_result": "Current relevant selection:76passes+5declaredLinuxskips=81methods. Reuse unchanged67results (62passes+5skips) from fullrun02 plus14affectedstorage methods passed after fixture-only extended-path cleanup fix. All owned process trees closed.",
+      "id": "policy-migration-focused-checks",
+      "source_snapshot": {
+        "kind": "dirty_working_tree",
+        "commit": null,
+        "manifest": "C:\\Users\\HallT\\Documents\\Codex\\2026-10-30\\continue-the-beacon-project-this-is-2\\work\\units-proof-20261030\\CURRENT-LIVE-INPUTS.json"
+      },
+      "next_action": "Reuse applicable checks; projectPython3.11/facility and marker persistence-failure qualification remain separate. No unchanged full-suite repetition.",
+      "selection": "81 methods: runner4; storage-reader9; allocated-reader5; policy19; retention25 (5 declared Linux skips on Windows); launcher8; DroneDelivery11. Historical excluded method remains separate.",
+      "evidence": [
+        "C:\\Users\\HallT\\Documents\\Codex\\Execution\\initia\\pyfa\\results\\policy-supplement-20261030-qualification-02\\focused-checks\\RESULT.json",
+        "C:\\Users\\HallT\\Documents\\Codex\\Execution\\initia\\pyfa\\results\\storage-cleanup-20261030-run01\\affected-checks\\RESULT.json"
+      ],
+      "required_capabilities": [
+        "Initia RAM admission for canonical light profile"
+      ],
+      "coordinator_reported_msi_proof": "C:\\Users\\HallT\\Documents\\Codex\\2026-10-30\\continue-the-beacon-project-this-is-2\\work\\policy-migration-20261030\\coordinator-supplement\\msi-coordinator-ack\\COORDINATOR-REPORTED-MSI-PROOF.json"
+    },
+    {
+      "selection": "test_drone_delivery.DroneDeliveryTests.test_preserves_exact_inherited_plan_and_adds_required_gates",
+      "required_capabilities": [
+        "Historical cbda3ade Git object"
+      ],
+      "status": "blocked_capability",
+      "source_snapshot": {
+        "kind": "dirty_working_tree",
+        "commit": null
+      },
+      "id": "historical-drone-plan-fixture",
+      "next_action": "Preserve blocked historicalmethod; four currentmodeplans separately match de605 baseline and full190gates.",
+      "actual_result": "Localobjectmissing; exact connectedGitHubcommit422 andcontents404. Originalassertionunchanged; no substitute generated.",
+      "evidence": "C:\\Users\\HallT\\Documents\\Codex\\2026-10-30\\continue-the-beacon-project-this-is-2\\work\\units-proof-20261030\\history-recovery\\GITHUB-HISTORICAL-FIXTURE.json"
+    },
+    {
+      "id": "c10-units1-source",
+      "status": "partial",
+      "source_snapshot": {
+        "kind": "isolated_derivative",
+        "commit": null,
+        "manifest": "Current chat outputs/PYFA-C10-UNITS-CHECKPOINT.json; protected113-file S1 plus exact listed derivative changes"
+      },
+      "selection": "10 authored unit-layer methods; independent original Unit witnesses; finite real-EOS module/drone sparse-edit, atomicity, revision/history and distinct-reader gates; 10 Android contract methods and affected native workflows",
+      "required_capabilities": [
+        "Qualified Python3.11 headless/reference and frozen dataset",
+        "Retained pinned independent module oracle",
+        "Original pinned independent drone oracle (missing restored input)",
+        "Policy-admitted job or coherent MSI snapshot",
+        "Qualified Android SDK/JDK/device for compilation/native proof"
+      ],
+      "actual_result": "Ten scalar unit-layer methods passed on admitted controlPython3.12 with originalUnitAST/raw-commitspy. Twelve Android methods and actualEOS/seed-generation remain unrun; no integration/compile/native acceptance.",
+      "next_action": "Qualify project3.11; run bound realEOS module proof and seed preparation. Recover original drone oracle; reviewed integration/Android capability required. Never derive expected values from candidate actual output.",
+      "evidence": "C:\\Users\\HallT\\Documents\\Codex\\Execution\\initia\\pyfa\\results\\units-proof-20261030-run02\\unit-layer-job-result.json"
+    },
+    {
+      "id": "c10-integration-prep1",
+      "status": "passed",
+      "selection": "Complete isolated source assembly, retained-base preservation, scoped source reviews and portable-validation preparation",
+      "source_snapshot": {
+        "kind": "filesystem_source_manifest_not_Git_commit",
+        "manifest": "Current chat outputs/PYFA-FULL-CANDIDATE-FILES.json"
+      },
+      "actual_result": "Source-preparation exits passed only.17app/producer delta paths plus4portable tools; old scalar proof retained as component proof; no new runtime/build/native claim.",
+      "next_action": "Use the separate full-candidate pending validation selection; parent remains open."
+    },
+    {
+      "id": "c10-full-candidate-validation",
       "status": "awaiting_snapshot",
+      "selection": "Portable10scalar methods, realEOS module/history/reopen, synthetic seed,12newAndroidmethods and retained full190gate acceptance",
       "source_snapshot": {
-        "kind": "working_tree",
+        "kind": "complete_isolated_source",
         "commit": null,
-        "policy_sha256": "0f9848f7e324e49268e550745d513d4fd6f516fcbb80619684bf47905b8bcef7"
+        "manifest": "Current chat outputs/PYFA-FULL-CANDIDATE-FILES.json"
       },
-      "workload": "light",
-      "argv": [
-        "python",
-        "-c",
-        "print('MSI queue exact-source probe')"
-      ],
+      "evidence": "C:\\Users\\HallT\\Documents\\Codex\\2026-10-30\\continue-the-beacon-project-this-is-2\\work\\c10-integration-20261030\\PENDING-VALIDATION.json",
       "required_capabilities": [
-        "windows",
-        "python"
+        "Actual complete immutable source commit before MSI submission",
+        "Qualified pinned reference and synthetic database",
+        "ProjectPython3.11 headless forEOS/seed",
+        "Qualified SDK/JDK/offline runtime forAndroid",
+        "Missing original drone oracle fordrone/both"
       ],
-      "queue_issue": null,
-      "dependency": "Outstanding approval for prepared exact-source policy/tooling publication",
-      "next_action": "Publish the approved scoped snapshot, pin its exact commit/policy hash, then run one light queue integration probe; no product acceptance is implied."
-    },
-    {
-      "id": "policy-initia-reconciliation-20261030",
-      "status": "queued",
-      "source_snapshot": {
-        "kind": "working_tree",
-        "commit": null,
-        "policy_sha256": "0f9848f7e324e49268e550745d513d4fd6f516fcbb80619684bf47905b8bcef7"
-      },
-      "required_capabilities": [
-        "connected-initia"
-      ],
-      "queue_issue": null,
-      "dependency": "Reviewed shared-tooling handoff awaiting active Initia owner reconciliation",
-      "next_action": "Read the active owner shutdown checkpoint, compare its final shared reader/runner and portable fixtures, merge only reviewed policy/adapter changes, refresh bindings and record focused results. Keep old Beacon paused."
+      "actual_result": "Unrun. Latest physical RAM observation1711468544B below current light/setup admission; no unchanged job retried.",
+      "next_action": "Qualify facilities after recovery, or publish/pin this actual complete candidate and resolve capabilities for MSI; do not substitute policy-only commit or oldHEAD."
     }
-  ]
+  ],
+  "resumed_by_owner": "30October2026: continue Pyfa; outdated Beacon chat remains paused",
+  "publication_and_queue": {
+    "schema_version": 1,
+    "source_thread_id": "01a18ce4-7905-7520-ae46-d4c59b55cb52",
+    "policy_publication": {
+      "status": "PUBLISHED_BY_COORDINATOR_WITH_USER_APPROVAL",
+      "branch": "codex/initia-execution-policy-20261030",
+      "commit": "62ef4ff597200450bcc26fdf9826ab6844bcd805",
+      "url": "https://github.com/Sussic/Pyfa-android/commit/62ef4ff597200450bcc26fdf9826ab6844bcd805",
+      "changed_paths": [
+        "AGENTS.md",
+        "EXECUTION.md",
+        "android/ci/artifact_retention.py",
+        "android/ci/drone_delivery.py",
+        "android/ci/local_verification.py",
+        "android/ci/policy_host_metrics.py",
+        "android/ci/test_artifact_storage_reader.py",
+        "android/ci/test_drone_retention.py",
+        "android/ci/test_execution_policy.py",
+        "android/ci/test_verify_local_launcher.py",
+        "android/verify-local.ps1",
+        "docs/android/DEVELOPMENT.md",
+        "docs/android/LOCAL-VERIFICATION.md",
+        "docs/android/MIGRATION.md",
+        "docs/android/ROADMAP.md",
+        "docs/android/STATUS.md",
+        "docs/pending-validation.json",
+        "execution-policy.json",
+        "scripts/execution_policy.py",
+        "scripts/run_project_job.py",
+        "scripts/test_execution_storage.py",
+        "scripts/test_run_project_job.py"
+      ],
+      "file_count": 22,
+      "approved_zip_sha256": "103d03abf5f9365cf921a6c137902143827851abb66cd85c53e1e7b4f0805db7",
+      "policy_sha256": "0f9848f7e324e49268e550745d513d4fd6f516fcbb80619684bf47905b8bcef7",
+      "verification": "Connected GitHub GET confirms exact commit and 22 changed paths; approved ZIP/policy identity reported by coordinator"
+    },
+    "queue": {
+      "state": "ENABLED",
+      "projects": [
+        "jita",
+        "pyfa"
+      ],
+      "cadence_minutes": 5,
+      "availability": "MSI awake and networked",
+      "probe": {
+        "project": "jita",
+        "commit": "e1401bda8be20ee7e952ff2bbefc31322dae4726",
+        "url": "https://github.com/Sussic/jita-market-app/issues/181",
+        "issue_state": "closed",
+        "comments": [
+          {
+            "id": 6531729915,
+            "body": "<!-- msi-queue-status:444c6b85ccd657e12580f46528b57a4e62e39becaa1e5ab29ba76b2e9e34025b -->\nMSI queue status:\n```json\n{\n  \"state\": \"passed\",\n  \"project\": \"jita\",\n  \"commit\": \"e1401bda8be20ee7e952ff2bbefc31322dae4726\",\n  \"policy_sha256\": \"25d31fb1dfb985553a617474952aef065a1ae2f74a0c767d7ea92c5ad5b52b40\",\n  \"request_sha256\": \"e81f65f26d31aec5ab59c990cbb55a99cff6df640e8dfe8e3fa3ba4226ca3230\",\n  \"utc\": \"2026-10-30T19:27:53.159316+00:00\",\n  \"exit_code\": 0,\n  \"result_directory\": \"C:\\\\Users\\\\HallT\\\\Documents\\\\Codex\\\\Execution\\\\MSI\\\\jita\\\\jobs\\\\e81f65f26d31aec5ab59c990cbb55a99cff6df640e8dfe8e3fa3ba4226ca3230\\\\results\\\\attempt-0001\"\n}\n```",
+            "created_at": "2026-10-30T19:27:55Z"
+          }
+        ],
+        "worker_python": "3.13.14 (coordinator-reported)",
+        "scope": "Light exact-source infrastructure probe only; not product setup, GUI, C10 or acceptance"
+      }
+    },
+    "remaining_state": {
+      "prior_prepared_package_publication_hold": "CLEARED",
+      "queue_activation_hold": "CLEARED",
+      "current_product_candidate": "AWAITING_COMPLETE_SOURCE_SNAPSHOT",
+      "product_jobs": "Must publish/pin intended dirty feature changes; policy-only commit is not this candidate",
+      "merge_release_deployment": "NOT DONE",
+      "old_beacon_and_api_chats": "UNCHANGED BY THIS CHAT"
+    }
+  }
 }

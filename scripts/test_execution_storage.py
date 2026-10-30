@@ -27,7 +27,8 @@ def without_junction_api(path):
 
 class StorageReaderTests(unittest.TestCase):
     def setUp(self):
-        self.temporary=tempfile.TemporaryDirectory()
+        # The retained cleanup path must use the same Windows extended syntax.
+        self.temporary=tempfile.TemporaryDirectory(dir=reader.filesystem_path(tempfile.gettempdir()))
         self.addCleanup(self.temporary.cleanup)
         self.root=Path(self.temporary.name)
         self.policy={'locations':{'execution_root':str(self.root/'execution')},

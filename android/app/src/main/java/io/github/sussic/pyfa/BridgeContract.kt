@@ -37,6 +37,10 @@ data class FitSpec(
 )
 
 sealed interface BridgeOperation {
+    data class SetMutationAttributes(val fitId: String, val kind: String, val position: Int,
+        val objectKey: String, val attributes: List<MutationRollInput>) : BridgeOperation
+    data class SetMutationDisplayAttributes(val fitId: String, val kind: String, val position: Int,
+        val objectKey: String, val edits: List<MutationDisplayEdit>) : BridgeOperation
     data class Snapshot(val fitIds: List<String> = emptyList()) : BridgeOperation
     data class CreateFit(val spec: FitSpec) : BridgeOperation
     data class RenameFit(val fitId: String, val name: String) : BridgeOperation
@@ -170,6 +174,8 @@ sealed interface BridgeOperation {
 
 /** Copy caller-owned collections before enqueueing work on the engine thread. */
 fun BridgeOperation.snapshotArguments(): BridgeOperation = when (this) {
+    is BridgeOperation.SetMutationAttributes -> copy(attributes = immutableList(attributes))
+    is BridgeOperation.SetMutationDisplayAttributes -> copy(edits = immutableList(edits))
     is BridgeOperation.SetProjectedFightersActive -> copy(selection = immutableList(selection))
     is BridgeOperation.SetProjectedFighterRanges -> copy(selection = immutableList(selection))
     is BridgeOperation.RemoveProjectedFighters -> copy(selection = immutableList(selection))
@@ -1001,6 +1007,29 @@ object BridgeCodec {
         is BridgeOperation.SetModuleSpool -> "set_module_spool" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0),
             "cycles" to operation.cycles?.let { integer(it, "cycles", 0) })
+        is BridgeOperation.SetMutationAttributes -> {
+            requireProtocol(operation.kind in setOf("module", "drone"), "Invalid mutation kind")
+            requireProtocol(operation.objectKey.matches(Regex("[0-9a-f]{32}")), "Invalid mutation identity")
+            requireProtocol(operation.attributes.isNotEmpty() && operation.attributes.zipWithNext().all { (a, b) -> a.attributeId < b.attributeId },
+                "Complete ordered roll set required")
+            "set_mutation_attributes" to obj("fit_id" to operation.fitId, "kind" to operation.kind,
+                "position" to integer(operation.position, "position", 0), "object_key" to operation.objectKey,
+                "attributes" to JSONArray().also { rows -> operation.attributes.forEach { roll ->
+                    rows.put(obj("attribute_id" to integer(roll.attributeId, "attribute_id", 1), "value" to finite(roll.value, "value")))
+                } })
+        }
+        is BridgeOperation.SetMutationDisplayAttributes -> {
+            requireProtocol(operation.kind in setOf("module", "drone"), "Invalid mutation kind")
+            requireProtocol(operation.objectKey.matches(Regex("[0-9a-f]{32}")), "Invalid mutation identity")
+            requireProtocol(operation.edits.isNotEmpty() && operation.edits.zipWithNext().all { (a, b) -> a.attributeId < b.attributeId },
+                "Nonempty unique ordered mutation edits required")
+            "set_mutation_display_attributes" to obj("fit_id" to operation.fitId, "kind" to operation.kind,
+                "position" to integer(operation.position, "position", 0), "object_key" to operation.objectKey,
+                "edits" to JSONArray().also { rows -> operation.edits.forEach { edit ->
+                    rows.put(obj("attribute_id" to integer(edit.attributeId, "attribute_id", 1),
+                        "value" to finite(edit.value, "value"), "representation" to edit.representation.wire))
+                } })
+        }
         is BridgeOperation.SetModuleCharge -> "set_module_charge" to obj("fit_id" to operation.fitId,
             "position" to integer(operation.position, "position", 0),
             "charge_id" to operation.chargeId?.let { integer(it, "charge_id", 1) })

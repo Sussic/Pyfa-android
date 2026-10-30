@@ -14,7 +14,8 @@ import artifact_retention as retention
 @unittest.skipUnless(os.name=='nt','Actual Win32 allocated-file reader')
 class ArtifactStorageReaderTests(unittest.TestCase):
     def setUp(self):
-        self.temporary=tempfile.TemporaryDirectory()
+        # Keep the finalizer's path qualified too, not only the deep test files.
+        self.temporary=tempfile.TemporaryDirectory(dir=retention.filesystem_path(tempfile.gettempdir()))
         self.addCleanup(self.temporary.cleanup)
         self.root=Path(self.temporary.name)
         self.file=self.root/'proof';self.file.write_bytes(b'preserve')

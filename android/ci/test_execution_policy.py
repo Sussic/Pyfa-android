@@ -3,7 +3,9 @@ import copy
 from contextlib import redirect_stderr
 import io
 import json
+import os
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import time
@@ -18,13 +20,46 @@ import drone_delivery
 import policy_host_metrics
 from execution_policy import (AdmissionDeferred, POLICY_PATH, PolicyError,
                               PressureWindow, admit, load_policy, select,
-                              storage_prompt_required)
+                              storage_prompt_required, project_usage)
 
 
 class ExecutionPolicyTests(unittest.TestCase):
     def setUp(self):
         self.policy,self.digest=load_policy()
         self.settings=select(self.policy,'initia','focused_test')
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows extended-path accounting')
+    def test_project_accounting_includes_restored_long_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path('\\\\?\\' + str(Path(directory).resolve()))
+            try:
+                nested = root
+                for index in range(12):
+                    nested = nested / ('retained-directory-' + str(index))
+                nested.mkdir(parents=True)
+                (nested / 'contract.txt').write_bytes(b'long-path-proof')
+                policy=copy.deepcopy(self.policy)
+                policy['storage']['accounting_roots']=[directory,directory]
+                self.assertEqual(len(b'long-path-proof'),project_usage(policy,Path(directory),'initia'))
+            finally:
+                self.assertEqual(Path(str(root)[4:]).resolve(),Path(directory).resolve())
+                shutil.rmtree(root)
+
+    def test_project_accounting_refuses_unreadable_declared_root(self):
+        policy=copy.deepcopy(self.policy)
+        policy['storage']['accounting_roots']=['{repository}']
+        with patch.object(Path,'stat',side_effect=PermissionError('denied-root')):
+            with self.assertRaisesRegex(PolicyError,'Cannot account owned storage root'):
+                project_usage(policy,Path.cwd(),'initia')
+
+    def test_project_accounting_requires_no_python312_path_method(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            (root/'ordinary-file').write_bytes(b'python311-proof')
+            policy=copy.deepcopy(self.policy)
+            policy['storage']['accounting_roots']=[directory]
+            with patch.object(Path,'is_junction',side_effect=AssertionError('Python3.12-only API'),create=True):
+                self.assertEqual(len(b'python311-proof'),project_usage(policy,root,'initia'))
 
     def test_missing_policy_has_no_historical_default(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -22,6 +22,8 @@ MODULE_LABELS = {
     'swap_modules': 'Reorder modules',
 }
 LABELS = {**MODULE_LABELS,
+    'set_mutation_attributes': 'Edit exact mutation rolls',
+    'set_mutation_display_attributes': 'Edit displayed mutation rolls',
     'set_projected_module_charges':'Change selected projected charges',
     'set_projected_fighters_active':'Change selected projected fighter states',
     'set_projected_fighter_ranges':'Change selected projected fighter ranges',

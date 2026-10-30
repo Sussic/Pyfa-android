@@ -74,6 +74,8 @@ def _module_state(module):
 
 
 ARGUMENTS = {
+    "set_mutation_attributes": ("fit_id", "kind", "position", "object_key", "attributes"),
+    "set_mutation_display_attributes": ("fit_id", "kind", "position", "object_key", "edits"),
     "snapshot": ("fit_ids",), "create_fit": ("spec",),
     "rename_fit": ("fit_id", "name"), "duplicate_fit": ("fit_id", "name"),
     "set_notes": ("fit_id", "text"),
@@ -222,7 +224,10 @@ def _spec(spec, *, allow_named=False, allow_character_security=False):
             if type(module["empty_slot"]) is not str or module["empty_slot"] not in VACANT_SLOTS:
                 _invalid()
             continue
-        _object(module, ("name", "state"), ("charge", "spool_cycles", "rah_pattern"))
+        _object(module, ("name", "state"), ("charge", "spool_cycles", "rah_pattern", "mutation"))
+        if 'mutation' in module:
+            from .mutation_records import validate as validate_mutation
+            validate_mutation(module['mutation'])
         if 'rah_pattern' in module:
             from .module_rah import validate as validate_rah
             validate_rah(module['rah_pattern'], allow_named=allow_named)
@@ -542,6 +547,14 @@ class BridgeSession:
             raise RuntimeError("Restart the fitting engine")
         return {"version": 1, "fit_id": fit_id, "revision": self._revisions[fit_id],
                 **details(self.engine, self.engine.prepare_read(self._fits[fit_id]))}
+
+    def mutation_details(self, fit_id):
+        from .mutation_editor import details
+        return self._projected_query(fit_id, details)
+
+    def mutation_display_details(self, fit_id):
+        from .mutation_units import details
+        return self._projected_query(fit_id, details)
 
     def cargo_details(self, fit_id):
         from .cargo import details
@@ -888,6 +901,18 @@ class BridgeSession:
         if operation not in ARGUMENTS:
             raise ContractError("UNKNOWN_OPERATION", "Unknown bridge operation")
         _object(args, ARGUMENTS[operation], ("pattern_id",) if operation == "set_module_rah" else ())
+        if operation == 'set_mutation_attributes':
+            from .mutation_editor import validate_request
+            try:
+                validate_request(args)
+            except ValueError as error:
+                _invalid(str(error))
+        if operation == 'set_mutation_display_attributes':
+            from .mutation_units import validate_request
+            try:
+                validate_request(args)
+            except ValueError as error:
+                _invalid(str(error))
         if operation == "set_system_security":
             from .system_security import validate
             validate(args["system"])
@@ -990,6 +1015,8 @@ class BridgeSession:
             _spec(args["spec"])
             if any('mutation' in row for row in args['spec']['drones']):
                 raise ContractError('INVALID_EDIT', 'Creating mutated drones is not supported by this editor')
+            if any('mutation' in row for row in args['spec']['modules']):
+                raise ContractError('INVALID_EDIT', 'Creating mutated modules needs the mutation conversion editor')
         if operation == "set_notes":
             _notes(args['text'])
         if operation == "set_damage_pattern":
@@ -1306,6 +1333,12 @@ class BridgeSession:
         if operation == 'set_module_spool':
             from .module_spool import change
             return change(self.engine,fit,args['position'],args['cycles'])
+        if operation == 'set_mutation_attributes':
+            from .mutation_editor import change
+            return change(self.engine, fit, args)
+        if operation == 'set_mutation_display_attributes':
+            from .mutation_units import change
+            return change(self.engine, fit, args)
         if operation in ('add_booster', 'set_booster_active', 'set_booster_side_effect', 'remove_booster'):
             from .boosters import change
             return change(self.engine, fit, operation, args)
@@ -1438,9 +1471,11 @@ class BridgeSession:
             from eos.const import FittingSlot
             from .module_rah import capture as capture_rah
             from .module_spool import capture as capture_spool
+            from .mutation_records import capture as capture_mutation
             spec["modules"] = [({"empty_slot": FittingSlot(module.slot).name} if module.isEmpty else
                                 {"name": module.item.name, "charge": module.charge.name if module.charge else None,
-                                 "state": _module_state(module), **capture_spool(module), **capture_rah(module, self._rah_resolver)}) for module in fit.modules]
+                                 "state": _module_state(module), **capture_spool(module), **capture_rah(module, self._rah_resolver),
+                                 **capture_mutation(module)}) for module in fit.modules]
             from .drone_records import capture as capture_drone
             spec["drones"] = [capture_drone(drone) for drone in fit.drones]
             if 'fighters' in spec or fit.fighters:

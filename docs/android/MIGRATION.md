@@ -1,27 +1,10 @@
 # MSI to Initia checkpoint
 
-## Resource-policy coordination resumed — 30 October 2026
-
-The shutdown pause is lifted for this active project. Its repository-root
-`execution-policy.json` remains the sole resource authority. MSI shared-tooling
-corrections are verified locally. Initia is reachable again; reconciling its
-final owner checkpoint, adapters and shared modules remains pending. Use
-`docs/pending-validation.json` for those dependencies and continue independent
-implementation instead of restoring a historical whole-project pause.
-
-The shared MSI worker permits Jita/Pyfa only and remains disabled until the
-prepared exact-source publication and queue prerequisites are satisfied. GitHub
-publication still requires the outstanding owner approval. The outdated Beacon
-chat and its application validation stay paused; current Beacon/API implementation
-belongs to its active API owner. No older Beacon application import is requested.
-
 Current execution authority: [EXECUTION](../../EXECUTION.md) and
 [execution-policy.json](../../execution-policy.json) supersede historical resource
 budgets, migration-only work pauses and runner prohibitions in this document.
 Keep dated proof unchanged. Queue unavailable validation and continue independent
 approved implementation; preserve product acceptance, access and C10 boundaries.
-
-## Retained migration history
 
 Migration preparation is authorized; product execution is stopped. Ownership stays
 with the current Pyfa owner until the destination checkout and external transfer
