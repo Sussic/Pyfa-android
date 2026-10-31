@@ -41,6 +41,20 @@ UNIT_REL_TOL, UNIT_ABS_TOL = 1e-12, 1e-12
 METRIC_REL_TOL, METRIC_ABS_TOL = 1e-10, 1e-9
 
 
+_WINDOWS_IDENTITY = None
+
+
+def windows_identity():
+    global _WINDOWS_IDENTITY
+    if _WINDOWS_IDENTITY is None:
+        path = Path(__file__).with_name("windows_venv_identity.py")
+        spec = importlib.util.spec_from_file_location("_units_windows_identity", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _WINDOWS_IDENTITY = module
+    return _WINDOWS_IDENTITY
+
+
 class WitnessQualificationRequired(RuntimeError):
     pass
 
@@ -93,18 +107,7 @@ def metrics(actual, expected, label):
 
 
 def process_identity():
-    if os.name != "nt":
-        raise RuntimeError("This deferred gate requires the current Windows host route")
-    from ctypes import wintypes
-    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
-    kernel.GetCurrentProcess.restype = wintypes.HANDLE
-    kernel.GetProcessTimes.argtypes = (wintypes.HANDLE,) + (ctypes.POINTER(wintypes.FILETIME),) * 4
-    kernel.GetProcessTimes.restype = wintypes.BOOL
-    values = [wintypes.FILETIME() for _ in range(4)]
-    if not kernel.GetProcessTimes(kernel.GetCurrentProcess(), *(ctypes.byref(value) for value in values)):
-        raise OSError("Could not record this gate's exact process creation identity")
-    return {"pid": os.getpid(), "parent_pid": os.getppid(),
-            "creation_filetime": (values[0].dwHighDateTime << 32) | values[0].dwLowDateTime}
+    return windows_identity().current_identity()
 
 
 def family_definition(oracle, family):
@@ -166,6 +169,7 @@ def validate_inputs(args, families):
         if expected is not None:
             assert provenance["source_sha256"] == expected, "Independent Unit source differs from the oracle"
     paths = {Path(__file__).resolve(), Path(__file__).with_name("reference_units.py").resolve(),
+             Path(__file__).with_name("windows_venv_identity.py").resolve(),
              args.reference_source / "eos/gamedata.py",
              args.product_source / "tools/android_headless/check.py",
              args.product_source / "tools/android_reference/reference.py"}
@@ -445,22 +449,27 @@ def selected_family(args, runtime, oracle, unit_class, family, writer_identity):
     assert sha(copy) == sha(store)
     state_path = directory / "READER-INPUT.json"
     state = dict(family=family, writer_identity=writer_identity, nonce=uuid4().hex,
+                 reader_launch_mode="cpython311-direct-base",
                  store=str(copy), store_sha256=sha(copy), graph_sha256=hashlib.sha256(payload.encode()).hexdigest(),
                  fit_id=key, position=position, object_key=context["object_key"],
                  revision=before["revisions"][key], original_store=str(store))
     write(state_path, state)
     command = child_arguments(args, family, directory / "reader", state_path, sha(state_path))
+    command, environment = windows_identity().direct_venv_command(command)
     with (directory / "reader.stdout.log").open("xb") as stdout, \
             (directory / "reader.stderr.log").open("xb") as stderr:
         child = subprocess.Popen(command, cwd=args.product_source, stdout=stdout, stderr=stderr,
-                                 creationflags=subprocess.CREATE_NO_WINDOW)
+                                 creationflags=subprocess.CREATE_NO_WINDOW, env=environment)
+        child_creation = windows_identity().creation_time(int(child._handle))
         exit_code = child.wait()  # Enclosing canonical Job owns the total deadline/tree.
     assert exit_code == 0, "Fresh OS reader failed; retain its raw logs and result"
     reader = read(directory / "reader/RESULT.json")
     assert reader["identity"]["pid"] == child.pid != writer_identity["pid"]
+    assert reader["identity"]["creation_filetime"] == child_creation
     assert reader["status"] == "PASS_READER_SELECTED_FAMILY"
     assert sha(store) == state["store_sha256"] == sha(copy)
     return dict(family=family, phases=context["phases"], sparse_steps=step_count,
+                spawned_reader_pid=child.pid, spawned_reader_creation_filetime=child_creation,
                 unit_observations=context["unit_observations"],
                 meaningful_converted_edits=context["meaningful_converted"],
                 invalid_later_edit_atomic=True, stale_revision_atomic=True,
@@ -474,28 +483,36 @@ def reader_gate(args, runtime, oracle, state):
     writer = state["writer_identity"]
     assert identity["pid"] != writer["pid"] and identity["parent_pid"] == writer["pid"]
     assert identity["creation_filetime"] > writer["creation_filetime"]
-    assert state["family"] == args.family and sha(state["store"]) == state["store_sha256"]
-    saved = GraphStore(state["store"]).current
-    assert saved is not None and hashlib.sha256(saved.payload.encode()).hexdigest() == state["graph_sha256"]
-    graph = decode_graph(saved.payload)
-    assert not engine._fits
-    assert graph["sample_id"] == state["fit_id"]
-    exact(engine.settings, graph["eos_settings"], "reader EOS settings")
-    bridge = BridgeSession.open(engine, state["store"], LOGICAL_PIN, None)
-    assert bridge.persistence_info["opened_existing"] and engine._fits
-    assert encode_graph(bridge._graph(bridge._records, bridge._revisions)) == saved.payload
-    assert bridge.sample_id == state["fit_id"] and bridge._revisions[state["fit_id"]] == state["revision"]
-    definition = family_definition(oracle, args.family)
-    context = dict(bridge=bridge, engine=engine, key=state["fit_id"], family=args.family,
-                   definition=definition, position=state["position"], object_key=state["object_key"],
-                   directory=args.output, store=Path(state["store"]), phases=[])
-    observe(context, definition["vectors"][1], "distinct OS reader reconstructs the frozen target", 1)
-    assert sha(state["store"]) == state["store_sha256"]
-    bridge._reset_storage()
-    assert not engine._fits
-    return dict(identity=identity, phases=context["phases"], canonical_graph_exact=True,
-                unchanged_store_sha256=state["store_sha256"], writer_alive_parent=True,
-                writer_process_death_claim=False, nonce=state["nonce"])
+    assert state["reader_launch_mode"] == "cpython311-direct-base"
+    assert identity["runtime"] == writer["runtime"], "Reader must preserve the qualified venv"
+    with windows_identity().Process(writer["pid"]) as live_writer:
+        writer_before = live_writer.snapshot()
+        windows_identity().same_process(writer_before, writer)
+        assert state["family"] == args.family and sha(state["store"]) == state["store_sha256"]
+        saved = GraphStore(state["store"]).current
+        assert saved is not None and hashlib.sha256(saved.payload.encode()).hexdigest() == state["graph_sha256"]
+        graph = decode_graph(saved.payload)
+        assert not engine._fits
+        assert graph["sample_id"] == state["fit_id"]
+        exact(engine.settings, graph["eos_settings"], "reader EOS settings")
+        bridge = BridgeSession.open(engine, state["store"], LOGICAL_PIN, None)
+        assert bridge.persistence_info["opened_existing"] and engine._fits
+        assert encode_graph(bridge._graph(bridge._records, bridge._revisions)) == saved.payload
+        assert bridge.sample_id == state["fit_id"] and bridge._revisions[state["fit_id"]] == state["revision"]
+        definition = family_definition(oracle, args.family)
+        context = dict(bridge=bridge, engine=engine, key=state["fit_id"], family=args.family,
+                       definition=definition, position=state["position"], object_key=state["object_key"],
+                       directory=args.output, store=Path(state["store"]), phases=[])
+        observe(context, definition["vectors"][1], "distinct OS reader reconstructs the frozen target", 1)
+        assert sha(state["store"]) == state["store_sha256"]
+        bridge._reset_storage()
+        assert not engine._fits
+        writer_after = live_writer.snapshot()
+        windows_identity().same_process(writer_after, writer)
+        return dict(identity=identity, phases=context["phases"], canonical_graph_exact=True,
+                    unchanged_store_sha256=state["store_sha256"], writer_alive_parent=True,
+                    writer_process_death_claim=False, nonce=state["nonce"],
+                    writer_handle_observations=dict(before=writer_before, after=writer_after))
 
 
 def main(args):
@@ -524,6 +541,8 @@ def main(args):
                       reader_mode=args.reader_state is not None)
         runtime = open_runtime(args)
         result["identity"] = process_identity()
+        if args.reader_state is None:
+            result["identity"]["launch_parent"] = windows_identity().launcher_parent(result["identity"])
         if args.reader_state is not None:
             assert len(families) == 1 and args.reader_state_sha256 is not None
             assert sha(args.reader_state) == args.reader_state_sha256
