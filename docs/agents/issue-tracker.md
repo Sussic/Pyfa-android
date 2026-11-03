@@ -15,8 +15,16 @@ authorization.
 
 ## Relationship to project documents
 
-Follow the existing ownership in `../android/STATUS.md` and
-`../android/ROADMAP.md`.
+Read [overall progress tracker #42](https://github.com/Sussic/Pyfa-android/issues/42) before feature work, verification,
+continuation or status reporting. Update its stable row at a meaningful checkpoint.
+[C10 checkpoint #43](https://github.com/Sussic/Pyfa-android/issues/43) carries the active units/native verification detail.
+
+`../android/STATUS.md` carries the current execution pointer.
+`../android/ROADMAP.md` retains the detailed feature inventory and dependencies;
+task briefs and PARITY own acceptance. Preserve their existing IDs and scope.
+Keep implementation, integration, executed proof and delivery distinct; date the
+source/evidence, blocker and next action. Public updates summarize results while
+raw private receipts stay in their existing stores.
 
 GitHub issues track requests and link to the relevant roadmap task,
 accepted task brief and evidence. Preserve existing task IDs.

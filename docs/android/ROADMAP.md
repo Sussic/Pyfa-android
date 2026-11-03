@@ -1,6 +1,30 @@
 # Android task queue
 
+## Current progress tracker — 3 November 2026
+
+[GitHub tracker #42](https://github.com/Sussic/Pyfa-android/issues/42) owns the reconciled overall task state.
+[Active C10 checkpoint #43](https://github.com/Sussic/Pyfa-android/issues/43) owns the current units/native verification
+detail. Read these first; the dated snapshots below preserve history and detailed
+requirements rather than current execution state.
+
+- Core library/fitting/cargo/bulk/statistics code is integrated with historical
+  evidence; complete current-source app acceptance remains open.
+- C10 is a separate published candidate at `cb1942397e22f937b38ea2d2d813f2c71e35d8e2`.
+  Ten scalar checks, the independent duration reference, the finite three-case EOS
+  check and the duration native seed/metadata review have passed. Main-app
+  integration, current C10 compilation and Android execution remain open.
+- The original-module baseline source preparation failed before seed execution.
+  Changed preparation, build/emulator storage admission and remaining toolchain/
+  input qualification are current prerequisites. The fixed 14-method Android
+  launcher is prepared, not executed.
+- Full F14, the remaining feature families and R01–R04 retain their existing exits.
+  At each meaningful stop update #42 and the applicable active checkpoint; keep
+  task briefs/PARITY as acceptance authorities. [EXECUTION](../../EXECUTION.md) and
+  [execution-policy.json](../../execution-policy.json) still own resource admission.
+
 ## Current execution policy — 30 October 2026
+
+> Historical pointer. Current progress is recorded in [#42](https://github.com/Sussic/Pyfa-android/issues/42).
 
 [EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
 own run locations, RAM/CPU/storage settings, MSI queueing and GitHub checkpoints.
@@ -10,6 +34,8 @@ pending validation by immutable source and exact test selection. Historical
 native failures remain failed, and C10's external candidate remains unintegrated.
 
 ## Current local migration work
+
+> Historical 30 October snapshot. Use [#43](https://github.com/Sussic/Pyfa-android/issues/43) for the current C10 step.
 
 | Stable ID | Status | Scope and proof | Next action |
 | --- | --- | --- | --- |
@@ -40,7 +66,7 @@ controls/evidence for Initia; product execution is stopped. Ownership remains
 with the MSI owner until transfer verification. See [MIGRATION](MIGRATION.md).
 This changes no feature acceptance or diagnostic retry authorization.
 
-This current section owns feature/ticket progress for the full agreed Pyfa Android scope on MSI. [STATUS](STATUS.md) is a short execution pointer; task briefs and the detailed tables below retain acceptance/dependencies, PARITY retains every audited behavior, and receipts retain proof. Historical state labels/next steps below do not override this section. [Cross-project index](<C:/Users/HallT/Documents/Codex/2026-10-23/task-7/PROGRESS.md>).
+This section is the retained 26 October feature reconciliation. [GitHub tracker #42](https://github.com/Sussic/Pyfa-android/issues/42) now owns current overall task state and supersedes older pause/blocker/next-action text. [STATUS](STATUS.md) is a short execution pointer; task briefs and the detailed tables below retain acceptance/dependencies, PARITY retains every audited behavior, and receipts retain proof. [Cross-project index](<C:/Users/HallT/Documents/Codex/2026-10-23/task-7/PROGRESS.md>).
 
 **Integration checked:** local branch `dev/merged-g052-d042-local`, HEAD `5b6f2312d8aaf5d3bc9eeea89376939d34d445b2`, with preserved dirty files. G05.2 and D04.2 are already integrated in this local variant; they are not a pending cloud handoff. Source files for pilot security and remote-repair adapters are tracked here. This is not exact cloud source, a clean checkout, a published merge or native acceptance.
 

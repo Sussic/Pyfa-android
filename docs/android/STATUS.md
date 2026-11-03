@@ -1,6 +1,42 @@
 # Android project status
 
+## Current execution pointer — 3 November 2026
+
+Read [overall GitHub tracker #42](https://github.com/Sussic/Pyfa-android/issues/42) and
+[active C10 checkpoint #43](https://github.com/Sussic/Pyfa-android/issues/43) for the reconciled progress and current
+step. They supersede the older execution snapshots below; those snapshots and
+failed evidence remain retained.
+
+Selected outcome: **C10.F14.02.UNITS1 converted numeric mutation entry**.
+Published isolated candidate: [`cb1942397e22f937b38ea2d2d813f2c71e35d8e2`](https://github.com/Sussic/Pyfa-android/commit/cb1942397e22f937b38ea2d2d813f2c71e35d8e2).
+The registered main application remains separate; no default-branch merge,
+current C10 Android pass or release is claimed.
+
+Accepted bounded proof: ten scalar methods; independent nonidentity duration
+reference; finite three-case EOS check on 3 November (26.25 s, exit 0, all three
+readers and 255 input hashes preserved); duration native seed generation
+(16.02 s, exit 0) with accepted source/input/oracle/store/reopen/closure metadata.
+These are engine/seed results, not native application acceptance.
+
+Current prerequisites: separate original-module baseline source preparation failed
+before its seed ran; a changed preparation is being investigated. Build/emulator
+storage admission and remaining exact toolchain/input qualification are open.
+WHPX usability is confirmed. The 14-method Android launcher and build plan are
+prepared; current C10 Kotlin/build/lint and Android execution remain pending.
+
+Next: qualify the baseline seed and accepted-source build inputs, then compile
+debug/test APKs and affected lint under current resource/slot admission. Execute
+the fixed Android selection only after its prerequisites pass, retaining the
+real force-stop/relaunch, offline/recreation and applicable wider acceptance.
+Integration and full F14/R01–R04 remain open.
+
+[EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
+remain the resource authority. Update #43 and the relevant #42 row at the same
+meaningful checkpoint; private raw evidence remains in its existing stores.
+
 ## Current execution pointer — 30 October 2026
+
+> Historical snapshot, superseded by the 3 November pointer above.
 
 [C10.F14.02.INTEGRATION-PREP1](tasks/C10-integration-prep1.md) is complete for
 source preparation only. The new complete isolated candidate contains the current
@@ -30,6 +66,8 @@ unchanged. Exact source/proof: current chat `outputs/PYFA-C10-UNITS-CHECKPOINT.j
 
 ## Current host checks and facility
 
+> Historical 30 October snapshot; later accepted results are in [#43](https://github.com/Sussic/Pyfa-android/issues/43).
+
 The focused policy/harness selection is qualified on control Python 3.12:
 76 passes and 5 declared Linux skips across 81 selected methods. The full run
 first exposed two long-path TemporaryDirectory cleanup errors. Both fixture
@@ -48,6 +86,8 @@ native/offline/recreation/screenshots and full F14 acceptance remain pending.
 The original pinned drone oracle is still missing from restored inputs.
 
 ## Current execution and publication authority
+
+> Historical 30 October checkpoint. Current progress is in [#42](https://github.com/Sussic/Pyfa-android/issues/42); EXECUTION still owns resource policy.
 
 [EXECUTION](../../EXECUTION.md) and [execution-policy.json](../../execution-policy.json)
 remain the sole resource authority. Shared reader/runner code is unchanged;
