@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_revision": "2026-10-30-initia-v1",
+  "policy_revision": "2026-10-31-msi-lifecycle-v1",
   "project": "pyfa",
   "hosts": {
     "initia": {
@@ -37,7 +37,8 @@
       "C:/Users/HallT/AppData/Local/Android/Sdk",
       "C:/Users/HallT/Documents/Codex/Restored-Migration-20261030-a1/evidence/Pyfa",
       "C:/Users/HallT/Documents/Codex/Restored-Migration-20261030-a1/controls/Pyfa",
-      "C:/Users/HallT/Documents/Codex/2026-10-30/continue-the-beacon-project-this-is-2"
+      "C:/Users/HallT/Documents/Codex/2026-10-30/continue-the-beacon-project-this-is-2",
+      "C:/Users/HallT/CodexMigration-Incoming-20261030/MSI-Cold-Archives-20261031/Pyfa"
     ]
   },
   "workloads": {
@@ -111,6 +112,7 @@
       "results",
       "jobs"
     ],
+    "private_initia_archive_root": "C:/Users/HallT/CodexMigration-Incoming-20261030/MSI-Cold-Archives-20261031/Pyfa",
     "historical_evidence": "Keep frozen migration evidence in its existing retained location. Do not move source or delete unique work automatically.",
     "repository_generated_outputs": [
       "android/build",
@@ -154,5 +156,9 @@
     "emulator_guest_ram_bytes": 2147483648,
     "new_avd_disk_forecast_bytes": 8589934592,
     "boot_timeout_seconds": 300
+  },
+  "runner_lifecycle": {
+    "retire_clean_source_after_published_terminal": true,
+    "retire_empty_scratch_after_published_terminal": true
   }
 }

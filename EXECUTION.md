@@ -83,6 +83,41 @@ the intended dirty changes in that commit. Until that snapshot exists, record
 `awaiting_snapshot`; testing an older HEAD is not validation of dirty source.
 Retain truthful queued, blocked-capability, running and terminal evidence states.
 
+## Temporary MSI job lifecycle
+
+Initia keeps the primary editable source. GitHub keeps coherent exact-source
+checkpoints and compact queue/evidence metadata. MSI keeps active isolated job
+checkouts, working scratch and required qualified warm tools. Historical results
+and unique scratch belong in the project's private Initia archive declared by
+`locations.private_initia_archive_root`; that exact local archive root is included
+in the sole storage accounting configuration. Preserve the policy's existing
+decimal project-storage prompt rule and all resource settings.
+
+The two `runner_lifecycle` opt-ins apply only to newly marked, worker-owned
+temporary job directories. Automatic source retirement requires an exact bound
+terminal runner report, confirmed standalone process-tree/root closure, published
+terminal status and a clean standalone Git checkout: worktree and index match the
+pinned commit, with no untracked files, including ignored files. Never infer
+ownership from a directory name or adopt an old unmarked job. Untracked user
+files, changed source, unresolved ownership or incomplete closure retain the
+directory for review. Empty scratch may retire only after the same ownership,
+closure and publication checks. Results, logs, receipts and queue state remain.
+
+Unique results or nonempty scratch require a private archive copy followed by a
+complete independent readback of the relative file set, lengths and hashes before
+any separately reviewed removal. Retain an original-path/archive mapping and
+verification receipt outside the data being removed. These opt-ins do not enable
+automatic removal of nonempty scratch or unique results, and policy text is not
+archive proof. Private share/UNC transport mapping and authentication belong to
+private host configuration; publish no private network endpoint or credentials.
+
+Protect the current keep-set: editable/dirty source and its index, frozen controls
+and source manifests, pinned reference checkouts and synthetic oracle datasets,
+qualified environments and required SDK/JDK/warm tools, active process working
+data, personal data and credentials. Continue independent implementation while
+validation waits. Legacy Beacon archival disposition never resumes its source,
+chat or application tests and does not authorize changes to current API data.
+
 ## Pyfa boundaries and handoff
 
 C10's external candidate remains separate until its own reviewed integration.

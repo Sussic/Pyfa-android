@@ -6,6 +6,25 @@ budgets, migration-only work pauses and runner prohibitions in this document.
 Keep dated proof unchanged. Queue unavailable validation and continue independent
 approved implementation; preserve product acceptance, access and C10 boundaries.
 
+## Temporary MSI job lifecycle - 31 October 2026
+
+The canonical policy declares two opt-ins for newly marked, worker-owned temporary
+job source and empty scratch, plus a private Initia archive root included in
+project accounting. Follow the [temporary MSI job lifecycle](../../EXECUTION.md#temporary-msi-job-lifecycle)
+for ownership, published terminal status, confirmed closure, complete clean
+source/Git bytes and independent archive/readback requirements. Old unmarked jobs,
+including189/190, unique results and nonempty scratch remain retained.
+
+Live worker installation/activation is a separate owner action after the recorded
+Jita191 terminal and idle-worker/OS-lock/control-preservation procedure. Consult
+live control and queue receipts for actual availability. Preserve the current
+[C10 control point](STATUS.md), immutable source/policy bindings and failed results;
+this local policy update supplies no feature or execution acceptance.
+
+Legacy Beacon archival disposition does not resume its source, chat or application
+tests and does not authorize changes to current API data. Required qualified warm
+tools, reference/database/oracle inputs, personal data and credentials stay protected.
+
 Migration preparation is authorized; product execution is stopped. Ownership stays
 with the current Pyfa owner until the destination checkout and external transfer
 are verified. This work branch is a development checkpoint, not a release or
