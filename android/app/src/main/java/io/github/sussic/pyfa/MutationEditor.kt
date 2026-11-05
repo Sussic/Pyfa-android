@@ -10,6 +10,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
@@ -87,6 +90,92 @@ class MutationEditorModel : ViewModel() {
     }
 }
 
+/** Presentation coordinates only: EOS already supplied the converted scalars. */
+private class MutationTouchRange(private val display: MutationDisplayValue.Available) {
+    private val below = display.sliderBase - display.minimum
+    private val above = display.maximum - display.sliderBase
+    private val direction = if (display.higherIsBetter) 1f else -1f
+    val fixed = display.minimum == display.maximum
+    val usable = below.isFinite() && above.isFinite() && below >= 0.0 && above >= 0.0
+    private val low = if (below > 0.0) -direction else 0f
+    private val high = if (above > 0.0) direction else 0f
+    // Material Slider requires a nonempty range even when disabled for a fixed roll.
+    val progressRange = if (fixed) 0f..1f else minOf(low, high)..maxOf(low, high)
+
+    fun progress(value: Double): Float? {
+        if (!usable || !value.isFinite() || value !in display.minimum..display.maximum) return null
+        if (value == display.sliderBase) return 0f
+        val fraction = if (value > display.sliderBase) (value - display.sliderBase) / above
+            else (value - display.sliderBase) / below
+        return (fraction * direction).takeIf { it.isFinite() }?.toFloat()
+    }
+
+    fun value(progress: Float): Double? {
+        if (!usable || fixed || !progress.isFinite() || progress !in progressRange) return null
+        val fraction = progress * direction
+        // Never interpolate an endpoint or the base through a Float value.
+        return when (fraction) {
+            -1f -> display.minimum
+            0f -> display.sliderBase
+            1f -> display.maximum
+            else -> display.sliderBase + fraction.toDouble() * if (fraction < 0f) below else above
+        }.takeIf { it.isFinite() && it in display.minimum..display.maximum }
+    }
+}
+
+/** The numeric and touch callers share this field's exact String draft. */
+@Composable
+internal fun MutationRollEditor(attribute: MutationDisplayAttribute, objectKey: String,
+    representation: MutationValueRepresentation, text: String, enabled: Boolean,
+    onRepresentationChange: (MutationValueRepresentation) -> Unit, onTextChange: (String) -> Unit) {
+    val display = attribute.display as? MutationDisplayValue.Available
+    val suffix = "$objectKey-${attribute.raw.attributeId}"
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FilterChip(selected = representation == MutationValueRepresentation.DISPLAY,
+            onClick = { onRepresentationChange(MutationValueRepresentation.DISPLAY) },
+            enabled = enabled && display != null, label = { Text("Converted") },
+            modifier = Modifier.testTag("mutation-display-$suffix"))
+        FilterChip(selected = representation == MutationValueRepresentation.RAW,
+            onClick = { onRepresentationChange(MutationValueRepresentation.RAW) },
+            enabled = enabled, label = { Text("Raw") },
+            modifier = Modifier.testTag("mutation-raw-$suffix"))
+    }
+    OutlinedTextField(value = text, onValueChange = onTextChange,
+        enabled = enabled, singleLine = true,
+        label = { Text(attribute.raw.label) },
+        supportingText = {
+            if (representation == MutationValueRepresentation.DISPLAY && display != null) {
+                Text("${display.minimum} to ${display.maximum}; ${display.unitLabel.ifEmpty { "unitless" }}; ${if (display.higherIsBetter) "higher" else "lower"} is better")
+            } else {
+                Text("${attribute.raw.minimum} to ${attribute.raw.maximum}; raw unit ${attribute.raw.unitId ?: "none"}; ${if (attribute.raw.highIsGood) "higher" else "lower"} is better")
+            }
+        }, modifier = Modifier.fillMaxWidth().testTag("mutation-value-$suffix"))
+    if (representation == MutationValueRepresentation.DISPLAY && display != null) {
+        val touch = remember(display) { MutationTouchRange(display) }
+        val progress = text.toDoubleOrNull()?.let(touch::progress)
+        if (progress != null) {
+            Text("Base ${display.sliderBase} ${display.unitLabel}; − worse / + better",
+                modifier = Modifier.testTag("mutation-base-$suffix"))
+            Slider(value = progress, onValueChange = { next ->
+                touch.value(next)?.let { onTextChange(it.toString()) }
+            }, enabled = enabled && !touch.fixed, valueRange = touch.progressRange,
+                modifier = Modifier.fillMaxWidth().testTag("mutation-slider-$suffix").semantics {
+                    contentDescription = "${attribute.raw.label}; negative is worse, positive is better"
+                    stateDescription = "$text ${display.unitLabel}; base ${display.sliderBase} ${display.unitLabel}"
+                })
+            if (touch.fixed) Text("Fixed converted value; touch editing is disabled.",
+                modifier = Modifier.testTag("mutation-slider-fixed-$suffix"))
+        } else {
+            Text("Touch editing unavailable for this draft or range. Use finite numeric entry within the returned bounds.",
+                modifier = Modifier.testTag("mutation-slider-unavailable-$suffix"))
+        }
+    }
+    (attribute.display as? MutationDisplayValue.Unavailable)?.let { unavailable ->
+        Text("Converted entry unavailable: ${unavailable.reason} Raw entry remains available.",
+            modifier = Modifier.testTag("mutation-display-unavailable-$suffix"))
+    }
+}
+
 @Composable
 internal fun MutationEditorDialog(model: MutationEditorModel, onClose: () -> Unit) {
     val context = LocalContext.current
@@ -119,38 +208,15 @@ internal fun MutationEditorDialog(model: MutationEditorModel, onClose: () -> Uni
                             Text("${row.raw.kind} ${row.raw.position + 1}; base ${row.raw.baseItemId}; mutaplasmid ${row.raw.mutaplasmidId}")
                             row.attributes.forEachIndexed { i, attribute ->
                                 val representation = MutationValueRepresentation.entries.single { it.wire == representations[i] }
-                                val display = attribute.display as? MutationDisplayValue.Available
                                 fun selectRepresentation(next: MutationValueRepresentation) {
                                     if (next == representation) return
                                     // Reset from the returned metadata, never convert a local draft.
                                     representations = representations.copyOf().also { it[i] = next.wire }
                                     texts = texts.copyOf().also { it[i] = attribute.sourceValue(next).toString() }
                                 }
-                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    FilterChip(selected = representation == MutationValueRepresentation.DISPLAY,
-                                        onClick = { selectRepresentation(MutationValueRepresentation.DISPLAY) },
-                                        enabled = model.available && display != null, label = { Text("Converted") },
-                                        modifier = Modifier.testTag("mutation-display-${row.raw.objectKey}-${attribute.raw.attributeId}"))
-                                    FilterChip(selected = representation == MutationValueRepresentation.RAW,
-                                        onClick = { selectRepresentation(MutationValueRepresentation.RAW) },
-                                        enabled = model.available, label = { Text("Raw") },
-                                        modifier = Modifier.testTag("mutation-raw-${row.raw.objectKey}-${attribute.raw.attributeId}"))
-                                }
-                                OutlinedTextField(value = texts[i], onValueChange = { value -> texts = texts.copyOf().also { it[i] = value } },
-                                    enabled = model.available, singleLine = true,
-                                    label = { Text(attribute.raw.label) },
-                                    supportingText = {
-                                        if (representation == MutationValueRepresentation.DISPLAY && display != null) {
-                                            Text("${display.minimum} to ${display.maximum}; ${display.unitLabel.ifEmpty { "unitless" }}; ${if (display.higherIsBetter) "higher" else "lower"} is better")
-                                        } else {
-                                            Text("${attribute.raw.minimum} to ${attribute.raw.maximum}; raw unit ${attribute.raw.unitId ?: "none"}; ${if (attribute.raw.highIsGood) "higher" else "lower"} is better")
-                                        }
-                                    },
-                                    modifier = Modifier.fillMaxWidth().testTag("mutation-value-${row.raw.objectKey}-${attribute.raw.attributeId}"))
-                                (attribute.display as? MutationDisplayValue.Unavailable)?.let { unavailable ->
-                                    Text("Converted entry unavailable: ${unavailable.reason} Raw entry remains available.",
-                                        modifier = Modifier.testTag("mutation-display-unavailable-${row.raw.objectKey}-${attribute.raw.attributeId}"))
-                                }
+                                MutationRollEditor(attribute, row.raw.objectKey, representation, texts[i], model.available,
+                                    onRepresentationChange = ::selectRepresentation,
+                                    onTextChange = { value -> texts = texts.copyOf().also { it[i] = value } })
                             }
                             TextButton(onClick = {
                                 texts = row.attributes.mapIndexed { i, attribute ->
