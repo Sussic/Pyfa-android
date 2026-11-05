@@ -36,7 +36,7 @@ class NativeSessionTests(unittest.TestCase):
         value=json.loads(self.session.dispatch(json.dumps(self.request(op,args))))
         self.assertEqual(value['status'],'ok',value);return value
     def feature(self,op,args,anchor=True):
-        r=dict(version=3,request_id='feature-test',context=self.session.context(),operation=op,
+        r=dict(version=4,request_id='feature-test',context=self.session.context(),operation=op,
                arguments=args,anchor_fit_id=self.key if anchor else None)
         value=json.loads(self.session.feature_dispatch(json.dumps(r)))
         self.assertTrue(value['ok'],value);return value
@@ -210,7 +210,7 @@ class NativeSessionTests(unittest.TestCase):
         self.assertTrue(replay['import_result']['replayed']);self.assertEqual(len(self.session._fits),2)
     def test_postcommit_history_publication_failure_disables_session(self):
         pid=self.profile();revision=self.session.graph._state['profiles']['profiles'][pid]['revision']
-        request=dict(version=3,request_id='postcommit',context=self.session.context(),operation='rename_profile',
+        request=dict(version=4,request_id='postcommit',context=self.session.context(),operation='rename_profile',
                      arguments=dict(profile_id=pid,revision=revision,name='Committed name'),anchor_fit_id=self.key)
         with patch.object(self.session,'_remember_versions',side_effect=RuntimeError('injected history failure')):
             result=json.loads(self.session.feature_dispatch(json.dumps(request)))
@@ -234,7 +234,7 @@ class NativeSessionTests(unittest.TestCase):
         pid=self.profile();row=self.session.graph._state['profiles']['profiles'][pid]
         self.feature('rename_profile',dict(profile_id=pid,revision=row['revision'],name='Migrated profile'))
         self.assertFalse(self.session.graph.migration_pending);self.assertNotEqual(self.path.read_bytes(),content)
-        self.assertEqual(self.session.graph._state['version'],9)
+        self.assertEqual(self.session.graph._state['version'],10)
         self.assertEqual(self.session.graph._state['targets'],dict(version=1,profiles={},bindings={}))
         self.assertEqual(self.session.graph._state['damage_patterns'],dict(version=2,patterns={},bindings={}))
         self.assertEqual(self.session.graph._state['imports'],{})
@@ -259,7 +259,7 @@ class NativeSessionTests(unittest.TestCase):
             for operation,arguments in (
                 ('create_profile',dict(name=value,source='builtin:all5')),
                 ('rename_profile',dict(profile_id=pid,revision=state['graph']['profiles']['profiles'][pid]['revision'],name=value))):
-                request=dict(version=3,request_id='unicode',context=self.session.context(),operation=operation,
+                request=dict(version=4,request_id='unicode',context=self.session.context(),operation=operation,
                              arguments=arguments,anchor_fit_id=self.key)
                 response=json.loads(self.session.feature_dispatch(json.dumps(request)))
                 self.assertFalse(response['ok']);self.assertFalse(response['committed'])

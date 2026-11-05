@@ -12,10 +12,14 @@ data class OfflineContext(val sessionId: String, val datasetSha256: String, val 
 data class OfflineProfile(val id: String, val name: String, val readonly: Boolean,
     val defaultLevel: Int?, val levels: Map<Int, Int?>, val revision: Long,
     val implants: List<OfflineProfileImplant> = emptyList(),
-    val secStatus: SecurityNumber = SecurityNumber(if (id == "builtin:all5") 5.0 else 0.0)) {
+    val secStatus: SecurityNumber = SecurityNumber(if (id == "builtin:all5") 5.0 else 0.0),
+    val alphaCloneId: Int? = null, val effectiveLevels: Map<Int, Int> = emptyMap()) {
     val displayImplants get() = implants.sortedBy { it.slot }
     fun level(skillId: Int): Int? = if (levels.containsKey(skillId)) levels[skillId] else defaultLevel
+    fun effectiveLevel(skillId: Int): Int? = effectiveLevels[skillId]
 }
+data class OfflineAlphaClone(val id: Int, val name: String)
+data class OfflineAlphaCatalogue(val available: Boolean, val clones: List<OfflineAlphaClone>, val error: String?)
 data class OfflineProfileImplant(val implantId: String, val itemId: Int, val name: String, val slot: Int, val active: Boolean)
 data class OfflineSkill(val id: Int, val name: String)
 data class OfflineBinding(val profileId: String, val revision: Long, val fitRevision: Long, val implantSource: ImplantLocation)
@@ -23,7 +27,8 @@ data class OfflineHistory(val undoCount: Int, val redoCount: Int, val limit: Int
     val undoLabel: String?, val redoLabel: String?)
 data class OfflineFeatureState(val context: OfflineContext, val profiles: List<OfflineProfile>,
     val bindings: Map<String, OfflineBinding>, val skills: List<OfflineSkill>, val selectedFitId: String?,
-    val history: OfflineHistory)
+    val history: OfflineHistory,
+    val alphaCatalogue: OfflineAlphaCatalogue = OfflineAlphaCatalogue(false, emptyList(), "Alpha cap data unavailable"))
 data class OfflineFeatureError(val code: String, val message: String)
 data class OfflineFeatureResponse(val requestId: String?, val ok: Boolean, val committed: Boolean?,
     val reopenRequired: Boolean, val state: OfflineFeatureState?, val bridge: BridgeResponse?,
@@ -81,8 +86,8 @@ internal object OfflineFeatureCodec {
     private fun itemId(raw: Any): Int = integer(raw).also { expect(it in 1..Int.MAX_VALUE.toLong(), "invalid item or slot") }.toInt()
     fun state(raw: String): OfflineFeatureState = state(parse(raw))
     internal fun state(root: JSONObject): OfflineFeatureState {
-        keys(root, "version", "context", "profiles", "bindings", "skills", "selected_fit_id", "history")
-        expect(integer(root.get("version")) == 3L, "unsupported version")
+        keys(root, "version", "context", "profiles", "bindings", "skills", "selected_fit_id", "history", "alpha_catalogue")
+        expect(integer(root.get("version")) == 4L, "unsupported version")
         expect(json(root).toByteArray(Charsets.UTF_8).size <= 524_288, "feature state exceeds 524288 bytes")
         val skills = rows(root.get("skills")).map { obj(it).let { row ->
             keys(row, "skill_id", "name")
@@ -90,12 +95,31 @@ internal object OfflineFeatureCodec {
             OfflineSkill(id.toInt(), text(row.get("name")).also { expect(it.isNotBlank(), "empty skill") })
         } }
         val skillIds = skills.map { it.id }.toSet(); expect(skillIds.size == skills.size && skills.isNotEmpty(), "duplicate or absent skills")
+        val catalogue = obj(root.get("alpha_catalogue")); keys(catalogue, "available", "clones", "error")
+        val clones = rows(catalogue.get("clones")).map { obj(it).let { row ->
+            keys(row, "alpha_clone_id", "name")
+            OfflineAlphaClone(itemId(row.get("alpha_clone_id")), safeText(row.get("name"), 200))
+        } }
+        val cloneIds = clones.map { it.id }.toSet()
+        expect(cloneIds.size == clones.size, "duplicate Alpha clone")
+        val alphaAvailable = bool(catalogue.get("available")); val alphaError = nullableText(catalogue.get("error"))
+        expect(if (alphaAvailable) clones.isNotEmpty() && alphaError == null else clones.isEmpty() && !alphaError.isNullOrBlank(), "invalid Alpha availability")
+        alphaError?.let { safeText(it, 1024) }
+        val alphaCatalogue = OfflineAlphaCatalogue(alphaAvailable, frozen(clones), alphaError)
         val implantIds = mutableSetOf<String>()
         val profiles = rows(root.get("profiles")).map { obj(it).let { row ->
-            keys(row, "profile_id", "name", "readonly", "default_level", "levels", "revision", "implants", "sec_status")
+            keys(row, "profile_id", "name", "readonly", "default_level", "levels", "revision", "implants", "sec_status", "alpha_clone_id", "effective_levels")
             val id = identity(row.get("profile_id")); val readonly = bool(row.get("readonly"))
             expect(if (readonly) id in setOf("builtin:all0", "builtin:all5") else id.matches(Regex("profile:[0-9a-f]{32}")), "invalid profile identity")
             val revision = integer(row.get("revision")); expect(if (readonly) revision == 0L else revision >= 1, "invalid profile revision")
+            val clone = row.get("alpha_clone_id").let { if (it === JSONObject.NULL) null else itemId(it) }
+            expect(clone == null || !readonly && clone in cloneIds, "unknown or protected Alpha clone")
+            val effective = obj(row.get("effective_levels")).let { values -> values.keys().asSequence().associate { key ->
+                val skill = key.toIntOrNull() ?: reject("invalid effective skill")
+                expect(key == skill.toString() && skill in skillIds, "unknown effective skill")
+                skill to (level(values.get(key)) ?: reject("effective level must be numeric"))
+            } }
+            expect(effective.keys == skillIds, "incomplete effective skills")
             val levels = obj(row.get("levels")).let { values -> values.keys().asSequence().associate { key ->
                 val skillId = key.toIntOrNull() ?: reject("invalid skill identity")
                 expect(key == skillId.toString() && skillId in skillIds, "unknown skill")
@@ -113,11 +137,17 @@ internal object OfflineFeatureCodec {
                 expect(it.isNotBlank() && it == it.trim { c -> c.isWhitespace() || c == '\u0085' }
                     && it.codePointCount(0, it.length) <= 200 && it.none { c -> c.code < 32 }, "invalid profile name")
             }, readonly,
-                level(row.get("default_level")), frozen(levels), revision, frozen(implants), PilotSecurityCodec.number(row.get("sec_status")))
+                level(row.get("default_level")), frozen(levels), revision, frozen(implants), PilotSecurityCodec.number(row.get("sec_status")), clone, frozen(effective))
             if (readonly) PilotSecurityCodec.builtin(id, value.secStatus)
             if (readonly) expect(implants.isEmpty(), "built-in implants must be empty")
             if (readonly) expect(value.levels.isEmpty() && value.name == if (id == "builtin:all0") "All 0" else "All 5", "modified built-in")
             if (readonly) expect(value.defaultLevel == if (id == "builtin:all0") null else 5, "modified built-in skills")
+            // Validate monotonicity and uncapped identity, without reproducing
+            // EOS's clone cap table or its cap calculation in Kotlin.
+            expect(effective.all { (skill, output) ->
+                val learned = value.level(skill) ?: 0
+                if (clone == null) output == learned else output <= learned
+            }, "effective skills disagree with learned inputs")
             value
         } }
         val profileIds = profiles.map { it.id }.toSet()
@@ -133,7 +163,7 @@ internal object OfflineFeatureCodec {
         expect(limit == 100L && undo in 0..limit && redo in 0..limit && undo + redo <= limit, "invalid history counts")
         fun label(name: String, count: Long): String? = nullableText(history.get(name)).also { expect(if (count == 0L) it == null else !it.isNullOrBlank(), "invalid history label") }
         return OfflineFeatureState(featureContext(obj(root.get("context"))), frozen(profiles), frozen(bindings), frozen(skills), selected,
-            OfflineHistory(undo.toInt(), redo.toInt(), limit.toInt(), label("undo_label", undo), label("redo_label", redo)))
+            OfflineHistory(undo.toInt(), redo.toInt(), limit.toInt(), label("undo_label", undo), label("redo_label", redo)), alphaCatalogue)
     }
     /** Validate the complete publication before any StateFlow can expose it. */
     internal fun validateLibrary(state: OfflineFeatureState, bridge: BridgeResponse) {
@@ -152,7 +182,7 @@ internal object OfflineFeatureCodec {
         anchorFitId: String? = before?.selectedFitId): OfflineFeatureResponse {
         val row = parse(raw)
         keys(row, "version", "request_id", "ok", "committed", "reopen_required", "state", "bridge", "error")
-        expect(integer(row.get("version")) == 3L, "unsupported response version")
+        expect(integer(row.get("version")) == 4L, "unsupported response version")
         val id = nullableText(row.get("request_id")); expect(id == requestId, "response identity differs")
         val ok = bool(row.get("ok")); val reopen = bool(row.get("reopen_required"))
         val committed = row.get("committed").let { if (it === JSONObject.NULL) null else bool(it) }
@@ -183,6 +213,10 @@ internal object OfflineFeatureCodec {
             "rename_profile" -> { keys(arguments, "profile_id", "revision", "name"); profile(); revision(); safeText(arguments.get("name"), 200) }
             "assign_profile" -> { keys(arguments, "fit_id", "profile_id"); hexId(arguments.get("fit_id")); profile() }
             "set_profile_skill" -> { keys(arguments, "profile_id", "revision", "skill_id", "level"); profile(); revision(); itemId(arguments.get("skill_id")); level(arguments.get("level")) }
+            "set_profile_clone" -> {
+                keys(arguments, "profile_id", "revision", "alpha_clone_id"); expect(!profile().startsWith("builtin:"), "built-in clone is protected"); revision()
+                if (arguments.get("alpha_clone_id") !== JSONObject.NULL) itemId(arguments.get("alpha_clone_id"))
+            }
             "delete_profile" -> { keys(arguments, "profile_id", "replacement"); profile(); if (arguments.get("replacement") !== JSONObject.NULL) profile("replacement") }
             "add_profile_implant" -> {
                 keys(arguments, "profile_id", "revision", "item_id", "replace_implant_id"); profile(); revision(); itemId(arguments.get("item_id"))
@@ -210,7 +244,7 @@ internal object OfflineFeatureCodec {
             "undo", "redo" -> keys(arguments)
             else -> reject("unsupported feature operation")
         }
-        return json(JSONObject().put("version", 3).put("request_id", requestId).put("context", context.json())
+        return json(JSONObject().put("version", 4).put("request_id", requestId).put("context", context.json())
             .put("operation", operation).put("arguments", arguments).put("anchor_fit_id", anchorFitId ?: JSONObject.NULL)).also {
                 expect(it.toByteArray(Charsets.UTF_8).size <= 16_384, "feature request exceeds 16384 bytes")
             }

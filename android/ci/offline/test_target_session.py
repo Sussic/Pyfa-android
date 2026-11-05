@@ -37,10 +37,10 @@ class ReplayGraph(IntegratedGraph):
         self._store=Store(initial);self._available=True;self._revision_floor={}
         self._bridge=SimpleNamespace(session_id=CONTEXT['session_id'],_available=True,_history=EditHistory(),engine=self.engine)
         self._bridge.bootstrap=lambda:_json(dict(version=1,status='ok',session_id=self._bridge.session_id,fits=list(self._bridge._snapshots.values())))
-        self._state=deepcopy(initial);self.migration_pending=initial['version']!=9
+        self._state=deepcopy(initial);self.migration_pending=initial['version']!=10
         self._snapshots=self._restore(initial['fit_graph'])
     def _validate(self,candidate,*,prospective=False):
-        self.assertion(candidate['version']==9 and set(candidate)=={'kind','version','fit_graph','profiles','imports','targets','damage_patterns','implant_sets'})
+        self.assertion(candidate['version']==10 and set(candidate)=={'kind','version','fit_graph','profiles','imports','targets','damage_patterns','implant_sets'})
         target.validate(candidate['targets'],candidate['fit_graph']['records'])
         damage.validate(candidate['damage_patterns'],candidate['fit_graph']['records'])
         for revision in candidate['fit_graph']['revisions'].values():target.integer(revision,1)
@@ -90,7 +90,7 @@ class TargetSessionTests(unittest.TestCase):
         self.assertEqual(store.current,before);self.assertTrue(self.session.graph.migration_pending)
         value=self.call('clear',dict(fit_revision=1));self.assertFalse(value['committed'])
         self.assertEqual(store.current,before);self.assertEqual(self.session.graph._state['version'],1)
-        key=self.create();self.assertEqual(self.session.graph._state['version'],9)
+        key=self.create();self.assertEqual(self.session.graph._state['version'],10)
         self.assertEqual(self.session.graph._state['imports'],{});self.assertFalse(self.session.graph.migration_pending)
         initial=state();initial['fit_graph'].update(records={},revisions={},fit_order=[],sample_id=None,format=2,modified={})
         self.session=session(initial);self.create('No fits')

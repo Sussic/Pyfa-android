@@ -2,9 +2,39 @@
 
 EOS must already be initialized by its serialized worker. This adapter uses EOS
 for skill dependency normalization; it contains no requirement/skill formula.
-Alpha clone remains outside this bounded slice.
+The source catalogue and Skill.level own Alpha caps; learned inputs stay intact.
 """
 from .profiles import level, require
+import unicodedata
+
+
+def alpha_catalogue(skill_ids):
+    """Read source data on the owning worker; never invent a fallback table."""
+    try:
+        import eos.db
+        rows = eos.db.getAlphaCloneList()
+        require(rows, 'alpha_unavailable', 'Alpha cap catalogue is empty')
+        choices, seen = [], set()
+        for clone in rows:
+            identity, label = clone.ID, clone.alphaCloneName
+            require(type(identity) is int and 0 < identity <= 2**31-1 and identity not in seen,
+                    'alpha_unavailable', 'Invalid Alpha clone identity')
+            require(type(label) is str and label.strip() and len(label) <= 200 and
+                    all(unicodedata.category(c) != 'Cc' and not 0xD800 <= ord(c) <= 0xDFFF for c in label),
+                    'alpha_unavailable', 'Invalid Alpha clone name')
+            require(clone.skills, 'alpha_unavailable', 'Alpha cap table is empty')
+            skills = set()
+            for row in clone.skills:
+                require(type(row.typeID) is int and row.typeID in skill_ids and row.typeID not in skills and
+                        type(row.level) is int and 0 <= row.level <= 5 and
+                        type(row.alphaCloneID) is int and row.alphaCloneID == identity,
+                        'alpha_unavailable', 'Malformed Alpha cap row')
+                skills.add(row.typeID)
+            seen.add(identity)
+            choices.append(dict(alpha_clone_id=identity, name=label))
+        return dict(available=True, clones=sorted(choices, key=lambda row: row['alpha_clone_id']), error=None)
+    except Exception:
+        return dict(available=False, clones=[], error='Source Alpha cap data is missing, empty or malformed')
 
 
 def materialize(record, *, include_implants=True):
@@ -18,6 +48,12 @@ def materialize(record, *, include_implants=True):
     character.secStatus = number(record['sec_status'])
     for skill_id, value in record['levels'].items():
         character.getSkill(int(skill_id)).setLevel(value, persist=True, ignoreRestrict=True)
+    clone = record.get('alpha_clone_id')
+    if clone is not None:
+        catalogue = alpha_catalogue(character.getSkillIDMap())
+        require(type(clone) is int and clone in {row['alpha_clone_id'] for row in catalogue['clones']},
+                'alpha_unavailable', 'Alpha clone is unknown or unavailable')
+    character.alphaCloneID = clone
     if include_implants:
         from android_bridge.character_implants import catalogue, validate
         from eos.saveddata.implant import Implant

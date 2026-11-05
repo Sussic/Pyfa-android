@@ -35,7 +35,8 @@ class ProfileSecurityModelTest {
         })
         fun state(anchor: String? = reads.lastOrNull()?.first) = OfflineFeatureState(current,
             listOfNotNull(all0, all5, profile, extra), emptyMap(), listOf(OfflineSkill(1, "Skill")), anchor,
-            OfflineHistory(0, 0, 100, null, null))
+            OfflineHistory(0, 0, 100, null, null),
+            OfflineAlphaCatalogue(true, listOf(OfflineAlphaClone(41, "Synthetic choice"), OfflineAlphaClone(42, "Other synthetic choice")), null))
         fun ready() {
             main { model.load(context, null) }
             main { reads.last().second.complete(state()) }
@@ -56,6 +57,40 @@ class ProfileSecurityModelTest {
         val before = h.profile
         main { h.profile = before.copy(revision = 2, secStatus = SecurityNumber(-6.25)); h.current = h.current.copy(generation = 2); h.response() }
         assertFalse(m.securityDirty); assertEquals("-6.25", m.securityText); assertEquals(before.levels, m.selectedProfile!!.levels); assertEquals(before.implants, m.selectedProfile!!.implants)
+    }
+    @Test fun cloneSelectionUsesCurrentRevisionOneOwnerAndRetainsLearnedSecurityAndImplants() {
+        val h = Harness(); h.ready(); val m = h.model; val original = h.profile
+        main { m.selectClone(context, 41); m.selectClone(context, 42) }
+        val request = h.writes.single(); assertEquals("set_profile_clone", request.op)
+        assertEquals(setOf("profile_id", "revision", "alpha_clone_id"), request.args.keys().asSequence().toSet())
+        assertEquals(41, request.args.getInt("alpha_clone_id")); assertEquals(1L, request.args.getLong("revision"))
+        main { h.profile = original.copy(alphaCloneId = 41, revision = 2); h.current = h.current.copy(generation = 2); h.response() }
+        assertEquals(original.levels, m.selectedProfile!!.levels); assertEquals(original.implants, m.selectedProfile!!.implants)
+        assertEquals(original.secStatus, m.selectedProfile!!.secStatus); assertEquals(41, m.selectedProfile!!.alphaCloneId)
+        main { m.selectClone(context, 41) }; assertEquals(1, h.writes.size)
+        main { m.selectClone(context, null) }; assertTrue(h.writes.last().args.isNull("alpha_clone_id"))
+    }
+    @Test fun cloneChoicesAreBlockedByBuiltinDraftUnknownStaleAndUnavailableState() {
+        val h = Harness(); h.ready(); val m = h.model
+        main { m.selectProfile("builtin:all5"); m.selectClone(context, 41); m.selectProfile(id); m.selectClone(context, 999) }
+        assertTrue(h.writes.isEmpty())
+        main { m.selectSkill(1); m.editLevel(4); m.selectClone(context, 41) }; assertTrue(h.writes.isEmpty()); assertTrue(m.dirty)
+        main { m.revert(); m.editSecurity("-6.25"); m.selectClone(context, 41) }; assertTrue(h.writes.isEmpty()); assertTrue(m.securityDirty)
+        main { m.revertSecurity(); h.current = h.current.copy(generation = 2); m.selectClone(context, 41) }; assertTrue(h.writes.isEmpty())
+        main { m.load(context, null) }
+        main { h.reads.last().second.complete(h.state().copy(alphaCatalogue = OfflineAlphaCatalogue(false, emptyList(), "Unavailable"))) }
+        main { m.selectClone(context, 41) }; assertTrue(h.writes.isEmpty())
+    }
+    @Test fun cloneRejectedWriteKeepsAuthorityAndUncertainWriteRequiresRefreshFromNewSession() {
+        val h = Harness(); h.ready(); val m = h.model; val original = h.profile
+        main { m.selectClone(context, 41); h.reject() }
+        assertEquals(original, m.selectedProfile); assertFalse(m.saving); assertFalse(m.reopenRequired)
+        main { m.selectClone(context, 42); h.reject(uncertain = true) }
+        assertEquals(original, m.selectedProfile); assertTrue(m.reopenRequired)
+        main { m.selectClone(context, 41) }; assertEquals(2, h.writes.size)
+        main { h.current = h.current.copy(sessionId = "d".repeat(32)); m.load(context, null) }
+        main { h.profile = original.copy(alphaCloneId = 42, revision = 2); h.reads.last().second.complete(h.state()) }
+        assertFalse(m.reopenRequired); assertEquals(42, m.selectedProfile!!.alphaCloneId)
     }
     @Test fun saveAsOfUnchangedDraftCreatesDetachedCompleteProfileWithoutAssigning() {
         val h = Harness(); h.ready(); val m = h.model; val source = h.profile

@@ -26,7 +26,7 @@ class PilotSecurityContractTest {
         .put("effective", if (pilot === JSONObject.NULL) security else pilot).put("presets", JSONArray(PilotSecurityCodec.presets))
     private fun decode(value: JSONObject) = PilotSecurityCodec.decode(wire(value))
     private fun feature() = OfflineFeaturesContractTest().stateJson()
-    private fun response(value: JSONObject = feature(), committed: Boolean = false) = JSONObject().put("version", 3)
+    private fun response(value: JSONObject = feature(), committed: Boolean = false) = JSONObject().put("version", 4)
         .put("request_id", "request").put("ok", true).put("committed", committed).put("reopen_required", false)
         .put("state", value).put("bridge", JSONObject().put("version", 1).put("request_id", "bootstrap")
             .put("session_id", context.sessionId).put("status", "ok").put("fits", JSONArray()).put("error", JSONObject.NULL))

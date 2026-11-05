@@ -595,7 +595,7 @@ class NativeSession:
         labels.extend(operation.replace('_',' ').capitalize()+' damage pattern' for operation in damage.OPERATIONS)
         labels.extend(implant_sets.LABELS.values())
         labels.extend(operation.replace('_',' ').capitalize() for operation in
-            ('create_profile','rename_profile','assign_profile','set_profile_skill','delete_profile',
+            ('create_profile','rename_profile','assign_profile','set_profile_skill','set_profile_clone','delete_profile',
              'add_profile_implant','remove_profile_implant','set_implant_source','set_pilot_security','save_profile_security'))
         labels.extend(action.label for actions,cursor in self.history.rows.values() for action in actions)
         longest=max(labels,key=lambda value:len(_json(value).encode('utf-8')))
@@ -613,11 +613,14 @@ class NativeSession:
         profiles=[]
         for key,row in ledger['profiles'].items():
             value=deepcopy(row);value['implants']=display(row['implants'])
+            from .eos_profiles import materialize
+            character=materialize(row,include_implants=False)
+            value['effective_levels']={str(skill.itemID):skill.level for skill in character.skills}
             profiles.append(dict(profile_id=key,readonly=key.startswith('builtin:'),**value))
         bindings={key:dict(row,fit_revision=graph['revisions'][key],implant_source=graph['records'][key]['implant_source'])
                   for key,row in ledger['bindings'].items()}
         skills=[dict(skill_id=int(key),name=value.name) for key,value in self.graph.catalog.items()]
-        result=dict(version=3,context=context,profiles=profiles,bindings=bindings,
+        result=dict(version=4,context=context,profiles=profiles,bindings=bindings,alpha_catalogue=deepcopy(self.graph.alpha_catalogue),
                     skills=sorted(skills,key=lambda x:x['name']),selected_fit_id=fit_id,
                     history=history.details(fit_id or 'library'))
         require(len(_json(result).encode('utf-8'))<=524288,'response_size','Offline profiles exceed the bounded response size')
@@ -638,7 +641,7 @@ class NativeSession:
         try:
             request=damage.parse(text)
             require(type(request) is dict and set(request)=={'version','request_id','context','operation','arguments','anchor_fit_id'},'request','Invalid feature request')
-            require(type(request['version']) is int and request['version']==3,'request','Unsupported feature version')
+            require(type(request['version']) is int and request['version']==4,'request','Unsupported feature version')
             request_id=damage.text(request['request_id'],128)
             self.graph._ready();self.graph._verify_durable()
             operation=request['operation'];args=request['arguments'];anchor=request['anchor_fit_id'];ctx=request['context']
@@ -652,6 +655,7 @@ class NativeSession:
                     'missing_fit','Selected fit no longer exists')
             fields={'create_profile':{'name','source'},'rename_profile':{'profile_id','revision','name'},
                     'assign_profile':{'fit_id','profile_id'},'set_profile_skill':{'profile_id','revision','skill_id','level'},
+                    'set_profile_clone':{'profile_id','revision','alpha_clone_id'},
                     'delete_profile':{'profile_id','replacement'},'undo':set(),'redo':set(),
                     'add_profile_implant':{'profile_id','revision','item_id','replace_implant_id'},
                     'remove_profile_implant':{'profile_id','revision','implant_id'},
@@ -675,7 +679,7 @@ class NativeSession:
             def prepare(state,snapshots,changed,next_history):
                 context=dict(self.context(),generation=generation+(1 if changed else 0))
                 view=self._feature_view(state,context,anchor,next_history)
-                prepared['text']=_json(dict(version=3,request_id=request_id,ok=True,committed=changed,
+                prepared['text']=_json(dict(version=4,request_id=request_id,ok=True,committed=changed,
                     reopen_required=False,state=view,bridge=json.loads(self.graph._bridge.bootstrap()),error=None))
                 prepared['history']=next_history
             if operation in ('undo','redo'):
@@ -699,12 +703,13 @@ class NativeSession:
                 # A same scalar skill level may still remove dependent skills.
                 # Detached EOS normalization decides whether this is a real edit;
                 # its reservation callback runs before any live fit staging.
-                if not noop and operation not in ('set_profile_skill','set_pilot_security','save_profile_security'):
+                if not noop and operation not in ('set_profile_skill','set_profile_clone','set_pilot_security','save_profile_security'):
                     damage.advance(generation);advance(self.history.sequence)
                 if operation=='create_profile':self.graph.create_profile(args['name'],source=args['source'],before_write=stage)
                 elif operation=='rename_profile':self.graph.rename_profile(args['profile_id'],args['revision'],args['name'],before_write=stage)
                 elif operation=='assign_profile':self.graph.assign_profile(args['fit_id'],args['profile_id'],before_write=stage)
                 elif operation=='set_profile_skill':self.graph.set_profile_skill(args['profile_id'],args['revision'],args['skill_id'],args['level'],before_write=stage,before_stage=lambda:advance(self.history.sequence))
+                elif operation=='set_profile_clone':self.graph.set_profile_clone(**args,before_write=stage,before_stage=lambda:advance(self.history.sequence))
                 elif operation=='delete_profile':self.graph.delete_profile(args['profile_id'],replacement=args['replacement'],before_write=stage)
                 elif operation=='add_profile_implant':self.graph.add_profile_implant(**args,before_write=stage)
                 elif operation=='remove_profile_implant':self.graph.remove_profile_implant(**args,before_write=stage)
@@ -721,7 +726,7 @@ class NativeSession:
             message=('Restart to confirm saved state' if uncertain else str(error) if isinstance(error,ProfileError)
                      else 'Profile request could not be completed; no changes were saved')
             message=''.join(c if damage.unicodedata.category(c)!='Cc' and not 0xD800<=ord(c)<=0xDFFF else ' ' for c in message)[:1024] or 'Profile request unavailable'
-            return _json(dict(version=3,request_id=request_id,ok=False,committed=None if uncertain else False,
+            return _json(dict(version=4,request_id=request_id,ok=False,committed=None if uncertain else False,
                 reopen_required=uncertain,state=None,bridge=None,error=dict(code=code,message=message)))
 
     def import_preview(self,text):

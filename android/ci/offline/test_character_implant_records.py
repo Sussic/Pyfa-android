@@ -55,15 +55,15 @@ class CharacterImplantRecordTests(unittest.TestCase):
             with self.assertRaises(ValueError):implants.validate(rows)
         state=self.model.snapshot();state['profiles']['profile:'+'e'*32]=dict(deepcopy(state['profiles'][self.pid]),name='Other')
         with self.assertRaises(ProfileError):self.model._validate(state)
-    def test_format1_readonly_migration_noop_and_first_write_format3(self):
+    def test_format1_readonly_migration_noop_and_first_write_format4(self):
         legacy=self.model.snapshot();legacy['format']=1
-        for row in legacy['profiles'].values():row.pop('implants');row.pop('sec_status')
+        for row in legacy['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
         store=MemoryStore(legacy);before=store.current
         migrated=Profiles('memory','a'*64,[1,2],store_type=lambda _:store)
-        self.assertEqual(store.current,before);self.assertEqual(migrated.snapshot()['format'],3)
+        self.assertEqual(store.current,before);self.assertEqual(migrated.snapshot()['format'],4)
         draft=migrated.begin(self.pid);migrated.save(draft);self.assertEqual(store.current,before)
         draft=migrated.begin(self.pid);draft.values['name']='Changed';migrated.save(draft)
-        self.assertEqual(store.current.generation,before.generation+1);self.assertEqual(migrated.snapshot()['format'],3)
+        self.assertEqual(store.current.generation,before.generation+1);self.assertEqual(migrated.snapshot()['format'],4)
     def test_revision_binding_exhaustion_is_before_commit(self):
         self.model.bind('a'*32,self.pid);state=self.model.snapshot()
         state['bindings']['a'*32]['revision']=2**63-1;self.model._state=deepcopy(state)
@@ -93,7 +93,7 @@ class CharacterImplantRecordTests(unittest.TestCase):
         unavailable=implants.catalog_response(None,None)
         self.assertIsNone(unavailable['dataset_sha256']);self.assertFalse(unavailable['ok']);self.assertEqual(set(unavailable),{'version','ok','dataset_sha256','implants','error'})
     def test_mixed_future_and_forged_builtin_ledgers_reject(self):
-        for transform in (lambda state:state.update(format=4),
+        for transform in (lambda state:state.update(format=5),
                           lambda state:state.update(format=1),
                           lambda state:state['profiles'][ALL_FIVE].update(implants=[dict(implant_id='f'*32,item_id=1,slot=6,active=True)])):
             state=self.model.snapshot();transform(state)
@@ -107,7 +107,7 @@ class CharacterImplantRecordTests(unittest.TestCase):
             with self.assertRaises(ProfileError):self.model.save(draft)
             self.assertEqual(self.model.snapshot(),before)
         legacy=self.model.snapshot();legacy['format']=1
-        for row in legacy['profiles'].values():row.pop('implants');row.pop('sec_status')
+        for row in legacy['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
         legacy['profiles'][self.pid]['name']='Old\x7f\x80\x9fpilot'
         store=MemoryStore(legacy);before=store.current
         migrated=Profiles('memory','a'*64,[1,2],store_type=lambda _:store)
