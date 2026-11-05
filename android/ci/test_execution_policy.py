@@ -1,6 +1,7 @@
 """Current policy admission and migration tests; no product/Android execution."""
 import copy
 from contextlib import redirect_stderr
+import hashlib
 import io
 import json
 import os
@@ -18,6 +19,7 @@ import artifact_retention as retention
 import local_verification
 import drone_delivery
 import policy_host_metrics
+import execution_policy as policy_api
 from execution_policy import (AdmissionDeferred, POLICY_PATH, PolicyError,
                               PressureWindow, admit, load_policy, select,
                               storage_prompt_required, project_usage)
@@ -195,6 +197,127 @@ class ExecutionPolicyTests(unittest.TestCase):
         with patch.object(local_verification,'detect_host',return_value='initia'):
             with self.assertRaisesRegex(AdmissionDeferred,'durable MSI queue'):
                 local_verification.Run(args)
+
+
+class MSISharedLoaderTests(unittest.TestCase):
+    # Synthetic interface declarations, independent of the installed implementation.
+    HOST_SOURCE = '''
+class Denied(RuntimeError): pass
+class HostControl:
+    denied_error = Denied
+    def __init__(self, directory): self.directory = directory
+    def locked(self): pass
+    def assert_development(self): pass
+    def register_locked(self, route, details=None): pass
+    def complete(self, token, closure=True): pass
+'''
+    JOB_SOURCE = '''
+import ctypes
+from ctypes import wintypes
+class Accounting(ctypes.Structure):
+    _fields_ = [(name, ctypes.c_int64) for name in ('user', 'kernel', 'period_user', 'period_kernel')] + [
+        (name, wintypes.DWORD) for name in ('faults', 'total', 'active', 'terminated')]
+class WindowsJob:
+    def launch(self, argv, environment, cwd, log, *, stderr=None, stdin=None): pass
+    def resources(self, disk_root): pass
+    def poll(self): pass
+    def active(self): pass
+    def stop(self, code): pass
+    def telemetry(self): pass
+    def custody(self): pass
+    def close(self): pass
+'''
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        policy, _ = load_policy()
+        self.policy = copy.deepcopy(policy)
+        self.policy['locations']['shared_root'] = str(self.root)
+        self.settings = select(self.policy, 'msi', 'light')
+
+    def install_fixture(self, filename, content):
+        path = self.root / filename
+        path.write_bytes(content.encode('utf-8'))
+        return patch.dict(policy_api.MSI_SHARED_PINS, {filename: hashlib.sha256(path.read_bytes()).hexdigest()})
+
+    def test_reviewed_installation_hashes_remain_explicit(self):
+        self.assertEqual({
+            'host_control.py': '272ced33c11ff3988523d946598d08ab5918d2544be9835e5b1e7cf2f94958b2',
+            'native_job.py': '2d0e6caae46c927f943e9ae7e298b1604dc31b947d0c7576af025446eeaa24c2',
+        }, policy_api.MSI_SHARED_PINS)
+
+    def test_initia_never_reads_or_imports_shared_files(self):
+        settings = select(self.policy, 'initia', 'focused_test')
+        with patch.object(Path, 'read_bytes', side_effect=AssertionError('Shared read on Initia')):
+            self.assertIsNone(policy_api.msi_host_control(self.policy, settings))
+            self.assertIsNone(policy_api.msi_native_job(self.policy, settings))
+
+    def test_missing_or_wrong_hash_defers_before_executing_unqualified_code(self):
+        for filename, loader in (('host_control.py', policy_api.msi_host_control),
+                                 ('native_job.py', policy_api.msi_native_job)):
+            with self.subTest(filename=filename):
+                with self.assertRaises(AdmissionDeferred) as missing:
+                    loader(self.policy, self.settings)
+                self.assertIsInstance(missing.exception.__cause__, FileNotFoundError)
+                (self.root / filename).write_text("raise AssertionError('unqualified code ran')", encoding='utf-8')
+                with self.assertRaises(AdmissionDeferred) as mismatch:
+                    loader(self.policy, self.settings)
+                self.assertIsInstance(mismatch.exception.__cause__, ValueError)
+
+    def test_qualified_host_and_native_exports_keep_the_reviewed_aliases_and_interface(self):
+        with self.install_fixture('host_control.py', self.HOST_SOURCE), \
+                self.install_fixture('native_job.py', self.JOB_SOURCE):
+            host = policy_api.msi_host_control(self.policy, self.settings)
+            native = policy_api.msi_native_job(self.policy, self.settings)
+        self.assertEqual(self.root, host.directory)
+        self.assertEqual('codex_msi_host_control', type(host).__module__)
+        self.assertEqual('codex_native_owned_job', native.__name__)
+        self.assertTrue(callable(native.WindowsJob.custody))
+        self.assertTrue(issubclass(host.denied_error, Exception))
+
+    def test_import_or_syntax_failure_is_a_deferred_dependency_not_a_fallback(self):
+        for content in ("raise RuntimeError('synthetic import failure')", 'this is invalid source !'):
+            for filename, loader in (('host_control.py', policy_api.msi_host_control),
+                                     ('native_job.py', policy_api.msi_native_job)):
+                with self.subTest(filename=filename, content=content):
+                    with self.install_fixture(filename, content):
+                        with self.assertRaises(AdmissionDeferred):
+                            loader(self.policy, self.settings)
+
+    def test_host_requires_callable_methods_compatible_arguments_and_denial_exception(self):
+        for content in (self.HOST_SOURCE.replace('def complete(self, token, closure=True)', 'def complete(self)'),
+                        self.HOST_SOURCE.replace('def complete(self, token, closure=True)', 'def complete(self, token, other=True)'),
+                        self.HOST_SOURCE + '\nHostControl.register_locked = None\n',
+                        self.HOST_SOURCE + '\nHostControl.denied_error = object\n',
+                        self.HOST_SOURCE.replace('class HostControl:', 'class WrongExport:')):
+            with self.subTest(content=content):
+                with self.install_fixture('host_control.py', content):
+                    with self.assertRaises(AdmissionDeferred):
+                        policy_api.msi_host_control(self.policy, self.settings)
+
+    def test_native_requires_custody_launch_arguments_and_accounting_export(self):
+        for content in (self.JOB_SOURCE + '\nWindowsJob.custody = None\n',
+                        self.JOB_SOURCE.replace('def launch(self, argv, environment, cwd, log, *, stderr=None, stdin=None)',
+                                                'def launch(self, argv)'),
+                        self.JOB_SOURCE + '\ndel Accounting\n',
+                        self.JOB_SOURCE + '\nAccounting = object\n',
+                        self.JOB_SOURCE + '\nAccounting._fields_.reverse()\n'):
+            with self.subTest(content=content):
+                with self.install_fixture('native_job.py', content):
+                    with self.assertRaises(AdmissionDeferred):
+                        policy_api.msi_native_job(self.policy, self.settings)
+
+    def test_import_uses_the_verified_bytes_even_if_the_installation_changes_during_import(self):
+        original = policy_api.importlib.util.spec_from_file_location
+        def replaced(alias, path, **kwargs):
+            Path(path).write_text("raise AssertionError('replacement source ran')", encoding='utf-8')
+            return original(alias, path, **kwargs)
+        with self.install_fixture('host_control.py', self.HOST_SOURCE), \
+                patch.object(policy_api.importlib.util, 'spec_from_file_location', side_effect=replaced):
+            host = policy_api.msi_host_control(self.policy, self.settings)
+        self.assertEqual(self.root, host.directory)
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

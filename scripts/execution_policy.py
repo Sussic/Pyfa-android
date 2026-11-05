@@ -4,6 +4,9 @@ from __future__ import annotations
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.machinery
+import importlib.util
+import inspect
 import json
 import ntpath
 import os
@@ -20,6 +23,76 @@ class PolicyError(ValueError):
 
 class AdmissionDeferred(RuntimeError):
     """The selected job waits; independent development remains available."""
+
+
+MSI_SHARED_PINS = {
+    'host_control.py': '272ced33c11ff3988523d946598d08ab5918d2544be9835e5b1e7cf2f94958b2',
+    'native_job.py': '2d0e6caae46c927f943e9ae7e298b1604dc31b947d0c7576af025446eeaa24c2',
+}
+
+
+def _msi_shared_module(policy, filename, alias):
+    """Execute only the pinned installed source bytes, never cached bytecode."""
+    path = Path(policy['locations']['shared_root']) / filename
+    content = path.read_bytes()
+    if hashlib.sha256(content).hexdigest() != MSI_SHARED_PINS[filename]:
+        raise ValueError('Installed MSI dependency does not match its reviewed pin.')
+
+    class PinnedSourceLoader(importlib.machinery.SourceFileLoader):
+        def get_code(self, fullname):
+            return compile(content, str(path), 'exec')
+
+    spec = importlib.util.spec_from_file_location(alias, path, loader=PinnedSourceLoader(alias, str(path)))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _require_calls(value, calls):
+    for name, arguments in calls.items():
+        method = getattr(value, name)
+        if not callable(method):
+            raise TypeError(f'MSI interface {name} is not callable.')
+        inspect.signature(method).bind(*arguments)
+
+
+def msi_host_control(policy, settings):
+    """Load the reviewed admission interface only for the MSI execution path."""
+    if settings['host'] != 'msi':
+        return None
+    try:
+        module = _msi_shared_module(policy, 'host_control.py', 'codex_msi_host_control')
+        inspect.signature(module.HostControl).bind(Path(policy['locations']['shared_root']))
+        host = module.HostControl(Path(policy['locations']['shared_root']))
+        _require_calls(host, {'locked': (), 'assert_development': (),
+                              'register_locked': ('direct', {}), 'complete': ('0' * 32, True)})
+        inspect.signature(host.complete).bind('0' * 32, closure=True)
+        if not isinstance(host.denied_error, type) or not issubclass(host.denied_error, Exception):
+            raise TypeError('MSI denial interface must be an exception class.')
+        return host
+    except Exception as error:
+        raise AdmissionDeferred('Install the pinned, compatible MSI host admission interface before launching.') from error
+
+
+def msi_native_job(policy, settings):
+    """Select the pinned Shared ownership module; Initia needs no Shared install."""
+    if settings['host'] != 'msi':
+        return None
+    try:
+        module = _msi_shared_module(policy, 'native_job.py', 'codex_native_owned_job')
+        inspect.signature(module.WindowsJob).bind()
+        _require_calls(module.WindowsJob, {'launch': (None, [], {}, Path.cwd(), None),
+            'resources': (None, Path.cwd()), 'poll': (None,), 'active': (None,),
+            'stop': (None, 1), 'telemetry': (None,), 'custody': (None,), 'close': (None,)})
+        import ctypes
+        if not isinstance(module.Accounting, type) or not issubclass(module.Accounting, ctypes.Structure):
+            raise TypeError('MSI Accounting export must be a native structure.')
+        if [field[0] for field in module.Accounting._fields_] != [
+                'user', 'kernel', 'period_user', 'period_kernel', 'faults', 'total', 'active', 'terminated']:
+            raise TypeError('MSI Accounting fields are incompatible.')
+        return module
+    except Exception as error:
+        raise AdmissionDeferred('Install the pinned, compatible MSI owned-job interface before launching.') from error
 
 
 def _positive(value, name):

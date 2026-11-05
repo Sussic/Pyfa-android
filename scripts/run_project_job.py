@@ -175,7 +175,8 @@ class WindowsJob:
             raise OSError(f'Owned native handle cleanup failed: {errors}')
 
 
-def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_bytes, *, job_factory=WindowsJob):
+def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_bytes, *,
+        job_factory=None, host_factory=None):
     prefix = Path(prefix).resolve()
     prefix.parent.mkdir(parents=True, exist_ok=True)
     report_path, log_path = Path(str(prefix) + '-result.json'), Path(str(prefix) + '.log')
@@ -188,6 +189,7 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                   estimated_disk_write_bytes=disk_forecast, estimated_peak_bytes=settings['estimated_peak_bytes'],
                   hard_memory_cap_bytes=None, cpu_hard_cap_percent=settings['cpu_hard_cap_percent'])
     started, job = time.monotonic(), None
+    host, host_token, launch_succeeded, job_closed = None, None, False, False
     exit_code = 1
     lease, lease_entered = None, False
     try:
@@ -196,6 +198,17 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
         if policy_api.storage_prompt_required(policy, project_bytes):
             raise policy_api.AdmissionDeferred('Measured project storage exceeds the owner prompt threshold; '
                                                'report the specific storage decision once.')
+        host = (host_factory or policy_api.msi_host_control)(policy, settings)
+        if settings['host'] == 'msi' and host is None:
+            raise policy_api.AdmissionDeferred('MSI requires its reviewed host admission interface.')
+        if host is not None:
+            with host.locked():
+                host.assert_development()
+        if job_factory is None:
+            native = policy_api.msi_native_job(policy, settings)
+            if settings['host'] == 'msi' and native is None:
+                raise policy_api.AdmissionDeferred('MSI requires its reviewed owned-job interface.')
+            job_factory = native.WindowsJob if native is not None else WindowsJob
         lease = policy_api.heavy_lease(policy, settings)
         lease.__enter__()
         lease_entered = True
@@ -213,11 +226,30 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                            MAX_JOBS=str(settings['workers']), PYTHONDONTWRITEBYTECODE='1')
         pressure = policy_api.PressureWindow(settings)
         with log_path.open('xb') as log:
-            job.launch(argv, environment, Path.cwd(), log)
+            if host is None:
+                job.launch(argv, environment, Path.cwd(), log)
+            else:
+                # The final fence check and actual child creation share the mutex.
+                # The registration outlives the mutex until custody is proven.
+                with host.locked():
+                    host.assert_development()
+                    host_token = host.register_locked('direct', dict(
+                        project=policy['project'], workload=settings['workload'],
+                        policy_sha256=policy_hash, report_path=str(report_path)))
+                    result['msi_admission'] = dict(token=host_token, closure_confirmed=False)
+                    job.launch(argv, environment, Path.cwd(), log)
+            launch_succeeded = True
             result['worker_pid'] = job.pid
             deadline = time.monotonic() + settings['timeout_seconds']
             while True:
                 now = time.monotonic()
+                # Retain descendants before resource/deadline stops can intervene.
+                if host is not None:
+                    try:
+                        job.active()
+                    except (Exception, KeyboardInterrupt) as error:
+                        result['ownership_observation_error'] = str(error)
+                        raise
                 values = job.resources(prefix.parent)
                 for key, value in values.items():
                     result['minimum'][key] = min(result['minimum'][key], value)
@@ -227,9 +259,15 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     raise policy_api.AdmissionDeferred('Physical free-disk reserve reached; owned job stopped.')
                 if now >= deadline:
                     raise TimeoutError('Workload deadline reached; retain results and diagnose before retry.')
-                code = job.poll()
+                try:
+                    code = job.poll()
+                    remaining = job.active() if code is not None else None
+                except (Exception, KeyboardInterrupt) as error:
+                    if host is not None:
+                        result['ownership_observation_error'] = str(error)
+                    raise
                 if code is not None:
-                    if job.active():
+                    if remaining:
                         raise RuntimeError('Worker exited while owned descendants remain; stopping descendants.')
                     result.update(root_exit_confirmed=True, root_exit_code=code,
                                   remaining_job_processes=0, tree_exit_confirmed=True)
@@ -241,7 +279,11 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
         exit_code = 75
         result.update(status='deferred', reason=str(error))
     except (Exception, KeyboardInterrupt) as error:
-        result.update(reason=str(error), failure_type=type(error).__name__)
+        if host is not None and isinstance(error, host.denied_error):
+            exit_code = 75
+            result.update(status='deferred', reason=str(error))
+        else:
+            result.update(reason=str(error), failure_type=type(error).__name__)
     finally:
         owned_started = job is not None and job.process is not None
         try:
@@ -250,6 +292,11 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     if owned_started and not result.get('tree_exit_confirmed'):
                         result['worker_pid'] = getattr(job, 'pid', None)
                         result.update(root_exit_confirmed=None, tree_exit_confirmed=False)
+                        if host is not None:
+                            try:
+                                job.active()
+                            except (Exception, KeyboardInterrupt) as error:
+                                result['ownership_observation_error'] = str(error)
                         job.stop(exit_code)
                         cleanup_end = time.monotonic() + settings['running_pressure_grace_seconds']
                         while True:
@@ -269,10 +316,23 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     try:
                         result['final_host'] = job.resources(prefix.parent)
                         result['owned_usage'] = job.telemetry()
-                    except Exception as error:
+                    except (Exception, KeyboardInterrupt) as error:
                         result['usage_observation_error'] = str(error)
+                    if host_token is not None:
+                        try:
+                            custody = job.custody()
+                            counts = [custody[key] for key in ('total_processes', 'retained_identity_count')]
+                            complete = (all(type(value) is int and value >= 1 for value in counts)
+                                        and counts[0] == counts[1]
+                                        and all(custody[key] is True for key in (
+                                            'all_identities_accounted', 'all_retained_descendants_exited', 'complete')))
+                            result['owned_custody'] = custody
+                            result['msi_admission']['custody_complete'] = complete
+                        except (Exception, KeyboardInterrupt) as error:
+                            result['custody_observation_error'] = str(error)
                     job.close()
-        except Exception as error:
+                    job_closed = True
+        except (Exception, KeyboardInterrupt) as error:
             result['status'], exit_code = 'failed', 1
             result['cleanup_error'] = str(error)
         finally:
@@ -288,6 +348,21 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                         remaining_job_processes=result.get('remaining_job_processes'),
                         cleanup_error=result.get('cleanup_error'), report_path=str(report_path)))
                     result['reconciliation_marker'] = str(blocker)
+                if host_token is not None:
+                    closure = (launch_succeeded and job_closed and result.get('root_exit_confirmed') is True
+                               and result.get('tree_exit_confirmed') is True
+                               and result['msi_admission'].get('custody_complete') is True
+                               and not any(key in result for key in (
+                                   'cleanup_error', 'usage_observation_error', 'custody_observation_error',
+                                   'ownership_observation_error')))
+                    if closure:
+                        try:
+                            host.complete(host_token, closure=True)
+                            result['msi_admission']['closure_confirmed'] = True
+                        except (Exception, KeyboardInterrupt) as error:
+                            result['status'], exit_code = 'failed', 1
+                            result['host_completion_error'] = str(error)
+                    result['msi_admission']['hold_retained'] = not result['msi_admission']['closure_confirmed']
                 result.update(exit_code=exit_code, seconds=time.monotonic() - started,
                               completed_utc=datetime.now(timezone.utc).isoformat())
                 with report_path.open('x', encoding='utf-8') as stream:
