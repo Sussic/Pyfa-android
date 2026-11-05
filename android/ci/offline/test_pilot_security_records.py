@@ -43,10 +43,10 @@ class PilotSecurityRecordTests(unittest.TestCase):
         for version in (1, 2):
             old = modern.snapshot(); old['format'] = version
             for row in old['profiles'].values():
-                row.pop('sec_status')
+                row.pop('sec_status'); row.pop('alpha_clone_id')
                 if version == 1: row.pop('implants')
             model, store = self.model(old); durable = store.current
-            self.assertEqual(model.snapshot()['format'], 3)
+            self.assertEqual(model.snapshot()['format'], 4)
             self.assertTrue(exact(model._profile(pid)['sec_status'], 0.0))
             self.assertTrue(exact(model._profile('builtin:all0')['sec_status'], 0.0))
             self.assertTrue(exact(model._profile('builtin:all5')['sec_status'], 5.0))

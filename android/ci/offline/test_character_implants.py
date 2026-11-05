@@ -38,7 +38,7 @@ class CharacterImplantTests(unittest.TestCase):
         finally:self.key=old
     def local(self):return self.session.implant_details(self.key)['implants']
     def payload(self,operation,args,anchor=True):
-        return dict(version=3,request_id='character-test',context=self.session.context(),operation=operation,arguments=args,anchor_fit_id=self.key if anchor else None)
+        return dict(version=4,request_id='character-test',context=self.session.context(),operation=operation,arguments=args,anchor_fit_id=self.key if anchor else None)
     def reject(self,request,*,code=None):
         state=self.session.graph.snapshot();store=self.path.read_bytes();history=self.session.history;recent=deepcopy(self.session._recent)
         result=json.loads(self.session.feature_dispatch(request if type(request) is str else _json(request)))
@@ -194,7 +194,7 @@ class CharacterImplantTests(unittest.TestCase):
     def test_v1_through_v4_migration_readonly_noop_and_one_v7_commit(self):
         for version in (1,2,3,4):
             baseline=deepcopy(self.session.graph._state);baseline['version']=version;baseline.pop('implant_sets');baseline['profiles']['format']=1
-            for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status')
+            for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
             for row in baseline['fit_graph']['records'].values():row.pop('implant_source');row.pop('character_implants');row.pop('character_security')
             if version<4:baseline.pop('damage_patterns')
             else:baseline['damage_patterns']['version']=1
@@ -205,7 +205,7 @@ class CharacterImplantTests(unittest.TestCase):
             self.session=NativeSession(self.engine,self.path,os.environ['PYFA_DATASET_SHA'],spec())
             self.assertTrue(self.session.graph.migration_pending);self.assertEqual(self.path.read_bytes(),content)
             self.source('FIT');self.assertEqual(self.path.read_bytes(),content);self.assertTrue(self.session.graph.migration_pending)
-            self.add();self.assertEqual(self.session._store.current.generation,2);self.assertEqual(self.session.graph._state['version'],9)
+            self.add();self.assertEqual(self.session._store.current.generation,2);self.assertEqual(self.session.graph._state['version'],10)
             self.reopen();self.assertEqual(len(self.row()['implants']),1)
             # Restore an empty authority before manufacturing the next legacy fixture.
             self.feature('remove_profile_implant',dict(profile_id=self.profile(),revision=self.row()['revision'],implant_id=self.row()['implants'][0]['implant_id']))
@@ -260,7 +260,7 @@ class CharacterImplantTests(unittest.TestCase):
     def test_same_skill_noop_at_exhausted_history_generation_retains_legacy_bytes(self):
         from android_bridge.offline.profile_store import StoredGraph
         baseline=deepcopy(self.session.graph._state);baseline['version']=4;baseline.pop('implant_sets');baseline['profiles']['format']=1;baseline['damage_patterns']['version']=1
-        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status')
+        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
         for row in baseline['fit_graph']['records'].values():row.pop('implant_source');row.pop('character_implants');row.pop('character_security')
         self.session.graph._bridge._reset_storage();self.path=Path(self.tmp.name)/'legacy-skill.sqlite'
         store=GraphStore(self.path);store.write(store.prepare(baseline))
@@ -307,7 +307,7 @@ class CharacterImplantTests(unittest.TestCase):
         self.edit('fit_implant',dict(fit_id=self.key,item_id=self.item(NAV1)))
         self.edit('toggle_implants',dict(fit_id=self.key,main_position=0,positions=[]))
         baseline=deepcopy(self.session.graph._state);baseline['version']=4;baseline.pop('implant_sets');baseline['profiles']['format']=1;baseline['damage_patterns']['version']=1
-        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status')
+        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
         for row in baseline['fit_graph']['records'].values():row.pop('implant_source');row.pop('character_implants');row.pop('character_security')
         baseline['fit_graph']['records'][self.key]['spec']['ship']='Astrahus'
         self.session.graph._bridge._reset_storage();self.path=Path(self.tmp.name)/'legacy-structure.sqlite'
@@ -330,7 +330,7 @@ class CharacterImplantTests(unittest.TestCase):
             self.reject(self.payload('create_profile',dict(name='New'+control+'pilot',source='builtin:all5')),code='invalid_name')
             self.reject(self.payload('rename_profile',dict(profile_id=self.profile(),revision=self.row()['revision'],name='New'+control+'pilot')),code='invalid_name')
         baseline=deepcopy(self.session.graph._state);baseline['version']=4;baseline.pop('implant_sets');baseline['profiles']['format']=1;baseline['damage_patterns']['version']=1
-        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status')
+        for row in baseline['profiles']['profiles'].values():row.pop('implants');row.pop('sec_status');row.pop('alpha_clone_id')
         for row in baseline['fit_graph']['records'].values():row.pop('implant_source');row.pop('character_implants');row.pop('character_security')
         pid=self.profile();baseline['profiles']['profiles'][pid]['name']='Historical\x7f\x80\x9fpilot'
         self.session.graph._bridge._reset_storage();self.path=Path(self.tmp.name)/'legacy-name.sqlite'
@@ -430,7 +430,7 @@ class CharacterImplantTests(unittest.TestCase):
             bad=deepcopy(valid);bad['fit_graph']['records'][self.key].pop(field);corruptions.append(bad)
         bad=deepcopy(valid);bad['fit_graph']['records'][self.key]['character_implants'][0]['active']=False;corruptions.append(bad)
         bad=deepcopy(valid);bad['profiles']['profiles']['builtin:all5']['implants']=deepcopy(self.row()['implants']);corruptions.append(bad)
-        bad=deepcopy(valid);bad['version']=10;corruptions.append(bad)
+        bad=deepcopy(valid);bad['version']=11;corruptions.append(bad)
         for index,bad in enumerate(corruptions):
             self.session.graph._bridge._reset_storage();path=Path(self.tmp.name)/('bad-'+str(index)+'.sqlite')
             store=GraphStore(path);store.write(store.prepare(bad));before=path.read_bytes()

@@ -22,7 +22,7 @@ class CharacterImplantsContractTest {
         .put("implants", JSONArray().put(implant()).put(implant("d".repeat(32), 12, 1))) }
     private fun binding() = JSONObject().put("profile_id", custom).put("revision", 2).put("fit_revision", 7).put("implant_source", "CHARACTER")
     private fun reject(block: () -> Unit) { try { block(); fail("Invalid character contract accepted") } catch (_: BridgeProtocolException) { } }
-    private fun response(committed: Boolean, value: JSONObject = state()) = JSONObject().put("version", 3).put("request_id", "request")
+    private fun response(committed: Boolean, value: JSONObject = state()) = JSONObject().put("version", 4).put("request_id", "request")
         .put("ok", true).put("committed", committed).put("reopen_required", false).put("error", JSONObject.NULL).put("state", value)
         .put("bridge", JSONObject().put("version", 1).put("request_id", "bootstrap").put("session_id", session).put("status", "ok")
             .put("fits", JSONArray()).put("error", JSONObject.NULL))

@@ -225,6 +225,13 @@ class OfflineProfilesModel(
         dispatch(context, "set_profile_skill", JSONObject().put("profile_id", profile.id)
             .put("revision", profile.revision).put("skill_id", skill).put("level", draftLevel ?: JSONObject.NULL), clearDraft = true)
     }
+    fun selectClone(context: Context, cloneId: Int?) {
+        val profile = selectedProfile ?: return; val current = state ?: return
+        if (!available || hasDraft || profile.readonly || profile.alphaCloneId == cloneId ||
+            (cloneId != null && (!current.alphaCatalogue.available || current.alphaCatalogue.clones.none { it.id == cloneId }))) return
+        dispatch(context, "set_profile_clone", JSONObject().put("profile_id", profile.id)
+            .put("revision", profile.revision).put("alpha_clone_id", cloneId ?: JSONObject.NULL))
+    }
     fun create(context: Context) {
         val source = selectedProfile ?: return; val requestedName = name.trim()
         if (requestedName.isEmpty() || hasDraft) return
@@ -404,7 +411,15 @@ internal fun OfflineProfilesView(model: OfflineProfilesModel, equipmentModel: Eq
     if (fit != null) Button(onClick = { model.assign(context) },
         enabled = available && !model.hasDraft && state.bindings[fit.id]?.profileId != profile.id,
         modifier = Modifier.testTag("profile-assign")) { Text("Use for ${fit.name}") }
-    if (profile.readonly) Text("Built-ins are read-only. Duplicate the complete profile before changing skills, implants or security.", Modifier.testTag("profile-readonly"))
+    if (profile.readonly) Text("Built-ins are read-only. Duplicate the complete profile before changing skills, clone, implants or security.", Modifier.testTag("profile-readonly"))
+    Text("Clone: " + (profile.alphaCloneId?.let { id -> state.alphaCatalogue.clones.single { it.id == id }.name } ?: "Omega"), Modifier.testTag("profile-clone-current"))
+    Text("Clone changes affect ${assigned.size} assigned fit(s). Learned skills are retained; fitting uses the effective EOS levels.")
+    TextButton(onClick = { model.selectClone(context, null) }, enabled = available && !model.hasDraft && !profile.readonly && profile.alphaCloneId != null,
+        modifier = Modifier.testTag("profile-clone-omega")) { Text("Omega (no caps)") }
+    if (!state.alphaCatalogue.available) Text(state.alphaCatalogue.error ?: "Alpha cap data unavailable", Modifier.testTag("profile-clone-unavailable"))
+    for (clone in state.alphaCatalogue.clones) TextButton(onClick = { model.selectClone(context, clone.id) },
+        enabled = available && !model.hasDraft && !profile.readonly && profile.alphaCloneId != clone.id,
+        modifier = Modifier.testTag("profile-clone-${clone.id}")) { Text(clone.name) }
     OutlinedTextField(value = model.name, onValueChange = { model.name = it }, label = { Text("Profile name") },
         enabled = available && !model.dirty, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("profile-name"))
     Row {
@@ -413,7 +428,7 @@ internal fun OfflineProfilesView(model: OfflineProfilesModel, equipmentModel: Eq
         if (!profile.readonly) TextButton(onClick = { model.rename(context) }, enabled = available && !model.hasDraft && model.name.isNotBlank(),
             modifier = Modifier.testTag("profile-rename")) { Text("Rename") }
     }
-    Text("Duplicates copy all skills, implant values and security into an independent character.", Modifier.testTag("profile-copy-scope"))
+    Text("Duplicates copy learned skills, clone, implant values and security into an independent character.", Modifier.testTag("profile-copy-scope"))
     Row {
         TextButton(onClick = { model.showSection(OfflineProfileSection.SKILLS) }, modifier = Modifier.testTag("profile-section-skills")) { Text("Skills") }
         TextButton(onClick = { model.showSection(OfflineProfileSection.IMPLANTS) }, modifier = Modifier.testTag("profile-section-implants")) { Text("Implants") }
@@ -459,12 +474,13 @@ internal fun OfflineProfilesView(model: OfflineProfilesModel, equipmentModel: Eq
     val matching = remember(state.skills, model.query) { state.skills.filter { it.name.contains(model.query.trim(), ignoreCase = true) } }
     Text("${matching.size} skills · showing up to 30. Refine the search to find more.")
     for (skill in matching.take(30)) TextButton(onClick = { model.selectSkill(skill.id) }, enabled = available && !model.hasDraft,
-        modifier = Modifier.testTag("profile-skill-${skill.id}")) { Text("${skill.name}: ${profile.level(skill.id)?.toString() ?: "Unlearned"}") }
+        modifier = Modifier.testTag("profile-skill-${skill.id}")) { Text("${skill.name}: learned ${profile.level(skill.id)?.toString() ?: "Unlearned"} · effective ${profile.effectiveLevel(skill.id)?.toString() ?: "Unavailable"}") }
     model.skillId?.let { id ->
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(state.skills.single { it.id == id }.name, Modifier.testTag("profile-skill-selected"))
                 Text("Draft level: ${model.draftLevel?.toString() ?: "Unlearned"}", Modifier.testTag("profile-skill-level"))
+                Text("Saved learned: ${profile.level(id)?.toString() ?: "Unlearned"} · effective: ${profile.effectiveLevel(id)?.toString() ?: "Unavailable"}", Modifier.testTag("profile-skill-effective"))
                 TextButton(onClick = { model.editLevel(null) }, enabled = available && !profile.readonly && !model.securityDirty,
                     modifier = Modifier.testTag("profile-level-unlearned")) { Text("Unlearned") }
                 for (levels in listOf(0..2, 3..5)) Row {

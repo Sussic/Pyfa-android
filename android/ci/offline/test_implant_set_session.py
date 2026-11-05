@@ -277,12 +277,12 @@ class ImplantSetSessionTests(unittest.TestCase):
         self.call('apply_profile',args,anchor=False);self.reopen()
         result=self.call(anchor=False,selected=key,profile=pid)
         self.assertEqual(len(result['state']['destination']['implants']),2);self.assertEqual(result['state']['history']['undo_count'],0)
-        self.assertEqual(self.session.graph._state['version'],9)
+        self.assertEqual(self.session.graph._state['version'],10)
     def test_v5_readonly_migration_noop_then_one_v7_edit(self):
         self.edit('fit_implant',dict(fit_id=self.key,item_id=self.item(NAV1)));self.source('CHARACTER')
         v5=deepcopy(self.session.graph._state);v5['version']=5;v5.pop('implant_sets');v5['damage_patterns']['version']=1
         v5['profiles']['format']=2
-        for row in v5['profiles']['profiles'].values():row.pop('sec_status')
+        for row in v5['profiles']['profiles'].values():row.pop('sec_status');row.pop('alpha_clone_id')
         for row in v5['fit_graph']['records'].values():row.pop('character_security')
         self.session.graph._bridge._reset_storage();self.path=Path(self.tmp.name)/'v5.sqlite'
         store=GraphStore(self.path);attempt=store.prepare(v5);store.write(attempt);content=self.path.read_bytes()
@@ -292,10 +292,10 @@ class ImplantSetSessionTests(unittest.TestCase):
         for key,row in projected['records'].items():row['character_security']=self.session.graph._state['fit_graph']['records'][key]['character_security']
         self.assertEqual(self.path.read_bytes(),content);self.assertEqual(self.session.graph._state['fit_graph'],projected)
         self.create();self.assertEqual(self.session._store.current.generation,2);self.assertFalse(self.session.graph.migration_pending)
-        self.assertEqual(self.session.graph._state['version'],9);self.assertEqual(self.session.graph._state['fit_graph'],projected)
+        self.assertEqual(self.session.graph._state['version'],10);self.assertEqual(self.session.graph._state['fit_graph'],projected)
     def test_corrupt_v6_and_mixed_v5_refuse_without_write(self):
         key=self.recipe();base=deepcopy(self.session.graph._state)
-        for index,change in enumerate((lambda x:x.update(version=10),lambda x:x.update(version=5),
+        for index,change in enumerate((lambda x:x.update(version=11),lambda x:x.update(version=5),
             lambda x:x['implant_sets']['sets'][key].update(item_ids=[self.item(NAV1),self.item(NAV5)]),
             lambda x:x['implant_sets']['sets'][key].update(active=True))):
             value=deepcopy(base);change(value);self.session.graph._bridge._reset_storage()

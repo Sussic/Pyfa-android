@@ -33,6 +33,67 @@ class OfflineProfilesUiTest {
         assertTrue(response.error?.message, response.isSuccess)
         return EngineRuntime.library.value.single { it.id !in before }.id
     }
+    /** Select separately with alpha_profile_phase=prepare/restart; existing gates stay intact. */
+    @Test fun alphaCloneTouchLearnedEffectiveRecreationSharedUndoAndFreshReopen() {
+        val phase = InstrumentationRegistry.getArguments().getString("alpha_profile_phase") ?: error("Explicit ALPHA1 phase required")
+        assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))
+        assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission(Manifest.permission.INTERNET))
+        EngineRuntime.start(context).get(120, TimeUnit.SECONDS)
+        val receipt = File(context.noBackupFilesDir, "offline-alpha-profile-test.json")
+        if (phase == "restart") {
+            val saved = JSONObject(receipt.readText()); val first = saved.getString("first")
+            val value = state(first); val profile = value.profiles.single { it.id == saved.getString("profile") }
+            assertEquals(saved.getInt("clone"), profile.alphaCloneId)
+            assertEquals(0, profile.level(saved.getInt("skill"))); assertEquals(0, profile.effectiveLevel(saved.getInt("skill")))
+            for (fit in listOf(first, saved.getString("second"))) assertEquals(profile.id, value.bindings.getValue(fit).profileId)
+            assertEquals(saved.getLong("unrelated_revision"), value.bindings.getValue(saved.getString("unrelated")).fitRevision)
+            assertEquals(0, value.history.undoCount)
+            return
+        }
+        assertEquals("prepare", phase)
+        val first = create("Alpha first"); val second = create("Alpha shared"); val unrelated = create("Alpha unrelated")
+        val unrelatedRevision = state(unrelated).bindings.getValue(unrelated).fitRevision
+        EngineRuntime.selectFit(context, first).get(30, TimeUnit.SECONDS)
+        click("profiles-open"); waitFor { model.state?.selectedFitId == first && model.available }
+        click("profile-select-builtin:all5")
+        val sourceChoices = checkNotNull(model.state).alphaCatalogue
+        assertTrue(sourceChoices.error, sourceChoices.available); assertTrue(sourceChoices.clones.isNotEmpty())
+        compose.onNodeWithTag("profile-clone-${sourceChoices.clones.first().id}").assertIsNotEnabled()
+        compose.onNodeWithTag("profile-name").performTextReplacement("Alpha custom")
+        click("profile-copy"); waitFor { !model.saving && model.selectedProfile?.name == "Alpha custom" }
+        val profile = checkNotNull(model.profileId)
+        click("profile-assign"); waitFor { model.state?.bindings?.get(first)?.profileId == profile && model.available }
+        dispatch("assign_profile", JSONObject().put("fit_id", second).put("profile_id", profile), first)
+        waitFor { model.state?.bindings?.get(second)?.profileId == profile && model.available }
+        for (choice in sourceChoices.clones) {
+            click("profile-clone-${choice.id}"); waitFor { model.selectedProfile?.alphaCloneId == choice.id && model.available }
+            compose.onNodeWithTag("profile-clone-${choice.id}").assertIsNotEnabled()
+            assertEquals(unrelatedRevision, state(first).bindings.getValue(unrelated).fitRevision)
+        }
+        val clone = sourceChoices.clones.last().id
+        val capped = checkNotNull(model.selectedProfile)
+        val skill = model.state!!.skills.first { (capped.effectiveLevel(it.id) ?: error("Missing effective skill")) < 5 }
+        compose.onNodeWithTag("profile-skill-search").performTextReplacement(skill.name)
+        click("profile-skill-${skill.id}")
+        compose.onNodeWithTag("profile-skill-effective").assertTextContains("Saved learned: 5")
+        click("profile-level-unlearned"); click("profile-skill-save")
+        waitFor { !model.dirty && model.available && model.selectedProfile?.level(skill.id) == null }
+        compose.onNodeWithTag("profile-skill-effective").assertTextContains("effective: 0")
+        click("profile-level-0"); compose.activityRule.scenario.recreate()
+        waitFor { model.dirty && model.available }
+        assertEquals(0, model.draftLevel); assertEquals(clone, model.selectedProfile!!.alphaCloneId)
+        click("profile-skill-save"); waitFor { !model.dirty && model.available && model.selectedProfile?.level(skill.id) == 0 }
+        click("profiles-undo"); waitFor { model.available && model.selectedProfile?.level(skill.id) == null }
+        click("profiles-redo"); waitFor { model.available && model.selectedProfile?.level(skill.id) == 0 }
+        click("profile-clone-omega"); waitFor { model.available && model.selectedProfile?.alphaCloneId == null }
+        click("profiles-undo"); waitFor { model.available && model.selectedProfile?.alphaCloneId == clone }
+        assertEquals(0, model.selectedProfile!!.level(skill.id))
+        val final = state(first)
+        assertTrue(final.bindings.getValue(first).fitRevision > 1); assertTrue(final.bindings.getValue(second).fitRevision > 1)
+        assertEquals(unrelatedRevision, final.bindings.getValue(unrelated).fitRevision)
+        receipt.writeText(JSONObject().put("first", first).put("second", second).put("profile", profile)
+            .put("clone", clone).put("skill", skill.id).put("unrelated", unrelated).put("unrelated_revision", unrelatedRevision).toString())
+    }
     @Test fun protectedCopyExplicitDraftSharedAssignmentHistoryAndRestart() {
         val phase = InstrumentationRegistry.getArguments().getString("offline_features_phase") ?: error("Explicit durable test phase required")
         assertEquals(1, Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON))

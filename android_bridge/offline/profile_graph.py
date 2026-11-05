@@ -1,6 +1,6 @@
 """Atomic C06 profiles + legacy declarative fit graph, isolated from packaged C04.
 
-Envelope v9 retains the fit graph, characters, imports, targets and damage
+Envelope v10 retains the fit graph, characters, imports, targets and damage
 patterns and detached implant sets in one GraphStore commit. Bound fit inputs are checked compatibility
 projections of their named ledgers, never independent editable authority. Legacy files open without writes; the first edit
 commits the envelope. Old bridges reject this format rather than lose profiles.
@@ -15,7 +15,7 @@ import uuid
 from android_bridge.contract import BridgeSession, _json
 from .profile_store import GraphStore, StoredGraph, StoreError, StoreUncertain, StoreWriteRejected, decode_graph
 from .profiles import Profiles, ProfileError, require
-from .eos_profiles import materialize, edit_level
+from .eos_profiles import materialize, edit_level, alpha_catalogue
 from . import target_profiles as targets
 from . import damage_patterns as damage
 from . import implant_sets
@@ -44,6 +44,7 @@ class ProfileGraph:
         self.engine=engine
         self.dataset=dataset
         self.catalog=Character.getSkillIDMap()
+        self.alpha_catalogue=alpha_catalogue(self.catalog)
         self._store=store_type(path)
         self._available=True
         self._bridge=BridgeSession(engine)
@@ -56,7 +57,7 @@ class ProfileGraph:
                 raw=decode_graph(self._store.current.payload)
                 if raw.get('kind')=='pyfa.profile-fit-graph':
                     candidate=raw
-                    self.migration_pending=raw.get('version')!=9
+                    self.migration_pending=raw.get('version')!=10
                 else:
                     require(type(raw.get('records')) is dict and all(type(record) is dict and not {'implant_source','character_implants','character_security'} & record.keys() for record in raw['records'].values()), 'format', 'Character projections require a versioned profile envelope')
                     BridgeSession._validate_graph(raw,dataset,engine.settings)
@@ -85,7 +86,8 @@ class ProfileGraph:
 
     def _model(self, state=None):
         return Profiles('unused-memory-candidate',self.dataset,self.catalog,
-                        store_type=lambda _:MemoryStore(state))
+                        store_type=lambda _:MemoryStore(state),
+                        clone_ids=(row['alpha_clone_id'] for row in self.alpha_catalogue['clones']))
 
     def _from_legacy(self, graph):
         model=self._model()
@@ -107,11 +109,11 @@ class ProfileGraph:
             draft.values['levels']=overrides
             model.save(draft)
             model.bind(fit_id,identity)
-        return self._migrate(dict(kind='pyfa.profile-fit-graph',version=9,fit_graph=deepcopy(graph),profiles=model.snapshot(), imports={}, targets=targets.empty(), damage_patterns=damage.empty(), implant_sets=implant_sets.empty()))
+        return self._migrate(dict(kind='pyfa.profile-fit-graph',version=10,fit_graph=deepcopy(graph),profiles=model.snapshot(), imports={}, targets=targets.empty(), damage_patterns=damage.empty(), implant_sets=implant_sets.empty()))
 
     def _migrate(self, state):
         candidate=deepcopy(state)
-        candidate.update(version=9, profiles=self._model(state['profiles']).snapshot())
+        candidate.update(version=10, profiles=self._model(state['profiles']).snapshot())
         candidate.setdefault('imports', {})
         candidate.setdefault('targets', targets.empty())
         candidate['damage_patterns']=damage.normalized(candidate.get('damage_patterns', damage.empty()))
@@ -123,12 +125,17 @@ class ProfileGraph:
 
     def _projection(self, profile):
         character=materialize(profile)
-        baseline=profile['default_level'] if profile['default_level'] is not None else 0
+        capped=profile.get('alpha_clone_id') is not None
+        baseline=0 if capped else profile['default_level'] if profile['default_level'] is not None else 0
         levels={}
         for skill in character.skills:
-            # EOS owns builtin side effects; no independently approximated rule.
-            skill.level
-            if skill.activeLevel!=baseline: levels[skill.item.name]=skill.activeLevel
+            # Reconstructed fits are synthetic uncapped characters. Project the
+            # effective EOS values for ALL skills, including a learned baseline5
+            # and skills absent from the cap table. Keep learned authority only
+            # in the profile. Preserve legacy Omega null/zero input distinctions.
+            effective=skill.level
+            value=effective if capped else skill.activeLevel
+            if value!=baseline: levels[skill.item.name]=value
         return baseline,levels
 
     def _apply_profiles(self, state):
@@ -152,7 +159,7 @@ class ProfileGraph:
 
     def _validate(self, state, *, prospective=False):
         require(type(state) is dict and type(state.get('version')) is int
-                and state['version'] in (1,2,3,4,5,6,7,8,9), 'format', 'Unsupported profile fit graph; data preserved')
+                and state['version'] in (1,2,3,4,5,6,7,8,9,10), 'format', 'Unsupported profile fit graph; data preserved')
         fields={'kind','version','fit_graph','profiles'} | ({'imports'} if state['version']>=2 else set()) | ({'targets'} if state['version']>=3 else set()) | ({'damage_patterns'} if state['version']>=4 else set()) | ({'implant_sets'} if state['version']>=6 else set())
         require(set(state)==fields and state['kind']=='pyfa.profile-fit-graph',
                 'format','Unsupported profile fit graph; data preserved')
@@ -166,7 +173,7 @@ class ProfileGraph:
             damage.validate(state['damage_patterns'],graph['records'],version=2 if state['version']>=7 else 1)
         if state['version']>=6:
             implant_sets.validate(state['implant_sets'])
-        require(type(state['profiles']) is dict and type(state['profiles'].get('format')) is int and state['profiles']['format']==(3 if state['version']>=9 else 2 if state['version']>=5 else 1), 'format', 'Mixed profile ledger version')
+        require(type(state['profiles']) is dict and type(state['profiles'].get('format')) is int and state['profiles']['format']==(4 if state['version']>=10 else 3 if state['version']>=9 else 2 if state['version']>=5 else 1), 'format', 'Mixed profile ledger version')
         ledger=self._model(state['profiles']).snapshot()
         require(set(ledger['bindings'])==set(graph['records']),'reference','Profiles must bind exactly the surviving fits')
         for record in graph['records'].values():
@@ -251,7 +258,7 @@ class ProfileGraph:
                     raise StoreUncertain('No-op replay failed; reopen the saved graph') from error
                 if before_write is not None:before_write(old,self._snapshots,False)
                 return dict(affected_fits=sorted(BridgeSession._affected(named,old['fit_graph']['records'],old['fit_graph']['records']) & old['fit_graph']['records'].keys()),snapshot=self.snapshot(),committed=False)
-        candidate.update(version=9)
+        candidate.update(version=10)
         candidate.setdefault('imports',{})
         candidate.setdefault('targets',targets.empty())
         candidate['damage_patterns']=damage.normalized(candidate.get('damage_patterns',damage.empty()))
@@ -454,6 +461,10 @@ class ProfileGraph:
             draft.values['levels']=edit_level(draft.values,skill_id,value)
             return model.save(draft)
         return self._profile_change(change,before_write=before_write,before_stage=before_stage)
+
+    def set_profile_clone(self,profile_id,revision,alpha_clone_id,*,before_write=None,before_stage=None):
+        return self._profile_change(lambda model:model.save_clone(profile_id,revision,alpha_clone_id),
+                                    before_write=before_write,before_stage=before_stage)
 
     def rename_profile(self,profile_id,expected_revision,name,*,before_write=None):
         def change(model):

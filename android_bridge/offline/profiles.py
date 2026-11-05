@@ -17,8 +17,8 @@ from .profile_store import GraphStore, StoreError, StoreUncertain, StoreWriteRej
 ALL_ZERO = 'builtin:all0'
 ALL_FIVE = 'builtin:all5'
 BUILTINS = {
-    ALL_ZERO: dict(name='All 0', default_level=None, levels={}, revision=0, implants=[], sec_status=0.0),
-    ALL_FIVE: dict(name='All 5', default_level=5, levels={}, revision=0, implants=[], sec_status=5.0),
+    ALL_ZERO: dict(name='All 0', default_level=None, levels={}, revision=0, implants=[], sec_status=0.0, alpha_clone_id=None),
+    ALL_FIVE: dict(name='All 5', default_level=5, levels={}, revision=0, implants=[], sec_status=5.0, alpha_clone_id=None),
 }
 
 
@@ -59,7 +59,7 @@ class Draft:
 
 
 class Profiles:
-    def __init__(self, path, dataset_sha256, skill_ids, *, store_type=GraphStore):
+    def __init__(self, path, dataset_sha256, skill_ids, *, store_type=GraphStore, clone_ids=()):
         require(type(dataset_sha256) is str and re.fullmatch('[0-9a-f]{64}', dataset_sha256),
                 'dataset', 'Expected a pinned dataset SHA256')
         skill_ids = tuple(skill_ids)
@@ -67,6 +67,9 @@ class Profiles:
                 and len(set(skill_ids)) == len(skill_ids), 'catalog', 'Invalid skill catalogue')
         self.dataset = dataset_sha256
         self.skill_ids = frozenset(str(i) for i in skill_ids)
+        self.clone_ids = frozenset(clone_ids)
+        require(all(type(i) is int and 0 < i <= 2**31-1 for i in self.clone_ids),
+                'alpha_unavailable', 'Invalid Alpha catalogue')
         self._owner = object()
         self._thread = threading.get_ident()
         self._disabled = False
@@ -74,24 +77,31 @@ class Profiles:
         if self.store.current:
             self._state = decode_graph(self.store.current.payload)
             self._validate(self._state)
-            if self._state['format'] < 3:
+            if self._state['format'] < 4:
                 self._state = deepcopy(self._state)
-                self._state['format'] = 3
+                old_format = self._state['format']
+                self._state['format'] = 4
                 for identity, record in self._state['profiles'].items():
                     record.setdefault('implants', [])
-                    record['sec_status'] = BUILTINS[identity]['sec_status'] if identity in BUILTINS else 0.0
+                    if old_format < 3:
+                        record['sec_status'] = BUILTINS[identity]['sec_status'] if identity in BUILTINS else 0.0
+                    record['alpha_clone_id'] = None
         else:
             self._state = None
-            self._commit(dict(kind='pyfa.offline-profiles', format=3, dataset=dataset_sha256,
+            self._commit(dict(kind='pyfa.offline-profiles', format=4, dataset=dataset_sha256,
                               profiles=deepcopy(BUILTINS), bindings={}, default_profile=ALL_FIVE))
 
     def _ready(self):
         require(threading.get_ident() == self._thread, 'thread', 'Use the serialized owning worker')
         require(not self._disabled, 'reopen_required', 'Commit outcome uncertain; reopen the ledger')
 
-    def _validate_profile(self, record, *, legacy=False, security=True):
-        require(type(record) is dict and set(record) == ({'name', 'default_level', 'levels', 'revision'} | (set() if legacy else {'implants'}) | ({'sec_status'} if security else set())),
+    def _validate_profile(self, record, *, legacy=False, security=True, alpha=True):
+        require(type(record) is dict and set(record) == ({'name', 'default_level', 'levels', 'revision'} | (set() if legacy else {'implants'}) | ({'sec_status'} if security else set()) | ({'alpha_clone_id'} if alpha else set())),
                 'format', 'Unsupported profile fields')
+        if alpha:
+            clone = record['alpha_clone_id']
+            require(clone is None or type(clone) is int and clone in self.clone_ids,
+                    'alpha_unavailable', 'Alpha clone is unknown or its source catalogue is unavailable')
         if security:
             from android_bridge.pilot_security import number
             number(record['sec_status'])
@@ -111,19 +121,19 @@ class Profiles:
             'kind', 'format', 'dataset', 'profiles', 'bindings', 'default_profile'},
             'format', 'Unsupported ledger; original data is preserved')
         require(state['kind'] == 'pyfa.offline-profiles' and type(state['format']) is int
-                and state['format'] in (1, 2, 3), 'format', 'Unsupported ledger version')
+                and state['format'] in (1, 2, 3, 4), 'format', 'Unsupported ledger version')
         require(state['dataset'] == self.dataset, 'dataset', 'Dataset mismatch; explicit migration required')
         records = state['profiles']
         require(type(records) is dict and BUILTINS.keys() <= records.keys(), 'format', 'Missing built-in profiles')
         seen_implants = set()
         for identity, record in records.items():
-            self._validate_profile(record, legacy=state['format'] == 1, security=state['format'] == 3)
+            self._validate_profile(record, legacy=state['format'] == 1, security=state['format'] >= 3, alpha=state['format'] >= 4)
             ids = {row['implant_id'] for row in record.get('implants', [])}
             require(not seen_implants & ids, 'identity', 'Character implant identity reused across profiles')
             seen_implants.update(ids)
             if identity in BUILTINS:
                 from .target_profiles import exact
-                omitted = ({'sec_status'} if state['format'] < 3 else set()) | ({'implants'} if state['format'] == 1 else set())
+                omitted = ({'sec_status'} if state['format'] < 3 else set()) | ({'implants'} if state['format'] == 1 else set()) | ({'alpha_clone_id'} if state['format'] < 4 else set())
                 require(exact(record, {k:v for k,v in BUILTINS[identity].items() if k not in omitted}), 'protected', 'Built-in profile was changed')
             else:
                 require(type(identity) is str and re.fullmatch('profile:[0-9a-f]{32}', identity),
@@ -246,6 +256,14 @@ class Profiles:
         from android_bridge.pilot_security import number
         draft.values['sec_status'] = number(sec_status)
         return self.save(draft, save_as=save_as)
+
+    def save_clone(self, profile_id, revision, alpha_clone_id):
+        """Change clone identity only; learned inputs never become capped values."""
+        draft = self.begin(profile_id)
+        require(type(revision) is int and revision > 0 and revision == draft.base_revision,
+                'conflict', 'Profile revision changed')
+        draft.values['alpha_clone_id'] = alpha_clone_id
+        return self.save(draft)
 
     def add_implant(self, profile_id, revision, item_id, replace_implant_id):
         from android_bridge.character_implants import catalogue, row_id

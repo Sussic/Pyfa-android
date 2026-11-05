@@ -271,7 +271,7 @@ class NamedRahSessionTests(NativeSessionTests):
             with self.assertRaises(ProfileError):self.session.graph._validate(candidate)
         # v7 predates profile security: use its actual profile/record schema.
         legacy=deepcopy(current);legacy['version']=7;legacy['profiles']['format']=2
-        for profile in legacy['profiles']['profiles'].values():profile.pop('sec_status')
+        for profile in legacy['profiles']['profiles'].values():profile.pop('sec_status');profile.pop('alpha_clone_id')
         for record in legacy['fit_graph']['records'].values():record.pop('character_security')
         untagged=deepcopy(legacy)
         for record in untagged['fit_graph']['records'].values():

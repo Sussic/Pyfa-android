@@ -33,11 +33,11 @@ class SelectedReplayGraph(DamageReplayGraph):
     def __init__(self, initial):
         super().__init__(initial)
         self._state = ProfileGraph._migrate(self, initial)
-        self.migration_pending = initial['version'] != 9
+        self.migration_pending = initial['version'] != 10
         self._snapshots = self._restore(self._state['fit_graph'])
 
     def _validate(self, candidate, *, prospective=False):
-        self.assertion(candidate['version'] == 9 and set(candidate) == {
+        self.assertion(candidate['version'] == 10 and set(candidate) == {
             'kind', 'version', 'fit_graph', 'profiles', 'imports', 'targets', 'damage_patterns', 'implant_sets'})
         target_profiles.validate(candidate['targets'], candidate['fit_graph']['records'])
         damage.validate(candidate['damage_patterns'], candidate['fit_graph']['records'])
@@ -166,7 +166,7 @@ class SelectedItemSessionTests(unittest.TestCase):
     def test_first_creation_undo_removes_special_redo_recreates_monotonically(self):
         self.item_call(); first = self.session._revisions[F]
         self.call('undo'); self.assertNotIn(damage.SELECTED_AMMO, self.session.graph._state['damage_patterns']['patterns'])
-        self.assertEqual(self.session.graph._state['version'], 9)
+        self.assertEqual(self.session.graph._state['version'], 10)
         self.assertEqual(self.session.graph._state['damage_patterns']['version'], 2)
         self.call('redo')
         self.assertGreater(self.session._revisions[F], first)
@@ -303,13 +303,15 @@ class SelectedItemSessionTests(unittest.TestCase):
 
 def empty_envelope(version):
     profiles = deepcopy(BUILTINS)
+    if version < 10:
+        for value in profiles.values(): value.pop('alpha_clone_id')
     if version < 9:
         for value in profiles.values(): value.pop('sec_status')
     if version < 5:
         for value in profiles.values(): value.pop('implants')
     result = dict(kind='pyfa.profile-fit-graph', version=version,
         fit_graph=dict(records={}, revisions={}, modified={}, fit_order=[], recent=[], sample_id=None, format=2),
-        profiles=dict(kind='pyfa.offline-profiles', format=3 if version >= 9 else 2 if version >= 5 else 1,
+        profiles=dict(kind='pyfa.offline-profiles', format=4 if version >= 10 else 3 if version >= 9 else 2 if version >= 5 else 1,
                       dataset=CONTEXT['dataset_sha256'], profiles=profiles, bindings={}, default_profile='builtin:all5'))
     if version >= 2: result['imports'] = {}
     if version >= 3: result['targets'] = target_profiles.empty()
@@ -341,16 +343,16 @@ class SelectedItemEnvelopeTests(unittest.TestCase):
 
     def test_all_supported_envelopes_open_normalized_without_writes_or_generation(self):
         with TemporaryDirectory() as directory:
-            for version in range(1, 10):
+            for version in range(1, 11):
                 with self.subTest(version=version):
                     path = Path(directory) / ('v%d.sqlite' % version)
                     original = self.save(path, empty_envelope(version))
                     with envelope_owner(path) as owner:
                         result = owner.snapshot()
-                        self.assertEqual(result['graph']['version'], 9)
+                        self.assertEqual(result['graph']['version'], 10)
                         self.assertEqual(result['graph']['damage_patterns']['version'], 2)
-                        self.assertEqual(result['graph']['profiles']['format'], 3)
-                        self.assertEqual(result['migration_pending'], version < 9)
+                        self.assertEqual(result['graph']['profiles']['format'], 4)
+                        self.assertEqual(result['migration_pending'], version < 10)
                         self.assertEqual(owner._store.current.generation, 1)
                     self.assertEqual(path.read_bytes(), original)
                     self.assertEqual(json.loads(GraphStore(path).current.payload)['version'], version)
@@ -362,7 +364,7 @@ class SelectedItemEnvelopeTests(unittest.TestCase):
             malformed.append(mixed)
         for version in range(1, 9):
             extra = empty_envelope(version); extra['unexpected'] = True; malformed.append(extra)
-        unknown = empty_envelope(7); unknown['version'] = 10; malformed.append(unknown)
+        unknown = empty_envelope(7); unknown['version'] = 11; malformed.append(unknown)
         bad = empty_envelope(7)
         bad['damage_patterns']['patterns'][damage.SELECTED_AMMO] = dict(name='Selected Ammo', revision=1, values=raw(0, 0, 0, 0))
         malformed.append(bad)
@@ -392,7 +394,7 @@ class SelectedItemEnvelopeTests(unittest.TestCase):
             with envelope_owner(path) as owner:
                 self.assertFalse(owner.migration_pending)
                 self.assertTrue(damage.exact(owner._state['damage_patterns']['patterns'][identity]['values'], raw(-0.0, 8.9, 0, 0)))
-                self.assertEqual(owner._state['version'], 9); self.assertEqual(owner._state['damage_patterns']['version'], 2)
+                self.assertEqual(owner._state['version'], 10); self.assertEqual(owner._state['damage_patterns']['version'], 2)
 
 
 if __name__ == '__main__': unittest.main()

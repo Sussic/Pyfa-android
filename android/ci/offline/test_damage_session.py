@@ -137,7 +137,7 @@ class DamageSessionTests(unittest.TestCase):
             self.assertEqual(self.session._store.current,before)
             self.assertTrue(self.session.graph.migration_pending)
             self.create('First real edit')
-            self.assertEqual(self.session.graph._state['version'],9);self.assertFalse(self.session.graph.migration_pending)
+            self.assertEqual(self.session.graph._state['version'],10);self.assertFalse(self.session.graph.migration_pending)
             self.assertEqual(self.session.graph._state['targets'],target.empty());self.assertEqual(self.session.graph._state['imports'],{})
             self.assertNotIn(F,self.session.graph._state['damage_patterns']['bindings'])
     def test_zero_library_only_create_duplicate_reopen_and_zero_reject_before_replay(self):
@@ -277,7 +277,7 @@ class DamageSessionTests(unittest.TestCase):
         model=self.session.graph._model(before['profiles']);spec=deepcopy(before['fit_graph']['records'][G]['spec']);spec['name']='Imported'
         result=self.session.graph._stage_import_specs([spec],'import-case','f'*64,PID,model)
         self.assertFalse(result['replayed']);current=self.session.graph._state
-        self.assertEqual(current['version'],9);self.assertEqual(current['damage_patterns'],before['damage_patterns']);self.assertEqual(current['targets'],before['targets'])
+        self.assertEqual(current['version'],10);self.assertEqual(current['damage_patterns'],before['damage_patterns']);self.assertEqual(current['targets'],before['targets'])
         self.assertNotIn(COPY,current['damage_patterns']['bindings']);self.assertIn('import-case',current['imports'])
         self.session=session(json.loads(self.session._store.current.payload));self.assertIn('import-case',self.session.graph._state['imports'])
     def test_full_state_size_and_bootstrap_serialization_refuse_before_write(self):
@@ -361,7 +361,7 @@ class DamageEnvelopeTests(unittest.TestCase):
             if version>=2:
                 candidate=deepcopy(owner.graph._state);del candidate['imports']
                 with self.assertRaises(ProfileError):self.check(owner.graph,candidate)
-        owner=session();candidate=deepcopy(owner.graph._state);candidate['version']=9
+        owner=session();candidate=deepcopy(owner.graph._state);candidate['version']=11
         with self.assertRaises(ProfileError):self.check(owner.graph,candidate)
         self.assertEqual(owner._store.writes,0)
     def test_current_damage_projection_raw_types_signs_and_zero_refuse_without_repair(self):
@@ -390,7 +390,7 @@ class DamageEnvelopeTests(unittest.TestCase):
             else:
                 spec=deepcopy(g._state['fit_graph']['records'][G]['spec'])
                 g._stage_import_specs([spec],'new-import','f'*64,PID,g._model(g._state['profiles']))
-            self.assertEqual(g._state['version'],9);self.assertEqual(g._state['damage_patterns'],damage.empty())
+            self.assertEqual(g._state['version'],10);self.assertEqual(g._state['damage_patterns'],damage.empty())
 
 
 if __name__=='__main__':unittest.main()

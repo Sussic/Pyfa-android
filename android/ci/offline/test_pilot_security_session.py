@@ -35,13 +35,13 @@ class PilotSecuritySessionTests(unittest.TestCase):
         return self.session.graph._state['profiles']['profiles'][pid or self.profile()]
 
     def payload(self, operation, arguments, anchor=True):
-        return dict(version=3, request_id='security-test', context=self.session.context(),
+        return dict(version=4, request_id='security-test', context=self.session.context(),
                     operation=operation, arguments=arguments, anchor_fit_id=self.key if anchor else None)
 
     def feature(self, operation, arguments, anchor=True):
         result = json.loads(self.session.feature_dispatch(_json(self.payload(operation, arguments, anchor))))
-        self.assertTrue(result['ok'], result); self.assertEqual(result['version'], 3)
-        self.assertEqual(result['state']['version'], 3)
+        self.assertTrue(result['ok'], result); self.assertEqual(result['version'], 4)
+        self.assertEqual(result['state']['version'], 4)
         self.assertEqual(set(result), {'version', 'request_id', 'ok', 'committed', 'reopen_required', 'state', 'bridge', 'error'})
         self.assertEqual(set(result['state']['bindings']), {fit['id'] for fit in result['bridge']['fits']})
         return result
@@ -209,7 +209,7 @@ class PilotSecuritySessionTests(unittest.TestCase):
                     old = deepcopy(modern); old['version'] = version
                     old['profiles']['format'] = 2 if version >= 5 else 1
                     for row in old['profiles']['profiles'].values():
-                        row.pop('sec_status')
+                        row.pop('sec_status'); row.pop('alpha_clone_id')
                         if version < 5: row.pop('implants')
                     for row in old['fit_graph']['records'].values():
                         row.pop('character_security')
@@ -230,7 +230,7 @@ class PilotSecuritySessionTests(unittest.TestCase):
                     self.assertEqual(self.stable(), before); self.assertEqual(self.path.read_bytes(), content)
                     self.save(2.75)
                     state = self.session.graph._state
-                    self.assertEqual(state['version'], 9); self.assertEqual(state['profiles']['format'], 3)
+                    self.assertEqual(state['version'], 10); self.assertEqual(state['profiles']['format'], 4)
                     self.assertEqual(self.session.context()['generation'], 2)
                     self.assertTrue(exact(state['fit_graph']['records'][self.key]['spec']['security']['pilot'], pilot))
                     self.reopen(); self.assertFalse(self.session.graph.migration_pending)
@@ -252,7 +252,7 @@ class PilotSecuritySessionTests(unittest.TestCase):
         for pid, security in (('builtin:all0', 0.0), ('builtin:all5', 5.0)):
             self.feature('assign_profile', dict(fit_id=self.key, profile_id=pid))
             old = deepcopy(self.session.graph._state); old['version'] = 8; old['profiles']['format'] = 2
-            for row in old['profiles']['profiles'].values(): row.pop('sec_status')
+            for row in old['profiles']['profiles'].values(): row.pop('sec_status'); row.pop('alpha_clone_id')
             for row in old['fit_graph']['records'].values(): row.pop('character_security')
             content = self.open_fixture(old, 'builtin-' + pid.split(':')[1])
             row = self.session.pilot_security_details(self.key)
@@ -283,7 +283,7 @@ class PilotSecuritySessionTests(unittest.TestCase):
             self.engine._fits.clear()
             self.session = NativeSession(self.engine, self.path, os.environ['PYFA_DATASET_SHA'], spec())
         legacy = deepcopy(good); legacy['version'] = 8; legacy['profiles']['format'] = 2
-        for row in legacy['profiles']['profiles'].values(): row.pop('sec_status')
+        for row in legacy['profiles']['profiles'].values(): row.pop('sec_status'); row.pop('alpha_clone_id')
         for row in legacy['fit_graph']['records'].values(): row.pop('character_security')
         legacy['fit_graph']['records'][self.key]['spec']['security']['pilot'] = None
         self.session.graph._bridge._reset_storage()
