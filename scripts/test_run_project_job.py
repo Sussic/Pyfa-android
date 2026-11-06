@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from contextlib import contextmanager
+from contextlib import contextmanager, redirect_stdout
+import io
 import json
 from pathlib import Path
 import sys
@@ -554,6 +555,431 @@ class MSIFenceRunnerTests(unittest.TestCase):
             remaining_job_processes=0,
             owned_usage=dict(peak_job_commit_bytes=123, peak_process_commit_bytes=100, owned_cpu_seconds=0.5),
             reconciliation_required=False, policy_sha256=self.digest), old_fields)
+
+
+class QueueCLITests(unittest.TestCase):
+    # Reuse the existing fixture without inheriting (and rerunning) its tests.
+    setUp = MSIFenceRunnerTests.setUp
+
+    def cli(self, *, queued=True, queue_identity='b' * 64, lease_error=None,
+            receipt_change=None, setup_error=None, before_run=None):
+        self.attempt += 1
+        prefix = self.root / str(self.attempt) / 'cli'
+        report = Path(str(prefix) + '-result.json')
+        clock, output = FakeClock(), io.StringIO()
+        @contextmanager
+        def lease(policy, settings):
+            self.assertIs(policy, self.policy)
+            self.assertEqual(self.settings, settings)
+            self.events.append('lease-enter')
+            try:
+                yield
+            finally:
+                self.events.append('lease-exit')
+                if receipt_change is not None:
+                    receipt_change(report)
+                if lease_error is not None:
+                    raise lease_error
+        def create_job():
+            self.events.append('job-create')
+            return self.job
+        native = mock.Mock(WindowsJob=create_job)
+        arguments = ['--host', self.settings['host'], '--profile', self.settings['workload'],
+                     '--required-disk-bytes', '0', '--project-total-bytes', '0',
+                     '--report-prefix', str(prefix), '--',
+                     'synthetic-command', 'space value', '--literal']
+        if before_run is not None:
+            before_run(prefix)
+        with mock.patch.dict(runner.os.environ, {'CODEX_QUEUE_JOB_ID': queue_identity}), \
+                mock.patch.object(policy_api, 'load_policy', return_value=(self.policy, self.digest),
+                                  side_effect=setup_error), \
+                mock.patch.object(policy_api, 'detect_host', return_value=self.settings['host']), \
+                mock.patch.object(policy_api, 'msi_host_control', return_value=self.job.host), \
+                mock.patch.object(policy_api, 'msi_native_job', return_value=native), \
+                mock.patch.object(runner, 'WindowsJob', side_effect=create_job), \
+                mock.patch.object(policy_api, 'heavy_lease', side_effect=lease) as leases, \
+                mock.patch.object(runner.time, 'monotonic', clock.monotonic), \
+                mock.patch.object(runner.time, 'sleep', lambda _: None), redirect_stdout(output):
+            if not queued:
+                del runner.os.environ['CODEX_QUEUE_JOB_ID']
+            code = runner.main(arguments)
+        try:
+            result = json.loads(report.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            result = None
+        records = [json.loads(line) for line in output.getvalue().splitlines()]
+        return code, result, records, prefix, leases.call_count
+
+    def test_queue_payload75_is_terminal_and_keeps_raw_receipt_and_stdout(self):
+        self.job.code = 75
+        code, result, records, prefix, leases = self.cli()
+        self.assertEqual(1, code)
+        self.assertEqual(75, result['exit_code'])
+        self.assertEqual(75, result['root_exit_code'])
+        self.assertEqual('failed', result['status'])
+        self.assertFalse(result['msi_admission']['hold_retained'])
+        self.assertEqual(1, leases)
+        self.assertEqual(dict(status='failed', exit_code=75, report=str(prefix) + '-result.json'), records[0])
+        self.assertEqual('queue_disposition', records[1]['record_type'])
+        self.assertEqual(75, records[1]['raw_source_exit'])
+        self.assertEqual(1, records[1]['queue_return_code'])
+        self.assertTrue(records[1]['creation_attempted'])
+
+    def test_absent_queue_identity_preserves_direct_payload75_stdout_and_schema(self):
+        self.job.code = 75
+        code, result, records, prefix, _ = self.cli(queued=False)
+        self.assertEqual(75, code)
+        self.assertEqual(1, result['schema_version'])
+        self.assertEqual(75, result['exit_code'])
+        self.assertEqual(75, result['root_exit_code'])
+        self.assertEqual([dict(status='failed', exit_code=75,
+                              report=str(prefix) + '-result.json')], records)
+        self.assertNotIn('queue_return_code', result)
+        self.assertNotIn('creation_attempted', result)
+
+    def fresh_job(self, host='msi', deny_at=None):
+        self.settings = policy_api.select(self.policy, host, 'focused_test')
+        self.events = []
+        self.host = FakeHost(self.events, deny_at=deny_at)
+        self.job = FencedJob(self.settings, self.host if host == 'msi' else None, self.events)
+
+    def test_queue_safe_prelaunch_refusals_preserve75_without_creating_a_payload(self):
+        for refusal in ('early-host', 'final-host', 'resources'):
+            with self.subTest(refusal=refusal):
+                self.fresh_job(deny_at={'early-host': 1, 'final-host': 2}.get(refusal))
+                if refusal == 'resources':
+                    values = self.job.resources(self.root)
+                    values['available_physical'] -= 1
+                    with mock.patch.object(self.job, 'resources', return_value=values):
+                        code, result, records, _, leases = self.cli()
+                else:
+                    code, result, records, _, leases = self.cli()
+                self.assertEqual(75, code)
+                self.assertEqual(75, result['exit_code'])
+                self.assertEqual('deferred', result['status'])
+                self.assertNotIn('launch', self.events)
+                self.assertFalse(self.host.tokens)
+                self.assertEqual(0 if refusal == 'early-host' else 1, leases)
+                self.assertFalse(records[-1]['creation_attempted'])
+                self.assertEqual('proven_nonlaunching_deferral', records[-1]['reason'])
+
+    def test_queue_running_memory_and_disk75_are_terminal_without_relabeling_raw_stops(self):
+        for pressure in (True, False):
+            with self.subTest(pressure=pressure):
+                self.fresh_job()
+                self.job.live_polls = 100
+                self.job.pressure, self.job.low_disk = pressure, not pressure
+                code, result, records, _, leases = self.cli()
+                self.assertEqual(1, code)
+                self.assertEqual(75, result['exit_code'])
+                self.assertEqual('deferred', result['status'])
+                self.assertIn('memory pressure' if pressure else 'free-disk reserve', result['reason'])
+                self.assertEqual(1, result['root_exit_code'])
+                self.assertTrue(self.job.stopped)
+                self.assertTrue(result['tree_exit_confirmed'])
+                self.assertFalse(result['reconciliation_required'])
+                self.assertFalse(result['msi_admission']['hold_retained'])
+                self.assertEqual(1, leases)
+                self.assertEqual(75, records[0]['exit_code'])
+                self.assertEqual(75, records[-1]['raw_source_exit'])
+                self.assertEqual(1, records[-1]['queue_return_code'])
+                if pressure:
+                    self.assertGreater(self.job.resource_calls, 3)
+                    self.assertLess(result['minimum']['available_physical'], self.settings['running_free_floor_bytes'])
+                else:
+                    self.assertLess(result['minimum']['free_disk'], self.settings['disk_free_reserve_bytes'])
+
+    def test_both_launch_paths_latch_before_partial_or_unknown_creation_can_raise75(self):
+        for host in ('msi', 'initia'):
+            for creation in ('partial', 'unknown'):
+                with self.subTest(host=host, creation=creation):
+                    self.fresh_job(host)
+                    launch = self.job.launch
+                    def denied_after_attempt(*arguments):
+                        launch(*arguments)
+                        if creation == 'unknown':
+                            self.job.process = None
+                        raise policy_api.AdmissionDeferred('fake creation outcome remains uncertain')
+                    with mock.patch.object(self.job, 'launch', side_effect=denied_after_attempt):
+                        code, result, records, _, leases = self.cli()
+                    self.assertEqual(1, code)
+                    self.assertEqual(75, result['exit_code'])
+                    self.assertEqual('deferred', result['status'])
+                    self.assertTrue(records[-1]['creation_attempted'])
+                    self.assertEqual(1, leases)
+                    self.assertEqual(creation == 'partial', self.job.stopped)
+                    if host == 'msi':
+                        self.assertTrue(result['msi_admission']['hold_retained'])
+                        self.assertTrue(self.host.tokens)
+                        self.assertNotIn('host-complete', self.events)
+
+    def test_queue_observer_failure_is_uncertainty_and_cannot_authorize_replay(self):
+        real_run = runner.run
+        def failing_observer(*arguments, **keywords):
+            observe = keywords['attempt_observer']
+            def failed(event):
+                observe(event)
+                if event == 'creation':
+                    raise policy_api.AdmissionDeferred('fake observer failure')
+            keywords['attempt_observer'] = failed
+            return real_run(*arguments, **keywords)
+        with mock.patch.object(runner, 'run', side_effect=failing_observer):
+            code, result, records, _, _ = self.cli()
+        self.assertEqual(1, code)
+        self.assertEqual(75, result['exit_code'])
+        self.assertIn('observer failure', result['reason'])
+        self.assertNotIn('launch', self.events)
+        self.assertTrue(records[-1]['creation_attempted'])
+        self.assertTrue(result['msi_admission']['hold_retained'])
+        self.assertTrue(self.host.tokens)
+
+    def test_unknown_registration_side_effects_cannot_look_like_a_safe_nonlaunch75(self):
+        register = self.host.register_locked
+        def unknown_registration(*arguments):
+            register(*arguments)
+            raise policy_api.AdmissionDeferred('fake registration publication is uncertain')
+        with mock.patch.object(self.host, 'register_locked', side_effect=unknown_registration):
+            code, result, records, _, leases = self.cli()
+        self.assertEqual(1, code)
+        self.assertEqual(75, result['exit_code'])
+        self.assertNotIn('msi_admission', result)  # No token was returned to run().
+        self.assertNotIn('launch', self.events)
+        self.assertTrue(self.host.tokens)  # Failure of token return did not clear the hold.
+        self.assertFalse(records[-1]['creation_attempted'])
+        self.assertEqual('ownership_registration_attempted', records[-1]['reason'])
+        self.assertEqual(1, leases)
+
+    def test_queue_normal_zero_and_one_preserve_raw_outcomes_and_one_lease(self):
+        for expected in (0, 1):
+            with self.subTest(expected=expected):
+                self.fresh_job()
+                self.job.code = expected
+                code, result, records, _, leases = self.cli()
+                self.assertEqual(expected, code)
+                self.assertEqual(expected, result['exit_code'])
+                self.assertEqual(expected, records[-1]['raw_source_exit'])
+                self.assertEqual(expected, records[-1]['queue_return_code'])
+                self.assertFalse(result['msi_admission']['hold_retained'])
+                self.assertEqual(1, leases)
+
+    def test_queue_custody_close_and_completion_uncertainty_preserve_holds(self):
+        for failure, field in (('custody_error', 'custody_observation_error'),
+                               ('telemetry_error', 'usage_observation_error'),
+                               ('active_error', 'ownership_observation_error'),
+                               ('close_error', 'cleanup_error'),
+                               ('completion', 'host_completion_error')):
+            with self.subTest(failure=failure):
+                self.fresh_job()
+                self.job.code = 75
+                if failure == 'completion':
+                    with mock.patch.object(self.host, 'complete', side_effect=OSError('fake completion failure')):
+                        code, result, records, _, _ = self.cli()
+                else:
+                    setattr(self.job, failure, True)
+                    code, result, records, _, _ = self.cli()
+                self.assertEqual(1, code)
+                self.assertIn(field, result)
+                self.assertTrue(result['msi_admission']['hold_retained'])
+                self.assertTrue(self.host.tokens)
+                self.assertEqual(result['exit_code'], records[-1]['raw_source_exit'])
+                self.assertEqual(1, records[-1]['queue_return_code'])
+
+    def test_queue_success_with_incomplete_custody_keeps_its_existing_unqualified_hold(self):
+        self.job.custody_result['complete'] = False
+        code, result, records, _, _ = self.cli()
+        self.assertEqual(0, code)
+        self.assertEqual(0, result['exit_code'])
+        self.assertTrue(result['msi_admission']['hold_retained'])
+        self.assertTrue(self.host.tokens)
+        self.assertNotIn('host-complete', self.events)
+        self.assertEqual(0, records[-1]['queue_return_code'])
+        self.assertNotIn('closure_confirmed', records[-1])
+
+    def test_postlaunch_lease_exit_admission_deferral_never_leaks75(self):
+        for raw in (0, 75):
+            with self.subTest(raw=raw):
+                self.fresh_job()
+                self.job.code = raw
+                code, result, records, _, leases = self.cli(
+                    lease_error=policy_api.AdmissionDeferred('fake lease exit failure'))
+                self.assertEqual(1, code)
+                self.assertEqual(raw, result['exit_code'])
+                self.assertEqual(raw, result['root_exit_code'])
+                self.assertIsNone(records[-1]['raw_source_exit'])  # run() did not return.
+                self.assertEqual(1, records[-1]['queue_return_code'])
+                self.assertIn('run_did_not_return: AdmissionDeferred', records[-1]['reason'])
+                self.assertTrue(records[-1]['creation_attempted'])
+                self.assertEqual(1, leases)
+
+    def test_prelaunch_deferred_receipt_cannot_hide_a_lease_exit_failure(self):
+        self.host.deny_at = 2
+        code, result, records, _, _ = self.cli(
+            lease_error=policy_api.AdmissionDeferred('fake nonlaunch finalization failure'))
+        self.assertEqual(1, code)
+        self.assertEqual(75, result['exit_code'])
+        self.assertEqual('deferred', result['status'])
+        self.assertNotIn('launch', self.events)
+        self.assertFalse(records[-1]['creation_attempted'])
+        self.assertIsNone(records[-1]['raw_source_exit'])
+        self.assertIn('run_did_not_return', records[-1]['reason'])
+
+    def test_postlaunch_policy_deferral_during_receipt_write_never_leaks75(self):
+        real_dump = runner.json.dump
+        def fail_report(value, stream, **keywords):
+            if stream.name.endswith('-result.json'):
+                raise policy_api.PolicyError('fake report finalization failure')
+            return real_dump(value, stream, **keywords)
+        with mock.patch.object(runner.json, 'dump', side_effect=fail_report):
+            code, result, records, _, _ = self.cli()
+        self.assertEqual(1, code)
+        self.assertIsNone(result)
+        self.assertIsNone(records[-1]['raw_source_exit'])
+        self.assertIn('run_did_not_return: PolicyError', records[-1]['reason'])
+        self.assertTrue(records[-1]['creation_attempted'])
+
+    def test_queue_rejects_missing_malformed_and_unreadable_same_attempt_receipts(self):
+        for corruption in ('missing', 'malformed', 'unreadable'):
+            with self.subTest(corruption=corruption):
+                self.fresh_job(deny_at=2)
+                def change(report):
+                    if corruption == 'malformed':
+                        report.write_text('{broken', encoding='utf-8')
+                    else:
+                        report.unlink()
+                        if corruption == 'unreadable':
+                            report.mkdir()  # read_text deterministically refuses a directory.
+                code, _, records, _, _ = self.cli(receipt_change=change)
+                self.assertEqual(1, code)
+                self.assertEqual(75, records[0]['exit_code'])
+                self.assertEqual(75, records[-1]['raw_source_exit'])
+                self.assertIn('invalid_final_receipt', records[-1]['reason'])
+                self.assertNotIn('launch', self.events)
+
+    def test_queue_rejects_mismatched_incomplete_stale_and_uncertain_deferred_receipts(self):
+        variants = [dict(argv=['another-command']), dict(policy_sha256='c' * 64),
+                    dict(host='initia'), dict(workload='light'), dict(project='other'),
+                    dict(schema_version=2), dict(exit_code=0), dict(status='failed'),
+                    dict(started_utc='2000-01-01T00:00:00+00:00'),
+                    dict(completed_utc=None), dict(seconds=-1), dict(seconds=float('nan')),
+                    dict(reconciliation_required=True), dict(worker_pid=23456),
+                    dict(ownership_observation_error='unknown'),
+                    dict(msi_admission=dict(hold_retained=True, closure_confirmed=False)),
+                    {'remove': 'completed_utc'}, {'remove': 'reconciliation_required'}]
+        for variant in variants:
+            with self.subTest(variant=variant):
+                self.fresh_job(deny_at=2)
+                def change(report):
+                    value = json.loads(report.read_text(encoding='utf-8'))
+                    if 'remove' in variant:
+                        del value[variant['remove']]
+                    else:
+                        value.update(variant)
+                    report.write_text(json.dumps(value), encoding='utf-8')
+                code, _, records, _, _ = self.cli(receipt_change=change)
+                self.assertEqual(1, code)
+                self.assertEqual(75, records[-1]['raw_source_exit'])
+                self.assertIn('invalid_final_receipt', records[-1]['reason'])
+                self.assertNotIn('launch', self.events)
+
+    def test_queue_rejects_reused_prefix_without_overwriting_old_receipt_or_log(self):
+        for suffix in ('-result.json', '.log'):
+            with self.subTest(suffix=suffix):
+                self.fresh_job()
+                def retain(prefix):
+                    prefix.parent.mkdir(parents=True)
+                    Path(str(prefix) + suffix).write_bytes(b'old evidence must stay')
+                code, _, records, prefix, leases = self.cli(before_run=retain)
+                self.assertEqual(1, code)
+                self.assertEqual(b'old evidence must stay', Path(str(prefix) + suffix).read_bytes())
+                self.assertEqual(0, leases)
+                self.assertNotIn('job-create', self.events)
+                self.assertNotIn('launch', self.events)
+                self.assertIsNone(records[-1]['raw_source_exit'])
+
+    def test_queue_invalid_present_identity_refuses_before_setup_lease_or_creation(self):
+        for identity in ('', 'not-a-hash', 'B' * 64, 'b' * 63, 'b' * 65, ' b' * 32):
+            with self.subTest(identity=identity):
+                self.fresh_job()
+                code, result, records, _, leases = self.cli(queue_identity=identity,
+                    setup_error=AssertionError('Invalid context must fail before policy setup'))
+                self.assertEqual(1, code)
+                self.assertIsNone(result)
+                self.assertEqual(0, leases)
+                self.assertNotIn('job-create', self.events)
+                self.assertNotIn('launch', self.events)
+                self.assertEqual('invalid_queue_identity', records[-1]['reason'])
+
+    def test_initial_setup_refusal_is_nonlaunching75_with_direct_stdout_preserved(self):
+        expected = dict(status='deferred', reason='fake policy unavailable', independent_development='continue')
+        for failure in (policy_api.PolicyError, policy_api.AdmissionDeferred):
+            for queued in (False, True):
+                with self.subTest(queued=queued, failure=failure.__name__):
+                    code, result, records, _, leases = self.cli(queued=queued,
+                        setup_error=failure('fake policy unavailable'))
+                    self.assertEqual(75, code)
+                    self.assertIsNone(result)
+                    self.assertEqual(expected, records[0])
+                    self.assertEqual(2 if queued else 1, len(records))
+                    self.assertEqual(0, leases)
+                    self.assertNotIn('launch', self.events)
+                    if queued:
+                        self.assertEqual('initial_setup_refusal', records[-1]['reason'])
+                        self.assertFalse(records[-1]['creation_attempted'])
+
+    def test_absent_queue_identity_preserves_direct_running_resource75_and_stdout(self):
+        self.job.low_disk, self.job.live_polls = True, 100
+        code, result, records, prefix, _ = self.cli(queued=False)
+        self.assertEqual(75, code)
+        self.assertEqual(75, result['exit_code'])
+        self.assertEqual('deferred', result['status'])
+        self.assertIn('free-disk reserve', result['reason'])
+        self.assertEqual([dict(status='deferred', exit_code=75,
+                              report=str(prefix) + '-result.json')], records)
+        self.assertNotIn('creation_attempted', result)
+
+    def test_two_poll_worker_contract_replayed_old75_but_never_replays_started_queue_failure(self):
+        # Maintained worker contract: 75 -> queued, 0 -> passed, others -> failed.
+        # This intentionally models only that documented mapping, not private worker code.
+        for outcome in ('payload75', 'disk-stop'):
+            for queued in (False, True):
+                with self.subTest(outcome=outcome, queued=queued):
+                    state, invocations, payloads = 'queued', 0, []
+                    for _poll in range(2):
+                        if state != 'queued':
+                            continue
+                        self.fresh_job()
+                        self.job.code = 75
+                        if outcome == 'disk-stop':
+                            self.job.low_disk, self.job.live_polls = True, 100
+                        launch = self.job.launch
+                        def counted_launch(*arguments):
+                            payloads.append('same-selected-payload')
+                            return launch(*arguments)
+                        with mock.patch.object(self.job, 'launch', side_effect=counted_launch):
+                            code, result, _, _, _ = self.cli(queued=queued)
+                        invocations += 1
+                        self.assertEqual(75, result['exit_code'])
+                        state = 'queued' if code == 75 else 'passed' if code == 0 else 'failed'
+                    self.assertEqual(1 if queued else 2, invocations)
+                    self.assertEqual(['same-selected-payload'] * (1 if queued else 2), payloads)
+                    self.assertEqual('failed' if queued else 'queued', state)
+
+    def test_two_poll_safe_nonlaunch_deferral_can_make_its_first_launch_after_recovery(self):
+        state, payloads, outcomes = 'queued', [], []
+        for poll in range(2):
+            self.assertEqual('queued', state)
+            self.fresh_job(deny_at=1 if poll == 0 else None)
+            launch = self.job.launch
+            def counted_launch(*arguments):
+                payloads.append('first-payload')
+                return launch(*arguments)
+            with mock.patch.object(self.job, 'launch', side_effect=counted_launch):
+                code, _, _, _, _ = self.cli()
+            outcomes.append(code)
+            state = 'queued' if code == 75 else 'passed' if code == 0 else 'failed'
+            self.assertEqual([] if poll == 0 else ['first-payload'], payloads)
+        self.assertEqual([75, 0], outcomes)
+        self.assertEqual('passed', state)
 
 
 if __name__ == '__main__':

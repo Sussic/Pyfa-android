@@ -176,7 +176,8 @@ class WindowsJob:
 
 
 def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_bytes, *,
-        job_factory=None, host_factory=None):
+        job_factory=None, host_factory=None, attempt_observer=None):
+    """Return the raw outcome; optional sink receives 'registration' / 'creation' before each attempt."""
     prefix = Path(prefix).resolve()
     prefix.parent.mkdir(parents=True, exist_ok=True)
     report_path, log_path = Path(str(prefix) + '-result.json'), Path(str(prefix) + '.log')
@@ -227,16 +228,22 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
         pressure = policy_api.PressureWindow(settings)
         with log_path.open('xb') as log:
             if host is None:
+                if attempt_observer is not None:
+                    attempt_observer('creation')
                 job.launch(argv, environment, Path.cwd(), log)
             else:
                 # The final fence check and actual child creation share the mutex.
                 # The registration outlives the mutex until custody is proven.
                 with host.locked():
                     host.assert_development()
+                    if attempt_observer is not None:
+                        attempt_observer('registration')
                     host_token = host.register_locked('direct', dict(
                         project=policy['project'], workload=settings['workload'],
                         policy_sha256=policy_hash, report_path=str(report_path)))
                     result['msi_admission'] = dict(token=host_token, closure_confirmed=False)
+                    if attempt_observer is not None:
+                        attempt_observer('creation')
                     job.launch(argv, environment, Path.cwd(), log)
             launch_succeeded = True
             result['worker_pid'] = job.pid
@@ -374,6 +381,87 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
     return exit_code
 
 
+def _queue_metadata(raw, outer, attempted, reason):
+    print(json.dumps(dict(record_type='queue_disposition', raw_source_exit=raw,
+                          queue_return_code=outer, creation_attempted=attempted,
+                          reason=reason)), flush=True)
+    return outer
+
+
+def _queue_receipt(report, policy, digest, settings, command, disk_forecast, total, raw, began, ended):
+    """Read this call's final schema-1 evidence without changing its raw meaning."""
+    value = json.loads(report.read_text(encoding='utf-8'))
+    expected = dict(project=policy['project'], host=settings['host'], workload=settings['workload'],
+                    policy_sha256=digest, argv=command, workers=settings['workers'],
+                    project_logical_bytes=total, estimated_disk_write_bytes=disk_forecast,
+                    estimated_peak_bytes=settings['estimated_peak_bytes'],
+                    hard_memory_cap_bytes=None, cpu_hard_cap_percent=settings['cpu_hard_cap_percent'])
+    if (not isinstance(value, dict) or type(value.get('schema_version')) is not int
+            or value['schema_version'] != 1 or type(value.get('exit_code')) is not int
+            or value['exit_code'] != raw or any(key not in value or value[key] != item
+                                             for key, item in expected.items())):
+        raise ValueError('Receipt identity or raw outcome differs from this invocation.')
+    started = datetime.fromisoformat(value['started_utc'])
+    completed = datetime.fromisoformat(value['completed_utc'])
+    seconds = value['seconds']
+    if (not began <= started <= completed <= ended
+            or type(seconds) not in (int, float) or not 0 <= seconds < float('inf')
+            or type(value.get('reconciliation_required')) is not bool):
+        raise ValueError('Receipt lacks complete same-attempt finalization evidence.')
+    statuses = ('deferred', 'failed') if raw == 75 else ('passed' if raw == 0 else 'failed',)
+    if value.get('status') not in statuses:
+        raise ValueError('Receipt status differs from the raw outcome.')
+    return value
+
+
+def _queue_run(policy, digest, settings, command, prefix, disk_forecast, total):
+    attempted, registration_attempted = False, False
+    def observe_attempt(event):
+        nonlocal attempted, registration_attempted
+        # This is deliberately before creation, including partial/unknown failure.
+        if event == 'creation':
+            attempted = True
+        elif event == 'registration':
+            # A registration can retain a hold and then fail before returning its token.
+            registration_attempted = True
+        else:
+            raise ValueError('Unknown attempt observer phase.')
+    try:
+        prefix = Path(prefix).resolve()
+        report = Path(str(prefix) + '-result.json')
+        # run() also enforces exclusive creation. A pre-existing prefix is never
+        # evidence for this invocation, even if it contains a plausible receipt.
+        if report.exists() or Path(str(prefix) + '.log').exists():
+            raise FileExistsError('Use a new result prefix; retain prior evidence.')
+        began = datetime.now(timezone.utc)
+        raw = run(policy, digest, settings, command, prefix, disk_forecast, total,
+                  attempt_observer=observe_attempt)
+    except (Exception, KeyboardInterrupt) as error:
+        return _queue_metadata(None, 1, attempted, f'run_did_not_return: {type(error).__name__}: {error}')
+    try:
+        if type(raw) is not int:
+            raise ValueError('run() did not return a numeric raw outcome.')
+        receipt = _queue_receipt(report, policy, digest, settings, command, disk_forecast,
+                                 total, raw, began, datetime.now(timezone.utc))
+        if raw != 75:
+            return _queue_metadata(raw, raw, attempted, 'raw_outcome_preserved')
+        if attempted:
+            return _queue_metadata(raw, 1, True, 'creation_attempted')
+        if registration_attempted:
+            return _queue_metadata(raw, 1, False, 'ownership_registration_attempted')
+        uncertainty = ('worker_pid', 'root_exit_confirmed', 'root_exit_code', 'tree_exit_confirmed',
+                       'remaining_job_processes', 'msi_admission', 'owned_custody', 'reconciliation_marker',
+                       'failure_type', 'cleanup_error', 'usage_observation_error',
+                       'custody_observation_error', 'ownership_observation_error', 'host_completion_error')
+        if (receipt['status'] != 'deferred' or receipt['reconciliation_required'] is not False
+                or not isinstance(receipt.get('reason'), str) or not receipt['reason']
+                or any(key in receipt for key in uncertainty)):
+            raise ValueError('Nonlaunching deferral has creation, ownership or finalization uncertainty.')
+    except (Exception, KeyboardInterrupt) as error:
+        return _queue_metadata(raw, 1, attempted, f'invalid_final_receipt: {type(error).__name__}: {error}')
+    return _queue_metadata(raw, 75, False, 'proven_nonlaunching_deferral')
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--policy', type=Path, default=policy_api.POLICY_PATH)
@@ -387,6 +475,11 @@ def main(argv=None):
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
     if not command:
         parser.error('An exact command vector after -- is required.')
+    queued = 'CODEX_QUEUE_JOB_ID' in os.environ
+    if queued:
+        identity = os.environ['CODEX_QUEUE_JOB_ID']
+        if len(identity) != 64 or any(char not in '0123456789abcdef' for char in identity):
+            return _queue_metadata(None, 1, False, 'invalid_queue_identity')
     try:
         policy, digest = policy_api.load_policy(args.policy)
         actual_host = policy_api.detect_host()
@@ -399,9 +492,13 @@ def main(argv=None):
             total = policy_api.project_usage(policy, repository, actual_host)
         root = Path(policy['locations']['execution_root'].format(host=actual_host))
         prefix = args.report_prefix or root / 'results' / uuid4().hex / 'job'
+        if queued:
+            return _queue_run(policy, digest, settings, command, prefix, args.required_disk_bytes, total)
         return run(policy, digest, settings, command, prefix, args.required_disk_bytes, total)
     except (policy_api.PolicyError, policy_api.AdmissionDeferred) as error:
         print(json.dumps({'status': 'deferred', 'reason': str(error), 'independent_development': 'continue'}), flush=True)
+        if queued:
+            return _queue_metadata(75, 75, False, 'initial_setup_refusal')
         return 75
 
 
