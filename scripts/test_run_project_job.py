@@ -6,6 +6,7 @@ from contextlib import contextmanager, redirect_stdout
 import io
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import sys
 import tempfile
 import unittest
@@ -285,7 +286,8 @@ class MSIFenceRunnerTests(unittest.TestCase):
         self.job = FencedJob(self.settings, self.host, self.events)
         self.attempt = 0
 
-    def run_fake(self, *, host_factory=None, use_default_job=False):
+    def run_fake(self, *, host_factory=None, use_default_job=False, custody_observer=None,
+                 activity_observer=None):
         self.attempt += 1
         prefix = self.root / str(self.attempt) / 'job'
         clock = FakeClock()
@@ -299,6 +301,10 @@ class MSIFenceRunnerTests(unittest.TestCase):
             finally:
                 self.events.append('lease-exit')
         kwargs = dict(host_factory=host_factory or (lambda *_: self.host))
+        if custody_observer is not None:
+            kwargs['custody_observer'] = custody_observer
+        if activity_observer is not None:
+            kwargs['activity_observer'] = activity_observer
         if not use_default_job:
             def create_job():
                 self.events.append('job-create')
@@ -311,6 +317,212 @@ class MSIFenceRunnerTests(unittest.TestCase):
                 ['synthetic-command', 'space value', '--literal'], prefix, 0, 0, **kwargs)
         result = json.loads(Path(str(prefix) + '-result.json').read_text(encoding='utf-8'))
         return code, result, prefix, leases.call_count
+
+    def test_pre_stop_observation_cannot_replace_failure_or_skip_finalization(self):
+        for failure in (None, OSError, KeyboardInterrupt, SystemExit):
+            with self.subTest(failure=failure):
+                self.events = []
+                self.host = FakeHost(self.events)
+                self.job = FencedJob(self.settings, self.host, self.events)
+                self.job.poll = mock.Mock(return_value=0)
+                self.job.active = lambda: int(not self.job.stopped)
+                accounting = object()
+                native = SimpleNamespace(WindowsJob=lambda: self.job, Accounting=accounting)
+
+                def observe(job, accounting_type, code, remaining, deadline):
+                    self.assertIs(job, self.job)
+                    self.assertIs(accounting_type, accounting)
+                    self.assertEqual((0, 1), (code, remaining))
+                    self.assertGreater(deadline, 0)
+                    self.assertFalse(self.host.locked_now)
+                    self.assertFalse(self.job.stopped)
+                    self.events.append('pre-stop')
+                    if failure:
+                        raise failure('synthetic callback failure')
+
+                with mock.patch.object(policy_api, 'msi_native_job', return_value=native):
+                    code, result, _, leases = self.run_fake(use_default_job=True,
+                                                            activity_observer=observe)
+                self.assertEqual(1, code)
+                self.assertEqual('RuntimeError', result['failure_type'])
+                self.assertEqual('Worker exited while owned descendants remain; stopping descendants.',
+                                 result['reason'])
+                self.assertEqual(0, result['root_exit_code'])
+                self.assertEqual(0, result['remaining_job_processes'])
+                self.assertEqual(1, self.events.count('pre-stop'))
+                self.assertEqual(1, leases)
+                ordered = ('pre-stop', 'stop', 'custody', 'job-close', 'host-complete', 'lease-exit')
+                self.assertEqual(list(ordered), [event for event in self.events if event in ordered])
+                self.assertTrue(result['msi_admission']['closure_confirmed'])
+
+    def test_pre_stop_callback_requires_the_default_native_path_and_zero_root_exit(self):
+        msi_settings = self.settings
+        for mode in ('disabled', 'custom', 'fallback', 'nonzero', 'empty'):
+            with self.subTest(mode=mode):
+                self.settings = msi_settings
+                self.events = []
+                self.host = FakeHost(self.events)
+                self.job = FencedJob(self.settings, self.host, self.events)
+                self.job.poll = mock.Mock(return_value=7 if mode == 'nonzero' else 0)
+                self.job.active = lambda: int(mode != 'empty' and not self.job.stopped)
+                callback = mock.Mock()
+                native = SimpleNamespace(WindowsJob=lambda: self.job, Accounting=object())
+                if mode == 'fallback':
+                    self.settings = policy_api.select(self.policy, 'initia', 'focused_test')
+                    self.job.settings, self.job.host = self.settings, None
+                with mock.patch.object(policy_api, 'msi_native_job',
+                                       return_value=None if mode == 'fallback' else native), \
+                        mock.patch.object(runner, 'WindowsJob', return_value=self.job):
+                    code, _, _, _ = self.run_fake(use_default_job=mode != 'custom',
+                        activity_observer=None if mode == 'disabled' else callback,
+                        host_factory=policy_api.msi_host_control if mode == 'fallback' else None)
+                callback.assert_not_called()
+                self.assertEqual(0 if mode == 'empty' else 1, code)
+
+    def test_pre_stop_actual_cap_and_write_failure_finalize_before_publication(self):
+        for mode in ('slot-cap', 'existing-output'):
+            with self.subTest(mode=mode):
+                self.events = []
+                self.host = FakeHost(self.events)
+                self.job = FencedJob(self.settings, self.host, self.events)
+                self.job.assigned, self.job.handle = True, 808
+                self.job.descendant_handles = (
+                    {pid: pid + 100 for pid in range(1, 17)} if mode == 'slot-cap' else {})
+                self.job.kernel = SimpleNamespace(QueryInformationJobObject=mock.Mock(
+                    side_effect=OSError('synthetic query error')))
+                launch = self.job.launch
+
+                def launch_borrowable(*args):
+                    launch(*args)
+                    self.job.process = 707
+
+                self.job.launch = launch_borrowable
+                self.job.poll = mock.Mock(return_value=0)
+                self.job.active = lambda: int(not self.job.stopped)
+                path = self.root / (mode + '.json')
+                if mode == 'existing-output':
+                    path.write_bytes(b'keep prior evidence')
+                capture = runner._CustodyCapture(path, '', clock=lambda: 0)
+
+                def observe(*args):
+                    capture.observe_activity(*args, source_commit='a' * 40,
+                                             policy_sha256='b' * 64, runtime_sha256='c' * 64)
+
+                native = SimpleNamespace(WindowsJob=lambda: self.job, Accounting=runner.Accounting)
+                with mock.patch.object(policy_api, 'msi_native_job', return_value=native), \
+                        mock.patch.object(capture, '_publish', wraps=capture._publish) as publish:
+                    code, result, _, _ = self.run_fake(use_default_job=True, activity_observer=observe)
+                    publish.assert_not_called()
+                    self.assertEqual(1, code)
+                    self.assertEqual('RuntimeError', result['failure_type'])
+                    self.assertTrue(result['msi_admission']['closure_confirmed'])
+                    self.assertEqual('lease-exit', self.events[-1])
+                    self.assertEqual(mode == 'slot-cap', capture.report['truncated'])
+                    self.assertFalse(capture.publish_activity())
+                    publish.assert_called_once()
+                if mode == 'slot-cap':
+                    self.job.kernel.QueryInformationJobObject.assert_not_called()
+                    self.assertFalse(json.loads(path.read_bytes())['complete'])
+                else:
+                    self.assertEqual('FileExistsError', capture.error)
+                    self.assertEqual(b'keep prior evidence', path.read_bytes())
+
+    def test_custody_observer_borrows_the_same_instance_after_custody_before_close(self):
+        self.job.custody_result.update(total_processes=4, retained_identity_count=4)
+        observed = []
+        def observer(job, snapshot):
+            self.events.append('diagnostic')
+            self.assertIs(job, self.job)
+            self.assertFalse(self.host.locked_now)
+            self.assertNotIn('job-close', self.events)
+            self.assertEqual(self.job.custody_result, snapshot)
+            self.assertIsNot(self.job.custody_result, snapshot)
+            observed.append((job.pid, dict(snapshot)))
+        code, result, _, leases = self.run_fake(custody_observer=observer)
+        self.assertEqual(0, code)
+        self.assertEqual(1, leases)
+        self.assertEqual(1, len(observed))
+        self.assertEqual(4, result['owned_custody']['total_processes'])
+        self.assertLess(self.events.index('custody'), self.events.index('diagnostic'))
+        self.assertLess(self.events.index('diagnostic'), self.events.index('job-close'))
+        self.assertLess(self.events.index('job-close'), self.events.index('host-complete'))
+        self.assertLess(self.events.index('host-complete'), self.events.index('lease-exit'))
+
+    def test_custody_observer_snapshot_mutation_cannot_normalize_the_raw_census(self):
+        self.job.custody_result.update(total_processes=4, retained_identity_count=4)
+        def observer(job, snapshot):
+            snapshot.update(total_processes=2, retained_identity_count=2, complete=False)
+        code, result, _, _ = self.run_fake(custody_observer=observer)
+        self.assertEqual(0, code)
+        self.assertEqual(4, self.job.custody_result['total_processes'])
+        self.assertEqual(self.job.custody_result, result['owned_custody'])
+        self.assertTrue(result['msi_admission']['closure_confirmed'])
+
+    def test_observer_error_cancel_and_system_exit_never_skip_real_finalization(self):
+        for failure in (RuntimeError, KeyboardInterrupt, SystemExit):
+            with self.subTest(failure=failure.__name__):
+                self.events = []
+                self.host = FakeHost(self.events)
+                self.job = FencedJob(self.settings, self.host, self.events)
+                def observer(job, snapshot):
+                    self.events.append('diagnostic-failed')
+                    raise failure('synthetic diagnostic failure')
+                code, result, _, leases = self.run_fake(custody_observer=observer)
+                self.assertEqual(0, code)
+                self.assertEqual('passed', result['status'])
+                self.assertEqual(1, leases)
+                self.assertFalse(self.host.tokens)
+                self.assertFalse(result['msi_admission']['hold_retained'])
+                self.assertEqual(1, self.events.count('job-close'))
+                self.assertLess(self.events.index('diagnostic-failed'), self.events.index('job-close'))
+                self.assertLess(self.events.index('job-close'), self.events.index('host-complete'))
+                self.assertLess(self.events.index('host-complete'), self.events.index('lease-exit'))
+
+    def test_missing_custody_reaches_observer_as_unavailable_and_keeps_the_host_hold(self):
+        self.job.custody_error = True
+        observed = []
+        code, result, _, _ = self.run_fake(custody_observer=lambda job, snapshot: observed.append(snapshot))
+        self.assertEqual(0, code)
+        self.assertEqual([None], observed)
+        self.assertIn('custody_observation_error', result)
+        self.assertTrue(result['msi_admission']['hold_retained'])
+        self.assertIn('job-close', self.events)
+        self.assertNotIn('host-complete', self.events)
+
+    def test_initia_path_does_not_activate_the_msi_custody_observer(self):
+        self.settings = policy_api.select(self.policy, 'initia', 'focused_test')
+        self.job = FencedJob(self.settings, None, self.events)
+        observer = mock.Mock()
+        code, result, _, _ = self.run_fake(host_factory=lambda *_: None, custody_observer=observer)
+        self.assertEqual(0, code)
+        observer.assert_not_called()
+        self.assertNotIn('owned_custody', result)
+
+    def test_complete_larger_census_is_preserved_without_topology_normalization(self):
+        # Ordinary jobs may own more than the separate two-process qualification fixture.
+        for lifetime in (4, 12):
+            with self.subTest(lifetime=lifetime):
+                self.events = []
+                self.host = FakeHost(self.events)
+                self.job = FencedJob(self.settings, self.host, self.events)
+                self.job.custody_result.update(total_processes=lifetime,
+                                              retained_identity_count=lifetime)
+                expected = deepcopy(self.job.custody_result)
+                code, result, _, leases = self.run_fake()
+                self.assertEqual(0, code)
+                self.assertEqual('passed', result['status'])
+                self.assertEqual(expected, result['owned_custody'])
+                self.assertEqual(lifetime, result['owned_custody']['total_processes'])
+                self.assertEqual(lifetime, result['owned_custody']['retained_identity_count'])
+                self.assertTrue(result['msi_admission']['custody_complete'])
+                self.assertTrue(result['msi_admission']['closure_confirmed'])
+                self.assertFalse(result['msi_admission']['hold_retained'])
+                self.assertFalse(self.host.tokens)
+                self.assertEqual(1, leases)
+                self.assertEqual(1, self.events.count('launch'))
+                self.assertLess(self.events.index('custody'), self.events.index('job-close'))
+                self.assertLess(self.events.index('job-close'), self.events.index('host-complete'))
+                self.assertLess(self.events.index('host-complete'), self.events.index('lease-exit'))
 
     def test_success_fences_creation_and_retains_custody_before_completion_and_lease_release(self):
         code, result, prefix, leases = self.run_fake()
@@ -980,6 +1192,340 @@ class QueueCLITests(unittest.TestCase):
             self.assertEqual([] if poll == 0 else ['first-payload'], payloads)
         self.assertEqual([75, 0], outcomes)
         self.assertEqual('passed', state)
+
+
+
+
+class CustodyCaptureTests(unittest.TestCase):
+    """Synthetic borrowed Win32 queries, never a native process or cause reproduction."""
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.path = Path(self.temporary.name) / 'private-capture.json'
+
+    def fixture(self, count=4, failed=()):
+        root_handle, job_handle = 2**40 + 101, 2**40 + 700
+        records = {}
+        handles = {}
+        for index in range(count):
+            handle, pid = root_handle + index, 10 * (index + 1)
+            records[handle] = dict(pid=pid, creation=8000 + pid, exit=9000 + pid,
+                signal=0, exit_code=0, member=True,
+                image=r'C:\synthetic\python.exe' if index < 2 else
+                      r'C:\private-fixture-directory\helper-' + str(index) + '.exe')
+            if index:
+                handles[pid] = handle
+        calls = []
+        kernel = SimpleNamespace()
+        def install(name, action):
+            def invoke(*args):
+                self.assertTrue(hasattr(invoke, 'argtypes'), name + ' must be declared before use')
+                self.assertTrue(hasattr(invoke, 'restype'), name + ' must declare its return type')
+                calls.append((name, args[0]))
+                if name in failed:
+                    return 0xffffffff if name == 'WaitForSingleObject' else 0
+                return action(*args)
+            setattr(kernel, name, invoke)
+        def times(handle, creation, exit_time, kernel_time, user_time):
+            creation._obj.dwLowDateTime = records[handle]['creation']
+            creation._obj.dwHighDateTime = 1
+            exit_time._obj.dwLowDateTime = records[handle]['exit']
+            exit_time._obj.dwHighDateTime = 1
+            return 1
+        def membership(handle, exact_job, output):
+            self.assertEqual(job_handle, exact_job)
+            output._obj.value = records[handle]['member']
+            return 1
+        def image(handle, flags, buffer, size):
+            self.assertEqual(0, flags)
+            self.assertEqual(32768, size._obj.value)
+            buffer.value = records[handle]['image']
+            size._obj.value = len(buffer.value)
+            return 1
+        def exit_code(handle, output):
+            output._obj.value = records[handle]['exit_code']
+            return 1
+        install('GetProcessId', lambda handle: records[handle]['pid'])
+        install('WaitForSingleObject', lambda handle, timeout: records[handle]['signal'])
+        install('GetExitCodeProcess', exit_code)
+        install('GetProcessTimes', times)
+        install('IsProcessInJob', membership)
+        install('QueryFullProcessImageNameW', image)
+        job = SimpleNamespace(process=root_handle, pid=10, handle=job_handle,
+                              assigned=True, descendant_handles=handles, kernel=kernel)
+        custody = dict(total_processes=count, retained_identity_count=count,
+            all_identities_accounted=True, all_retained_descendants_exited=True, complete=True)
+        return job, custody, records, calls
+
+    def capture(self, job, custody, **kwargs):
+        observer = runner._CustodyCapture(self.path, r'C:\synthetic\python.exe',
+                                         clock=kwargs.pop('clock', lambda: 0), **kwargs)
+        observer(job, custody)
+        return observer, json.loads(self.path.read_bytes()) if self.path.exists() else None
+
+    def test_four_borrowed_slots_are_joined_without_changing_counts_or_exposing_handles(self):
+        job, custody, records, calls = self.fixture()
+        before = dict(job.descendant_handles)
+        observer, report = self.capture(job, custody)
+        self.assertTrue(observer.complete)
+        self.assertTrue(report['complete'])
+        self.assertEqual(custody, report['raw_custody'])
+        self.assertEqual(4, report['observed_slots'])
+        self.assertEqual(['root', 'retained', 'retained', 'retained'],
+                         [row['origin'] for row in report['rows']])
+        self.assertEqual([10, 20, 30, 40], [row['handle_pid'] for row in report['rows']])
+        self.assertTrue(all(row['creation_filetime'] > 2**32 for row in report['rows']))
+        self.assertTrue(all(row['ancestry'] == 'unavailable' for row in report['rows']))
+        self.assertEqual(before, job.descendant_handles)
+        encoded = self.path.read_text(encoding='utf-8')
+        self.assertNotIn('private-fixture-directory', encoded)
+        self.assertNotIn(str(job.process), encoded)
+        self.assertNotIn(str(job.handle), encoded)
+        self.assertNotIn('unexpected-secret', encoded)
+        self.assertEqual({'GetProcessId', 'WaitForSingleObject', 'GetExitCodeProcess',
+                          'GetProcessTimes', 'IsProcessInJob', 'QueryFullProcessImageNameW'},
+                         {name for name, _ in calls})
+
+    def test_pointer_sized_handles_and_all_metadata_api_declarations_are_bound(self):
+        job, custody, _, calls = self.fixture()
+        observer, _ = self.capture(job, custody)
+        self.assertTrue(observer.complete)
+        w, pointer = runner.wintypes, runner.ctypes.POINTER
+        expected = {
+            'GetProcessId': ((w.HANDLE,), w.DWORD),
+            'GetProcessTimes': ((w.HANDLE, pointer(w.FILETIME), pointer(w.FILETIME),
+                                pointer(w.FILETIME), pointer(w.FILETIME)), w.BOOL),
+            'IsProcessInJob': ((w.HANDLE, w.HANDLE, pointer(w.BOOL)), w.BOOL),
+            'WaitForSingleObject': ((w.HANDLE, w.DWORD), w.DWORD),
+            'GetExitCodeProcess': ((w.HANDLE, pointer(w.DWORD)), w.BOOL),
+            'QueryFullProcessImageNameW': ((w.HANDLE, w.DWORD, w.LPWSTR, pointer(w.DWORD)), w.BOOL),
+        }
+        for name, (arguments, result) in expected.items():
+            self.assertEqual(arguments, getattr(job.kernel, name).argtypes)
+            self.assertIs(result, getattr(job.kernel, name).restype)
+        self.assertTrue(all(handle > 2**32 for _, handle in calls))
+        self.assertEqual(4, runner.ctypes.sizeof(w.DWORD))
+        self.assertEqual(4, runner.ctypes.sizeof(w.BOOL))
+        self.assertEqual(8, runner.ctypes.sizeof(w.FILETIME))
+        self.assertEqual(runner.ctypes.sizeof(runner.ctypes.c_void_p),
+                         runner.ctypes.sizeof(w.HANDLE))
+
+    def test_each_query_failure_is_explicit_and_cannot_become_complete(self):
+        for api in ('GetProcessId', 'WaitForSingleObject', 'GetExitCodeProcess',
+                    'GetProcessTimes', 'IsProcessInJob', 'QueryFullProcessImageNameW'):
+            with self.subTest(api=api):
+                self.path = self.path.with_name(api + '.json')
+                job, custody, _, _ = self.fixture(failed=(api,))
+                with mock.patch.object(runner.ctypes, 'get_last_error', return_value=5):
+                    observer, report = self.capture(job, custody)
+                self.assertFalse(observer.complete)
+                self.assertFalse(report['complete'])
+                self.assertTrue(any(query['api'] == api and query['error'] == 5
+                    for row in report['rows'] for query in row['queries']))
+                self.assertEqual(4, custody['total_processes'])
+
+    def test_active_exit_is_not_read_but_a_signalled_exit259_is_valid(self):
+        job, custody, records, calls = self.fixture()
+        records[job.process]['signal'] = 258
+        observer, report = self.capture(job, custody)
+        self.assertFalse(observer.complete)
+        self.assertIsNone(report['rows'][0]['exit_code'])
+        self.assertIsNone(report['rows'][0]['exit_filetime'])
+        self.assertNotIn(('GetExitCodeProcess', job.process), calls)
+        self.path = self.path.with_name('exit259.json')
+        job, custody, records, _ = self.fixture()
+        records[job.process]['exit_code'] = 259
+        observer, report = self.capture(job, custody)
+        self.assertTrue(observer.complete)
+        self.assertEqual(259, report['rows'][0]['exit_code'])
+
+    def test_mismatched_pid_nonmember_and_truncated_image_stay_incomplete(self):
+        for field, value in (('pid', 999), ('member', False), ('image', 'x' * 261)):
+            with self.subTest(field=field):
+                self.path = self.path.with_name(field + '.json')
+                job, custody, records, _ = self.fixture()
+                records[job.process][field] = value
+                observer, report = self.capture(job, custody)
+                self.assertFalse(observer.complete)
+                self.assertFalse(report['rows'][0]['complete'])
+                if field == 'image':
+                    self.assertTrue(report['rows'][0]['image_truncated'])
+
+    def test_sixteen_slot_boundary_and_seventeen_slot_refusal(self):
+        for count in (16, 17):
+            with self.subTest(count=count):
+                self.path = self.path.with_name(str(count) + '.json')
+                job, custody, _, calls = self.fixture(count=count)
+                observer, report = self.capture(job, custody)
+                self.assertEqual(count == 16, observer.complete)
+                self.assertEqual(count, report['raw_custody']['total_processes'])
+                if count == 17:
+                    self.assertFalse(calls)
+                    self.assertEqual(0, report['observed_slots'])
+
+    def test_query_budget_expiry_writes_only_incomplete_evidence(self):
+        job, custody, _, calls = self.fixture()
+        ticks = iter((0, 3, 3))
+        observer, report = self.capture(job, custody, clock=lambda: next(ticks))
+        self.assertFalse(observer.complete)
+        self.assertEqual('TimeoutError', report['error'])
+        self.assertFalse(calls)
+
+    def test_query_exception_and_cancellation_preserve_incomplete_coverage(self):
+        for failure in (OSError, KeyboardInterrupt, SystemExit):
+            with self.subTest(failure=failure.__name__):
+                self.path = self.path.with_name(failure.__name__ + '.json')
+                job, custody, _, _ = self.fixture()
+                def fail(*args):
+                    error = failure('synthetic query failure')
+                    if isinstance(error, OSError):
+                        error.winerror = 5
+                    raise error
+                job.kernel.GetProcessId = fail
+                observer, report = self.capture(job, custody)
+                self.assertFalse(observer.complete)
+                self.assertEqual(failure.__name__, report['error'])
+                self.assertLess(report['observed_slots'], report['expected_slots'])
+                query = report['rows'][0]['queries'][0]
+                self.assertEqual('GetProcessId', query['api'])
+                self.assertFalse(query['ok'])
+                self.assertEqual('raised' if failure is OSError else 'interrupted', query['outcome'])
+                self.assertEqual(failure.__name__, query['exception_type'])
+                self.assertEqual(5 if failure is OSError else None, query['error'])
+                self.assertNotIn('synthetic query failure', self.path.read_text(encoding='utf-8'))
+
+    def test_missing_snapshot_or_invalid_owned_ledger_is_not_repaired_or_reopened(self):
+        for mode in ('missing', 'duplicate_root', 'bad_handle'):
+            with self.subTest(mode=mode):
+                self.path = self.path.with_name(mode + '.json')
+                job, custody, _, calls = self.fixture()
+                if mode == 'missing':
+                    custody = None
+                elif mode == 'duplicate_root':
+                    job.descendant_handles[job.pid] = 42
+                else:
+                    job.descendant_handles[20] = -1
+                observer, report = self.capture(job, custody)
+                self.assertFalse(observer.complete)
+                self.assertFalse(calls)
+                self.assertEqual(0, report['observed_slots'])
+
+    def test_evidence_cap_and_existing_or_unwritable_output_never_claim_success(self):
+        job, custody, _, _ = self.fixture()
+        with mock.patch.object(runner._CustodyCapture, 'MAX_BYTES', 1):
+            observer, report = self.capture(job, custody)
+        self.assertFalse(observer.complete)
+        self.assertIsNone(report)
+        self.path.write_bytes(b'original')
+        observer = runner._CustodyCapture(self.path, r'C:\synthetic\python.exe', clock=lambda: 0)
+        observer(job, custody)
+        self.assertFalse(observer.complete)
+        self.assertEqual('FileExistsError', observer.error)
+        self.assertEqual(b'original', self.path.read_bytes())
+        self.path = self.path.with_name('unwritable.json')
+        with mock.patch.object(Path, 'open', side_effect=PermissionError('synthetic write refusal')):
+            observer = runner._CustodyCapture(self.path, r'C:\synthetic\python.exe', clock=lambda: 0)
+            observer(job, custody)
+        self.assertFalse(observer.complete)
+        self.assertEqual('PermissionError', observer.error)
+
+
+    def observe_activity(self, job, accounting_type, **kwargs):
+        capture = runner._CustodyCapture(self.path, '', clock=kwargs.pop('clock', lambda: 0))
+        binding = dict(source_commit='a' * 40, policy_sha256='b' * 64, runtime_sha256='c' * 64)
+        binding.update(kwargs)
+        capture.observe_activity(job, accounting_type, 0, 1, 100, **binding)
+        capture.publish_activity()
+        return capture
+
+    def install_accounting(self, job, active, result=True):
+        class Accounting(runner.ctypes.Structure):
+            _fields_ = [(name, runner.ctypes.c_int64) for name in ('a', 'b', 'c', 'd')] + [
+                (name, runner.ctypes.c_uint32) for name in ('faults', 'total', 'active', 'terminated')]
+
+        def query(handle, info_class, info, size, returned):
+            self.assertEqual((job.handle, 1, 48, None), (handle, info_class, size, returned))
+            self.assertIsInstance(info._obj, Accounting)
+            info._obj.active, info._obj.total = active, 4
+            return result
+
+        job.kernel.QueryInformationJobObject = mock.Mock(side_effect=query)
+        return Accounting
+
+    def test_pre_stop_snapshot_keeps_later_counts_separate_and_marks_live_handles(self):
+        for kernel_active, retained_live in ((1, 0), (0, 1), (1, 1), (0, 0)):
+            with self.subTest(kernel_active=kernel_active, retained_live=retained_live):
+                job, _, records, calls = self.fixture()
+                for handle in list(job.descendant_handles.values())[:retained_live]:
+                    records[handle]['signal'] = 258
+                accounting = self.install_accounting(job, kernel_active)
+                capture = self.observe_activity(job, accounting)
+                report = json.loads(self.path.read_bytes())
+                self.path.unlink()
+                self.assertTrue(capture.complete)
+                self.assertEqual({'root_exit_code': 0, 'active_return': 1}, report['original_guard'])
+                self.assertEqual({'active': kernel_active, 'total': 4}, report['accounting'])
+                self.assertEqual(retained_live, report['retained_unsignalled'])
+                self.assertFalse(report['atomic_with_guard'])
+                self.assertEqual(4, report['observed_slots'])
+                job.kernel.QueryInformationJobObject.assert_called_once()
+                for row in report['rows']:
+                    self.assertEqual(row['ledger_pid'], row['handle_pid'])
+                    if row['signalled'] is False:
+                        self.assertIsNone(row['exit_code'])
+                self.assertNotIn(str(job.handle), json.dumps(report))
+                self.assertFalse(any(name in {'IsProcessInJob', 'QueryFullProcessImageNameW'}
+                                     for name, _ in calls))
+
+    def test_pre_stop_unavailable_accounting_preserves_held_evidence_and_error(self):
+        job, _, _, _ = self.fixture()
+        accounting = self.install_accounting(job, 999, result=False)
+        with mock.patch.object(runner.ctypes, 'get_last_error', return_value=5, create=True):
+            capture = self.observe_activity(job, accounting)
+        self.assertFalse(capture.complete)
+        self.assertIsNone(capture.report['accounting'])
+        self.assertEqual(5, capture.report['queries'][0]['error'])
+        self.assertEqual(0, capture.report['retained_unsignalled'])
+
+    def test_pre_stop_unavailable_member_is_not_counted_as_exited(self):
+        job, _, _, _ = self.fixture(failed=('WaitForSingleObject',))
+        accounting = self.install_accounting(job, 1)
+        with mock.patch.object(runner.ctypes, 'get_last_error', return_value=6, create=True):
+            capture = self.observe_activity(job, accounting)
+        self.assertFalse(capture.complete)
+        self.assertIsNone(capture.report['retained_unsignalled'])
+        self.assertTrue(all(row['signalled'] is None for row in capture.report['rows']))
+        self.assertTrue(all(row['exit_code'] is None for row in capture.report['rows']))
+
+    def test_pre_stop_caps_type_and_deadline_before_reading_job(self):
+        for mode in ('slot-cap', 'type', 'deadline'):
+            with self.subTest(mode=mode):
+                job, _, _, calls = self.fixture(count=17 if mode == 'slot-cap' else 4)
+                accounting = self.install_accounting(job, 1)
+                capture = self.observe_activity(job, object if mode == 'type' else accounting,
+                                                clock=lambda: 100 if mode == 'deadline' else 0)
+                self.assertFalse(capture.complete)
+                self.assertEqual(mode == 'slot-cap', capture.report['truncated'])
+                job.kernel.QueryInformationJobObject.assert_not_called()
+                self.assertEqual([], calls)
+                self.path.unlink()
+
+    def test_pre_stop_query_overrun_and_existing_output_preserve_incomplete_status(self):
+        for successful_clock_reads, observed_slots in ((3, 0), (12, 1)):
+            with self.subTest(observed_slots=observed_slots):
+                job, _, _, _ = self.fixture()
+                accounting = self.install_accounting(job, 1)
+                clock = mock.Mock(side_effect=[0] * successful_clock_reads + [3, 3])
+                capture = self.observe_activity(job, accounting, clock=clock)
+                self.assertEqual('TimeoutError', capture.report['error'])
+                self.assertEqual(observed_slots, capture.report['observed_slots'])
+                self.assertFalse(capture.complete)
+                original = self.path.read_bytes()
+                capture = self.observe_activity(job, accounting)
+                self.assertFalse(capture.complete)
+                self.assertEqual('FileExistsError', capture.error)
+                self.assertEqual(original, self.path.read_bytes())
+                self.path.unlink()
 
 
 if __name__ == '__main__':
