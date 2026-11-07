@@ -5,11 +5,13 @@ import argparse
 import ctypes
 from ctypes import wintypes
 from datetime import datetime, timezone
+import hashlib
 import json
 import ntpath
 import os
 from pathlib import Path
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -417,6 +419,21 @@ class _CustodyCapture:
             and all(query['ok'] for query in row['queries']) for row in rows)
 
 
+def _activity_receipt(record):
+    """Validate the optional private extension before touching the raw result."""
+    unavailable = {'status': 'unavailable'}
+    try:
+        if type(record) is not dict or record.get('kind') != 'private-owned-activity-diagnostic':
+            return unavailable
+        encoded = json.dumps({'pre_stop_activity': record}, indent=2,
+                             allow_nan=False).encode('utf-8')
+        if len(encoded) > _CustodyCapture.MAX_BYTES:
+            return unavailable
+        return json.loads(encoded)['pre_stop_activity']
+    except BaseException:
+        return unavailable
+
+
 def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_bytes, *,
         job_factory=None, host_factory=None, attempt_observer=None, custody_observer=None,
         activity_observer=None):
@@ -426,7 +443,8 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
     its private diagnostic verdict; even cancellation cannot skip real close or
     alter the authoritative raw result. Optional activity observation uses the
     same registered MSI Job and loaded Accounting type before stopping. Its
-    callback samples in memory. The caller publishes after finalization.
+    callback samples in memory. An optional validated observation joins the
+    existing private receipt after lifecycle finalization.
     """
     prefix = Path(prefix).resolve()
     prefix.parent.mkdir(parents=True, exist_ok=True)
@@ -442,6 +460,7 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
     started, job, native = time.monotonic(), None, None
     host, host_token, launch_succeeded, job_closed = None, None, False, False
     exit_code = 1
+    activity_attempted, activity_record = False, None
     lease, lease_entered = None, False
     try:
         if settings['preferred_host'] == 'msi' and settings['host'] != 'msi':
@@ -527,8 +546,10 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     if remaining:
                         if (code == 0 and activity_observer is not None and native is not None
                                 and host_token is not None and settings['host'] == 'msi'):
+                            activity_attempted = True
                             try:
-                                activity_observer(job, native.Accounting, code, remaining, deadline)
+                                activity_record = activity_observer(job, native.Accounting, code,
+                                                                    remaining, deadline)
                             except BaseException:
                                 # Observation cannot replace the guard or skip finalization.
                                 pass
@@ -638,6 +659,8 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     result['msi_admission']['hold_retained'] = not result['msi_admission']['closure_confirmed']
                 result.update(exit_code=exit_code, seconds=time.monotonic() - started,
                               completed_utc=datetime.now(timezone.utc).isoformat())
+                if activity_attempted:
+                    result['pre_stop_activity'] = _activity_receipt(activity_record)
                 with report_path.open('x', encoding='utf-8') as stream:
                     json.dump(result, stream, indent=2)
             finally:
@@ -680,7 +703,94 @@ def _queue_receipt(report, policy, digest, settings, command, disk_forecast, tot
     return value
 
 
+# The dedicated diagnostic snapshot binds the original #237 payload.
+_DIAGNOSTIC_ARGV = (
+    'C:/Program Files/Python313/python.exe', '-B', '-m', 'unittest', 'discover',
+    '-s', 'scripts', '-p', 'test_run_project_job.py', '-v',
+)
+_DIAGNOSTIC_POLICY_SHA256 = '8a5ef27c6051ae6268ee7735c767aea3457779525f191b2cb4313146ab8d5827'
+_DIAGNOSTIC_FIXTURE_SHA256 = 'a84294405c998dcb2a131ad2e3e245ec8e3c8c89c7d134569c96d6cf508cab94'
+_DIAGNOSTIC_RUNTIME_SHA256 = 'ef8f51028ac5329641985112f8efb1c2d4c47c86b8011ddf7e6fae21e2b4e5a1'
+
+
+def _plain_owned_path(path, is_expected_type):
+    info = path.lstat()
+    if (not is_expected_type(info.st_mode)
+            or getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+        raise ValueError('Unexpected diagnostic path type')
+
+
+def _read_diagnostic_input(path, limit):
+    _plain_owned_path(path, stat.S_ISREG)
+    with path.open('rb') as stream:
+        data = stream.read(limit + 1)
+    if len(data) > limit:
+        raise ValueError('Diagnostic input exceeds size bound')
+    return data
+
+
+def _bind_activity_observer(policy, digest, settings, command, prefix, disk_forecast):
+    """Bind the worker's first-attempt request to the dedicated diagnostic."""
+    if tuple(command) != _DIAGNOSTIC_ARGV:
+        return None
+    if (policy['project'] != 'pyfa' or settings['host'] != 'msi'
+            or settings['workload'] != 'focused_test' or digest != _DIAGNOSTIC_POLICY_SHA256
+            or disk_forecast != 268435456):
+        raise ValueError('Diagnostic policy or profile differs')
+    identity = os.environ.get('CODEX_QUEUE_JOB_ID', '')
+    if len(identity) != 64 or any(char not in '0123456789abcdef' for char in identity):
+        raise ValueError('Diagnostic queue key unavailable')
+    root = Path(policy['locations']['execution_root'].format(host='msi')).resolve(strict=True)
+    jobs = root / 'jobs'
+    job = jobs / identity
+    source, results = job / 'source', job / 'results'
+    attempt = results / 'attempt-0001'
+    if (prefix != attempt / 'policy' or Path.cwd().resolve() != source
+            or Path(__file__).resolve() != source / 'scripts' / 'run_project_job.py'):
+        raise ValueError('Diagnostic first-attempt checkout or prefix differs')
+    for directory in (jobs, job, source, source / 'scripts', source / '.git', results, attempt):
+        _plain_owned_path(directory, stat.S_ISDIR)
+    commit = _read_diagnostic_input(source / '.git' / 'HEAD', 64).decode('ascii').strip()
+    if len(commit) != 40 or any(char not in '0123456789abcdef' for char in commit):
+        raise ValueError('Diagnostic checkout is not detached at a full commit')
+    expected = dict(schema_version=1, kind='codex-msi-validation', project='pyfa',
+                    repository='Sussic/Pyfa-android', commit=commit,
+                    policy_path='execution-policy.json', policy_sha256=digest,
+                    workload='focused_test', argv=list(_DIAGNOSTIC_ARGV),
+                    required_capabilities=['windows', 'python'],
+                    estimated_disk_write_bytes=disk_forecast)
+    canonical = dict(sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    key = hashlib.sha256(json.dumps(expected, **canonical).encode('utf-8')).hexdigest()
+    request = json.loads(_read_diagnostic_input(attempt / 'request.json', 16384))
+    if key != identity or json.dumps(request, **canonical) != json.dumps(
+            dict(expected, idempotency_key=key), **canonical):
+        raise ValueError('Diagnostic request binding differs')
+    marker = json.loads(_read_diagnostic_input(job / '.msi-job-owner.json', 16384))
+    if (not isinstance(marker, dict) or type(marker.get('schema_version')) is not int
+            or marker['schema_version'] != 1 or marker.get('kind') != 'codex-msi-owned-job'
+            or not isinstance(marker.get('job_root'), str) or Path(marker['job_root']) != job
+            or marker.get('request_sha256') != key
+            or any(marker.get(field) != expected[field] for field in
+                   ('project', 'repository', 'commit', 'policy_sha256'))):
+        raise ValueError('Diagnostic worker ownership binding differs')
+    fixture = _read_diagnostic_input(source / 'scripts' / 'test_run_project_job.py', 128 * 1024)
+    runtime = _read_diagnostic_input(Path(command[0]), 4 * 1024 * 1024)
+    if (hashlib.sha256(fixture).hexdigest() != _DIAGNOSTIC_FIXTURE_SHA256
+            or hashlib.sha256(runtime).hexdigest() != _DIAGNOSTIC_RUNTIME_SHA256):
+        raise ValueError('Diagnostic fixture or interpreter differs')
+
+    # The private activity path uses the existing receipt and never publishes a sidecar.
+    capture = _CustodyCapture(Path(str(prefix) + '-result.json'), '')
+    def observe(job, accounting_type, code, remaining, deadline):
+        capture.observe_activity(job, accounting_type, code, remaining, deadline,
+                                 source_commit=commit, policy_sha256=digest,
+                                 runtime_sha256=_DIAGNOSTIC_RUNTIME_SHA256)
+        return capture.report
+    return observe
+
+
 def _queue_run(policy, digest, settings, command, prefix, disk_forecast, total):
+    diagnostic = tuple(command) == _DIAGNOSTIC_ARGV
     attempted, registration_attempted = False, False
     def observe_attempt(event):
         nonlocal attempted, registration_attempted
@@ -699,9 +809,15 @@ def _queue_run(policy, digest, settings, command, prefix, disk_forecast, total):
         # evidence for this invocation, even if it contains a plausible receipt.
         if report.exists() or Path(str(prefix) + '.log').exists():
             raise FileExistsError('Use a new result prefix; retain prior evidence.')
+        options = dict(attempt_observer=observe_attempt)
+        if diagnostic:
+            try:
+                options['activity_observer'] = _bind_activity_observer(
+                    policy, digest, settings, command, prefix, disk_forecast)
+            except (OSError, ValueError, KeyError, TypeError):
+                return _queue_metadata(None, 1, False, 'diagnostic_binding_refused')
         began = datetime.now(timezone.utc)
-        raw = run(policy, digest, settings, command, prefix, disk_forecast, total,
-                  attempt_observer=observe_attempt)
+        raw = run(policy, digest, settings, command, prefix, disk_forecast, total, **options)
     except (Exception, KeyboardInterrupt) as error:
         return _queue_metadata(None, 1, attempted, f'run_did_not_return: {type(error).__name__}: {error}')
     try:
@@ -711,6 +827,8 @@ def _queue_run(policy, digest, settings, command, prefix, disk_forecast, total):
                                  total, raw, began, datetime.now(timezone.utc))
         if raw != 75:
             return _queue_metadata(raw, raw, attempted, 'raw_outcome_preserved')
+        if diagnostic:
+            return _queue_metadata(raw, 1, attempted, 'diagnostic_attempt_consumed')
         if attempted:
             return _queue_metadata(raw, 1, True, 'creation_attempted')
         if registration_attempted:
@@ -742,6 +860,10 @@ def main(argv=None):
     if not command:
         parser.error('An exact command vector after -- is required.')
     queued = 'CODEX_QUEUE_JOB_ID' in os.environ
+    diagnostic = tuple(command) == _DIAGNOSTIC_ARGV
+    if diagnostic and (
+            not queued or args.policy.resolve() != policy_api.POLICY_PATH.resolve()):
+        return _queue_metadata(None, 1, False, 'diagnostic_binding_refused')
     if queued:
         identity = os.environ['CODEX_QUEUE_JOB_ID']
         if len(identity) != 64 or any(char not in '0123456789abcdef' for char in identity):
@@ -764,6 +886,8 @@ def main(argv=None):
     except (policy_api.PolicyError, policy_api.AdmissionDeferred) as error:
         print(json.dumps({'status': 'deferred', 'reason': str(error), 'independent_development': 'continue'}), flush=True)
         if queued:
+            if diagnostic:
+                return _queue_metadata(75, 1, False, 'diagnostic_setup_refused')
             return _queue_metadata(75, 75, False, 'initial_setup_refusal')
         return 75
 
