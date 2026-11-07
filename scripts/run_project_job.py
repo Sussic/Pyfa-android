@@ -6,6 +6,7 @@ import ctypes
 from ctypes import wintypes
 from datetime import datetime, timezone
 import json
+import ntpath
 import os
 from pathlib import Path
 import shutil
@@ -175,9 +176,170 @@ class WindowsJob:
             raise OSError(f'Owned native handle cleanup failed: {errors}')
 
 
+class _CustodyCapture:
+    """Private, version-scoped Native2d borrowed-handle observer; never activates itself.
+
+    The caller must bind the exact protocol/pins and private output before use.
+    Queries use existing handles after custody and before close on the same thread.
+    The two-second query budget is cooperative, not a hard Win32 cancellation.
+    This capture's verdict never replaces the raw run or qualification verdict.
+    """
+    MAX_SLOTS, MAX_BYTES, QUERY_SECONDS = 16, 1024 * 1024, 2.0
+    FIELDS = ('total_processes', 'retained_identity_count', 'all_identities_accounted',
+              'all_retained_descendants_exited', 'complete')
+
+    def __init__(self, path, selected_image, *, clock=time.monotonic):
+        self.path, self.selected_image, self.clock = Path(path), str(selected_image), clock
+        self.complete, self.error, self.report = False, None, None
+
+    def _budget(self):
+        if self.clock() - self.started >= self.QUERY_SECONDS:
+            raise TimeoutError('Diagnostic query budget exhausted')
+
+    def _query(self, kernel, row, name, *args, valid=bool):
+        self._budget()
+        outcome = dict(api=name, ok=False, outcome='started', error=None)
+        row['queries'].append(outcome)
+        try:
+            value = getattr(kernel, name)(*args)
+            ok = valid(value)
+        except BaseException as error:
+            code = getattr(error, 'winerror', None)
+            outcome.update(outcome='interrupted' if isinstance(error, (KeyboardInterrupt, SystemExit))
+                           else 'raised', exception_type=type(error).__name__,
+                           error=code if type(code) is int and 0 <= code <= 0xffffffff else None)
+            raise
+        outcome.update(ok=ok, outcome='success' if ok else 'failed',
+                       error=None if ok else ctypes.get_last_error())
+        self._budget()
+        return ok, value
+
+    @staticmethod
+    def _filetime(value):
+        return (value.dwHighDateTime << 32) | value.dwLowDateTime
+
+    def _read_row(self, job, handle, row):
+        kernel = job.kernel
+        ok, pid = self._query(kernel, row, 'GetProcessId', handle)
+        row['handle_pid'] = pid if ok else None
+        row['pid_matches_ledger'] = ok and pid == row['ledger_pid']
+        ok, signal = self._query(kernel, row, 'WaitForSingleObject', handle, 0,
+                                valid=lambda value: value in (0, 258))
+        row['signalled'] = signal == 0 if ok else None
+        row['exit_code'] = None
+        if row['signalled'] is True:
+            exit_code = wintypes.DWORD()
+            ok, _ = self._query(kernel, row, 'GetExitCodeProcess', handle, ctypes.byref(exit_code))
+            if ok:
+                row['exit_code'] = exit_code.value
+        creation, exit_time, kernel_time, user_time = (wintypes.FILETIME() for _ in range(4))
+        ok, _ = self._query(kernel, row, 'GetProcessTimes', handle, ctypes.byref(creation),
+                           ctypes.byref(exit_time), ctypes.byref(kernel_time), ctypes.byref(user_time))
+        row['creation_filetime'] = self._filetime(creation) if ok else None
+        row['exit_filetime'] = self._filetime(exit_time) if ok and row['signalled'] is True else None
+        member = wintypes.BOOL()
+        ok, _ = self._query(kernel, row, 'IsProcessInJob', handle, job.handle, ctypes.byref(member))
+        row['member_of_exact_job'] = bool(member.value) if ok else None
+        image, size = ctypes.create_unicode_buffer(32768), wintypes.DWORD(32768)
+        ok, _ = self._query(kernel, row, 'QueryFullProcessImageNameW', handle, 0,
+                           image, ctypes.byref(size))
+        basename = ntpath.basename(image.value) if ok else ''
+        row['image_basename'] = basename[:260] if ok else None
+        row['image_truncated'] = bool(ok and (len(basename) > 260 or size.value >= len(image)))
+        row['matches_selected_image_path'] = (
+            ntpath.normcase(ntpath.normpath(image.value)) ==
+            ntpath.normcase(ntpath.normpath(self.selected_image))) if ok else None
+        row['ancestry'] = 'unavailable'
+        row['complete'] = (row['pid_matches_ledger'] and row['signalled'] is True
+            and row['creation_filetime'] is not None and row['creation_filetime'] > 0
+            and row['member_of_exact_job'] is True and bool(row['image_basename'])
+            and not row['image_truncated']
+            and all(query['ok'] for query in row['queries']))
+
+    def _collect(self, job, custody, report):
+        if not isinstance(custody, dict) or any(key not in custody for key in self.FIELDS):
+            raise ValueError('Native custody snapshot unavailable')
+        if any(type(custody[key]) is not int or custody[key] < 1 for key in self.FIELDS[:2]):
+            raise ValueError('Invalid native lifetime counts')
+        if any(type(custody[key]) is not bool for key in self.FIELDS[2:]):
+            raise ValueError('Invalid native custody flags')
+        report['raw_custody'] = {key: custody[key] for key in self.FIELDS}
+        if (job.assigned is not True or type(job.pid) is not int or job.pid <= 0
+                or type(job.process) is not int or job.process <= 0
+                or type(job.handle) is not int or job.handle <= 0):
+            raise ValueError('Assigned native root unavailable')
+        handles = job.descendant_handles
+        if type(handles) is not dict or len(handles) >= self.MAX_SLOTS:
+            raise ValueError('Owned slot cap or ledger layout')
+        slots = [('root', job.pid, job.process)]
+        for pid, handle in sorted(handles.items()):
+            if (type(pid) is not int or pid <= 0 or pid == job.pid
+                    or type(handle) is not int or handle <= 0):
+                raise ValueError('Invalid retained slot')
+            slots.append(('retained', pid, handle))
+        report['expected_slots'] = len(slots)
+        pointer = ctypes.POINTER
+        signatures = {
+            'GetProcessId': ((wintypes.HANDLE,), wintypes.DWORD),
+            'GetProcessTimes': ((wintypes.HANDLE, pointer(wintypes.FILETIME), pointer(wintypes.FILETIME),
+                                 pointer(wintypes.FILETIME), pointer(wintypes.FILETIME)), wintypes.BOOL),
+            'IsProcessInJob': ((wintypes.HANDLE, wintypes.HANDLE, pointer(wintypes.BOOL)), wintypes.BOOL),
+            'WaitForSingleObject': ((wintypes.HANDLE, wintypes.DWORD), wintypes.DWORD),
+            'GetExitCodeProcess': ((wintypes.HANDLE, pointer(wintypes.DWORD)), wintypes.BOOL),
+            'QueryFullProcessImageNameW': ((wintypes.HANDLE, wintypes.DWORD, wintypes.LPWSTR,
+                                          pointer(wintypes.DWORD)), wintypes.BOOL),
+        }
+        for name, (arguments, result) in signatures.items():
+            function = getattr(job.kernel, name)
+            function.argtypes, function.restype = arguments, result
+        for origin, pid, handle in slots:
+            self._budget()
+            row = dict(slot=len(report['rows']), origin=origin, ledger_pid=pid,
+                       complete=False, queries=[])
+            report['rows'].append(row)
+            self._read_row(job, handle, row)
+        report['observed_slots'] = len(report['rows'])
+        report['complete'] = (len(slots) == custody['total_processes'] == custody['retained_identity_count']
+            and custody['complete'] is True and custody['all_identities_accounted'] is True
+            and custody['all_retained_descendants_exited'] is True
+            and all(row['complete'] for row in report['rows']))
+
+    def __call__(self, job, custody):
+        self.started = self.clock()
+        report = dict(schema_version=1, kind='private-owned-custody-diagnostic',
+            capture_id=uuid4().hex, expected_native_sha256=policy_api._MSI_SHARED_PINS['native_job.py'],
+            stage='after-custody-before-close', complete=False, expected_slots=None,
+            observed_slots=0, rows=[], error=None)
+        self.report, self.complete, self.error = report, False, None
+        try:
+            self._collect(job, custody, report)
+            self._budget()
+        except BaseException as error:
+            report['complete'], report['error'] = False, type(error).__name__
+        report['observed_slots'] = len(report['rows'])
+        report['query_seconds'] = self.clock() - self.started
+        try:
+            payload = (json.dumps(report, sort_keys=True, allow_nan=False) + '\n').encode('utf-8')
+            if len(payload) > self.MAX_BYTES:
+                raise ValueError('Diagnostic evidence cap exceeded')
+            with self.path.open('xb') as stream:
+                if stream.write(payload) != len(payload):
+                    raise OSError('Incomplete diagnostic write')
+            self.complete = report['complete']
+        except BaseException as error:
+            self.error, self.complete = type(error).__name__, False
+            report['complete'], report['write_error'] = False, self.error
+        return self.complete
+
+
 def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_bytes, *,
-        job_factory=None, host_factory=None, attempt_observer=None):
-    """Return the raw outcome; optional sink receives 'registration' / 'creation' before each attempt."""
+        job_factory=None, host_factory=None, attempt_observer=None, custody_observer=None):
+    """Return raw outcomes. Optional custody observer is MSI-only, post-custody/pre-close.
+
+    It receives the same job and a shallow snapshot (None if unavailable). It owns
+    its private diagnostic verdict; even cancellation cannot skip real close or
+    alter the authoritative raw result. CLI activation remains separate.
+    """
     prefix = Path(prefix).resolve()
     prefix.parent.mkdir(parents=True, exist_ok=True)
     report_path, log_path = Path(str(prefix) + '-result.json'), Path(str(prefix) + '.log')
@@ -326,6 +488,7 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                     except (Exception, KeyboardInterrupt) as error:
                         result['usage_observation_error'] = str(error)
                     if host_token is not None:
+                        custody = None
                         try:
                             custody = job.custody()
                             counts = [custody[key] for key in ('total_processes', 'retained_identity_count')]
@@ -337,6 +500,14 @@ def run(policy, policy_hash, settings, argv, prefix, disk_forecast, project_byte
                             result['msi_admission']['custody_complete'] = complete
                         except (Exception, KeyboardInterrupt) as error:
                             result['custody_observation_error'] = str(error)
+                        if custody_observer is not None:
+                            try:
+                                snapshot = dict(custody) if isinstance(custody, dict) else None
+                                custody_observer(job, snapshot)
+                            except BaseException:
+                                # Diagnosis cannot replace raw custody or interrupt real finalization.
+                                # Its private report/status must be checked independently of exit0.
+                                pass
                     job.close()
                     job_closed = True
         except (Exception, KeyboardInterrupt) as error:
