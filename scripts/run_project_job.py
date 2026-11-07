@@ -307,7 +307,7 @@ class _CustodyCapture:
     def __call__(self, job, custody):
         self.started = self.clock()
         report = dict(schema_version=1, kind='private-owned-custody-diagnostic',
-            capture_id=uuid4().hex, expected_native_sha256=policy_api._MSI_SHARED_PINS['native_job.py'],
+            capture_id=uuid4().hex, expected_native_sha256=policy_api.MSI_SHARED_PINS['native_job.py'],
             stage='after-custody-before-close', complete=False, expected_slots=None,
             observed_slots=0, rows=[], error=None)
         self.report, self.complete, self.error = report, False, None
